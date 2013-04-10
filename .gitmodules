@@ -1,0 +1,3 @@
+[submodule "friendlycode"]
+	path = friendlycode
+	url = git@github.com:mozilla/friendlycode.git
