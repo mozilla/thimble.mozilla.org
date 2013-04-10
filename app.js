@@ -50,6 +50,8 @@ app.get("/remix", function(request, response) {
 });
 
 app.post('/publish', function(request, response) {
+  console.error("FUNCTION HIT");
+  console.error(request.body);
   /*
     1) get data from request
     2) try to bleach it through http://htmlsanitizer.org/
@@ -57,12 +59,10 @@ app.post('/publish', function(request, response) {
 
     3b) for P.O.C., we're actually just going to say "hurray it worked" for now
   */
-  var buffer = "";
-  request.on('data', function(chunk) { buffer += chunk });
-  request.on('end', function() {
+    var data = ( request.body.html ? request.body.html : "" );
     sanitize({
       url: 'http://htmlsanitizer.org',
-      text: buffer,
+      text: data,
       // THESE VALUES NEED TO BE ADJUSTED FOR REAL WORLD WHITELISTING
       tags: ['p'],
       attributes: {},
@@ -75,8 +75,12 @@ app.post('/publish', function(request, response) {
       // At this point, we have a sanitized, and raw unsanitized
       // data in "sanitized" and "buffer", respectively. We can now
       // push this to AWS or wherever else we want
-      response.send(err ? err : sanitized);
-      response.end();
+      if(err) { response.end(); }
+      else {
+        var jsonRespose = { 'published-url' : 'http://mozilla.org/1' };
+        response.json(jsonRespose);
+        response.end();
+      }
     });
-  });
+
 });
