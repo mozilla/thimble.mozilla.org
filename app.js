@@ -6,7 +6,9 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , ajax = require('request')
+  , sanitize = require('htmlsanitizer');
 
 var app = express();
 
@@ -36,22 +38,45 @@ http.createServer(app).listen(app.get('port'), function(){
 // HACKASAURUS API IMPLEMENTATION
 
 app.get("/remix", function(request, response) {
+	console.error("TEST");
   // this does nothing for us, since we publish to AWS.
   // any link that we get in /publish will point to an AWS
   // location, so we're not serving saved content from this app.
   // we only publish through it, and load up templated pages,
   // such as the default, and learning_projects (which can come
   // later. This is P.O.C.)
+  response.send("there are no teapots here.");
+  response.end();
 });
 
 app.post('/publish', function(request, response) {
-  // .. stub for POST operation
+  /*
+    1) get data from request
+    2) try to bleach it through http://htmlsanitizer.org/
+    3) if we succeeded in bleaching, we save that data to AWS
 
-/*
-  1) get data from request
-  2) try to bleach it through http://htmlsanitizer.org/
-  3) if we succeeded in bleaching, we save that data to AWS
-
-  3b) for P.O.C., we're actually just going to say "hurray it worked" for now
-*/
+    3b) for P.O.C., we're actually just going to say "hurray it worked" for now
+  */
+  var buffer = "";
+  request.on('data', function(chunk) { buffer += chunk });
+  request.on('end', function() {
+    sanitize({
+      url: 'http://htmlsanitizer.org',
+      text: buffer,
+      // THESE VALUES NEED TO BE ADJUSTED FOR REAL WORLD WHITELISTING
+      tags: ['p'],
+      attributes: {},
+      styles: [],
+      strip: false,
+      strip_comments: false
+    },
+    // response callback
+    function(err, sanitized) {
+      // At this point, we have a sanitized, and raw unsanitized
+      // data in "sanitized" and "buffer", respectively. We can now
+      // push this to AWS or wherever else we want
+      response.send(err ? err : sanitized);
+      response.end();
+    });
+  });
 });
