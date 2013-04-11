@@ -9,12 +9,14 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , ajax = require('request')
-  , sanitize = require('htmlsanitizer');
+  , sanitize = require('htmlsanitizer')
+  , sqlite = require('sqlite3')
+  , async = require('async');
 
 var app = express(),
-    nunjucksEnv;
-
-var ALLOWED_TAGS = [
+    nunjucksEnv,
+    // whitelist for HTML5 elements
+    ALLOWED_TAGS = [
       "!doctype", "html", "body", "a", "abbr", "address", "area", "article",
       "aside", "audio", "b", "base", "bdi", "bdo", "blockquote", "body", "br",
       "button", "canvas", "caption", "cite", "code", "col", "colgroup",
@@ -29,9 +31,8 @@ var ALLOWED_TAGS = [
       "table", "tbody", "td", "textarea", "tfoot", "th", "thead", "time",
       "title", "tr", "track", "u", "ul", "var", "video", "wbr"
     ],
+    // whitelist for HTML5 element attributes.
     ALLOWED_ATTRS = {
-      // TODO: We should probably add to this. What meta attributes can't
-      // be abused for SEO purposes?
       "meta": ["charset", "name", "content"],
       "*": ["class", "id", "style"],
       "img": ["src", "width", "height"],
@@ -66,25 +67,20 @@ if ('development' == app.get('env')) {
 nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
 nunjucksEnv.express(app);
 
-app.get('/', function(request, response) {
-  response.render('index.html');
+// base dir lookup
+app.get('/', function(req, res) {
+  res.render('index.html');
 });
 
-app.get('/projects/:name', function(request, response) {
-  var tpl = nunjucksEnv.getTemplate('learning_projects/' + request.params.name + '.html' );
+// learning project lookup
+app.get('/projects/:name', function(req, res) {
+  var tpl = nunjucksEnv.getTemplate('learning_projects/' + req.params.name + '.html' );
   var content = tpl.render({HTTP_STATIC_URL: '/learning_projects/'}).replace(/'/g, '\\\'').replace(/\n/g, '\\n');
-  response.render('index.html', {template: content, HTTP_STATIC_URL: '/'});
+  res.render('index.html', {template: content, HTTP_STATIC_URL: '/'});
 });
 
-app.get('/users', user.list);
-
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
-});
-
-// HACKASAURUS API IMPLEMENTATION
-
-app.get("/remix", function(request, response) {
+// lookup for remixed projects (from db)
+app.get("/remix/:id", function(req, res) {
 	console.error("TEST");
   // this does nothing for us, since we publish to AWS.
   // any link that we get in /publish will point to an AWS
@@ -92,41 +88,94 @@ app.get("/remix", function(request, response) {
   // we only publish through it, and load up templated pages,
   // such as the default, and learning_projects (which can come
   // later. This is P.O.C.)
-  response.send("there are no teapots here.");
-  response.end();
+  res.send("there are no teapots here, certainly not with id "+req.params.id+".");
+  res.end();
 });
 
-app.post('/publish', function(request, response) {
-  console.error("FUNCTION HIT");
-  console.error(request.body);
-  /*
-    1) get data from request
-    2) try to bleach it through http://htmlsanitizer.org/
-    3) if we succeeded in bleaching, we save that data to AWS
+// publish remixes (to db)
+app.post('/publish', function(req, res) {
+  async.waterfall([
 
-    3b) for P.O.C., we're actually just going to say "hurray it worked" for now
-  */
-    var data = ( request.body.html ? request.body.html : "" );
-    sanitize({
-      url: 'http://htmlsanitizer.org',
-      text: data,
-      tags: ALLOWED_TAGS,
-      attributes: ALLOWED_ATTRS,
-      styles: [],
-      strip: false,
-      strip_comments: false
+    // do we have actual data to publish?
+    function(callback) {
+      console.error("1");
+      var data = ( req.body.html ? req.body.html : "" );
+      if(data=="") { return callback("request had no publishable content"); }
+      callback(null, data);
     },
-    // response callback
-    function(err, sanitized) {
-      // At this point, we have a sanitized, and raw unsanitized
-      // data in "sanitized" and "buffer", respectively. We can now
-      // push this to AWS or wherever else we want
-      if(err) { response.end(); }
-      else {
-        var jsonRespose = { 'published-url' : 'http://mozilla.org/1' };
-        response.json(jsonRespose);
-        response.end();
-      }
-    });
 
+    // try to sanitize the raw data
+    function(data, callback) {
+      console.error("2");
+      sanitize( {
+        url: 'http://htmlsanitizer.org',
+        text: data,
+        tags: ALLOWED_TAGS,
+        attributes: ALLOWED_ATTRS,
+        styles: [],
+        strip: false,
+        strip_comments: false
+      }, function(err, sanitizedData) {
+        if(err) { return callback(err); }
+        callback(null, data, sanitizedData);
+      });
+    },
+
+    // try to get to our database
+    function(rawData, sanitizedData, callback) {
+      console.error("3");
+      var db = new sqlite.Database('thimble.sqlite', function(err) {
+        if(err!=null) { return callback(err); }
+        callback(null, db, rawData, sanitizedData);
+      });
+    },
+
+    // try to write the raw and sanitized data to the DB
+    function(db, rawData, sanitizedData, callback) {
+      console.error("4");
+      db.serialize(function() {
+        // replace with http://stackoverflow.com/questions/1601151/how-do-i-check-in-sqlite-whether-a-table-exists or like
+        db.run("CREATE TABLE test (unsanitized TEXT, sanitized TEXT)",function(err) {
+          // don't care about errors here, atm, since it'll be of the
+          // type "table already exists", so that's fine.
+        });
+        db.run("INSERT INTO test VALUES (?, ?)", [rawData, sanitizedData], function(err) {
+          if(err!=null) { return callback(err); }
+          callback(null, db);
+        });
+      });
+    },
+
+    // get our new row number
+    function(db, callback) {
+      console.error("5");
+      // NOTE: this totally doesn't work in async concurrent settings, so we need to get
+      // the rowid from the actual insert at some point (way) before deploy.
+      db.get("SELECT count(*) as totalCount FROM test", function(err, row) {
+        if(err!=null) { return callback(err); }
+        callback(null, db, row.totalCount);
+      });
+    },
+
+    // form a "load from..." URL based on our row number
+    function(db, resultId, callback) {
+      db.close();
+      var result = { 'published-url' : 'http://www.example.com/' + resultId };
+      callback(null, result);
+    }
+  ],
+
+  // final callback
+  function (err, result) {
+   console.error("end");
+    if(err) { res.send("could not publish, "+err); }
+    else { res.json(result); }
+    res.end();
+  });
 });
+
+// run server
+http.createServer(app).listen(app.get('port'), function(){
+  console.log('Express server listening on port ' + app.get('port'));
+});
+
