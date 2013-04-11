@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<!--
+========================================================
+Is there something that you are passionate about and always quick to defend? Well with Thimble you can use your HTML and CSS swagger to mix and match elements to create a webpage that encourages people to TAKE A STAND FOR something that you believe in. Here are some suggestions of what your webpage/meme can be about: bullying, LGBT rights, women’s rights, Occupy Wall Street, racism, freedom, abuse, texting & driving, peer pressure, etc. You can also PUBLISH & SHARE your webage with your friends on Facebook and Twitter. HAVE FUN!!!
+========================================================
+-->
+
+<!--
+Let's get started.
+
+1) READ THROUGH THE COMMENTS. This is a comment. Everything inside of this tag for HTML or '/*' for CSS, is not processed as code, but as text comments about the code. For this project the comments will give you instructions, hints and guides to completing the project, so skim down through the comments to get an understanding of what you are being asked to do.
+
+2) GET ORIENTED IN THE CODE. HTML is made up of tags that look like this <p> </p>. The tags tell you something about the information contained between them. You can click on the tags below to learn more about them. You can also click on the site on the right hand pane to see the code highlighted on the left. 
+-->
+
+<html>
+
+<!--
+Start by changing the <title> element to a witty one for your webpage. Typically, the title will show up at the top of your browser window and will be searchable in search engines like Google. In Thimble, the title shows up in the tab above the pane on the right side of the editor.
+-->
+
+<head>
+    <title>Take a Stand Project</title>
+</head>
+
+<body>
+
+<!--
+The following text is styled with an <h1> tag, where "h" stands for header and "1" means most important, followed by h2, h3, etc. It is used to build an outline or hierarchy into your page. Think about changing the text in the <h1> tag to something that you personally take a stand for.
+-->
+
+    <h1>I'm Taking a Stand For ________!</h1>
+
+<!--
+Now that you are a master of header tags, you can give your webpage a sub-header by changing the text in between the <h2> tag below.
+-->
+
+    <h2>Tell us why you are passionate about this certain topic</h2>
+
+
+<!--
+Now change out the images below with images of your choice. You can also choose fewer images or add more. Images are defined in HTML with the <img> tag. <img> is one of the few weird tags that you don't have to close. Every <img> tag has a src attribute where you include the URL to the image you want to use. To change the image below, replace the
+content  within the quotes with a url of another image. You can also change the  size of the image using the width and the height. If you are looking for images a good place to start is google.com. To get the URL of an image, right click (or CTRL-click on a Mac) and select "Copy Image Address". If you find an image on Flickr, you can select Share and copy the image URL from the dropdown.
+-->
+
+    <img src="{{ HTTP_STATIC_URL }}stand/Take_A_Stand_logo_by_InflatableBanana.png" width="320" height="350">
+    
+    <img src="{{ HTTP_STATIC_URL }}stand/tumblr_m4syw6KCgN1rvdgg9o1_500.jpg">
+
+    <img src="{{ HTTP_STATIC_URL }}stand/stand%20right%20even%20if%20youre%20standing%20alone.jpg" >
+
+    <img src="{{ HTTP_STATIC_URL }}stand/be-the-change-you-want-to-see-in-the-world.jpg">
+
+<style>
+/*
+You've played with HTML, now try playing around with the look of your page. To do so we will use CSS, which stands for Cascading Style Sheets, and lets you add a touch of style to your page. All of the stuff within the <style> tags is CSS. You can look for the name of the corresponding HTML tag to change how it is styled. For example, to change the style of <h1>, look for "h1" below.
+*/
+
+    body {
+        background-color: black;
+        color: white;
+        text-align: center;
+    }
+
+/*
+Try tinkering with the different kinds of style attributes. Maybe you want to change the background color (above) or formatting of the page by increasing the size of the margins, or perhaps you are more interested in reducing the font size. Be playful and remember that things can easily be undone or redone by pressing the undo and redo buttons on the top of the editor.
+*/
+
+    h1, h2 {
+        z-index: 100;
+        margin: 0 auto;
+    }
+
+/*
+Finally, let's fine tune your webpage. Change the position of the headings by adjusting the numbers in "padding-top" attribute. Here they are listed as "px" which stands for pixels. Make incremental changes to see how the headings move. You can also change the colors, fonts, etc.
+*/
+
+    h1 {
+        color: white;
+        font-family: "Times New Roman";
+        font-size: 55px;
+        padding-top: 50px;
+        padding-bottom: 100px;
+    }
+
+    h2 {
+        color: white;
+        font-family: sans-serif;
+        font-size: 30px;
+        padding-top: 50px;
+        padding-bottom: 25px;
+    }
+
+</style>
+
+<!-- 
+Note, the <style> tag is closed so you are back working in HTML instead of CSS.
+-->
+
+<!--
+Now you can add or edit the footer for your webpage by replacing the text between the <h6> tags below.
+-->
+
+<h6>Suggest a website where people can get more info about what you are taking a stand for here</h6>
+
+<!--
+==========================================
+EXTRA  CHALLENGE!!!!: Figure out a way using HTML and CSS to add a link on your webpage for a website that provides people with more information about what you're take a stand for.
+
+Hint: Hyperlinks in HTML use the <a> tag and look something like this:
+<a href="http://www.thewebsitelink.com">This text is linked</a>
+============================================
+-->
+
+
+<!--
+================================================
+And with that, you've created your webpage! Watch out, Internet! Here are a few things you learned while building your webpage: how to set the title of a webpage (<title> tag), work with images (<img> tag), organize your text with headers (<h1>, <h2>, etc.) and start to get down and dirty in CSS to change the look and feel of your page. Good webmaking and speaking out, my friend!
+================================================
+-->
+
+<!--
+================================================
+Last but certainly not least, publish your page using the Publish button in the upper right corner. You can copy the URL and then share it with The Hive Learning Network NYC either on our Facebook page: http://www.facebook.com/HiveLearningNYC or on Twitter @HiveLearningNYC. We really hope that you had a great time creating this webpage and learned a few handy new things. 
+================================================
+-->
+
+</body>
+
+</html>
+ 

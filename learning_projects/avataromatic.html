@@ -1,0 +1,161 @@
+<!doctype html>
+
+<!-- ======================================================================
+Avatar-O-Matic is a unique blend of HTML agility, CSS wizardry and mental firepower. There are people who are on the web, and then there are people who MAKE the web. Your goal in this project is to MAKE your very own Webmaker avatar. Mix and match the images on this page to create your very own avatar page and share what you are passionate about making.
+============================================================================ -->
+
+<!--
+Let's get started.
+
+1) READ THROUGH THE COMMENTS. This is a comment. Everything inside of this tag for HTML or '/*' for CSS, is not processed as code, but instead is just text comments about the code. For this project, the comments will give you instructions, hints and guides to completing the project, so skim down through the comments to get an understanding of what you are being asked to do.
+
+2) GET ORIENTED IN THE CODE. HTML is made up of tags that look like this <p> </p>. The tags tell you something about the information contained between them. Click on the tags in the code on this side of the editor to get a description of what each tag is for.
+-->
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Avatar-o-Matic</title>
+  
+    <style>
+/* 
+Everything contained within this <style> tag is called CSS and it is used to define the presentational components of the page, like fonts, colors, containers, positioning, etc. Remember that in CSS, comments are enclosed in '/*'. You can edit this CSS to change the background of your avatar.
+*/
+
+      #container {
+        width: 1293px;
+      }
+
+      .avatar01, .avatar02, .avatar03, .avatar04, .avatar05, .avatar06 {
+        width: 431px;
+        height: 432px;
+        float: left;
+        background-repeat: no-repeat;
+      }
+
+/*
+Start by choosing a background for your avatar. Notice the numbers next to each avatar? (i.e. avatar01 or avatar02, etc.). Those correspond to different backgrounds you see behind the 6 avatars on the right. Choose which one you like and either delete or comment out the other ones. To comment in CSS, surround the code with / and * like you see in this comment. So for example, if you like the blue stripe background, keep avatar04, and either delete or comment out the other ones. Once you've selected your background, move on down to the HTML below.
+*/
+
+      .avatar01 {
+        background-image: url({{ HTTP_STATIC_URL }}avataromatic/blackstripes.png);
+      }
+
+      .avatar02 {
+        background-image: url({{ HTTP_STATIC_URL }}avataromatic/body_green_top.png), url({{ HTTP_STATIC_URL }}avataromatic/body_green-bottom.png);
+        background-position: top center, bottom center;
+      }
+
+      .avatar03 {
+        background-image: url({{ HTTP_STATIC_URL }}avataromatic/body_pink_top.png), url({{ HTTP_STATIC_URL }}avataromatic/body_pink_bottom.png);
+        background-position: top center, bottom center;
+      }
+
+      .avatar04 {
+        background-image: url({{ HTTP_STATIC_URL }}avataromatic/bluestripes.png);
+      }
+
+      .avatar05 {
+        background-image: url({{ HTTP_STATIC_URL }}avataromatic/body_yellow_top.png), url({{ HTTP_STATIC_URL }}avataromatic/body_yellow_bottom.png);
+        background-position: top center, bottom center;
+      }
+
+      .avatar06 {
+        background-image: url({{ HTTP_STATIC_URL }}avataromatic/greenstripes.png);
+      }
+
+      body {
+        background-color: #000066;
+      }
+
+      .webmaker {
+        font-family: Arial;
+        font-size: 20px;
+        color: white;
+        background-color: #000066;
+        padding: 5px;
+        text-align: center;
+        clear: both;
+      }
+
+      p {
+        margin: 20px;
+        padding-top: 5px;
+      }
+
+      a {
+        color: yellow;
+      }
+      
+      li {
+        list-style-position: inside;
+      }
+    </style>
+ 
+<!-- NOTE: The style tag is closed above so we are back to the HTML -->
+
+  </head>
+  <body>
+    <div id="container">
+
+<!--
+Choose a set of eyes and a mouth! Each <div> below includes different eye and mouth images. Find the ones you like, and then move the appropriate <img> tags into the <div> that has the avatar number you selected above. So if you selected "avatar06" above, copy and paste the eye and mouth <img> tags that you selected into that <div>. Delete or comment out the other divs so that you only see your avatar! To comment in HTML, surround the entire element with the ! and - tags you see in this comment.
+-->
+      <div class="avatar01">
+        <img class="eyes" src="{{ HTTP_STATIC_URL }}avataromatic/eyes1.png"/>
+        <img class="mouth" src="{{ HTTP_STATIC_URL }}avataromatic/moustache1.png"/>
+      </div>
+
+      <div class="avatar02">
+        <img class="eyes" src="{{ HTTP_STATIC_URL }}avataromatic/eyes2.png"/>
+        <img class="mouth" src="{{ HTTP_STATIC_URL }}avataromatic/moustache2.png"/>
+      </div>
+
+      <div class="avatar03">
+        <img class="eyes" src="{{ HTTP_STATIC_URL }}avataromatic/eyes3.png"/>
+        <img class="mouth" src="{{ HTTP_STATIC_URL }}avataromatic/mouth3.png"/>
+      </div>
+
+      <div class="avatar04">
+        <img class="eyes" src="{{ HTTP_STATIC_URL }}avataromatic/eyes4.png"/>
+        <img class="mouth" src="{{ HTTP_STATIC_URL }}avataromatic/mouth4.png"/>
+      </div>
+
+      <div class="avatar05">
+        <img class="eyes" src="{{ HTTP_STATIC_URL }}avataromatic/eyes5.png"/>
+        <img class="mouth" src="{{ HTTP_STATIC_URL }}avataromatic/mouth5.png"/>
+      </div>
+
+      <div class="avatar06">
+        <img class="eyes" src="{{ HTTP_STATIC_URL }}avataromatic/eyes6.png"/>
+        <img class="mouth" src="{{ HTTP_STATIC_URL }}avataromatic/mouth6.png"/>
+      </div>
+
+    </div>
+<!--
+Congrats on building your avatar! You can change your tagline by changing the text within the <h1> tag. <h1> is used for headings - the "h" stands for header and the "1" stands for most important (versus h2, h3, etc.). Try a different headline for your avatar.
+-->
+    
+    <div class="webmaker">
+      <h1> I AM A __________ WEBMAKER</h1>
+
+<!--
+Now share a few things about yourself such as things that you want to make or links from projects that you have already worked on. The <ul> tag is used for bulleted, or unordered lists (versus <ol> for ordered lists). Each <li> tag is a separate list item, or bullet. You can change the text between each <li> tag. You can even try making this an ordered list (Hint: <ol> instead of <ul> and remember to close the tag!)
+
+You can also link out to projects you've done or sites you love by using the <a> tag which is used for hyperlinks. The <a> tag has a very important attribute: href, which defines the URL you want to point to. The text you put between the open <a> tag and the close </a> tag will hyperlink the text that shows up on the page, linking to the URL you specify. Try it out!
+-->
+      <ul>
+        <li>Add a list of things you want to make</li>
+        <li>Show us a project that you have made, add a <a href="http://www.mozilla.org">link</a></li>
+      </ul>
+      
+<!-- =======================================================================
+As you share your work and pictures remember that even though there are many fascinating things to do and explore online, just like in the offline world, it’s important to keep yourself safe and secure. When creating a webpage, you want to make sure that you don't share things like your address or your phone number. To stay updated on the best practices when it comes to sharing your data online and browsing safely watch this video with 5 tips from Google http://www.youtube.com/watch?feature=player_embedded&v=o5wC826_Z18.
+=========================================================================== -->
+    </div>
+
+<!-- 
+Congrats on completing your Webmaker avatar page! You can still go back and change things - that's the beauty of the Web. You might have missed it, but you actually learned some stuff in this project. You now know how to do comments in HTML and CSS, manipulate some CSS, work with headers (the <h1> tag), use lists (<ul> and <ol>) and bullets (<li>), add hyperlinks to text (<a> tag) and even a little about Web safety and privacy. Way to go, Webmaker!
+-->
+  </body>
+</html>

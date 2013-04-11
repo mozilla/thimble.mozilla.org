@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<!-- =========================
+One of the most popular spots in Open Webville is the Cinema! Madame Lille wants to bring some new web screenings to the citizens of her town. Can you help her find a good clip from Le Web? It can be anything you want — a music clip, a film trailer, or even a minecraft video. Just remember to give attribution to the creator. Oh oui, and you will have to show the rest of Open Webville how to upload their own clips by completing this project's guidebook section so viewers don't have to watch the same screening forever! As Madame Lille would say, that would be domage!
+==================== -->
+
+<!--
+Let's get started.
+1) READ THROUGH THE COMMENTS. This is a comment. Everything inside of this tag for HTML or '/*' for CSS, is not processed as code, but instead is just text comments about the code. The comments will give you instructions, hints and guides to complete the project, so skim down through the comments to get an understanding of what you are being asked to do.
+
+2) GET ORIENTED IN THE CODE. HTML is made up of tags that look like this <p> </p>. The tags tell you something about the information contained between them. Click on the tags in the code on this side of the editor to get a description of what each tag is for. 
+-->
+
+<html>
+
+<head>
+<meta charset="utf-8">
+
+<title>Open Webville Cinema</title>
+</head>
+
+<body>
+<div class="cinema"> 
+	
+<!--
+Before we started changing and customizing the cinema, watch this video (on the right) to learn a little more about copyright, copyleft, attributing and using existing work.
+
+Now let's change that video to show the citizens of Open WebVille something that you like. To do so, we'll work with the <iframe> tag below. The <iframe> tag builds a container into your page where you can pull content from another webpage. In this case, you are pulling in video content. To change the video, you need to replace the src value (a URL) in the <iframe> tag with the URL pointing to your new video. 
+
+You can find videos across the Web, but a good place to start is with YouTube or look at Creative Commons http://creativecommons.org/videos. When pulling a video from YouTube, make sure to use a video that is under a cc license. Grab the video URL and swap it in below. 
+
+Note: if you replace the entire <iframe> tag below with the one provided by YouTube, you will lose the class="video" attribute designation which is important for the positioning on the page which we'll see later in the CSS. If you don't see class="video" in your <iframe> tag below, make sure to add it back in.
+
+-->
+
+    <iframe allowfullscreen="no" class="video" frameborder="0" height="360" src="http://www.youtube.com/embed/1DKm96Ftfko" width="640"></iframe>
+    
+
+<!-- 
+The citizens of Open Webville will be forever grateful that you have brought to them a new screening! It is time to let them know who made this wonderful piece of video. In this section we will learn how to add full attribution to the original author(s) to the best of your ability with the information you have. 
+
+You can investigate best practices about giving attribution to video creators here http://wiki.creativecommons.org/Marking/Creators#Video and here http://wiki.creativecommons.org/Marking/Users#Crediting_in_Video
+
+-->
+    
+    <div class="attribution">
+
+<!-- 
+To add the attribution we will use the <p> tag below, which stands for paragraph and is one of the most commonly used elements in HTML. We use it to write exactly what you would expect: paragraphs of text. Try editing the text. Just remember to use both opening and closing paragraph tags like this <p> </p>. You can add the credits for your video in between the open <p> and close </p> tags.
+
+You'll notice that this text doesn't look as clean below as it does on the right. This is because some of the words are hyperlinked, or linked out to other pages on the Web. This works because of a special tag: <a>, that is used for hyperlinks. It requires the href attribute to define the URL, or link, that you want to point to. Everything between the open and close <a> tags is the text that shows up on the page linked to the URL provided. You can see on the right that the words "A Shared Culture" are linked - look at the code below to see how that is defined. 
+
+Now try switching out the links and the text to point to the work that you would like the citizens of Open Webville to screen. You can even add an extra hyperlink to the creator's page. Similarly, you also need to link to the type of CC license that this video is under.
+
+Follow the example below to add attribution to the creators of the video showing at the Open Webville Cinema.
+-->    
+      <p><a href="http://creativecommons.org/videos/a-shared-culture">A Shared Culture</a> by Jesse Dylan is licensed under a <a href="http://creativecommons.org/licenses/by-nc/3.0/"> Creative Commons Attribution-Noncommercial-Share Alike(CC BY-NC-SA) </a> license.</p>
+    </div>
+
+<!--
+Now let's build a guidebook to help other people with using and attributing video resources on the Web. Add some guidelines that you learned from the initial video or from your experience building this page below. You can use the <ol> tag to create an ordered, or numbered, list, and the <li> tag to indicate each item in the list. Try changing the text below and adding a few more list items.
+-->
+    <section id="guidebook">
+    <h1>Open Webville Guidebook</h1>
+    <ol>
+      <li>How did you see people including credits for the video notification?</li>
+      <li>What are the best videos out there about CC/CC licenses?</li>
+      <li>Which video platforms enable CC licensing support?</li>
+      <li>What are the differences between platforms and which one do you prefer?</li>
+    </ol>
+  </section>
+</div>
+
+<style>
+/*
+Everything inside the <style> tag is called CSS (Cascading Style Sheets) and is used to define the look and feel of the webpage, including fonts, colors, containers and positioning.
+*/
+
+  	@font-face {
+  		font-family: 'Lobster';
+  		font-style: normal;
+  		font-weight: 400;
+  		src: local('Lobster'), url(https://webpagemaker-dev.allizom.org/sd/cinema/fonts/lobster/v5/NIaFDq6p6eLpSvtV2DTNDQLUuEpTyoUstqEm5AMlJo4.woff) format('woff');
+	}
+
+	body {
+    	margin-left:auto;
+    	margin-right:auto;
+    	width:800px;
+    	font-family:'Lobster'; 
+    	background-color: black;
+    }
+
+	p {
+		margin-top:20px;
+	}
+      
+/*Remember when we said that class="video" in the <iframe> tag was important for positioning? That's because this project has a CSS class defined as video that sets those positioning values. You can try changing the pixel numbers to see where the video moves on the page.*/
+    .video {
+		left: 84px;
+		position: relative;
+		top: 216px;     
+    }
+      
+    .attribution {
+		width:610px;
+		margin-left:auto;
+		margin-right:auto;
+		position: relative;
+		top:193px;
+		font-family:Arial, Helvetica, sans-serif;
+		font-size: 10px;
+    }
+      
+    .cinema {
+		background-image: url({{ HTTP_STATIC_URL }}opencinema/webville_cinema.png);
+    	background-repeat: no-repeat;
+    	min-height: 1264px;
+    	border: 1px solid black;
+    	background-color:#FCFAD7;
+    }
+     
+    ul, ol {
+		width: 720px;    
+    }     
+     
+    #guidebook {
+		position: absolute;
+    	top: 740px;
+    	font-size: 21px;
+    }
+      
+    #guidebook h1 {
+		font-size:36px;
+		text-align: center;
+    }  
+
+</style>
+
+<!-- ==============================================
+Congrats! You've helped Madame Lille bring a new screening to Open Webville and you also created a guidebook for the Open Webville Citizens that shows them how to use Creative Commons Licensed videos! Not to mention that you learned some HTML along the way, like using the <iframe>, <p> and <li> tags. Way to go Webmaker!
+============================================-->
+
+</body>
+
+</html>

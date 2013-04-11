@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Make your Own Sports Channel</title>
+  </head>
+
+  <!--
+
+  Make your own Sports Channel
+
+  Step 1.) Change the text and link to articles that interest you e.g. Football.
+  Step 2.) Create your own video content or find content from other sites. Your school can sign up for a free station on Radiowaves, where you can upload media ('http://radiowaves.co.uk/s2r') or alternatively you can use a different site to upload content.
+  Step 3.) Change the title image, background and article layout to suit your own stories/news.
+  Step 4.) Rock out, because you're now a professional web developer with your very own Sports Channel. :)
+
+  -->
+
+  <body>
+    <!-- Tile Branding: Think of a catchy title for your page. -->
+    <div class="branding">
+      <!-- Change the image: You can keep this image or if you prefer add your own logo for your Sports Channel. -->
+      <img src="{{ HTTP_STATIC_URL }}s2r/logo.png" alt="Supporter2Reporter" width="200px"/>
+
+      <h1>2012 Reports</h1>
+      <p>Tell us what yours will be about</p>
+    </div>
+
+    <!-- Big Title Video: Add the title of your video. -->
+    <iframe class="bigArticle" width="365" height="220" src="https://www.radiowaves.co.uk/fw/cm/embedvideo.aspx?intvideoid=21758&amp;intholderid=395461"></iframe>
+
+    <div class="row">
+
+      <!-- Video 1: Here is where you paste the embed code from your chosen video. It is usually quite easy to find the embed code. e.g. On Radiowaves, hover on the video and you will see an 'embed' symbol image appear. Click on it and press copy. -->
+
+      <div class="article text_bottom_append">
+	<iframe width="280" height="160" src="https://www.radiowaves.co.uk/fw/cm/embedvideo.aspx?intvideoid=21341&amp;intholderid=386851" frameborder="0"></iframe>
+	<a href="https://www.radiowaves.co.uk/story/386851" target="_blank">
+	  <div class="text">
+	    <h2>Find an article</h2>
+	    <p>Go to www.radiowaves.co.uk/s2r, find a video article
+	      and copy the video <em>embed</em> tag here.</p>
+	  </div>
+	</a>
+      </div>
+
+      <!-- Video 2: Why not add someone else's content to your Sports Channel? Remember to always credit them for their hard work. -->
+
+      <div class="article text_bottom_append">
+	<iframe width="280" height="160" src="https://www.radiowaves.co.uk/fw/cm/embedvideo.aspx?intvideoid=21039&amp;intholderid=380461" frameborder="0"></iframe>
+	<a href="https://www.radiowaves.co.uk/story/380461/title/meetthegbtaekwondoteam" target="_blank">
+	  <div class="text">
+	    <h2>Video Size?!</h2>
+	    <p>When you embed your video, change the width and height to
+	      280px by 160px.</p>
+	  </div>
+	</a>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <!-- Image 1: As well as videos, you can add images to your sports channel. Take a picture yourself or find one on the S2R Network. www.radiowaves.co.uk/s2r  -->
+
+      <div class="article text_overlay_left">
+	<a href="https://www.radiowaves.co.uk/story/387470/title/theolympicparkdayinpictures" target="_blank">
+	<img src="{{ HTTP_STATIC_URL }}s2r/9r3g9944_o.jpg">
+	  <div class="text">
+	    <h2>Get Images</h2>
+	    <p>Right click on an image you like and select <em>Copy image location</em>. Paste the location in the <code>&lt;img&gt;</code> tag.</p>
+	  </div>
+	</a>
+      </div>
+
+      <!-- Image 2 -->
+
+      <div class="article text_overlay_bottom">
+	<a href="https://www.radiowaves.co.uk/story/387470/title/theolympicparkdayinpictures" target="_blank">
+	<img src="{{ HTTP_STATIC_URL }}s2r/ioi_o.jpg">
+	  <div class="text">
+	    <h2>Change The Link</h2>
+	    <p>Edit the <code>&lt;a&gt;</code> tag above to link to a full article of your choice.</p>
+	  </div>
+	</a>
+      </div>
+    </div>
+
+    <!-- Styles, advanced web ninjas can go here: If you are feeling confident, you can now change the colour of your background and much more. -->
+
+    <style>
+    html {
+      background-color: #4dc0fe;
+      font-size: 0;
+      font-family: sans-serif;
+    }
+
+    body {
+      width: 600px;
+      margin: 10px auto;
+      position: relative;
+    }
+
+    div.branding {
+      display: inline-block;
+      padding-left: 10px;
+      width: 200px;
+      font-size: 12px;
+    }
+
+    div.branding h1 {
+      padding: 4px;
+      margin: 10px 0;
+      background: white;
+      color: #4dc0fe;
+    }
+
+    div.branding p {
+      padding: 4px;
+      margin: 10px 0 0 0;
+      background: white;
+      color: gray;
+    }
+
+    iframe.bigArticle {
+      vertical-align: top;
+      border: none;
+      padding-left: 10px;
+    }
+
+    .row {
+      margin: 12px 0;
+    }
+
+    .row .article img {
+      width: 280px;
+    }
+
+    .row .article {
+      position: relative;
+      display: inline-block;
+      vertical-align: top;
+      width: 280px;
+      background-color: #00639e;
+      margin: 0 8px;
+    }
+
+    .row .article.text_overlay_left .text {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      bottom: 0px;
+      width: 33%;
+      background: rgba(0, 128, 255, 0.66);
+      overflow: hidden;
+    }
+
+    .row .article.text_overlay_bottom .text {
+      position: absolute;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      background: rgba(0, 128, 255, 0.66);
+      overflow: hidden;
+    }
+
+    .row .article .text {
+      padding: 4px;
+      font-size: 12px;
+    }
+
+    .row .article a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .row .article .text * {
+      margin: 0 0;
+    }
+
+    </style>
+  </body>
+</html>

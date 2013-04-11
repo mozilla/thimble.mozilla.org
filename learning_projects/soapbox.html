@@ -1,0 +1,97 @@
+<!doctype html>
+
+<!-- ==========================================================================
+There are people who sit back and watch things happen, say “que sera sera” and leave things be. You are not one of these people, you take the bull by the horns, jump up on your rooftop and shout out loud so all the world can hear what you have on your mind. This project is for you. Remix this webpage to let your voice, concerns and complaints be heard.
+============================================================================ -->
+
+<!--
+Let's get started.
+
+1) READ THROUGH THE COMMENTS. This is a comment. Everything inside of this tag for HTML or '/*' for CSS, is not processed as code, but instead is just text comments about the code. For this project, the comments will give you instructions, hints and guides to completing the project, so skim down through the comments to get an understanding of what you are being asked to do.
+
+2) GET ORIENTED IN THE CODE. HTML is made up of tags that look like this <p> </p>. The tags tell you something about the information contained between them. Click on the tags in the code on this side of the editor to get a description of what each tag is for.
+-->
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <base href=".">
+    <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}soapbox/bevan-fontfacekit/stylesheet.css">
+    <title>Soapbox - Let your voice be heard!</title>
+  </head>
+
+  <body>
+<!--
+The following text uses an <h1> tag, where "h" stands for header and "1" means most important, or in most cases, biggest, followed by h2, h3, etc. It is used to build an outline or hierarchy into your page. Think about changing the text in the <h1> tag to something that will really grab your readers attention. Use the <h2>, or subheader, tag to add a catchy tagline describing your cause.
+-->
+    <h1>Listen Up!</h1>
+    <h2>Tagline here</h2>
+
+<!--
+Now let's change out this video with one that matches your message. First let's unpack the code below. The <iframe> tag builds a container into your page where you can pull content from another webpage. In this case, you are pulling in video content. To change the video, you need to replace the src value (a URL) with the URL pointing to your new video. You can find videos across the Web, but a good place to start is on the Creative Commons search page (http://search.creativecommons.org/) or on YouTube. When pulling video from YouTube, make sure to grab the embed url.
+
+Note: before you change the video, watch this one to learn a little more about copyright, copyleft, attributing and using existing work.
+-->
+    <iframe allowfullscreen="" frameborder="0" height="240" src="//www.youtube.com/embed/1DKm96Ftfko" width="320"></iframe>
+
+<!--
+The <p> tag is used for paragraphs of text. Change the text below to add some narrative to your page. The example below is a quote from The Lorax by Dr. Seuss, which is a great book about civic engagement and thinking global but acting local. Check it out in children's section of your local library http://nypl.bibliocommons.com/item/show/17468203052_the_lorax
+-->
+    <p>
+      Check this out: I am the Lorax. I speak for the trees. I speak for the trees, for the trees have no tongues. And I'm asking you sir, at the top of my lungs - that thing! That horrible thing that I see! What's that thing you've made out of my truffula tree?
+    </p>
+    
+    <p>
+      I'm paragraph #2
+    </p>
+
+    <style>
+
+/*
+Everything contained within this <style> tag is called CSS and it is used to define the presentational components of the page, like fonts, colors, containers, positioning, etc. Remember that in CSS, comments are enclosed in '/*'. You can edit this CSS to change the look and feel of your page.
+*/
+      html {
+        color: gray;
+        background-image: url({{ HTTP_STATIC_URL }}soapbox/frenchstucco.png);
+        padding-top: 50px;
+        font-family: Georgia, serif;
+      }
+/*
+If you want to remix the image of the character on the soapbox, look for the "background-image" CSS property below."background-image" lets you add art (or photography) to the background of the page using CSS. Sometimes it is easier to place an image in the background through CSS because you can then treat it separate from the rest of the layout. By default, a "background-image" is placed at the top-left corner of an element, and then repeated vertically and horizontally.
+*/
+
+      body {
+        background-image: url({{ HTTP_STATIC_URL }}soapbox/soapbox.png);
+        background-repeat: no-repeat;
+        background-position: 0% 50%;
+        margin: 0 auto;
+        min-height: 500px;
+        padding-left: 320px;
+        width: 320px;
+      }
+
+/*
+This is where your <h1> header style is defined. Try changing the size or the font attributes.
+*/
+      h1 {
+        font-family: 'BevanRegular';
+        font-weight: normal;
+      }
+
+/*
+Same with the paragraph style. You could try making it bold instead of italic.
+*/
+      p {
+        font-style: italic;
+      }
+
+      iframe {
+        border: 20px solid lightblue;
+      }
+    </style>
+
+<!--============================================================================
+Congrats on voicing your opinion! Did you realize in all of this ranting, that you also learned some stuff about HTML and CSS? You now know how to work with text in HTML (<h1>, <h2>, <p>), how to pull videos into your page, as well as iframes to hold those videos, and how to manipulate the style of the text and page in the CSS. So climb up on your virtual soapbox and give yourself a pat on the back! Well done!
+============================================================================ -->
+  </body>
+</html>

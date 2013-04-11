@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Mozilla Thimble App</title>
+        <link rel="stylesheet" href="/media/css/opensans/stylesheet.css">
+        <link rel="stylesheet" href="/media/css/press-start/stylesheet.css">
+        <link rel="stylesheet" href="/media/css/sandstone.css">
+        <link rel="stylesheet" href="/media/css/wpm.css">
+        <link href="//www.mozilla.org/tabzilla/media/css/tabzilla.css" rel="stylesheet">
+        <style>
+        .divider.container {
+            margin-top: -90px;
+            padding-top: 90px;
+        }
+        #animal-builder .zsl {
+            background: url({{ HTTP_STATIC_URL }}zoo/background_animals.png) no-repeat scroll top right;
+            min-height: 200px;
+            margin: -40px -58px 0 0;
+            padding: 40px 350px 0 0;
+        }
+        #animal-builder .zsl .hero-unit {
+            width: 100%;
+        }
+        #animal-builder .zsl h1 {
+            font-size: 70px;
+        }
+        #animal-builder p.logos {
+            text-align: center;
+            position: absolute;
+            right: 0;
+            top: 500px;
+            width: 300px;
+        }
+        </style>
+        {% if not settings.DEV %}
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-35433268-13']);
+            _gaq.push(['_setDomainName', 'webmaker.org']);
+            _gaq.push(['_trackPageview']);
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+        {% endif %}
+    </head>
+    <body id="animal-builder">
+        <div id="outer-wrapper">
+            <div id="wrapper">
+                <section id="header">
+                    <header id="masthead">
+                        <div class="row">
+                            <div class="span10">
+                                <div class="logo">
+                                    <a href="/en-US/">
+                                        <img src="/media/img/thimble-logo.png">
+                                    </a>
+                                </div>
+                                <a href="http://www.mozilla.org/" id="tabzilla">Mozilla</a>
+                                <nav id="nav-main" role="navigation">
+                                    <ul>
+                                        <li class="home"><a href="/en-US/">Home</a></li>
+                                        <li class="projects"><a href="/en-US/projects">Projects</a></li>
+                                        <li class="about"><a href="/en-US/about">About</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </header>
+                </section>
+                <section>
+                    <div class="container divider">
+                        <div class="row zsl">
+                            <div class="hero-unit span7">
+                                <hgroup class="large">
+                                    <h2>Welcome to the</h2>
+                                    <h1>Awesome Animal Builder</h1>
+                                </hgroup>
+                                <p>Create you own unique, weird and totally bizarre Awesome Animal!</p>
+                                <p>We've drawn some of the world's most Evolutionarily Distinct and Globally Endangered animals (EDGE species) for you to remix and hack together to create your own awesome animals!</p>
+                                <p>EDGE species often have amazing adaptations such as the ability to inject venom through their teeth or to roll up into a ball of yellow spikes! Have a go at building your own awesome animals by mixing adaptations together. </p>
+                                <p>Don't forget to name and describe your new creations for all our friends and family to see.</p>
+                                <p>This was made by the Zoological Society of London (ZSL). Learn more about their work conserving EDGE animals at <a href="http://www.edgeofexistence.org/">EDGE of Existence</a>.</p>
+                                <p class="logos"><img src="{{ HTTP_STATIC_URL }}zoo/edge.png" alt="EDGE" title=""> <img src="{{ HTTP_STATIC_URL }}zoo/zsl.png" alt="ZSL" title=""></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <ul class="projects show-thumbs">
+                            <li class="project">
+                                <div class="thumb">
+                                    <a href="zoo-small/edit">
+                                        <img src="{{ HTTP_STATIC_URL }}zoo/small_animals_thumb.jpg" alt="">
+                                    </a>
+                                    <div class="caption">
+                                        <p>By ZSL</p>
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    <h3 class="title">Small Awesome Animals</h3>
+                                    <p><a href="zoo-small/edit" class="button-blue">Make Project</a>
+                                </div>
+                            </li>
+                            <li class="project">
+                                <div class="thumb">
+                                    <a href="zoo-medium/edit">
+                                        <img src="{{ HTTP_STATIC_URL }}zoo/medium_animals_thumb.jpg" alt="">
+                                    </a>
+                                    <div class="caption">
+                                        <p>By ZSL</p>
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    <h3 class="title">Medium Awesome Animals</h3>
+                                    <p><a href="zoo-medium/edit" class="button-blue">Make Project</a>
+                                </div>
+                            </li>
+                            <li class="project">
+                                <div class="thumb">
+                                    <a href="zoo-large/edit">
+                                        <img src="{{ HTTP_STATIC_URL }}zoo/large_animals_thumb.jpg" alt="">
+                                    </a>
+                                    <div class="caption">
+                                        <p>By ZSL</p>
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    <h3 class="title">Large Awesome Animals</h3>
+                                    <p><a href="zoo-large/edit" class="button-blue">Make Project</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <section id="page-bottom">
+                    <footer id="colophon">
+                        <div class="row">
+                            <div class="span2">
+                                <h2><img src="/media/img/footer-logo.png" alt="Mozilla Thimble App"></h2>
+                            </div>
+                            <nav class="span2">
+                                <h3>About</h3>
+                                <ul>
+                                    <li><a href="https://webmaker.org/en-US/events/about/summer_campaign/">About Us</a></li>
+                                    <li><a href="mailto:joinmozilla@mozilla.org">Contact Us</a></li>
+                                    <li><a href="https://webmaker.org/en-US/events/legal/privacy-policy/">Privacy Policy</a></li>
+                                    <li><a href="https://webmaker.org/en-US/events/legal/terms-of-use/">Terms of Use</a></li>
+                                    <li><a href="http://www.mozilla.org/en-US/about/legal.html">Legal Notices</a></li>
+                                </ul>
+                            </nav>
+                            <nav class="span2">
+                                <h3>Connect with us</h3>
+                                <ul>
+                                    <li><a href="http://twitter.com/mozilla/">Twitter</a></li>
+                                    <li><a href="https://www.facebook.com/mozilla/">Facebook</a></li>
+                                </ul>
+                            </nav>
+                            <nav class="span2">
+                                <h3>Make something!</h3>
+                                <ul>
+                                    <li><a href="https://webmaker.org/en-US/events/">Events</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </footer>
+                </section>
+            </div>
+        </div>
+        <script src="//www.mozilla.org/media/js/libs/jquery-1.7.1.min.js"></script>
+        <script src="//www.mozilla.org/tabzilla/media/js/tabzilla.js"></script> 
+        <script src="/media/js/projects.js"></script>
+    </body>
+</html>

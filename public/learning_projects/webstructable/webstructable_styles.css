@@ -1,0 +1,52 @@
+@charset "UTF-8";
+/* CSS Document */
+
+ body {
+	background-color: #ffff00;
+	color: #000000;
+	padding-top: 1em;
+	font-family:"Press Start 2P";
+	font-size:20px;
+	text-align:center;
+	text-transform:uppercase;
+}
+.content {
+	width:1024px;
+	margin-left:auto;
+	margin-right:auto;
+}
+#lesson {
+	font-size:38px;
+}
+#lesson ol {
+	margin-bottom:0px;
+}
+#lesson ol li {
+	padding-bottom:20px;
+}
+#addImages {
+	font-family:"Sue Ellen Francisco";
+	font-size:24px;
+	text-transform:uppercase;
+	width:300px;
+	margin:20px 21%;
+}
+#addImages p, addImages img, #video img, #video p {
+	float:left;
+}
+#video {
+	width:790px;
+	position:relative;
+	top:-25px;
+}
+#video p, #video img {
+	position:relative;
+	top:110px;
+	left:-50px;
+}
+#video p {
+	font-family:"Sue Ellen Francisco";
+	font-size:24px;
+	width:220px;
+	text-align:left;
+}

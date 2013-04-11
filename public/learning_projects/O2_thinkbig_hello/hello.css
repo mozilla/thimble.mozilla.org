@@ -1,0 +1,56 @@
+@font-face {
+   font-family: 'Open Sans Regular';
+   src: url('fonts/OpenSans-Regular.ttf');	
+}
+
+@font-face {
+   font-family: 'Open Sans Bold';
+   src: url('fonts/OpenSans-Bold.ttf');	
+}
+
+body {
+   font-family: 'Open Sans Regular', sans-serif;                                                                                                                                        
+   font-size: 1em; 	
+   position: relative;
+   width: 800px;
+   height: 700px;
+   margin: 0 auto;
+   background-image: url('O2_helloworld_bg.png');
+   background-repeat: no-repeat;
+   background-position: top center;
+}
+
+strong {
+   font-family: 'Open Sans Bold';
+}
+
+.hello {
+   position: absolute;
+   top: 140px;
+   left: 140px;
+   font-size: 1.5em;
+}
+
+.name {
+   position: absolute;
+   top: 110px;
+   left: 430px;
+   font-size: 2em;
+   text-align: center;
+}
+
+.love {
+   position: absolute;
+   top: 280px;
+   left: 440px;
+   font-size: 2em;
+   text-align: center;
+}
+
+img {
+   position: absolute;
+   top: 400px;
+   left: 400px;
+   width: 250px;
+   height: 200px;
+}

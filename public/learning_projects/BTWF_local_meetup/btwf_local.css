@@ -1,0 +1,116 @@
+@font-face {
+  font-family: 'Open Sans Regular';
+  src: url('fonts/OpenSans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Open Sans Bold';
+  src: url('fonts/OpenSans-Bold.ttf');
+}
+
+body {
+  font-family: 'Open Sans Regular', sans-serif;
+  font-size: 1em;
+  padding-top: 10px;
+  margin: 0 auto;
+  background-image: url('btwf_bg.png');
+  background-color: #0b0b0b;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center top;
+  text-align: center;
+  margin-bottom: 100px;
+}
+
+strong {
+  font-family: 'Open Sans Bold';
+  font-weight: normal;
+}
+
+.content_wrapper {
+  position: relative;
+  top: 35px;
+  width: 700px;
+  margin: 0 auto;
+  padding: 0px;
+}
+
+header {
+  background-color: #F7931D;
+  width: 700px;
+  height: 40px;
+  margin: 0 auto;
+  font-size: 1.5em;
+  color: white;
+  padding-top: 10px;
+}
+
+h1,h2,h3,h4,h5 {
+  background-color: #F7931D;
+  color: #EF4036;
+  padding: 0px;
+  margin: 0px;
+  padding-bottom: 7px;
+}
+
+.left {
+  float: left;
+  width: 300px;
+  font-size: 0.9em;
+  color: white;
+  overflow: auto;
+  background-color: #EF4036;
+  text-align: left;
+  line-height: 1.32em;
+  min-height: 365px;
+}
+
+.right {
+  float: right;
+  width: 400px;
+  color: white;
+  padding: 0px;
+  margin: 0px;
+}
+
+.stamp {
+  position: absolute;
+  top: -45px;
+  left: -50px;
+}
+
+.topright {
+  width: 100%;
+  font-size: 0.8em;
+  margin: 0px;
+  padding: 0px;
+}
+
+.middleright {
+  width: 100%;
+  background-color: black;
+}
+
+.bottomright {
+  width: 100%;
+  background-color: #00A54E;
+  color: white;
+  font-size: 0.9em;
+  line-height: 1.4em;
+  padding: 0px;
+  min-height: 125px;
+}
+
+p {
+  padding: 15px;
+  margin: 0;
+}
+
+.social {
+  text-align: right;
+  margin-right: 5px;
+}
+
+.twittericon {
+  text-align: right;
+}

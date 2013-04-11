@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<!-- =========================================================================
+Madame Lille is a robot with a knack for the arts who has recently opened her own Art Gallery in Open Webville. Her passion is collecting velvet bird paintings! She is looking to expand her collection and you can help her. In this project you will add images of your choice to her Art Gallery. "Mais, fait attention!" Make sure that the images you choose are under a Creative Commons License.
+============================================================================ -->
+
+<!--
+Let's get started.
+
+1) READ THROUGH THE COMMENTS. This is a comment. Everything inside of this tag for HTML or '/*' for CSS, is not processed as code, but instead is just text comments about the code. The comments will give you instructions, hints and guides to complete the project, so skim down through the comments to get an understanding of what you are being asked to do.
+
+2) GET ORIENTED IN THE CODE. HTML is made up of tags that look like this <p> </p>. The tags tell you something about the information contained between them. Click on the tags in the code on this side of the editor to get a description of what each tag is for. 
+
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+<!--
+Earlier we mentioned a Creative Commons License; "Qu'est que c'est?", you might ask! To put it simply the Creative Commons Licenses (CC licenses) give everyone—from individual creators to large companies and institutions—a simple, standardized way to grant copyright permissions to their creative work.
+
+As a result of CC licensing, creative work like pictures of velvet bird paintings(!) can be copied, distributed, edited and remixed by anyone on the web, all within the boundaries of copyright law. There are different types of CC licenses that you can find more about here http://creativecommons.org/licenses/
+-->
+
+    <title>Open Webville Gallery</title>
+  </head>
+
+  <body>
+<!--
+Now that we know more about what a CC license is, let's find some CC licensed pictures for Madame Lille's empty frames. A good place to start your search for some snazzy images is the Flickr Creative Commons Pool http://www.flickr.com/creativecommons/
+-->
+    <section class="gallery">
+<!--
+Once you have located your CC licensed images add them to the frames. Each <div class="frame"> tag below represents one of the picture frames.
+
+Note that the image is defined with a URL, or link, in the <img> tag. By filling in the src attribute with the URL of an image, you are telling the browser where to find that image and which image to show.
+
+Now let's try swapping out the images below by replacing them with URLs of your choice. To grab a URL all you have to do is right click and choose "Copy Image Location" and then paste within the " ". Make sure that your link ends in a file format like .jpg, .gif, or .png.
+-->
+      <div class="frame01">
+        <img src="http://farm3.staticflickr.com/2417/2149942020_a681cb7043.jpg">
+      </div>
+      <div class="frame02">
+        <img src="http://farm3.staticflickr.com/2417/2149942020_a681cb7043.jpg">
+      </div>
+      <div class="frame03">
+        <img src="http://farm3.staticflickr.com/2417/2149942020_a681cb7043.jpg">
+      </div>
+      <div class="frame04">
+        <img src="http://farm3.staticflickr.com/2417/2149942020_a681cb7043.jpg">
+      </div>
+      <div class="frame05">
+        <img src="http://farm3.staticflickr.com/2417/2149942020_a681cb7043.jpg">
+      </div>
+    </section>
+
+    <section id="label">
+<!--
+Great job on adding your images, Madame Lille's Gallery looks smashing!
+
+In this next section we will learn how to add full attribution to the original author(s) to the best of your ability with the information you do have.
+
+Note that each <p class="attribution"> tag corresponds to the attribution of your chosen image. In the other panel of the editor if you click on the title "Peacock," it will open a new window at the location of the actual Flickr image. This works because of a special tag: <a>, which is used for hyperlinks and requires the href attribute to define the URL. Like the <a> tag, proper copyright attribution provides a link to the type of CC license specified by the creator of the work.
+
+Follow the example below to add the appropriate attribution to the creator(s) of the work you've decided to add to Madame Lille's Gallery.
+-->
+      <p class="attribution01">
+        <a href="http://farm3.staticflickr.com/2417/2149942020_a681cb7043.jpg">Peacock</a>
+        © BBM Explorer used under a
+        <a href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons Attribution Non Commercial License</a>
+      </p>
+      <p class="attribution02">
+        <a href="http://farm3.staticflickr.com/2417/2149942020_a681cb7043.jpg">Peacock</a>
+        © BBM Explorer used under a
+        <a href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons Attribution Non Commercial License</a>
+      </p>
+      <p class="attribution03">
+        <a href="http://farm3.staticflickr.com/2417/2149942020_a681cb7043.jpg">Peacock</a>
+        © BBM Explorer used under a
+        <a href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons Attribution Non Commercial License</a>
+      </p>
+      <p class="attribution04">
+        <a href="http://farm3.staticflickr.com/2417/2149942020_a681cb7043.jpg">Peacock</a>
+        © BBM Explorer used under a
+        <a href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons Attribution Non Commercial License</a>
+      </p>
+      <p class="attribution05">
+        <a href="http://farm3.staticflickr.com/2417/2149942020_a681cb7043.jpg">Peacock</a>
+        © BBM Explorer used under a
+        <a href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons Attribution Non Commercial License</a>
+      </p>
+    </section>
+
+    <section id="guidebook">
+<!--
+Adding images to Madame Lille's Gallery should be as easy as 1, 2, 3! Now let's take this opportunity to create a guidebook to show the rest of Open Webville how to use Creative Commons Licenses. 
+
+We will do so using an ordered (or numbered) list. Writing <ol> indicates that you are creating a list, and <li> indicates both the line number as well as the item in that list. Think of each <li> as the 1, 2, 3, etc. of your list. Add some answers to the questions in this list by replacing the text between the <li> </li> tags below.
+
+Use these resources to fill in the Gallery guidebook;
+http://openattribute.com/ & http://wiki.creativecommons.org/FAQ
+-->
+      <h1>Open Webville Guidebook</h1>
+      <ol>
+        <li>What is a CC licensed image?</li>
+        <li>Where can you find a CC licensed image?</li>
+        <li>Can you compare what the CC license on one image, say CC BY-SA, lets you do versus the CC license on  another image, say CC BY-NC ? which CC license allows you to do more?</li>
+        <li>How do you give attribution to a creator?</li>
+      </ol>
+    </section>
+
+    <style>
+/*
+Everything inside the <style> tag is called CSS (Cascading Style Sheets) and is used to define the look and feel of the webpage, including fonts, colors, containers and positioning.
+*/
+      @font-face {
+        font-family: 'Lobster';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Lobster'), url(http://themes.googleusercontent.com/https://webpagemaker-dev.allizom.org/sd/gallery/fonts/lobster/v5/NIaFDq6p6eLpSvtV2DTNDQLUuEpTyoUstqEm5AMlJo4.woff) format('woff');
+      }
+
+      body {
+        margin-left: auto;
+        margin-right: auto;
+        width: 800px;
+        font-family: 'Lobster';
+        background-color: #B2DDD7;
+      }
+
+      .gallery{
+        background-image: url({{ HTTP_STATIC_URL }}opengallery/gallery.png);
+        background-repeat: no-repeat;
+        background-color: #FCFAD7;
+        min-height: 1200px;
+        border:1px solid black;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      .attribution01, .attribution02, .attribution03, .attribution04, .attribution05 {
+        background-image: url({{ HTTP_STATIC_URL }}opengallery/plakat.png);
+        background-repeat: no-repeat;
+        width: 232px;
+        height: 28px;
+        font-size: 9px;
+        margin-top: 5px;
+        font-family: Arial, Helvetica, sans-serif;
+        padding-top: 2px;
+        text-align: center;
+      }
+      
+      .attribution01 {
+        position:relative;
+        left:295px;
+      }
+      
+      .attribution02 {
+        left: 565px;
+        position: relative;
+        top: -38px;
+      }
+      
+      .attribution03 {
+        left: 420px;
+        position: relative;
+        top: 160px;
+      }
+      
+      .attribution04 {
+        left: 158px;
+        position: relative;
+        top: 260px;
+      }
+      
+      .attribution05 {
+        left: 545px;
+        position: relative;
+        top: 225px;
+      }
+      
+      #label {
+        position: relative;
+        top: -1092px;
+      }
+
+      .frame01, .frame02, .frame03, .frame04, .frame05 {
+        float:left;
+        position:relative;
+      }
+
+      .frame01 img, .frame02 img, .frame03 img, .frame04 img, .frame05 img {
+        position:relative;
+      }
+
+      .frame01 {
+        background-image:url({{ HTTP_STATIC_URL }}opengallery/frame1.png);
+        background-repeat: no-repeat;
+        height: 100px;
+        width: 125px;
+        left: 350px;
+        top: 15px;
+      }
+
+      .frame01 img {
+        height: 75px;
+        left: 12px;
+        top: 10px;
+        width: 99px;
+      }
+      
+      .frame02 {
+        background-image:url({{ HTTP_STATIC_URL }}opengallery/frame2.png);
+        background-repeat: no-repeat;
+        height: 110px;
+        width: 105px;
+        left: 510px;
+        top: 5px;
+      }
+      
+      .frame02 img {
+        height: 76px;
+        left: 22px;
+        top: 18px;
+        width: 51px;
+      }
+    
+      .frame03 {
+        background-image:url({{ HTTP_STATIC_URL }}opengallery/frame3.png);
+        background-repeat: no-repeat;
+        height: 190px;
+        width: 180px;
+        left: 215px;
+        top: 160px;
+      }
+      
+      .frame03 img {
+        height: 150px;
+        left: 15px;
+        top: 17px;
+        width: 149px;
+      }
+      
+      .frame04 {
+        background-image:url({{ HTTP_STATIC_URL }}opengallery/frame4.png);
+        background-repeat: no-repeat;
+        height: 230px;
+        width: 275px;
+        left: -275px;
+        top: 270px;
+      }
+      
+      .frame04 img {
+         height: 180px;
+         left: 18px;
+         top: 17px;
+         width: 241px;
+      }
+      
+      .frame05 {
+        background-image:url({{ HTTP_STATIC_URL }}opengallery/frame5.png);
+        background-repeat: no-repeat;
+        height: 105px;
+        width: 110px;
+        left: -75px;
+        top: 385px;
+      }
+       
+      .frame05 img {
+        height: 75px;
+        left: 16px;
+        top: 14px;
+        width: 76px;
+      }
+
+      ul, ol {
+        width: 720px;
+      }
+
+      #guidebook {
+        position: absolute;
+        top: 590px;
+        width: 795px;
+        font-family: 'Lobster';
+        font-size: 21px;
+      }
+
+      #guidebook h1 {
+        font-size: 36px;
+        text-align: center;
+      }
+    </style>
+  </body>
+<!-- ========================================================================
+Congrats! You've helped Madame Lille create a collection for her gallery and also you created a guidebook for the Open Webville citizens that shows them how to use Creative Commons Licenses! Not to mention that you learned some HTML along the way, like using the <img> and <a> tags. Way to go Webmaker!
+============================================================================ -->
+</html>

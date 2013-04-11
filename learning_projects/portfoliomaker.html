@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<!-- 
+Welcome to Portfolio Builder!! Are you a Designer? Filmmaker? Comedian? Artist? Singer? Actor? Coder? Hacker? Your next big break might be just around the corner. Get ready to grab it! Create a web page showcasing your work. Make it fun, make it personal so that it can tell a story about who you are and the amazing work you have done. And pick up some snazzy web making skills along the way.
+-->
+
+<!--
+Let's get started.
+
+1) READ THROUGH THE COMMENTS. This is a comment. Everything inside of this tag for HTML or '/*' for CSS, is not processed as code, but instead is just text comments about the code. For this project, the comments will give you instructions, hints and guides to completing the project, so skim down through the comments to get an understanding of what you are being asked to do.
+
+2) GET ORIENTED IN THE CODE. HTML is made up of tags that look like this <p> </p>. The tags tell you something about the information contained between them. Click on the tags in the code on this side of the editor to get a description of what each tag is for. Each tag has a beginning defined as <p> and an end defined as </p>
+-->
+
+<html>
+    <head>
+        <meta charset="utf-8">
+
+<!-- 
+The text within the <title> </title> tags will help people including schools, your friends or potential employers to easily identify your page when it is minimized or open in one of countless tabs. Think about how you want to personalize it and then change the text below.
+-->
+
+        <title>My Portfolio</title>
+       	<link href='{{ HTTP_STATIC_URL }}portfoliobuilder/portfoliobuilder.css' rel='stylesheet'>
+  </head>
+  <body>
+
+	<header>
+
+<!-- 
+The header is prime real-estate on a web page. It's the first thing people see and read on a page. It's where you can begin to make this space yours. Change the text within the header 2 <h2> tags to include your name or your company's name. Play with the <h1> or <h3> tags to see how the numbers following the "h" in a header tag make a difference to its size.
+-->
+
+		<h2>MY PORTFOLIO</h2>
+
+<!--
+If you have a logo, insert it here. A logo represents your brand. It also serves as a picture or icon through which others can remember who you are. Upload it to Flickr, click "Share" and select the option to "Grab the link". Copy the link and paste it into the src value of the <img> tag. If you find the size of your logo or mark doesn't fit properly, you can crop or resize it using an image editing tool like Photoshop. If you fancy this colorful rainbow, just keep it. 
+-->
+
+		<img src="{{ HTTP_STATIC_URL }}portfoliobuilder/logo_rainbow.png">
+	</header>
+
+<!-- 
+Now let's move to the heart of your portfolio. A simple three column layout will help you organize your work and present it to the world. Balance is key! Gather all your images, videos, text and piece them together into a stunning mosaic along with some content about you. Ready to show off your work as well as your balancing skills?  
+
+Note: The image dimensions used here are 250px X 200px and the video dimension is 250px x 160px. Keep in mind that the height of your media can vary but the width must always be 250px to maintain a clean three column grid.
+-->
+
+	<div class="content_wrapper">
+      
+<!-- LEFT COLUMN --> 
+
+		<div class="leftcolumn">
+
+<!-- 
+Let's start with customizing your first project block. Each project block is created using <div> tags with class attribute set to "project", which defines the appearance of this block i.e. rectangular in shape with a white background and grey text. There are ways to change the appearance and we'll get to that later in our code.
+-->
+
+			<div class="project">
+            
+<!--
+Now add an image to your project by replacing the URL in the src value of the <img> tag. It would be a good idea to first upload all your project images to Flickr. Then choose the image you want to use, click Share and select the option to Grab the link. Copy the link and paste it into the src value of the <img> tag. Similar options will exist for other photo sharing sites.
+-->
+
+				<img src="{{ HTTP_STATIC_URL }}portfoliobuilder/project_amazingcreature.jpeg">
+
+<!-- 
+Next replace the text within the paragraph <p> tags with some text describing this project. The length of description can vary for each project or you can choose to have no description at all. It's your call. Also, note that </div> closes the <div> tag we opened earlier.
+-->
+
+				<p>Mix and match elements to create your own amazing creature.</p> 
+			</div>
+
+<!-- 
+Notice that this next block has a different style to it -- rounded corners and a colored background. The class attribute of the <div> tag is set to "personal". You can use this style for all information other than projects. 
+
+You can customize the look using some CSS (cascading style sheets) code. Everything that appears within the style attribute is a CSS property followed by a value. The minimum height for this block has been set to 260px. Once you have your content in there you can try changing that number or removing that information altogether. 
+
+The background color has been set to #55BA63 -- the hexadecimal or HEX code for green. HEX codes begin with a number sign "#" and are used to define colors on the Web. The color property specifies the text color for this block. Refer to the Color Palette at the end of the document for the HEX codes of all the colors used in the design of this page. 
+-->
+
+			<div class="personal" style="min-height: 260px; background-color: #55BA63; color: #377F3E;">
+
+<!--
+Change the section header by replacing the text within the <strong> tags or remove it if you don't want it at all. You can make any part of the text stand out from the rest of the content by adding the <strong> tags around it. 
+-->
+
+				<strong>ABOUT</strong><br>
+
+<!--
+Use this block to tell the world about yourself. What interests you? What you love to do? What motivates you in your work and your personal life? Replace the text within the paragraph <p> tags with your words. 
+-->
+
+                                <p>What's interesting about me?</p>	
+			</div>
+
+<!--
+Now that you know how to customize a project block, why not give it a try. In this example, you will see that clicking the image will take you to the project page. Links are what the World Wide Web is made up of. Links are created by adding <a> tags around an image or text. Here they are wrapped around the <img> tag. 
+
+Replace the URL in the <a> tag with the project URL. Copy the <a> tag from below and create a link for the first project too. Don't forget to close the tag with </a>.
+-->
+
+			<div class="project">
+				<a href="https://www.webmaker.org/en-US/projects/customize-your-tumblr-theme/">
+				<img src="{{ HTTP_STATIC_URL }}portfoliobuilder/project_tumblr.jpeg">
+				</a>
+
+				<p>How to customize your blog using Tumblr's HTML editor. Create a custom background, add unique widgets and more.</p>
+			</div>
+		</div>
+
+<!-- RIGHT COLUMN -->
+
+		<div class="rightcolumn">
+
+<!-- Project -->
+
+			<div class="project">
+				<a href="https://www.webmaker.org/en-US/projects/internet-defense-league/">
+				<img src="{{ HTTP_STATIC_URL }}portfoliobuilder/project_internetdefence.jpeg">
+				</a>
+				<p>The Internet Defense League is like the internet's Emergency Broadcast System, or its bat signal. It takes the tactics that killed recent threats to Internet Freedom like SOPA and PIPA and turns them into a permanent force for defending the internet, and making it better.</p>
+			</div>
+
+<!-- Project -->
+
+<!-- 
+Once you add in your image for this project, play around with the background color and text color from the Color Palette below to see what works best with your image and the rest of the page. Experiment with colors if you wish to create your own Color Palette. 
+-->
+
+
+			<div class="project" style="background-color: #55A4DA; color: #0C5D7A;">
+				<a href="https://www.webmaker.org/en-US/projects/learn-html-fast-making-your-own-web-page/">
+				<img src="{{ HTTP_STATIC_URL }}portfoliobuilder/project_html.png">
+				</a>
+				<p>This starter project helps you play around with the most common HTML elements and tags using a simple side-by-side visual editor. You'll be surprised by how easy it is to get started.</p>
+			</div>
+
+<!-- Project -->
+
+			<div class="project">
+				<a href="https://www.webmaker.org/en-US/projects/hack-your-way-through-web-arcade/">
+				<img src="{{ HTTP_STATIC_URL }}portfoliobuilder/project_webarcade.jpeg">
+				</a>
+			</div>
+
+		</div>
+
+<!-- MIDDLE COLUMN -->
+
+		<div class="middlecolumn">
+
+<!-- 
+Here we have added a burst of color to the project block. The HEX code is for the color orange as in the Color Palette at the end of the document. 
+-->
+
+			<div class="project" style="background-color: #E85A27; color: white;">
+				<a href="https://www.webmaker.org/en-US/projects/play-get-my-lawn/">
+				<img src="{{ HTTP_STATIC_URL }}portfoliobuilder/project_getoffmylawn.jpeg">
+				</a>
+			</div>
+
+<!-- Project -->
+			
+			<div class="project">
+				<a href="https://www.webmaker.org/en-US/projects/play-bakery-bash/">
+				<img src="{{ HTTP_STATIC_URL }}portfoliobuilder/project_bakerybash.jpeg">
+				</a>
+				<p>In this web-based game, your mission is to help "Loaf Cat" throw a sweet party in her cozy bakery. It's simple but strangely addictive. Did we mention the dancing cats?</p>
+			</div>
+
+<!-- 
+Your contact details are a must have. You want to make sure people know how to get in touch with you. 
+-->
+
+			<div class="personal" style="background-color: #ED2279; color: #830748;">
+			If my work interests you, send a note to myporfolio@gmail.com
+			</div>
+
+<!-- 
+To embed a video on the page, first upload it to a video sharing site like YouTube or Vimeo. Then get the embed code of your video by clicking on the Share link. Make sure to customize the size to 250 X 160. Replace the <iframe> </iframe> tags with the new embed code. If you get a direct link to the video, paste it in the src value of the <iframe> tag.
+-->
+
+			<div class="project">
+				<iframe src="http://player.vimeo.com/video/33229542" width="270" height="160" frameborder="0">
+				</iframe>
+			</div>
+
+<!--
+Here you can include a link to your Mozilla Open Badge Backpack to show off your collection of Open Badges. Or use this block for some other piece of information that you think might be valuable to a potential employer. You can also change it to a project block by just changing the class to "project". As easy as that!!
+-->
+			
+			<div class="personal" style="background-color: #F6EB16; color: #A38F31;">
+			I'm a collector! Check out my <a href="">Badge Backpack</a>
+			</div>
+		</div>
+
+</div>
+
+
+<!-- 
+Do you tweet? Do you blog? What does your social media landscape look like? What communities and networks are you a part of? Insert your personal social media URLs in place of "your personal link here" text. Remove the buttons you don't want by deleting the <img> tag along with the link <a> tags that surround it.
+-->
+
+	<div class="footer">
+
+<!-- Linkedin -->
+
+		<a href="your personal link here">
+		<img src="{{ HTTP_STATIC_URL }}portfoliobuilder/social_linkedin.png">
+		</a>
+
+<!-- Twitter -->
+
+		<a href="your personal link here">
+		<img src="{{ HTTP_STATIC_URL }}portfoliobuilder/social_twitter.png">
+		</a>
+
+<!-- Facebook -->
+
+		<a href="your personal link here">
+		<img src="{{ HTTP_STATIC_URL }}portfoliobuilder/social_facebook.png">
+		</a>
+
+<!-- Blog -->
+
+		<a href="your personal link here">
+		<img src="{{ HTTP_STATIC_URL }}portfoliobuilder/social_rssfeed.png">
+		</a>
+
+<!-- Flickr -->
+
+		<a href="your personal link here">
+		<img src="{{ HTTP_STATIC_URL }}portfoliobuilder/social_flickr.png">
+		</a>
+	
+	</div>
+      
+<!-- You did it! You pulled together your best work for all the world to see. This amazing portfolio is sure to get you your next big gig. And what snazzy web making skills did you end up with? Let's see -- working with blocks of information created using <div> tags, customizing CSS properties such as background color and text color for individual blocks, linking <a>, inserting images <img>, paragraphs <p>, headers <h1> <h2> <h3>, <strong> tags and experimenting with HEX codes for colors. Impressive! Now publish it! -->
+
+<!--
+=============
+COLOR PALETTE 
+=============
+Down here you'll find the color palette for this web page. Use the HEX codes alongside the color name to play around with the background colors and text colors for your project or personal blocks. Or use this template to create your own color palette. 
+
+Note: Use an image editing software to get the HEX codes for colors of your choice or an online tool such as http://www.colorpicker.com/
+or http://www.hexhelp.com/
+
+More about Color and HEX Codes:
+https://developer.mozilla.org/en-US/docs/CSS/Getting_Started/Color
+https://developer.mozilla.org/en-US/docs/CSS/color_value
+
+[BACKGROUND COLORS]
+** give projects or personal blocks a burst of color
+
+COLOR		HEX CODE
+------------------------
+PINK		#ED2279
+YELLOW		#F6EB16
+GREEN		#55BA63
+ORANGE		#E85A27
+BLUE		#55A4DA
+
+[TEXT COLORS]
+** match them up with the background colors for best results
+
+COLOR		HEX CODE
+------------------------
+DARK PINK	#830748
+DARK YELLOW	#A38F31
+DARK GREEN	#377F3E
+DARK ORANGE	#7E3B1A
+DARK BLUE	#0C5D7A
+-->
+  
+  </body>
+</html>
+
+<!-- 
+Credits: This was made by Mozilla.
+Social Media buttons are freebies from Growcase.
+-->

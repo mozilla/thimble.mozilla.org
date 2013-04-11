@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<!-- ==========================================================================
+With the Open Webville projects, you've learned how to you use and attribute CC licensed images, video and sound;  now it's time for you to create your own unique masterpiece, choose an attribution, and share it with the world of the Open Web!
+============================================================================ -->
+
+<!--
+Let's get started.
+1) READ THROUGH THE COMMENTS. This is a comment. Everything inside of this tag for HTML or '/*' for CSS, is not processed as code, but instead is just text comments about the code. The comments will give you instructions, hints and guides to complete the project, so skim down through the comments to get an understanding of what you are being asked to do.
+
+2) GET ORIENTED IN THE CODE. HTML is made up of tags that look like this <p> </p>. The tags tell you something about the information contained between them. Click on the tags in the code on this side of the editor to get a description of what each tag is for. 
+-->
+
+<html>
+
+<!--
+You might notice some words on this page that are colored blue and inside of angle brackets, like <body> and <h1>. These words are called tags. Tags help you to structure your page. 
+
+For example, let's say that you want to make a paragraph. You will put an opening tag at the exact point you want the paragraph to start and a closing tag where you want the paragraph to stop. The most important thing to remember is that tags (with a few exceptions, like <img>) come in pairs, so you almost always need to have an opening and closing tag.
+-->
+  
+<head>
+<meta charset="utf-8">
+<title>Open Webville Masterpiece</title>
+</head>
+ 
+<!--The <body> tag below contains the actual content of your webpage. Everything a visitor sees will be written inside this tag. 
+-->
+
+<body>
+  
+<!--
+Below this comment is a heading, indicated by the <h1> or header tag. Everything inside the <h1> tag becomes a big header on the preview to the right. <h1> opens the tag, and </h1> closes it. The content in between is the heading. Let's edit the title below to give your masterpiece a name.
+-->
+  <h1>Make Your Own Open Webville Masterpiece</h1>
+  <div class="masterpiece"> 
+    
+<!-- This is the section to add your photo, video or audio masterpiece. Now's the chance to use what you learned about embedding media in the other Open Webville projects. Try replacing the images below with your creation. 
+--> 
+    <img src="{{ HTTP_STATIC_URL }}openmasterpiece/lille.png">
+    <img src="{{ HTTP_STATIC_URL }}openmasterpiece/city.png">
+  </div>
+  
+<!-- It's time to show your creation to the world. Let's start by choosing the Creative Commons license you want to share it under. Then, depending on whether your creation is an image, a song or a video add the attribution license within the <div> tag below. 
+You can use the resources found here to choose the right license: http://creativecommons.org/choose
+-->
+  
+<!--
+In other projects we learned that the <p> tag below stands for "paragraph" and is one of the most commonly used elements in HTML. Let's try adding a description to your creation using the  <p> tag. Just remember to have both opening (<p>) and closing (</p>) paragraph tags surrounding each paragraph.
+-->
+  
+  <p>Add a description to your creation</p>
+<style>
+  
+/*
+Everything inside the <style> tag is CSS (Cascading Style Sheets) and is used to define the look and feel of the webpage, including fonts, colors, containers and positioning. 
+  
+Now that we've played with the text in html, let's try tinkering with the look and feel of your page using CSS. Try changing the values below to significantly alter how your page looks. Look for HTML tags above to change the style of that element. For example, if you want to change the background-color of the entire <body> of the document to blue, look at the body styling below. 
+*/
+  
+  @font-face {
+    font-family: 'Lobster';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Lobster'),  url(http://themes.googleusercontent.com/{{ HTTP_STATIC_URL }}openmasterpiece/fonts/lobster/v5/NIaFDq6p6eLpSvtV2DTNDQLUuEpTyoUstqEm5AMlJo4.woff) format('woff');
+  }
+
+  body {
+    margin-left: auto;
+    margin-right: auto;
+    width: 800px;
+    font-family: 'Lobster'; 
+    background-color: #D1EBE7;
+  }
+  
+/* the next bit of CSS styles tags with class="masterpiece". The '.' refers to class. */
+  .masterpiece {
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  p {
+    width: 100%;
+  }
+  
+  h1 {
+    font-size: 36px;
+    text-align: center;
+  }
+</style>
+
+<!-- ==========================================================================
+Congrats! Your Open Web Masterpiece is now complete! Hit the publish button and share it with the world. And don't forget you learned some pretty awesome stuff in all of this webmaking: you can now work with text in HTML, including the <p> tag, you can use images and videos, and you have started to understand and edit CSS. Way to go Webmaker!
+============================================================================ -->
+  
+</body>
+
+</html>
+

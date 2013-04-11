@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<!-- 
+In this project, you can create you own unique, weird and totally bizarre Awesome Animal! We've drawn some of the world's most Evolutionarily Distinct and Globally Endangered animals (EDGE species) for you remix and hack together to create your own awesome animals! You'll do so by moving around the HTML for pieces of the real animals' pictures below into your own frame. 
+-->
+
+<!--
+Let's get started.
+
+1) READ THROUGH THE COMMENTS. This is a comment. Everything inside of this tag for HTML or '/*' for CSS, is not processed as code, but instead is just text comments about the code. For this project, the comments will give you instructions, hints and guides to completing the project, so skim down through the comments to get an understanding of what you are being asked to do.
+
+2) GET ORIENTED IN THE CODE. HTML is made up of tags that look like this <p> </p>. The tags tell you something about the information contained between them. Click on the tags in the code on this side of the editor to get a description of what each tag is for.
+-->
+
+<html lang="en-gb" dir="ltr">
+    <head>
+        <title>Awesome Animal Builder - Small Animals</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}zoo-small/style.css">
+    </head>
+
+<!-- Before you build your own creature, read down through the other animals at the bottom of the page on the right. Each of the pictures on the right is made up of three parts. See if you can create a new species by taking parts from each of them and mixing them up! -->    
+	
+	<body>
+
+        <h1>Small Awesome Animals</h1>
+
+<!-- 
+You can change the subheader to give your animal a name. Note that this one uses the <h2> tag instead of the <h1> tag used above. Play around with the tag to see what <h1> or <h3> looks like. Remember to close your tags appropriately!
+-->
+
+        <h2>Your own awesome animal</h2>
+
+<!-- You can change the environment and habitat that your awesome animal lives (and the background of your picture) by changing the class below to "ocean", "rainforest" or "desert". -->
+
+        <figure class="changeme">
+
+<!-- 
+Change these images by pulling in parts of the images below. You can do so by cutting and pasting the src attribute of the <img> tag from down below into the <img> tags here. The src attribute defines the URL for the image and is a required part of the <img> tag. Or you can just cut and paste the entire <img> tag. Note that the <img> tag is one of the few weird tags that doesn't need a close tag. 
+-->
+            <img src="{{ HTTP_STATIC_URL }}zoo-small/unknown.png">
+            <img src="{{ HTTP_STATIC_URL }}zoo-small/unknown.png">
+            <img src="{{ HTTP_STATIC_URL }}zoo-small/unknown.png">
+
+<!-- You can change the label for your animal here -->
+            <figcaption><span>Your own awesome animal</span></figcaption>
+        </figure>
+
+        <h3>About your Awesome Animal</h3>
+
+<!-- Change the description of your animal here. Think about the animal's different attributes and qualities based on the pieces you selected. You can replace the text between the <p> tags with your own. The <p> tag is for paragraphs. Also note that the first sentence is enclosed in <strong> tags - note how this changes the text on the right. Experiment with moving the strong tags around. -->
+	
+        <p><strong>Write the description of your own animal here.</strong> Use the descriptions of the other animals below to help you, or make up something completely different!</p>
+
+        <h4>My animal's cool features</h4>
+
+<!-- And write about its cool features too! The <ol> tag is for ordered lists and the <li> tag represents each list item, or bullet. Change the text between the <li> tags to add your features.-->
+	
+        <p>What are the interesting features and facts about your new animal?</p>
+		<ol>
+			<li>Feature one</li>
+			<li>Feature two</li>
+			<li>Feature three</li>
+		</ol>
+
+<!-- 
+Congrats! You've built your animal and learned some stuff in the process! In addition to knowing more about some endangered species, oh and creating your own - you are now capable of wielding HTML to add, format and organize text (<p>, <h1>, <h2>, <ol>, <li>, <strong>, etc.) and work with images (<img>). You are a Webmaker AND an animal maker! 
+
+You might want to delete all the code below before you publish your new animal!
+-->
+
+
+
+<!-- 
+===========================================
+BELOW IS INFORMATION ABOUT REAL ENDANGERED ANIMALS. USE THIS INFO TO BUILD YOUR OWN CREATURE!
+===========================================
+-->
+
+<!-- This is all the information about the Solenodon -->
+
+        <h2>Hispaniolan Solenodon</h2>
+
+<!-- Note that the class below defines the environment of the animal and the picture behind it -->
+        <figure class="rainforest">
+
+<!-- Each animal picture is made up of three parts: tail, body, head. You can cut and paste the parts from each below into your new animal above. Experiment with different combinations! -->
+
+            <img src="{{ HTTP_STATIC_URL }}zoo-small/solenodon-tail.png">
+            <img src="{{ HTTP_STATIC_URL }}zoo-small/solenodon-body.png">
+            <img src="{{ HTTP_STATIC_URL }}zoo-small/solenodon-head.png">
+            <figcaption><span>Hispaniolan Solenodon</span></figcaption>
+        </figure>
+
+        <h3>About this Awesome Animal</h3>
+
+        <p>Resembling an overgrown shrew, this incredible Caribbean animal has continued to evolved for over 76 million years! It is one of only a few mammals capable of producing toxic saliva, which it injects into its prey through special grooves in its teeth. The solenodon didn't evolved any ‘anti-predator' defences as it was the top predator of its island home (before people arrived). A slow, clumsy mover, it is poorly equipped to defend itself against introduced predators such as dogs, cats and mongooses but is fantastic at catching small spiders and insects thanks to its long nose (which is perfect for finding them in leaf litter and under rocks).</p>
+
+        <h4>Red List Status: Endangered</h4>
+
+        <h4>Cool features:</h4>
+
+        <ol>
+            <li>Can inject venom through its teeth into its prey</li>
+            <li>Has a long nose perfect for finding insects in cracks and leaf litter</li>
+            <li>Has sharp claws for digging our insects</li>
+        </ol>
+
+
+<!-- This is all the information about the Numbat -->
+
+        <h2>Numbat</h2>
+
+        <figure class="rainforest">
+            <img src="{{ HTTP_STATIC_URL }}zoo-small/numbat-tail.png">
+            <img src="{{ HTTP_STATIC_URL }}zoo-small/numbat-body.png">
+            <img src="{{ HTTP_STATIC_URL }}zoo-small/numbat-head.png">
+            <figcaption><span>Numbat</span></figcaption>
+        </figure>
+
+        <h3>About this Awesome Animal</h3>
+
+        <p>A relative of the Tasmanian devil, this small marsupial feeds only on social insects, sucking up around 20,000 termites a day with its long, sticky tongue! It is the only Australian mammal that is solely active during the day, and uses “torpor” (a kind of hibernation) to save energy in the winter. Once widespread across Australia, the species is now extinct in over 99% of its former range, as a result of the introduction of foxes by European settlers and changes in fire regimes. Individuals can be identified by their unique pattern of bands. There are thought to be fewer than 1,000 living in the wild today.</p>
+
+        <h4>Red List Status: Endangered</h4>
+
+        <h4>Cool features:</h4>
+
+        <ol>
+            <li>Can suck up over 20,000 termites a day!</li>
+            <li>Has a long sticky tongue that can extend to up to 10cm long</li>
+            <li>Can hibernate to save energy in the winter</li>
+        </ol>
+
+
+<!-- And this is all the information about the Rabbit -->
+
+        <h2>Riverine Rabbit</h2>
+
+        <figure class="desert">
+            <img src="{{ HTTP_STATIC_URL }}zoo-small/rabbit-tail.png">
+            <img src="{{ HTTP_STATIC_URL }}zoo-small/rabbit-body.png">
+            <img src="{{ HTTP_STATIC_URL }}zoo-small/rabbit-head.png">
+            <figcaption><span>Riverine Rabbit</span></figcaption>
+        </figure>
+
+        <h3>About this Awesome Animal</h3>
+
+        <p>This rabbit lives in one of the few areas of South Africa's Karoo Desert suitable for conversion to agriculture, and as a result has lost virtually all its habitat to farming. Fewer than 250 individuals survive, and all occur on privately owned land where they come under further pressure from hunting, trapping, and predation by feral dogs and cats. Unusually for rabbits, this species breeds very slowly, with females giving birth to only one or two young each year, making it difficult for the population to recover.</p>
+
+        <h4>Red List Status: Critically Endangered</h4>
+
+        <h4>Cool features:</h4>
+
+        <ol>
+            <li>Has huge ears to listen out for approaching predators</li>
+            <li>Can live in very dry habitats such as the Karoo Desert</li>
+            <li>Has powerful back legs for hopping across the landscape</li>
+        </ol>
+    </body>
+</html>

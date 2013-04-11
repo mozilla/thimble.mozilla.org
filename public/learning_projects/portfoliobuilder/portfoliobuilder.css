@@ -1,0 +1,77 @@
+@font-face {
+   font-family: 'Yanone Kaffeesatz Light';
+   src: url('fonts/YanoneKaffeesatz-Light.otf');	
+}
+
+@font-face {
+   font-family: 'Yanone Kaffeesatz Bold';
+   src: url('fonts/YanoneKaffeesatz-Bold.otf');	
+}
+
+body {
+   font-family: 'Yanone Kaffeesatz Light', sans-serif;
+   font-size: 1.09em; 
+   background-color: #707070;
+}
+
+strong {
+   font-family: 'Yanone Kaffeesatz Bold';
+}
+		
+.content_wrapper {
+   width: 930px;  
+   margin: auto;
+}
+  
+.leftcolumn {
+   float: left;
+   width: 32%;
+}
+
+.middlecolumn {
+   margin-left: 34%;
+   margin-right: 34%;
+}
+
+.rightcolumn {
+   float: right;
+   width: 32%;
+}
+
+.footer {
+   padding-top: 25px;
+   padding-bottom: 25px;
+   text-align: center;
+   clear: both;
+   margin-top: 50px;
+   margin-bottom: 50px;
+}
+
+.footer img {
+   padding: 5px;
+}
+
+header {
+   display: block;
+   margin: 0 auto;
+   text-align: center;
+   color: white;
+   margin-top: 50px;
+   margin-bottom: 50px;
+}		
+
+.personal {
+   background-color: #ED2279;	
+   border-radius: 10px;
+   padding: 15px;
+   margin-bottom: 17px;
+   color: white;
+}
+
+.project {
+   background-color: white;
+   margin: 0 auto;
+   margin-bottom: 17px;	
+   color: #A7A9AB;
+   padding: 14px;
+}

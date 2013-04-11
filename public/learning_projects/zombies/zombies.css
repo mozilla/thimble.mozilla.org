@@ -1,0 +1,127 @@
+html {
+	width: 800px;
+	height: 600px;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	border: 10px solid #fff;
+}
+
+body {
+	background: #000; /* url('../../static/images/bg-body.jpg') no-repeat left top; */
+	padding: 0;
+	margin: 0;
+	position: relative;
+	font-size: 20px;
+}
+
+section#barricades img {
+	max-width: 150px;
+	max-height: 150px;
+	position: absolute;
+	z-index: 9999999;
+}
+
+section#barricades {
+	margin: 0;
+}
+
+#house {
+	width: 800px;
+	height: 600px;
+	background: url('zombie-house-outside.png') top left no-repeat;
+}
+#house img:last-child {
+	margin: 0;
+	padding: 0;
+	z-index: 300 !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+/*#house:after {
+	content: url(zombie.png);
+	width: 53px;
+	height: 81px;
+	display: block;
+	position: absolute;
+	top: 300px;
+	left: 390px;
+	-moz-animation-duration: 5s;
+	-moz-animation-name: walk;
+}
+#house:before {
+	content: url(zombie.png);
+	width: 27px;
+	height: 40px;
+	display: block;
+	position: absolute;
+	top: 270px;
+	left: 500px;
+	-moz-animation-duration: 5s;
+	-moz-animation-name: walk;
+}*/
+.zombie {
+	position: absolute;
+	-moz-animation-duration: 10s;
+	-moz-animation-name: walk;
+	display: block;
+	max-height: 81px;
+	max-width: 53px;
+	z-index: 100;
+}
+#zombie1 {
+	top: 400px;
+	left: 420px;
+}
+#zombie2 {
+	top: 380px;
+	left: 600px;
+}
+#zombie3 {
+	top: 380px;
+	left: 150px;
+}
+#zombie4 {
+	top: 148px;
+	left: 150px;
+}
+#zombie5 {
+	top: 130px;
+	left: 370px;
+}
+#zombie6 {
+	top: 148px;
+	left: 600px;
+}
+
+audio {
+	visibility: hidden;
+}
+
+/* Transitions */
+section#barricades img {
+	-webkit-transition: .7s;
+	-moz-transition: .7s;
+	-ms-transition: .7s;
+	-o-transition: .7s;
+	transition: .7s;
+}
+
+/* animations */
+@-moz-keyframes walk {
+	from {
+		-moz-transform: scale(.2, .2);
+	}
+	to {
+		-moz-transform: scale(1, 1);
+	}
+}
+@-webkit-keyframes walk {
+	from {
+		-webkit-transform: scale(.2, .2);
+	}
+	to {
+		-webkit-transform: scale(1, 1);
+	}
+}

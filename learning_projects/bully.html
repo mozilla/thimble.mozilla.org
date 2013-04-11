@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<!--
+===============================================
+Use your HTML and CSS swagger to mix and match elements to make a webpage about something you're willing to take a stand for. [P.S. remember to fill in all the blanks]
+===============================================
+ -->
+ 
+<!--
+Let's get started.
+1) READ THROUGH THE COMMENTS. This is a comment. Everything inside of this tag for HTML or '/*' for CSS, is not processed as code, but as text comments about the code. For this project the comments will give you instructions, hints and guides to completing the project, so skim down through the comments to get an understanding of what you are being asked to do.
+
+2) GET ORIENTED IN THE CODE. HTML is made up of tags that look like this <p> </p>. The tags tell you something about the information contained between them. Click on the tags in the code on this side of the editor to get a description of what each tag is for. You can also click on the webpage on the right and see the relevant pieces of code highlighted on the left. So take a minute and get to know your way around the code.
+-->
+
+<html>
+
+<head>
+<!--
+Start by changing the <title> element to tell people what "you stand up for" for your webpage. Typically, the title will show up at the top of your browser window and will be searchable in search engines like Google. In Thimble, the title shows up in the tab above the pane on the right side of the editor.
+-->
+
+    <title>We Stand Up For _______</title>
+</head>
+
+<body>
+<!--
+Use the <h1> tag as shown below to define your header. Fill in the blanks below to tell people why you stand up for what you believe.
+-->
+
+    <h1>I stand up for ________, because ________.</h1>
+
+<!--
+The first image represents important facts about your cause. Research some relevant statistics and see if you can find an image that illustrates it. Images are defined in HTML with the <img> tag. <img> is one of the few weird tags that you don't have to close. Every <img> tag has a src attribute where you include the URL to the image you want to use. To change the image below, replace the content within the quotes with a URL of another image. To get the URL of an image, right click (or CTRL-click on a Mac) and select "Copy Image Address". If you find an image on Flickr, you can select Share and copy the image URL from the dropdown.
+-->
+
+    <img src="{{ HTTP_STATIC_URL }}bully/anti-bullying-slogans-743.jpg">
+        
+<!-- 
+The second image is to show how you and your friends are taking a stand for what you believe in.
+-->
+    <img src="{{ HTTP_STATIC_URL }}bully/No%20to%20bullying.jpg">
+
+<!-- 
+Change the text to tell others to band together for your cause
+-->
+
+    <h1>Let's stand up for _________ together.</h1>
+
+    <img src="{{ HTTP_STATIC_URL }}bully/slider.jpg">
+
+<!--
+Now find a website to send people to so they can support your cause (http://www.standforthesilent.org is a website that is standing up for the people being bullied, find a website that supports your cause). The more people there are behind it, the better the chances that your cause will succeed. Be the leader of your cause, and rally support behind you.
+-->
+
+    <h2>Visit ________ for more information and to support the cause.</h2>
+
+<style>
+/*
+Everything in the <style> tag is called CSS and is used to handle the look and feel of your page. Try tinkering with the different kinds of style attributes. Maybe you want to change the formatting of the page by upping the size of the margins, or perhaps you are more interested in changing the font or reducing the font size. Have fun and remember that things can easily be undone or redone by pressing the undo and redo buttons on the top of the editor. 
+*/
+
+    h1 {
+        text-align: center;
+        margin: 0 auto;
+        text-shadow: 5px 5px 0px #000000;
+        filter: dropshadow(color=#000000, offx=5, offy=5);
+        color: white;
+        font-family: fantasy;
+        font-size: 68px;
+        padding-top: 20px;
+    }
+    
+    h2 {
+        text-align: center;
+        margin: 0 auto;
+        text-shadow: 5px 5px 0px #000000;
+        filter: dropshadow(color=#000000, offx=5, offy=5);
+        color: white;
+        font-family: fantasy;
+        font-size: 40px;
+    }
+
+    img {
+        border: 10px solid #000;
+        margin: 20px auto;
+        display: block;
+        width: 600px;
+    }
+
+/*
+To personalize your page even more you could change the background color by changing the background color code listed above. A list of colors and their codes are given here: http://www.ascii-code.com/html-color-names.php. Or you can just type the name of your favorite color. If you want to read more about color codes, you can read the "Web colors" entry on Wikipedia: http://en.wikipedia.org/wiki/Web_colors
+*/
+
+    body {
+        background-color: #3999ff;
+    }
+
+</style>
+
+<!-- 
+Well done, webmaker! You've taken a stance and learned some webmaking skills in the process! You can now wrangle text and images in HTML and style your page with some basic CSS.
+-->
+
+<!--
+Now publish your work using the Publish button in the upper right corner. You'll get a URL to your now hosted project. Share the URL and your stance with us on facebook.com/hivelearningnyc or on twitter using the #hivebuzz hashtag.
+-->
+
+</body>
+
+</html>
+
+ 

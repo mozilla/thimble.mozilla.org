@@ -1,0 +1,113 @@
+@font-face {
+    /* Annie Use Your Telescope */
+    font-family: 'Annie';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Annie Use Your Telescope'),
+         local('AnnieUseYourTelescope'),
+         url('//themes.googleusercontent.com/static/fonts/annieuseyourtelescope/v3/2cuiO5VmaR09C8SLGEQjGgtSTT_xyPSRqbb82lxMsRF2IY20qb3OO3nusUf_NB58.woff') format('woff');
+}
+
+body {
+    font-size: 16px;
+    font-family: sans-serif;
+    text-align: center;
+}
+body * {
+    text-align: left;
+}
+figure {
+    display: inline-block;
+    height: 225px;
+    min-width: 450px;
+    max-width: 600px;
+    overflow: hidden;
+    margin: 0;
+    padding: 22px 29px 22px 37px;
+    background: 50% 50% no-repeat;
+    position: relative;
+}
+figure::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    border-width: 25px 31px 24px 37px;
+    -moz-border-image: url(frame.png) 25 31 24 37 stretch;
+    -webkit-border-image: url(frame.png) 25 31 24 37 stretch;
+    -o-border-image: url(frame.png) 25 31 24 37 stretch;
+    border-image: url(frame.png) 25 31 24 37 stretch;
+}
+figure.ocean {
+    background-image: url(ocean.jpg);
+}
+figure.desert {
+    background-image: url(desert.jpg);
+}
+figure.rainforest {
+    background-image: url(rainforest.jpg);
+}
+figure img {
+    width: 150px;
+    height: 225px;
+    display: block;
+    float: left;
+}
+figcaption {
+    position: absolute;
+    bottom: 5px;
+    left: 60px;
+    right: 60px;
+    text-align: center;
+    font-family: serif;
+    font-size: 11px;
+    white-space: nowrap;
+}
+figcaption span {
+    background: #EEECCC;
+    border: solid 1px #333;
+    padding: 2px 20px;
+    border-radius: 3px;
+    position: relative;
+}
+figcaption span::before,
+figcaption span::after {
+    content: "";
+    background: #000;
+    width: 2px;
+    height: 2px;
+    position: absolute;
+    border-radius: 2px;
+    top: 50%;
+    margin-top: -1px;
+}
+figcaption span::before {
+    left: 10px;
+}
+figcaption span::after {
+    right: 10px;
+}
+h1, h2, h3, h4, p, ol, li {
+    clear: both;
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+h2 {
+    margin-top: 3em;
+}
+h2, h3 {
+    font-size: 1.5em;
+}
+h3, h4 {
+    font-family: Annie, sans-serif;
+}
+h4 {
+    font-size: 1.25em;
+}

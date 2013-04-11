@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<!-- 
+Hello World, Welcome to the Web. Learn the basics of creating your own page on the Web and introduce yourself to the world. Let us know your first name and tell us about something you love. We have provided you with some basic instructions to help you edit your name, find an image of what you love and insert it on your page. 
+-->
+
+<!--
+Let's get started.
+
+1) READ THROUGH THE COMMENTS. This is a comment. Everything inside of this tag for HTML or '/*' for CSS, is not processed as code, but instead is just text comments about the code. For this project, the comments will give you instructions, hints and guides to completing the project, so skim down through the comments to get an understanding of what you are being asked to do.
+
+2) GET ORIENTED IN THE CODE. HTML is made up of tags that look like this <p> </p>. The tags tell you something about the information contained between them. Click on the tags in the code on this side of the editor to get a description of what each tag is for. 
+-->
+
+<html>
+  <head>
+	<meta charset="utf-8">
+
+<!-- 
+A good place to start is with the title. Personalize the title of your page by changing the text within the <title> </title> tags. For example, 'Charlie Brown's first web page' might be one way to go. 
+
+The title won't appear on the main web page within this editor but it will appear at the top of the browser once you publish and view your project and if you roll over it when it's a tab or a minimized window. Mighty helpful when you have a gazillion windows open at the same time. 
+-->
+
+	<title>My first web page</title>
+	<link href="{{ HTTP_STATIC_URL }}O2_thinkbig_hello/hello.css" rel="stylesheet">
+
+  </head> 
+	
+  <body>
+
+<!-- 
+Hello World is typically the best way to greet the World Wide Web (WWW). No matter what (coding) language you speak, the first greeting is always the same. 
+
+The paragraph <p> tags used here help to create spacing around text on a web page. 
+-->
+      
+		<p class="hello">Hello World!</p>
+
+<!-- 
+Introduce yourself by adding your first name in place of the dotted line. Simply delete the dotted line and write your name between the <br> and </p> tags. The linebreak <br> tag forces the text that comes after it to the next line. 
+
+Note: <br> does not have a closing tag and can be placed just about anywhere. 
+-->
+      
+		<p class="name">I am<br>________</p>
+
+<!-- 
+In the next section, we'll add a little text about something we love. I love sailing, what about you? Think about one thing you love and write it below by replacing the word "sailing". 
+
+The <strong> tags around it will make it PoP. Remove the <strong> tags to see the difference and then add them back if you wish.
+-->
+      
+		<p class="love">and I love<br><strong>sailing</strong></p>
+
+<!-- 
+To change the image, you need to replace the URL in the src value of the <img> tag i.e. {{ HTTP_STATIC_URL }}O2_thinkbig_hello/O2_sailing.jpeg with a URL pointing to an image of your choice. 
+
+So go on, search the Internet for an image that screams YOU. Look on http://search.creativecommons.org/ for openly licensed content. When you find it, right-click and copy image URL. Then paste the URL within the quotes of the <img> tag. 
+
+If the image is on Flickr, click "Share" and select the option to "Grab the link". Copy the link and paste it in the src value of the <img> tag. Similar options exist for other photo sharing sites as well. You won't know till you try it. 
+-->
+
+		<img src="{{ HTTP_STATIC_URL }}O2_thinkbig_hello/O2_sailing.jpeg">
+
+<!-- 
+That's it! Kudos on creating your very own web page! With just a few basic HTML tags <img>,<br>,<strong>,<p> under your belt you can begin to craft the Web. Go ahead and hit publish to get a link to share around the web!
+-->
+
+  </body>
+</html>
+
+<!--
+Credits:
+This was made by Think Big. Learn more about us at:
+Think Big UK: http://www.o2thinkbig.co.uk/
+Think Big Ireland: http://www.o2thinkbig.ie/ 
+-->

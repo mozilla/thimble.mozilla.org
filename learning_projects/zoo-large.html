@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<!-- 
+In this project, you can create you own unique, weird and totally bizarre Awesome Animal! We've drawn some of the world's most Evolutionarily Distinct and Globally Endangered animals (EDGE species) for you remix and hack together to create your own awesome animals! You'll do so by moving around the HTML for pieces of the real animals' pictures below into your own frame. 
+-->
+
+<!--
+Let's get started.
+
+1) READ THROUGH THE COMMENTS. This is a comment. Everything inside of this tag for HTML or '/*' for CSS, is not processed as code, but instead is just text comments about the code. For this project, the comments will give you instructions, hints and guides to completing the project, so skim down through the comments to get an understanding of what you are being asked to do.
+
+2) GET ORIENTED IN THE CODE. HTML is made up of tags that look like this <p> </p>. The tags tell you something about the information contained between them. Click on the tags in the code on this side of the editor to get a description of what each tag is for.
+-->
+
+<html lang="en-gb" dir="ltr">
+    <head>
+        <title>Awesome Animal Builder - Large Animals</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}zoo-large/style.css">
+    </head>
+
+<!-- Before you build your own creature, read down through the other animals at the bottom of the page on the right. Each of the pictures on the right is made up of three parts. See if you can create a new species by taking parts from each of them and mixing them up! -->  
+
+    <body>
+
+        <h1>Large Awesome Animals</h1>
+
+<!-- 
+You can change the subheader to give your animal a name. Note that this one uses the <h2> tag instead of the <h1> tag used above. Play around with the tag to see what <h1> or <h3> looks like. Remember to close your tags appropriately!
+-->
+		
+        <h2>Your own awesome animal</h2>
+
+<!-- You can change the environment and habitat that your awesome animal lives (and the background of your picture) by changing the class below to "ocean", "rainforest" or "desert". -->
+
+        <figure class="changeme">
+
+<!-- 
+Change these images by pulling in parts of the images below. You can do so by cutting and pasting the src attribute of the <img> tag from down below into the <img> tags here. The src attribute defines the URL for the image and is a required part of the <img> tag. Or you can just cut and paste the entire <img> tag. Note that the <img> tag is one of the few weird tags that doesn't need a close tag. 
+-->
+            <img src="{{ HTTP_STATIC_URL }}zoo-large/unknown.png">
+            <img src="{{ HTTP_STATIC_URL }}zoo-large/unknown.png">
+            <img src="{{ HTTP_STATIC_URL }}zoo-large/unknown.png">
+
+<!-- You can change the label for your animal here -->
+
+            <figcaption><span>Your own awesome animal</span></figcaption>
+        </figure>
+
+        <h3>About your Awesome Animal</h3>
+
+<!-- Change the description of your animal here. Think about the animal's different attributes and qualities based on the pieces you selected. You can replace the text between the <p> tags with your own. The <p> tag is for paragraphs. Also note that the first sentence is enclosed in <strong> tags - note how this changes the text on the right. Experiment with moving the strong tags around. -->
+	
+        <p><strong>Write the description of your own animal here.</strong> Use the descriptions of the other animals below to help you, or make up something completely different!</p>
+
+        <h4>My animal's cool features</h4>
+
+<!-- And write about its cool features too! The <ol> tag is for ordered lists and the <li> tag represents each list item, or bullet. Change the text between the <li> tags to add your features.-->
+	
+        <p>What are the interesting features and facts about your new animal?</p>
+		<ol>
+			<li>Feature one</li>
+			<li>Feature two</li>
+			<li>Feature three</li>
+		</ol>
+
+<!-- 
+Congrats! You've built your animal and learned some stuff in the process! In addition to knowing more about some endangered species, oh and creating your own - you are now capable of wielding HTML to add, format and organize text (<p>, <h1>, <h2>, <ol>, <li>, <strong>, etc.) and work with images (<img>). You are a Webmaker AND an animal maker! 
+
+You might want to delete all the code below before you publish your new animal!
+-->
+
+<!-- 
+===========================================
+BELOW IS INFORMATION ABOUT REAL ENDANGERED ANIMALS. USE THIS INFO TO BUILD YOUR OWN CREATURE!
+===========================================
+-->
+
+<!-- This is all the information about the Whale -->
+
+        <h2>Blue Whale</h2>
+
+        <figure class="ocean">
+            <img src="{{ HTTP_STATIC_URL }}zoo-large/whale-tail.png">
+            <img src="{{ HTTP_STATIC_URL }}zoo-large/whale-body.png">
+            <img src="{{ HTTP_STATIC_URL }}zoo-large/whale-head.png">
+            <figcaption><span>Blue Whale</span></figcaption>
+        </figure>
+
+        <h3>About this Awesome Animal</h3>
+
+        <p>The size of a jumbo jet, the blue whale is the largest mammal ever known to have existed. The species is thought to feed almost exclusively on krill (small, shrimp-like crustaceans). In the summer feeding areas, individuals may consume as much as 40 million krill, weighing 4 tonnes, each day. Blue whales have the deepest voice of any animal, and their vocalizations carry for thousands of miles underwater, allowing them to communicate across vast oceans at frequencies below the range of human hearing. For centuries the blue whale was safe from exploitation because of its sheer size and speed. However, the species was driven to the brink of extinction following the development of modern whaling techniques.</p>
+
+        <h4>Red List Status: Endangered</h4>
+
+        <h4>Cool features:</h4>
+
+        <ol>
+            <li>Is the largest animal to have ever lived in the planet</li>
+            <li>Has the deepest voice of any animal and can talk to other whales thousands of miles away</li>
+            <li>A blue whale's blood vessels are wide enough for a human to swim through</li>
+        </ol>
+
+
+<!-- This is all the information about the Rhino -->
+
+        <h2>Black Rhinoceros</h2>
+
+        <figure class="desert">
+            <img src="{{ HTTP_STATIC_URL }}zoo-large/rhino-tail.png">
+            <img src="{{ HTTP_STATIC_URL }}zoo-large/rhino-body.png">
+            <img src="{{ HTTP_STATIC_URL }}zoo-large/rhino-head.png">
+            <figcaption><span>Black Rhinoceros</span></figcaption>
+        </figure>
+
+        <h3>About this Awesome Animal</h3>
+
+        <p>Black rhinos and white rhinos are not named for their colours, but for the shape of their lips. The black rhino has a prehensile (or grasping) upper lip, which it uses to draw plant material into its mouth. Yellow-brown or grey in colour, this two-horned rhinoceros has a reputation for being unpredictable and dangerous. As a result it has suffered much more persecution than other rhinos. The rhino has two horns made from keratin (the same protein found in human hair and nails). The longest of these horns can grow to over 50 cm in length. Illegal poaching of rhinos for their horns, which are used in traditional Chinese medicine, is one of the main threats to the species.</p>
+
+        <h4>Red List Status: Critically Endangered</h4>
+
+        <h4>Cool features:</h4>
+
+        <ol>
+            <li>Has a horn to defend itself (made from the same protein found in human hair)</li>
+            <li>Has thick overlapping skin for protection</li>
+            <li>Can live up to 50 years old!</li>
+        </ol>
+
+
+<!-- And this is all the information about the Asian Elephant -->
+
+        <h2>Asian Elephant</h2>
+
+        <figure class="rainforest">
+            <img src="{{ HTTP_STATIC_URL }}zoo-large/elephant-tail.png">
+            <img src="{{ HTTP_STATIC_URL }}zoo-large/elephant-body.png">
+            <img src="{{ HTTP_STATIC_URL }}zoo-large/elephant-head.png">
+            <figcaption><span>Asian Elephant</span></figcaption>
+        </figure>
+
+        <h3>About this Awesome Animal</h3>
+
+        <p>The largest land mammal in Asia, this intelligent, highly social animal lives in small groups led by the dominant female, or 'matriarch'. Elephants are large, stocky animals with a strong, flexible trunk, which is an extension of the nose and upper lip! The elephant play a crucial role in its forest ecosystem. Commonly referred to as a ‘keystone' species, it helps to open up forest clearings and distributes the seeds of trees and shrubs. Asian elephants are very social animals. Asian elephants live in family groups consisting of related females and their offspring that are led by the oldest female, the ‘matriarch'. Threatened by poaching and the destruction of the forests in which they live, these magnificent animals are increasingly coming into conflict with the people sharing their habitat.</p>
+
+        <h4>Red List Status: Endangered</h4>
+
+        <h4>Cool features:</h4>
+
+        <ol>
+            <li>Has a flexible truck to both drink water through and collect food</li>
+            <li>The tusks, which are used for defence, are actually modified teeth!</li>
+            <li>Can disperse the seeds of plants by eating them and then passing them out in their dung</li>
+        </ol>
+    </body>
+</html>

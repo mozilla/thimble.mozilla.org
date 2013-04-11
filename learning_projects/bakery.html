@@ -1,0 +1,191 @@
+<!doctype html>
+
+<!-- ==========================================================================
+The Bread Cat Bakery is throwing a party. Unfortunately the guests are all undercover Serious Cats. Bummer! Your mission, if you choose to accept it, is to fix the links and clickable images so that they no longer point to the serious cats. Once you are done bring a few more guests and add some music to get this party started!
+============================================================================ -->
+
+<!--
+Let's get started.
+
+1) READ THROUGH THE COMMENTS. This is a comment. Everything inside of this tag for HTML or '/*' for CSS, is not processed as code, but instead is just text comments about the code. For this project, the comments will give you instructions, hints and guides to completing the project, so skim down through the comments to get an understanding of what you are being asked to do.
+
+2) GET ORIENTED IN THE CODE. HTML is made up of tags that look like this <p> </p>. The tags tell you something about the information contained between them. Click on the tags in the code on this side of the editor to get a description of what each tag is for.
+
+-->
+
+<html>
+  <head>
+    <meta charset="utf8">
+    <title>Bakery Bash</title>
+    <link href="//fonts.googleapis.com/css?family=Sue+Ellen+Francisco" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet" type="text/css">
+  </head>
+
+<!-- The stuff between the open <body> tag and close </body> tag is what you see on the page.-->
+
+  <body>
+    <div id="container">
+      <header>Bakery Bash</header>
+      <div class="bread-cat">
+        <img src="{{ HTTP_STATIC_URL }}bakery/kittyloaf.gif" width="95px">
+<!--
+For starters can you change the Loaf Cat's greeting message so that your mission remains a secret! Maybe change it to describe the awesome party you and Loaf Cat are throwing. The <p> tag is for paragraphs - you can change the text in between the open <p> and close </p> tags to add your own message.
+-->
+        <p>
+          Hey it's me, Loaf Cat. The Serious Cat is trying to crash my party as a secret guest.
+          Can you fix the Secret Guest links and invite cool guests to my party?
+        </p>
+      </div>
+<!--
+Each <div class="kitty"> tag below represents one of your guests. You can change the name from "Guest #1", etc. to your Guests real names by changing the text in the <h1> tag. <h1> is a tag for headings, the "h" stands for header and the "1" for most important. You can try changing the tag to <h2> or <h3> to see the difference.
+
+Each of of your guests can bring another surprise guest, which they link to below. Notice on the right, that you can click on "Secret Guest" under each guest image to see their guest. This works because of a special tag: <a> which is used for hyperlinks. It requires the href attribute to define the URL.
+-->
+
+      <div class="kitty">
+        <h1>Guest #1</h1>
+        <img src="{{ HTTP_STATIC_URL }}bakery/dancing-cat.gif" width="188px">
+        <p>
+          <a href="{{ HTTP_STATIC_URL }}bakery/serious_cat_is_serious.jpg">Secret Guest</a>
+        </p>
+      </div>
+
+<!-- Uh oh! The secret guest is a serious cat! What a party pooper! Can you replace him with more Dancing Cats? You can find. Try replacing the Serious Cat URL in the <a> tag above with the Dancing Cat. -->
+
+<!--
+Now that you know how <a> tags work, and how to change the secret guests, let's see if you want to change up some of the main guests. You can do this by swapping out the image, which is defined in the <img> tag. By filling in the src attribute with the URL of an image, you are telling the browser which image to show. The attribute width="188px" will keep things aligned well in this project but you can play around with other widths to see what it looks like. If you need help finding images, you can use http://search.creativecommons.org. Once you find an image, right click or CTRL click and choose Copy Image Address. Or within Flickr, choose Share, and then copy the URL. You can then swap out the <img> src URL below with your new image address.
+-->
+      <div class="kitty">
+        <h1>Guest #2</h1>
+        <img src="{{ HTTP_STATIC_URL }}bakery/dancing-cat.gif" width="188px">
+        <p>
+          <a href="{{ HTTP_STATIC_URL }}bakery/serious_cat_is_serious.jpg">Secret Guest</a>
+        </p>
+      </div>
+<!--
+Whoops, we forgot to remove the serious cat from the mix. Can you fix the above link so that when you click on the image links back to the dancing cat file?
+-->
+      <div class="kitty">
+        <h1>Guest #3</h1>
+        <img src="{{ HTTP_STATIC_URL }}bakery/dancing-cat.gif" width="188px">
+        <p>
+          <a href="{{ HTTP_STATIC_URL }}bakery/serious_cat_is_serious.jpg">Secret Guest</a>
+        </p>
+      </div>
+<!--
+Now you can do the same for your other guests. You can cut and paste from above or find new images for each guest. It's gonna be a great party!
+-->
+      <div class="kitty">
+        <h1>Guest #4</h1>
+        <img src="{{ HTTP_STATIC_URL }}bakery/dancing-cat.gif" width="188px">
+        <p>
+          <a href="{{ HTTP_STATIC_URL }}bakery/serious_cat_is_serious.jpg">Secret Guest</a>
+        </p>
+      </div>
+  
+      <div class="kitty">
+        <h1>Guest #5</h1>
+        <img src="{{ HTTP_STATIC_URL }}bakery/dancing-cat.gif" width="188px">
+        <p>
+          <a href="{{ HTTP_STATIC_URL }}bakery/serious_cat_is_serious.jpg">Secret Guest</a>
+        </p>
+      </div>
+    </div>
+
+<!--
+Way to go, these guests look way more fun, how about adding some music? Time to meet the <audio> tag which is used to specify media resources for audio in HTML5. It works like the <img> tag in that you need to provide a src URL that points to the audio file. Try adding swapping out the song below with a song of your choice by replacing the URL. If you don't know where to find a free tune, find a song that's openly licensed or in the public domain to use by looking in the following places:
+  Jamendo Portal: http://www.jamendo.com/
+  Check out record labels under CC licenses: http://creativecommons.org/record-labels
+  Vimeo has free CC-licensed tracks in addition to tracks that you can pay for:http://vimeo.com/musicstore.
+-->
+
+    <audio autoplay="true">
+      <source src="{{ HTTP_STATIC_URL }}bakery/8-bit-morph.mp3" type='audio/mpeg; codecs="mp3"'>
+    </audio>
+
+    <style>
+
+/*
+Everything contained within this <style> tag is called CSS and it is used to define the presentational components of the page, like fonts, colors, containers, positioning, etc. Remember that in CSS, comments are enclosed in '/*'.
+*/
+      body {
+        background-image: url({{ HTTP_STATIC_URL }}bakery/stripe_blue.png);
+        margin: 0px;
+      }
+
+      #container {
+        width: 1000px;
+        height: 750px;
+        margin-left: auto;
+        margin-right: auto;
+        background-image: url({{ HTTP_STATIC_URL }}bakery/tent.png);
+        background-repeat: no-repeat;
+        font-family: 'Sue Ellen Francisco';
+      }
+
+      header {
+        font-family: 'Press Start 2P';
+        font-size: 38px;
+        font-weight: normal;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 40px;
+        padding-bottom: 100px;
+        width: 418px;
+      }
+
+      .bread-cat {
+        width: 50%;
+        height: 150px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .bread-cat p {
+        font-size: 18px;
+        width: 395px;
+        text-transform: uppercase;
+      }
+
+      .bread-cat img, .bread-cat p {
+        float: left;
+      }
+
+      .kitty {
+        width: 188px;
+        margin: 0px 5px;
+        border: 1px solid #000;
+        background-color: #99ffff;
+        float: left;
+      }
+
+      .kitty p {
+        text-align: center;
+      }
+
+      .kitty h1 {
+        font-family: 'Press Start 2P';
+        font-size: 12px;
+        padding: 6px;
+        color: #99ffff;
+        background-color: #000000;
+      }
+    </style>
+
+<!-- End of CSS, back to HTML-->
+
+  </body>
+
+<!-- ===========================================================================
+Congrats! You've successfully fixed Loaf Cat's party! Looks like its going to be a fun one. You might not have noticed, but you learned some HTML skills in the process. You now know how to work with paragraphs (<p> tag), images (<img> tag), hyperlinks (<a> tag) and audio files (<audio> tag) in HTML5. Way to go!
+============================================================================ -->
+
+<!--
+    Credits:
+      Firefox badge: http://thekruser.com/media/4sq/badges/sxsw2011_firefox.png
+      Audio: title: 8bit morph
+             artist: bilou le skankerfou
+             link: http://www.jamendo.com/en/track/759486/8-bit-morph
+-->
+
+</html>

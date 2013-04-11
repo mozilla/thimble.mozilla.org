@@ -1,0 +1,116 @@
+{% extends "website/layout.html" %}
+{% block head %}
+<style>
+/*@font-face {
+    font-family: 'Lobster';
+    src: url('/media/css/Lobster.otf');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+#openwebville .hero-unit h1 {
+  background-color: yellow;
+  color: #4098D5;
+  display: inline-block;
+  padding: 10px 8px 0 8px;
+  font-family: "Lobster";
+  font-size: 64px;
+  word-spacing: -0.25em;
+}*/
+
+#openwebville .divider {
+    border-bottom: 4px dashed #4098D5;
+}
+
+.arcade {
+    background: url("/media/img/projects/openwebville_master.png") no-repeat scroll right top transparent;
+    min-height: 270px;
+    padding-right: 233px;
+}
+
+</style>
+{% endblock %}
+{% block page_id %}openwebville{% endblock %}
+{% block body %}
+  <div class="container divider">
+    <div class="row arcade">
+      <div class="hero-unit span7">
+        <hgroup class="large">
+          <h2>Welcome to</h2>
+          <h1>Open Webville</h1>
+        </hgroup>
+        <p>
+          Open WebVille isn’t just your run-of-the-mill "Ville." You see, it’s managed by Madame Lille, a former french 
+          politician and robot who is relaunching her career in a new  direction:  focusing more on velvet bird painting, 
+          organic farming, and protecting the Open Web. In this series of mini-games Madame Lille has started putting together 
+          a guidebook for the citizens of Open WebVille to understand how to use and reference openly licensed works. 
+        </p>
+
+        <p>
+          Use your Open Web ways and HTML dexterity to help her finish her work. These projects are offered in 
+          partnership with the <a href="https://p2pu.org/en/schools/school-of-open/">School of Open</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <ul class="projects show-thumbs">
+      {{ project(
+           title       = "Open Webville Gallery",
+           description = "",
+           author      = "School of Open",
+           url         = url('edit_project', 'opengallery'),
+           img         = "/media/img/projects/opengallery.png",
+         ) 
+      }}
+	    {{ project(
+           title       = "Open Webville Discotheque",
+           description = "",
+           author      = "School of Open",
+           url         = url('edit_project', 'opendisco'),
+           img         = "/media/img/projects/opendisco.png",
+         ) 
+      }}
+      {{ project(
+           title       = "Open Webville Cinema",
+           description = "",
+           author      = "School of Open",
+           url         = url('edit_project', 'opencinema'),
+           img         = "/media/img/projects/opencinema.png",
+         ) 
+      }}
+	    {{ project(
+           title       = "Open Webville Make Your Own Masterpiece (Boss Level)",
+           description = "",
+           author      = "School of Open",
+           url         = url('edit_project', 'openmasterpiece'),
+           img         = "/media/img/projects/openmasterpiece.png",
+         ) 
+      }}
+    </ul>
+  </div>
+      
+{% endblock %}
+{% block scripts %}
+<script src="/media/js/projects.js"></script>
+{% endblock %}
+{% macro project(title, description, author, url, img) -%}
+  <li class="project">
+    <div class="thumb">
+        <a href="{{ url }}">
+          <img src="{{ img }}" alt="{{ title }}">
+        </a>
+        <div class="caption">
+          <p>By {{ author }}</p>
+        </div>
+    </div>
+    <div class="info">
+      <h3 class="title">{{ title }}</h3>
+      <p class="description">{{ description|safe }}</p>
+      <p><a href="{{ url }}" class="button-blue">Make Project</a>
+    </div>
+  </li>
+{%- endmacro %}

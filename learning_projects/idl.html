@@ -1,0 +1,102 @@
+<!doctype html>
+
+<!-- 
+The internet is a vital resource that we all need to protect (which you already know, or else you wouldn't be here!). The Internet Defense League (IDL) is an effort to coordinate those who would defend the net against threats from governments and corporations -- think of it as the internet's Emergency Broadcast System, or its bat signal! You can find out more at http://internetdefenseleague.org
+
+Starting with this project, you can make your own Internet Defense League Campaign that you can easily send to anyone who should see it -- your representatives in government, or friends and family, or anyone else you can think of.
+-->
+
+<!--
+Let's get started.
+
+1) READ THROUGH THE COMMENTS. This is a comment. Everything inside of this tag for HTML or '/*' for CSS, is not processed as code, but instead is just text comments about the code. For this project, the comments will give you instructions, hints and guides to completing the project, so skim down through the comments to get an understanding of what you are being asked to do.
+
+2) GET ORIENTED IN THE CODE. HTML is made up of tags that look like this <p> </p>. The tags tell you something about the information contained between them. Click on the tags in the code on this side of the editor to get a description of what each tag is for.
+-->
+
+<html>
+
+<!--
+You might notice some words on this page (like <head>, <body>, <p> and <h1>) which are inside of angle brackets and colored blue.
+
+These words are called tags. Tags help you to structure your page. For example, let's say that you want to make a paragraph. You will put a tag at the exact point you want the paragraph to start and another tag where you want the paragraph to stop. The most important thing to remember is that tags (with a few exceptions, like <img>) come in pairs - so you almost always need to have an opening and closing tag.
+
+The <head> tag below is like the brain of your webpage. It contains invisible yet important information about how your page works.
+-->
+
+  <head>
+    <meta charset="utf8">
+    <title>Internet Defense League</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
+  </head>
+  
+<!--
+The <body> tag below contains the actual content of your webpage. Everything a visitor sees will be written inside this tag.
+-->
+
+  <body>
+    <div class="sheet">
+ 
+<!--
+Below this comment is a heading. The <h1> tag stands for header - and everything inside the <h1> tag becomes a big header on the preview to the right. <h1> opens the tag, and </h1> closes it. Everything in between is the heading. Try to add a catchy title to you IDL page by typing between the tags.
+-->
+
+      <h1>Create Your Own Page To Defend Internet Freedom</h1>
+    
+<!--
+The <p> tag below stands for paragraph and is one of the most commonly used elements in HTML. We use it to write exactly what you would expect: paragraphs of text. Try editing the paragraphs, or even adding one or two more. Just remember to have both opening and closing paragraph tags.
+-->
+
+      <p>To the world:</p>
+      <p>I am a member of the Internet Defense League.</p>
+      
+<!-- 
+It is time to compose the message for your IDL page. In the section below we are asking you to broadcast what you believe and spread the word. (Say, a prominent message asking everyone to call their elected leaders, or to make their own declaration in defense of the internet.) You can find some resources to compose your page at the campaign website http://internetdefenseleague.org, as well as the Electronic Frontier Foundation https://www.eff.org/ and Public Knowledge http://publicknowledge.org/
+-->
+
+      <p>I believe in a free and open internet -- one that is free of government or corporate censorship. [INSERT MORE OF WHAT YOU LOVE ABOUT THE INTERNET HERE].</p>
+      <p>If the internet comes under attack—like it has recently all over the world—I will stand in its defense.</p>
+      <p>I hope you'll stand with me.</p>
+      <p>Sincerely,</p>
+      <p>[INSERT YOUR NAME HERE]</p>
+    </div>
+    <style>
+     
+/*
+You've played with the text, now try tinkering with the look and feel of your page. To do so we will use CSS, which stands for Cascading Style Sheets, and everything within the <style> tags is CSS. You can change values below to significantly change how your page looks. Try changing the backgroud image url for example or the font family and color within the heading tag. You can check http://www.google.com/webfonts/ to learn more about adding typefaces to your webpage.
+*/
+
+      body {
+        background-image: url({{ HTTP_STATIC_URL }}idl/extra_clean_paper.png);
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
+      }
+
+      .sheet {
+        width: 800px;
+        margin: 0 auto;
+        padding-bottom: 371px;
+        background-image: url({{ HTTP_STATIC_URL }}idl/idl_cat_banner.png);
+        background-repeat: no-repeat;
+        background-position: center bottom;
+      }
+
+      h1 {
+        font-family: 'Patua One', serif;
+        font-weight: normal;
+        color: #b60000;
+      }
+
+    </style>
+  </body>
+</html>
+
+<!-- 
+Your page is complete - now if only you had a robot to try it out! You can try it out on a friend and make any necessary edits to get the message across. Hit the publish button and share it with the entire wide web calling them to action. And don't forget you learned some pretty awesome stuff in all of this webmaking: you can now work with text in HTML including the <p> and <h1> tags and you can start to understand and edit CSS.
+-->
+
+<!--
+Credits: Footer Image made by Internet Defense League.
+-->
+

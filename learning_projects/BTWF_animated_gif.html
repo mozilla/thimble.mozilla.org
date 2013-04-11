@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<!--
+Add a burst of fun and an element of surprise to your Born Brave page. Learn how to make an animated GIF using GIMP and create your very own gallery of animations. You can also remix this video tutorial using Popcorn Maker and share it with all your friends.
+-->
+
+<!--
+Are you ready to take on this challenge?
+Let's get started.
+
+1) READ THROUGH THE COMMENTS. This is a comment. Everything inside of this tag for HTML or '/*' for CSS, is not processed as code, but instead is just text comments about the code. For this project, the comments will give you instructions, hints and guides to completing the project, so skim down through the comments to get an understanding of what you are being asked to do.
+
+2) GET ORIENTED IN THE CODE. HTML is made up of tags that look like this <p> </p>. The tags tell you something about the information contained between them. Click on the tags in the code on this side of the editor to get a description of what each tag is for. Each tag has a beginning defined as <p> and an end defined as </p>.
+-->
+
+<html>
+<head>
+  <meta charset="utf-8">
+
+<!--
+The text within the <title> </title> tags will help people easily identify the page when it is minimized or open in one of many tabs. Since this is a personal page, feel free to customize the title to include your name. For example, 'Sam's Born Brave Animated GIFs' might be one way to go.
+-->
+
+  <title>My Born Brave Animated GIFs</title>
+  <link href='{{ HTTP_STATIC_URL }}BTWF_animated_gif/btwf_animated.css' rel='stylesheet'>
+
+</head>
+
+<body>
+<div class="outer">
+	<div class="content_wrapper">
+	  <img class="logo" src="{{ HTTP_STATIC_URL }}BTWF_animated_gif/btwf_logo.png">
+
+<!--
+It's pretty likely that you've seen an animated GIF before. An animated GIF is an image file made up of a series of progressive images that loop to create a sort of video animation. They can be added to web pages just like you would add any image file.
+
+The video below will show you how to make an animated GIF using a tool called GIMP.
+
+You can remix this video tutorial by using Mozilla Popcorn Maker to add your own fun tips and tricks. After you remix the video, you can add it back into this page by replacing the <iframe> </iframe> tags below with the tags in your new embed code.
+
+Note: If you are not familiar with Mozilla Popcorn Maker, learn the basics here - https://popcorn.webmaker.org/templates/basic/?savedDataUrl=tutorial.json
+-->
+
+	  <iframe src='http://popcorn.webmadecontent.org/fhb_' width='560' height='358' frameborder='0' mozallowfullscreen webkitallowfullscreen allowfullscreen></iframe>
+
+<!--
+Use the section below to create your very own gallery of animated GIFs. The comments below explain where to insert your GIF links and how to grow your gallery.
+-->
+
+	  <header>My Gallery of Animated GIFs</header>
+
+    <div class="gallery_wrapper">
+      <img class="arrow" src="{{ HTTP_STATIC_URL }}BTWF_animated_gif/arrow.png">
+
+<!--
+Add your first animated GIF to the gallery by replacing the <img> tag below. Start by uploading your animated GIF(s) to Flickr or another image sharing site. Once you've done that, from Flickr, choose the first GIF you want to add, click "Share" and select the option to "Grab the HTML/BBCode". Copy the code and paste it here to replace the existing <img> tag. Then remove the link <a> </a> tags surrounding the <img> tag so that the GIF is not clickable. Similar options will exist for other image sharing sites.
+-->
+
+      <div class ="gallery"><img src="{{ HTTP_STATIC_URL }}BTWF_animated_gif/sharingkindness_anim.gif"></div>
+
+<!--
+Add your second animated GIF here by replacing the URL in the src value of the <img> tag with your own.
+-->
+
+      <div class ="gallery"><img src="{{ HTTP_STATIC_URL }}BTWF_animated_gif/actofbravery_anim.gif"></div>
+
+<!--
+Here comes the third animated GIF. You are having fun with this aren't you? Replace the URL in the src value of the <img> tag with your own.
+
+When you've completed changing the first 3 animated GIFs in this row, copy the code starting with <div> and ending with </div> and paste it right below the ending </div> to start a second row of animated GIFs. Repeat this process to continue to build your GIF gallery.
+-->
+
+      <div class ="gallery"><img src="{{ HTTP_STATIC_URL }}BTWF_animated_gif/brave_anim.gif"></div>
+
+    </div>
+	</div>
+</div>
+
+<!--
+Whoa! Congratulate yourself. You just learned how to make animated GIFs and you showcased them in a gallery! And BIG applause for taking on the challenge of remixing this video in Popcorn Maker. With that act you have truly made this page your own. Now share it with as many people as you can and spread the love. :)
+-->
+
+</body>
+</html>
+
+<!--
+Credits: This was made by Mozilla.
+-->
