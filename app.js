@@ -79,20 +79,103 @@ app.get('/projects/:name', function(req, res) {
   res.render('index.html', {template: content, HTTP_STATIC_URL: '/'});
 });
 
-// lookup for remixed projects (from db)
-app.get("/remix/:id", function(req, res) {
-	console.error("TEST");
-  // this does nothing for us, since we publish to AWS.
-  // any link that we get in /publish will point to an AWS
-  // location, so we're not serving saved content from this app.
-  // we only publish through it, and load up templated pages,
-  // such as the default, and learning_projects (which can come
-  // later. This is P.O.C.)
-  res.send("there are no teapots here, certainly not with id "+req.params.id+".");
-  res.end();
+// lookup for remixing someone's project (from db)
+app.get("/remix/:id/edit", function(req, res) {
+  async.waterfall([
+    // do we have a project to work with?
+    function(callback) {
+      console.error("1");
+      var id = (req.params.id | 0);
+      if(id === 0) { return callback("request did not point to a project"); }
+      callback(null, id);
+    },
+
+    // try to get to our database
+    function(id, callback) {
+      console.error("2");
+      var db = new sqlite.Database('thimble.sqlite', function(err) {
+        if(err!=null) { return callback(err); }
+        callback(null, id, db);
+      });
+    },
+
+    // try to write the raw and sanitized data to the DB
+    function(id, db, callback) {
+      console.error("3");
+      db.serialize(function() {
+        db.get("SELECT * FROM test WHERE rowid = ?", [id], function(err, row) {
+          if(err!=null) { return callback(err); }
+          callback(null, db, row);
+        });
+      });
+    },
+
+    // get our new row number
+    function(db, row, callback) {
+      console.error("4 - " + row);
+      db.close();
+      callback(null, row.raw);
+    }
+  ],
+
+  // final callback
+  function (err, content) {
+   console.error("end");
+    if(err) { res.send("could not publish, "+err); }
+    else { res.render('index.html', {template: content.replace(/'/g, '\\\'').replace(/\n/g, '\\n'), HTTP_STATIC_URL: '/'}); }
+    res.end();
+  });
 });
 
-// publish remixes (to db)
+// get a published page (from db)
+app.get("/remix/:id", function(req, res) {
+  async.waterfall([
+    // do we have a project to work with?
+    function(callback) {
+      console.error("1");
+      var id = (req.params.id | 0);
+      if(id === 0) { return callback("request did not point to a project"); }
+      callback(null, id);
+    },
+
+    // try to get to our database
+    function(id, callback) {
+      console.error("2");
+      var db = new sqlite.Database('thimble.sqlite', function(err) {
+        if(err!=null) { return callback(err); }
+        callback(null, id, db);
+      });
+    },
+
+    // try to write the raw and sanitized data to the DB
+    function(id, db, callback) {
+      console.error("3");
+      db.serialize(function() {
+        db.get("SELECT * FROM test WHERE rowid = ?", [id], function(err, row) {
+          if(err!=null) { return callback(err); }
+          callback(null, db, row);
+        });
+      });
+    },
+
+    // get our new row number
+    function(db, row, callback) {
+      console.error("4 - " + row);
+      db.close();
+      callback(null, row.raw);
+    }
+  ],
+
+  // final callback
+  function (err, result) {
+   console.error("end");
+    if(err) { res.send("could not publish, "+err); }
+    else { res.send(result); }
+    res.end();
+  });
+});
+
+// publish a remixe (to the db)
 app.post('/publish', function(req, res) {
   async.waterfall([
 
