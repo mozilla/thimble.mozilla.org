@@ -55,6 +55,7 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'learning_projects')));
 
 // development only
 if ('development' == app.get('env')) {
@@ -65,9 +66,14 @@ if ('development' == app.get('env')) {
 nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
 nunjucksEnv.express(app);
 
-// Load index template into nunjucks.
 app.get('/', function(request, response) {
   response.render('index.html');
+});
+
+app.get('/projects/:name', function(request, response) {
+  var tpl = nunjucksEnv.getTemplate('learning_projects/' + request.params.name + '.html' );
+  var content = tpl.render({HTTP_STATIC_URL: '/learning_projects/'}).replace(/'/g, '\\\'').replace(/\n/g, '\\n');
+  response.render('index.html', {template: content, HTTP_STATIC_URL: '/'});
 });
 
 app.get('/users', user.list);
