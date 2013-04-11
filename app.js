@@ -61,12 +61,13 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+// Tell express where to find our templates.
 nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
 nunjucksEnv.express(app);
 
 // Load index template into nunjucks.
 app.get('/', function(request, response) {
-  response.render('public/index.html');
+  response.render('index.html');
 });
 
 app.get('/users', user.list);
