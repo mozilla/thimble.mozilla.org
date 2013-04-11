@@ -10,7 +10,8 @@
     "jade": "*",
     "request": "~2.16.6",
     "htmlsanitizer": "0.0.1",
-    "nunjucks": "~0.1.8a"
+    "nunjucks": "~0.1.8a",
+    "async": "~0.2.7"
   },
   "optionalDependencies": {
     "sqlite3": "~2.1.7"
