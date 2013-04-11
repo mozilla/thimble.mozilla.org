@@ -122,7 +122,11 @@ app.get("/remix/:id/edit", function(req, res) {
   function (err, content) {
    console.error("end");
     if(err) { res.send("could not publish, "+err); }
-    else { res.render('index.html', {template: content.replace(/'/g, '\\\'').replace(/\n/g, '\\n'), HTTP_STATIC_URL: '/'}); }
+    else if(!content) { res.send("could not publish: content was empty"); }
+    else {
+      content = content.replace(/'/g, '\\\'').replace(/\n/g, '\\n');
+      res.render('index.html', {template: content, HTTP_STATIC_URL: '/'});
+    }
     res.end();
   });
 });
