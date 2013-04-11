@@ -175,7 +175,7 @@ app.get("/remix/:id", function(req, res) {
   });
 });
 
-// publish a remixe (to the db)
+// publish a remix (to the db)
 app.post('/publish', function(req, res) {
   async.waterfall([
 
