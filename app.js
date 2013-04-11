@@ -112,7 +112,7 @@ app.get("/remix/:id/edit", function(req, res) {
 
     // get our new row number
     function(db, row, callback) {
-      console.error("4 - " + row);
+      console.error("4 - " + row.raw);
       db.close();
       callback(null, row.raw);
     }
@@ -164,7 +164,7 @@ app.get("/remix/:id", function(req, res) {
 
     // get our new row number
     function(db, row, callback) {
-      console.error("4 - " + row);
+      console.error("4 - " + row.raw);
       db.close();
       callback(null, row.raw);
     }
@@ -222,7 +222,7 @@ app.post('/publish', function(req, res) {
       console.error("4");
       db.serialize(function() {
         // replace with http://stackoverflow.com/questions/1601151/how-do-i-check-in-sqlite-whether-a-table-exists or like
-        db.run("CREATE TABLE test (unsanitized TEXT, sanitized TEXT)",function(err) {
+        db.run("CREATE TABLE test (raw TEXT, sanitized TEXT)",function(err) {
           // don't care about errors here, atm, since it'll be of the
           // type "table already exists", so that's fine.
         });
