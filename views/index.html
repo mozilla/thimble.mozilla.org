@@ -106,7 +106,7 @@
             url: '/persona/verify',
             data: {assertion: assertion},
             success: function(res, status, xhr) {
-              //window.location.reload();
+              loggedIn = true;
               personaButton.text("Log Out");
             },
             error: function(xhr, status, err) {
@@ -120,18 +120,19 @@
             type: 'POST',
             url: '/persona/logout',
             success: function(res, status, xhr) {
-              //window.location.reload();
+              loggedIn = false;
               personaButton.text("Log In");
             },
             error: function(xhr, status, err) { alert("Logout failure: " + err); }
           });
         }
       });
-      personaButton.toggle(function() {
-        navigator.id.request();
-      },
-      function() {
-        navigator.id.logout();
+      personaButton.click(function() {
+        if (!loggedIn) {
+          navigator.id.request();
+        } else {
+          navigator.id.logout();
+        }
       });
     });
     </script>
