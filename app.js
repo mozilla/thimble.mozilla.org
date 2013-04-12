@@ -5,7 +5,6 @@
 var express = require('express')
   , nunjucks = require('nunjucks')
   , routes = require('./routes')
-  , habitat = require('habitat')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
@@ -48,11 +47,6 @@ var app = express(),
       "link": ["href", "rel", "type"]
     };
 
-// asdf is only a default if an env variable for secret is not set.
-// You can set this by running this file with
-// THIMBLE_SECRET=newsecretasdf node app
-var habitatEnv = new habitat("thimble", {secret: "asdf"});
-
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
@@ -61,7 +55,8 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.cookieParser());
-app.use(express.cookieSession({secret: habitatEnv.get('secret')}));
+// I am pretty sure asdf needs to be... better?
+app.use(express.cookieSession({secret: "asdf"}));
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
@@ -213,6 +208,10 @@ app.post('/publish', function(req, res) {
       if(data=="") { return callback("request had no publishable content"); }
       // is there a "we are remixing id ... " indicator
       var originalRecord = req.body['original-url'];
+      if(originalRecord) {
+        originalRecord = originalRecord.substring(originalRecord.lastIndexOf('/')+1);
+      };
+      console.error(originalRecord);
       callback(null, personaId, data, originalRecord);
     },
 
@@ -261,18 +260,19 @@ app.post('/publish', function(req, res) {
                   function(err, result) {
                     if(err!=null) { return callback(err); }
                     callback(null, db, this.lastID);
-                  });
+                  }
+                );
               }
 
               // otherwise, update it with this new content:
               else {
-                console.log("UPDATE RECORD");
                 db.run("UPDATE test SET raw = ?, sanitized = ? WHERE rowid = ?",
                   [rawData, sanitizedData, originalRecord],
                   function(err, result) {
                     if(err!=null) { return callback(err); }
                     callback(null, db, originalRecord);
-                  });
+                  }
+                );
               }
             }
           );

@@ -48,6 +48,13 @@
             });
           },
           saveCode: function(data, originalURL, cb) {
+
+            // fake the originalURL for the moment, based on the current doc. URL
+            var originalURL = window.location.toString();
+            if(originalURL.indexOf("/edit")!==-1) {
+              originalURL = originalURL.replace('/edit','');
+            } else { originalURL = undefined; }
+
             $.ajax({
               type: "POST",
               url: options.hackpubURL + "/publish",
@@ -76,7 +83,7 @@
         allowJS: false,
         defaultContent: '{{template}}',
         publisher: Hackpub({
-          hackpubURL: "http://localhost:3000", // This is the URL we want to "save" to
+          hackpubURL: "http://localhost:3000",        // This is the URL we want to "save" to
           publishURL: "http://localhost:3000/remix/"  // This is the URL where projects can be loaded from
         }),
         remixURLTemplate: "http://localhost:3000/remix/\{\{VIEW_URL\}\}/edit",
