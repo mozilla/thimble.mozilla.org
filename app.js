@@ -11,7 +11,8 @@ var express = require('express')
   , ajax = require('request')
   , sanitize = require('htmlsanitizer')
   , sqlite = require('sqlite3')
-  , async = require('async');
+  , async = require('async')
+  , fs = require('fs');
 
 var app = express(),
     nunjucksEnv,
@@ -70,6 +71,21 @@ nunjucksEnv.express(app);
 // base dir lookup
 app.get('/', function(req, res) {
   res.render('index.html');
+});
+
+// learning project listing
+app.get('/projects', function(req, res) {
+  fs.readdir('learning_projects', function(err, files){
+    if(err) { res.end(); return; }
+    var response = "<h1>GALLERY TYPE TEMPLATE GOES HERE</h1>\n";
+    files.forEach( function(e) {
+      console.error(e);
+      e = e.replace('.html','');
+      response += "<a href='/projects/" + e + "'>" + e + "</a><br>\n";
+    });
+    res.send(response);
+    res.end();
+  });
 });
 
 // learning project lookup
@@ -202,7 +218,7 @@ app.post('/publish', function(req, res) {
         styles: [],
         strip: false,
         strip_comments: false,
-        parse_as_fragment: false
+        parse_as_fragment: false,
       }, function(err, sanitizedData) {
         if(err) { return callback(err); }
         callback(null, data, sanitizedData);
