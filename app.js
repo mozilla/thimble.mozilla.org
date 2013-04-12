@@ -54,10 +54,17 @@ app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
+app.use(express.cookieParser());
+// I am pretty sure asdf needs to be... better?
+app.use(express.cookieSession({secret: "asdf"}));
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
+
+require('express-persona')(app, {
+  audience: "http://localhost:3000"
+});
 
 // development only
 if ('development' == app.get('env')) {
