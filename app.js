@@ -68,7 +68,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
 
 require('express-persona')(app, {
-  audience: "http://localhost:3000"
+  audience: "http://calm-headland-1764.herokuapp.com"
 });
 
 // development only
@@ -223,7 +223,7 @@ app.post('/publish', function(req, res) {
     // try to sanitize the raw data
     function(personaId, data, originalRecord, callback) {
       sanitize( {
-        endpoint: 'http://localhost:5000',
+        endpoint: 'http://peaceful-crag-3591.herokuapp.com',
         text: data,
         tags: ALLOWED_TAGS,
         attributes: ALLOWED_ATTRS,
