@@ -5,6 +5,7 @@
 var express = require('express')
   , nunjucks = require('nunjucks')
   , routes = require('./routes')
+  , habitat = require('habitat')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
@@ -47,6 +48,11 @@ var app = express(),
       "link": ["href", "rel", "type"]
     };
 
+// asdf is only a default if an env variable for secret is not set.
+// You can set this by running this file with
+// THIMBLE_SECRET=newsecretasdf node app
+var habitatEnv = new habitat("thimble", {secret: "asdf"});
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
@@ -55,8 +61,7 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.cookieParser());
-// I am pretty sure asdf needs to be... better?
-app.use(express.cookieSession({secret: "asdf"}));
+app.use(express.cookieSession({secret: habitatEnv.get('secret')}));
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
