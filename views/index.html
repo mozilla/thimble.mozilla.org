@@ -69,7 +69,8 @@
         };
       };
     });
-    define("thimblePage", ["jquery", "friendlycode", "hackpub"],
+    define("thimblePage",
+           ["jquery", "friendlycode", "hackpub"],
            function($, FriendlycodeEditor, Hackpub) {
       return FriendlycodeEditor({
         allowJS: false,
@@ -82,22 +83,15 @@
         container: $("#bare-fc-holder")
       });
     });
-    </script>
-    <script>
     require([
       "jquery",
       "thimblePage"
     ], function($, ThimblePage) {
-      var personaButtonElement = document.createElement("div"),
-          personaButton = $(personaButtonElement),
+      var personaButton = $("<div>Log In</div>"),
           navItem = $(".nav-item.buttons"),
           loggedIn = false;
-      // I did not bother figuring out basic element manipulation in jquery.
-      personaButtonElement.classList.add("persona-button");
-      personaButtonElement.classList.add("wm-button");
-      personaButtonElement.classList.add("wm-button-blue");
-      personaButtonElement.classList.add("short");
-      personaButtonElement.innerHTML = "Log In";
+
+      personaButton.addClass("persona-button wm-button wm-button-blue short");
       navItem.append(personaButton);
       navigator.id.watch({
         onlogin: function( assertion ) {
