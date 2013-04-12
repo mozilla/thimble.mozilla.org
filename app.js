@@ -195,13 +195,14 @@ app.post('/publish', function(req, res) {
     function(data, callback) {
       console.error("2");
       sanitize( {
-        url: 'http://htmlsanitizer.org',
+        endpoint: 'http://localhost:5000',
         text: data,
         tags: ALLOWED_TAGS,
         attributes: ALLOWED_ATTRS,
         styles: [],
         strip: false,
-        strip_comments: false
+        strip_comments: false,
+        parse_as_fragment: false
       }, function(err, sanitizedData) {
         if(err) { return callback(err); }
         callback(null, data, sanitizedData);
