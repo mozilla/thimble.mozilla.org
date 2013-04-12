@@ -102,12 +102,11 @@ app.get('/projects/:name', function(req, res) {
   res.render('index.html', {template: content, HTTP_STATIC_URL: '/'});
 });
 
-// lookup for remixing someone's project (from db)
+// load up someone's project for editing (from db)
 app.get("/remix/:id/edit", function(req, res) {
   async.waterfall([
     // do we have a project to work with?
     function(callback) {
-      console.error("1");
       var id = (req.params.id | 0);
       if(id === 0) { return callback("request did not point to a project"); }
       callback(null, id);
@@ -115,38 +114,36 @@ app.get("/remix/:id/edit", function(req, res) {
 
     // try to get to our database
     function(id, callback) {
-      console.error("2");
       var db = new sqlite.Database('thimble.sqlite', function(err) {
         if(err!=null) { return callback(err); }
         callback(null, id, db);
       });
     },
 
-    // try to write the raw and sanitized data to the DB
+    // grab this project's data from the db
     function(id, db, callback) {
-      console.error("3");
       db.serialize(function() {
         db.get("SELECT * FROM test WHERE rowid = ?", [id], function(err, row) {
           if(err!=null) { return callback(err); }
-          callback(null, db, row);
+          // FIXME: note that we're not pulling up the "real" raw data. we're still grabbing sanitized data.
+          callback(null, db, row.sanitized);
         });
       });
     },
 
-    // get our new row number
-    function(db, row, callback) {
-      console.error("4 - " + row.raw);
+    // we're done, close the db
+    function(db, data, callback) {
       db.close();
-      callback(null, row.raw);
+      callback(null, data);
     }
   ],
 
   // final callback
   function (err, content) {
-   console.error("end");
     if(err) { res.send("could not publish, "+err); }
     else if(!content) { res.send("could not publish: content was empty"); }
     else {
+      // load up the content for mixing.
       content = content.replace(/'/g, '\\\'').replace(/\n/g, '\\n');
       res.render('index.html', {template: content, HTTP_STATIC_URL: '/'});
     }
@@ -154,12 +151,11 @@ app.get("/remix/:id/edit", function(req, res) {
   });
 });
 
-// get a published page (from db)
+// view a published page (from db)
 app.get("/remix/:id", function(req, res) {
   async.waterfall([
     // do we have a project to work with?
     function(callback) {
-      console.error("1");
       var id = (req.params.id | 0);
       if(id === 0) { return callback("request did not point to a project"); }
       callback(null, id);
@@ -167,35 +163,31 @@ app.get("/remix/:id", function(req, res) {
 
     // try to get to our database
     function(id, callback) {
-      console.error("2");
       var db = new sqlite.Database('thimble.sqlite', function(err) {
         if(err!=null) { return callback(err); }
         callback(null, id, db);
       });
     },
 
-    // try to write the raw and sanitized data to the DB
+    // grab this project's data from the db
     function(id, db, callback) {
-      console.error("3");
       db.serialize(function() {
         db.get("SELECT * FROM test WHERE rowid = ?", [id], function(err, row) {
           if(err!=null) { return callback(err); }
-          callback(null, db, row);
+          callback(null, db, row.sanitized);
         });
       });
     },
 
-    // get our new row number
-    function(db, row, callback) {
-      console.error("4 - " + row.raw);
+    // we're done, close the db
+    function(db, data, callback) {
       db.close();
-      callback(null, row.raw);
+      callback(null, data);
     }
   ],
 
   // final callback
   function (err, result) {
-   console.error("end");
     if(err) { res.send("could not publish, "+err); }
     else { res.send(result); }
     res.end();
@@ -208,15 +200,19 @@ app.post('/publish', function(req, res) {
 
     // do we have actual data to publish?
     function(callback) {
-      console.error("1");
+      // logged in?
+      var personaId = req.session.email;
+      if(personaId==null) { return callback("you'll have to log in to publish"); }
+      // is there data?
       var data = ( req.body.html ? req.body.html : "" );
       if(data=="") { return callback("request had no publishable content"); }
-      callback(null, data);
+      // is there a "we are remixing id ... " indicator
+      var originalRecord = req.body['original-url'];
+      callback(null, personaId, data, originalRecord);
     },
 
     // try to sanitize the raw data
-    function(data, callback) {
-      console.error("2");
+    function(personaId, data, originalRecord, callback) {
       sanitize( {
         endpoint: 'http://localhost:5000',
         text: data,
@@ -228,43 +224,54 @@ app.post('/publish', function(req, res) {
         parse_as_fragment: false,
       }, function(err, sanitizedData) {
         if(err) { return callback(err); }
-        callback(null, data, sanitizedData);
+        callback(null, personaId, data, sanitizedData, originalRecord);
       });
     },
 
     // try to get to our database
-    function(rawData, sanitizedData, callback) {
-      console.error("3");
+    function(personaId, rawData, sanitizedData, originalRecord, callback) {
       var db = new sqlite.Database('thimble.sqlite', function(err) {
         if(err!=null) { return callback(err); }
-        callback(null, db, rawData, sanitizedData);
+        callback(null, db, personaId, rawData, sanitizedData, originalRecord);
       });
     },
 
     // try to write the raw and sanitized data to the DB
-    function(db, rawData, sanitizedData, callback) {
-      console.error("4");
+    function(db, personaId, rawData, sanitizedData, originalRecord, callback) {
       db.serialize(function() {
         // replace with http://stackoverflow.com/questions/1601151/how-do-i-check-in-sqlite-whether-a-table-exists or like
-        db.run("CREATE TABLE test (raw TEXT, sanitized TEXT)",function(err) {
-          // don't care about errors here, atm, since it'll be of the
-          // type "table already exists", so that's fine.
-        });
-        db.run("INSERT INTO test VALUES (?, ?)", [rawData, sanitizedData], function(err) {
-          if(err!=null) { return callback(err); }
-          callback(null, db);
-        });
-      });
-    },
+        db.run("CREATE TABLE IF NOT EXISTS test (personaid TEXT, raw TEXT, sanitized TEXT)", function(err) {
+          if(err!=null) return callback(err);
 
-    // get our new row number
-    function(db, callback) {
-      console.error("5");
-      // NOTE: this totally doesn't work in async concurrent settings, so we need to get
-      // the rowid from the actual insert at some point (way) before deploy.
-      db.get("SELECT count(*) as totalCount FROM test", function(err, row) {
-        if(err!=null) { return callback(err); }
-        callback(null, db, row.totalCount);
+          // do we own this remix? if so, update. Otherwise, write.
+          db.get("SELECT count(*) as count FROM test WHERE rowid = ? AND personaid = ?",
+            [originalRecord, personaId],
+            function(err, row) {
+              if(err!=null) { return callback(err); }
+
+              // if we don't own [originalRecord], write a new entry:
+              if(row.count == 0 ) {
+                db.run("INSERT INTO test VALUES (?, ?, ?)",
+                  [personaId, rawData, sanitizedData],
+                  function(err, result) {
+                    if(err!=null) { return callback(err); }
+                    callback(null, db, this.lastID);
+                  });
+              }
+
+              // otherwise, update it with this new content:
+              else {
+                console.log("UPDATE RECORD");
+                db.run("UPDATE test SET raw = ?, sanitized = ? WHERE rowid = ?",
+                  [rawData, sanitizedData, originalRecord],
+                  function(err, result) {
+                    if(err!=null) { return callback(err); }
+                    callback(null, db, originalRecord);
+                  });
+              }
+            }
+          );
+        });
       });
     },
 
@@ -278,7 +285,7 @@ app.post('/publish', function(req, res) {
 
   // final callback
   function (err, result) {
-   console.error("end");
+    debugger;
     if(err) { res.send("could not publish, "+err); }
     else { res.json(result); }
     res.end();
