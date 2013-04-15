@@ -49,13 +49,11 @@ app.get('/', function(req, res) {
 app.get('/projects', function(req, res) {
   fs.readdir('learning_projects', function(err, files){
     if(err) { res.end(); return; }
-    var response = "<h1>GALLERY TYPE TEMPLATE GOES HERE</h1>\n";
+    var projects = [];
     files.forEach( function(e) {
-      e = e.replace('.html','');
-      response += "<a href='/projects/" + e + "'>" + e + "</a><br>\n";
+      projects.push(e.replace('.html',''));
     });
-    res.send(response);
-    res.end();
+    res.render('gallery.html', {title: 'GALLERY TYPE TEMPLATE GOES HERE', projects: projects});
   });
 });
 
