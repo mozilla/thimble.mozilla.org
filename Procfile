@@ -1,1 +1,1 @@
-web: NODE_ENV = deployment node app.js
+web: node app.js
