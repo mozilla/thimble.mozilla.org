@@ -1,12 +1,4 @@
-/**
- * Environment values
- */
-var DEVELOPMENT = 'development',
-    HEROKU_ENDPOINT = 'http://peaceful-crag-3591.herokuapp.com',
-    HEROKU_AUDIENCE = 'http://calm-headland-1764.herokuapp.com',
-    LOCAL_NODE = 'http://localhost:3000',
-    LOCAL_PYTHON = 'http://localhost:5000',
-    env = process.env.NODE_ENV || DEVELOPMENT;
+const DEVELOPMENT = "development";
 
 /**
  * Module dependencies.
@@ -23,6 +15,8 @@ var express = require('express')
   , sqlite = require('sqlite3')
   , async = require('async')
   , fs = require('fs');
+
+habitat.load();
 
 var app = express(),
     nunjucksEnv,
@@ -57,32 +51,22 @@ var app = express(),
       "link": ["href", "rel", "type"]
     };
 
-// asdf is only a default if an env variable for secret is not set.
-// You can set this by running this file with
-// THIMBLE_SECRET=newsecretasdf node app
-var habitatEnv = new habitat("thimble", {secret: "asdf"});
+var env = new habitat();
 
 // all environments
-app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.cookieParser());
-app.use(express.cookieSession({secret: habitatEnv.get('secret')}));
+app.use(express.cookieSession({secret: env.get('secret')}));
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
 
 // set up personal
-var audience = HEROKU_AUDIENCE;
-if (env === DEVELOPMENT) {
-  audience = LOCAL_NODE;
-}
-require('express-persona')(app, { audience: audience });
-if (env === DEVELOPMENT) {
+require('express-persona')(app, { audience: env.get });
+if (env.get("NODE_ENV") === DEVELOPMENT) {
   app.use(express.errorHandler());
 }
 
@@ -93,11 +77,7 @@ nunjucksEnv.express(app);
 
 // base dir lookup
 app.get('/', function(req, res) {
-  var appURL = HEROKU_AUDIENCE;
-  if(env===DEVELOPMENT) {
-    appURL = LOCAL_NODE;
-  }
-  res.render('index.html', { appURL: appURL} );
+  res.render('index.html', { appURL: env.get("HOSTNAME") } );
 });
 
 
@@ -120,11 +100,7 @@ app.get('/projects', function(req, res) {
 app.get('/projects/:name', function(req, res) {
   var tpl = nunjucksEnv.getTemplate('learning_projects/' + req.params.name + '.html' );
   var content = tpl.render({HTTP_STATIC_URL: '/learning_projects/'}).replace(/'/g, '\\\'').replace(/\n/g, '\\n');
-  var appURL = HEROKU_AUDIENCE;
-  if(env===DEVELOPMENT) {
-    appURL = LOCAL_NODE;
-  }
-  res.render('index.html', {appURL: appURL, template: content, HTTP_STATIC_URL: '/'});
+  res.render('index.html', {appURL: env.get("HOSTNAME"), template: content, HTTP_STATIC_URL: '/'});
 });
 
 
@@ -223,11 +199,7 @@ app.get("/remix/:id/edit", function(req, res) {
     else {
       // load up the content for mixing.
       content = content.replace(/'/g, '\\\'').replace(/\n/g, '\\n');
-      var appURL = HEROKU_AUDIENCE;
-      if(env===DEVELOPMENT) {
-        appURL = LOCAL_NODE;
-      }
-      res.render('index.html', {appURL: appURL, template: content, HTTP_STATIC_URL: '/'});
+      res.render('index.html', {appURL: env.get("HOSTNAME"), template: content, HTTP_STATIC_URL: '/'});
     }
     res.end();
   });
@@ -300,12 +272,8 @@ app.post('/publish', function(req, res) {
 
     // try to sanitize the raw data
     function(personaId, data, originalRecord, callback) {
-      var endpoint = HEROKU_ENDPOINT;
-      if (env === DEVELOPMENT) {
-        endpoint = LOCAL_PYTHON;
-      }
       sanitize( {
-        endpoint: endpoint,
+        endpoint: env.get("BLEACH_ENDPOINT"),
         text: data,
         tags: ALLOWED_TAGS,
         attributes: ALLOWED_ATTRS,
@@ -386,7 +354,7 @@ app.post('/publish', function(req, res) {
 
 
 // run server
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+http.createServer(app).listen(env.get("PORT"), function(){
+  console.log('Express server listening on port ' + env.get("PORT"));
 });
 
