@@ -30,7 +30,10 @@
     //       <AllowedMethod>GET</AllowedMethod>
     //     </CORSRule>
     //   </CORSConfiguration>
-     
+
+    /**
+     * ...
+     */
     define("hackpub", ["jquery"], function($) {
       return function Hackpub(options) {
         return {
@@ -69,15 +72,19 @@
               },
               success: function(result) {
                 var url = result['published-url'];
-                console.log(url);
-                var path = url.match(/\/([A-Za-z0-9]+)$/)[1];
-                cb(null, {path: path, url: options.publishURL + path});
+                console.log(options.publishURL, url);
+                var path = url.substring(url.lastIndexOf('/')+1);
+                cb(null, {path: path, url: options.publishURL + '/' + path});
               }
             });
           }
         };
       };
     });
+
+    /**
+     * ...
+     */
     define("thimblePage",
            ["jquery", "friendlycode", "hackpub"],
            function($, FriendlycodeEditor, Hackpub) {
@@ -85,13 +92,17 @@
         allowJS: false,
         defaultContent: '{{template}}',
         publisher: Hackpub({
-          hackpubURL: "http://calm-headland-1764.herokuapp.com",        // This is the URL we want to "save" to
-          publishURL: "http://calm-headland-1764.herokuapp.com/remix/"  // This is the URL where projects can be loaded from
+          hackpubURL: "{{appURL}}",
+          publishURL: "{{appURL}}/remix",
         }),
-        remixURLTemplate: "http://calm-headland-1764.herokuapp.com/remix/\{\{VIEW_URL\}\}/edit",
+        remixURLTemplate: "{{appURL}}/remix/\{\{VIEW_URL\}\}/edit",
         container: $("#bare-fc-holder")
       });
     });
+
+    /**
+     * ...
+     */
     require([
       "jquery",
       "thimblePage"

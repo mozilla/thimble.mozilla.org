@@ -1,7 +1,18 @@
 /**
+ * Environment values
+ */
+var DEVELOPMENT = 'development',
+    HEROKU_ENDPOINT = 'http://peaceful-crag-3591.herokuapp.com',
+    HEROKU_AUDIENCE = 'http://calm-headland-1764.herokuapp.com',
+    LOCAL_NODE = 'http://localhost:3000',
+    LOCAL_PYTHON = 'http://localhost:5000',
+    env = process.env.NODE_ENV || DEVELOPMENT;
+
+console.error(env);
+
+/**
  * Module dependencies.
  */
-
 var express = require('express')
   , nunjucks = require('nunjucks')
   , routes = require('./routes')
@@ -67,12 +78,13 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
 
-require('express-persona')(app, {
-  audience: "http://calm-headland-1764.herokuapp.com"
-});
-
-// development only
-if ('development' == app.get('env')) {
+// set up personal
+var audience = HEROKU_AUDIENCE;
+if (env === DEVELOPMENT) {
+  audience = LOCAL_NODE;
+}
+require('express-persona')(app, { audience: audience });
+if (env === DEVELOPMENT) {
   app.use(express.errorHandler());
 }
 
@@ -80,10 +92,17 @@ if ('development' == app.get('env')) {
 nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
 nunjucksEnv.express(app);
 
+
 // base dir lookup
 app.get('/', function(req, res) {
-  res.render('index.html');
+  var appURL = HEROKU_AUDIENCE;
+  if(env===DEVELOPMENT) {
+    appURL = LOCAL_NODE;
+  }
+  console.error(appURL);
+  res.render('index.html', { appURL: appURL} );
 });
+
 
 // learning project listing
 app.get('/projects', function(req, res) {
@@ -100,12 +119,70 @@ app.get('/projects', function(req, res) {
   });
 });
 
+
 // learning project lookup
 app.get('/projects/:name', function(req, res) {
   var tpl = nunjucksEnv.getTemplate('learning_projects/' + req.params.name + '.html' );
   var content = tpl.render({HTTP_STATIC_URL: '/learning_projects/'}).replace(/'/g, '\\\'').replace(/\n/g, '\\n');
-  res.render('index.html', {template: content, HTTP_STATIC_URL: '/'});
+  var appURL = HEROKU_AUDIENCE;
+  if(env===DEVELOPMENT) {
+    appURL = LOCAL_NODE;
+  }
+  res.render('index.html', {appURL: appURL, template: content, HTTP_STATIC_URL: '/'});
 });
+
+
+// "my projects" listing -- USED FOR DEV WORK ATM, MAY NOT BE PERMANENT IN ANY WAY
+app.get('/myprojects', function(req, res) {
+  async.waterfall([
+    // are we logged in?
+    function(callback) {
+      // logged in?
+      var personaId = req.session.email;
+      if(personaId==null) { return callback("you'll have to log in to see your published projects"); }
+      callback(null, personaId);
+    },
+
+    // try to get to our database
+    function(personaId, callback) {
+      var db = new sqlite.Database('thimble.sqlite', function(err) {
+        if(err!=null) { return callback(err); }
+        callback(null, db, personaId);
+      });
+    },
+
+    // grab this project's data from the db
+    function(db, personaId, callback) {
+      db.serialize(function() {
+        db.all("SELECT rowid FROM test WHERE personaid = ?", [personaId], function(err, rows) {
+          if(err!=null) { return callback(err); }
+          callback(null, db, rows);
+        });
+      });
+    },
+
+    // we're done, close the db
+    function(db, rows, callback) {
+      db.close();
+      callback(null, rows);
+    }
+  ],
+
+  // final callback
+  function (err, rows) {
+    if(err) { res.send("could not fetch content, "+err); }
+    else {
+      var response = "<h1>MY PROJECTS TEMPLATE GOES HERE</h1>\n", id;
+      rows.forEach( function(row) {
+        id = row.rowid;
+        response += "<a href='/remix/"+id+"'>"+id+"</a> (<a href='/remix/"+id+"/edit'>edit</a>)<br>\n";
+      });
+      res.send(response);
+    }
+    res.end();
+  });
+});
+
 
 // load up someone's project for editing (from db)
 app.get("/remix/:id/edit", function(req, res) {
@@ -150,11 +227,16 @@ app.get("/remix/:id/edit", function(req, res) {
     else {
       // load up the content for mixing.
       content = content.replace(/'/g, '\\\'').replace(/\n/g, '\\n');
-      res.render('index.html', {template: content, HTTP_STATIC_URL: '/'});
+      var appURL = HEROKU_AUDIENCE;
+      if(env===DEVELOPMENT) {
+        appURL = LOCAL_NODE;
+      }
+      res.render('index.html', {appURL: appURL, template: content, HTTP_STATIC_URL: '/'});
     }
     res.end();
   });
 });
+
 
 // view a published page (from db)
 app.get("/remix/:id", function(req, res) {
@@ -199,6 +281,7 @@ app.get("/remix/:id", function(req, res) {
   });
 });
 
+
 // publish a remix (to the db)
 app.post('/publish', function(req, res) {
   async.waterfall([
@@ -222,8 +305,12 @@ app.post('/publish', function(req, res) {
 
     // try to sanitize the raw data
     function(personaId, data, originalRecord, callback) {
+      var endpoint = HEROKU_ENDPOINT;
+      if (env === DEVELOPMENT) {
+        endpoint = LOCAL_PYTHON;
+      }
       sanitize( {
-        endpoint: 'http://peaceful-crag-3591.herokuapp.com',
+        endpoint: endpoint,
         text: data,
         tags: ALLOWED_TAGS,
         attributes: ALLOWED_ATTRS,
@@ -301,6 +388,7 @@ app.post('/publish', function(req, res) {
     res.end();
   });
 });
+
 
 // run server
 http.createServer(app).listen(app.get('port'), function(){
