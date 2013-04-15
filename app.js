@@ -8,8 +8,6 @@ var DEVELOPMENT = 'development',
     LOCAL_PYTHON = 'http://localhost:5000',
     env = process.env.NODE_ENV || DEVELOPMENT;
 
-console.error(env);
-
 /**
  * Module dependencies.
  */
@@ -99,7 +97,6 @@ app.get('/', function(req, res) {
   if(env===DEVELOPMENT) {
     appURL = LOCAL_NODE;
   }
-  console.error(appURL);
   res.render('index.html', { appURL: appURL} );
 });
 
@@ -110,7 +107,6 @@ app.get('/projects', function(req, res) {
     if(err) { res.end(); return; }
     var response = "<h1>GALLERY TYPE TEMPLATE GOES HERE</h1>\n";
     files.forEach( function(e) {
-      console.error(e);
       e = e.replace('.html','');
       response += "<a href='/projects/" + e + "'>" + e + "</a><br>\n";
     });
@@ -299,7 +295,6 @@ app.post('/publish', function(req, res) {
       if(originalRecord) {
         originalRecord = originalRecord.substring(originalRecord.lastIndexOf('/')+1);
       };
-      console.error(originalRecord);
       callback(null, personaId, data, originalRecord);
     },
 
