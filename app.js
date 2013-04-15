@@ -51,9 +51,10 @@ app.get('/projects', function(req, res) {
     if(err) { res.end(); return; }
     var projects = [];
     files.forEach( function(e) {
-      projects.push(e.replace('.html',''));
+      var id = e.replace('.html','');
+      projects.push("<a href='/projects/"+id+"'>"+id+"</a>");
     });
-    res.render('gallery.html', {title: 'GALLERY TYPE TEMPLATE GOES HERE', projects: projects});
+    res.render('gallery.html', {location: "projects", title: 'Learning Projects', projects: projects});
   });
 });
 

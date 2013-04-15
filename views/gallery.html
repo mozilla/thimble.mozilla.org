@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="/stylesheets/style.css">
   </head>
   <body>
-    <h1>{{title}}</h1>
+    <h3>{{title}}</h3>
+    <ul>
     {% for project in projects %}
-      <a href='/projects/{{project}}'>{{project}}</a><br>
+      <li>{{project}}</li>
     {% endfor %}
+    </ul>
   </body>
 </html>
