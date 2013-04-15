@@ -72,7 +72,6 @@
               },
               success: function(result) {
                 var url = result['published-url'];
-                console.log(options.publishURL, url);
                 var path = url.substring(url.lastIndexOf('/')+1);
                 cb(null, {path: path, url: options.publishURL + '/' + path});
               }
