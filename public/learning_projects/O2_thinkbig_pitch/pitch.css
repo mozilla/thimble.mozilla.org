@@ -50,7 +50,7 @@ header {
    position: absolute;
    background-image: url('O2_video_placeholder.png');
    background-repeat: no-repeat;
-   background-position: top top;
+   background-position: left top;
    width: 400px;
    height: 300px;
    margin: 0px;
