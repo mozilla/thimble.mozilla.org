@@ -34,7 +34,7 @@ app.use(express.cookieParser());
 app.use(express.cookieSession({secret: env.get('secret')}));
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'learning_projects')));
+app.use(express.static(path.join(__dirname, 'learning_projects'))); 
 
 // set up persona
 require('express-persona')(app, { audience: env.get("HOSTNAME") });
@@ -63,12 +63,7 @@ app.get('/projects', function(req, res) {
 
 // learning project lookup
 app.get('/projects/:name', function(req, res) {
-  // This is quite ugly, and we need a better way to inject data
-  // into friendlycode. I'm pretty sure it CAN load from URI, we
-  // just need to find out how to tell it to...
-  var tpl = nunjucksEnv.getTemplate('learning_projects/' + req.params.name + '.html' );
-  var content = tpl.render({HTTP_STATIC_URL: '/learning_projects/'}).replace(/'/g, '\\\'').replace(/\n/g, '\\n');
-  res.render('index.html', {appURL: env.get("HOSTNAME"), template: content, HTTP_STATIC_URL: '/'});
+  res.render('index.html', {appURL: env.get("HOSTNAME"), pageToLoad: '/' + req.params.name + '.html', HTTP_STATIC_URL: '/'});
 });
 
 // "my projects" listing -- USED FOR DEV WORK ATM, MAY NOT BE PERMANENT IN ANY WAY
