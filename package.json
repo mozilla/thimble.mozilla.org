@@ -9,7 +9,7 @@
     "habitat": "~0.4.0",
     "htmlsanitizer": "0.0.1",
     "nunjucks": "~0.1.8a",
-    "request": "~2.16.6",
+    "request": "~2.16.6"
   },
   "optionalDependencies": {
     "sqlite3": "~2.1.7"
