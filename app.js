@@ -52,7 +52,7 @@ app.get('/projects', function(req, res) {
     var projects = [];
     files.forEach( function(e) {
       var id = e.replace('.html','');
-      projects.push("<a href='/projects/"+id+"'>"+id+"</a>");
+      projects.push(id+"<a href='/projects/"+id+"'>edit</a><a href='/"+id+".html'>view</a>");
     });
     res.render('gallery.html', {location: "projects", title: 'Learning Projects', projects: projects});
   });
@@ -68,13 +68,13 @@ app.get('/myprojects',
   middleware.checkForPersonaAuth,
   function(req, res) {
     databaseAPI.findAllByUser(req.session.email, function(err, results) {
-      var response = "<h1>MY PROJECTS TEMPLATE GOES HERE</h1>\n", id;
+      var projects = [],
+          id;
       results.forEach(function(result){
         id = result.id;
-        response += "<a href='/remix/"+id+"'>"+id+"</a> (<a href='/remix/"+id+"/edit'>edit</a>)<br>\n";
+        projects.push(row.title + "<a href='/remix/"+id+"'>view</a><a href='/remix/"+id+"/edit'>edit</a>");
       });
-      res.send(response);
-      res.end();
+      res.render('gallery.html', {title: 'User Projects', projects: projects});
     });
   }
 );
