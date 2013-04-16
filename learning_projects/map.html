@@ -28,7 +28,7 @@ These <link> tags pull in additional style sheets for things like fonts, etc. Yo
 -->
     <link href="//fonts.googleapis.com/css?family=Sue+Ellen+Francisco" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet" type="text/css">
-    <link href="{{ HTTP_STATIC_URL }}map/arcademap_styles.css" rel="stylesheet" type="text/css">
+    <link href="/learning_projects/map/arcademap_styles.css" rel="stylesheet" type="text/css">
   </head>
   
   <body>
@@ -45,14 +45,14 @@ Uh-oh, this part of the map is broken! Can you fix the issue below. Hint: Rememb
 <!--
 While almost all tags need an open and a close tag, <img> tags are special because they don't need a close tag. All of the information the browser needs to show the image is defined in the attributes.
 -->
-        <img class="forest" src="{{ HTTP_STATIC_URL }}map/forest1.png">
-        <img class="mountains" src="{{ HTTP_STATIC_URL }}map/mountain1.png">
+        <img class="forest" src="/learning_projects/map/forest1.png">
+        <img class="mountains" src="/learning_projects/map/mountain1.png">
         
 <!--
 Changing the images on your map is as easy as replacing the url with another image of your choice. You may want to make this a map of your neighborhood, social network or favorite vacation place. If you are looking for images a good place to start is http://search.creativecommons.org/. Here you can find images that are available under the Creative Commons licenses. To get the link for the image, either right click/CTRL click and Copy Image Address, or in Flickr, click "Share" and copy the link. 
 -->
-        <img class="tower" src="{{ HTTP_STATIC_URL }}map/rabbit.gif" >
-        <img class="tower02" src="{{ HTTP_STATIC_URL }}map/minecraft-pig.jpg" width="50px">
+        <img class="tower" src="/learning_projects/map/rabbit.gif" >
+        <img class="tower02" src="/learning_projects/map/minecraft-pig.jpg" width="50px">
         
 <!-- 
 Oops! Here is another issue. Can you fix it? Hint: tags must have an open and close tag. Once you are done go ahead and fix any other elements that look broken. The <h3> tag is another header tag, the "h" stands for header and the "3" for the level (so its less important than <h1> or <h2> but more important than <h4>). Try changing the name of the location by editing the text between the <h3> tags. 
@@ -64,10 +64,10 @@ Oops! Here is another issue. Can you fix it? Hint: tags must have an open and cl
       </section>
       
       <section id="island02">
-        <img class="forest" src="{{ HTTP_STATIC_URL }}map/forest1.png">
-        <img class="forest2" src="{{ HTTP_STATIC_URL }}map/forest2.png">
-        <img class="mountains" src="{{ HTTP_STATIC_URL }}map/mountain2.png">
-        <img src="{{ HTTP_STATIC_URL }}map/kittyloaf.gif" width="100px">
+        <img class="forest" src="/learning_projects/map/forest1.png">
+        <img class="forest2" src="/learning_projects/map/forest2.png">
+        <img class="mountains" src="/learning_projects/map/mountain2.png">
+        <img src="/learning_projects/map/kittyloaf.gif" width="100px">
 
 <!-- This location doesn't have a name. You can fix that by adding text between the opening and closing h3 tag. -->
          <h3 class="kitty"></h3>
@@ -77,9 +77,9 @@ Oops! Here is another issue. Can you fix it? Hint: tags must have an open and cl
            Serious Cat Town
          /h3>
          
-         <img class="famous" src="{{ HTTP_STATIC_URL }}map/goggles10.jpg" width="100px">
+         <img class="famous" src="/learning_projects/map/goggles10.jpg" width="100px">
          <h3 class="rainbow">Triple Rainbow 
-         <img class="rainbow" src="{{ HTTP_STATIC_URL }}map/rainbows.png">
+         <img class="rainbow" src="/learning_projects/map/rainbows.png">
       </section>
     </div>
         
