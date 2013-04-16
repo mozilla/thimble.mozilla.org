@@ -3,18 +3,19 @@ const DEVELOPMENT = "development";
 /**
  * Module dependencies.
  */
-var express = require('express'), 
-    nunjucks = require('nunjucks'),
-    routes = require('./routes'),
-    habitat = require('habitat'),
-    user = require('./routes/user'),
-    http = require('http'),
-    path = require('path'),
-    ajax = require('request'),
-    sqlite = require('sqlite3'),
+var ajax = require('request'),
     async = require('async'),
+    express = require('express'), 
     fs = require('fs'),
-    middleware = require( "./lib/middleware" );
+    habitat = require('habitat'),
+    http = require('http'),
+    middleware = require( "./lib/middleware"),
+    mysql = require('mysql'),
+    nunjucks = require('nunjucks'),
+    path = require('path'),
+    routes = require('./routes'),
+    sqlite = require('sqlite3'),
+    user = require('./routes/user');
 
 habitat.load();
 
