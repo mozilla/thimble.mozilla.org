@@ -44,7 +44,7 @@
     }
     
     #wall  {
-      background: url("{{ HTTP_STATIC_URL }}bunnies/wall.png");
+      background: url("/learning_projects/bunnies/wall.png");
       height: 550px;
     }
     
@@ -97,7 +97,7 @@
     
     #floor {
       height:120px;
-      background:  url("{{ HTTP_STATIC_URL }}bunnies/floor.png");
+      background:  url("/learning_projects/bunnies/floor.png");
       background-repeat: repeat-x;
       background-position: bottom;
     }
@@ -124,19 +124,19 @@
     
       <div id="scene">  <!-- The bunny and masher images are here -->
         
-      <img id="worried_bunny" src="{{ HTTP_STATIC_URL }}bunnies/cute_worried_bunny.png">
+      <img id="worried_bunny" src="/learning_projects/bunnies/cute_worried_bunny.png">
       <!-- 
-            Happy bunny:   {{ HTTP_STATIC_URL }}bunnies/happy_bunny.png
+            Happy bunny:   /learning_projects/bunnies/happy_bunny.png
 
             Can you put the bunny in a spotlight?
-            {{ HTTP_STATIC_URL }}bunnies/lamp.png
+            /learning_projects/bunnies/lamp.png
       -->
       
-    <img id="crusher" src="{{ HTTP_STATIC_URL }}bunnies/masher.png">
+    <img id="crusher" src="/learning_projects/bunnies/masher.png">
       <!-- 
-            Carrots?: {{ HTTP_STATIC_URL }}bunnies/carrots.png
+            Carrots?: /learning_projects/bunnies/carrots.png
 
-            Whoops:  {{ HTTP_STATIC_URL }}bunnies/mashed.png
+            Whoops:  /learning_projects/bunnies/mashed.png
       -->
       
     </div>   <!-- end of "scene" -->
@@ -159,7 +159,7 @@
       
       
       <audio id="soundbox" controls="controls">
-        <source src="{{ HTTP_STATIC_URL }}bunnies/drum-roll.mp3" type='audio/mpeg; codecs="mp3"'>
+        <source src="/learning_projects/bunnies/drum-roll.mp3" type='audio/mpeg; codecs="mp3"'>
       </audio>
       
       

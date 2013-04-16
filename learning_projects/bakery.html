@@ -27,7 +27,7 @@ Let's get started.
     <div id="container">
       <header>Bakery Bash</header>
       <div class="bread-cat">
-        <img src="{{ HTTP_STATIC_URL }}bakery/kittyloaf.gif" width="95px">
+        <img src="/learning_projects/bakery/kittyloaf.gif" width="95px">
 <!--
 For starters can you change the Loaf Cat's greeting message so that your mission remains a secret! Maybe change it to describe the awesome party you and Loaf Cat are throwing. The <p> tag is for paragraphs - you can change the text in between the open <p> and close </p> tags to add your own message.
 -->
@@ -44,9 +44,9 @@ Each of of your guests can bring another surprise guest, which they link to belo
 
       <div class="kitty">
         <h1>Guest #1</h1>
-        <img src="{{ HTTP_STATIC_URL }}bakery/dancing-cat.gif" width="188px">
+        <img src="/learning_projects/bakery/dancing-cat.gif" width="188px">
         <p>
-          <a href="{{ HTTP_STATIC_URL }}bakery/serious_cat_is_serious.jpg">Secret Guest</a>
+          <a href="/learning_projects/bakery/serious_cat_is_serious.jpg">Secret Guest</a>
         </p>
       </div>
 
@@ -57,9 +57,9 @@ Now that you know how <a> tags work, and how to change the secret guests, let's 
 -->
       <div class="kitty">
         <h1>Guest #2</h1>
-        <img src="{{ HTTP_STATIC_URL }}bakery/dancing-cat.gif" width="188px">
+        <img src="/learning_projects/bakery/dancing-cat.gif" width="188px">
         <p>
-          <a href="{{ HTTP_STATIC_URL }}bakery/serious_cat_is_serious.jpg">Secret Guest</a>
+          <a href="/learning_projects/bakery/serious_cat_is_serious.jpg">Secret Guest</a>
         </p>
       </div>
 <!--
@@ -67,9 +67,9 @@ Whoops, we forgot to remove the serious cat from the mix. Can you fix the above 
 -->
       <div class="kitty">
         <h1>Guest #3</h1>
-        <img src="{{ HTTP_STATIC_URL }}bakery/dancing-cat.gif" width="188px">
+        <img src="/learning_projects/bakery/dancing-cat.gif" width="188px">
         <p>
-          <a href="{{ HTTP_STATIC_URL }}bakery/serious_cat_is_serious.jpg">Secret Guest</a>
+          <a href="/learning_projects/bakery/serious_cat_is_serious.jpg">Secret Guest</a>
         </p>
       </div>
 <!--
@@ -77,17 +77,17 @@ Now you can do the same for your other guests. You can cut and paste from above 
 -->
       <div class="kitty">
         <h1>Guest #4</h1>
-        <img src="{{ HTTP_STATIC_URL }}bakery/dancing-cat.gif" width="188px">
+        <img src="/learning_projects/bakery/dancing-cat.gif" width="188px">
         <p>
-          <a href="{{ HTTP_STATIC_URL }}bakery/serious_cat_is_serious.jpg">Secret Guest</a>
+          <a href="/learning_projects/bakery/serious_cat_is_serious.jpg">Secret Guest</a>
         </p>
       </div>
   
       <div class="kitty">
         <h1>Guest #5</h1>
-        <img src="{{ HTTP_STATIC_URL }}bakery/dancing-cat.gif" width="188px">
+        <img src="/learning_projects/bakery/dancing-cat.gif" width="188px">
         <p>
-          <a href="{{ HTTP_STATIC_URL }}bakery/serious_cat_is_serious.jpg">Secret Guest</a>
+          <a href="/learning_projects/bakery/serious_cat_is_serious.jpg">Secret Guest</a>
         </p>
       </div>
     </div>
@@ -100,7 +100,7 @@ Way to go, these guests look way more fun, how about adding some music? Time to 
 -->
 
     <audio autoplay="true">
-      <source src="{{ HTTP_STATIC_URL }}bakery/8-bit-morph.mp3" type='audio/mpeg; codecs="mp3"'>
+      <source src="/learning_projects/bakery/8-bit-morph.mp3" type='audio/mpeg; codecs="mp3"'>
     </audio>
 
     <style>
@@ -109,7 +109,7 @@ Way to go, these guests look way more fun, how about adding some music? Time to 
 Everything contained within this <style> tag is called CSS and it is used to define the presentational components of the page, like fonts, colors, containers, positioning, etc. Remember that in CSS, comments are enclosed in '/*'.
 */
       body {
-        background-image: url({{ HTTP_STATIC_URL }}bakery/stripe_blue.png);
+        background-image: url(/learning_projects/bakery/stripe_blue.png);
         margin: 0px;
       }
 
@@ -118,7 +118,7 @@ Everything contained within this <style> tag is called CSS and it is used to def
         height: 750px;
         margin-left: auto;
         margin-right: auto;
-        background-image: url({{ HTTP_STATIC_URL }}bakery/tent.png);
+        background-image: url(/learning_projects/bakery/tent.png);
         background-repeat: no-repeat;
         font-family: 'Sue Ellen Francisco';
       }
