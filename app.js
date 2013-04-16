@@ -34,7 +34,7 @@ app.use(express.cookieParser());
 app.use(express.cookieSession({secret: env.get('secret')}));
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'learning_projects'))); 
+app.use(express.static(path.join(__dirname, 'learning_projects')));
 
 // set up persona
 require('express-persona')(app, { audience: env.get("HOSTNAME") });
