@@ -108,8 +108,10 @@
       "thimblePage"
     ], function($, ThimblePage) {
       var personaButton = $("<div>Log In</div>"),
+          publishButton = $('.publish-button.wm-button.wm-button-blue.short'),
           navItem = $(".nav-item.buttons"),
           loggedIn = false;
+      publishButton.hide();
       personaButton.addClass("persona-button wm-button wm-button-blue short");
       navItem.append(personaButton);
       navigator.id.watch({
@@ -120,6 +122,7 @@
             data: {assertion: assertion},
             success: function(res, status, xhr) {
               loggedIn = true;
+              publishButton.show();
               personaButton.text("Log Out");
             },
             error: function(xhr, status, err) {
@@ -134,6 +137,7 @@
             url: '/persona/logout',
             success: function(res, status, xhr) {
               loggedIn = false;
+              publishButton.hide();
               personaButton.text("Log In");
             },
             error: function(xhr, status, err) { alert("Logout failure: " + err); }
