@@ -38,7 +38,7 @@
       return function Hackpub(options) {
         return {
           loadCode: function(path, cb) {
-            var url = options.publishURL + path;
+            var url = path;
             $.ajax({
               type: "GET",
               url: url,
@@ -90,6 +90,7 @@
       return FriendlycodeEditor({
         allowJS: false,
         defaultContent: '{{template}}',
+        pageToLoad: '{{pageToLoad}}',
         publisher: Hackpub({
           hackpubURL: "{{appURL}}",
           publishURL: "{{appURL}}/remix",
