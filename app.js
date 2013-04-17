@@ -72,7 +72,7 @@ app.get('/myprojects',
           id;
       results.forEach(function(result){
         id = result.id;
-        projects.push(row.title + "<a href='/remix/"+id+"'>view</a><a href='/remix/"+id+"/edit'>edit</a>");
+        projects.push(env.get('HOSTNAME') + "/remix/" + id + "<a href='/remix/"+id+"'>view</a><a href='/remix/"+id+"/edit'>edit</a>");
       });
       res.render('gallery.html', {title: 'User Projects', projects: projects});
     });

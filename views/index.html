@@ -54,8 +54,7 @@
           saveCode: function(data, originalURL, cb) {
 
             // fake the originalURL for the moment, based on the current doc. URL
-            var originalURL = window.location.toString(),
-                title = $('.preview-title').text();
+            var originalURL = window.location.toString();
 
             if(originalURL.indexOf("/edit")!==-1) {
               originalURL = originalURL.replace('/edit','');
@@ -66,8 +65,7 @@
               url: options.hackpubURL + "/publish",
               data: {
                 'html': data,
-                'original-url': originalURL,
-                'title': title
+                'original-url': originalURL
               },
               dataType: 'json',
               error: function(req) {
