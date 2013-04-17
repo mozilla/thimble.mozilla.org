@@ -1,8 +1,26 @@
 Thimble on Node.js
 ==================
 
-Setting it up
--------------
+This is a port of Thimble, the mozilla webmaker tool for writing and editing
+HTML and CSS right in your browser (https://thimble.webmaker.org) from its
+Playdoh-embedded python implementation to a dedicated ust-Thimble Node.js
+implementation.
+
+While the python implementation relied on Bleach for sanitization, no such
+module exists (satisfactorily) for Node.js, so this version relies on a
+RESTful Bleach endpoint; the code for this endpoint can be found at:
+
+```
+https://github.com/pomax/htmlsanitizer.org
+```
+
+The Thimble port and its custom Bleach endpoint are dev-deployed at:
+
+  Thimble: http://calm-headland-1764.herokuapp.com
+  Bleach : http://peaceful-crag-3591.herokuapp.com
+
+Setup
+-----
 
 In order to run Thimble on Node.js, the following things are required:
 
