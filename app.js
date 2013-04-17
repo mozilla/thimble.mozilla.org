@@ -6,7 +6,6 @@ var ajax = require('request'),
     express = require('express'), 
     fs = require('fs'),
     habitat = require('habitat'),
-    http = require('http'),
     middleware = require( "./lib/middleware"),
     mysql = require('mysql'),
     nunjucks = require('nunjucks'),
@@ -128,6 +127,6 @@ app.post('/publish',
 );
 
 // run server
-http.createServer(app).listen(env.get("PORT"), function(){
+app.listen(env.get("PORT"), function(){
   console.log('Express server listening on port ' + env.get("PORT"));
 });
