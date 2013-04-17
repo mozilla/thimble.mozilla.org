@@ -54,3 +54,26 @@ to set up if you don't have it installed already:
 
 After this, simpy run ```grunt``` before commiting code and you should
 be good to go.
+
+Deploying to Heroku
+-------------------
+
+If you want to test this code in a live environment, you can spin up a
+heroku instance, and simply push up the master branch code. (read
+the heroku tutorial on deploying a node.js application. If you follow
+the instructions, it's super simple).
+
+You will need to issue some environment "SET" commands to make sure
+things work:
+
+```
+> heroku config:set HOSTNAME="<the http://....heroku address you get from "heroku open">""
+> heroku config:set BLEACH_ENDPOINT = "http://peaceful-crag-3591.herokuapp.com"
+> heroku config:set SECRET="abcd"
+> heroku config:set NODE_ENV="development"
+```
+That should be enough to ensure the deployed version has all the environment
+variables that it will rely on. The BLEACH_ENDPOINT url is where we are
+currently hosting the custom htmlsanitizer.org code. If you want to run 
+your own copy, create another heroku instance and read the tutorial on
+setting up a python instance.
