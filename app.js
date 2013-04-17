@@ -69,7 +69,7 @@ app.get('/projects/:name', function(req, res) {
 app.get('/myprojects',
   middleware.checkForPersonaAuth,
   function(req, res) {
-    databaseAPI.findAllBy(req.session.email, function(err, results) {
+    databaseAPI.findAllByUser(req.session.email, function(err, results) {
       var response = "<h1>MY PROJECTS TEMPLATE GOES HERE</h1>\n", id;
       results.forEach(function(result){
         id = result.id;
