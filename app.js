@@ -49,13 +49,12 @@ app.get('/', function(req, res) {
 app.get('/projects', function(req, res) {
   fs.readdir('learning_projects', function(err, files){
     if(err) { res.end(); return; }
-    var response = "<h1>GALLERY TYPE TEMPLATE GOES HERE</h1>\n";
+    var projects = [];
     files.forEach( function(e) {
-      e = e.replace('.html','');
-      response += "<a href='/projects/" + e + "'>" + e + "</a><br>\n";
+      var id = e.replace('.html','');
+      projects.push(id+"<a href='/projects/"+id+"'>edit</a><a href='/"+id+".html'>view</a>");
     });
-    res.send(response);
-    res.end();
+    res.render('gallery.html', {location: "projects", title: 'Learning Projects', projects: projects});
   });
 });
 
@@ -69,13 +68,13 @@ app.get('/myprojects',
   middleware.checkForPersonaAuth,
   function(req, res) {
     databaseAPI.findAllByUser(req.session.email, function(err, results) {
-      var response = "<h1>MY PROJECTS TEMPLATE GOES HERE</h1>\n", id;
+      var projects = [],
+          id;
       results.forEach(function(result){
         id = result.id;
-        response += "<a href='/remix/"+id+"'>"+id+"</a> (<a href='/remix/"+id+"/edit'>edit</a>)<br>\n";
+        projects.push(env.get('HOSTNAME') + "/remix/" + id + "<a href='/remix/"+id+"'>view</a><a href='/remix/"+id+"/edit'>edit</a>");
       });
-      res.send(response);
-      res.end();
+      res.render('gallery.html', {title: 'User Projects', projects: projects});
     });
   }
 );
