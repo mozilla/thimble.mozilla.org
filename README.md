@@ -14,10 +14,9 @@ RESTful Bleach endpoint; the code for this endpoint can be found at:
 https://github.com/pomax/htmlsanitizer.org
 ```
 
-The Thimble port and its custom Bleach endpoint are dev-deployed at:
-
-  Thimble: http://calm-headland-1764.herokuapp.com
-  Bleach : http://peaceful-crag-3591.herokuapp.com
+The Thimble port and its custom Bleach endpoint are dev-deployed at
+http://calm-headland-1764.herokuapp.com and http://peaceful-crag-3591.herokuapp.com,
+respectively.
 
 Setup
 -----
