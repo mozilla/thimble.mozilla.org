@@ -3,6 +3,7 @@
  */
 var ajax = require('request'),
     async = require('async'),
+    db = require('./lib/database'),
     express = require('express'), 
     fs = require('fs'),
     habitat = require('habitat'),
@@ -12,12 +13,12 @@ var ajax = require('request'),
     nunjucks = require('nunjucks'),
     path = require('path'),
     routes = require('./routes'),
-    sqlite = require('sqlite3'),
     user = require('./routes/user');
 
 habitat.load();
 
-var app = express(),
+var databaseAPI = db(),
+    app = express(),
     nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views')),
     env = new habitat();
 
@@ -68,31 +69,23 @@ app.get('/projects/:name', function(req, res) {
 app.get('/myprojects',
   middleware.checkForPersonaAuth,
   function(req, res) {
-    var db = new sqlite.Database('thimble.sqlite', function(err) {
-      if(err) { res.send(err); res.end(); return; }
-      db.all("SELECT rowid FROM test WHERE personaid = ?", [req.session.email], function(err, rows) {
-        if(err) { res.send(err); res.end(); return; }
-        var response = "<h1>MY PROJECTS TEMPLATE GOES HERE</h1>\n", id;
-        rows.forEach( function(row) {
-          id = row.rowid;
-          response += "<a href='/remix/"+id+"'>"+id+"</a> (<a href='/remix/"+id+"/edit'>edit</a>)<br>\n";
-        });
-        res.send(response);
-        res.end();
+    databaseAPI.findAllBy(req.session.email, function(err, results) {
+      var response = "<h1>MY PROJECTS TEMPLATE GOES HERE</h1>\n", id;
+      results.forEach(function(result){
+        id = result.id;
+        response += "<a href='/remix/"+id+"'>"+id+"</a> (<a href='/remix/"+id+"/edit'>edit</a>)<br>\n";
       });
+      res.send(response);
+      res.end();
     });
   }
 );
 
 // what do we do when a project request comes in by id (:id route)?
 app.param('id', function(req, res, next, id) {
-  var db = new sqlite.Database('thimble.sqlite', function(err) {
-    if(err) { return next(err); }
-    db.get("SELECT * FROM test WHERE rowid = ?", [id], function(err, row) {
-      if(err) { return next(err); }
-      req.pageData = row.sanitized;
-      next();
-    });
+  databaseAPI.find(id, function(err, result) {
+    req.pageData = result.sanitizedData;
+    next();
   });
 });
 
@@ -120,7 +113,7 @@ app.post('/publish',
          middleware.checkForPublishData,
          middleware.checkForOriginalPage,
          middleware.bleachData(env.get("BLEACH_ENDPOINT")),
-         middleware.publishData(sqlite),
+         middleware.publishData(databaseAPI),
   function(req, res) {
     res.json({ 'published-url' : env.get('HOSTNAME') + '/' + req.publishId });
     res.end();
