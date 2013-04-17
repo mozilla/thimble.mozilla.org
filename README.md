@@ -43,3 +43,14 @@ cp env.dist .env
 ```
 
 and the Thimble code will pick up on it when run through node.
+
+Development additionals
+-----------------------
+
+We handle JS, HTML and CSS linting through grunt, which is very simple
+to set up if you don't have it installed already:
+
+```npm install -g grunt-cli```
+
+After this, simpy run ```grunt``` before commiting code and you should
+be good to go.
