@@ -1,5 +1,3 @@
-const DEVELOPMENT = "development";
-
 /**
  * Module dependencies.
  */
@@ -38,7 +36,7 @@ app.use(express.static(path.join(__dirname, 'learning_projects')));
 
 // set up persona
 require('express-persona')(app, { audience: env.get("HOSTNAME") });
-if (env.get("NODE_ENV") === DEVELOPMENT) {
+if (env.get("NODE_ENV") === "development") {
   app.use(express.errorHandler());
 }
 
