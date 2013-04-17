@@ -17,10 +17,10 @@ var ajax = require('request'),
 
 habitat.load();
 
-var databaseAPI = db(),
-    app = express(),
-    nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views')),
-    env = new habitat();
+var app = express(),
+    databaseAPI = db(),
+    env = new habitat(),
+    nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
 
 nunjucksEnv.express(app);
 
