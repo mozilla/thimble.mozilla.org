@@ -3,23 +3,23 @@
   "version": "0.0.2",
   "private": true,
   "dependencies": {
-    "async": "~0.2.7",
+    "async": "0.2.7",
     "express": "3.1.1",
     "express-persona": "0.0.7",
-    "habitat": "~0.4.1",
+    "habitat": "0.4.1",
     "htmlsanitizer": "0.0.1",
     "nunjucks": "~0.1.8a",
     "request": "~2.16.6",
     "makeapi": "0.0.4"
   },
   "optionalDependencies": {
-    "mysql": "~2.0.0",
-    "sequelize": "~1.6.0",
-    "sqlite3": "~2.1.7"
+    "mysql": "2.0.0",
+    "sequelize": "1.6.0",
+    "sqlite3": "2.1.7"
   },
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-csslint": "~0.1.2",
-    "grunt-contrib-jshint": "~0.4.3"
+    "grunt": "0.4.1",
+    "grunt-contrib-csslint": "0.1.2",
+    "grunt-contrib-jshint": "0.4.3"
   }
 }
