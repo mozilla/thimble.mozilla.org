@@ -85,8 +85,8 @@ things work:
 
 ```
 > heroku config:set HOSTNAME="<the http://....heroku address you get from "heroku open">""
-> heroku config:set BLEACH_ENDPOINT = "http://peaceful-crag-3591.herokuapp.com"
-> heroku config:set SECRET="abcd"
+> heroku config:set BLEACH_ENDPOINT="http://peaceful-crag-3591.herokuapp.com"
+> heroku config:set SECRET="irrelephant"
 > heroku config:set NODE_ENV="development"
 ```
 That should be enough to ensure the deployed version has all the environment
