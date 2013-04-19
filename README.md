@@ -84,7 +84,7 @@ You will need to issue some environment "SET" commands to make sure
 things work:
 
 ```
-> heroku config:set HOSTNAME="<the http://....heroku address you get from "heroku open">""
+> heroku config:set HOSTNAME="<the http://....heroku.com address you get from 'heroku open'>"
 > heroku config:set BLEACH_ENDPOINT="http://peaceful-crag-3591.herokuapp.com"
 > heroku config:set SECRET="irrelephant"
 > heroku config:set NODE_ENV="development"
