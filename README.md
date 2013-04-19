@@ -61,9 +61,6 @@ cp env.dist .env
 
 and the Thimble code will pick up on it when run through node.
 
-*NOTE: due to a bug in ```habitat```, you will need to remove all
-empty lines, as well as comments, from the ```.env``` file*
-
 Development additionals
 -----------------------
 
