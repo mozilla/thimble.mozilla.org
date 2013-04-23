@@ -77,14 +77,17 @@ app.get('/myprojects',
     make.search({email: req.session.email}, function(results) {
       var projects = [],
           url;
-      results.forEach(function(result){
-        url = result.url;
-        projects.push({
-          title: url,
-          edit: url + "/edit",
-          view: url
+
+      if (results) {
+        results.forEach(function(result){
+          url = result.url;
+          projects.push({
+            title: url,
+            edit: url + "/edit",
+            view: url
+          });
         });
-      });
+      }
       res.render('gallery.html', {title: 'User Projects', projects: projects});
     });
   }
@@ -124,7 +127,6 @@ app.post('/publish',
          middleware.bleachData(env.get("BLEACH_ENDPOINT")),
          middleware.saveData(databaseAPI, env.get('HOSTNAME')),
          middleware.publishData(s3writer),
-         middleware.publishMake(make, env.get('HOSTNAME')),
          middleware.publishMake(make),
   function(req, res) {
     res.json({ 'published-url' : req.publishUrl });
