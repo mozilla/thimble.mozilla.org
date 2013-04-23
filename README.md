@@ -40,14 +40,14 @@ full documents, rather than document fragments)
 
 4) go into the thimble.webmaker.org dir and run ```npm install```
 
-5) set up fake-s3 for testing without conneting to AWS-S3 directly.
+5) set up fake-s3 for testing without connecting to AWS-S3 directly:
 
 ```
 gem install fakes3
 mkdir fakes3
 ```
 
-(note: this requires ruby. If not already installed, visit ruby-lang.org)
+(**note** this requires ```ruby```. If you do not have this installed, visit http://ruby-lang.org)
 
 6) set up the environment variables (see next section).
 
@@ -61,7 +61,7 @@ fakes3 -r ./fakes3 -h localhost -p 6060
 ```
 
 You can then run Thimble from the thimble.webmaker.org directory using
-```node app``` or, if you want to run it in continuous mode, so that it
+```node app``` or, if you want to run it in continuous mode so that it
 auto-restarts when files are updated, ```forever -w app```
 
 Environment variables
@@ -90,6 +90,13 @@ you to add the following rule to your hosts file:
 If your bucket name is "test", then this rule should point to
 test.localhost, if your bucketname is "potato", point to potato.localhost,
 etc.
+
+Note that this file is used on all conventional operation systems, but
+lives in different places:
+
+* on *n*x, it is located at ```<systemroot>/etc/hosts```
+* on OSX, it is located at ```<systemroot>/private/etc/hosts```
+* on Windows, it is located at ```<systemroot>\system32\drivers\etc\hosts```
 
 Development additionals
 -----------------------
