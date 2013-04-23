@@ -4,7 +4,7 @@
 var ajax = require('request'),
     async = require('async'),
     db = require('./lib/database'),
-    express = require('express'), 
+    express = require('express'),
     fs = require('fs'),
     habitat = require('habitat'),
     middleware = require( "./lib/middleware"),
@@ -18,10 +18,10 @@ var ajax = require('request'),
 habitat.load();
 
 var app = express(),
-    databaseAPI = db(),
     env = new habitat(),
     nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
 
+databaseAPI = db(env.get('DB')),
 nunjucksEnv.express(app);
 
 // all environments
