@@ -48,7 +48,7 @@ gem install fakes3
 mkdir fakes3
 ```
 
-(**note** this requires ```ruby```. If you do not have this installed, visit http://ruby-lang.org)
+**NOTE:** this requires ```ruby```. If you do not have this installed, visit http://ruby-lang.org
 
 6) set up the environment variables (see next section).
 
@@ -80,7 +80,7 @@ cp env.dist .env
 
 and the Thimble code will pick up on it when run through node.
 
-**NOTE** If you are using fakes3, you will need to make sure that
+**NOTE:** If you are using fakes3, you will need to make sure that
 [bucket].localhost points to localhost, which most likely requires
 you to add the following rule to your hosts file:
 
