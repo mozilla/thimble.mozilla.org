@@ -60,6 +60,7 @@
                 nodeList = iframeDocument.querySelectorAll('meta'),
                 metaTags = [],
                 title,
+                tutorial,
                 description;
 
             if (iframeDocument.title) {
@@ -78,6 +79,8 @@
               } else if (nodeList[i].name === 'webmaker-title' && !title) {
                 // We don't want to grab a title if a title element already exists.
                 title = nodeList[i].content;
+              } else if (nodeList[i].name === 'webmaker-tutorial') {
+                tutorial = nodeList[i].content;
               }
             }
 
@@ -90,7 +93,8 @@
                 'metadata': {
                   'tags': metaTags,
                   'title': title,
-                  'description': description
+                  'description': description,
+                  'tutorial': tutorial
                 }
               },
               dataType: 'json',
