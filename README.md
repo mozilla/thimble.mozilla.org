@@ -40,7 +40,8 @@ full documents, rather than document fragments)
 
 4) go into the thimble.webmaker.org dir and run ```npm install```
 
-5) set up fake-s3 for testing without connecting to AWS-S3 directly:
+5) as an optional step, when you don't want to test with a live AWS-S3 instance, you
+can set up fake-s3 to handle the S3 publication:
 
 ```
 gem install fakes3
@@ -88,7 +89,7 @@ you to add the following rule to your hosts file:
 ```
 
 If your bucket name is "test", then this rule should point to
-test.localhost, if your bucketname is "potato", point to potato.localhost,
+test.localhost, if your bucket name is "potato", point to potato.localhost,
 etc.
 
 Note that this file is used on all conventional operation systems, but
