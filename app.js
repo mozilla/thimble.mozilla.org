@@ -74,18 +74,16 @@ app.get('/projects/:name', function(req, res) {
 app.get('/myprojects',
   middleware.checkForPersonaAuth,
   function(req, res) {
-    make.search({email: req.session.email}, function(results) {
-      var projects = [],
-          url;
-
+    make.search({email: req.session.email}, function(err, results) {
+      var projects = [];
       if (results) {
-        results.forEach(function(result){
-          url = result.url;
-          projects.push({
+        projects = results.map(function(result) {
+          var url = result.url;
+          return {
             title: url,
             edit: url + "/edit",
             view: url
-          });
+          }
         });
       }
       res.render('gallery.html', {title: 'User Projects', projects: projects});
