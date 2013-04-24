@@ -54,17 +54,48 @@
           saveCode: function(data, originalURL, cb) {
 
             // fake the originalURL for the moment, based on the current doc. URL
-            var originalURL = window.location.toString();
+            var originalURL = window.location.toString(),
+                iframeDocument = document.querySelectorAll('.preview-holder iframe')[0]
+                                         .contentDocument,
+                nodeList = iframeDocument.querySelectorAll('meta'),
+                metaTags = [],
+                title,
+                tutorial,
+                description;
+
+            if (iframeDocument.title) {
+              title = iframeDocument.title;
+            }
+
             if(originalURL.indexOf("/edit")!==-1) {
               originalURL = originalURL.replace('/edit','');
             } else { originalURL = undefined; }
+
+            for (var i = 0; i < nodeList.length; i++) {
+              if (nodeList[i].name === 'webmaker-tag') {
+                metaTags.push(nodeList[i].content);
+              } else if (nodeList[i].name === 'webmaker-description') {
+                description = nodeList[i].content;
+              } else if (nodeList[i].name === 'webmaker-title' && !title) {
+                // We don't want to grab a title if a title element already exists.
+                title = nodeList[i].content;
+              } else if (nodeList[i].name === 'webmaker-tutorial') {
+                tutorial = nodeList[i].content;
+              }
+            }
 
             $.ajax({
               type: "POST",
               url: options.hackpubURL + "/publish",
               data: {
                 'html': data,
-                'original-url': originalURL
+                'original-url': originalURL,
+                'metadata': {
+                  'tags': metaTags,
+                  'title': title,
+                  'description': description,
+                  'tutorial': tutorial
+                }
               },
               dataType: 'json',
               error: function(req) {

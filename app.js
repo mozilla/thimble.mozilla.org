@@ -7,6 +7,7 @@ var ajax = require('request'),
     express = require('express'),
     fs = require('fs'),
     habitat = require('habitat'),
+    makeAPI = require('./lib/makeapi'),
     middleware = require( "./lib/middleware"),
     mysql = require('mysql'),
     nunjucks = require('nunjucks'),
@@ -19,6 +20,7 @@ habitat.load();
 
 var app = express(),
     env = new habitat(),
+    make = makeAPI(env.get("MAKE_ENDPOINT")),
     nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
 
 databaseAPI = db(env.get('DB')),
@@ -53,7 +55,11 @@ app.get('/projects', function(req, res) {
     var projects = [];
     files.forEach( function(e) {
       var id = e.replace('.html','');
-      projects.push(id+"<a href='/projects/"+id+"'>edit</a><a href='/"+id+".html'>view</a>");
+      projects.push({
+        title: id,
+        edit: id,
+        view: "/" + id + ".html"
+      });
     });
     res.render('gallery.html', {location: "projects", title: 'Learning Projects', projects: projects});
   });
@@ -68,13 +74,20 @@ app.get('/projects/:name', function(req, res) {
 app.get('/myprojects',
   middleware.checkForPersonaAuth,
   function(req, res) {
-    databaseAPI.findAllByUser(req.session.email, function(err, results) {
+    make.search({email: req.session.email}, function(results) {
       var projects = [],
-          id;
-      results.forEach(function(result){
-        id = result.id;
-        projects.push(env.get('HOSTNAME') + "/remix/" + id + "<a href='/remix/"+id+"'>view</a><a href='/remix/"+id+"/edit'>edit</a>");
-      });
+          url;
+
+      if (results) {
+        results.forEach(function(result){
+          url = result.url;
+          projects.push({
+            title: url,
+            edit: url + "/edit",
+            view: url
+          });
+        });
+      }
       res.render('gallery.html', {title: 'User Projects', projects: projects});
     });
   }
@@ -112,10 +125,11 @@ app.post('/publish',
          middleware.checkForPublishData,
          middleware.checkForOriginalPage,
          middleware.bleachData(env.get("BLEACH_ENDPOINT")),
-         middleware.saveData(databaseAPI),
+         middleware.saveData(databaseAPI, env.get('HOSTNAME')),
          middleware.publishData(s3writer),
+         middleware.publishMake(make),
   function(req, res) {
-    res.json({ 'published-url' : env.get('HOSTNAME') + '/' + req.publishId });
+    res.json({ 'published-url' : req.publishUrl });
     res.end();
   }
 );
