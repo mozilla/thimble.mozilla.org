@@ -10,7 +10,7 @@
     "htmlsanitizer": "0.0.1",
     "nunjucks": "0.1.8a",
     "request": "2.16.6",
-    "makeapi": "0.0.6"
+    "makeapi": "0.0.7"
   },
   "optionalDependencies": {
     "mysql": "2.0.0",
