@@ -80,7 +80,7 @@ app.get('/myprojects',
         projects = results.map(function(result) {
           var url = result.url;
           return {
-            title: url,
+            title: result.title || url,
             edit: url + "/edit",
             view: url
           }
