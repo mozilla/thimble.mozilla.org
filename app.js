@@ -82,7 +82,7 @@ app.get('/myprojects',
             title: result.title || url,
             edit: url + "/edit",
             view: url
-          }
+          };
         });
       }
       res.render('gallery.html', {title: 'User Projects', projects: projects});
