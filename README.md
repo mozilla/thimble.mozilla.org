@@ -55,15 +55,14 @@ mkdir fakes3
 You are now ready to run the app, by first starting up the sanitizer in the
 htmlsanitizer.org directory, by running ```python app.py```
 
-In additional, launch the fake S3 service in a terminal with:
+In addition, launch the fake S3 service in a terminal with:
 
 ```
 fakes3 -r ./fakes3 -h localhost -p 6060
 ```
 
 You can then run Thimble from the thimble.webmaker.org directory using
-```node app``` or, if you want to run it in continuous mode so that it
-auto-restarts when files are updated, ```forever -w app```
+```node app```
 
 Environment variables
 ---------------------

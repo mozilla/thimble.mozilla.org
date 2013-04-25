@@ -15,7 +15,7 @@
     "sequelize": "1.6.0"
   },
   "optionalDependencies": {
-    "mysql": "2.0.0",
+    "mysql": "2.0.0-alpha7",
     "sqlite3": "2.1.7"
   },
   "devDependencies": {
