@@ -122,17 +122,12 @@ app.post('/publish',
          middleware.checkForPublishData,
          middleware.checkForOriginalPage,
          middleware.bleachData(env.get("BLEACH_ENDPOINT")),
-<<<<<<< HEAD
          middleware.saveData(databaseAPI, env.get('HOSTNAME')),
-         middleware.publishData(s3writer),
-         middleware.publishMake(make),
-=======
-         middleware.saveData(databaseAPI),
          middleware.finalizeProject,
          middleware.publishData(env.get('S3')),
->>>>>>> rebase fix
+         middleware.publishMake(make),
   function(req, res) {
-    res.json({ 'published-url' : req.publishUrl });
+    res.json({ 'published-url' : req.publishedUrl });
     res.end();
   }
 );

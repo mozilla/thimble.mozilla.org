@@ -48,7 +48,7 @@ gem install fakes3
 mkdir fakes3
 ```
 
-**NOTE:** this requires ```ruby```. If you do not have this installed, visit http://ruby-lang.org
+**NOTE:** this requires ruby. If you do not have this installed, visit http://ruby-lang.org
 
 6) set up the environment variables (see next section).
 
@@ -58,7 +58,7 @@ htmlsanitizer.org directory, by running ```python app.py```
 In additional, launch the fake S3 service in a terminal with:
 
 ```
-fakes3 -r ./fakes3 -h localhost -p 6060 
+fakes3 -r ./fakes3 -h localhost -p 6060
 ```
 
 You can then run Thimble from the thimble.webmaker.org directory using
@@ -129,6 +129,6 @@ things work:
 ```
 That should be enough to ensure the deployed version has all the environment
 variables that it will rely on. The BLEACH_ENDPOINT url is where we are
-currently hosting the custom htmlsanitizer.org code. If you want to run 
+currently hosting the custom htmlsanitizer.org code. If you want to run
 your own copy, create another heroku instance and read the tutorial on
 setting up a python instance.
