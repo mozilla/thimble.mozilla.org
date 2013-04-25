@@ -13,7 +13,6 @@ var ajax = require('request'),
     nunjucks = require('nunjucks'),
     path = require('path'),
     routes = require('./routes'),
-    s3writer = {}, // STUBBED, PENDING S3 WRITING MODULE
     user = require('./routes/user');
 
 habitat.load();
@@ -83,7 +82,7 @@ app.get('/myprojects',
             title: result.title || url,
             edit: url + "/edit",
             view: url
-          }
+          };
         });
       }
       res.render('gallery.html', {title: 'User Projects', projects: projects});
@@ -124,10 +123,11 @@ app.post('/publish',
          middleware.checkForOriginalPage,
          middleware.bleachData(env.get("BLEACH_ENDPOINT")),
          middleware.saveData(databaseAPI, env.get('HOSTNAME')),
-         middleware.publishData(s3writer),
+         middleware.finalizeProject,
+         middleware.publishData(env.get('S3')),
          middleware.publishMake(make),
   function(req, res) {
-    res.json({ 'published-url' : req.publishUrl });
+    res.json({ 'published-url' : req.publishedUrl });
     res.end();
   }
 );
