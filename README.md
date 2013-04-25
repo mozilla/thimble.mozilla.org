@@ -21,13 +21,13 @@ respectively.
 Setup
 -----
 
-In order to run Thimble on Node.js, the following things are required:
+In order to run Thimble, the following things are required:
 
 1) you will need to have node installed
 2) you'll need to fork and then clone the repo recursively:
 
 ```
-git clone git@github.com:[yourname]/ThimbleOnNode.git --recursive
+git clone git@github.com:[yourname]/thimble.webmaker.org.git --recursive
 ```
 
 3) you'll also need to clone the custom sanitization REST service that Thimble uses:
@@ -35,16 +35,34 @@ git clone git@github.com:[yourname]/ThimbleOnNode.git --recursive
 ```
 git clone git://github.com/Pomax/htmlsanitizer.org.git
 ```
+(this is a version of htmlsanitizer.org with a modified Bleach that can deal with
+full documents, rather than document fragments)
 
-4) go into the ThimbleOnNode dir and run ```npm install```
+4) go into the thimble.webmaker.org dir and run ```npm install```
+
+5) set up fake-s3 for testing without conneting to AWS-S3 directly.
+
+```
+gem install fakes3
+mkdir fakes3
+```
+
+(note: this requires ruby. If not already installed, visit ruby-lang.org)
+
+6) set up the environment variables (see next section).
 
 You are now ready to run the app, by first starting up the sanitizer in the
 htmlsanitizer.org directory, by running ```python app.py```
 
+In additional, launch the fake S3 service in a terminal with:
 
-You can then run Thimble from the ThimbleOnNode directory using ```node app```
-or, if you want to run it in continuous mode, so that it auto-restarts when
-files are updated, ```forever -w app```
+```
+fakes3 -r ./fakes3 -h localhost -p 6060 
+```
+
+You can then run Thimble from the thimble.webmaker.org directory using
+```node app``` or, if you want to run it in continuous mode, so that it
+auto-restarts when files are updated, ```forever -w app```
 
 Environment variables
 ---------------------
@@ -60,6 +78,18 @@ cp env.dist .env
 ```
 
 and the Thimble code will pick up on it when run through node.
+
+**NOTE** If you are using fakes3, you will need to make sure that
+[bucket].localhost points to localhost, which most likely requires
+you to add the following rule to your hosts file:
+
+```
+127.0.0.1 bucketName.localhost
+```
+
+If your bucket name is "test", then this rule should point to
+test.localhost, if your bucketname is "potato", point to potato.localhost,
+etc.
 
 Development additionals
 -----------------------

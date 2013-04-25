@@ -13,7 +13,6 @@ var ajax = require('request'),
     nunjucks = require('nunjucks'),
     path = require('path'),
     routes = require('./routes'),
-    s3writer = {}, // STUBBED, PENDING S3 WRITING MODULE
     user = require('./routes/user');
 
 habitat.load();
@@ -123,9 +122,15 @@ app.post('/publish',
          middleware.checkForPublishData,
          middleware.checkForOriginalPage,
          middleware.bleachData(env.get("BLEACH_ENDPOINT")),
+<<<<<<< HEAD
          middleware.saveData(databaseAPI, env.get('HOSTNAME')),
          middleware.publishData(s3writer),
          middleware.publishMake(make),
+=======
+         middleware.saveData(databaseAPI),
+         middleware.finalizeProject,
+         middleware.publishData(env.get('S3')),
+>>>>>>> rebase fix
   function(req, res) {
     res.json({ 'published-url' : req.publishUrl });
     res.end();
