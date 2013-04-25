@@ -21,7 +21,7 @@ habitat.load();
 var app = express(),
     databaseAPI = db(),
     env = new habitat(),
-    make = makeAPI(env.get("MAKE_ENDPOINT"), env.get("MAKE_AUTH")),
+    make = makeAPI(env.get("MAKE")),
     nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
 
 nunjucksEnv.express(app);
