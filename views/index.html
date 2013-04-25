@@ -52,7 +52,6 @@
             });
           },
           saveCode: function(data, originalURL, cb) {
-
             // fake the originalURL for the moment, based on the current doc. URL
             var originalURL = window.location.toString(),
                 iframeDocument = document.querySelector('.preview-holder iframe')
@@ -64,6 +63,12 @@
                 locale,
                 thumbnail,
                 title;
+
+            // Create an iframe to insert og meta tags into then build a new string from.
+            var builderIframe = document.createElement("iframe"),
+                ogMetaElement,
+                ogMetaTagsString = "url site_name title description author image locale updated_time",
+                ogMetaTagsArray;
 
             if (iframeDocument.title) {
               title = iframeDocument.title;
@@ -84,8 +89,40 @@
                 thumbnail = nodeList[i].content;
               } else if (nodeList[i].name === 'webmaker:locale') {
                 locale = nodeList[i].content;
+              } else if (nodeList[i].getAttribute( "property" ).split(":")[0] === "og") {
+                // Drop any supported og meta tags that already exist.
+                // TODO: decide if we want to display og meta tags on a remix.
+                // Then, we'll have to decide if we want to display user generated ones or not.
+                ogMetaTagsString = ogMetaTagsString.replace(nodeList[i].getAttribute( "property" ).split(":")[1], "");
               }
             }
+
+            ogMetaTagsArray = ogMetaTagsString.split(/\s+/);
+            document.body.appendChild( builderIframe );
+
+            builderIframe.contentDocument.open();
+            builderIframe.contentDocument.write(data);
+            builderIframe.contentDocument.close();
+
+            builderIframe.contentDocument.head.innerHTML += "<!--Webmaker generated Social Sharing metadata-->";
+            for (var i = 0; i < ogMetaTagsArray.length; i++) {
+              if (ogMetaTagsArray[i]) {
+                ogMetaElement = document.createElement("meta");
+                ogMetaElement.setAttribute("property", "og:" + ogMetaTagsArray[i]);
+                ogMetaElement.setAttribute("content", "placeholder");
+                builderIframe.contentDocument.head.appendChild(ogMetaElement);
+              }
+            }
+            builderIframe.contentDocument.head.innerHTML += "<!--Webmaker generated Social Sharing metadata-->";
+
+            // Rebuild data with og meta tags inserted.
+            data = "<!DOCTYPE html><html><head>" +
+                   builderIframe.contentDocument.head.innerHTML +
+                   "</head><body>" +
+                   builderIframe.contentDocument.body.innerHTML +
+                   "</body></html>";
+
+            document.body.removeChild( builderIframe );
 
             $.ajax({
               type: "POST",
