@@ -17,7 +17,7 @@
     <script>
     // Alternate publisher implementation that publishes to a hackpub
     // endpoint. For more information, see:
-    // 
+    //
     //   https://github.com/hackasaurus/hackpub
     //
     // Note also that the Amazon S3 bucket hackpub publishes to must
@@ -107,9 +107,9 @@
                 cb(req);
               },
               success: function(result) {
-                var url = result['published-url'];
-                var path = url.substring(url.lastIndexOf('/')+1);
-                cb(null, {path: path, url: options.publishURL + '/' + path});
+                var url = result['published-url'],
+                    path = url.substring(url.lastIndexOf('/')+1);
+                cb(null, {path: path, url: url});
               }
             });
           }

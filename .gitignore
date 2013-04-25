@@ -2,3 +2,4 @@
 node_modules
 thimble.sqlite
 .env
+fakes3
