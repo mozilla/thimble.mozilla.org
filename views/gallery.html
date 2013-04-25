@@ -7,7 +7,7 @@
     <h3>{{title}}</h3>
     <ul>
     {% for project in projects %}
-      <li>{{project}}</li>
+      <li><span>{{project.title}}</span><a href='{{project.view}}'>view</a><a href='{{project.edit}}'>edit</a></li>
     {% endfor %}
     </ul>
   </body>
