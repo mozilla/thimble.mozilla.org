@@ -67,7 +67,7 @@ You can then run Thimble from the thimble.webmaker.org directory using
 Environment variables
 ---------------------
 
-there is a special file that is used for environment variables in lieu of
+There is a special file that is used for environment variables in lieu of
 actually setting these for development purposes. The base file is
 ```env.dist``` and is self documented. Simply run through it and set your
 values accordingly. To use these values during development, copy this
