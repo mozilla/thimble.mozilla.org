@@ -128,7 +128,7 @@ app.post('/publish',
          middleware.checkForOriginalPage,
          middleware.bleachData(env.get("BLEACH_ENDPOINT")),
          middleware.saveData(databaseAPI, env.get('HOSTNAME')),
-         middleware.finalizeProject(nunjucksEnv, env.get('HOSTNAME')),
+         middleware.finalizeProject(nunjucksEnv, env),
          middleware.publishData(env.get('S3')),
          middleware.publishMake(make),
   function(req, res) {
