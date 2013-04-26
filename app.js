@@ -66,7 +66,11 @@ app.get('/projects', function(req, res) {
 
 // learning project lookup
 app.get('/projects/:name', function(req, res) {
-  res.render('index.html', {appURL: env.get("HOSTNAME"), pageToLoad: '/' + req.params.name + '.html', HTTP_STATIC_URL: '/'});
+  res.render('index.html', {
+    appURL: env.get("HOSTNAME"),
+    pageToLoad: '/' + req.params.name + '.html',
+    HTTP_STATIC_URL: '/'
+  });
 });
 
 // "my projects" listing -- USED FOR DEV WORK ATM, MAY NOT BE PERMANENT IN ANY WAY
@@ -106,7 +110,8 @@ app.get("/remix/:id/edit", function(req, res) {
   var content = req.pageData.replace(/'/g, '\\\'').replace(/\n/g, '\\n');
   res.render('index.html', {
     appURL: env.get("HOSTNAME"),
-    template: content, HTTP_STATIC_URL: '/'
+    template: content,
+    HTTP_STATIC_URL: '/'
   });
 });
 
@@ -123,7 +128,7 @@ app.post('/publish',
          middleware.checkForOriginalPage,
          middleware.bleachData(env.get("BLEACH_ENDPOINT")),
          middleware.saveData(databaseAPI, env.get('HOSTNAME')),
-         middleware.finalizeProject,
+         middleware.finalizeProject(nunjucksEnv, env.get('HOSTNAME')),
          middleware.publishData(env.get('S3')),
          middleware.publishMake(make),
   function(req, res) {
