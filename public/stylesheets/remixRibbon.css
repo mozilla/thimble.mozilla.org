@@ -1,4 +1,4 @@
-.remixRibbon {
+.webmaker-remixRibbon {
   position: fixed;
   right: -160px;
   top: -70px;
@@ -29,7 +29,7 @@
 
 }
 
-.remixRibbon a {
+.webmaker-remixRibbon a {
   color: #FFF;
   text-decoration: none;
   text-shadow: 2px 2px 6px black;
@@ -37,7 +37,7 @@
   line-height: 1.2em;
 }
 
-.remixRibbon a:hover {
+.webmaker-remixRibbon a:hover {
   font-size: 1.3em;
   line-height: 1em;
 }
