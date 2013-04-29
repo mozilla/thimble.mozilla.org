@@ -58,9 +58,11 @@
                 iframeDocument = document.querySelector('.preview-holder iframe')
                                          .contentDocument,
                 nodeList = iframeDocument.querySelectorAll('meta'),
-                metaData = {},
+                metaData = {
+                  tags: []
+                },
                 metaTag, metaName,
-                metaTags = {
+                metaNames = {
                   'description': function(node) {
                     metaData.description = node.content;
                   },
@@ -68,7 +70,7 @@
                     metaData.author = node.content;
                   },
                   'webmaker:tags': function(node) {
-                    metaData.metaTags = node.content.split(",");
+                    metaData.metaTags = metaData.metaTags.concat(node.content.split(","));
                   },
                   'webmaker:thumbnail': function(node) {
                     metaData.thumbnail = node.content;
@@ -77,15 +79,11 @@
                     metaData.locale = node.content;
                   },
                   'webmaker:tutorial': function(node) {
-                    var steps = iframeDocument.querySelectorAll("ul li"),
-                        tutorial = {
-                          url: node.content,
-                          steps: []
-                        };
-                    for (var i = 0; i < steps.length; i++) {
-                      tutorial.steps.push(step[i].innerHTML);
-                    }
-                    metaData.tutorial = tutorial;
+                    //var steps = iframeDocument.querySelectorAll("ul li")
+                    //metaData.metaTags.push("tutorial:" + node.content);
+                    //for (var i = 0; i < steps.length; i++) {
+                    //  metaData.metaTags.push("step1:" + steps[i].innerHTML);
+                    //}
                   }
                 };
 
@@ -100,8 +98,8 @@
             for (var i = 0; i < nodeList.length; i++) {
               metaTag = nodeList[i];
               metaName = metaTag.name;
-              if (metaTags[metaName]) {
-                metaTags[metaName](metaTag);
+              if (metaNames[metaName]) {
+                metaNames[metaName](metaTag);
               }
             }
 
