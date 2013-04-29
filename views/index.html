@@ -58,12 +58,28 @@
                 iframeDocument = document.querySelector('.preview-holder iframe')
                                          .contentDocument,
                 nodeList = iframeDocument.querySelectorAll('meta'),
-                metaTags = [],
-                author,
-                description,
-                locale,
-                thumbnail,
-                title;
+                metaData = {},
+                metaMap = {
+                  'description': function(node) {
+                    metaData.description = node.content;
+                  },
+                  'author': function(node) {
+                    metaData.author = node.content;
+                  },
+                  'webmaker:tags': function(node) {
+                    metaData.metaTags = node.content.split(",");
+                  },
+                  'webmaker:thumbnail': function(node) {
+                    metaData.thumbnail = node.content;
+                  },
+                  'webmaker:locale': function(node) {
+                    metaData.locale = node.content;
+                  },
+                  'webmaker:tutorial': function(node) {
+                    // empty for now.
+                    metaData.tutorial = {};
+                  }
+                };
 
             if (iframeDocument.title) {
               title = iframeDocument.title;
@@ -84,6 +100,8 @@
                 thumbnail = nodeList[i].content;
               } else if (nodeList[i].name === 'webmaker:locale') {
                 locale = nodeList[i].content;
+              } else if (nodeList[i].name === 'webmaker:tutorial') {
+                // go through all tutorial data
               }
             }
 
@@ -93,14 +111,15 @@
               data: {
                 'html': data,
                 'original-url': originalURL,
-                'metadata': {
+                // make this into a metaTag object, we can add as we need it.
+                'metadata': metaData /*{
                   'tags': metaTags,
                   'title': title,
                   'description': description,
                   'thumbnail': thumbnail,
                   'author': author,
                   'locale': locale
-                }
+                }*/
               },
               dataType: 'json',
               error: function(req) {
