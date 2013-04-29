@@ -59,7 +59,8 @@
                                          .contentDocument,
                 nodeList = iframeDocument.querySelectorAll('meta'),
                 metaData = {},
-                metaMap = {
+                metaTag, metaName,
+                metaTags = {
                   'description': function(node) {
                     metaData.description = node.content;
                   },
@@ -76,8 +77,15 @@
                     metaData.locale = node.content;
                   },
                   'webmaker:tutorial': function(node) {
-                    // empty for now.
-                    metaData.tutorial = {};
+                    var steps = iframeDocument.querySelectorAll("ul li"),
+                        tutorial = {
+                          url: node.content,
+                          steps: []
+                        };
+                    for (var i = 0; i < steps.length; i++) {
+                      tutorial.steps.push(step[i].innerHTML);
+                    }
+                    metaData.tutorial = tutorial;
                   }
                 };
 
@@ -90,18 +98,10 @@
             } else { originalURL = undefined; }
 
             for (var i = 0; i < nodeList.length; i++) {
-              if (nodeList[i].name === 'description') {
-                description = nodeList[i].content;
-              } else if (nodeList[i].name === 'author') {
-                author = nodeList[i].content;
-              } else if (nodeList[i].name === 'webmaker:tags') {
-                metaTags = metaTags.concat(nodeList[i].content.split(","));
-              } else if (nodeList[i].name === 'webmaker:thumbnail') {
-                thumbnail = nodeList[i].content;
-              } else if (nodeList[i].name === 'webmaker:locale') {
-                locale = nodeList[i].content;
-              } else if (nodeList[i].name === 'webmaker:tutorial') {
-                // go through all tutorial data
+              metaTag = nodeList[i];
+              metaName = metaTag.name;
+              if (metaTags[metaName]) {
+                metaTags[metaName](metaTag);
               }
             }
 
@@ -111,15 +111,7 @@
               data: {
                 'html': data,
                 'original-url': originalURL,
-                // make this into a metaTag object, we can add as we need it.
-                'metadata': metaData /*{
-                  'tags': metaTags,
-                  'title': title,
-                  'description': description,
-                  'thumbnail': thumbnail,
-                  'author': author,
-                  'locale': locale
-                }*/
+                'metadata': metaData
               },
               dataType: 'json',
               error: function(req) {
