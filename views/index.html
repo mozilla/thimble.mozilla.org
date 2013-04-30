@@ -70,7 +70,7 @@
                     metaData.author = node.content;
                   },
                   'webmaker:tags': function(node) {
-                    metaData.metaTags = metaData.metaTags.concat(node.content.split(","));
+                    metaData.tags = metaData.tags.concat(node.content.split(","));
                   },
                   'webmaker:thumbnail': function(node) {
                     metaData.thumbnail = node.content;
@@ -79,16 +79,16 @@
                     metaData.locale = node.content;
                   },
                   'webmaker:tutorial': function(node) {
-                    //var steps = iframeDocument.querySelectorAll("ul li")
-                    //metaData.metaTags.push("tutorial:" + node.content);
-                    //for (var i = 0; i < steps.length; i++) {
-                    //  metaData.metaTags.push("step1:" + steps[i].innerHTML);
-                    //}
+                    var steps = iframeDocument.querySelectorAll("ul li")
+                    metaData.tags.push("tutorial:" + node.content);
+                    for (var i = 0; i < steps.length; i++) {
+                      metaData.tags.push("step1:" + steps[i].innerHTML);
+                    }
                   }
                 };
 
             if (iframeDocument.title) {
-              title = iframeDocument.title;
+              metaData.title = iframeDocument.title;
             }
 
             if(originalURL.indexOf("/edit")!==-1) {
