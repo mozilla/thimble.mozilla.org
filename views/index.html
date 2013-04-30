@@ -6,10 +6,28 @@
     <base target="_blank">
 
     <title>Alternate Publisher Friendlycode Editor</title>
-    <link rel="stylesheet" href="{{HTTP_STATIC_URL}}friendlycode/css/friendlycode.css">
-    <link rel="stylesheet" href="{{HTTP_STATIC_URL}}button-override.css">
+    <link rel="stylesheet" href="{{ ssoURL }}css/nav.css" />
+    <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}friendlycode/css/friendlycode.css">
+    <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}friendlycode-overrides.css">
   </head>
   <body style="margin: 0">
+    <!-- SSO -->
+    <div id="webmaker-nav">
+      <nav class="webmaker-nav-container">
+        <ul class="webmaker-nav primary">
+          <li><a>Webmaker</a></li>
+        </ul>
+        <ul class="webmaker-nav user-info">
+          <li class="user">
+            <div class="user-name">
+              <span id="identity" class="user-name-container"></span>
+            </div>
+          </li>
+          <li><iframe id="SSO"></iframe></li>
+        </ul>
+      </nav>
+    </div>
+    <!-- friendcode editor -->
     <div id="bare-fc-holder" class="friendlycode-loading"></div>
     <script src="https://login.persona.org/include.js"></script>
     <script src="{{HTTP_STATIC_URL}}friendlycode/js/require-config.js"></script>
@@ -143,14 +161,11 @@
       "jquery",
       "thimblePage"
     ], function($, ThimblePage) {
-      var personaButton = $("<div>Log In</div>"),
-          publishButton = $('.publish-button.wm-button.wm-button-blue.short'),
+      var publishButton = $('.publish-button.wm-button.wm-button-blue.short'),
           navItem = $(".nav-item.buttons"),
           loggedIn = false;
       publishButton.hide();
-      personaButton.addClass("persona-button wm-button wm-button-blue short");
-      navItem.append(personaButton);
-      navigator.id.watch({
+      navigator.personaSSO.id.watch({
         onlogin: function( assertion ) {
           $.ajax({
             type: "POST",
@@ -159,7 +174,6 @@
             success: function(res, status, xhr) {
               loggedIn = true;
               publishButton.show();
-              personaButton.text("Log Out");
             },
             error: function(xhr, status, err) {
               navigator.id.logout();
@@ -174,20 +188,30 @@
             success: function(res, status, xhr) {
               loggedIn = false;
               publishButton.hide();
-              personaButton.text("Log In");
             },
             error: function(xhr, status, err) { alert("Logout failure: " + err); }
           });
         }
       });
-      personaButton.click(function() {
-        if (!loggedIn) {
-          navigator.id.request();
-        } else {
-          navigator.id.logout();
-        }
-      });
     });
+    </script>
+
+    <!-- SSO -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="{{ ssoURL }}js/sso.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        var personaSSO = navigator.personaSSO;
+        personaSSO.init(document.getElementById('SSO'));
+        personaSSO.id.watch({
+          onlogin: function(topic, data){
+            personaSSO.ui.checkMaker(data, $("#webmaker-nav"));
+          },
+          onlogout: function(){
+            personaSSO.ui.loggedOut();
+          }
+        });
+      });
     </script>
   </body>
 </html>
