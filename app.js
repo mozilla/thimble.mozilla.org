@@ -8,7 +8,6 @@ var ajax = require('request'),
     fs = require('fs'),
     habitat = require('habitat'),
     makeAPI = require('./lib/makeapi'),
-    middleware = require( "./lib/middleware"),
     mysql = require('mysql'),
     nunjucks = require('nunjucks'),
     path = require('path'),
@@ -19,6 +18,7 @@ habitat.load();
 
 var app = express(),
     env = new habitat(),
+    middleware = require( "./lib/middleware")(env),
     make = makeAPI(env.get("MAKE")),
     nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
 
