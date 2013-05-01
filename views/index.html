@@ -155,63 +155,32 @@
     });
 
     /**
-     * ...
+     * Hide the publish button unless the user is logged in, so people
+     * don't get confused about when they can and cannot publish pages.
      */
-    require([
-      "jquery",
-      "thimblePage"
-    ], function($, ThimblePage) {
-      var publishButton = $('.publish-button.wm-button.wm-button-blue.short'),
-          navItem = $(".nav-item.buttons"),
-          loggedIn = false;
+    require(["jquery", "thimblePage"], function($, ThimblePage) {
+      var publishButton = $('.publish-button.wm-button.wm-button-blue.short');
       publishButton.hide();
-      navigator.personaSSO.id.watch({
-        onlogin: function( assertion ) {
-          $.ajax({
-            type: "POST",
-            url: '/persona/verify',
-            data: {assertion: assertion},
-            success: function(res, status, xhr) {
-              loggedIn = true;
-              publishButton.show();
-            },
-            error: function(xhr, status, err) {
-              navigator.id.logout();
-              alert("Login failure: " + err);
-            }
-          });
-        },
-        onlogout: function() {
-          $.ajax({
-            type: 'POST',
-            url: '/persona/logout',
-            success: function(res, status, xhr) {
-              loggedIn = false;
-              publishButton.hide();
-            },
-            error: function(xhr, status, err) { alert("Logout failure: " + err); }
-          });
-        }
-      });
     });
     </script>
 
-    <!-- SSO -->
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-    <script src="{{ ssoURL }}js/sso.js"></script>
-    <script type="text/javascript">
-      $(function(){
-        var personaSSO = navigator.personaSSO;
-        personaSSO.init(document.getElementById('SSO'));
-        personaSSO.id.watch({
-          onlogin: function(topic, data){
-            personaSSO.ui.checkMaker(data, $("#webmaker-nav"));
-          },
-          onlogout: function(){
-            personaSSO.ui.loggedOut();
+    <!-- Add in webmaker SSO as last step -->
+    <script type="text/x-webmaker-sso-config">
+      var publishButton = false;
+      var config = {
+        onlogin: function(user, assertion) {
+          if (!publishButton) {
+            publishButton = $('.publish-button.wm-button.wm-button-blue.short');
           }
-        });
-      });
+          publishButton.show();
+        },
+        onlogout: function() {
+          if (publishButton) {
+            publishButton.hide();
+          }
+        }
+      };
     </script>
+    <script src="{{ ssoURL }}js/sso.js"></script>
   </body>
 </html>
