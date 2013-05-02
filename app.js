@@ -130,6 +130,7 @@ app.post('/publish',
          middleware.saveData(databaseAPI, env.get('HOSTNAME')),
          middleware.finalizeProject(nunjucksEnv, env),
          middleware.publishData(env.get('S3')),
+         middleware.rewriteUrl(env.get('USER_SUBDOMAIN')),
          middleware.publishMake(make),
   function(req, res) {
     res.json({ 'published-url' : req.publishedUrl });
@@ -139,5 +140,5 @@ app.post('/publish',
 
 // run server
 app.listen(env.get("PORT"), function(){
-  console.log('Express server listening on port ' + env.get("PORT"));
+  console.log('Express server listening on ' + env.get("HOSTNAME"));
 });
