@@ -130,6 +130,7 @@ app.post('/publish',
          middleware.saveData(databaseAPI, env.get('HOSTNAME')),
          middleware.finalizeProject(nunjucksEnv, env),
          middleware.publishData(env.get('S3')),
+         middleware.rewriteUrl(env.get('USER_SUBDOMAINS')),
          middleware.publishMake(make),
   function(req, res) {
     res.json({ 'published-url' : req.publishedUrl });
