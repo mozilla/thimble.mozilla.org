@@ -44,7 +44,10 @@ if (env.get("NODE_ENV") === "development") {
 
 // base dir lookup
 app.get('/', function(req, res) {
-  res.render('index.html', { appURL: env.get("HOSTNAME") } );
+  res.render('index.html', {
+    appURL: env.get("HOSTNAME"),
+    ssoURL: env.get("HTTP_SSO_URL")
+  } );
 });
 
 // learning project listing
