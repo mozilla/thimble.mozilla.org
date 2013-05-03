@@ -9,7 +9,7 @@
     "habitat": "0.4.1",
     "htmlsanitizer": "0.0.1",
     "knox": "0.7.0",
-    "makeapi": "0.0.7",
+    "makeapi": "0.0.10",
     "node-statsd": "0.0.7",
     "nunjucks": "0.1.8a",
     "request": "2.16.6",
