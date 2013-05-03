@@ -131,3 +131,10 @@ variables that it will rely on. The BLEACH_ENDPOINT url is where we are
 currently hosting the custom htmlsanitizer.org code. If you want to run
 your own copy, create another heroku instance and read the tutorial on
 setting up a python instance.
+
+New Relic
+---------
+
+To enable New Relic, set the `NEW_RELIC_ENABLED` environment variable and add a config file, or set the relevant environment variables.
+
+For more information on configuring New Relic, see: https://github.com/newrelic/node-newrelic/#configuring-the-agent
