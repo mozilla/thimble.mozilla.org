@@ -14,6 +14,7 @@ var ajax = require('request'),
     routes = require('./routes'),
     user = require('./routes/user');
 
+
 habitat.load();
 
 var app = express(),
@@ -26,12 +27,21 @@ databaseAPI = db(env.get('DB')),
 nunjucksEnv.express(app);
 
 // all environments
+
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.compress());
 app.use(express.bodyParser());
-app.use(express.cookieParser());
-app.use(express.cookieSession({secret: env.get('secret')}));
+app.use(express.cookieParser("we shall see"));
+app.use(express.cookieSession({
+    key: 'wm.sid',
+    secret: env.get("SECRET"),
+    cookie: {
+      maxAge: 2678400000, // 31 days
+      domain: ".webmaker.local"
+    },
+    proxy: true
+  }));
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
@@ -45,6 +55,7 @@ if (env.get("NODE_ENV") === "development") {
 // base dir lookup
 app.get('/', function(req, res) {
   res.render('index.html', { appURL: env.get("HOSTNAME") } );
+  console.log("\n\nBeginning\n", req.session, "\n\n", req.cookies);
 });
 
 // learning project listing
@@ -72,6 +83,11 @@ app.get('/projects/:name', function(req, res) {
     HTTP_STATIC_URL: '/'
   });
 });
+
+app.get('/test', function (req,res) {
+  console.log("\n\nBeginning\n", req.session);
+  res.send(200);
+})
 
 // "my projects" listing -- USED FOR DEV WORK ATM, MAY NOT BE PERMANENT IN ANY WAY
 app.get('/myprojects',
