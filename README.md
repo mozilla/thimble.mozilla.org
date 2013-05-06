@@ -98,6 +98,20 @@ lives in different places:
 * on OSX, it is located at ```<systemroot>/private/etc/hosts```
 * on Windows, it is located at ```<systemroot>\system32\drivers\etc\hosts```
 
+Single Sign-On cookie management
+--------------------------------
+
+Thimble.webmaker.org uses the login.webmaker.org single sign-on service, which
+means that special care must be taken to ensure that the cookie secrets all match
+up. There are two environment variables that **must** agree with the
+login.webmaker.org values: `PARSER_SECRET` and `SESSION_SECRET`. If these are
+mismatched, logging in will not authenticate a user at the server, despite
+being logged in client-side as far as Persona is concerned.
+
+Also make sure that thimble and its login endpoint (indicated in with the
+`SSO_HOSTNAME` variable) are on the same domain, and the the login endpoint
+has this domain bound for its `COOKIE_DOMAIN` variable.
+
 Development additionals
 -----------------------
 
