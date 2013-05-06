@@ -8,8 +8,26 @@
     <title>Alternate Publisher Friendlycode Editor</title>
     <link rel="stylesheet" href="{{HTTP_STATIC_URL}}friendlycode/css/friendlycode.css">
     <link rel="stylesheet" href="{{HTTP_STATIC_URL}}button-override.css">
+    <link rel="stylesheet" href="http://login.webmaker.local:3000/css/nav.css" />
   </head>
   <body style="margin: 0">
+    
+    <div id="webmaker-nav">
+      <nav class="webmaker-nav-container">
+        <ul class="webmaker-nav primary">
+          <li><a>Webmaker</a></li>
+        </ul>
+        <ul class="webmaker-nav user-info">
+          <li class="user">
+            <div class="user-name">
+              <span id="identity" class="user-name-container"></span>
+            </div>
+          </li>
+          <li><iframe id="SSO"></iframe></li>
+        </ul>
+      </nav>
+    </div>
+
     <div id="bare-fc-holder" class="friendlycode-loading"></div>
     <script src="https://login.persona.org/include.js"></script>
     <script src="{{HTTP_STATIC_URL}}friendlycode/js/require-config.js"></script>
@@ -193,5 +211,7 @@
       });
     });
     </script>
+    <script src="http://login.webmaker.local:3000/js/sso.js"></script>
+
   </body>
 </html>
