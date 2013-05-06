@@ -139,7 +139,7 @@ variables that it will rely on. The BLEACH_ENDPOINT url is where we are
 currently hosting the custom htmlsanitizer.org code. If you want to run
 your own copy, create another heroku instance and read the tutorial on
 setting up a python instance. The AWS-S3 credentials are needed from your .env file.
-The MAKE_AUTH should make with the ALLOWED_USERS setting in the MakeAPI .env hosted at MAKE_ENDPOINT.
+The MAKE_AUTH setting should match with the ALLOWED_USERS setting in the MakeAPI .env hosted at MAKE_ENDPOINT.
 
 New Relic
 ---------
