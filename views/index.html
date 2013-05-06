@@ -75,16 +75,34 @@
             var originalURL = window.location.toString(),
                 iframeDocument = document.querySelector('.preview-holder iframe')
                                          .contentDocument,
-                nodeList = iframeDocument.querySelectorAll('meta'),
-                metaTags = [],
-                author,
-                description,
-                locale,
-                thumbnail,
-                title;
+                nodeList = Array.prototype.slice.apply(iframeDocument.querySelectorAll('meta')),
+                metaData = {
+                  tags: []
+                },
+                metaName,
+                metaNames = {
+                  'description': function(node) {
+                    metaData.description = node.content;
+                  },
+                  'author': function(node) {
+                    metaData.author = node.content;
+                  },
+                  'webmaker:tags': function(node) {
+                    metaData.tags = metaData.tags.concat(node.content.split(","));
+                  },
+                  'webmaker:thumbnail': function(node) {
+                    metaData.thumbnail = node.content;
+                  },
+                  'webmaker:locale': function(node) {
+                    metaData.locale = node.content;
+                  },
+                  'webmaker:tutorial': function(node) {
+                    metaData.tags.push("tutorial:" + node.content);
+                  }
+                };
 
             if (iframeDocument.title) {
-              title = iframeDocument.title;
+              metaData.title = iframeDocument.title;
             }
 
             if(originalURL.indexOf("/edit")!==-1) {
@@ -92,16 +110,9 @@
             } else { originalURL = undefined; }
 
             for (var i = 0; i < nodeList.length; i++) {
-              if (nodeList[i].name === 'description') {
-                description = nodeList[i].content;
-              } else if (nodeList[i].name === 'author') {
-                author = nodeList[i].content;
-              } else if (nodeList[i].name === 'webmaker:tags') {
-                metaTags = metaTags.concat(nodeList[i].content.split(","));
-              } else if (nodeList[i].name === 'webmaker:thumbnail') {
-                thumbnail = nodeList[i].content;
-              } else if (nodeList[i].name === 'webmaker:locale') {
-                locale = nodeList[i].content;
+              metaName = nodeList[i].name;
+              if (metaNames[metaName]) {
+                metaNames[metaName](nodeList[i]);
               }
             }
 
@@ -111,14 +122,7 @@
               data: {
                 'html': data,
                 'original-url': originalURL,
-                'metaData': {
-                  'tags': metaTags,
-                  'title': title,
-                  'description': description,
-                  'thumbnail': thumbnail,
-                  'author': author,
-                  'locale': locale
-                }
+                'metaData': metaData
               },
               dataType: 'json',
               error: function(req) {

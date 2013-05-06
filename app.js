@@ -1,3 +1,8 @@
+// New Relic Server monitoring support
+if ( process.env.NEW_RELIC_ENABLED ) {
+  require( "newrelic" );
+}
+
 /**
  * Module dependencies.
  */
@@ -53,7 +58,7 @@ app.get('/', function(req, res) {
 // learning project listing
 app.get('/projects', function(req, res) {
   fs.readdir('learning_projects', function(err, files){
-    if(err) { res.end(); return; }
+    if(err) { res.send(404); return; }
     var projects = [];
     files.forEach( function(e) {
       var id = e.replace('.html','');
@@ -121,7 +126,6 @@ app.get("/remix/:id/edit", function(req, res) {
 // view a published page (from db)
 app.get("/remix/:id", function(req, res) {
   res.send(req.pageData);
-  res.end();
 });
 
 // publish a remix (to the db)
@@ -133,14 +137,14 @@ app.post('/publish',
          middleware.saveData(databaseAPI, env.get('HOSTNAME')),
          middleware.finalizeProject(nunjucksEnv, env),
          middleware.publishData(env.get('S3')),
+         middleware.rewriteUrl(env.get('USER_SUBDOMAIN')),
          middleware.publishMake(make),
   function(req, res) {
     res.json({ 'published-url' : req.publishedUrl });
-    res.end();
   }
 );
 
 // run server
 app.listen(env.get("PORT"), function(){
-  console.log('Express server listening on port ' + env.get("PORT"));
+  console.log('Express server listening on ' + env.get("HOSTNAME"));
 });
