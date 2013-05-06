@@ -55,7 +55,7 @@ app.get('/', function(req, res) {
 // learning project listing
 app.get('/projects', function(req, res) {
   fs.readdir('learning_projects', function(err, files){
-    if(err) { res.end(); return; }
+    if(err) { res.send(404); return; }
     var projects = [];
     files.forEach( function(e) {
       var id = e.replace('.html','');
@@ -123,7 +123,6 @@ app.get("/remix/:id/edit", function(req, res) {
 // view a published page (from db)
 app.get("/remix/:id", function(req, res) {
   res.send(req.pageData);
-  res.end();
 });
 
 // publish a remix (to the db)
@@ -139,7 +138,6 @@ app.post('/publish',
          middleware.publishMake(make),
   function(req, res) {
     res.json({ 'published-url' : req.publishedUrl });
-    res.end();
   }
 );
 
