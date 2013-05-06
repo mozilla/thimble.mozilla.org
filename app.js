@@ -27,7 +27,7 @@ var app = express(),
     make = makeAPI(env.get("MAKE")),
     nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
 
-databaseAPI = db(env.get('DB')),
+databaseAPI = db(env.get('CLEARDB_DATABASE_URL') || env.get('DB')),
 nunjucksEnv.express(app);
 
 // all environments

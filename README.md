@@ -117,6 +117,10 @@ heroku instance, and simply push up the master branch code. (read
 the heroku tutorial on deploying a node.js application. If you follow
 the instructions, it's super simple).
 
+First, add the MySQL add-on for saving projects:
+
+`heroku addons:add cleardb:ignite`
+
 You will need to issue some environment "SET" commands to make sure
 things work:
 
