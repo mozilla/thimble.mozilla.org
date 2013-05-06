@@ -6,9 +6,9 @@
     <base target="_blank">
 
     <title>Alternate Publisher Friendlycode Editor</title>
-    <link rel="stylesheet" href="{{ ssoURL }}css/nav.css" />
     <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}friendlycode/css/friendlycode.css">
     <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}friendlycode-overrides.css">
+    <link rel="stylesheet" href="{{ SSO_HOSTNAME }}/css/nav.css" />
   </head>
   <body style="margin: 0">
     <!-- SSO -->
@@ -157,34 +157,37 @@
         container: $("#bare-fc-holder")
       });
     });
+    </script>
 
+    <script>
     /**
-     * Hide the publish button unless the user is logged in, so people
-     * don't get confused about when they can and cannot publish pages.
+     * Hide publish button until logged in. This is Aesthetic; the button will
+     * still work, of course, but since it won't do anything unless you're logged
+     * in, we hide it until persona indicates this is the case.
      */
-    require(["jquery", "thimblePage"], function($, ThimblePage) {
+    require(["jquery","thimblePage"], function($, ThimblePage) {
       var publishButton = $('.publish-button.wm-button.wm-button-blue.short');
       publishButton.hide();
     });
     </script>
 
-    <!-- Add in webmaker SSO as last step -->
     <script type="text/x-webmaker-sso-config">
-      var publishButton = false;
       var config = {
-        onlogin: function(user, assertion) {
-          if (!publishButton) {
-            publishButton = $('.publish-button.wm-button.wm-button-blue.short');
-          }
-          publishButton.show();
+        target: document.getElementById('SSO'),
+        onlogin: function(eventName, personaData) {
+          var userid = personaData.loggedInUser,
+              assertion = personaData.assertion;
+          $('.publish-button.wm-button.wm-button-blue.short').show();
+          // TODO: make this use the loginAPI's indicated username
+          var userName = userid; // ...
+          $('.webmaker-nav.user-info .user-name-container').text(userName);
         },
         onlogout: function() {
-          if (publishButton) {
-            publishButton.hide();
-          }
+          $('.publish-button.wm-button.wm-button-blue.short').hide();
+          $('.webmaker-nav.user-info .user-name-container').text('');
         }
       };
     </script>
-    <script src="{{ ssoURL }}js/sso.js"></script>
+    <script src="{{ SSO_HOSTNAME }}/js/sso.js"></script>
   </body>
 </html>

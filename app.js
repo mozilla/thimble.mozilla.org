@@ -35,8 +35,16 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.compress());
 app.use(express.bodyParser());
-app.use(express.cookieParser());
-app.use(express.cookieSession({secret: env.get('secret')}));
+app.use(express.cookieParser(env.get("PARSER_SECRET")));
+app.use(express.cookieSession({
+  key: 'wm.sid',
+  secret: env.get("SESSION_SECRET"),
+  cookie: {
+    maxAge: 2678400000, // 31 days
+    domain: ".webmaker.local"
+  },
+  proxy: true
+}));
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
@@ -51,8 +59,8 @@ if (env.get("NODE_ENV") === "development") {
 app.get('/', function(req, res) {
   res.render('index.html', {
     appURL: env.get("HOSTNAME"),
-    ssoURL: env.get("HTTP_SSO_URL")
-  } );
+    SSO_HOSTNAME: env.get("SSO_HOSTNAME")
+  });
 });
 
 // learning project listing
@@ -119,7 +127,8 @@ app.get("/remix/:id/edit", function(req, res) {
   res.render('index.html', {
     appURL: env.get("HOSTNAME"),
     template: content,
-    HTTP_STATIC_URL: '/'
+    HTTP_STATIC_URL: '/',
+    SSO_HOSTNAME: env.get("SSO_HOSTNAME")
   });
 });
 
