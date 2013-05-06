@@ -109,7 +109,7 @@ mismatched, logging in will not authenticate a user at the server, despite
 being logged in client-side as far as Persona is concerned.
 
 Also make sure that thimble and its login endpoint (indicated in with the
-`SSO_HOSTNAME` variable) are on the same domain, and the the login endpoint
+`SSO_HOSTNAME` variable) are on the same domain, and that the login endpoint
 has this domain bound for its `COOKIE_DOMAIN` variable.
 
 Development additionals
