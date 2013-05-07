@@ -108,7 +108,7 @@ login.webmaker.org values: `PARSER_SECRET` and `SESSION_SECRET`. If these are
 mismatched, logging in will not authenticate a user at the server, despite
 being logged in client-side as far as Persona is concerned.
 
-Also make sure that thimble and its login endpoint (indicated in with the
+Also make sure that thimble and its login endpoint (indicated by the
 `SSO_HOSTNAME` variable) are on the same domain, and that the login endpoint
 has this domain bound for its `COOKIE_DOMAIN` variable.
 
