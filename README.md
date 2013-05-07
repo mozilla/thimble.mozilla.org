@@ -112,6 +112,18 @@ Also make sure that thimble and its login endpoint (indicated in with the
 `SSO_HOSTNAME` variable) are on the same domain, and that the login endpoint
 has this domain bound for its `COOKIE_DOMAIN` variable.
 
+Finally, in order to test SSO integration, you must run thimble from its own
+named domain. By default, in dev mode, login.webmaker.org will set up routes for
+`login.webmaker.local`, `thimble.webmaker.local`, and `popcorn.webmaker.local`, all rerouting to 127.0.0.1 (without rerouting any ports).
+
+To test SSO, make sure that you refer to the SSO location as
+`http://login.webmaker.local:<port>`, **not** `localhost`, and refer to
+thimble by its webmaker.local domain, too. I.E. if you were testing thimble
+integration and ran thimble on `http://localhost:3456` then you will have
+to use `http://thimble.webmaker.local:3456` for SSO purpose (the reason
+here is that we're setting cross-sub-domain cookies, making the `localhost`
+domain name unusable).
+
 Development additionals
 -----------------------
 
