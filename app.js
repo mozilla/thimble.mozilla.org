@@ -58,7 +58,7 @@ if (env.get("NODE_ENV") === "development") {
 // base dir lookup
 app.get('/', function(req, res) {
   res.render('index.html', {
-    appURL: env.get("HOSTNAME"),
+    APP_URL: env.get("HOSTNAME"),
     SSO_HOSTNAME: env.get("SSO_HOSTNAME")
   });
 });
@@ -83,8 +83,8 @@ app.get('/projects', function(req, res) {
 // learning project lookup
 app.get('/projects/:name', function(req, res) {
   res.render('index.html', {
-    appURL: env.get("HOSTNAME"),
     pageToLoad: '/' + req.params.name + '.html',
+    APP_URL: env.get("HOSTNAME"),
     HTTP_STATIC_URL: '/'
   });
 });
@@ -125,8 +125,8 @@ app.get("/remix/:id/edit", function(req, res) {
   // just need to find out how to tell it to...
   var content = req.pageData.replace(/'/g, '\\\'').replace(/\n/g, '\\n');
   res.render('index.html', {
-    appURL: env.get("HOSTNAME"),
     template: content,
+    APP_URL: env.get("HOSTNAME"),
     HTTP_STATIC_URL: '/',
     SSO_HOSTNAME: env.get("SSO_HOSTNAME")
   });

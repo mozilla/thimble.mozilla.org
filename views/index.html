@@ -30,8 +30,8 @@
     <!-- friendcode editor -->
     <div id="bare-fc-holder" class="friendlycode-loading"></div>
     <script src="https://login.persona.org/include.js"></script>
-    <script src="{{HTTP_STATIC_URL}}friendlycode/js/require-config.js"></script>
-    <script src="{{HTTP_STATIC_URL}}friendlycode/vendor/require.min.js"></script>
+    <script src="{{ HTTP_STATIC_URL }}friendlycode/js/require-config.js"></script>
+    <script src="{{ HTTP_STATIC_URL }}friendlycode/vendor/require.min.js"></script>
     <script>
     // Alternate publisher implementation that publishes to a hackpub
     // endpoint. For more information, see:
@@ -147,13 +147,13 @@
            function($, FriendlycodeEditor, Hackpub) {
       return FriendlycodeEditor({
         allowJS: false,
-        defaultContent: '{{template}}',
-        pageToLoad: '{{pageToLoad}}',
+        defaultContent: '{{ template }}',
+        pageToLoad: '{{ pageToLoad }}',
         publisher: Hackpub({
-          hackpubURL: "{{appURL}}",
-          publishURL: "{{appURL}}/remix",
+          hackpubURL: "{{ APP_URL }}",
+          publishURL: "{{ APP_URL }}/remix",
         }),
-        remixURLTemplate: "{{appURL}}/remix/\{\{VIEW_URL\}\}/edit",
+        remixURLTemplate: "{{ APP_URL }}/remix/\{\{VIEW_URL\}\}/edit",
         container: $("#bare-fc-holder")
       });
     });
@@ -166,25 +166,29 @@
      * in, we hide it until persona indicates this is the case.
      */
     require(["jquery","thimblePage"], function($, ThimblePage) {
-      var publishButton = $('.publish-button.wm-button.wm-button-blue.short');
+      var publishButton = $('.publish-button');
       publishButton.hide();
     });
     </script>
 
     <script type="text/x-webmaker-sso-config">
+      var publishButton = false;
       var config = {
         target: document.getElementById('SSO'),
         onlogin: function(eventName, personaData) {
-          var userid = personaData.loggedInUser,
-              assertion = personaData.assertion;
-          $('.publish-button.wm-button.wm-button-blue.short').show();
-          // TODO: make this use the loginAPI's indicated username
-          var userName = userid; // ...
-          $('.webmaker-nav.user-info .user-name-container').text(userName);
+          var userid = personaData.loggedInUser;
+          if(publishButton===false) {
+            publishButton = $('.publish-button');
+          }
+          publishButton.show();
+          // FIXME: make this use the loginAPI's indicated username,
+          //       rather than the full personal email address.
+          var userName = userid;
+          navigator.personaSSO.ui.displayLogin(userName);
         },
         onlogout: function() {
-          $('.publish-button.wm-button.wm-button-blue.short').hide();
-          $('.webmaker-nav.user-info .user-name-container').text('');
+          publishButton.hide();
+          navigator.personaSSO.ui.displayLogin("");
         }
       };
     </script>
