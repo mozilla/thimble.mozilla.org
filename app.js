@@ -44,7 +44,7 @@ app.use(express.cookieSession({
   secret: env.get('SESSION_SECRET'),
   cookie: {
     maxAge: 2678400000, // 31 days
-    domain: '.webmaker.local'
+    domain: env.get('COOKIE_DOMAIN');
   },
   proxy: true
 }));

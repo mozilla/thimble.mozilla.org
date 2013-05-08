@@ -152,11 +152,24 @@ things work:
 > heroku config:set SECRET="irrelephant"
 > heroku config:set NODE_ENV="development"
 ```
+
+For single sign-on purposes, you will also have to set the following variables,
+making sure that they match up with what the login.webmaker.org heroku instance
+has set:
+
+```
+> heroku config:set COOKIE_DOMAIN=".herokuapps.com"
+> heroku config:set SESSION_SECRET="qqqq"
+> heroku config:set SSO_HOSTNAME="http://obscure-fjord-5429.herokuapp.com"
+```
+
 That should be enough to ensure the deployed version has all the environment
-variables that it will rely on. The BLEACH_ENDPOINT url is where we are
+variables that it will rely on. The `BLEACH_ENDPOINT` url is where we are
 currently hosting the custom htmlsanitizer.org code. If you want to run
 your own copy, create another heroku instance and read the tutorial on
-setting up a python instance.
+setting up a python instance. The same goes for the single sign-on variables;
+if you set up your own instance, make sure that the `SSO_HOSTNAME` and
+the `SESSION_SECRET` values match.
 
 New Relic
 ---------
