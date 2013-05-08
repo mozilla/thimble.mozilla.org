@@ -39,6 +39,7 @@ app.use(express.logger('dev'));
 app.use(express.compress());
 app.use(express.bodyParser());
 app.use(express.cookieParser(env.get('SESSION_SECRET')));
+/*
 app.use(express.cookieSession({
   key: 'wm.sid',
   secret: env.get('SESSION_SECRET'),
@@ -48,6 +49,7 @@ app.use(express.cookieSession({
   },
   proxy: true
 }));
+*/
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
