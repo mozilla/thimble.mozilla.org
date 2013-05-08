@@ -25,7 +25,8 @@ var app = express(),
     env = new habitat(),
     middleware = require( "./lib/middleware")(env),
     make = makeAPI(env.get("MAKE")),
-    nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
+    nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views')),
+    SSO_HOSTNAME = env.get('SSO_HOSTNAME');
 
 databaseAPI = db(env.get('DB')),
 nunjucksEnv.express(app);
@@ -49,7 +50,10 @@ if (env.get("NODE_ENV") === "development") {
 
 // base dir lookup
 app.get('/', function(req, res) {
-  res.render('index.html', { appURL: env.get("HOSTNAME") } );
+  res.render('index.html', {
+    appURL: env.get("HOSTNAME"),
+    SSO_HOSTNAME: SSO_HOSTNAME 
+  });
 });
 
 // learning project listing
