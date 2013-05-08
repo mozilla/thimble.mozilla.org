@@ -33,7 +33,7 @@ var app = express(),
 
 nunjucksEnv.express(app);
 
-var cookieSecret = env.get("SESSION_SECRET");
+var cookieSecret = env.get("SESSION_SECRET") + "";
 
 // all environments
 app.use(express.favicon());
