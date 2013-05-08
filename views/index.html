@@ -172,21 +172,17 @@
     </script>
 
     <script type="text/x-webmaker-sso-config">
-      var publishButton = false;
       var config = {
         onlogin: function(eventName, personaData) {
           var userid = personaData.loggedInUser;
-          if(publishButton===false) {
-            publishButton = $('.publish-button');
-          }
-          publishButton.show();
+          $('.publish-button').show();
           // FIXME: make this use the loginAPI's indicated username,
           //       rather than the full personal email address.
           var userName = userid;
           navigator.personaSSO.ui.displayLogin(userName);
         },
         onlogout: function() {
-          publishButton.hide();
+          $('.publish-button').hide();
           navigator.personaSSO.ui.displayLogin("");
         }
       };
