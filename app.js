@@ -33,15 +33,17 @@ var app = express(),
 
 nunjucksEnv.express(app);
 
+var cookieSecret = env.get("SESSION_SECRET");
+
 // all environments
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.compress());
 app.use(express.bodyParser());
-app.use(express.cookieParser('generic string'));
+app.use(express.cookieParser(cookieSecret));
 app.use(express.cookieSession({
   key: 'wm.sid',
-  secret: env.get('SESSION_SECRET'),
+  secret: cookieSecret,
   cookie: {
     maxAge: 2678400000, // 31 days
     domain: env.get("COOKIE_DOMAIN")
