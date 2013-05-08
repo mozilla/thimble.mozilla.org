@@ -44,7 +44,7 @@ app.use(express.cookieSession({
   secret: env.get('SESSION_SECRET'),
   cookie: {
     maxAge: 2678400000, // 31 days
-    domain: env.get('COOKIE_DOMAIN');
+    domain: env.get('COOKIE_DOMAIN')
   },
   proxy: true
 }));
