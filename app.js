@@ -39,17 +39,15 @@ app.use(express.logger('dev'));
 app.use(express.compress());
 app.use(express.bodyParser());
 app.use(express.cookieParser(env.get('SESSION_SECRET')));
-/*
 app.use(express.cookieSession({
   key: 'wm.sid',
   secret: env.get('SESSION_SECRET'),
   cookie: {
     maxAge: 2678400000, // 31 days
-    domain: env.get('COOKIE_DOMAIN')
+    domain: env.get("COOKIE_DOMAIN")
   },
   proxy: true
 }));
-*/
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
