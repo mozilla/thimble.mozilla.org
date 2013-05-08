@@ -38,7 +38,7 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.compress());
 app.use(express.bodyParser());
-app.use(express.cookieParser(env.get('SESSION_SECRET')));
+app.use(express.cookieParser('generic string'));
 app.use(express.cookieSession({
   key: 'wm.sid',
   secret: env.get('SESSION_SECRET'),
