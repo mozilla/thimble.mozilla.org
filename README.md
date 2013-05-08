@@ -158,7 +158,7 @@ making sure that they match up with what the login.webmaker.org heroku instance
 has set:
 
 ```
-> heroku config:set COOKIE_DOMAIN=".herokuapps.com"
+> heroku config:set COOKIE_DOMAIN=".herokuapp.com"
 > heroku config:set SESSION_SECRET="qqqq"
 > heroku config:set SSO_HOSTNAME="http://obscure-fjord-5429.herokuapp.com"
 ```
