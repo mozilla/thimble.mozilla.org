@@ -98,6 +98,32 @@ lives in different places:
 * on OSX, it is located at ```<systemroot>/private/etc/hosts```
 * on Windows, it is located at ```<systemroot>\system32\drivers\etc\hosts```
 
+Single Sign-On cookie management
+--------------------------------
+
+Thimble.webmaker.org uses the login.webmaker.org single sign-on service, which
+means that special care must be taken to ensure that the cookie secrets match
+up. The `SESSION_SECRET` environment variable **must** match the
+login.webmaker.org value. If these is a mismatch, logging in will not
+authenticate a user at the server, despite being logged in client-side as far
+as Persona is concerned.
+
+Also make sure that thimble and its login endpoint (indicated by the
+`SSO_HOSTNAME` variable) are on the same domain, and that the login endpoint
+has this domain bound for its `COOKIE_DOMAIN` variable.
+
+Finally, in order to test SSO integration, you must run thimble from its own
+named domain. By default, in dev mode, login.webmaker.org will set up routes for
+`login.webmaker.local`, `thimble.webmaker.local`, and `popcorn.webmaker.local`, all rerouting to 127.0.0.1 (without rerouting any ports).
+
+To test SSO, make sure that you refer to the SSO location as
+`http://login.webmaker.local:<port>`, **not** `localhost`, and refer to
+thimble by its webmaker.local domain, too. I.E. if you were testing thimble
+integration and ran thimble on `http://localhost:3456` then you will have
+to use `http://thimble.webmaker.local:3456` for SSO purpose (the reason
+here is that we're setting cross-sub-domain cookies, making the `localhost`
+domain name unusable).
+
 Development additionals
 -----------------------
 
@@ -126,11 +152,24 @@ things work:
 > heroku config:set SECRET="irrelephant"
 > heroku config:set NODE_ENV="development"
 ```
+
+For single sign-on purposes, you will also have to set the following variables,
+making sure that they match up with what the login.webmaker.org heroku instance
+has set:
+
+```
+> heroku config:set COOKIE_DOMAIN=".herokuapp.com"
+> heroku config:set SESSION_SECRET="qqqq"
+> heroku config:set SSO_HOSTNAME="http://obscure-fjord-5429.herokuapp.com"
+```
+
 That should be enough to ensure the deployed version has all the environment
-variables that it will rely on. The BLEACH_ENDPOINT url is where we are
+variables that it will rely on. The `BLEACH_ENDPOINT` url is where we are
 currently hosting the custom htmlsanitizer.org code. If you want to run
 your own copy, create another heroku instance and read the tutorial on
-setting up a python instance.
+setting up a python instance. The same goes for the single sign-on variables;
+if you set up your own instance, make sure that the `SSO_HOSTNAME` and
+the `SESSION_SECRET` values match.
 
 New Relic
 ---------

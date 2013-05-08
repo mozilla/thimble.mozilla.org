@@ -1,6 +1,6 @@
 // New Relic Server monitoring support
 if ( process.env.NEW_RELIC_ENABLED ) {
-  require( "newrelic" );
+  require( 'newrelic' );
 }
 
 /**
@@ -23,11 +23,14 @@ habitat.load();
 
 var app = express(),
     env = new habitat(),
-    middleware = require( "./lib/middleware")(env),
-    make = makeAPI(env.get("MAKE")),
-    nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
+    middleware = require( './lib/middleware')(env),
+    databaseAPI = db(env.get('DB'));
+    make = makeAPI(env.get('MAKE')),
+    nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views')),
+    APP_URL = env.get('HOSTNAME'),
+    SSO_HOSTNAME = env.get('SSO_HOSTNAME');
 
-databaseAPI = db(env.get('DB')),
+
 nunjucksEnv.express(app);
 
 // all environments
@@ -35,26 +38,37 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.compress());
 app.use(express.bodyParser());
-app.use(express.cookieParser());
-app.use(express.cookieSession({secret: env.get('secret')}));
+app.use(express.cookieParser('generic string'));
+app.use(express.cookieSession({
+  key: 'wm.sid',
+  secret: env.get('SESSION_SECRET'),
+  cookie: {
+    maxAge: 2678400000, // 31 days
+    domain: env.get("COOKIE_DOMAIN")
+  },
+  proxy: true
+}));
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
 
 // set up persona
-require('express-persona')(app, { audience: env.get("HOSTNAME") });
-if (env.get("NODE_ENV") === "development") {
+require('express-persona')(app, { audience: env.get('HOSTNAME') });
+if (env.get('NODE_ENV') === 'development') {
   app.use(express.errorHandler());
 }
 
 // base dir lookup
 app.get('/', function(req, res) {
-  res.render('index.html', { appURL: env.get("HOSTNAME") } );
+  res.render('index.html', {
+    APP_URL: APP_URL,
+    SSO_HOSTNAME: SSO_HOSTNAME
+  });
 });
 
 // learning project listing
 app.get('/projects', function(req, res) {
-  fs.readdir('learning_projects', function(err, files){
+  fs.readdir('learning_projects', function(err, files) {
     if(err) { res.send(404); return; }
     var projects = [];
     files.forEach( function(e) {
@@ -62,23 +76,23 @@ app.get('/projects', function(req, res) {
       projects.push({
         title: id,
         edit: id,
-        view: "/" + id + ".html"
+        view: '/' + id + '.html'
       });
     });
-    res.render('gallery.html', {location: "projects", title: 'Learning Projects', projects: projects});
+    res.render('gallery.html', {location: 'projects', title: 'Learning Projects', projects: projects});
   });
 });
 
 // learning project lookup
 app.get('/projects/:name', function(req, res) {
   res.render('index.html', {
-    appURL: env.get("HOSTNAME"),
     pageToLoad: '/' + req.params.name + '.html',
+    APP_URL: APP_URL,
     HTTP_STATIC_URL: '/'
   });
 });
 
-// "my projects" listing -- USED FOR DEV WORK ATM, MAY NOT BE PERMANENT IN ANY WAY
+// 'my projects' listing -- USED FOR DEV WORK ATM, MAY NOT BE PERMANENT IN ANY WAY
 app.get('/myprojects',
   middleware.checkForPersonaAuth,
   function(req, res) {
@@ -89,7 +103,7 @@ app.get('/myprojects',
           var url = result.url;
           return {
             title: result.title || url,
-            edit: url + "/edit",
+            edit: url + '/edit',
             view: url
           };
         });
@@ -108,20 +122,21 @@ app.param('id', function(req, res, next, id) {
 });
 
 // remix a published page (from db)
-app.get("/remix/:id/edit", function(req, res) {
+app.get('/remix/:id/edit', function(req, res) {
   // This is quite ugly, and we need a better way to inject data
   // into friendlycode. I'm pretty sure it CAN load from URI, we
   // just need to find out how to tell it to...
   var content = req.pageData.replace(/'/g, '\\\'').replace(/\n/g, '\\n');
   res.render('index.html', {
-    appURL: env.get("HOSTNAME"),
     template: content,
-    HTTP_STATIC_URL: '/'
+    APP_URL: APP_URL,
+    HTTP_STATIC_URL: '/',
+    SSO_HOSTNAME: SSO_HOSTNAME
   });
 });
 
 // view a published page (from db)
-app.get("/remix/:id", function(req, res) {
+app.get('/remix/:id', function(req, res) {
   res.send(req.pageData);
 });
 
@@ -130,7 +145,7 @@ app.post('/publish',
          middleware.checkForPersonaAuth,
          middleware.checkForPublishData,
          middleware.checkForOriginalPage,
-         middleware.bleachData(env.get("BLEACH_ENDPOINT")),
+         middleware.bleachData(env.get('BLEACH_ENDPOINT')),
          middleware.saveData(databaseAPI, env.get('HOSTNAME')),
          middleware.finalizeProject(nunjucksEnv, env),
          middleware.publishData(env.get('S3')),
@@ -142,6 +157,6 @@ app.post('/publish',
 );
 
 // run server
-app.listen(env.get("PORT"), function(){
-  console.log('Express server listening on ' + env.get("HOSTNAME"));
+app.listen(env.get('PORT'), function(){
+  console.log('Express server listening on ' + env.get('HOSTNAME'));
 });
