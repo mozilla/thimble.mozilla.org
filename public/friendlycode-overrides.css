@@ -4,8 +4,18 @@
 
 .friendlycode-toolbar {
   top: 30px!important;
+  transition: top .35s;
 }
 
 .friendlycode-panes {
   top: 60px!important;
+  transition: top .35s;
+}
+
+.friendlycode-toolbar.expanded {
+  top: 330px!important;
+}
+
+.friendlycode-panes.expanded {
+  top: 360px!important;
 }
