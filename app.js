@@ -25,7 +25,8 @@ var app = express(),
     env = new habitat(),
     middleware = require( "./lib/middleware")(env),
     make = makeAPI(env.get("MAKE")),
-    nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
+    nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views')),
+    SSO_HOSTNAME = env.get('SSO_HOSTNAME');
 
 databaseAPI = db(env.get('DB')),
 nunjucksEnv.express(app);
@@ -49,7 +50,10 @@ if (env.get("NODE_ENV") === "development") {
 
 // base dir lookup
 app.get('/', function(req, res) {
-  res.render('index.html', { appURL: env.get("HOSTNAME") } );
+  res.render('index.html', {
+    appURL: env.get("HOSTNAME"),
+    SSO_HOSTNAME: SSO_HOSTNAME 
+  });
 });
 
 // learning project listing
@@ -65,7 +69,7 @@ app.get('/projects', function(req, res) {
         view: "/" + id + ".html"
       });
     });
-    res.render('gallery.html', {location: "projects", title: 'Learning Projects', projects: projects});
+    res.render('learningProjects.html', {location: "projects", title: 'Learning Projects', projects: projects});
   });
 });
 
@@ -83,18 +87,33 @@ app.get('/myprojects',
   middleware.checkForPersonaAuth,
   function(req, res) {
     make.search({email: req.session.email}, function(err, results) {
-      var projects = [];
+      var projects = {
+            "popcorn": [],
+            "thimble": []
+          },
+          type, url;
       if (results && results.hits) {
-        projects = results.hits.map(function(result) {
-          var url = result.url;
-          return {
-            title: result.title || url,
+        for ( var i = 0; i < results.hits.length; i++ ) {
+          type = results.hits[ i ].contentType;
+          if ( !type ) {
+            continue;
+          }
+          type = type.split( "application/x-" );
+          if ( !type[ 1 ] ) {
+            continue;
+          }
+          type = type[ 1 ];
+          url = results.hits[ i ].url;
+          projects[ type ].push({
+            title: results.hits[ i ].title || url,
             edit: url + "/edit",
+            type: type,
             view: url
-          };
-        });
+          });
+        }
       }
-      res.render('gallery.html', {title: 'User Projects', projects: projects});
+
+      res.render('myProjects.html', {title: 'User Projects', projects: projects});
     });
   }
 );
