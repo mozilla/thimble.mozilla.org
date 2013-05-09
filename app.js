@@ -93,15 +93,6 @@ app.get('/myprojects',
           },
           type, url;
       if (results && results.hits) {
-        /*projects = results.hits.map(function(result) {
-
-          var url = result.url;
-          return {
-            title: result.title || url,
-            edit: url + "/edit",
-            view: url
-          };
-        });*/
         for ( var i = 0; i < results.hits.length; i++ ) {
           type = results.hits[ i ].contentType;
           if ( !type ) {
