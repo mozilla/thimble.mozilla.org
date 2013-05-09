@@ -69,7 +69,7 @@ app.get('/projects', function(req, res) {
         view: "/" + id + ".html"
       });
     });
-    res.render('gallery.html', {location: "projects", title: 'Learning Projects', projects: projects});
+    res.render('learningProjects.html', {location: "projects", title: 'Learning Projects', projects: projects});
   });
 });
 
@@ -87,18 +87,42 @@ app.get('/myprojects',
   middleware.checkForPersonaAuth,
   function(req, res) {
     make.search({email: req.session.email}, function(err, results) {
-      var projects = [];
+      var projects = {
+            "popcorn": [],
+            "thimble": []
+          },
+          type, url;
       if (results && results.hits) {
-        projects = results.hits.map(function(result) {
+        /*projects = results.hits.map(function(result) {
+
           var url = result.url;
           return {
             title: result.title || url,
             edit: url + "/edit",
             view: url
           };
-        });
+        });*/
+        for ( var i = 0; i < results.hits.length; i++ ) {
+          type = results.hits[ i ].contentType;
+          if ( !type ) {
+            continue;
+          }
+          type = type.split( "application/x-" );
+          if ( !type[ 1 ] ) {
+            continue;
+          }
+          type = type[ 1 ];
+          url = results.hits[ i ].url;
+          projects[ type ].push({
+            title: results.hits[ i ].title || url,
+            edit: url + "/edit",
+            type: type,
+            view: url
+          });
+        }
       }
-      res.render('gallery.html', {title: 'User Projects', projects: projects});
+
+      res.render('myProjects.html', {title: 'User Projects', projects: projects});
     });
   }
 );

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/stylesheets/gallery.css">
+  </head>
+  <body>
+    <h3>{{title}}</h3>
+    <button class="popcornButton">popcorn</button>
+    <button class="thimbleButton">thimble</button>
+    <ul class="popcornList hidden">
+    {% for project in projects.popcorn %}
+      <li><span>{{project.title}}</span><a target="_blank" href='{{project.view}}'>view</a><a target="_blank" href='{{project.edit}}'>edit</a></li>
+    {% endfor %}
+    </ul>
+    <ul class="thimbleList">
+    {% for project in projects.thimble %}
+      <li><span>{{project.title}}</span><a target="_blank" href='{{project.view}}'>view</a><a target="_blank" href='{{project.edit}}'>edit</a></li>
+    {% endfor %}
+    </ul>
+    <script>
+      var popcornButton = document.querySelector( ".popcornButton" ),
+          thimbleButton = document.querySelector( ".thimbleButton" ),
+          popcornList = document.querySelector( ".popcornList" ),
+          thimbleList = document.querySelector( ".thimbleList" );
+
+      popcornButton.addEventListener( "click", function() {
+        thimbleList.classList.add( "hidden" );
+        popcornList.classList.remove( "hidden" );
+      }, false );
+
+      thimbleButton.addEventListener( "click", function() {
+        popcornList.classList.add( "hidden" );
+        thimbleList.classList.remove( "hidden" );
+      }, false );
+    </script>
+  </body>
+</html>
