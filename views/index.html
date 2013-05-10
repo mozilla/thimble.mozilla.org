@@ -7,9 +7,27 @@
 
     <title>Alternate Publisher Friendlycode Editor</title>
     <link rel="stylesheet" href="{{HTTP_STATIC_URL}}friendlycode/css/friendlycode.css">
+    <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}friendlycode-overrides.css">
     <link rel="stylesheet" href="{{HTTP_STATIC_URL}}button-override.css">
+    <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}stylesheets/nav.css" />
   </head>
   <body style="margin: 0">
+    <!-- webmaker nav -->
+    <div id="webmaker-nav">
+      <nav class="webmaker-nav-container">
+        <ul class="webmaker-nav primary">
+          <li><a>Webmaker</a></li>
+        </ul>
+        <ul class="webmaker-nav user-info">
+          <li class="user">
+            <div class="user-name">
+              <span id="identity" class="user-name-container"></span>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <!-- friendcode editor -->
     <div id="bare-fc-holder" class="friendlycode-loading"></div>
     <script src="http://personasso.s3-website-us-east-1.amazonaws.com/include.js"></script>
     <script src="{{HTTP_STATIC_URL}}friendlycode/js/require-config.js"></script>
