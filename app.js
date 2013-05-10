@@ -25,8 +25,7 @@ var app = express(),
     env = new habitat(),
     middleware = require( "./lib/middleware")(env),
     make = makeAPI(env.get("MAKE")),
-    nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views')),
-    SSO_HOSTNAME = env.get('SSO_HOSTNAME');
+    nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
 
 databaseAPI = db(env.get('DB')),
 nunjucksEnv.express(app);
