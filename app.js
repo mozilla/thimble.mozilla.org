@@ -42,7 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
 
 // set up persona
-require('express-persona')(app, { audience: env.get("HOSTNAME") });
+require('express-persona')(app, { audience: env.get("AUDIENCE") });
 if (env.get("NODE_ENV") === "development") {
   app.use(express.errorHandler());
 }
