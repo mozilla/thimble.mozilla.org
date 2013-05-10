@@ -90,21 +90,24 @@ app.get('/myprojects',
             "popcorn": [],
             "thimble": []
           },
-          type, url;
+          result,
+          type,
+          url;
       if (results && results.hits) {
-        for ( var i = 0; i < results.hits.length; i++ ) {
-          type = results.hits[ i ].contentType;
-          if ( !type ) {
+        for (var i = 0; i < results.hits.length; i++) {
+          result = results.hits[i];
+          type = result.contentType;
+          if (!type) {
             continue;
           }
           type = type.split( "application/x-" );
-          if ( !type[ 1 ] ) {
+          if (!type[1]) {
             continue;
           }
-          type = type[ 1 ];
-          url = results.hits[ i ].url;
-          projects[ type ].push({
-            title: results.hits[ i ].title || url,
+          type = type[1];
+          url = result.url;
+          projects[type].push({
+            title: result.title || url,
             edit: url + "/edit",
             type: type,
             view: url

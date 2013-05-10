@@ -25,7 +25,9 @@ module.exports = function( grunt ) {
           "zero-units": false
         },
         src: [
-          "public/learning_projects/**/*.css"
+          "public/learning_projects/**/*.css",
+          // NOTE: we need to move these to strict eventually
+          "public/stylesheets/*.css"
         ]
       },
       strict: {
@@ -34,8 +36,7 @@ module.exports = function( grunt ) {
           "important": false
          },
         src: [
-          "public/*.css",
-          "public/stylesheets/*.css"
+          "public/*.css"
         ]
       }
     },
