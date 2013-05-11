@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}friendlycode-overrides.css">
     <link rel="stylesheet" href="{{HTTP_STATIC_URL}}button-override.css">
     <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}stylesheets/nav.css" />
+    <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}stylesheets/myProjects.css" />
   </head>
   <body style="margin: 0">
     <!-- webmaker nav -->
@@ -17,6 +18,9 @@
       <nav class="webmaker-nav-container">
         <ul class="webmaker-nav primary">
           <li><a>Webmaker</a></li>
+          <li>
+            <a class="my-projects-title">My Projects</a>
+          </li>
         </ul>
         <ul class="webmaker-nav user-info">
           <li class="user">
@@ -27,9 +31,13 @@
         </ul>
       </nav>
     </div>
+    <div class="my-projects-container">
+      <iframe class="my-projects-iframe"></iframe>
+    </div>
     <!-- friendcode editor -->
     <div id="bare-fc-holder" class="friendlycode-loading"></div>
     <script src="http://personasso.s3-website-us-east-1.amazonaws.com/include.js"></script>
+    <script src="{{HTTP_STATIC_URL}}js/webmakernav.js"></script>
     <script src="{{HTTP_STATIC_URL}}friendlycode/js/require-config.js"></script>
     <script src="{{HTTP_STATIC_URL}}friendlycode/vendor/require.min.js"></script>
     <script>

@@ -33,3 +33,7 @@ ul > li a:hover {
 ul > li:hover {
   background: #F4F5F5;
 }
+
+.hidden {
+  display: none;
+}
