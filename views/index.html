@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}stylesheets/friendlycode-overrides.css">
     <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}stylesheets/userbar-overrides.css">
     <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}stylesheets/nav.css" />
+    <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}stylesheets/tutorial.css" />
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   </head>
   <body style="margin: 0">
 
@@ -20,6 +24,14 @@
       <nav class="webmaker-nav-container">
         <ul class="webmaker-nav primary">
           <li><a>Webmaker</a></li>
+          <li class="tutorial-list hidden">
+            <a>
+              <div>
+                <span>Tutorial</span>
+                <div class="tutorial-container"></div>
+              </div>
+            </a>
+          </li>
         </ul>
         <ul class="webmaker-nav secondary">
         </ul>
@@ -39,15 +51,99 @@
       </nav>
     </div>
 
-    <!-- friendcode editor -->
+    <div class="tutorial-view closed">
+      <div class="tutorial-view-title"></div>
+      <iframe class="tutorial-iframe"></iframe>
+      <div class="tutorial-iframe-cover"></div>
+      <div class="icon icon-x tutorial-close-button"></div>
+    </div>
+
+    <!-- friendlycode editor -->
     <div id="bare-fc-holder" class="friendlycode-loading"></div>
     <script src="{{HTTP_STATIC_URL}}friendlycode/js/require-config.js"></script>
     <script src="{{HTTP_STATIC_URL}}friendlycode/vendor/require.min.js"></script>
     <script>
+
+    define("webmaker-nav", ["{{MAKE_ENDPOINT}}/js/make-api.js"], function(Make) {
+      var make = Make({
+        apiURL: "{{MAKE_ENDPOINT}}"
+      });
+      return {
+        loadTutorials: function(remixedFrom) {
+          make.tags("tutorial:{{appURL}}/remix/" + remixedFrom).then(function(err, results) {
+            var tutorialList = $(".tutorial-list"),
+                tutorialContainer = $(".tutorial-container"),
+                iframe = $(".tutorial-iframe"),
+                tutorialView = $(".tutorial-view"),
+                viewTitle = $(".tutorial-view-title"),
+                iframeCover = $(".tutorial-iframe-cover"),
+                closeButton = $(".tutorial-close-button");
+
+            if (err) {
+              return err;
+            }
+
+            if (!results.hits.length) {
+              return;
+            }
+
+            tutorialList.removeClass("hidden");
+
+            var onCoverMouseUp = function() {
+              iframeCover.css("display", "none");
+              tutorialView.mousedown(onCoverMouseDown);
+              document.removeEventListener("mouseup", onCoverMouseUp, false);
+            };
+
+            var onCoverMouseDown = function() {
+              iframeCover.css("display", "block");
+              tutorialView.off("mousedown", onCoverMouseDown);
+              document.addEventListener("mouseup", onCoverMouseUp, false);
+            };
+
+            function createTutorialItem(item) {
+              var tutorialElement = $("<div class='tutorial-list-item'></div>");
+              tutorialElement.html(item.title);
+              tutorialElement.click(function() {
+                iframe.attr("src", item.url);
+                viewTitle.html("Tutorial: " + item.title);
+                tutorialView.removeClass("closed");
+                tutorialView.css({
+                  "height": "",
+                  "width": ""
+                });
+              });
+              tutorialContainer.append(tutorialElement);
+            }
+
+            tutorialView.mousedown(onCoverMouseDown);
+
+            closeButton.disableSelection();
+            closeButton.click(function() {
+              tutorialView.addClass("closed");
+              tutorialView.css({
+                "height": 0,
+                "width": 0
+              });
+            });
+
+            tutorialView.draggable({
+              cancel: "iframe"
+            });
+            tutorialView.resizable();
+
+            for (var i = 0; i < results.hits.length; i++) { 
+              createTutorialItem(results.hits[i]);
+            }
+          });
+        }
+      };
+    });
+
     /**
      * ...
      */
-    define("hackpub", ["jquery"], function($) {
+    define("hackpub", ["jquery", "webmaker-nav"], function($, nav) {
       return function Hackpub(options) {
         return {
           loadCode: function(path, cb) {
@@ -127,6 +223,7 @@
                 var url = result['published-url'],
                     path = url.substring(url.lastIndexOf('/')+1);
                 cb(null, {path: path, url: url});
+                nav.loadTutorials(path);
               }
             });
           }
@@ -138,8 +235,12 @@
      * ...
      */
     define("thimblePage",
-           ["jquery", "friendlycode", "hackpub"],
-           function($, FriendlycodeEditor, Hackpub) {
+           ["jquery", "friendlycode", "hackpub", "webmaker-nav"],
+           function($, FriendlycodeEditor, Hackpub, nav) {
+      var remixedFrom = "{{REMIXED_FROM}}";
+      if (remixedFrom) {
+        nav.loadTutorials(remixedFrom);
+      }
       return FriendlycodeEditor({
         allowJS: false,
         defaultContent: '{{template}}',

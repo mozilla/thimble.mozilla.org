@@ -27,8 +27,9 @@ habitat.load();
 
 var app = express(),
     env = new habitat(),
+    makeEnv = env.get("MAKE"),
     middleware = require( "./lib/middleware")(env),
-    make = makeAPI(env.get("MAKE")),
+    make = makeAPI(makeEnv),
     nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
 
 databaseAPI = db(env.get('CLEARDB_DATABASE_URL') || env.get('DB')),
@@ -59,7 +60,8 @@ app.get('/', function(req, res) {
     audience: env.get("AUDIENCE"),
     userbar: env.get("USERBAR"),
     email: req.session.email || '',
-    HTTP_STATIC_URL: ''
+    HTTP_STATIC_URL: '',
+    MAKE_ENDPOINT: makeEnv.endpoint
   });
 });
 
@@ -129,7 +131,12 @@ app.get("/remix/:id/edit", function(req, res) {
   res.render('index.html', {
     appURL: env.get("HOSTNAME"),
     template: content,
-    HTTP_STATIC_URL: '/'
+    HTTP_STATIC_URL: '/',
+    audience: env.get("AUDIENCE"),
+    userbar: env.get("USERBAR"),
+    email: req.session.email || '',
+    REMIXED_FROM: req.params.id,
+    MAKE_ENDPOINT: makeEnv.endpoint
   });
 });
 
