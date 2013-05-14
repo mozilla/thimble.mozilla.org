@@ -49,6 +49,7 @@ app.use(express.cookieSession({
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
+app.use(express.static(path.join(__dirname, 'templates')));
 
 // set up persona
 require('express-persona')(app, { audience: env.get("AUDIENCE") });
@@ -93,6 +94,20 @@ app.get('/projects/:name', function(req, res) {
     appURL: env.get("HOSTNAME"),
     pageToLoad: '/' + req.params.name + '.html',
     HTTP_STATIC_URL: '/',
+    appname: appName
+  });
+});
+
+// project template lookups
+app.get('/templates/:name', function(req, res) {
+  res.render('index.html', {
+    appURL: env.get("HOSTNAME"),
+    pageToLoad: '/' + req.params.name + '.html',
+    HTTP_STATIC_URL: '/',
+    audience: env.get("AUDIENCE"),
+    userbar: env.get("USERBAR"),
+    email: req.session.email || '',
+    MAKE_ENDPOINT: makeEnv.endpoint,
     appname: appName
   });
 });
