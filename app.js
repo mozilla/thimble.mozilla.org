@@ -105,6 +105,10 @@ app.get('/myprojects',
 // what do we do when a project request comes in by id (:id route)?
 app.param('id', function(req, res, next, id) {
   databaseAPI.find(id, function(err, result) {
+    if ( err ) {
+      return next( err );
+    }
+    if ( !result ) { res.send(404); return; }
     req.pageData = result.sanitizedData;
     next();
   });
