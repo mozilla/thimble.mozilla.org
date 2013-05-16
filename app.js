@@ -20,7 +20,8 @@ var ajax = require('request'),
     path = require('path'),
     persona = require('express-persona'),
     routes = require('./routes'),
-    user = require('./routes/user');
+    user = require('./routes/user'),
+    utils = require('./lib/utils');
 
 habitat.load();
 
@@ -54,6 +55,7 @@ if (env.get("NODE_ENV") === "development") {
 app.get('/', function(req, res) {
   res.render('index.html', {
     appURL: env.get("HOSTNAME"),
+    template: utils.defaultPage(),
     audience: env.get("AUDIENCE"),
     userbar: env.get("USERBAR"),
     email: req.session.email || '',
