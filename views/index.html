@@ -164,13 +164,10 @@
       "jquery",
       "thimblePage"
     ], function($, ThimblePage) {
-      var //personaButton = $("<div>Log In</div>"),
-          publishButton = $('.publish-button.wm-button.wm-button-blue.short'),
-          //navItem = $(".nav-item.buttons"),
+      var publishButton = $('.publish-button.wm-button.wm-button-blue.short'),
           loggedIn = false;
 
       publishButton.hide();
-      //personaButton.addClass("persona-button wm-button wm-button-blue short");
 
       navigator.idSSO.app = {
         onlogin: function(loggedInUser, displayName) {
@@ -180,46 +177,6 @@
           publishButton.hide();
         }
       };
-/*
-      navItem.append(personaButton);
-      navigator.idSSO.watch({
-        onlogin: function( assertion ) {
-          $.ajax({
-            type: "POST",
-            url: '/persona/verify',
-            data: {assertion: assertion},
-            success: function(res, status, xhr) {
-              loggedIn = true;
-              publishButton.show();
-              personaButton.text("Log Out");
-            },
-            error: function(xhr, status, err) {
-              navigator.idSSO.logout();
-              alert("Login failure: " + err);
-            }
-          });
-        },
-        onlogout: function() {
-          $.ajax({
-            type: 'POST',
-            url: '/persona/logout',
-            success: function(res, status, xhr) {
-              loggedIn = false;
-              publishButton.hide();
-              personaButton.text("Log In");
-            },
-            error: function(xhr, status, err) { alert("Logout failure: " + err); }
-          });
-        }
-      });
-      personaButton.click(function() {
-        if (!loggedIn) {
-          navigator.idSSO.request();
-        } else {
-          navigator.idSSO.logout();
-        }
-      });
-*/
     });
     </script>
     <script src="{{userbar}}/js/sso-ux.js"></script>
