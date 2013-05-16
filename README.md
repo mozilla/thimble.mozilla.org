@@ -129,12 +129,21 @@ things work:
 > heroku config:set BLEACH_ENDPOINT="http://peaceful-crag-3591.herokuapp.com"
 > heroku config:set SECRET="irrelephant"
 > heroku config:set NODE_ENV="development"
+> heroku config:set S3_BUCKET="<the AWS-S3 credentials>"
+> heroku config:set S3_KEY="<the AWS-S3 credentials>"
+> heroku config:set S3_SECRET="<the AWS-S3 credentials>"
+> heroku config:set MAKE_AUTH="user:pass"
+> heroku config:set MAKE_ENDPOINT="http://localhost:6001"
+> heroku config:set DB_DIALECT="sqlite"
+> heroku config:set DB_STORAGE="thimble.sqlite"
+> heroku config:set PATH="bin:node_modules/.bin:/usr/local/bin:/usr/bin:/bin"
 ```
 That should be enough to ensure the deployed version has all the environment
 variables that it will rely on. The BLEACH_ENDPOINT url is where we are
 currently hosting the custom htmlsanitizer.org code. If you want to run
 your own copy, create another heroku instance and read the tutorial on
-setting up a python instance.
+setting up a python instance. The AWS-S3 credentials are needed from your .env file.
+The MAKE_AUTH setting should match with the ALLOWED_USERS setting in the MakeAPI .env hosted at MAKE_ENDPOINT.
 
 New Relic
 ---------
