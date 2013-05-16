@@ -24,6 +24,7 @@
       <nav class="webmaker-nav-container">
         <ul class="webmaker-nav primary">
           <li><a>Webmaker</a></li>
+          <li><a class="my-projects-title">My Projects</a></li>
           <li class="tutorial-list hidden">
             <a>
               <div>
@@ -51,6 +52,9 @@
       </nav>
     </div>
 
+    <div class="my-projects-container">
+      <iframe class="my-projects-iframe" src="{{audience}}/myprojects?app={{appname}}"></iframe>
+    </div>
     <div class="tutorial-view closed">
       <div class="tutorial-view-title"></div>
       <iframe class="tutorial-iframe"></iframe>
@@ -62,6 +66,7 @@
     <div id="bare-fc-holder" class="friendlycode-loading"></div>
     <script src="{{HTTP_STATIC_URL}}friendlycode/js/require-config.js"></script>
     <script src="{{HTTP_STATIC_URL}}friendlycode/vendor/require.min.js"></script>
+    <script src="{{HTTP_STATIC_URL}}js/userbar.js"></script>
     <script>
 
     define("webmaker-nav", ["{{MAKE_ENDPOINT}}/js/make-api.js"], function(Make) {
