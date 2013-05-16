@@ -13,9 +13,11 @@ var ajax = require('request'),
     fs = require('fs'),
     habitat = require('habitat'),
     makeAPI = require('./lib/makeapi'),
+    loginAPI = require('webmaker-loginapi')('http://testuser:password@localhost:3000');
     mysql = require('mysql'),
     nunjucks = require('nunjucks'),
     path = require('path'),
+    persona = require('express-persona'),
     routes = require('./routes'),
     user = require('./routes/user');
 
@@ -51,6 +53,8 @@ if (env.get("NODE_ENV") === "development") {
 app.get('/', function(req, res) {
   res.render('index.html', {
     appURL: env.get("HOSTNAME"),
+    audience: env.get("AUDIENCE"),
+    email: req.session.email || '',
     HTTP_STATIC_URL: ''
   });
 });
@@ -143,6 +147,40 @@ app.post('/publish',
     res.json({ 'published-url' : req.publishedUrl });
   }
 );
+
+
+/**
+ * WEBMAKER SSO
+ */
+persona(app, {
+  audience: env.get( "AUDIENCE" ),
+  verifyResponse: function(err, req, res, email) {
+    if (err) {
+      return res.json({status: "failure", reason: err});
+    }
+    req.session.email = email;
+    res.json({status: "okay", email: email});
+  }
+});
+app.post( "/user/:userid", function( req, res ) {
+  loginAPI.getUser(req.session.email, function(err, user) {
+    if(err || !user) {
+      return res.json({
+        status: "failed",
+        reason: (err || "user not defined")
+      });
+    }
+    req.session.webmakerid = user.subdomain;
+    res.json({
+      status: "okay",
+      subdomain: user.subdomain
+    });
+  });
+});
+/**
+ * END WEBMAKER SSO
+ */
+
 
 // run server
 app.listen(env.get("PORT"), function(){

@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="persona-email" content="{{email}}">
     <base target="_blank">
 
     <title>Alternate Publisher Friendlycode Editor</title>
@@ -12,11 +13,16 @@
     <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}stylesheets/nav.css" />
   </head>
   <body style="margin: 0">
+
     <!-- webmaker nav -->
     <div id="webmaker-nav">
       <nav class="webmaker-nav-container">
         <ul class="webmaker-nav primary">
           <li><a>Webmaker</a></li>
+        </ul>
+        <ul class="webmaker-nav secondary">
+        </ul>
+        <ul class="webmaker-nav custom">
         </ul>
         <ul class="webmaker-nav user-info">
           <li class="user">
@@ -24,31 +30,20 @@
               <span id="identity" class="user-name-container"></span>
             </div>
           </li>
+          <li>
+            <button id="webmaker-login" class="access-button hidden">Login</button>
+            <button id="webmaker-logout" class="access-button hidden">Logout</button>
+          </li>
         </ul>
       </nav>
     </div>
+
     <!-- friendcode editor -->
     <div id="bare-fc-holder" class="friendlycode-loading"></div>
-    <script src="http://personasso.s3-website-us-east-1.amazonaws.com/include.js"></script>
+    <link rel="stylesheet" href="http://localhost:3000/css/nav.css" />
     <script src="{{HTTP_STATIC_URL}}friendlycode/js/require-config.js"></script>
     <script src="{{HTTP_STATIC_URL}}friendlycode/vendor/require.min.js"></script>
     <script>
-    // Alternate publisher implementation that publishes to a hackpub
-    // endpoint. For more information, see:
-    //
-    //   https://github.com/hackasaurus/hackpub
-    //
-    // Note also that the Amazon S3 bucket hackpub publishes to must
-    // be configured with a CORS configuration that allows for cross-origin
-    // GET requests, e.g.:
-    //
-    //   <CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
-    //     <CORSRule>
-    //       <AllowedOrigin>*</AllowedOrigin>
-    //       <AllowedMethod>GET</AllowedMethod>
-    //     </CORSRule>
-    //   </CORSConfiguration>
-
     /**
      * ...
      */
@@ -157,7 +152,11 @@
         container: $("#bare-fc-holder")
       });
     });
+    </script>
 
+    <script src="{{audience}}/sso/include.js"></script>
+
+    <script>
     /**
      * ...
      */
@@ -165,12 +164,23 @@
       "jquery",
       "thimblePage"
     ], function($, ThimblePage) {
-      var personaButton = $("<div>Log In</div>"),
+      var //personaButton = $("<div>Log In</div>"),
           publishButton = $('.publish-button.wm-button.wm-button-blue.short'),
-          navItem = $(".nav-item.buttons"),
+          //navItem = $(".nav-item.buttons"),
           loggedIn = false;
+
       publishButton.hide();
-      personaButton.addClass("persona-button wm-button wm-button-blue short");
+      //personaButton.addClass("persona-button wm-button wm-button-blue short");
+
+      navigator.idSSO.app = {
+        onlogin: function(loggedInUser, displayName) {
+          publishButton.show();
+        },
+        onlogout: function() {
+          publishButton.hide();
+        }
+      };
+/*
       navItem.append(personaButton);
       navigator.idSSO.watch({
         onlogin: function( assertion ) {
@@ -209,7 +219,9 @@
           navigator.idSSO.logout();
         }
       });
+*/
     });
     </script>
+    <script src="http://localhost:3000/js/sso-ux.js"></script>
   </body>
 </html>

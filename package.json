@@ -14,7 +14,8 @@
     "node-statsd": "0.0.7",
     "nunjucks": "0.1.8a",
     "request": "2.21.0",
-    "sequelize": "1.6.0"
+    "sequelize": "1.6.0",
+    "webmaker-loginapi": "0.1.0"
   },
   "optionalDependencies": {
     "mysql": "2.0.0-alpha7",
