@@ -154,3 +154,11 @@
   border: none;
   margin-top: 3px;
 }
+/*********************************************************
+* My projects
+*/
+.my-projects-iframe {
+  width: 100%;
+  height: 0;
+  border-bottom: 1px solid #CCC;
+}
