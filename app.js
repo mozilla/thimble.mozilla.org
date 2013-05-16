@@ -54,6 +54,7 @@ app.get('/', function(req, res) {
   res.render('index.html', {
     appURL: env.get("HOSTNAME"),
     audience: env.get("AUDIENCE"),
+    userbar: env.get("USERBAR"),
     email: req.session.email || '',
     HTTP_STATIC_URL: ''
   });

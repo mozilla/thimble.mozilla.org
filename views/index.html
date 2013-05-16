@@ -14,7 +14,8 @@
   </head>
   <body style="margin: 0">
 
-    <!-- webmaker nav -->
+    <!-- webmaker user bar -->
+    <link rel="stylesheet" href="{{userbar}}/css/nav.css" />
     <div id="webmaker-nav">
       <nav class="webmaker-nav-container">
         <ul class="webmaker-nav primary">
@@ -40,7 +41,6 @@
 
     <!-- friendcode editor -->
     <div id="bare-fc-holder" class="friendlycode-loading"></div>
-    <link rel="stylesheet" href="http://localhost:3000/css/nav.css" />
     <script src="{{HTTP_STATIC_URL}}friendlycode/js/require-config.js"></script>
     <script src="{{HTTP_STATIC_URL}}friendlycode/vendor/require.min.js"></script>
     <script>
@@ -222,6 +222,6 @@
 */
     });
     </script>
-    <script src="http://localhost:3000/js/sso-ux.js"></script>
+    <script src="{{userbar}}/js/sso-ux.js"></script>
   </body>
 </html>
