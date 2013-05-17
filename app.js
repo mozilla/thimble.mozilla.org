@@ -96,7 +96,7 @@ app.get('/projects/:name', function(req, res) {
 
 // "my projects" listing -- USED FOR DEV WORK ATM, MAY NOT BE PERMANENT IN ANY WAY
 app.get('/myprojects',
-  middleware.checkForPersonaAuth,
+  middleware.checkForAuth,
   function(req, res) {
     make.search({email: req.session.email}, function(err, results) {
       var projects = [];
@@ -151,17 +151,21 @@ app.get("/remix/:id", function(req, res) {
 
 // publish a remix (to the db)
 app.post('/publish',
-         middleware.checkForPersonaAuth,
+         middleware.checkForAuth,
          middleware.checkForPublishData,
          middleware.checkForOriginalPage,
          bleach.bleachData(env.get("BLEACH_ENDPOINT")),
          middleware.saveData(databaseAPI, env.get('HOSTNAME')),
+         middleware.rewritePublishId(databaseAPI),
          middleware.finalizeProject(nunjucksEnv, env),
          middleware.publishData(env.get('S3')),
          middleware.rewriteUrl(env.get('USER_SUBDOMAIN')),
          middleware.publishMake(make),
   function(req, res) {
-    res.json({ 'published-url' : req.publishedUrl });
+    res.json({
+      'published-url': req.publishedUrl,
+      'remix-id': req.publishId
+    });
   }
 );
 
