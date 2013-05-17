@@ -190,7 +190,7 @@ app.get( "/user/:userid", function( req, res ) {
     req.session.webmakerid = user.subdomain;
     res.json({
       status: "okay",
-      user: user,
+      user: user
     });
   });
 });
