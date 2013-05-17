@@ -137,7 +137,7 @@
             });
             tutorialView.resizable();
 
-            for (var i = 0; i < results.hits.length; i++) { 
+            for (var i = 0; i < results.hits.length; i++) {
               createTutorialItem(results.hits[i]);
             }
           });
@@ -225,10 +225,8 @@
                 cb(req);
               },
               success: function(result) {
-                var url = result['published-url'],
-                    path = url.substring(url.lastIndexOf('/')+1);
-                cb(null, {path: path, url: url});
-                nav.loadTutorials(path);
+                cb(null, {path: result['remix-id'], url: result['published-url']});
+                nav.loadTutorials(result['remix-id']);
               }
             });
           }
