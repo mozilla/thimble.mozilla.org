@@ -61,8 +61,7 @@ app.get('/', function(req, res) {
     userbar: env.get("USERBAR"),
     email: req.session.email || '',
     HTTP_STATIC_URL: '',
-    MAKE_ENDPOINT: makeEnv.endpoint,
-    WEBMAKER_ORG: env.get("WEBMAKER_ORG")
+    MAKE_ENDPOINT: makeEnv.endpoint
   });
 });
 
@@ -88,8 +87,7 @@ app.get('/projects/:name', function(req, res) {
   res.render('index.html', {
     appURL: env.get("HOSTNAME"),
     pageToLoad: '/' + req.params.name + '.html',
-    HTTP_STATIC_URL: '/',
-    WEBMAKER_ORG: env.get("WEBMAKER_ORG")
+    HTTP_STATIC_URL: '/'
   });
 });
 
@@ -138,8 +136,7 @@ app.get("/remix/:id/edit", function(req, res) {
     userbar: env.get("USERBAR"),
     email: req.session.email || '',
     REMIXED_FROM: req.params.id,
-    MAKE_ENDPOINT: makeEnv.endpoint,
-    WEBMAKER_ORG: env.get("WEBMAKER_ORG")
+    MAKE_ENDPOINT: makeEnv.endpoint
   });
 });
 
