@@ -179,7 +179,7 @@ persona(app, {
     res.json({status: "okay", email: email});
   }
 });
-app.post( "/user/:userid", function( req, res ) {
+app.get( "/user/:userid", function( req, res ) {
   loginAPI.getUser(req.session.email, function(err, user) {
     if(err || !user) {
       return res.json({
@@ -190,7 +190,7 @@ app.post( "/user/:userid", function( req, res ) {
     req.session.webmakerid = user.subdomain;
     res.json({
       status: "okay",
-      subdomain: user.subdomain
+      user: user
     });
   });
 });
