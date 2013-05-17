@@ -26,6 +26,7 @@ var ajax = require('request'),
 habitat.load();
 
 var app = express(),
+    appName = "thimble",
     env = new habitat(),
     makeEnv = env.get("MAKE"),
     middleware = require( "./lib/middleware")(env),
@@ -61,7 +62,8 @@ app.get('/', function(req, res) {
     userbar: env.get("USERBAR"),
     email: req.session.email || '',
     HTTP_STATIC_URL: '',
-    MAKE_ENDPOINT: makeEnv.endpoint
+    MAKE_ENDPOINT: makeEnv.endpoint,
+    appname: appName
   });
 });
 
@@ -87,7 +89,8 @@ app.get('/projects/:name', function(req, res) {
   res.render('index.html', {
     appURL: env.get("HOSTNAME"),
     pageToLoad: '/' + req.params.name + '.html',
-    HTTP_STATIC_URL: '/'
+    HTTP_STATIC_URL: '/',
+    appname: appName
   });
 });
 
@@ -136,7 +139,8 @@ app.get("/remix/:id/edit", function(req, res) {
     userbar: env.get("USERBAR"),
     email: req.session.email || '',
     REMIXED_FROM: req.params.id,
-    MAKE_ENDPOINT: makeEnv.endpoint
+    MAKE_ENDPOINT: makeEnv.endpoint,
+    appname: appName
   });
 });
 

@@ -154,3 +154,21 @@
   border: none;
   margin-top: 3px;
 }
+/*********************************************************
+* My projects
+*/
+.my-projects-iframe {
+  width: 100%;
+  height: 0;
+  z-index: 0;
+  border-bottom: 1px solid #CCC;
+}
+
+.my-projects-container.open {
+  z-index: 5;
+  position: relative;
+}
+
+.my-projects-container.open .my-projects-iframe {
+  height: 300px;
+}
