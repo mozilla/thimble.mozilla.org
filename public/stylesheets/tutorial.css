@@ -1,0 +1,106 @@
+.tutorial-list.hidden {
+  display: none;
+}
+
+.tutorial-container {
+  position: absolute;
+  background: rgb(58, 60, 60);
+  padding: 0 15px;
+  opacity: 0;
+  transition: opacity .35s;
+  bottom: 100%;
+  overflow: hidden;
+}
+
+.tutorial-list-item {
+  opacity: 0.5;
+}
+
+.tutorial-list-item:hover {
+  opacity: 1;
+}
+
+.tutorial-list:hover .tutorial-container {
+  opacity: 1;
+  position: relative;
+}
+
+.tutorial-view {
+  position: relative;
+  opacity: 1;
+  transition: opacity .35s;
+  top: 0;
+  left: 0;
+  cursor: move;
+  width: 500px;
+  height: 500px;
+  z-index: 3;
+  background-color: white;
+  border: 1px solid #B3B3B3;
+  box-shadow: 0 3px 10px -5px rgba( 0, 0, 0, 0.5 );
+  padding: 3em 1em 1em;
+}
+
+.tutorial-view.closed {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.tutorial-view-title {
+  position: absolute;
+  top: 1em;
+  color: #555;
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.tutorial-iframe-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+.tutorial-close-button {
+  position: absolute;
+  cursor: pointer;
+  top: 7px;
+  right: 3px;
+  opacity: 0.6;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.tutorial-iframe {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #CCC;
+}
+
+#webmaker-nav {
+  position: relative;
+  z-index: 3;
+}
+
+.primary > li {
+  height: 100%;
+}
+.icon-x,
+.icon-close {
+  background-position: -432px -24px;
+}
+.icon {
+  display: inline-block;
+  background-image: url( "../resources/icons/glyphiconshalflings-alt.png" );
+  width: 14px;
+  height: 14px;
+  margin-left: -4px;
+  margin-right: 4px;
+  line-height: 14px;
+  background-repeat: no-repeat;
+  vertical-align: text-top;
+}
