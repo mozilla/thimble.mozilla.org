@@ -1,15 +1,13 @@
 (function() {
   var myProjectsButton = document.querySelector( ".my-projects-title" ),
-      container = document.querySelector( ".my-projects-container" ),
+      container = $( ".my-projects-container" ),
       iframe = document.querySelector( ".my-projects-iframe" );
 
   function open() {
     myProjectsButton.addEventListener( "click", close, false );
     myProjectsButton.removeEventListener( "click", open, false );
 
-    container.style.zIndex = 5;
-    container.style.position = "relative";
-    iframe.style.height = "300px"
+    container.addClass("open");
 
     iframe.src = iframe.src;
   }
@@ -18,9 +16,7 @@
     myProjectsButton.addEventListener( "click", open, false );
     myProjectsButton.removeEventListener( "click", close, false );
 
-    container.style.zIndex = "";
-    container.style.position = "";
-    iframe.style.height = ""
+    container.removeClass("open");
   }
 
   myProjectsButton.addEventListener( "click", open, false );
