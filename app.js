@@ -100,8 +100,8 @@ app.get('/myprojects',
   function(req, res) {
     make.search({email: req.session.email}, function(err, results) {
       var projects = [];
-      if (results && results.hits) {
-        projects = results.hits.map(function(result) {
+      if (results) {
+        projects = results.map(function(result) {
           var url = result.url;
           return {
             title: result.title || url,

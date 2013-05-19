@@ -75,7 +75,7 @@
       });
       return {
         loadTutorials: function(remixedFrom) {
-          make.tags("tutorial:{{appURL}}/remix/" + remixedFrom).then(function(err, results) {
+          make.tags("tutorial-" + escape("{{appURL}}/remix/" + remixedFrom)).then(function(err, results) {
             var tutorialList = $(".tutorial-list"),
                 tutorialContainer = $(".tutorial-container"),
                 iframe = $(".tutorial-iframe"),
@@ -88,7 +88,9 @@
               return err;
             }
 
-            if (!results.hits.length) {
+            // Search was successful, just found nothing.
+            // Return early because we have nothing to display.
+            if (!results.length) {
               return;
             }
 
@@ -137,8 +139,8 @@
             });
             tutorialView.resizable();
 
-            for (var i = 0; i < results.hits.length; i++) {
-              createTutorialItem(results.hits[i]);
+            for (var i = 0; i < results.length; i++) {
+              createTutorialItem(results[i]);
             }
           });
         }
@@ -193,7 +195,7 @@
                     metaData.locale = node.content;
                   },
                   'webmaker:tutorial': function(node) {
-                    metaData.tags.push("tutorial:" + node.content);
+                    metaData.tags.push("tutorial-" + escape(node.content));
                   }
                 };
 
