@@ -6,10 +6,7 @@
   function open() {
     myProjectsButton.addEventListener( "click", close, false );
     myProjectsButton.removeEventListener( "click", open, false );
-
     container.addClass("open");
-
-    iframe.src = iframe.src;
   }
 
   function close() {
