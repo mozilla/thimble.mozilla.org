@@ -23,6 +23,11 @@
 
   window.userBar = {
     set: function(email) {
+      if(email) {
+        $(myProjectsButton).removeClass("hidden");
+      } else {
+        $(myProjectsButton).addClass("hidden");
+      }
       iframe.src = iframe.src.replace(/email=.*/,"email="+email);
     }
   };
