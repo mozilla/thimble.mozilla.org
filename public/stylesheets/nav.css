@@ -172,3 +172,7 @@
 .my-projects-container.open .my-projects-iframe {
   height: 300px;
 }
+
+.my-projects-title.hidden {
+  display: none;
+}
