@@ -271,6 +271,7 @@
       "thimblePage"
     ], function($, ThimblePage) {
       var publishButton = $('.publish-button.wm-button.wm-button-blue.short'),
+          myProjects = document.querySelector( ".my-projects-iframe" ),
           loggedIn = false;
 
       publishButton.hide();
@@ -278,9 +279,11 @@
       navigator.idSSO.app = {
         onlogin: function(loggedInUser, displayName) {
           publishButton.show();
+          userBar.set(loggedInUser);
         },
         onlogout: function() {
           publishButton.hide();
+          userBar.set("");
         }
       };
     });

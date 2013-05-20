@@ -20,4 +20,10 @@
   }
 
   myProjectsButton.addEventListener( "click", open, false );
+
+  window.userBar = {
+    set: function(email) {
+      iframe.src = iframe.src.replace(/email=.*/,"email="+email);
+    }
+  };
 }());
