@@ -26,6 +26,9 @@
         $(myProjectsButton).addClass("hidden");
       }
       iframe.src = iframe.src.replace(/email=.*/,"email="+email);
+    },
+    update: function() {
+      iframe.src = iframe.src;
     }
   };
 }());
