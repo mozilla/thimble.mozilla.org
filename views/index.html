@@ -229,6 +229,7 @@
               success: function(result) {
                 cb(null, {path: result['remix-id'], url: result['published-url']});
                 nav.loadTutorials(result['remix-id']);
+                userBar.update();
               }
             });
           }
