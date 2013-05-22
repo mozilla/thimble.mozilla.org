@@ -42,7 +42,10 @@ app.use(express.logger('dev'));
 app.use(express.compress());
 app.use(express.bodyParser());
 app.use(express.cookieParser());
-app.use(express.cookieSession({secret: env.get('SESSION_SECRET')}));
+app.use(express.cookieSession({
+  key: "thimble.sid",
+  secret: env.get('SESSION_SECRET')
+}));
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
