@@ -1,5 +1,5 @@
 (function() {
-  var myProjectsButton = document.querySelector( ".my-projects-title" ),
+  var myProjectsButton = document.querySelector( ".webmaker-nav .makes button" ),
       container = $( ".my-projects-container" ),
       iframe = document.querySelector( ".my-projects-iframe" );
 

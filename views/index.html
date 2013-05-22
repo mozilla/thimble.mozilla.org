@@ -6,6 +6,8 @@
     <meta name="persona-email" content="{{email}}">
     <base target="_blank">
 
+      <link rel="stylesheet" href="http://yui.yahooapis.com/2.9.0/build/reset/reset.css" >
+
     <title>Alternate Publisher Friendlycode Editor</title>
     <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}friendlycode/css/friendlycode.css">
     <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}stylesheets/friendlycode-overrides.css">
@@ -21,32 +23,17 @@
     <!-- webmaker user bar -->
     <link rel="stylesheet" href="{{userbar}}/css/nav.css" />
     <div id="webmaker-nav">
+      <!-- the webmaker bar -->
       <nav class="webmaker-nav-container">
-        <ul class="webmaker-nav primary">
-          <li><a>Webmaker</a></li>
-          <li><a class="my-projects-title hidden">My Projects</a></li>
-          <li class="tutorial-list hidden">
-            <a>
-              <div>
-                <span>Tutorial</span>
-                <div class="tutorial-container"></div>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <ul class="webmaker-nav secondary">
-        </ul>
-        <ul class="webmaker-nav custom">
-        </ul>
+        <a id="logo" href="https://webmaker.org"><img src="{{userbar}}/img/webmaker-logo.png" alt="Mozilla Webmaker" /></a>
         <ul class="webmaker-nav user-info">
           <li class="user">
-            <div class="user-name">
-              <span id="identity" class="user-name-container"></span>
-            </div>
+              Hi <span id="identity" class="user-name-container"></span>
           </li>
+          <li class="makes"><button>My makes</button></li>
           <li>
-            <button id="webmaker-login" class="access-button hidden">Login</button>
-            <button id="webmaker-logout" class="access-button hidden">Logout</button>
+            <button id="webmaker-login">Sign in to save <span>Sign up</span></button>
+            <button id="webmaker-logout">Sign out</button>
           </li>
         </ul>
       </nav>
