@@ -100,7 +100,12 @@ app.get('/templates/:name', function(req, res) {
   res.render('index.html', {
     appURL: env.get("HOSTNAME"),
     pageToLoad: '/' + req.params.name + '.html',
-    HTTP_STATIC_URL: '/'
+    HTTP_STATIC_URL: '/',
+    audience: env.get("AUDIENCE"),
+    userbar: env.get("USERBAR"),
+    email: req.session.email || '',
+    MAKE_ENDPOINT: makeEnv.endpoint,
+    appname: appName
   });
 });
 
