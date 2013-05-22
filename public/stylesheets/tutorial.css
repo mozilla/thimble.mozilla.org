@@ -2,9 +2,17 @@
   display: none;
 }
 
+.tutorial-title {
+  cursor: pointer;
+  margin: 0px 0.9em;
+}
+
+.tutorial-list {
+  margin: 0.9em 0px;
+}
+
 .tutorial-container {
   position: absolute;
-  background: rgb(58, 60, 60);
   padding: 0 15px;
   opacity: 0;
   transition: opacity .35s;
@@ -14,6 +22,7 @@
 
 .tutorial-list-item {
   opacity: 0.5;
+  cursor: pointer;
 }
 
 .tutorial-list-item:hover {
@@ -103,4 +112,8 @@
   line-height: 14px;
   background-repeat: no-repeat;
   vertical-align: text-top;
+}
+
+.tutorial-nav {
+  float: left;
 }
