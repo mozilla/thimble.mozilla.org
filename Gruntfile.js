@@ -30,7 +30,9 @@ module.exports = function( grunt ) {
       },
       strict: {
          options: {
+          "ids": false,
           "adjoining-classes": false,
+          "box-model": false,
           "important": false
          },
         src: [
