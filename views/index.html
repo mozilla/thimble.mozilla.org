@@ -39,11 +39,11 @@
           </li>
         </ul>
       </nav>
+      <div class="my-projects-container">
+        <iframe class="my-projects-iframe" src="{{audience}}/myprojects?app={{appname}}&email={{email}}"></iframe>
+      </div>
     </div>
 
-    <div class="my-projects-container">
-      <iframe class="my-projects-iframe" src="{{audience}}/myprojects?app={{appname}}&email={{email}}"></iframe>
-    </div>
     <div class="tutorial-view closed">
       <div class="tutorial-view-title"></div>
       <iframe class="tutorial-iframe"></iframe>
@@ -55,9 +55,7 @@
     <div id="bare-fc-holder" class="friendlycode-loading"></div>
     <script src="{{HTTP_STATIC_URL}}friendlycode/js/require-config.js"></script>
     <script src="{{HTTP_STATIC_URL}}friendlycode/vendor/require.min.js"></script>
-    <script src="{{HTTP_STATIC_URL}}js/userbar.js"></script>
     <script>
-
     define("webmaker-nav", ["{{MAKE_ENDPOINT}}/js/make-api.js"], function(Make) {
       var make = Make({
         apiURL: "{{MAKE_ENDPOINT}}"
@@ -218,7 +216,7 @@
               success: function(result) {
                 cb(null, {path: result['remix-id'], url: result['published-url']});
                 nav.loadTutorials(result['remix-id']);
-                userBar.update();
+                userBar.updateMakes();
               }
             });
           }
@@ -269,11 +267,9 @@
       navigator.idSSO.app = {
         onlogin: function(loggedInUser, displayName) {
           publishButton.show();
-          userBar.set(loggedInUser);
         },
         onlogout: function() {
           publishButton.hide();
-          userBar.set("");
         }
       };
     });
