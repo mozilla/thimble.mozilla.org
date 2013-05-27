@@ -171,7 +171,7 @@ app.get("/remix/:id", function(req, res) {
 app.post('/publish',
          middleware.checkForAuth,
          middleware.checkForPublishData,
-         middleware.checkForOriginalPage,
+         middleware.checkForOriginalPage(databaseAPI),
          bleach.bleachData(env.get("BLEACH_ENDPOINT")),
          middleware.saveData(databaseAPI, env.get('HOSTNAME')),
          middleware.rewritePublishId(databaseAPI),
