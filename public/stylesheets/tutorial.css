@@ -4,11 +4,11 @@
 
 .tutorial-title {
   cursor: pointer;
-  margin: 0px 0.9em;
+  margin: 0 0.9em;
 }
 
 .tutorial-list {
-  margin: 0.9em 0px;
+  margin: 0.9em 0;
 }
 
 .tutorial-container {
