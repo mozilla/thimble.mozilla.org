@@ -143,24 +143,35 @@ app.param('id', function(req, res, next, id) {
   });
 });
 
-// remix a published page (from db)
-app.get("/remix/:id/edit", function(req, res) {
-  // This is quite ugly, and we need a better way to inject data
-  // into friendlycode. I'm pretty sure it CAN load from URI, we
-  // just need to find out how to tell it to...
-  var content = req.pageData.replace(/'/g, '\\\'').replace(/\n/g, '\\n');
-  res.render('index.html', {
-    appURL: env.get("HOSTNAME"),
-    template: content,
-    HTTP_STATIC_URL: '/',
-    audience: env.get("AUDIENCE"),
-    userbar: env.get("USERBAR"),
-    email: req.session.email || '',
-    REMIXED_FROM: req.params.id,
-    MAKE_ENDPOINT: makeEnv.endpoint,
-    appname: appName
-  });
-});
+
+var editOrRemix = function(pageEdit) {
+  return function(req, res) {
+    var content = req.pageData.replace(/'/g, '\\\'').replace(/\n/g, '\\n');
+    res.render('index.html', {
+      appURL: env.get("HOSTNAME"),
+      template: content,
+      HTTP_STATIC_URL: '/',
+      audience: env.get("AUDIENCE"),
+      userbar: env.get("USERBAR"),
+      email: req.session.email || '',
+      REMIXED_FROM: req.params.id,
+      MAKE_ENDPOINT: makeEnv.endpoint,
+      appname: appName
+    });
+  };
+};
+
+// Edit a published page (from db).
+// If this is not "our own" page, this will
+// effect a new page upon publication.
+// Otherwise, the edit overwrites the
+// existing page instead.
+app.get("/remix/:id/edit", editOrRemix(true)});
+
+// Remix a published page (from db)
+// Even if this is "our own" page, this URL
+// will effect a new page upon publication.
+app.get("/remix/:id/remix", editOrRemix(false)});
 
 // view a published page (from db)
 app.get("/remix/:id", function(req, res) {
