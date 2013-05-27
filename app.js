@@ -146,6 +146,7 @@ app.param('id', function(req, res, next, id) {
 
 var editOrRemix = function(pageEdit) {
   return function(req, res) {
+    req.session.pageEdit = pageEdit;
     var content = req.pageData.replace(/'/g, '\\\'').replace(/\n/g, '\\n');
     res.render('index.html', {
       appURL: env.get("HOSTNAME"),
@@ -166,12 +167,12 @@ var editOrRemix = function(pageEdit) {
 // effect a new page upon publication.
 // Otherwise, the edit overwrites the
 // existing page instead.
-app.get("/remix/:id/edit", editOrRemix(true)});
+app.get("/remix/:id/edit", editOrRemix(true));
 
 // Remix a published page (from db)
 // Even if this is "our own" page, this URL
 // will effect a new page upon publication.
-app.get("/remix/:id/remix", editOrRemix(false)});
+app.get("/remix/:id/remix", editOrRemix(false));
 
 // view a published page (from db)
 app.get("/remix/:id", function(req, res) {
@@ -180,6 +181,10 @@ app.get("/remix/:id", function(req, res) {
 
 // publish a remix (to the db)
 app.post('/publish',
+         function(req, res, next) {
+           console.log(req.session);
+           next();
+         },
          middleware.checkForAuth,
          middleware.checkForPublishData,
          middleware.checkForOriginalPage(databaseAPI),
