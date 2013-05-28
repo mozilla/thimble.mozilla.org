@@ -19,7 +19,6 @@ var ajax = require('request'),
     path = require('path'),
     persona = require('express-persona'),
     routes = require('./routes'),
-    user = require('./routes/user'),
     utils = require('./lib/utils');
 
 habitat.load();
@@ -28,9 +27,8 @@ var app = express(),
     appName = "thimble",
     env = new habitat(),
     loginAPI = require('webmaker-loginapi')(env.get('LOGINAPI')),
-    makeEnv = env.get("MAKE"),
-    middleware = require( "./lib/middleware")(env),
-    make = makeAPI(makeEnv),
+    middleware = require('./lib/middleware')(env),
+    make = makeAPI(env.get('make')),
     nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
 
 databaseAPI = db(env.get('CLEARDB_DATABASE_URL') || env.get('DB')),
@@ -56,20 +54,6 @@ require('express-persona')(app, { audience: env.get("AUDIENCE") });
 if (env.get("NODE_ENV") === "development") {
   app.use(express.errorHandler());
 }
-
-// base dir lookup
-app.get('/', function(req, res) {
-  res.render('index.html', {
-    appURL: env.get("HOSTNAME"),
-    template: utils.defaultPage(),
-    audience: env.get("AUDIENCE"),
-    userbar: env.get("USERBAR"),
-    email: req.session.email || '',
-    HTTP_STATIC_URL: '',
-    MAKE_ENDPOINT: makeEnv.endpoint,
-    appname: appName
-  });
-});
 
 // learning project listing
 app.get('/projects', function(req, res) {
@@ -143,27 +127,29 @@ app.param('id', function(req, res, next, id) {
   });
 });
 
-// remix a published page (from db)
-app.get("/remix/:id/edit", function(req, res) {
-  // This is quite ugly, and we need a better way to inject data
-  // into friendlycode. I'm pretty sure it CAN load from URI, we
-  // just need to find out how to tell it to...
-  var content = req.pageData.replace(/'/g, '\\\'').replace(/\n/g, '\\n');
-  res.render('index.html', {
-    appURL: env.get("HOSTNAME"),
-    template: content,
-    HTTP_STATIC_URL: '/',
-    audience: env.get("AUDIENCE"),
-    userbar: env.get("USERBAR"),
-    email: req.session.email || '',
-    REMIXED_FROM: req.params.id,
-    MAKE_ENDPOINT: makeEnv.endpoint,
-    appname: appName
-  });
-});
+// Main page
+app.get('/',
+        middleware.setDefaultPublishOperation,
+        routes.index(utils, env, appName));
+
+// Remix a published page (from db)
+// Even if this is "our own" page, this URL
+// will effect a new page upon publication.
+app.get('/remix/:id/remix',
+        middleware.setDefaultPublishOperation,
+        routes.index(utils, env, appName));
+
+// Edit a published page (from db).
+// If this is not "our own" page, this will
+// effect a new page upon publication.
+// Otherwise, the edit overwrites the
+// existing page instead.
+app.get('/remix/:id/edit',
+        middleware.setPublishAsUpdate,
+        routes.index(utils, env, appName));
 
 // view a published page (from db)
-app.get("/remix/:id", function(req, res) {
+app.get('/remix/:id', function(req, res) {
   res.send(req.pageData);
 });
 
