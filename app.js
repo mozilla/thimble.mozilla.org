@@ -19,7 +19,6 @@ var ajax = require('request'),
     path = require('path'),
     persona = require('express-persona'),
     routes = require('./routes'),
-    user = require('./routes/user'),
     utils = require('./lib/utils');
 
 habitat.load();
@@ -28,7 +27,7 @@ var app = express(),
     appName = "thimble",
     env = new habitat(),
     loginAPI = require('webmaker-loginapi')(env.get('LOGINAPI')),
-    middleware = require('./lib/middleware')(env, appName),
+    middleware = require('./lib/middleware')(env),
     make = makeAPI(env.get('make')),
     nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
 
@@ -131,14 +130,14 @@ app.param('id', function(req, res, next, id) {
 // Main page
 app.get('/',
         middleware.setDefaultPublishOperation,
-        middleware.serveMainPage);
+        routes.index(utils, env, appName));
 
 // Remix a published page (from db)
 // Even if this is "our own" page, this URL
 // will effect a new page upon publication.
 app.get('/remix/:id/remix',
         middleware.setDefaultPublishOperation,
-        middleware.serveMainPage);
+        routes.index(utils, env, appName));
 
 // Edit a published page (from db).
 // If this is not "our own" page, this will
@@ -147,7 +146,7 @@ app.get('/remix/:id/remix',
 // existing page instead.
 app.get('/remix/:id/edit',
         middleware.setPublishAsUpdate,
-        middleware.serveMainPage);
+        routes.index(utils, env, appName));
 
 // view a published page (from db)
 app.get('/remix/:id', function(req, res) {
