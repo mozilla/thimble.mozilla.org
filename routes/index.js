@@ -14,9 +14,10 @@ exports.index = function(utils, env, appName) {
       email: req.session.email || '',
       HTTP_STATIC_URL: '/',
       MAKE_ENDPOINT: env.get("MAKE_ENDPOINT"),
+      pageOperation: req.body.pageOperation,
       REMIXED_FROM: req.params.id,
       template: content,
-      userbar: env.get("USERBAR")
+      userbar: env.get("USERBAR"),
     });
   };
 };

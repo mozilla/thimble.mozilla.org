@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="persona-email" content="{{email}}">
+    <meta name="thimble-operation" content="{{pageOperation}}">
     <base target="_blank">
     <title>Alternate Publisher Friendlycode Editor</title>
     <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}friendlycode/css/friendlycode.css">
@@ -206,7 +207,8 @@
               data: {
                 'html': data,
                 'original-url': originalURL,
-                'metaData': metaData
+                'metaData': metaData,
+                'pageOperation': $("meta[name='thimble-operation']").attr("content")
               },
               dataType: 'json',
               error: function(req) {
@@ -214,6 +216,7 @@
               },
               success: function(result) {
                 cb(null, {path: result['remix-id'], url: result['published-url']});
+                $("meta[name='thimble-operation']").attr("content","edit")
                 nav.loadTutorials(result['remix-id']);
                 userBar.updateMakes();
               }
@@ -257,7 +260,7 @@
       "jquery",
       "thimblePage"
     ], function($, ThimblePage) {
-      var publishButton = $('.publish-button.wm-button.wm-button-blue.short'),
+      var publishButton = $('.publish-button'),
           myProjects = document.querySelector( ".my-projects-iframe" ),
           loggedIn = false;
 
