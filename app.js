@@ -29,7 +29,7 @@ var app = express(),
     env = new habitat(),
     loginAPI = require('webmaker-loginapi')(env.get('LOGINAPI')),
     makeEnv = env.get("MAKE"),
-    middleware = require( "./lib/middleware")(env),
+    middleware = require( "./lib/middleware")(env, makeEnv, appName),
     make = makeAPI(makeEnv),
     nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
 
@@ -129,37 +129,29 @@ app.param('id', function(req, res, next, id) {
   });
 });
 
-// base dir lookup
-/*
-app.get('/', function(req, res) {
-  res.render('index.html', {
-    appURL: env.get("HOSTNAME"),
-    template: utils.defaultPage(),
-    audience: env.get("AUDIENCE"),
-    userbar: env.get("USERBAR"),
-    email: req.session.email || '',
-    HTTP_STATIC_URL: '',
-    MAKE_ENDPOINT: makeEnv.endpoint,
-    appname: appName
-  });
-});
-*/
-app.get('/', middleware.editOrRemixTemplate(appName, env, makeEnv, "remix"));
+// Main page
+app.get('/',
+        middleware.setDefaultPublishOperation,
+        middleware.serveMainPage);
+
+// Remix a published page (from db)
+// Even if this is "our own" page, this URL
+// will effect a new page upon publication.
+app.get('/remix/:id/remix',
+        middleware.setDefaultPublishOperation,
+        middleware.serveMainPage);
 
 // Edit a published page (from db).
 // If this is not "our own" page, this will
 // effect a new page upon publication.
 // Otherwise, the edit overwrites the
 // existing page instead.
-app.get("/remix/:id/edit", middleware.editOrRemixTemplate(appName, env, makeEnv, "edit"));
-
-// Remix a published page (from db)
-// Even if this is "our own" page, this URL
-// will effect a new page upon publication.
-app.get("/remix/:id/remix", middleware.editOrRemixTemplate(appName, env, makeEnv, "remix"));
+app.get('/remix/:id/edit',
+        middleware.setPublishAsUpdate,
+        middleware.serveMainPage);
 
 // view a published page (from db)
-app.get("/remix/:id", function(req, res) {
+app.get('/remix/:id', function(req, res) {
   res.send(req.pageData);
 });
 
