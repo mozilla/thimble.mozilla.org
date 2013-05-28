@@ -17,7 +17,7 @@ exports.index = function(utils, env, appName) {
       pageOperation: req.body.pageOperation,
       REMIXED_FROM: req.params.id,
       template: content,
-      userbar: env.get("USERBAR"),
+      userbar: env.get("USERBAR")
     });
   };
 };
