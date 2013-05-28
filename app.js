@@ -28,9 +28,8 @@ var app = express(),
     appName = "thimble",
     env = new habitat(),
     loginAPI = require('webmaker-loginapi')(env.get('LOGINAPI')),
-    makeEnv = env.get("MAKE"),
-    middleware = require( "./lib/middleware")(env, makeEnv, appName),
-    make = makeAPI(makeEnv),
+    middleware = require('./lib/middleware')(env, appName),
+    make = makeAPI(env.get('make')),
     nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
 
 databaseAPI = db(env.get('CLEARDB_DATABASE_URL') || env.get('DB')),
