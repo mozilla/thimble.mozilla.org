@@ -125,16 +125,60 @@ You will need to issue some environment "SET" commands to make sure
 things work:
 
 ```
+> heroku config:set NODE_ENV="development"
 > heroku config:set HOSTNAME="<the http://....heroku.com address you get from 'heroku open'>"
 > heroku config:set BLEACH_ENDPOINT="http://peaceful-crag-3591.herokuapp.com"
-> heroku config:set SECRET="irrelephant"
-> heroku config:set NODE_ENV="development"
+> heroku config:set SESSION_SECRET="irrelephant"
+> heroku config:set LOGINAPI="http://testuser:testpassword@[loginserver]"
+> heroku config:set MAKE_ENDPOINT="http://[make server]/"
+> heroku config:set MAKE_AUTH="testuser:testpassword"
 ```
+
 That should be enough to ensure the deployed version has all the environment
 variables that it will rely on. The BLEACH_ENDPOINT url is where we are
 currently hosting the custom htmlsanitizer.org code. If you want to run
 your own copy, create another heroku instance and read the tutorial on
 setting up a python instance.
+
+If you're running your own `login.webmaker.org` instance as a heroku app
+on X-B-herokuapps.com, then your `LOGINAPI` should be:
+
+`http://testuser:testpassword@X-B-herokuapps.com`.
+
+If you're working on this in the context of mozilla's webmaker suite,
+the login server is `login.mofostaging.net` and the `make` server
+is `makeapi.mofostaging.net`
+
+The login credentials map to the `ALLOWED_USERS` variable for the login
+instance, and regulate who can ask the login service for user information. It is
+not the list of which persona users are allowed access to the service.
+
+The makeapi credentials map to the `ALLOWED_USERS` variable for the
+makeapi instance, and regulate who can query and push to the makeAPI.
+
+If you're working on this in the context of mozilla's webmaker suite,
+the login server is `login.mofostaging.net`.
+
+Deploying to Heroku with a database
+-----------------------------------
+
+If you want to work with your data, you can either use the build in
+SQLite3 storage, or you can add a mysql addon to your heroku instance.
+The first is convenient, but you will lose all your data when your
+heroku instance goes to sleep, as it simply resets the heroku instance
+to its deploy state. If that's fine, you can use these environment vars:
+
+```
+> heroku config:set DB_DIALECT="sqlite"
+> heroku config:set DB_STORAGE="thimble.sqlite"
+```
+
+If you want persistent data, however, you will want to add `ClearDB` to
+your heroku app, and then pass its setting URL to Thimble using the
+`CLEARDB_DATABASE_URL` variable. Heroku should have already built this
+variable for you automatically, but if it hasn't, make sure to add it
+yourself based on what your heroku app settings tell you.
+
 
 New Relic
 ---------
