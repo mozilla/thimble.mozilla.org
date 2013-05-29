@@ -49,12 +49,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
 app.use(express.static(path.join(__dirname, 'templates')));
 
-// set up persona
-require('express-persona')(app, { audience: env.get("AUDIENCE") });
-if (env.get("NODE_ENV") === "development") {
-  app.use(express.errorHandler());
-}
-
 // learning project listing
 app.get('/projects', function(req, res) {
   fs.readdir('learning_projects', function(err, files){
@@ -177,16 +171,8 @@ app.post('/publish',
 /**
  * WEBMAKER SSO
  */
-persona(app, {
-  audience: env.get( "AUDIENCE" ),
-  verifyResponse: function(err, req, res, email) {
-    if (err) {
-      return res.json({status: "failure", reason: err});
-    }
-    req.session.email = email;
-    res.json({status: "okay", email: email});
-  }
-});
+persona(app, {audience: env.get( "AUDIENCE" )});
+
 app.get( "/user/:userid", function( req, res ) {
   loginAPI.getUser(req.session.email, function(err, user) {
     if(err || !user) {
