@@ -238,8 +238,7 @@
       }
       return FriendlycodeEditor({
         allowJS: false,
-        defaultContent: '{{template}}',
-        pageToLoad: '{{pageToLoad}}',
+        {{contentType}}: '{{content}}',
         publisher: Hackpub({
           hackpubURL: "{{appURL}}",
           publishURL: "{{appURL}}/remix",

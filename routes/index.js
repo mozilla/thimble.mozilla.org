@@ -3,9 +3,13 @@
  */
 exports.index = function(utils, env, appName) {
   return function(req, res) {
-    var content = utils.defaultPage();
+    var content = utils.defaultPage(),
+        contentType = "defaultContent";
     if(req.pageData) {
       content = req.pageData.replace(/'/g, '\\\'').replace(/\n/g, '\\n');
+    } else if (req.pageToLoad) {
+      contentType = "pageToLoad";
+      content = req.pageToLoad;
     }
     res.render('index.html', {
       appname: appName,
@@ -13,10 +17,11 @@ exports.index = function(utils, env, appName) {
       audience: env.get("AUDIENCE"),
       email: req.session.email || '',
       HTTP_STATIC_URL: '/',
+      contentType: contentType,
+      content: content,
       MAKE_ENDPOINT: env.get("MAKE_ENDPOINT"),
       pageOperation: req.body.pageOperation,
       REMIXED_FROM: req.params.id,
-      template: content,
       userbar: env.get("USERBAR")
     });
   };
