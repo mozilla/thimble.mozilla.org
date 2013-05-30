@@ -28,7 +28,8 @@ var app = express(),
     env = new habitat(),
     loginAPI = require('webmaker-loginapi')(env.get('LOGINAPI')),
     middleware = require('./lib/middleware')(env),
-    make = makeAPI(env.get('make')),
+    makeEnv = env.get('make'),
+    make = makeAPI(makeEnv),
     nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
 
 databaseAPI = db(env.get('CLEARDB_DATABASE_URL') || env.get('DB')),
