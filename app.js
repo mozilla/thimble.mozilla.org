@@ -100,7 +100,7 @@ app.param('id', function(req, res, next, id) {
 // Main page
 app.get('/',
         middleware.setDefaultPublishOperation,
-        routes.index(utils, env, appName, "template"));
+        routes.index(utils, env, appName));
 
 // Remix a published page (from db)
 // Even if this is "our own" page, this URL
