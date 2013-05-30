@@ -121,20 +121,76 @@ First, add the MySQL add-on for saving projects:
 
 `heroku addons:add cleardb:ignite`
 
-You will need to issue some environment "SET" commands to make sure
-things work:
+(See https://devcenter.heroku.com/articles/cleardb for more information)
+
+Alternatively, you can rely on SQLite3 to act as database, but you will
+lose all your data when your heroku instance goes to sleep, as it simply
+resets the heroku instance to its deploy state. If that's fine, you can
+use these environment variables rather than setting up ClearDB:
 
 ```
-> heroku config:set HOSTNAME="<the http://....heroku.com address you get from 'heroku open'>"
-> heroku config:set BLEACH_ENDPOINT="http://peaceful-crag-3591.herokuapp.com"
-> heroku config:set SECRET="irrelephant"
-> heroku config:set NODE_ENV="development"
+> heroku config:set DB_DIALECT="sqlite"
+> heroku config:set DB_STORAGE="thimble.sqlite"
 ```
+
+After doing this, you will then need to issue some (more) environment "SET"
+commands to make sure things work. This is mostly making sure that all the
+variables that are found in the `env.dist` file also exist in your heroku
+environment:
+
+
+```
+> heroku config:set NODE_ENV="development"
+> heroku config:set HOSTNAME="htt:// ...heroku instance..."
+> heroku config:set AUDIENCE="http://[webmaker.org instance]"
+> heroku config:set USERBAR="http://[login.webmaker.org instance]"
+> heroku config:set LOGINAPI="http://testuser:password@[login.mofostaging.net instance]"
+> heroku config:set MAKE_ENDPOINT="http://[makeapi instance]/"
+> heroku config:set MAKE_AUTH="testuser:password"
+> heroku config:set BLEACH_ENDPOINT="http://peaceful-crag-3591.herokuapp.com"
+> heroku config:set SESSION_SECRET="irrelephant"
+```
+
 That should be enough to ensure the deployed version has all the environment
 variables that it will rely on. The BLEACH_ENDPOINT url is where we are
 currently hosting the custom htmlsanitizer.org code. If you want to run
 your own copy, create another heroku instance and read the tutorial on
 setting up a python instance.
+
+All the other services are correspondingly free: If you're running your
+own heroku copies of all the webmaker.org services, then you can simply
+point your heroku instance to the various other instances. If, however,
+you are testing within the greater webmaker.org suite of applications,
+you probably want to use the `*.mofostaging.net` URLs.
+
+Also, for Amazon S3, the following values are quite important:
+
+```
+> heroku config:set S3_BUCKET="your bucket name"
+> heroku config:set S3_KEY="your S3 access key"
+> heroku config:set S3_SECRET="your private S3 secret string"
+```
+
+Unless you're using FakeS3, in which case you can scroll up to the FakeS3
+section, which explains the environment variables when using fake publishing.
+Although FakeS3 also gets reset when your app gets restarted, so if you
+want persistent data, it is strongly recommended to use a real S3 bucket.
+
+A note on credentials
+---------------------
+
+The login credentials  in the `LOGINAPI` variable map to the `ALLOWED_USERS`
+variable used by the login instance that you rely on. This login regulates
+who can ask the login service for user information. It is not the list of
+"which persona user is allowed to access the login service".
+
+The makeapi credentials map to the `ALLOWED_USERS` variable for the
+MakeAPI instance, and regulate who can query and push to the makeAPI.
+Again, this is not related to persona logins in any way.
+
+Also note that the `SESSION_SECRET` environment variable is the secret
+that Thimble uses for setting its own local cookie, and can be any
+string you like (except an empty string).
 
 New Relic
 ---------
