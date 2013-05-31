@@ -85,7 +85,7 @@ app.get('/templates/:name', function(req, res) {
     audience: env.get("AUDIENCE"),
     userbar: env.get("USERBAR"),
     email: req.session.email || '',
-    MAKE_ENDPOINT: makeEnv.endpoint,
+    MAKE_ENDPOINT: env.get('make').endpoint,
     appname: appName
   });
 });
