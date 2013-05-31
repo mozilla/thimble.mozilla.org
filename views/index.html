@@ -40,7 +40,7 @@
         </ul>
       </nav>
       <div class="my-projects-container">
-        <iframe class="my-projects-iframe" src="{{audience}}/myprojects?app={{appname}}&email={{email}}"></iframe>
+        <iframe class="my-projects-iframe"></iframe>
       </div>
     </div>
 
@@ -260,7 +260,7 @@
       "thimblePage"
     ], function($, ThimblePage) {
       var publishButton = $('.publish-button'),
-          myProjects = document.querySelector( ".my-projects-iframe" ),
+          myProjects = $( ".my-projects-iframe" ),
           loggedIn = false;
 
       publishButton.hide();
@@ -268,9 +268,11 @@
       navigator.idSSO.app = {
         onlogin: function(loggedInUser, displayName) {
           publishButton.show();
+          myProjects.attr("src", "{{audience}}/myprojects?app={{appname}}&email=" + loggedInUser);
         },
         onlogout: function() {
           publishButton.hide();
+          myProjects.attr("src", "");
         }
       };
     });
