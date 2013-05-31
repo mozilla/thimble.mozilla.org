@@ -66,30 +66,6 @@ app.get('/projects', function(req, res) {
   });
 });
 
-// learning project lookup
-app.get('/projects/:name', function(req, res) {
-  res.render('index.html', {
-    appURL: env.get("HOSTNAME"),
-    pageToLoad: '/' + req.params.name + '.html',
-    HTTP_STATIC_URL: '/',
-    appname: appName
-  });
-});
-
-// project template lookups
-app.get('/templates/:name', function(req, res) {
-  res.render('index.html', {
-    appURL: env.get("HOSTNAME"),
-    pageToLoad: '/' + req.params.name + '.html',
-    HTTP_STATIC_URL: '/',
-    audience: env.get("AUDIENCE"),
-    userbar: env.get("USERBAR"),
-    email: req.session.email || '',
-    MAKE_ENDPOINT: env.get('make').endpoint,
-    appname: appName
-  });
-});
-
 // "my projects" listing -- USED FOR DEV WORK ATM, MAY NOT BE PERMANENT IN ANY WAY
 app.get('/myprojects',
   middleware.checkForAuth,
@@ -121,6 +97,12 @@ app.param('id', function(req, res, next, id) {
   });
 });
 
+// what do we do when a project request comes in by name (:name route)?
+app.param('name', function(req, res, next, name) {
+  req.pageToLoad = '/' + name + '.html';
+  next();
+});
+
 // Main page
 app.get('/',
         middleware.setDefaultPublishOperation,
@@ -146,6 +128,16 @@ app.get('/remix/:id/edit',
 app.get('/remix/:id', function(req, res) {
   res.send(req.pageData);
 });
+
+// learning project lookup
+app.get('/projects/:name', 
+        middleware.setDefaultPublishOperation,
+        routes.index(utils, env, appName));
+
+// project template lookups
+app.get('/templates/:name', 
+        middleware.setDefaultPublishOperation,
+        routes.index(utils, env, appName));
 
 // publish a remix (to the db)
 app.post('/publish',
