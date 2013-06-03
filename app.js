@@ -19,14 +19,14 @@ var ajax = require('request'),
     path = require('path'),
     persona = require('express-persona'),
     routes = require('./routes'),
-    utils = require('./lib/utils');
+    utils = require('./lib/utils'),
+    loginAPI;
 
 habitat.load();
 
 var app = express(),
     appName = "thimble",
     env = new habitat(),
-    loginAPI = require('webmaker-loginapi')(env.get('LOGINAPI')),
     middleware = require('./lib/middleware')(env),
     make = makeAPI(env.get('make')),
     nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
@@ -166,21 +166,8 @@ app.post('/publish',
  */
 persona(app, {audience: env.get( "AUDIENCE" )});
 
-app.get( "/user/:userid", function( req, res ) {
-  loginAPI.getUser(req.session.email, function(err, user) {
-    if(err || !user) {
-      return res.json({
-        status: "failed",
-        reason: (err || "user not defined")
-      });
-    }
-    req.session.webmakerid = user.subdomain;
-    res.json({
-      status: "okay",
-      user: user
-    });
-  });
-});
+// LoginAPI Helper module
+loginAPI = require('webmaker-loginapi')( app, env.get('LOGINAPI') );
 /**
  * END WEBMAKER SSO
  */
