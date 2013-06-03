@@ -9,3 +9,19 @@
 .friendlycode-panes {
   top: 71px!important;
 }
+
+.preview-nav-item {
+  display: block!important;
+  position: absolute;
+  /* 75px is the width of the publish button */
+  right: 75px;
+  left: 0;
+  top: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: left!important;
+}
+
+.pane-indicator {
+  top: 28px!important;
+}
