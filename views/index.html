@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="persona-email" content="{{email}}">
     <meta name="thimble-operation" content="{{pageOperation}}">
+    <meta name="thimble-project-origin" content="{{origin}}">
     <base target="_blank">
     <title>Alternate Publisher Friendlycode Editor</title>
     <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}friendlycode/css/friendlycode.css">
@@ -155,10 +156,7 @@
             });
           },
           saveCode: function(data, originalURL, cb) {
-
-            // fake the originalURL for the moment, based on the current doc. URL
-            var originalURL = window.location.toString(),
-                iframeDocument = document.querySelector('.preview-holder iframe')
+            var iframeDocument = document.querySelector('.preview-holder iframe')
                                          .contentDocument,
                 nodeList = Array.prototype.slice.apply(iframeDocument.querySelectorAll('meta')),
                 metaData = {
@@ -190,10 +188,6 @@
               metaData.title = iframeDocument.title;
             }
 
-            if(originalURL.indexOf("/edit")!==-1) {
-              originalURL = originalURL.replace('/edit','');
-            } else { originalURL = undefined; }
-
             for (var i = 0; i < nodeList.length; i++) {
               metaName = nodeList[i].name;
               if (metaNames[metaName]) {
@@ -206,18 +200,24 @@
               url: options.hackpubURL + "/publish",
               data: {
                 'html': data,
-                'original-url': originalURL,
                 'metaData': metaData,
-                'pageOperation': $("meta[name='thimble-operation']").attr("content")
+                'pageOperation': $("meta[name='thimble-operation']").attr("content"),
+                'origin': $("meta[name='thimble-project-origin']").attr("content")
               },
               dataType: 'json',
               error: function(req) {
                 cb(req);
               },
               success: function(result) {
+                var origin = $("meta[name='thimble-project-origin']").attr("content");
                 cb(null, {path: result['remix-id'], url: result['published-url']});
-                $("meta[name='thimble-operation']").attr("content","edit")
-                nav.loadTutorials(result['remix-id']);
+                // If we were a remix, update the new page's origin.
+                if ($("meta[name='thimble-operation']").attr("content") === "remix" || !origin) {
+                  origin = result['remix-id'];
+                  $("meta[name='thimble-project-origin']").attr("content",origin);
+                }
+                $("meta[name='thimble-operation']").attr("content","edit");
+                nav.loadTutorials(origin);
                 userBar.updateMakes();
               }
             });
@@ -232,9 +232,9 @@
     define("thimblePage",
            ["jquery", "friendlycode", "hackpub", "webmaker-nav"],
            function($, FriendlycodeEditor, Hackpub, nav) {
-      var remixedFrom = "{{REMIXED_FROM}}";
-      if (remixedFrom) {
-        nav.loadTutorials(remixedFrom);
+      var origin = "{{origin}}";
+      if (origin) {
+        nav.loadTutorials(origin);
       }
       return FriendlycodeEditor({
         allowJS: false,

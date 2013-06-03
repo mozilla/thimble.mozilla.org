@@ -15,13 +15,13 @@ exports.index = function(utils, env, appName) {
       appname: appName,
       appURL: env.get("HOSTNAME"),
       audience: env.get("AUDIENCE"),
+      content: content,
+      contentType: contentType,
       email: req.session.email || '',
       HTTP_STATIC_URL: '/',
-      contentType: contentType,
-      content: content,
       MAKE_ENDPOINT: env.get("MAKE_ENDPOINT"),
       pageOperation: req.body.pageOperation,
-      REMIXED_FROM: req.params.id,
+      origin: req.params.id,
       userbar: env.get("USERBAR")
     });
   };
