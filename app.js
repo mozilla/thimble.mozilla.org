@@ -13,8 +13,8 @@ var ajax = require('request'),
     express = require('express'),
     fs = require('fs'),
     habitat = require('habitat'),
+    helmet = require( "helmet" ),
     makeAPI = require('./lib/makeapi'),
-    mysql = require('mysql'),
     nunjucks = require('nunjucks'),
     path = require('path'),
     persona = require('express-persona'),
@@ -36,13 +36,22 @@ nunjucksEnv.express(app);
 
 // all environments
 app.use(express.favicon());
-app.use(express.logger('dev'));
+app.use(express.logger("dev"));
+if (!!env.get("FORCE_SSL") ) {
+  app.use(helmet.hsts());
+  app.enable("trust proxy");
+}
 app.use(express.compress());
 app.use(express.bodyParser());
 app.use(express.cookieParser());
 app.use(express.cookieSession({
   key: "thimble.sid",
-  secret: env.get('SESSION_SECRET')
+  secret: env.get("SESSION_SECRET"),
+  cookie: {
+    maxAge: 2678400000, // 31 days. Persona saves session data for 1 month
+    secure: !!env.get("FORCE_SSL")
+  },
+  proxy: true
 }));
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
@@ -130,12 +139,12 @@ app.get('/remix/:id', function(req, res) {
 });
 
 // learning project lookup
-app.get('/projects/:name', 
+app.get('/projects/:name',
         middleware.setDefaultPublishOperation,
         routes.index(utils, env, appName));
 
 // project template lookups
-app.get('/templates/:name', 
+app.get('/templates/:name',
         middleware.setDefaultPublishOperation,
         routes.index(utils, env, appName));
 

@@ -7,6 +7,7 @@
     "express": "3.1.1",
     "express-persona": "0.0.7",
     "habitat": "0.4.1",
+    "helmet": "0.0.9",
     "htmlsanitizer": "0.0.1",
     "knox": "0.7.0",
     "makeapi": "0.1.9",
