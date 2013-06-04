@@ -174,7 +174,7 @@ app.get( "/user/:userid", function( req, res ) {
         reason: (err || "user not defined")
       });
     }
-    req.session.webmakerid = user.subdomain;
+    req.session.username = user.username;
     res.json({
       status: "okay",
       user: user
