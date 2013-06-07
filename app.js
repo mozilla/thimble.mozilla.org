@@ -122,6 +122,11 @@ app.get('/projects/:name',
         middleware.setDefaultPublishOperation,
         routes.index(utils, env, appName));
 
+// SECONDARY, LEGACY ROUTE; SEE: https://bugzilla.mozilla.org/show_bug.cgi?id=874986
+app.get('/en-US/projects/:name/edit',
+        middleware.setDefaultPublishOperation,
+        routes.index(utils, env, appName));
+
 // project template lookups
 app.get('/templates/:name',
         middleware.setDefaultPublishOperation,
