@@ -27,6 +27,14 @@ var appName = "thimble",
     app = express(),
     env = new habitat(),
 
+    /**
+      We're using two databases here: the first is our normal database, the second is
+      a legacy database will old the original thimble.webmaker.org data from 2012/2013
+      prior to the webmaker.org reboot. This database is a read-only database, with
+      remixes/edits being published to the new database instead. This is intended as
+      a short-term solution until all the active "old thimble" projects have been
+      migrated by their owners/remixers.
+    **/
     databaseAPI = db('thimbleproject', env.get('CLEARDB_DATABASE_URL') || env.get('DB')),
     legacyDatabaseAPI = db('legacyproject', env.get('LEGACY_DB')),
 
