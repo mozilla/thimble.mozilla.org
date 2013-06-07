@@ -75,27 +75,6 @@ app.get('/projects', function(req, res) {
   });
 });
 
-// "my projects" listing -- USED FOR DEV WORK ATM, MAY NOT BE PERMANENT IN ANY WAY
-app.get('/myprojects',
-  middleware.checkForAuth,
-  function(req, res) {
-    make.search({email: req.session.email}, function(err, results) {
-      var projects = [];
-      if (results) {
-        projects = results.map(function(result) {
-          var url = result.url;
-          return {
-            title: result.title || url,
-            edit: url + "/edit",
-            view: url
-          };
-        });
-      }
-      res.render('gallery.html', {title: 'User Projects', projects: projects});
-    });
-  }
-);
-
 // what do we do when a project request comes in by id (:id route)?
 app.param('id', function(req, res, next, id) {
   databaseAPI.find(id, function(err, result) {
