@@ -160,7 +160,7 @@ app.post('/publish',
          middleware.publishData(env.get('S3')),
          middleware.rewriteUrl(env.get('USER_SUBDOMAIN')),
          // update the database now that we have a url
-         middleware.saveData(databaseAPI, env.get('HOSTNAME')),
+         middleware.saveUrl(databaseAPI, env.get('HOSTNAME')),
          middleware.getRemixedFrom(databaseAPI, make),
          middleware.publishMake(make),
   function(req, res) {
