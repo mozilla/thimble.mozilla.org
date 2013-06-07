@@ -63,7 +63,7 @@
       });
       return {
         loadTutorials: function(remixedFrom) {
-          make.tags("tutorial-" + escape("{{appURL}}/remix/" + remixedFrom)).then(function(err, results) {
+          make.tags("tutorial-" + escape("{{appURL}}/project/" + remixedFrom)).then(function(err, results) {
             var tutorialList = $(".tutorial-list"),
                 tutorialContainer = $(".tutorial-container"),
                 iframe = $(".tutorial-iframe"),
@@ -241,9 +241,9 @@
         {{contentType}}: '{{content}}',
         publisher: Hackpub({
           hackpubURL: "{{appURL}}",
-          publishURL: "{{appURL}}/remix",
+          publishURL: "{{appURL}}/project",
         }),
-        remixURLTemplate: "{{appURL}}/remix/\{\{VIEW_URL\}\}/edit",
+        remixURLTemplate: "{{appURL}}/project/\{\{VIEW_URL\}\}/edit",
         container: $("#bare-fc-holder")
       });
     });

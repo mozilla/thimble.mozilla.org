@@ -120,7 +120,7 @@ app.get('/',
 // Remix a published page (from db)
 // Even if this is "our own" page, this URL
 // will effect a new page upon publication.
-app.get('/remix/:id/remix',
+app.get('/project/:id/remix',
         middleware.setDefaultPublishOperation,
         routes.index(utils, env, appName));
 
@@ -129,12 +129,12 @@ app.get('/remix/:id/remix',
 // effect a new page upon publication.
 // Otherwise, the edit overwrites the
 // existing page instead.
-app.get('/remix/:id/edit',
+app.get('/project/:id/edit',
         middleware.setPublishAsUpdate,
         routes.index(utils, env, appName));
 
 // view a published page (from db)
-app.get('/remix/:id', function(req, res) {
+app.get('/project/:id', function(req, res) {
   res.send(req.pageData);
 });
 
