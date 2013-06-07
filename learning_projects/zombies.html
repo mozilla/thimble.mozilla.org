@@ -13,19 +13,19 @@ Let's get started.
 <html>
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}zombies/zombies.css">
+        <link rel="stylesheet" href="/learning_projects/zombies/zombies.css">
         <title>Get off my lawn!!!</title>
         <style type="text/css">
 /*
-Note we are now within the <style> tag. That tells us we are dealing with CSS. Remember that now comments are indicated by slashes / and stars *. 
+Note we are now within the <style> tag. That tells us we are dealing with CSS. Remember that now comments are indicated by slashes / and stars *.
 */
 
 
 /*
 So what are CSS positions? Well a CSS position is a way of placing something on the screen in a specific place. We will be focusing on absolute positions. These are absolutely where we say they are. We have also fixed the size of the game to a set size (800px x 600px) to make life a little easier for you.
-*/			
+*/
 
-/*				
+/*
 Now time to play... try and block the zombies by positioning the items on top of them. Imagine that the webpage is a graph: you can move the objects (like the fridge) up from the bottom or in from the left in small increments called pixels (px).
 
 Lets move the cooker...
@@ -38,15 +38,15 @@ Lets move the cooker...
                 bottom: 0px;
                 left: 100px;
             }
-			
+
 /*
 Now let's try another positioning option: em. What on earth is an em?
-				
-Well an em is a multiple of a predefined size. The predefined size is the current font size, so 1em = current font size. In this case, the font size is 20pt, so an em is 20px. That means 2em is 40px, and so on. 
+
+Well an em is a multiple of a predefined size. The predefined size is the current font size, so 1em = current font size. In this case, the font size is 20pt, so an em is 20px. That means 2em is 40px, and so on.
 (1) Using the current predefined size, what would 10em be?
-Answer:				
+Answer:
 (2a) What would 2em be if the predefined size was 10px?
-Answer: 
+Answer:
 (2b) What would the text size be?
 Answer:
 */
@@ -82,51 +82,51 @@ Finally, you can also use percentages for positioning...the %, as you would expe
 Remember all those things we were moving... well they are these images below! You can tell they are images because they are in <img> tags and the src attribute gives the URL to each image. Try copying and pasting one of the URLs into a different browser window to see the image. You can swap out these images with ones of your own - you just need to know the URL of your image.
 -->
     	<section id="barricades">
-    	    <img src="{{ HTTP_STATIC_URL }}zombies/cooker.png" alt="cooker" id="cooker" />
-    	    <img src="{{ HTTP_STATIC_URL }}zombies/fridge.png" alt="fridge" id="fridge" />
-    	    <img src="{{ HTTP_STATIC_URL }}zombies/snofa.png" alt="snow-sofa" id="snow-sofa" />
-    	    <img src="{{ HTTP_STATIC_URL }}zombies/sofa.png" alt="sofa" id="sofa" />
-    	    <img src="{{ HTTP_STATIC_URL }}zombies/wardrobe.png" alt="wardrobe" id="wardrobe" />
-    	    <img src="{{ HTTP_STATIC_URL }}zombies/bin.png" alt="bin" id="bin" />
+    	    <img src="/learning_projects/zombies/cooker.png" alt="cooker" id="cooker" />
+    	    <img src="/learning_projects/zombies/fridge.png" alt="fridge" id="fridge" />
+    	    <img src="/learning_projects/zombies/snofa.png" alt="snow-sofa" id="snow-sofa" />
+    	    <img src="/learning_projects/zombies/sofa.png" alt="sofa" id="sofa" />
+    	    <img src="/learning_projects/zombies/wardrobe.png" alt="wardrobe" id="wardrobe" />
+    	    <img src="/learning_projects/zombies/bin.png" alt="bin" id="bin" />
     	</section>
-    	
-    	
+
+
 		<section id="house">
 
 <!--
 So we now know how to defeat the zombies, but why not make them be other people? Try removing the comment tags on the image below that you see before	and after this text to reveal a new person.
 -->
-		<!-- <img src="{{ HTTP_STATIC_URL }}zombies/supergirl.png" alt="" class="zombie" id="zombie1"> -->
-		
+		<!-- <img src="/learning_projects/zombies/supergirl.png" alt="" class="zombie" id="zombie1"> -->
+
 <!-- She doesn't look that scary but one can never be too careful, better block her too! -->
-	
-<!--			
-Now try making your own zombies. Find an image of one of your friends, right-click, and choose "copy image address" or in Flickr, choose Share and copy the URL. Then replace the src URL below with the link to the picture of your friend... what happens now?-->
-			<img src="{{ HTTP_STATIC_URL }}zombies/zombie.png" alt="zombie" class="zombie" id="zombie2" />
-			<img src="{{ HTTP_STATIC_URL }}zombies/zombie.png" alt="zombie" class="zombie" id="zombie3" />
-			<img src="{{ HTTP_STATIC_URL }}zombies/zombie.png" alt="zombie" class="zombie" id="zombie4" />
-			<img src="{{ HTTP_STATIC_URL }}zombies/zombie.png" alt="zombie" class="zombie" id="zombie5" />
-			<img src="{{ HTTP_STATIC_URL }}zombies/zombie.png" alt="zombie" class="zombie" id="zombie6" />
-			
-			
+
 <!--
-Congrats on conquering the zombies and making the game your own! Did you realize you were also learning a few things in the process? You actually learned a bunch about CSS positioning - and that's something that stumps a lot of people. Plus, you know how to wrangle images in HTML as well. Way to go! Maybe you want to share your game with others! Before doing so, you might want to go back to the top and move all of the barricades back to the bottom of the screen. Don't remember what they were before? That's okay, you are a CSS wizard now, just play around a bit and you'll surprise yourself with how much you know! 
+Now try making your own zombies. Find an image of one of your friends, right-click, and choose "copy image address" or in Flickr, choose Share and copy the URL. Then replace the src URL below with the link to the picture of your friend... what happens now?-->
+			<img src="/learning_projects/zombies/zombie.png" alt="zombie" class="zombie" id="zombie2" />
+			<img src="/learning_projects/zombies/zombie.png" alt="zombie" class="zombie" id="zombie3" />
+			<img src="/learning_projects/zombies/zombie.png" alt="zombie" class="zombie" id="zombie4" />
+			<img src="/learning_projects/zombies/zombie.png" alt="zombie" class="zombie" id="zombie5" />
+			<img src="/learning_projects/zombies/zombie.png" alt="zombie" class="zombie" id="zombie6" />
+
+
+<!--
+Congrats on conquering the zombies and making the game your own! Did you realize you were also learning a few things in the process? You actually learned a bunch about CSS positioning - and that's something that stumps a lot of people. Plus, you know how to wrangle images in HTML as well. Way to go! Maybe you want to share your game with others! Before doing so, you might want to go back to the top and move all of the barricades back to the bottom of the screen. Don't remember what they were before? That's okay, you are a CSS wizard now, just play around a bit and you'll surprise yourself with how much you know!
 -->
-			
+
 <!-- Try to change this one, if you are up for a spook-tacular adventure.-->
-			<img src="{{ HTTP_STATIC_URL }}zombies/zombie-house-inside.png" alt="House" />
-		</section>    
-    
-    	
-    	
+			<img src="/learning_projects/zombies/zombie-house-inside.png" alt="House" />
+		</section>
+
+
+
 <!-- Don't worry about things below this line they just make the noises. -->
 		<audio autoplay="true">
-			<source src="{{ HTTP_STATIC_URL }}zombies/snarl.ogg" />
-			<source src="{{ HTTP_STATIC_URL }}zombies/snarl.mp3" />  
+			<source src="/learning_projects/zombies/snarl.ogg" />
+			<source src="/learning_projects/zombies/snarl.mp3" />
 		</audio>
 		<audio autoplay="true">
-			<source src="{{ HTTP_STATIC_URL }}zombies/zombie-crowd.ogg" />
-			<source src="{{ HTTP_STATIC_URL }}zombies/zombie-crowd.mp3" />
+			<source src="/learning_projects/zombies/zombie-crowd.ogg" />
+			<source src="/learning_projects/zombies/zombie-crowd.mp3" />
 		</audio>
     </body>
 </html>
