@@ -123,9 +123,30 @@ app.get('/projects/:name',
         middleware.setDefaultPublishOperation,
         routes.index(utils, env, appName));
 
-// SECONDARY, LEGACY ROUTE; SEE: https://bugzilla.mozilla.org/show_bug.cgi?id=874986
+// Legacy route for the same content
+// See: https://bugzilla.mozilla.org/show_bug.cgi?id=874986
 app.get('/en-US/projects/:name/edit',
         middleware.setDefaultPublishOperation,
+        routes.index(utils, env, appName));
+
+// Legacy route for old publications
+// see: https://bugzilla.mozilla.org/show_bug.cgi?id=880768
+app.get('/p/:oldid',
+        function verifyOldId(req, res, next) {
+          var oldid = req.params.oldid;
+          if(!req.params.oldid) {
+            next(new Error(404, "no project found"));
+          }
+          next();
+        },
+        function fetchOldPageData(req, res, next) {
+          console.log("fetching old data");
+          next();
+        },
+        function generateIndexForOldData(req, res, next) {
+          console.log("end of route");
+          next();
+        },
         routes.index(utils, env, appName));
 
 // project template lookups
