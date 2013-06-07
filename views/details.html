@@ -1,191 +1,192 @@
-<link media="screen" rel="stylesheet" href="{{HOSTNAME}}/stylesheets/makedetails.css">
-<link media="print" rel="stylesheet" href="{{HOSTNAME}}/stylesheets/makedetails-print.css">
-<script src="{{MAKE_ENDPOINT}}/js/make-api.js"></script>
-<div class="make-details-page">
-  <div id="content" class="content clearfix">
-    <div class="hide make-details">
-      <div class="wrapper">
-        <!-- LH side of make-details -->
-        <div class="remixed-from hidden">
-          <div class="remix-info">
-            <span class="remixed-from-txt">Remixed from</span>
-            <span class="remixed-user">PLACEHOLDER</span>
-            <a href="//webmaker.org">
-              <img class="original-thumb" src="PLACEHOLDER" alt="ORIGINAL TITLE" />
-            </a>
-          </div>
 
-          <div class="remixed-by">
-            PLACEHOLDER remixes by
-            <ul>
-              <li><a href="//webmaker.org">@PLACEHOLDER</a></li>
-              <li><a href="//webmaker.org">@PLACEHOLDER</a></li>
-              <li><a href="//webmaker.org">@PLACEHOLDER</a></li>
-            </ul>
-          </div>
-        </div>
+  <link media="screen" rel="stylesheet" href="{{HOSTNAME}}/stylesheets/makedetails.css">
+  <link media="print" rel="stylesheet" href="{{HOSTNAME}}/stylesheets/makedetails-print.css">
+  <script src="{{MAKE_ENDPOINT}}/js/make-api.js"></script>
+  <div class="make-details-page">
+    <div id="content" class="content clearfix">
+      <div class="hide make-details">
+        <div class="wrapper">
+          <!-- LH side of make-details -->
+          <div class="remixed-from hidden">
+            <div class="remix-info">
+              <span class="remixed-from-txt">Remixed from</span>
+              <span class="remixed-user">PLACEHOLDER</span>
+              <a href="//webmaker.org">
+                <img class="original-thumb" src="PLACEHOLDER" alt="ORIGINAL TITLE" />
+              </a>
+            </div>
 
-        <!-- RH side of make-details -->
-        <div class="make-details-deets">
-          <h1 class="make-title"></h1>
-
-          <div class="make-made-by">
-            <a href="//webmaker.org">
-              <img class="make-user-gravatar" src="" alt="USER NAME" />
-            </a>
-            <div class="made-by">
-              Made by <a class="make-username" href="//webmaker.org"></a>
-              <span class="make-relative-date"></span>
+            <div class="remixed-by">
+              PLACEHOLDER remixes by
+              <ul>
+                <li><a href="//webmaker.org">@PLACEHOLDER</a></li>
+                <li><a href="//webmaker.org">@PLACEHOLDER</a></li>
+                <li><a href="//webmaker.org">@PLACEHOLDER</a></li>
+              </ul>
             </div>
           </div>
-          <div class="make-tools-languages">
-            <span class="built-with">Built with</span>
-            <a href="//webmaker.org">
-              <img class="tool-image" alt="WEBMAKER TOOL" />
-              <span class="tool-name"></span></a>
 
-            <span class="languages">Languages</span>
-            <ul class="langs">
-              <li class="lang-item active-lang">English</li>
-              <li class="lang-item"><a href="//webmaker.org">Español</a></li>
-            </ul>
+          <!-- RH side of make-details -->
+          <div class="make-details-deets">
+            <h1 class="make-title"></h1>
+
+            <div class="make-made-by">
+              <a href="//webmaker.org">
+                <img class="make-user-gravatar" src="" alt="USER NAME" />
+              </a>
+              <div class="made-by">
+                Made by <a class="make-username" href="//webmaker.org"></a>
+                <span class="make-relative-date"></span>
+              </div>
+            </div>
+            <div class="make-tools-languages">
+              <span class="built-with">Built with</span>
+              <a href="//webmaker.org">
+                <img class="tool-image" alt="WEBMAKER TOOL" />
+                <span class="tool-name"></span></a>
+
+              <span class="languages">Languages</span>
+              <ul class="langs">
+                <li class="lang-item active-lang">English</li>
+                <li class="lang-item"><a href="//webmaker.org">Español</a></li>
+              </ul>
+            </div>
+
+            <p class="make-desc"></p>
           </div>
-
-          <p class="make-desc"></p>
         </div>
       </div>
-    </div>
 
-    <div class="make-bar">
-      <span class="expand-collapse">
-        Details <img src="{{HOSTNAME}}/img/icon-arrow-down.png"></img>
-      </span>
+      <div class="make-bar">
+        <span class="expand-collapse">
+          Details <img src="{{HOSTNAME}}/img/icon-arrow-down.png"></img>
+        </span>
 
-      <span class="logospan">
-        <a href="//webmaker.org"><img src="{{HOSTNAME}}/img/logo_small.png" alt="Mozilla Webmaker" /></a>
-        <span class="made-with">Made with <a href="//webmaker.org">Webmaker</a></span>
-      </span>
+        <span class="logospan">
+          <a href="//webmaker.org"><img src="{{HOSTNAME}}/img/logo_small.png" alt="Mozilla Webmaker" /></a>
+          <span class="made-with">Made with <a href="//webmaker.org">Webmaker</a></span>
+        </span>
 
-      <div class="make-social">
-        <ul>
-          <li class="button">
-          <a href="{{REMIX_URL}}" class="button-remix">
-            <span> Remix</span>
-          </a>
-          </li>
-          <li class="button">
-          <a href="//webmaker.org" class="button-share">
-            <span> Share</span>
-          </a>
-          </li>
-        </ul>
-        <span class="clear"></span>
+        <div class="make-social">
+          <ul>
+            <li class="button">
+            <a href="{{REMIX_URL}}" class="button-remix">
+              <span> Remix</span>
+            </a>
+            </li>
+            <li class="button">
+            <a href="//webmaker.org" class="button-share">
+              <span> Share</span>
+            </a>
+            </li>
+          </ul>
+          <span class="clear"></span>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<script>
-(function loadWithJquery($) {
-  var LIMIT = 100000;
+  <script>
+  (function loadWithJquery($) {
+    var LIMIT = 100000;
 
-  if(!$) {
-    var script = document.createElement("script");
-    script.src = "//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js";
-    script.onload = function() {
-      loadWithJquery(window.jQuery);
-    };
-    document.head.appendChild(script);
-    return;
-  }
-
-  // continue in the knowledge that we have jquery available
-  var img_path = '{{HOSTNAME}}/img/',
-      img_up = 'icon-arrow-up.png',
-      img_down = 'icon-arrow-down.png',
-      animationSpeed = 200,
-      $toggle = $('.expand-collapse'),
-      $details = $('.make-details'),
-      $arrow = $('img', $toggle),
-      nav_open = false,
-      projectTitle = "{{PROJECT_TITLE}}";
-
-  var make = new Make({
-    apiURL: "{{MAKE_ENDPOINT}}"
-  });
-
-  var options = {
-    duration: animationSpeed,
-    easing: 'linear'
-  };
-
-  function toPrettyString( ms ) {
-    var round = Math.round,
-        t, seconds, minutes, hours, days;
-
-    t = ms / 1000;
-    seconds = ( t % 60 ) | 0;
-    t /= 60;
-    minutes = ( t % 60 ) | 0;
-    t /= 60;
-    hours = ( t % 24 ) | 0;
-    t /= 24;
-    days = t | 0;
-
-    if( days >= 1 ) {
-      return "" + ( days === 1 ? "a day" : days + " days" );
-    } else if( hours >= 1 ) {
-      return "" + ( hours === 1 ? "an hour" : hours + " hours" );
-    } else if( minutes >= 1 ) {
-      return "" + ( minutes === 1 ? "a minute" : minutes + " minutes" );
-    } else {
-      return "less than a minute";
+    if(!$) {
+      var script = document.createElement("script");
+      script.src = "//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js";
+      script.onload = function() {
+        loadWithJquery(window.jQuery);
+      };
+      document.head.appendChild(script);
+      return;
     }
-  }
 
-  make.find({
-    contentType: "{{CONTENT_TYPE}}",
-    user: "{{USER}}"
-  }).limit( LIMIT ).then( function( err, results ) {
-    var tool,
-        toolImageSrc = "{{HOSTNAME}}/img/icon-";
-    for ( var i = 0; i < results.length; i++ ) {
-      if ( results[ i ].title === projectTitle ) {
-        if ( results[ i ].contentType === "application/x-thimble" ) {
-          tool = "thimble";
-          toolImageSrc += "Thimble.png";
-        } else if ( results[ i ].contentType === "application/x-popcorn" ) {
-          tool = "popcorn";
-          toolImageSrc += "Popcorn.png";
-        }
-        $( ".make-title" ).html( results[ i ].title );
-        $( ".make-username" ).html( results[ i ].username );
-        $( ".tool-name" ).html( tool );
-        $( ".tool-image" ).attr( "src", toolImageSrc );
+    // continue in the knowledge that we have jquery available
+    var img_path = '{{HOSTNAME}}/img/',
+        img_up = 'icon-arrow-up.png',
+        img_down = 'icon-arrow-down.png',
+        animationSpeed = 200,
+        $toggle = $('.expand-collapse'),
+        $details = $('.make-details'),
+        $arrow = $('img', $toggle),
+        nav_open = false,
+        projectTitle = "{{PROJECT_TITLE}}";
 
-        $( ".make-relative-date" ).html( toPrettyString( Date.now() - results[ i ].createdAt ) + " ago" );
-        $( ".make-user-gravatar" ).attr( "src", "http://gravatar.com/avatar/" + results[ i ].emailHash + "?s=26" );
-        $( ".make-desc" ).html( results[ i ].description || "No description" );
+    var make = new Make({
+      apiURL: "{{MAKE_ENDPOINT}}"
+    });
 
-        if ( results[ i ].remixedFrom ) {
-          $( ".remixed-from" ).removeClass( "hidden" );
-        }
+    var options = {
+      duration: animationSpeed,
+      easing: 'linear'
+    };
+
+    function toPrettyString( ms ) {
+      var round = Math.round,
+          t, seconds, minutes, hours, days;
+
+      t = ms / 1000;
+      seconds = ( t % 60 ) | 0;
+      t /= 60;
+      minutes = ( t % 60 ) | 0;
+      t /= 60;
+      hours = ( t % 24 ) | 0;
+      t /= 24;
+      days = t | 0;
+
+      if( days >= 1 ) {
+        return "" + ( days === 1 ? "a day" : days + " days" );
+      } else if( hours >= 1 ) {
+        return "" + ( hours === 1 ? "an hour" : hours + " hours" );
+      } else if( minutes >= 1 ) {
+        return "" + ( minutes === 1 ? "a minute" : minutes + " minutes" );
+      } else {
+        return "less than a minute";
       }
     }
-  });
 
-  var toggleNav = function( e ) {
-    e.preventDefault();
-    $details.slideToggle(options);
-    if (nav_open === true) {
-      nav_open = false;
-      $arrow.attr('src', img_path + img_down);
-    }
-    else {
-      nav_open = true;
-      $arrow.attr('src', img_path + img_up);
-    }
-  };
+    make.find({
+      contentType: "{{CONTENT_TYPE}}",
+      user: "{{USER}}"
+    }).limit( LIMIT ).then( function( err, results ) {
+      var tool,
+          toolImageSrc = "{{HOSTNAME}}/img/icon-";
+      for ( var i = 0; i < results.length; i++ ) {
+        if ( results[ i ].title === projectTitle ) {
+          if ( results[ i ].contentType === "application/x-thimble" ) {
+            tool = "thimble";
+            toolImageSrc += "Thimble.png";
+          } else if ( results[ i ].contentType === "application/x-popcorn" ) {
+            tool = "popcorn";
+            toolImageSrc += "Popcorn.png";
+          }
+          $( ".make-title" ).html( results[ i ].title );
+          $( ".make-username" ).html( results[ i ].username );
+          $( ".tool-name" ).html( tool );
+          $( ".tool-image" ).attr( "src", toolImageSrc );
 
-  $toggle.on('click', toggleNav);
-}(window.jQuery));
-</script>
+          $( ".make-relative-date" ).html( toPrettyString( Date.now() - results[ i ].createdAt ) + " ago" );
+          $( ".make-user-gravatar" ).attr( "src", "http://gravatar.com/avatar/" + results[ i ].emailHash + "?s=26" );
+          $( ".make-desc" ).html( results[ i ].description || "No description" );
+
+          if ( results[ i ].remixedFrom ) {
+            $( ".remixed-from" ).removeClass( "hidden" );
+          }
+        }
+      }
+    });
+
+    var toggleNav = function( e ) {
+      e.preventDefault();
+      $details.slideToggle(options);
+      if (nav_open === true) {
+        nav_open = false;
+        $arrow.attr('src', img_path + img_down);
+      }
+      else {
+        nav_open = true;
+        $arrow.attr('src', img_path + img_up);
+      }
+    };
+
+    $toggle.on('click', toggleNav);
+  }(window.jQuery));
+  </script>
