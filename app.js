@@ -67,7 +67,7 @@ app.get('/projects', function(req, res) {
       var id = e.replace('.html','');
       projects.push({
         title: id,
-        edit: id,
+        remix: "/projects/" + id + "/",
         view: "/" + id + ".html"
       });
     });
