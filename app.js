@@ -56,6 +56,7 @@ app.use(express.cookieSession({
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
+app.use(express.static(path.join(__dirname, 'templates')));
 
 // learning project listing
 app.get('/projects', function(req, res) {
@@ -118,6 +119,11 @@ app.get('/remix/:id', function(req, res) {
 
 // learning project lookup
 app.get('/projects/:name',
+        middleware.setDefaultPublishOperation,
+        routes.index(utils, env, appName));
+
+// project template lookups
+app.get('/templates/:name',
         middleware.setDefaultPublishOperation,
         routes.index(utils, env, appName));
 
