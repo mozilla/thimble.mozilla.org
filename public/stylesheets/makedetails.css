@@ -202,6 +202,8 @@ a:hover {
   -webkit-border-radius: 5px;
   border-radius: 5px;
   border: 1px solid white;
+  width: 210px;
+  height: 158px; /* 4:3 aspect ratio height for width:210 */
 }
 .make-details .remixed-from .remixed-by {
   color: #787878;
