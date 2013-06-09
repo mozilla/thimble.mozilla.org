@@ -11,18 +11,14 @@
             <div class="remix-info">
               <span class="remixed-from-txt">Remixed from</span>
               <span class="remixed-user">PLACEHOLDER</span>
-              <a href="//webmaker.org">
+              <a class="details-remixedfrom-link" href="//webmaker.org">
                 <img class="original-thumb" src="PLACEHOLDER" alt="ORIGINAL TITLE" />
               </a>
             </div>
 
-            <div class="remixed-by">
-              PLACEHOLDER remixes by
-              <ul>
-                <li><a href="//webmaker.org">@PLACEHOLDER</a></li>
-                <li><a href="//webmaker.org">@PLACEHOLDER</a></li>
-                <li><a href="//webmaker.org">@PLACEHOLDER</a></li>
-              </ul>
+            <div class="hidden remixed-by">
+              <span class="details-remixedby-count">PLACEHOLDER</span> remixes by
+              <ul class="details-remixedby-list" ></ul>
             </div>
           </div>
 
@@ -149,6 +145,9 @@
     }).limit( LIMIT ).then( function( err, results ) {
       var tool,
           toolImageSrc = "{{HOSTNAME}}/img/icon-";
+      if ( err ) {
+        return err;
+      }
       for ( var i = 0; i < results.length; i++ ) {
         if ( results[ i ].title === projectTitle ) {
           if ( results[ i ].contentType === "application/x-thimble" ) {
@@ -168,7 +167,32 @@
           $( ".make-desc" ).html( results[ i ].description || "No description" );
 
           if ( results[ i ].remixedFrom ) {
-            $( ".remixed-from" ).removeClass( "hidden" );
+            make.find({id: results[ i ].remixedFrom}).then(function(err, remixedFrom) {
+              if (err) {
+                return err;
+              }
+              var remixed = remixedFrom[0];
+              if (remixed) {
+                $( ".remixed-user" ).html( remixed.username );
+                $( ".original-thumb" ).attr( "src", remixed.thumbnail );
+                $( ".original-thumb" ).attr( "alt", remixed.title );
+                $( ".details-remixedfrom-link" ).attr( "href", remixed.url );
+                $( ".remixed-from" ).removeClass( "hidden" );
+                make.remixedFrom( remixedFrom[0].id ).then(function(err, siblings) {
+                  if (err) {
+                    return err;
+                  }
+                  var remixedByList = $( ".details-remixedby-list" );
+                  if (siblings.length) {
+                    $( ".remixed-by" ).removeClass( "hidden" );
+                    $( ".details-remixedby-count" ).html( siblings.length );
+                  }
+                  for (var j = 0; j < siblings.length; j++) {
+                    remixedByList.append("<li><a href=" + siblings[j].url + ">@" + siblings[j].username + "</a></li>");
+                  }
+                });
+              }
+            });
           }
         }
       }
