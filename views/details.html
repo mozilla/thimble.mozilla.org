@@ -10,19 +10,15 @@
           <div class="remixed-from hidden">
             <div class="remix-info">
               <span class="remixed-from-txt">Remixed from</span>
-              <span class="remixed-user">PLACEHOLDER</span>
-              <a href="//webmaker.org">
-                <img class="original-thumb" src="PLACEHOLDER" alt="ORIGINAL TITLE" />
+              <span class="remixed-user"></span>
+              <a class="details-remixedfrom-link" href="//webmaker.org">
+                <img class="original-thumb"/>
               </a>
             </div>
 
-            <div class="remixed-by">
-              PLACEHOLDER remixes by
-              <ul>
-                <li><a href="//webmaker.org">@PLACEHOLDER</a></li>
-                <li><a href="//webmaker.org">@PLACEHOLDER</a></li>
-                <li><a href="//webmaker.org">@PLACEHOLDER</a></li>
-              </ul>
+            <div class="hidden remixed-by">
+              <span class="details-remixedby-count">0 remixes by </span>
+              <ul class="details-remixedby-list" ></ul>
             </div>
           </div>
 
@@ -119,25 +115,25 @@
       easing: 'linear'
     };
 
-    function toPrettyString( ms ) {
+    function toPrettyString(ms) {
       var round = Math.round,
           t, seconds, minutes, hours, days;
 
       t = ms / 1000;
-      seconds = ( t % 60 ) | 0;
+      seconds = (t % 60) | 0;
       t /= 60;
-      minutes = ( t % 60 ) | 0;
+      minutes = (t % 60) | 0;
       t /= 60;
-      hours = ( t % 24 ) | 0;
+      hours = (t % 24) | 0;
       t /= 24;
       days = t | 0;
 
-      if( days >= 1 ) {
-        return "" + ( days === 1 ? "a day" : days + " days" );
-      } else if( hours >= 1 ) {
-        return "" + ( hours === 1 ? "an hour" : hours + " hours" );
-      } else if( minutes >= 1 ) {
-        return "" + ( minutes === 1 ? "a minute" : minutes + " minutes" );
+      if (days >= 1) {
+        return "" + (days === 1 ? "a day" : days + " days");
+      } else if (hours >= 1) {
+        return "" + (hours === 1 ? "an hour" : hours + " hours");
+      } else if (minutes >= 1) {
+        return "" + (minutes === 1 ? "a minute" : minutes + " minutes");
       } else {
         return "less than a minute";
       }
@@ -146,35 +142,71 @@
     make.find({
       contentType: "{{CONTENT_TYPE}}",
       user: "{{USER}}"
-    }).limit( LIMIT ).then( function( err, results ) {
+    }).limit(LIMIT).then(function(err, results) {
       var tool,
           toolImageSrc = "{{HOSTNAME}}/img/icon-";
-      for ( var i = 0; i < results.length; i++ ) {
-        if ( results[ i ].title === projectTitle ) {
-          if ( results[ i ].contentType === "application/x-thimble" ) {
+      if (err) {
+        return err;
+      }
+      for (var i = 0; i < results.length; i++) {
+        if (results[i].title === projectTitle) {
+          if (results[i].contentType === "application/x-thimble") {
             tool = "thimble";
             toolImageSrc += "Thimble.png";
-          } else if ( results[ i ].contentType === "application/x-popcorn" ) {
+          } else if (results[i].contentType === "application/x-popcorn") {
             tool = "popcorn";
             toolImageSrc += "Popcorn.png";
           }
-          $( ".make-title" ).html( results[ i ].title );
-          $( ".make-username" ).html( results[ i ].username );
-          $( ".tool-name" ).html( tool );
-          $( ".tool-image" ).attr( "src", toolImageSrc );
+          $(".make-title").html(results[i].title);
+          $(".make-username").html(results[i].username);
+          $(".tool-name").html(tool);
+          $(".tool-image").attr("src", toolImageSrc);
 
-          $( ".make-relative-date" ).html( toPrettyString( Date.now() - results[ i ].createdAt ) + " ago" );
-          $( ".make-user-gravatar" ).attr( "src", "http://gravatar.com/avatar/" + results[ i ].emailHash + "?s=26" );
-          $( ".make-desc" ).html( results[ i ].description || "No description" );
+          $(".make-relative-date").html(toPrettyString(Date.now() - results[i].createdAt) + " ago");
+          $(".make-user-gravatar").attr("src", "http://gravatar.com/avatar/" + results[i].emailHash + "?s=26");
+          $(".make-desc").html(results[i].description || "No description");
 
-          if ( results[ i ].remixedFrom ) {
-            $( ".remixed-from" ).removeClass( "hidden" );
+          if (results[i].remixedFrom) {
+            make.find({id: results[ i ].remixedFrom}).then(function(err, originals) {
+              if (err) {
+                return err;
+              }
+              var original = originals[0];
+              if (original) {
+                $(".remixed-user").html(original.username);
+                $(".original-thumb").attr({
+                  "src": original.thumbnail,
+                  "alt": original.title
+                });
+                $(".details-remixedfrom-link").attr("href", original.url);
+                $(".remixed-from").removeClass("hidden");
+                make.remixedFrom(original.id).then(function(err, siblings) {
+                  if (err) {
+                    return err;
+                  }
+                  var remixedByList = $(".details-remixedby-list"),
+                      sibling;
+                  if (siblings.length) {
+                    $(".remixed-by").removeClass("hidden");
+                    if (siblings.length === 1) {
+                      $(".details-remixedby-count").text(siblings.length + " remix by ");
+                    } else {
+                      $(".details-remixedby-count").text(siblings.length + " remixes by ");
+                    }
+                  }
+                  for (var j = 0; j < siblings.length; j++) {
+                    sibling = siblings[j];
+                    remixedByList.append("<li><a href=" + sibling.url + ">@" + sibling.username + "</a></li>");
+                  }
+                });
+              }
+            });
           }
         }
       }
     });
 
-    var toggleNav = function( e ) {
+    var toggleNav = function(e) {
       e.preventDefault();
       $details.slideToggle(options);
       if (nav_open === true) {
