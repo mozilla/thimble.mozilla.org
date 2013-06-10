@@ -34,7 +34,7 @@ var app = express(),
 databaseAPI = db(env.get('CLEARDB_DATABASE_URL') || env.get('DB')),
 nunjucksEnv.express(app);
 
-// all environments
+// Express settings
 app.use(express.favicon());
 app.use(express.logger("dev"));
 if (!!env.get("FORCE_SSL") ) {
@@ -53,6 +53,7 @@ app.use(express.cookieSession({
   },
   proxy: true
 }));
+app.use(express.csrf());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
