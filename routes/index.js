@@ -17,6 +17,7 @@ exports.index = function(utils, env, appName) {
       audience: env.get("AUDIENCE"),
       content: content,
       contentType: contentType,
+      csrf: req.session._csrf,
       email: req.session.email || '',
       HTTP_STATIC_URL: '/',
       MAKE_ENDPOINT: env.get("MAKE_ENDPOINT"),
