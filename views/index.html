@@ -144,8 +144,8 @@
       // set up CSRF handling
       var csrf_token = $("meta[name='X-CSRF-Token']").attr("content");
       $.ajaxSetup({
-        beforeSend: function(xhr, options) {
-         xhr.setRequestHeader('X-CSRF-Token', csrf_token);
+        beforeSend: function(request) {
+         request.setRequestHeader('X-CSRF-Token', csrf_token);
         }
       });
 
