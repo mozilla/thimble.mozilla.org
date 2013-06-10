@@ -6,6 +6,7 @@
     <meta name="persona-email" content="{{email}}">
     <meta name="thimble-operation" content="{{pageOperation}}">
     <meta name="thimble-project-origin" content="{{origin}}">
+    <meta name="X-CSRF-Token" content="{{csrf}}">
     <base target="_blank">
     <title>Alternate Publisher Friendlycode Editor</title>
     <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}friendlycode/css/friendlycode.css">
@@ -139,6 +140,15 @@
      * ...
      */
     define("hackpub", ["jquery", "webmaker-nav"], function($, nav) {
+
+      // set up CSRF handling
+      var csrf_token = $("meta[name='X-CSRF-Token']").attr("content");
+      $.ajaxSetup({
+        beforeSend: function(request) {
+         request.setRequestHeader('X-CSRF-Token', csrf_token);
+        }
+      });
+
       return function Hackpub(options) {
         return {
           loadCode: function(path, cb) {
