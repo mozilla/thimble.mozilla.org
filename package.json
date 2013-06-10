@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "async": "0.2.7",
-    "express": "3.1.1",
+    "express": "3.2.6",
     "express-persona": "0.0.7",
     "habitat": "0.4.1",
     "helmet": "0.0.9",
