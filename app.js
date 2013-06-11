@@ -72,11 +72,11 @@ app.param('id', function(req, res, next, id) {
 });
 
 // what do we do when a project request comes in by id (:id route)?
-app.param('oldid', function(req, res, next, id) {
-  legacyDatabaseAPI.find(id, function(err, result) {
+app.param('oldid', function(req, res, next, oldid) {
+  legacyDatabaseAPI.findOld(oldid, function(err, result) {
     if (err) { return next( err ); }
     if (!result) { return next( new Error("404 Not Found") ); }
-    req.pageData = result.sanitizedData;
+    req.pageData = result.html;
     next();
   });
 });
