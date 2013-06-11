@@ -33,7 +33,8 @@ module.exports = function( grunt ) {
           "ids": false,
           "adjoining-classes": false,
           "box-model": false,
-          "important": false
+          "important": false,
+          "box-sizing": false
          },
         src: [
           "public/*.css",

@@ -2,6 +2,7 @@
   <link media="screen" rel="stylesheet" href="{{HOSTNAME}}/stylesheets/makedetails.css">
   <link media="print" rel="stylesheet" href="{{HOSTNAME}}/stylesheets/makedetails-print.css">
   <script src="{{MAKE_ENDPOINT}}/js/make-api.js"></script>
+  <script src="{{HOSTNAME}}/js/social-media.js"></script>
   <div class="make-details-page">
     <div id="content" class="content clearfix">
       <div class="hide make-details">
@@ -49,6 +50,15 @@
             </div>
 
             <p class="make-desc"></p>
+
+            <span id="share-btn" class="button"><a class="button-share"><span> Share</span></span>
+
+            <div id="share-container" class="hidden">
+              <a id="google-btn"></a>
+              <a id="twitter-btn"></a>
+              <a id="fb-btn"></a>
+            </div>
+
           </div>
         </div>
       </div>
@@ -68,11 +78,6 @@
             <li class="button">
             <a href="{{REMIX_URL}}" class="button-remix">
               <span> Remix</span>
-            </a>
-            </li>
-            <li class="button">
-            <a href="//webmaker.org" class="button-share">
-              <span> Share</span>
             </a>
             </li>
           </ul>
@@ -104,10 +109,15 @@
         $details = $('.make-details'),
         $arrow = $('img', $toggle),
         nav_open = false,
-        projectTitle = "{{PROJECT_TITLE}}";
+        projectTitle = "{{PROJECT_TITLE}}",
+        $shareBtn = $("#share-btn"),
+        $shareContainer = $("#share-container");
+        googleBtn = document.getElementById("google-btn"),
+        twitterBtn = document.getElementById("twitter-btn"),
+        fbBtn = document.getElementById("fb-btn");
 
     var make = new Make({
-      apiURL: "{{MAKE_ENDPOINT}}"
+      apiURL: '{{MAKE_ENDPOINT}}'
     });
 
     var options = {
@@ -157,6 +167,23 @@
             tool = "popcorn";
             toolImageSrc += "Popcorn.png";
           }
+
+          var social = new SocialMedia({
+            message: "Tweet this awesome thimble project: ",
+            via: "#webmaker"
+          });
+
+          var url = results[i].url || window.location.href;
+
+          function shareOnClick() {
+            social.hotLoad(twitterBtn, social.twitter, url);
+            social.hotLoad(googleBtn, social.google, url);
+            social.hotLoad(fbBtn, social.facebook, url);
+            $shareBtn.addClass("hidden");
+            $shareContainer.removeClass("hidden");
+            $shareBtn.off("click", shareOnClick);
+          }
+          $shareBtn.on( "click", shareOnClick );
           $(".make-title").html(results[i].title);
           $(".make-username").html(results[i].username);
           $(".tool-name").html(tool);
@@ -180,6 +207,7 @@
                 });
                 $(".details-remixedfrom-link").attr("href", original.url);
                 $(".remixed-from").removeClass("hidden");
+
                 make.remixedFrom(original.id).then(function(err, siblings) {
                   if (err) {
                     return err;

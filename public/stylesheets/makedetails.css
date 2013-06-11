@@ -76,11 +76,11 @@ a:hover {
   line-height: 0;
   height: 0;
 }
-.make-bar .button {
+.button {
+  display: inline-block;
   color: white;
   background: #27aae1;
   list-style: none;
-  float: right;
   font-size: 13px;
   height: 25px;
   width: 60px;
@@ -92,8 +92,11 @@ a:hover {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.make-bar .button:hover {
+.button:hover {
   background: #4abff0;
+}
+.make-bar .button {
+  float: right;
 }
 .make-bar .logospan {
   width: 180px;
@@ -141,7 +144,6 @@ a:hover {
   float: right;
   margin: 0 9px;
   vertical-align: top;
-  display: inline-block;
 }
 .make-bar .make-social:after {
   content: '.';
@@ -179,10 +181,7 @@ a:hover {
   width: 210px;
   position: relative;
   background: #e3eaee;
-  padding-bottom: 6px;
-  padding-top: 10px;
-  padding-left: 10px;
-  padding-right: 13px;
+  padding: 10px 10px 6px 10px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
 }
@@ -240,10 +239,9 @@ a:hover {
 .make-details .make-details-deets .make-desc {
   color: #4c4c4c;
   margin: 0;
-  height: 110px;
+  max-height: 70px;
   font-weight: normal;
   margin-top: 20px;
-  margin-bottom: 60px;
   line-height: 22px;
 }
 .make-details .make-details-deets .make-tools-languages .built-with,
@@ -318,6 +316,8 @@ a:hover {
 }
 .button-remix,
 .button-share {
+  color: #FFF;
+  cursor: pointer;
   background-repeat: no-repeat;
   display: block;
   margin-left: 5px;
