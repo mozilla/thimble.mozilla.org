@@ -18,11 +18,13 @@
 /*********************************************************
  * MAKE DETAILS
  */
+body {
+  margin: 0;
+  padding: 0;
+}
 .make-details-page {
   color: #555;
   font-family: "Open Sans", "Helvetica Neue", sans-serif;
-  margin: 0;
-  padding: 0;
 }
 .make-details-page a {
   color: #27aae1;
