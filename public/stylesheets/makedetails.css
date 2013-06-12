@@ -1,15 +1,10 @@
 /*********************************************************
  * MIXINS
  */
-.border-box {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-.clearfix {
+.make-details-page .clearfix {
   display: inline-block;
 }
-.clearfix:after {
+.make-details-page .clearfix:after {
   content: '.';
   display: block;
   clear: both;
@@ -17,36 +12,36 @@
   line-height: 0;
   height: 0;
 }
-.hide {
+.make-details-page .hide {
   display: none;
 }
 /*********************************************************
  * MAKE DETAILS
  */
-body {
+.make-details-page {
   color: #555;
   font-family: "Open Sans", "Helvetica Neue", sans-serif;
   margin: 0;
   padding: 0;
 }
-a {
+.make-details-page a {
   color: #27aae1;
   text-decoration: none;
 }
-a:hover {
+.make-details-page a:hover {
   color: #056c97;
 }
-.content {
+.make-details-page .content {
   display: block;
   margin: 0 auto;
   position: relative;
 }
-.wrapper {
+.make-details-page .wrapper {
   width: 1020px;
   margin: 0 auto;
   position: relative;
 }
-.make-bar {
+.make-details-page .make-bar {
   background: #e3eaee;
   height: 37px;
   border-bottom: 1px solid white;
@@ -57,18 +52,18 @@ a:hover {
   -moz-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
 }
-.make-bar .make-social {
+.make-details-page .make-bar .make-social {
   margin: 0 auto;
   display: inline-block;
 }
-.make-bar .make-social ul {
+.make-details-page .make-bar .make-social ul {
   margin: 0;
   padding: 0;
 }
-.make-bar .make-social ul a {
+.make-details-page .make-bar .make-social ul a {
   color: white;
 }
-.make-bar .make-social:after {
+.make-details-page .make-bar .make-social:after {
   content: '.';
   display: block;
   clear: both;
@@ -76,7 +71,7 @@ a:hover {
   line-height: 0;
   height: 0;
 }
-.button {
+.make-details-page .button {
   display: inline-block;
   color: white;
   background: #27aae1;
@@ -92,21 +87,21 @@ a:hover {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.button:hover {
+.make-details-page .button:hover {
   background: #4abff0;
 }
-.make-bar .button {
+.make-details-page .make-bar .button {
   float: right;
 }
-.make-bar .logospan {
+.make-details-page .make-bar .logospan {
   width: 180px;
   height: 35px;
 }
-.make-bar .logospan img {
+.make-details-page .make-bar .logospan img {
   margin-top: 2px;
   height: 35px;
 }
-.make-bar .logospan .made-with {
+.make-details-page .make-bar .logospan .made-with {
   font-size: 13px;
   color: #787878;
   position: relative;
@@ -114,7 +109,7 @@ a:hover {
   left: 5px;
   bottom: 13px;
 }
-.make-bar .expand-collapse {
+.make-details-page .make-bar .expand-collapse {
   cursor: pointer;
   color: #27aae1;
   width: 100%;
@@ -126,7 +121,7 @@ a:hover {
   padding-top: 6px;
   display: inline-block;
 }
-.make-bar .expand-collapse:after {
+.make-details-page .make-bar .expand-collapse:after {
   content: '.';
   display: block;
   clear: both;
@@ -134,18 +129,18 @@ a:hover {
   line-height: 0;
   height: 0;
 }
-.make-bar .expand-collapse .toggle-ec {
+.make-details-page .make-bar .expand-collapse .toggle-ec {
   width: 100%;
 }
-.make-bar .expand-collapse img {
+.make-details-page .make-bar .expand-collapse img {
   padding-bottom: 2px;
 }
-.make-bar .make-social {
+.make-details-page .make-bar .make-social {
   float: right;
   margin: 0 9px;
   vertical-align: top;
 }
-.make-bar .make-social:after {
+.make-details-page .make-bar .make-social:after {
   content: '.';
   display: block;
   clear: both;
@@ -153,7 +148,7 @@ a:hover {
   line-height: 0;
   height: 0;
 }
-.make-details {
+.make-details-page .make-details {
   height: 335px;
   margin: 0 auto;
   width: 100%;
@@ -162,14 +157,14 @@ a:hover {
   overflow: hidden;
   background-image: url("../img/bkg-stripe.png");
 }
-.make-details .wrapper {
+.make-details-page .make-details .wrapper {
   margin-bottom: 60px;
   padding-top: 30px;
 }
-.make-details .remixed-user {
+.make-details-page .make-details .remixed-user {
   font-weight: 500;
 }
-.make-details .remixed-from {
+.make-details-page .make-details .remixed-from {
   width: 270px;
   margin-top: 10px;
   float: left;
@@ -177,7 +172,7 @@ a:hover {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.make-details .remixed-from .remix-info {
+.make-details-page .make-details .remixed-from .remix-info {
   width: 210px;
   position: relative;
   background: #e3eaee;
@@ -185,58 +180,58 @@ a:hover {
   -webkit-border-radius: 5px;
   border-radius: 5px;
 }
-.make-details .remixed-from .remix-info .remixed-from-txt,
-.make-details .remixed-from .remix-info .remixed-user {
+.make-details-page .make-details .remixed-from .remix-info .remixed-from-txt,
+.make-details-page .make-details .remixed-from .remix-info .remixed-user {
   display: inline-block;
   position: relative;
   bottom: 4px;
 }
-.make-details .remixed-from .remix-info .remixed-from-txt {
+.make-details-page .make-details .remixed-from .remix-info .remixed-from-txt {
   color: #787878;
 }
-.make-details .remixed-from .remix-info .remixed-user {
+.make-details-page .make-details .remixed-from .remix-info .remixed-user {
   color: #484848;
 }
-.make-details .remixed-from .remix-info .original-thumb {
+.make-details-page .make-details .remixed-from .remix-info .original-thumb {
   -webkit-border-radius: 5px;
   border-radius: 5px;
   border: 1px solid white;
   width: 210px;
   height: 158px; /* 4:3 aspect ratio height for width:210 */
 }
-.make-details .remixed-from .remixed-by {
+.make-details-page .make-details .remixed-from .remixed-by {
   color: #787878;
   padding-left: 10px;
   width: 210px;
   margin-top: 15px;
 }
-.make-details .remixed-from .remixed-by ul {
+.make-details-page .make-details .remixed-from .remixed-by ul {
   list-style: none;
   display: inline;
   padding: 0;
 }
-.make-details .remixed-from .remixed-by ul li {
+.make-details-page .make-details .remixed-from .remixed-by ul li {
   display: inline;
 }
-.make-details .remixed-from .remixed-by ul li a {
+.make-details-page .make-details .remixed-from .remixed-by ul li a {
   text-decoration: underline;
 }
-.make-details .remixed-from .remixed-by ul li:not(:last-child):after {
+.make-details-page .make-details .remixed-from .remixed-by ul li:not(:last-child):after {
   content: ', ';
 }
-.make-details .make-details-deets {
+.make-details-page .make-details .make-details-deets {
   width: 750px;
   float: right;
   font-size: 14px;
 }
-.make-details .make-details-deets .make-title {
+.make-details-page .make-details .make-details-deets .make-title {
   color: #55575c;
   font-size: 29px;
   margin: 0;
   font-weight: 300;
   margin-bottom: 10px;
 }
-.make-details .make-details-deets .make-desc {
+.make-details-page .make-details .make-details-deets .make-desc {
   color: #4c4c4c;
   margin: 0;
   max-height: 70px;
@@ -244,8 +239,8 @@ a:hover {
   margin-top: 20px;
   line-height: 22px;
 }
-.make-details .make-details-deets .make-tools-languages .built-with,
-.make-details .make-details-deets .make-tools-languages .languages {
+.make-details-page .make-details .make-details-deets .make-tools-languages .built-with,
+.make-details-page .make-details .make-details-deets .make-tools-languages .languages {
   color: #787878;
   display: inline-block;
   height: 20px;
@@ -254,42 +249,42 @@ a:hover {
   -webkit-border-radius: 5px;
   border-radius: 5px;
 }
-.make-details .make-details-deets .make-tools-languages .built-with {
+.make-details-page .make-details .make-details-deets .make-tools-languages .built-with {
   margin-right: 15px;
 }
-.make-details .make-details-deets .make-tools-languages .tool-name {
+.make-details-page .make-details .make-details-deets .make-tools-languages .tool-name {
   margin-left: 5px;
 }
-.make-details .make-details-deets .make-tools-languages .languages {
+.make-details-page .make-details .make-details-deets .make-tools-languages .languages {
   margin-left: 30px;
 }
-.make-details .make-details-deets .make-tools-languages img {
+.make-details-page .make-details .make-details-deets .make-tools-languages img {
   position: relative;
   top: 6px;
 }
-.make-details .make-details-deets .make-tools-languages .languages {
+.make-details-page .make-details .make-details-deets .make-tools-languages .languages {
   margin-right: 10px;
 }
-.make-details .make-details-deets .make-tools-languages .langs {
+.make-details-page .make-details .make-details-deets .make-tools-languages .langs {
   list-style: none;
   display: inline;
   padding: 0;
 }
-.make-details .make-details-deets .make-tools-languages .langs li {
+.make-details-page .make-details .make-details-deets .make-tools-languages .langs li {
   display: inline;
   color: #787878;
 }
-.make-details .make-details-deets .make-tools-languages .langs li:not(:last-child):after {
+.make-details-page .make-details .make-details-deets .make-tools-languages .langs li:not(:last-child):after {
   content: ' | ';
   color: #9b9b9b;
   font-size: 13px;
   padding: 0 5px;
 }
-.make-details .make-details-deets .make-made-by {
+.make-details-page .make-details .make-details-deets .make-made-by {
   position: relative;
   margin-top: 5px;
 }
-.make-details .make-details-deets .make-made-by .made-by {
+.make-details-page .make-details .make-details-deets .make-made-by .made-by {
   display: inline;
   color: #787878;
   font-size: 18px;
@@ -297,25 +292,25 @@ a:hover {
   position: relative;
   bottom: 10px;
 }
-.make-details .make-details-deets .make-made-by .make-relative-date {
+.make-details-page .make-details .make-details-deets .make-made-by .make-relative-date {
   color: #787878;
   margin-left: 10px;
   font-size: 14px;
 }
-.make-details .make-details-deets .make-made-by img {
+.make-details-page .make-details .make-details-deets .make-made-by img {
   -webkit-border-radius: 50em;
   border-radius: 50em;
   border: 1px solid #b5b5b5;
 }
-.make-img {
+.make-details-page .make-img {
   z-index: -2;
   position: relative;
   display: block;
   margin: 0 auto;
   width: 1020px;
 }
-.button-remix,
-.button-share {
+.make-details-page .button-remix,
+.make-details-page .button-share {
   color: #FFF;
   cursor: pointer;
   background-repeat: no-repeat;
@@ -323,19 +318,19 @@ a:hover {
   margin-left: 5px;
   margin-top: 2px;
 }
-.button-remix span,
-.button-share span {
+.make-details-page .button-remix span,
+.make-details-page .button-share span {
   position: relative;
   bottom: 2px;
   left: 5px;
 }
-.button-remix {
+.make-details-page .button-remix {
   background-image: url(../img/icon-Remix.png);
 }
-.button-share {
+.make-details-page .button-share {
   background-image: url(../img/icon-Share.png);
 }
 
-.hidden {
+.make-details-page .hidden {
   display: none;
 }
