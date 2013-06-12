@@ -19,19 +19,29 @@ var ajax = require('request'),
     path = require('path'),
     persona = require('express-persona'),
     routes = require('./routes'),
-    utils = require('./lib/utils'),
-    loginAPI;
+    utils = require('./lib/utils');
 
 habitat.load();
 
-var app = express(),
-    appName = "thimble",
+var appName = "thimble",
+    app = express(),
     env = new habitat(),
+
+    /**
+      We're using two databases here: the first is our normal database, the second is
+      a legacy database with old the original thimble.webmaker.org data from 2012/2013
+      prior to the webmaker.org reboot. This database is a read-only database, with
+      remixes/edits being published to the new database instead. This is intended as
+      a short-term solution until all the active "old thimble" projects have been
+      migrated by their owners/remixers.
+    **/
+    databaseAPI = db('thimbleproject', env.get('CLEARDB_DATABASE_URL') || env.get('DB')),
+    legacyDatabaseAPI = db('legacyproject', env.get('LEGACY_DB') || env.get('DB')),
+
     middleware = require('./lib/middleware')(env),
     make = makeAPI(env.get('make')),
     nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
 
-databaseAPI = db(env.get('CLEARDB_DATABASE_URL') || env.get('DB')),
 nunjucksEnv.express(app);
 
 // Express settings
@@ -59,29 +69,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
 app.use(express.static(path.join(__dirname, 'templates')));
 
-// learning project listing
-app.get('/projects', function(req, res) {
-  fs.readdir('learning_projects', function(err, files){
-    if(err) { res.send(404); return; }
-    var projects = [];
-    files.forEach( function(e) {
-      var id = e.replace('.html','');
-      projects.push({
-        title: id,
-        remix: "/projects/" + id + "/",
-        view: "/" + id + ".html"
-      });
-    });
-    res.render('gallery.html', {location: "projects", title: 'Learning Projects', projects: projects});
-  });
-});
-
 // what do we do when a project request comes in by id (:id route)?
 app.param('id', function(req, res, next, id) {
   databaseAPI.find(id, function(err, result) {
     if (err) { return next( err ); }
     if (!result) { return next( new Error("404 Not Found") ); }
     req.pageData = result.sanitizedData;
+    next();
+  });
+});
+
+// what do we do when a project request comes in by id (:id route)?
+app.param('oldid', function(req, res, next, oldid) {
+  legacyDatabaseAPI.findOld(oldid, function(err, result) {
+    if (err) { return next( err ); }
+    if (!result) { return next( new Error("404 Not Found") ); }
+    req.pageData = result.html;
     next();
   });
 });
@@ -104,6 +107,11 @@ app.get('/project/:id/remix',
         middleware.setDefaultPublishOperation,
         routes.index(utils, env, appName));
 
+// Legacy counterpart
+app.get('/p/:oldid/remix',
+        middleware.setDefaultPublishOperation,
+        routes.index(utils, env, appName));
+
 // Edit a published page (from db).
 // If this is not "our own" page, this will
 // effect a new page upon publication.
@@ -113,18 +121,49 @@ app.get('/project/:id/edit',
         middleware.setPublishAsUpdate,
         routes.index(utils, env, appName));
 
+// Legacy counterpart
+app.get('/p/:oldid/edit',
+        // this will be a remix, since there's no new
+        // data to "edit"; old thimble was anonymous.
+        middleware.setDefaultPublishOperation,
+        routes.index(utils, env, appName));
+
 // view a published page (from db)
 app.get('/project/:id', function(req, res) {
   res.send(req.pageData);
 });
 
-// learning project lookup
-app.get('/projects/:name',
+// Legacy route for new content
+// See: https://bugzilla.mozilla.org/show_bug.cgi?id=874986
+app.get('/en-US/projects/:name/edit',
         middleware.setDefaultPublishOperation,
         routes.index(utils, env, appName));
 
-// SECONDARY, LEGACY ROUTE; SEE: https://bugzilla.mozilla.org/show_bug.cgi?id=874986
-app.get('/en-US/projects/:name/edit',
+// Legacy route for old content
+// see: https://bugzilla.mozilla.org/show_bug.cgi?id=880768
+app.get('/p/:oldid',function(req, res) {
+  res.send(req.pageData);
+});
+
+// learning project listing
+app.get('/projects', function(req, res) {
+  fs.readdir('learning_projects', function(err, files){
+    if(err) { res.send(404); return; }
+    var projects = [];
+    files.forEach( function(e) {
+      var id = e.replace('.html','');
+      projects.push({
+        title: id,
+        remix: "/projects/" + id + "/",
+        view: "/" + id + ".html"
+      });
+    });
+    res.render('gallery.html', {location: "projects", title: 'Learning Projects', projects: projects});
+  });
+});
+
+// learning project lookup
+app.get('/projects/:name',
         middleware.setDefaultPublishOperation,
         routes.index(utils, env, appName));
 
@@ -157,18 +196,9 @@ app.post('/publish',
   }
 );
 
-
-/**
- * WEBMAKER SSO
- */
-persona(app, {audience: env.get( "AUDIENCE" )});
-
-// LoginAPI Helper module
-loginAPI = require('webmaker-loginapi')( app, env.get('LOGINAPI') );
-/**
- * END WEBMAKER SSO
- */
-
+// WEBMAKER SSO
+persona(app, {audience: env.get('AUDIENCE')});
+require('webmaker-loginapi')(app, env.get('LOGINAPI'));
 
 // run server
 app.listen(env.get("PORT"), function(){
