@@ -28,21 +28,19 @@
           <li class="user">
               Hi <span id="identity" class="user-name-container"></span>
           </li>
+          <li class="tutorial-btn hidden"><button>Tutorials</button></li>
           <li class="makes"><button>My makes</button></li>
           <li>
             <button id="webmaker-login">Sign in to save <span>Sign up</span></button>
             <button id="webmaker-logout">Sign out</button>
           </li>
         </ul>
-        <ul class="webmaker-nav tutorial-nav">
-          <li class="tutorial-list hidden">
-            <span class="tutorial-title">Tutorial</span>
-            <div class="tutorial-container"></div>
-          </li>
-        </ul>
       </nav>
       <div class="my-projects-container">
         <iframe class="my-projects-iframe"></iframe>
+      </div>
+      <div class="tutorial-list">
+        <div class="tutorial-arrow"></div>
       </div>
     </div>
 
@@ -65,8 +63,8 @@
       return {
         loadTutorials: function(remixedFrom) {
           make.tags("tutorial-" + escape("{{appURL}}/project/" + remixedFrom)).then(function(err, results) {
-            var tutorialList = $(".tutorial-list"),
-                tutorialContainer = $(".tutorial-container"),
+            var tutorialBtn = $(".tutorial-btn"),
+                tutorialList = $(".tutorial-list"),
                 iframe = $(".tutorial-iframe"),
                 tutorialView = $(".tutorial-view"),
                 viewTitle = $(".tutorial-view-title"),
@@ -83,7 +81,7 @@
               return;
             }
 
-            tutorialList.removeClass("hidden");
+            tutorialBtn.removeClass("hidden");
 
             var onCoverMouseUp = function() {
               iframeCover.css("display", "none");
@@ -109,7 +107,7 @@
                   "width": ""
                 });
               });
-              tutorialContainer.append(tutorialElement);
+              tutorialList.append(tutorialElement);
             }
 
             tutorialView.mousedown(onCoverMouseDown);
@@ -121,6 +119,10 @@
                 "height": 0,
                 "width": 0
               });
+            });
+
+            tutorialBtn.click(function() {
+              tutorialList.toggleClass("open");
             });
 
             tutorialView.draggable({
