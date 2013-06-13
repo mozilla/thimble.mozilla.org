@@ -1,7 +1,18 @@
 /*********************************************************
  * MAKE DETAILS
  */
-
+body {
+  margin: 0;
+  padding: 0;
+}
+a {
+  color: #27aae1;
+  text-decoration: none;
+}
+a:hover {
+  color: #54bce7;
+  text-decoration: underline;
+}
 .wrapper {
   position: relative;
   width: 1020px;
