@@ -62,7 +62,7 @@
       });
       return {
         loadTutorials: function(remixedFrom) {
-          make.tags("tutorial-" + escape("{{appURL}}/project/" + remixedFrom)).then(function(err, results) {
+          make.tags("tutorial:" + escape("{{appURL}}/project/" + remixedFrom)).then(function(err, results) {
             var tutorialBtn = $(".tutorial-btn"),
                 tutorialList = $(".tutorial-list"),
                 iframe = $(".tutorial-iframe"),
@@ -192,7 +192,7 @@
                     metaData.locale = node.content;
                   },
                   'webmaker:tutorial': function(node) {
-                    metaData.tags.push("tutorial-" + escape(node.content));
+                    metaData.tags.push("tutorial:" + escape(node.content));
                   }
                 };
 
