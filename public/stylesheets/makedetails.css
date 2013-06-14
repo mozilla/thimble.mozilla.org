@@ -5,6 +5,13 @@ body {
   margin: 0;
   padding: 0;
 }
+.make-details-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999999;
+}
 .make-link {
   color: #27aae1;
   text-decoration: none;
@@ -13,7 +20,7 @@ body {
   color: #54bce7;
   text-decoration: underline;
 }
-.wrapper {
+.make-details-page .wrapper {
   position: relative;
   width: 100%;
   margin: 0 auto;
@@ -23,11 +30,15 @@ body {
   height: 37px;
   border-top: 1px solid #cdd9e1;
   border-bottom: 1px solid #d3dee4;
-  padding: 0;
+  padding: 0 10px;
   width: 100%;
   z-index: 5;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
 }
 .make-bar .button {
   margin-top: 2px;
@@ -45,7 +56,7 @@ body {
 }
 .make-bar .button a {
   color: #FFF;
-  padding: 0.5em 1em 0.5em;
+  padding: 0.4em 1em 0.4em;
 }
 .make-bar .button:hover {
   background: #60c7a5;
@@ -155,3 +166,15 @@ body {
 .button-remix {
   background-image: url("../img/icon-Remix.png");
 }
+
+
+@media (max-width: 640px) {
+ .make-bar .logospan .made-with {
+    display: none;
+  }
+  .make-bar .expand-collapse {
+    left: 50px;
+    right: 80px;
+  }
+}
+
