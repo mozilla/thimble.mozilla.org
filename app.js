@@ -75,7 +75,6 @@ app.param('id', function(req, res, next, id) {
     if (err) { return next( err ); }
     if (!result) { return next( new Error("404 Not Found") ); }
     req.pageData = result.sanitizedData;
-    req.tutorialUrl = result.url;
     next();
   });
 });

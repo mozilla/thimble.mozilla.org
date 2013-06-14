@@ -23,7 +23,6 @@ exports.index = function(utils, env, appName) {
       MAKE_ENDPOINT: env.get("MAKE_ENDPOINT"),
       pageOperation: req.body.pageOperation,
       origin: req.params.id,
-      tutorialUrl: req.tutorialUrl,
       userbar: env.get("USERBAR")
     });
   };

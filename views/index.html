@@ -60,8 +60,8 @@
         apiURL: "{{MAKE_ENDPOINT}}"
       });
       return {
-        loadTutorials: function(publishedUrl) {
-          make.tags("tutorial-" + escape(publishedUrl)).then(function(err, results) {
+        loadTutorials: function(remixedFrom) {
+          make.tags("tutorial-" + escape("{{appURL}}/project/" + remixedFrom)).then(function(err, results) {
             var tutorialBtn = $(".tutorial-btn"),
                 tutorialList = $(".tutorial-list"),
                 iframe = $(".tutorial-iframe"),
@@ -228,6 +228,7 @@
                   $("meta[name='thimble-project-origin']").attr("content",origin);
                 }
                 $("meta[name='thimble-operation']").attr("content","edit");
+                nav.loadTutorials(origin);
                 userBar.updateMakes();
               }
             });
@@ -242,9 +243,9 @@
     define("thimblePage",
            ["jquery", "friendlycode", "hackpub", "webmaker-nav"],
            function($, FriendlycodeEditor, Hackpub, nav) {
-      var tutorialUrl = "{{tutorialUrl}}";
-      if (tutorialUrl) {
-        nav.loadTutorials(tutorialUrl);
+      var origin = "{{origin}}";
+      if (origin) {
+        nav.loadTutorials(origin);
       }
       return FriendlycodeEditor({
         allowJS: false,
