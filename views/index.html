@@ -179,7 +179,13 @@
                   'description': function(node) {
                     metaData.description = node.content;
                   },
+                  'webmaker:description': function(node) {
+                    metaData.description = node.content;
+                  },
                   'author': function(node) {
+                    metaData.author = node.content;
+                  },
+                  'webmaker:author': function(node) {
                     metaData.author = node.content;
                   },
                   'webmaker:tags': function(node) {
