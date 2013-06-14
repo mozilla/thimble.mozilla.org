@@ -68,6 +68,9 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
 app.use(express.static(path.join(__dirname, 'templates')));
+app.use( function( err, req, res, next) {
+  res.send( 500, err );
+});
 
 // what do we do when a project request comes in by id (:id route)?
 app.param('id', function(req, res, next, id) {
