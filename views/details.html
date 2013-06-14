@@ -1,91 +1,28 @@
 
   <link media="screen" rel="stylesheet" href="{{HOSTNAME}}/stylesheets/makedetails.css">
   <link media="print" rel="stylesheet" href="{{HOSTNAME}}/stylesheets/makedetails-print.css">
-  <script src="{{MAKE_ENDPOINT}}/js/make-api.js"></script>
-  <script src="{{HOSTNAME}}/js/social-media.js"></script>
-  <div class="make-details-page">
-    <div id="content" class="content clearfix">
-      <div class="hide make-details">
-        <div class="wrapper">
-          <!-- LH side of make-details -->
-          <div class="remixed-from hidden">
-            <div class="remix-info">
-              <span class="remixed-from-txt">Remixed from</span>
-              <span class="remixed-user"></span>
-              <a class="details-remixedfrom-link" href="//webmaker.org">
-                <img class="original-thumb"/>
-              </a>
-            </div>
-
-            <div class="hidden remixed-by">
-              <span class="details-remixedby-count">0 remixes</span>
-              <ul class="details-remixedby-list" ></ul>
-            </div>
-          </div>
-
-          <!-- RH side of make-details -->
-          <div class="make-details-deets">
-            <h1 class="make-title"></h1>
-
-            <div class="make-made-by">
-              <a href="//webmaker.org">
-                <img class="make-user-gravatar" src="" alt="USER NAME" />
-              </a>
-              <div class="made-by">
-                Made by <a class="make-username" href="//webmaker.org"></a>
-                <span class="make-relative-date"></span>
-              </div>
-            </div>
-            <div class="make-tools-languages">
-              <span class="built-with">Built with</span>
-              <a href="//webmaker.org">
-                <img class="tool-image" alt="WEBMAKER TOOL" />
-                <span class="tool-name"></span></a>
-
-              <span class="languages">Languages</span>
-              <ul class="langs">
-                <li class="lang-item active-lang">English</li>
-                <li class="lang-item"><a href="//webmaker.org">Español</a></li>
-              </ul>
-            </div>
-
-            <p class="make-desc"></p>
-
-            <span id="share-btn" class="button"><a class="button-share"><span> Share</span></span>
-
-            <div id="share-container" class="hidden">
-              <a id="google-btn"></a>
-              <a id="twitter-btn"></a>
-              <a id="fb-btn"></a>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <div class="make-bar">
-        <span class="expand-collapse">
-          Details <img src="{{HOSTNAME}}/img/icon-arrow-down.png"></img>
+  <div class="hide make-details">
+    <iframe id="details-iframe" src="{{AUDIENCE}}/details/?url={{URL}}"></iframe>
+  </div>
+  <div class="make-bar">
+    <div class="wrapper">
+      <span class="logospan">
+        <a href="#">
+          <img src="{{HOSTNAME}}/img/logo_small.png" alt="Mozilla Webmaker">
+        </a>
+        <span class="made-with">
+          Made with<a href="//webmaker.org"> Webmaker</a>
         </span>
-
-        <span class="logospan">
-          <a href="//webmaker.org"><img src="{{HOSTNAME}}/img/logo_small.png" alt="Mozilla Webmaker" /></a>
-          <span class="made-with">Made with <a href="//webmaker.org">Webmaker</a></span>
-        </span>
-
-        <div class="make-social">
-          <ul>
-            <li class="button">
-            <a href="{{REMIX_URL}}" class="button-remix">
-              <span> Remix</span>
-            </a>
-            </li>
-          </ul>
-          <span class="clear"></span>
-        </div>
+      </span>
+      <span class="expand-collapse">
+        Details<img src="{{HOSTNAME}}/img/icon-arrow-down.png">
+      </span>
+      <div class="button">
+        <a href="{{REMIX_URL}}" target="_blank" class="button-remix"><span>Remix</span></a>
       </div>
     </div>
   </div>
+  <div class="mobile"></div>
   <script>
   (function loadWithJquery($) {
     var LIMIT = 100000;
@@ -108,131 +45,12 @@
         $toggle = $('.expand-collapse'),
         $details = $('.make-details'),
         $arrow = $('img', $toggle),
-        nav_open = false,
-        projectTitle = "{{PROJECT_TITLE}}",
-        $shareBtn = $("#share-btn"),
-        $shareContainer = $("#share-container");
-        googleBtn = document.getElementById("google-btn"),
-        twitterBtn = document.getElementById("twitter-btn"),
-        fbBtn = document.getElementById("fb-btn");
-
-    var make = new Make({
-      apiURL: '{{MAKE_ENDPOINT}}'
-    });
+        nav_open = false;
 
     var options = {
       duration: animationSpeed,
       easing: 'linear'
     };
-
-    function toPrettyString(ms) {
-      var round = Math.round,
-          t, seconds, minutes, hours, days;
-
-      t = ms / 1000;
-      seconds = (t % 60) | 0;
-      t /= 60;
-      minutes = (t % 60) | 0;
-      t /= 60;
-      hours = (t % 24) | 0;
-      t /= 24;
-      days = t | 0;
-
-      if (days >= 1) {
-        return "" + (days === 1 ? "a day" : days + " days");
-      } else if (hours >= 1) {
-        return "" + (hours === 1 ? "an hour" : hours + " hours");
-      } else if (minutes >= 1) {
-        return "" + (minutes === 1 ? "a minute" : minutes + " minutes");
-      } else {
-        return "less than a minute";
-      }
-    }
-
-    make.find({
-      contentType: "{{CONTENT_TYPE}}",
-      user: "{{USER}}"
-    }).limit(LIMIT).then(function(err, results) {
-      var tool,
-          toolImageSrc = "{{HOSTNAME}}/img/icon-";
-      if (err) {
-        return err;
-      }
-      for (var i = 0; i < results.length; i++) {
-        if (results[i].title === projectTitle) {
-          if (results[i].contentType === "application/x-thimble") {
-            tool = "thimble";
-            toolImageSrc += "Thimble.png";
-          } else if (results[i].contentType === "application/x-popcorn") {
-            tool = "popcorn";
-            toolImageSrc += "Popcorn.png";
-          }
-
-          var social = new SocialMedia({
-            message: "Tweet this awesome thimble project: ",
-            via: "#webmaker"
-          });
-
-          var url = results[i].url || window.location.href;
-
-          function shareOnClick() {
-            social.hotLoad(twitterBtn, social.twitter, url);
-            social.hotLoad(googleBtn, social.google, url);
-            social.hotLoad(fbBtn, social.facebook, url);
-            $shareBtn.addClass("hidden");
-            $shareContainer.removeClass("hidden");
-            $shareBtn.off("click", shareOnClick);
-          }
-          $shareBtn.on( "click", shareOnClick );
-          $(".make-title").html(results[i].title);
-          $(".make-username").html(results[i].username);
-          $(".tool-name").html(tool);
-          $(".tool-image").attr("src", toolImageSrc);
-
-          $(".make-relative-date").html(toPrettyString(Date.now() - results[i].createdAt) + " ago");
-          $(".make-user-gravatar").attr("src", "http://gravatar.com/avatar/" + results[i].emailHash + "?s=26");
-          $(".make-desc").html(results[i].description || "No description");
-
-          if (results[i].remixedFrom) {
-            make.find({id: results[ i ].remixedFrom}).then(function(err, originals) {
-              if (err) {
-                return err;
-              }
-              var original = originals[0];
-              if (original) {
-                $(".remixed-user").html(original.username);
-                $(".original-thumb").attr({
-                  "src": original.thumbnail,
-                  "alt": original.title
-                });
-                $(".details-remixedfrom-link").attr("href", original.url);
-                $(".remixed-from").removeClass("hidden");
-
-                make.remixedFrom(original.id).then(function(err, siblings) {
-                  if (err) {
-                    return err;
-                  }
-                  var remixedByList = $(".details-remixedby-list"),
-                      sibling;
-                  if (siblings.length) {
-                    $(".remixed-by").removeClass("hidden");
-                    if (siblings.length === 1) {
-                      $(".details-remixedby-count").text(siblings.length + " remix by ");
-                    } else {
-                      $(".details-remixedby-count").text(siblings.length + " remixes by ");
-                    }
-                  }
-                  for (var j = 0; j < siblings.length; j++) {
-                    sibling = siblings[j];
-                    remixedByList.append("<li><a href=" + sibling.url + ">@" + sibling.username + "</a></li>");
-                  }
-                });
-              }
-            });
-          }
-        }
-      }
-    });
 
     var toggleNav = function(e) {
       e.preventDefault();
