@@ -2,15 +2,14 @@
  * MAKE DETAILS
  */
 body {
-  margin: 0;
-  padding: 0;
+  /* This is to clear space for the details bar */
+  padding-top: 37px !important;
 }
 .make-details-page {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 9999999;
 }
 .make-bar-link {
   color: #27aae1;
