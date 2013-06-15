@@ -2,30 +2,29 @@
   <link media="screen" rel="stylesheet" href="{{HOSTNAME}}/stylesheets/makedetails.css">
   <div class="make-details-page">
     <div class="make-details hide">
-      <iframe id="details-iframe" src="{{AUDIENCE}}/details/?url={{URL}}"></iframe>
+      <iframe id="make-details-iframe" src="{{AUDIENCE}}/details/?url={{URL}}"></iframe>
     </div>
     <div class="make-bar">
-      <div class="wrapper">
-        <span class="logospan">
-          <a class="make-link" href="#">
+      <div class="make-bar-wrapper">
+        <span class="make-bar-logospan">
+          <a class="make-bar-link" href="#">
             <img src="{{HOSTNAME}}/img/logo_small.png" alt="Mozilla Webmaker">
           </a>
-          <span class="made-with">
-            Made with <a class="make-link" href="//webmaker.org">Webmaker</a>
+          <span class="make-bar-made-with">
+            Made with <a class="make-bar-link" href="//webmaker.org">Webmaker</a>
           </span>
         </span>
-        <span class="expand-collapse">
+        <span class="make-bar-expand-collapse">
           Details<img src="{{HOSTNAME}}/img/icon-arrow-down.png">
         </span>
-        <div class="button">
-          <a href="{{REMIX_URL}}" target="_blank" class="button-remix make-link"><span>Remix</span></a>
+        <div class="make-bar-button">
+          <a href="{{REMIX_URL}}" target="_blank" class="make-bar-button-remix make-bar-link"><span>Remix</span></a>
         </div>
       </div>
     </div>
   </div>
   <script>
   (function loadWithJquery($) {
-    var LIMIT = 100000;
 
     if(!$) {
       var script = document.createElement("script");
@@ -42,7 +41,7 @@
         img_up = 'icon-arrow-up.png',
         img_down = 'icon-arrow-down.png',
         animationSpeed = 200,
-        $toggle = $('.expand-collapse'),
+        $toggle = $('.make-bar-expand-collapse'),
         $details = $('.make-details'),
         $arrow = $('img', $toggle),
         nav_open = false;
