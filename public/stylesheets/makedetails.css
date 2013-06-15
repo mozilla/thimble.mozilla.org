@@ -1,8 +1,14 @@
 /*********************************************************
  * MAKE DETAILS
  */
+body {
+  margin: 0;
+  padding: 0;
+  /* This is to clear space for the details bar */
+  padding-top: 37px;
+}
 .make-details-page {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
