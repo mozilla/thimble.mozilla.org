@@ -1,10 +1,6 @@
 /*********************************************************
  * MAKE DETAILS
  */
-body {
-  margin: 0;
-  padding: 0;
-}
 .make-details-page {
   position: fixed;
   top: 0;
