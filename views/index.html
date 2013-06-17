@@ -182,7 +182,8 @@
                     metaData.author = node.content;
                   },
                   'webmaker:tags': function(node) {
-                    metaData.tags = metaData.tags.concat(node.content.split(","));
+                    var content = node.content.replace(/webmaker:\w+/g, "");
+                    metaData.tags = metaData.tags.concat(content.split(","));
                   },
                   'webmaker:thumbnail': function(node) {
                     metaData.thumbnail = node.content;
