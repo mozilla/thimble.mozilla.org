@@ -40,7 +40,8 @@ var appName = "thimble",
 
     middleware = require('./lib/middleware')(env),
     make = makeAPI(env.get('make')),
-    nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'));
+    nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views')),
+    parameters = require('./lib/parameters');
 
 nunjucksEnv.express(app);
 
@@ -73,31 +74,13 @@ app.use( function( err, req, res, next) {
 });
 
 // what do we do when a project request comes in by id (:id route)?
-app.param('id', function(req, res, next, id) {
-  databaseAPI.find(id, function(err, result) {
-    if (err) { return next( err ); }
-    if (!result) { return next( new Error("404 Not Found") ); }
-    req.pageData = result.sanitizedData;
-    req.tutorialUrl = result.url;
-    next();
-  });
-});
+app.param('id', parameters.id(databaseAPI));
 
-// what do we do when a project request comes in by id (:id route)?
-app.param('oldid', function(req, res, next, oldid) {
-  legacyDatabaseAPI.findOld(oldid, function(err, result) {
-    if (err) { return next( err ); }
-    if (!result) { return next( new Error("404 Not Found") ); }
-    req.pageData = result.html;
-    next();
-  });
-});
+// what do we do when a project request comes in by id (:oldid route)?
+app.param('oldid', parameters.oldid(legacyDatabaseAPI));
 
 // what do we do when a project request comes in by name (:name route)?
-app.param('name', function(req, res, next, name) {
-  req.pageToLoad = '/' + name + '.html';
-  next();
-});
+app.param('name', parameters.name);
 
 // Main page
 app.get('/',
