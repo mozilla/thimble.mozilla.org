@@ -183,7 +183,8 @@
                   },
                   'webmaker:tags': function(node) {
                     var content = node.content.replace(/webmaker:recommended/g, "")
-                                              .replace(/webmaker:featured/g, "");
+                                              .replace(/webmaker:featured/g, "")
+                                              .replace(/webmaker:template/g, "");
                     metaData.tags = metaData.tags.concat(content.split(","));
                   },
                   'webmaker:thumbnail': function(node) {
