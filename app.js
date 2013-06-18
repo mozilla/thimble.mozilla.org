@@ -136,14 +136,13 @@ app.get('/p/:oldid',function(req, res) {
 app.get('/projects', function(req, res) {
   fs.readdir('learning_projects', function(err, files){
     if(err) { res.send(404); return; }
-    var projects = [];
-    files.forEach( function(e) {
+    var projects = files.map( function(e) {
       var id = e.replace('.html','');
-      projects.push({
+      return {
         title: id,
         remix: "/projects/" + id + "/",
         view: "/" + id + ".html"
-      });
+      };
     });
     res.render('gallery.html', {location: "projects", title: 'Learning Projects', projects: projects});
   });
