@@ -87,6 +87,11 @@ app.get('/',
         middleware.setDefaultPublishOperation,
         routes.index(utils, env, appName));
 
+// Legacy route for the main page
+app.get('/en-US/editor',
+        middleware.setDefaultPublishOperation,
+        routes.index(utils, env, appName));
+
 // Remix a published page (from db)
 // Even if this is "our own" page, this URL
 // will effect a new page upon publication.
