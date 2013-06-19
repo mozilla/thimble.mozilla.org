@@ -1,8 +1,12 @@
+{% if GA_ACCOUNT %}
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', '{{ GA_ACCOUNT }}']);
+  {% if GA_DOMAIN %}
   _gaq.push(['_setDomainName', '{{ GA_DOMAIN }}']);
+  {% endif %}
   _gaq.push(['_trackPageview']);
+
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript';
     ga.async = true;
@@ -11,3 +15,4 @@
     s.parentNode.insertBefore(ga, s);
   })();
 </script>
+{% endif %}
