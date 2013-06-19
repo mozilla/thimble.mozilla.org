@@ -18,7 +18,6 @@ body {
 }
 .make-bar-link:hover {
   color: #54bce7;
-  text-decoration: underline;
 }
 .make-details-page .make-bar-wrapper {
   position: relative;
