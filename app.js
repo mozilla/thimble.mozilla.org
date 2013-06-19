@@ -44,6 +44,10 @@ var appName = "thimble",
     parameters = require('./lib/parameters');
 
 nunjucksEnv.express(app);
+app.locals({
+  GA_ACCOUNT: env.get("GA_ACCOUNT"),
+  GA_DOMAIN: env.get("GA_DOMAIN")
+});
 
 // Express settings
 app.use(express.favicon());
