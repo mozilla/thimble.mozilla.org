@@ -11,6 +11,9 @@ exports.index = function(utils, env, appName) {
       contentType = "pageToLoad";
       content = req.pageToLoad;
     }
+    if (req.body.pageOperation === "remix") {
+      content = content.replace(/<title([^>]*)>/, "<title$1>Remix of ");
+    }
     res.render('index.html', {
       appname: appName,
       appURL: env.get("HOSTNAME"),
