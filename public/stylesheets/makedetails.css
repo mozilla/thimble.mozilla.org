@@ -2,15 +2,8 @@
  * MAKE DETAILS
  */
 body {
-  /* This is to clear space for the details bar */
-  padding-top: 37px !important;
-}
-.make-details-page {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 999999;
+  margin: 0;
+  padding: 0;
 }
 .make-bar-link {
   color: #27aae1;
@@ -146,7 +139,8 @@ body {
 .make-details.hide {
   display: none;
 }
-#make-details-iframe {
+#make-details-iframe,
+.thimble-project-iframe {
   border: none;
   width: 100%;
   height: 100%;
