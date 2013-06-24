@@ -69,6 +69,7 @@ app.use(express.cookieSession({
   proxy: true
 }));
 app.use(express.csrf());
+app.use(helmet.xframe());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
