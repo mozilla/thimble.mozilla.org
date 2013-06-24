@@ -55,24 +55,22 @@
 
       var options = {
         duration: animationSpeed,
-        easing: 'linear',
-        always: function() {
-          if (nav_open === true) {
-            nav_open = false;
-            $projectContainer.removeClass("open");
-            $arrow.attr('src', img_path + img_down);
-          }
-          else {
-            nav_open = true;
-            $projectContainer.addClass("open");
-            $arrow.attr('src', img_path + img_up);
-          }
-        }
+        easing: 'linear'
       };
 
       var toggleNav = function(e) {
         e.preventDefault();
         $details.slideToggle(options);
+        if (nav_open === true) {
+          nav_open = false;
+          $projectContainer.removeClass("open");
+          $arrow.attr('src', img_path + img_down);
+        }
+        else {
+          nav_open = true;
+          $projectContainer.addClass("open");
+          $arrow.attr('src', img_path + img_up);
+        }
       };
 
       $toggle.on('click', toggleNav);
