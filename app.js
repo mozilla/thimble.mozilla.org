@@ -89,12 +89,12 @@ app.param('name', parameters.name);
 
 // Main page
 app.get('/',
-        middleware.setDefaultPublishOperation,
+        middleware.setNewPageOperation,
         routes.index(utils, env, appName));
 
 // Legacy route for the main page
 app.get('/en-US/editor',
-        middleware.setDefaultPublishOperation,
+        middleware.setNewPageOperation,
         routes.index(utils, env, appName));
 
 // Remix a published page (from db)
