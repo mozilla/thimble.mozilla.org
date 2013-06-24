@@ -50,24 +50,29 @@
           $toggle = $('.make-bar-expand-collapse'),
           $details = $('.make-details'),
           $arrow = $('img', $toggle),
+          $projectContainer = $(".thimble-project-container"),
           nav_open = false;
 
       var options = {
         duration: animationSpeed,
-        easing: 'linear'
+        easing: 'linear',
+        always: function() {
+          if (nav_open === true) {
+            nav_open = false;
+            $projectContainer.removeClass("open");
+            $arrow.attr('src', img_path + img_down);
+          }
+          else {
+            nav_open = true;
+            $projectContainer.addClass("open");
+            $arrow.attr('src', img_path + img_up);
+          }
+        }
       };
 
       var toggleNav = function(e) {
         e.preventDefault();
         $details.slideToggle(options);
-        if (nav_open === true) {
-          nav_open = false;
-          $arrow.attr('src', img_path + img_down);
-        }
-        else {
-          nav_open = true;
-          $arrow.attr('src', img_path + img_up);
-        }
       };
 
       $toggle.on('click', toggleNav);

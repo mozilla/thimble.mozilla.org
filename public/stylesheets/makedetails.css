@@ -154,6 +154,10 @@ body {
   bottom: 0;
 }
 
+.thimble-project-container.open {
+  top: 337px;
+}
+
 .make-bar-button-remix {
   background-repeat: no-repeat;
   background-position: left 3px;
