@@ -145,6 +145,15 @@ body {
   width: 100%;
   height: 100%;
 }
+
+.thimble-project-container {
+  position: fixed;
+  top: 37px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
 .make-bar-button-remix {
   background-repeat: no-repeat;
   background-position: left 3px;

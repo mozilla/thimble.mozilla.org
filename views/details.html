@@ -1,70 +1,80 @@
-
-  <link media="screen" rel="stylesheet" href="{{HOSTNAME}}/stylesheets/makedetails.css">
-  <div class="make-details-page">
-    <div class="make-details hide">
-      <iframe id="make-details-iframe" src="{{AUDIENCE}}/details/?url={{URL}}"></iframe>
-    </div>
-    <div class="make-bar">
-      <div class="make-bar-wrapper">
-        <span class="make-bar-logospan">
-          <a class="make-bar-link" href="{{AUDIENCE}}">
-            <img src="{{HOSTNAME}}/img/logo_small.png" alt="Mozilla Webmaker">
-          </a>
-          <span class="make-bar-made-with">
-            Made with <a class="make-bar-link" href="//webmaker.org">Webmaker</a>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{TITLE}}</title>
+    <link media="screen" rel="stylesheet" href="{{HOSTNAME}}/stylesheets/makedetails.css">
+  </head>
+  <body>
+    <div class="make-details-page">
+      <div class="make-details hide">
+        <iframe id="make-details-iframe" src="{{AUDIENCE}}/details/?url={{URL}}"></iframe>
+      </div>
+      <div class="make-bar">
+        <div class="make-bar-wrapper">
+          <span class="make-bar-logospan">
+            <a class="make-bar-link" href="{{AUDIENCE}}">
+              <img src="{{HOSTNAME}}/img/logo_small.png" alt="Mozilla Webmaker">
+            </a>
+            <span class="make-bar-made-with">
+              Made with <a class="make-bar-link" href="//webmaker.org">Webmaker</a>
+            </span>
           </span>
-        </span>
-        <span class="make-bar-expand-collapse">
-          Details<img src="{{HOSTNAME}}/img/icon-arrow-down.png">
-        </span>
-        <div class="make-bar-button">
-          <a href="{{REMIX_URL}}" target="_blank" class="make-bar-button-remix make-bar-link"><span>Remix</span></a>
+          <span class="make-bar-expand-collapse">
+            Details<img src="{{HOSTNAME}}/img/icon-arrow-down.png">
+          </span>
+          <div class="make-bar-button">
+            <a href="{{REMIX_URL}}" target="_blank" class="make-bar-button-remix make-bar-link"><span>Remix</span></a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <script>
-  (function loadWithJquery($) {
+    <script>
+    (function loadWithJquery($) {
 
-    if(!$) {
-      var script = document.createElement("script");
-      script.src = "//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js";
-      script.onload = function() {
-        loadWithJquery(window.jQuery);
+      if(!$) {
+        var script = document.createElement("script");
+        script.src = "//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js";
+        script.onload = function() {
+          loadWithJquery(window.jQuery);
+        };
+        document.head.appendChild(script);
+        return;
+      }
+
+      // continue in the knowledge that we have jquery available
+      var img_path = '{{HOSTNAME}}/img/',
+          img_up = 'icon-arrow-up.png',
+          img_down = 'icon-arrow-down.png',
+          animationSpeed = 200,
+          $toggle = $('.make-bar-expand-collapse'),
+          $details = $('.make-details'),
+          $arrow = $('img', $toggle),
+          nav_open = false;
+
+      var options = {
+        duration: animationSpeed,
+        easing: 'linear'
       };
-      document.head.appendChild(script);
-      return;
-    }
 
-    // continue in the knowledge that we have jquery available
-    var img_path = '{{HOSTNAME}}/img/',
-        img_up = 'icon-arrow-up.png',
-        img_down = 'icon-arrow-down.png',
-        animationSpeed = 200,
-        $toggle = $('.make-bar-expand-collapse'),
-        $details = $('.make-details'),
-        $arrow = $('img', $toggle),
-        nav_open = false;
+      var toggleNav = function(e) {
+        e.preventDefault();
+        $details.slideToggle(options);
+        if (nav_open === true) {
+          nav_open = false;
+          $arrow.attr('src', img_path + img_down);
+        }
+        else {
+          nav_open = true;
+          $arrow.attr('src', img_path + img_up);
+        }
+      };
 
-    var options = {
-      duration: animationSpeed,
-      easing: 'linear'
-    };
-
-    var toggleNav = function(e) {
-      e.preventDefault();
-      $details.slideToggle(options);
-      if (nav_open === true) {
-        nav_open = false;
-        $arrow.attr('src', img_path + img_down);
-      }
-      else {
-        nav_open = true;
-        $arrow.attr('src', img_path + img_up);
-      }
-    };
-
-    $toggle.on('click', toggleNav);
-  }(window.jQuery));
-  </script>
-  <iframe class="thimble-project-iframe" src="{{THIMBLE_PROJECT}}"></iframe>
+      $toggle.on('click', toggleNav);
+    }(window.jQuery));
+    </script>
+    <div class="thimble-project-container">
+      <iframe class="thimble-project-iframe" src="{{THIMBLE_PROJECT}}"></iframe>
+    </div>
+  </body>
+</html>
