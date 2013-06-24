@@ -103,7 +103,7 @@ app.get('/project/:id/remix',
         middleware.setDefaultPublishOperation,
         routes.index(utils, env, appName));
 
-// Legacy counterpart
+// Legacy route for remixing old user content
 app.get('/p/:oldid/remix',
         middleware.setDefaultPublishOperation,
         routes.index(utils, env, appName));
@@ -117,29 +117,24 @@ app.get('/project/:id/edit',
         middleware.setPublishAsUpdate,
         routes.index(utils, env, appName));
 
-// Legacy counterpart
-app.get('/p/:oldid/edit',
-        // this will be a remix, since there's no new
-        // data to "edit"; old thimble was anonymous.
-        middleware.setDefaultPublishOperation,
-        routes.index(utils, env, appName));
-
-// view a published page (from db)
-app.get('/project/:id', function(req, res) {
-  res.send(req.pageData);
-});
-
-// Legacy route for new content
+// Legacy route for new premade content
 // See: https://bugzilla.mozilla.org/show_bug.cgi?id=874986
 app.get('/en-US/projects/:name/edit',
         middleware.setDefaultPublishOperation,
         routes.index(utils, env, appName));
 
-// Legacy route for old content
+// Legacy route for old user content
 // see: https://bugzilla.mozilla.org/show_bug.cgi?id=880768
 app.get('/p/:oldid',function(req, res) {
   res.send(req.pageData);
 });
+
+// Legacy route for editing old user content
+app.get('/p/:oldid/edit',
+        // this will be a remix, since there's no new
+        // data to "edit"; old thimble was anonymous.
+        middleware.setDefaultPublishOperation,
+        routes.index(utils, env, appName));
 
 // learning project listing
 app.get('/projects', function(req, res) {
