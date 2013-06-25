@@ -152,11 +152,11 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  transition: top .2s;
-  -moz-transition: top .2s;
-  -webkit-transition: top .2s;
-  -o-transition: top .2s;
-  -ms-transition: top .2s; 
+  transition: top .2s ease-in-out;
+  -moz-transition: top .2s ease-in-out;
+  -webkit-transition: top .2s ease-in-out;
+  -o-transition: top .2s ease-in-out;
+  -ms-transition: top .2s ease-in-out;
 }
 
 .thimble-project-container.open {
