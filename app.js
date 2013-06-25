@@ -40,7 +40,9 @@ var appName = "thimble",
 
     middleware = require('./lib/middleware')(env),
     make = makeAPI(env.get('make')),
-    nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views')),
+    nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'), {
+      autoescape: true
+    }),
     parameters = require('./lib/parameters');
 
 nunjucksEnv.express(app);
