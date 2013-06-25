@@ -1,0 +1,25 @@
+{% block userbar %}
+    <!-- webmaker user bar -->
+    <link rel="stylesheet" href="{{userbar}}/css/nav.css" />
+    <div id="webmaker-nav">
+      <nav class="webmaker-nav-container">
+        <a id="logo" href="https://webmaker.org"><img src="{{userbar}}/img/webmaker-logo.png" alt="Mozilla Webmaker" /></a>
+        <ul class="webmaker-nav user-info">
+          <li class="user">
+              Hi <span id="identity" class="user-name-container"></span>
+          </li>
+          <li class="tutorial-btn hidden"><button>Tutorials</button></li>
+          <li class="makes"><button>My makes</button></li>
+          <li>
+            <iframe src="{{audience}}/sso/include.html" class="include-frame"></iframe>
+          </li>
+        </ul>
+      </nav>
+      <div class="my-projects-container">
+        <iframe class="my-projects-iframe"></iframe>
+      </div>
+      <div class="tutorial-list">
+        <div class="tutorial-arrow"></div>
+      </div>
+    </div>
+{% endblock %}
