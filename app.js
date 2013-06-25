@@ -188,6 +188,17 @@ app.post('/publish',
   }
 );
 
+
+// dev-only route for testing deletes.
+if (env.get("NODE_ENV") === "development") {
+  /**
+    This route only exists for testing. Since CSRF cannot be
+    "overruled", this is a .get route, conditional on dev env.
+  **/
+  app.get('/project/:id/delete', middleware.deleteProject(databaseAPI));
+}
+
+
 // WEBMAKER SSO
 persona(app, {audience: env.get('AUDIENCE')});
 require('webmaker-loginapi')(app, env.get('LOGINAPI'));
