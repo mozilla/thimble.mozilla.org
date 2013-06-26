@@ -190,7 +190,7 @@ app.post('/publish',
 
 
 // dev-only route for testing deletes.
-if (env.get("NODE_ENV") === "development") {
+if (!!env.get("DELETE_ENABLED")) {
   /**
     This route only exists for testing. Since CSRF cannot be
     "overruled", this is a .get route, conditional on dev env.

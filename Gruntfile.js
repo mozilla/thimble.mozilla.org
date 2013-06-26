@@ -43,9 +43,6 @@ module.exports = function( grunt ) {
       }
     },
     jshint: {
-      options: {
-        "-W024": true // Expected an identifier and instead saw 'delete' (a reserved word)
-      },
       files: [
         "Gruntfile.js",
         "app.js",
