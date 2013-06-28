@@ -64,6 +64,10 @@ fakes3 -r ./fakes3 -h localhost -p 6060
 You can then run Thimble from the thimble.webmaker.org directory using
 ```node app```
 
+Finally, there is a special variable that enables an additional route
+in the app for testing content deletion, `DELETE_ENABLED`. See app.js
+for more details on the effect this variable has on running the app.
+
 Environment variables
 ---------------------
 
@@ -97,6 +101,7 @@ lives in different places:
 * on *n*x, it is located at ```<systemroot>/etc/hosts```
 * on OSX, it is located at ```<systemroot>/private/etc/hosts```
 * on Windows, it is located at ```<systemroot>\system32\drivers\etc\hosts```
+
 
 Development additionals
 -----------------------
@@ -198,3 +203,4 @@ New Relic
 To enable New Relic, set the `NEW_RELIC_ENABLED` environment variable and add a config file, or set the relevant environment variables.
 
 For more information on configuring New Relic, see: https://github.com/newrelic/node-newrelic/#configuring-the-agent
+
