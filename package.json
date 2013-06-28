@@ -10,7 +10,7 @@
     "helmet": "0.0.9",
     "htmlsanitizer": "0.0.2",
     "knox": "0.8.3",
-    "makeapi": "0.2.0",
+    "makeapi-client": "https://github.com/mozilla/makeapi-client/tarball/v0.3.2",
     "newrelic": "0.9.20",
     "node-statsd": "0.0.7",
     "nunjucks": "0.1.9",
