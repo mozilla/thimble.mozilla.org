@@ -13,7 +13,7 @@
     "makeapi": "0.2.0",
     "newrelic": "0.9.20",
     "node-statsd": "0.0.7",
-    "nunjucks": "0.1.8a",
+    "nunjucks": "0.1.9",
     "request": "2.21.0",
     "sequelize": "1.6.0",
     "webmaker-loginapi": "0.1.6"
