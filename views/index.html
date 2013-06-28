@@ -253,7 +253,8 @@
       }
       return FriendlycodeEditor({
         allowJS: false,
-        {{contentType}}: '{{content|safe}}',
+        defaultContent: '{{content|safe}}',
+        pageToLoad: '{{pageToLoad}}',
         publisher: Hackpub({
           hackpubURL: "{{appURL}}",
           publishURL: "{{appURL}}/project",
