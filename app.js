@@ -35,8 +35,9 @@ var appName = "thimble",
       a short-term solution until all the active "old thimble" projects have been
       migrated by their owners/remixers.
     **/
-    databaseAPI = db('thimbleproject', env.get('CLEARDB_DATABASE_URL') || env.get('DB')),
-    legacyDatabaseAPI = db('legacyproject', env.get('LEGACY_DB'), env.get('DB')),
+    databaseOptions =  env.get('CLEARDB_DATABASE_URL') || env.get('DB'),
+    databaseAPI = db('thimbleproject', databaseOptions),
+    legacyDatabaseAPI = db('legacyproject', databaseOptions, env.get('LEGACY_DB')),
 
     middleware = require('./lib/middleware')(env),
     make = makeAPI(env.get('make')),
