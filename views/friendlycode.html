@@ -1,0 +1,215 @@
+{% block friendlycode %}
+    <!-- friendlycode editor -->
+    <div id="bare-fc-holder" class="friendlycode-loading"></div>
+    <script src="{{HTTP_STATIC_URL}}friendlycode/js/require-config.js"></script>
+    <script src="{{HTTP_STATIC_URL}}friendlycode/vendor/require.min.js"></script>
+    <script>
+    define("webmaker-nav", ["{{MAKE_ENDPOINT}}/js/make-api.js"], function(Make) {
+      var make = Make({
+        apiURL: "{{MAKE_ENDPOINT}}"
+      });
+      return {
+        loadTutorials: function(publishedUrl) {
+          make.tags("tutorial-" + escape(publishedUrl)).then(function(err, results) {
+            var tutorialBtn = $(".tutorial-btn"),
+                tutorialList = $(".tutorial-list"),
+                iframe = $(".tutorial-iframe"),
+                tutorialView = $(".tutorial-view"),
+                viewTitle = $(".tutorial-view-title"),
+                iframeCover = $(".tutorial-iframe-cover"),
+                closeButton = $(".tutorial-close-button");
+
+            if (err) {
+              return err;
+            }
+
+            // Search was successful, just found nothing.
+            // Return early because we have nothing to display.
+            if (!results.length) {
+              return;
+            }
+
+            tutorialBtn.removeClass("hidden");
+
+            var onCoverMouseUp = function() {
+              iframeCover.css("display", "none");
+              tutorialView.mousedown(onCoverMouseDown);
+              document.removeEventListener("mouseup", onCoverMouseUp, false);
+            };
+
+            var onCoverMouseDown = function() {
+              iframeCover.css("display", "block");
+              tutorialView.off("mousedown", onCoverMouseDown);
+              document.addEventListener("mouseup", onCoverMouseUp, false);
+            };
+
+            function createTutorialItem(item) {
+              var tutorialElement = $("<div class='tutorial-list-item'></div>");
+              tutorialElement.html(item.title);
+              tutorialElement.click(function() {
+                iframe.attr("src", item.url);
+                viewTitle.html("Tutorial: " + item.title);
+                tutorialView.removeClass("closed");
+                tutorialView.css({
+                  "height": "",
+                  "width": ""
+                });
+              });
+              tutorialList.append(tutorialElement);
+            }
+
+            tutorialView.mousedown(onCoverMouseDown);
+
+            closeButton.disableSelection();
+            closeButton.click(function() {
+              tutorialView.addClass("closed");
+              tutorialView.css({
+                "height": 0,
+                "width": 0
+              });
+            });
+
+            tutorialBtn.click(function() {
+              tutorialList.toggleClass("open");
+            });
+
+            tutorialView.draggable({
+              cancel: "iframe"
+            });
+            tutorialView.resizable();
+
+            for (var i = 0; i < results.length; i++) {
+              createTutorialItem(results[i]);
+            }
+          });
+        }
+      };
+    });
+
+    /**
+     * ...
+     */
+    define("hackpub", ["jquery", "webmaker-nav"], function($, nav) {
+
+      // set up CSRF handling
+      var csrf_token = $("meta[name='X-CSRF-Token']").attr("content");
+      $.ajaxSetup({
+        beforeSend: function(request) {
+         request.setRequestHeader('X-CSRF-Token', csrf_token);
+        }
+      });
+
+      return function Hackpub(options) {
+        return {
+          loadCode: function(path, cb) {
+            var url = path;
+            $.ajax({
+              type: "GET",
+              url: url,
+              dataType: 'text',
+              error: function(req) {
+                cb(req);
+              },
+              success: function(html) {
+                cb(null, html, url);
+              }
+            });
+          },
+          saveCode: function(data, originalURL, cb) {
+            var iframeDocument = document.querySelector('.preview-holder iframe')
+                                         .contentDocument,
+                nodeList = Array.prototype.slice.apply(iframeDocument.querySelectorAll('meta')),
+                metaData = {
+                  tags: []
+                },
+                metaName,
+                metaNames = {
+                  'description': function(node) {
+                    metaData.description = node.content;
+                  },
+                  'author': function(node) {
+                    metaData.author = node.content;
+                  },
+                  'webmaker:tags': function(node) {
+                    var content = node.content.replace(/webmaker:recommended/g, "")
+                                              .replace(/webmaker:featured/g, "")
+                                              .replace(/webmaker:template/g, "");
+                    metaData.tags = metaData.tags.concat(content.split(","));
+                  },
+                  'webmaker:thumbnail': function(node) {
+                    metaData.thumbnail = node.content;
+                  },
+                  'webmaker:locale': function(node) {
+                    metaData.locale = node.content;
+                  },
+                  'webmaker:tutorial': function(node) {
+                    metaData.tags.push("tutorial-" + escape(node.content));
+                  }
+                };
+
+            if (iframeDocument.title) {
+              metaData.title = iframeDocument.title;
+            }
+
+            for (var i = 0; i < nodeList.length; i++) {
+              metaName = nodeList[i].name;
+              if (metaNames[metaName]) {
+                metaNames[metaName](nodeList[i]);
+              }
+            }
+
+            $.ajax({
+              type: "POST",
+              url: options.hackpubURL + "/publish",
+              data: {
+                'html': data,
+                'metaData': metaData,
+                'pageOperation': $("meta[name='thimble-operation']").attr("content"),
+                'origin': $("meta[name='thimble-project-origin']").attr("content")
+              },
+              dataType: 'json',
+              error: function(req) {
+                cb(req);
+              },
+              success: function(result) {
+                var origin = $("meta[name='thimble-project-origin']").attr("content");
+                cb(null, {path: result['remix-id'], url: result['published-url']});
+                // If we were a remix, update the new page's origin.
+                if ($("meta[name='thimble-operation']").attr("content") === "remix" || !origin) {
+                  origin = result['remix-id'];
+                  $("meta[name='thimble-project-origin']").attr("content",origin);
+                }
+                $("meta[name='thimble-operation']").attr("content","edit");
+                userBar.updateMakes();
+              }
+            });
+          }
+        };
+      };
+    });
+
+    /**
+     * This code sets up the various Friendlycode values for
+     * publication and remixing.
+     */
+    define("thimblePage",
+           ["jquery", "friendlycode", "hackpub", "webmaker-nav"],
+           function($, FriendlycodeEditor, Hackpub, nav) {
+      var tutorialUrl = "{{tutorialUrl}}";
+      if (tutorialUrl) {
+        nav.loadTutorials(tutorialUrl);
+      }
+      return FriendlycodeEditor({
+        allowJS: false,
+        defaultContent: '{{content|safe}}',
+        pageToLoad: '{{pageToLoad}}',
+        publisher: Hackpub({
+          hackpubURL: "{{appURL}}",
+          publishURL: "{{appURL}}/project",
+        }),
+        remixURLTemplate: "{{appURL}}/project/\{\{VIEW_URL\}\}/edit",
+        container: $("#bare-fc-holder")
+      });
+    });
+    </script>
+{% endblock %}

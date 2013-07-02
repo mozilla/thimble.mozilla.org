@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html class="deployment-type-development">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="persona-email" content="{{email}}">
+    <meta name="thimble-operation" content="{{pageOperation}}">
+    <meta name="thimble-project-origin" content="{{origin}}">
+    <meta name="X-CSRF-Token" content="{{csrf}}">
+    <base target="_blank">
+    <title>Mozilla Thimble</title>
+    <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}friendlycode/css/friendlycode.css">
+    <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}stylesheets/friendlycode-overrides.css">
+    <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}stylesheets/userbar-overrides.css">
+    <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}stylesheets/tutorial.css" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.js"></script>
+    {% include "googleanalytics.html" %}
+  </head>
+  <body style="margin: 0">
+    {% block body %}{% endblock %}
+  </body>
+</html>
