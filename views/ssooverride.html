@@ -1,0 +1,30 @@
+{% block ssooverride %}
+    <script>
+    /**
+     * This code ensures the "publish" button is only
+     * visible when the user is logged in according
+     * the persona SSO that we employ for webmaker.org
+     */
+    require([
+      "jquery",
+      "thimblePage"
+    ], function($, ThimblePage) {
+      var publishButton = $('.publish-button'),
+          myProjects = $( ".my-projects-iframe" ),
+          loggedIn = false;
+
+      publishButton.hide();
+
+      navigator.idSSO.app = {
+        onlogin: function(loggedInUser, displayName) {
+          publishButton.show();
+          myProjects.attr("src", "{{audience}}/me?app={{appname}}");
+        },
+        onlogout: function() {
+          publishButton.hide();
+          myProjects.attr("src", "");
+        }
+      };
+    });
+    </script>
+{% endblock %}
