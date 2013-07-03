@@ -19,7 +19,9 @@ var ajax = require('request'),
     path = require('path'),
     persona = require('express-persona'),
     routes = require('./routes'),
-    utils = require('./lib/utils');
+    utils = require('./lib/utils'),
+    version = require('./package').version;
+
 
 habitat.load();
 
@@ -191,6 +193,13 @@ app.post('/publish',
   }
 );
 
+// DEVOPS - Healthcheck
+app.get('/healthcheck', function( req, res ) {
+  res.json({
+    http: "okay",
+    version: version
+  });
+});
 
 // dev-only route for testing deletes.
 if (!!env.get("DELETE_ENABLED")) {
