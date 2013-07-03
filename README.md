@@ -23,8 +23,7 @@ Setup
 
 In order to run Thimble, the following things are required:
 
-1) you will need to have node installed
-
+1) you will need to have node installed.<br>
 2) you'll need to fork and then clone the repo recursively:
 
 ```
