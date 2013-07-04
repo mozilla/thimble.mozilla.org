@@ -17,7 +17,6 @@ var ajax = require('request'),
     makeAPI = require('./lib/makeapi'),
     nunjucks = require('nunjucks'),
     path = require('path'),
-    persona = require('express-persona'),
     routes = require('./routes'),
     utils = require('./lib/utils'),
     version = require('./package').version;
@@ -212,8 +211,10 @@ if (!!env.get("DELETE_ENABLED")) {
 
 
 // WEBMAKER SSO
-persona(app, {audience: env.get('AUDIENCE')});
-require('webmaker-loginapi')(app, env.get('LOGINAPI'));
+require('webmaker-loginapi')(app, {
+  loginURL: env.get('LOGINAPI'),
+  audience: env.get('AUDIENCE')
+});
 
 // run server
 app.listen(env.get("PORT"), function(){

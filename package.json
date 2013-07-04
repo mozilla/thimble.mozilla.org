@@ -5,7 +5,6 @@
   "dependencies": {
     "async": "0.2.7",
     "express": "3.2.6",
-    "express-persona": "0.0.7",
     "habitat": "0.4.1",
     "helmet": "0.0.9",
     "htmlsanitizer": "0.0.2",
@@ -16,7 +15,7 @@
     "nunjucks": "0.1.9",
     "request": "2.21.0",
     "sequelize": "1.6.0",
-    "webmaker-loginapi": "0.1.6"
+    "webmaker-loginapi": "0.1.8"
   },
   "optionalDependencies": {
     "mysql": "2.0.0-alpha7",
