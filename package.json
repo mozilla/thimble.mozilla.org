@@ -15,7 +15,7 @@
     "nunjucks": "0.1.9",
     "request": "2.21.0",
     "sequelize": "1.6.0",
-    "webmaker-loginapi": "0.1.8"
+    "webmaker-loginapi": "https://github.com/mozilla/node-webmaker-loginapi/tarball/v0.1.9"
   },
   "optionalDependencies": {
     "mysql": "2.0.0-alpha7",
