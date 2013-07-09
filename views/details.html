@@ -51,6 +51,8 @@
           $details = $('.make-details'),
           $arrow = $('img', $toggle),
           $projectContainer = $(".thimble-project-container"),
+          $detailsContainer = $('.make-details-page'),
+          detailsHidden = window.location.toString().indexOf('details=hidden') > -1,
           nav_open = false;
 
       var options = {
@@ -72,6 +74,11 @@
           $arrow.attr('src', img_path + img_up);
         }
       };
+
+      if (detailsHidden) {
+        $projectContainer.addClass('no-details');
+        $detailsContainer.addClass('no-details');
+      }
 
       $toggle.on('click', toggleNav);
     }(window.jQuery));
