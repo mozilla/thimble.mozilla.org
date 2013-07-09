@@ -13,7 +13,8 @@ var ajax = require('request'),
     express = require('express'),
     fs = require('fs'),
     habitat = require('habitat'),
-    helmet = require( "helmet" ),
+    helmet = require("helmet"),
+    lessMiddleWare = require("less-middleware"),
     makeAPI = require('./lib/makeapi'),
     nunjucks = require('nunjucks'),
     path = require('path'),
@@ -27,7 +28,8 @@ habitat.load();
 var appName = "thimble",
     app = express(),
     env = new habitat(),
-
+    node_env = env.get('NODE_ENV'),
+    WWW_ROOT = path.resolve(__dirname, 'public'),
     /**
       We're using two databases here: the first is our normal database, the second is
       a legacy database with old the original thimble.webmaker.org data from 2012/2013
@@ -75,10 +77,26 @@ app.use(express.cookieSession({
 app.use(express.csrf());
 app.use(helmet.xframe());
 app.use(app.router);
+
+var optimize = (node_env !== "development"),
+    tmpDir = path.join( require("os").tmpDir(), "mozilla.webmaker.org");
+
+app.use(lessMiddleWare({
+  once: true,
+  debug: !optimize,
+  dest: tmpDir,
+  src: WWW_ROOT,
+  compress: true,
+  yuicompress: optimize,
+  optimization: optimize ? 0 : 2
+}));
+
+app.use( express.static(tmpDir));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
 app.use(express.static(path.join(__dirname, 'templates')));
-app.use( function( err, req, res, next) {
+
+app.use( function(err, req, res, next) {
   res.send( 500, err );
 });
 

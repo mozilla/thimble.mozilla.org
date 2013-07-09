@@ -1,0 +1,33 @@
+body {
+  font-family: "Helvetica Neue", sans-serif;
+  width: 600px;
+  margin: 40px auto;
+  color: #555;
+}
+
+ul {
+    border-radius: 3px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    border: 1px solid #CCC;
+    > li {
+        line-height: 3;
+        padding: 0 0 0 1em;
+        border-bottom: 1px solid #CCC;
+        >a:hover {
+            color: black;
+        }
+        & > a {
+            padding: 0 0.5em;
+            float: right;
+            color: #999;
+        }
+    }
+    & > li:last-child {
+        border-bottom: none;
+    }
+    & > li:hover {
+        background: #F4F5F5;
+    }
+}

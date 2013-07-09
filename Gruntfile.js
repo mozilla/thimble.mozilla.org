@@ -28,19 +28,18 @@ module.exports = function( grunt ) {
           "public/learning_projects/**/*.css"
         ]
       },
-      strict: {
-         options: {
-          "ids": false,
-          "adjoining-classes": false,
-          "box-model": false,
-          "important": false,
-          "box-sizing": false
-         },
+    recess: {
+      dist: {
+        options: {
+          noOverQualifying: false,
+          noIDs: false,
+          strictPropertyOrder: false
+        },
         src: [
-          "public/*.css",
-          "public/stylesheets/*.css"
+          "public/stylesheets/*.less"
         ]
       }
+    }      
     },
     jshint: {
       files: [
