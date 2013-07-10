@@ -6,7 +6,7 @@ exports.index = function(utils, env, appName) {
     var content;
 
     if (req.pageData) {
-      content = req.pageData.replace(/'/g, '\\\'').replace(/\n/g, '\\n');
+      content = req.pageData.replace(/'/g, '\\\'').replace(/\n/g, '\\n').replace(/\//g,'\\\/');
     } else {
       content = utils.defaultPage();
     }
