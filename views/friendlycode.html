@@ -200,7 +200,8 @@
         nav.loadTutorials(tutorialUrl);
       }
       return FriendlycodeEditor({
-        allowJS: false,
+        allowJS: true,
+        previewLoader: 'http://mozillathimblelivepreview.net/loader.html',
         defaultContent: '{{content|safe}}',
         pageToLoad: '{{pageToLoad}}',
         publisher: Hackpub({
