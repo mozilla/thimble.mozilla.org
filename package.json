@@ -9,7 +9,7 @@
     "helmet": "0.0.9",
     "htmlsanitizer": "0.0.2",
     "knox": "0.8.3",
-    "makeapi-client": "https://github.com/mozilla/makeapi-client/tarball/v0.4.0",
+    "makeapi-client": "https://github.com/mozilla/makeapi-client/tarball/v0.5.0",
     "less-middleware": "0.1.12",
     "newrelic": "0.9.20",
     "node-statsd": "0.0.7",
