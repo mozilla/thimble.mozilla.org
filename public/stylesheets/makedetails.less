@@ -12,11 +12,17 @@ body {
 .make-bar-link:hover {
   color: #54bce7;
 }
-.make-details-page .make-bar-wrapper {
-  position: relative;
-  width: 100%;
-  margin: 0 auto;
+.make-details-page {
+  .make-bar-wrapper {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+  }
+  &.no-details {
+    display: none;
+  }
 }
+
 .make-bar {
   background: #e3eaee;
   height: 37px;
@@ -149,6 +155,12 @@ body {
 .thimble-project-container {
   position: fixed;
   top: 37px;
+  &.no-details {
+    top: 0;
+  }
+  &.open {
+    top: 337px;
+  }
   left: 0;
   right: 0;
   bottom: 0;
@@ -159,9 +171,6 @@ body {
   -ms-transition: top .2s ease-in-out;
 }
 
-.thimble-project-container.open {
-  top: 337px;
-}
 
 .make-bar-button-remix {
   background-repeat: no-repeat;
