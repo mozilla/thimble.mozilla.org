@@ -47,7 +47,7 @@
               var tutorialElement = $("<div class='tutorial-list-item'></div>");
               tutorialElement.html(item.title);
               tutorialElement.click(function() {
-                iframe.attr("src", item.url);
+                iframe.attr("src", item.url + "?details=hidden");
                 viewTitle.html("Tutorial: " + item.title);
                 tutorialView.removeClass("closed");
                 tutorialView.css({
@@ -119,9 +119,8 @@
             var iframeDocument = document.querySelector('.preview-holder iframe')
                                          .contentDocument,
                 nodeList = Array.prototype.slice.apply(iframeDocument.querySelectorAll('meta')),
-                metaData = {
-                  tags: []
-                },
+                metaData = {},
+                metaDataTags = [],
                 metaName,
                 metaNames = {
                   'description': function(node) {
@@ -134,7 +133,7 @@
                     var content = node.content.replace(/webmaker:recommended/g, "")
                                               .replace(/webmaker:featured/g, "")
                                               .replace(/webmaker:template/g, "");
-                    metaData.tags = metaData.tags.concat(content.split(","));
+                    metaDataTags = metaDataTags.concat(content.split(","));
                   },
                   'webmaker:thumbnail': function(node) {
                     metaData.thumbnail = node.content;
@@ -143,7 +142,7 @@
                     metaData.locale = node.content;
                   },
                   'webmaker:tutorial': function(node) {
-                    metaData.tags.push("tutorial-" + escape(node.content));
+                    metaDataTags.push("tutorial-" + escape(node.content));
                   }
                 };
 
@@ -157,6 +156,8 @@
                 metaNames[metaName](nodeList[i]);
               }
             }
+
+            metaData.tags = metaDataTags.join(",");
 
             $.ajax({
               type: "POST",
