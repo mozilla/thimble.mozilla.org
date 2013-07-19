@@ -23,8 +23,11 @@ Setup
 
 In order to run Thimble, the following things are required:
 
-1. you will need to have node installed
-2. you'll need to fork and then clone the repo recursively:
+1) you will need to have node installed
+
+You can find node on http://nodejs.org or your package manager.
+
+2) you'll need to fork and then clone the repo recursively:
 
 ```
 git clone git@github.com:[yourname]/thimble.webmaker.org.git --recursive
