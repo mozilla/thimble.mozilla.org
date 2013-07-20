@@ -5,10 +5,5 @@
     {% include 'friendlycode.html' %}
     <script src="{{audience}}/sso/include.js"></script>
     {% include 'ssooverride.html' %}
-    <script>
-      require(["ssooverride"], function() {
-        // ensure that SSO is triggered only after the login/logout handling has been set up
-        require(["{{userbar}}/js/sso-ux.js"]);
-      });
-    </script>
+    <script src="{{userbar}}/js/sso-ux.js"></script>
 {% endblock %}
