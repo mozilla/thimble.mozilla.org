@@ -4,7 +4,7 @@
     <script src="{{HTTP_STATIC_URL}}friendlycode/js/require-config.js"></script>
     <script src="{{HTTP_STATIC_URL}}friendlycode/vendor/require.min.js"></script>
     <script>
-    define("webmaker-nav", ["{{MAKE_ENDPOINT}}/js/make-api.js"], function(Make) {
+    define("webmaker-nav", ["/external/make-api.js"], function(Make) {
       var make = Make({
         apiURL: "{{MAKE_ENDPOINT}}"
       });
