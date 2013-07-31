@@ -8,7 +8,7 @@ Let's get started.
 
 1) READ THROUGH THE COMMENTS. This is a comment. Everything inside of this tag for HTML or '/*' for CSS, is not processed as code, but instead is just text comments about the code. The comments will give you instructions, hints and guides to complete the project, so skim down through the comments to get an understanding of what you are being asked to do.
 
-2) GET ORIENTED IN THE CODE. HTML is made up of tags that look like this <p> </p>. The tags tell you something about the information contained between them. Click on the tags in the code on this side of the editor to get a description of what each tag is for. 
+2) GET ORIENTED IN THE CODE. HTML is made up of tags that look like this <p> </p>. The tags tell you something about the information contained between them. Click on the tags in the code on this side of the editor to get a description of what each tag is for.
 
 -->
 <html>
@@ -19,8 +19,8 @@ Earlier we mentioned a Creative Commons License; "Qu'est que c'est?", you might 
 
 As a result of CC licensing, creative work like pictures of velvet bird paintings(!) can be copied, distributed, edited and remixed by anyone on the web, all within the boundaries of copyright law. There are different types of CC licenses that you can find more about here http://creativecommons.org/licenses/
 -->
-
     <title>Open Webville Gallery</title>
+    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
   </head>
 
   <body>
@@ -91,7 +91,7 @@ Follow the example below to add the appropriate attribution to the creator(s) of
 
     <section id="guidebook">
 <!--
-Adding images to Madame Lille's Gallery should be as easy as 1, 2, 3! Now let's take this opportunity to create a guidebook to show the rest of Open Webville how to use Creative Commons Licenses. 
+Adding images to Madame Lille's Gallery should be as easy as 1, 2, 3! Now let's take this opportunity to create a guidebook to show the rest of Open Webville how to use Creative Commons Licenses.
 
 We will do so using an ordered (or numbered) list. Writing <ol> indicates that you are creating a list, and <li> indicates both the line number as well as the item in that list. Think of each <li> as the 1, 2, 3, etc. of your list. Add some answers to the questions in this list by replacing the text between the <li> </li> tags below.
 
@@ -111,12 +111,6 @@ http://openattribute.com/ & http://wiki.creativecommons.org/FAQ
 /*
 Everything inside the <style> tag is called CSS (Cascading Style Sheets) and is used to define the look and feel of the webpage, including fonts, colors, containers and positioning.
 */
-      @font-face {
-        font-family: 'Lobster';
-        font-style: normal;
-        font-weight: 400;
-        src: local('Lobster'), url(http://themes.googleusercontent.com/https://webpagemaker-dev.allizom.org/sd/gallery/fonts/lobster/v5/NIaFDq6p6eLpSvtV2DTNDQLUuEpTyoUstqEm5AMlJo4.woff) format('woff');
-      }
 
       body {
         margin-left: auto;
@@ -149,36 +143,36 @@ Everything inside the <style> tag is called CSS (Cascading Style Sheets) and is 
         padding-top: 2px;
         text-align: center;
       }
-      
+
       .attribution01 {
         position:relative;
         left:295px;
       }
-      
+
       .attribution02 {
         left: 565px;
         position: relative;
         top: -38px;
       }
-      
+
       .attribution03 {
         left: 420px;
         position: relative;
         top: 160px;
       }
-      
+
       .attribution04 {
         left: 158px;
         position: relative;
         top: 260px;
       }
-      
+
       .attribution05 {
         left: 545px;
         position: relative;
         top: 225px;
       }
-      
+
       #label {
         position: relative;
         top: -1092px;
@@ -208,7 +202,7 @@ Everything inside the <style> tag is called CSS (Cascading Style Sheets) and is 
         top: 10px;
         width: 99px;
       }
-      
+
       .frame02 {
         background-image:url(/learning_projects/opengallery/frame2.png);
         background-repeat: no-repeat;
@@ -217,14 +211,14 @@ Everything inside the <style> tag is called CSS (Cascading Style Sheets) and is 
         left: 510px;
         top: 5px;
       }
-      
+
       .frame02 img {
         height: 76px;
         left: 22px;
         top: 18px;
         width: 51px;
       }
-    
+
       .frame03 {
         background-image:url(/learning_projects/opengallery/frame3.png);
         background-repeat: no-repeat;
@@ -233,14 +227,14 @@ Everything inside the <style> tag is called CSS (Cascading Style Sheets) and is 
         left: 215px;
         top: 160px;
       }
-      
+
       .frame03 img {
         height: 150px;
         left: 15px;
         top: 17px;
         width: 149px;
       }
-      
+
       .frame04 {
         background-image:url(/learning_projects/opengallery/frame4.png);
         background-repeat: no-repeat;
@@ -249,14 +243,14 @@ Everything inside the <style> tag is called CSS (Cascading Style Sheets) and is 
         left: -275px;
         top: 270px;
       }
-      
+
       .frame04 img {
          height: 180px;
          left: 18px;
          top: 17px;
          width: 241px;
       }
-      
+
       .frame05 {
         background-image:url(/learning_projects/opengallery/frame5.png);
         background-repeat: no-repeat;
@@ -265,7 +259,7 @@ Everything inside the <style> tag is called CSS (Cascading Style Sheets) and is 
         left: -75px;
         top: 385px;
       }
-       
+
       .frame05 img {
         height: 75px;
         left: 16px;
