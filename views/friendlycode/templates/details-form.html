@@ -1,0 +1,26 @@
+<form class="makeapi-details">
+  <fieldset>
+    <label>{{ gettext("Title") }}</label>
+    <input type="text" name="title" class="input">
+    <div class="error-message">{{ gettext("This title is already taken.") }}</div>
+  </fieldset>
+  <fieldset>
+    <label>{{ gettext("Tags") }}</label>
+    <input type="hidden" name="tags" class="input">
+    <div class="tags-wrapper">
+      <ul name="tag-output" class="tags-output">
+        <li>thimble</li>
+      </ul>
+      <input type="text" name="tag-input" class="tags-input">
+    </div>
+  </fieldset>
+  <fieldset>
+    <label>{{ gettext("Thumbnail") }}</label>
+    <input type="text" name="thumbnail" class="input">
+    <ul class="thumbnail-choices input"></ul>
+  </fieldset>
+  <fieldset>
+    <label>{{ gettext("Description") }}</label>
+    <textarea name="description" class="input"></textarea>
+  </fieldset>
+</form>

@@ -19,7 +19,8 @@ var ajax = require('request'),
     path = require('path'),
     routes = require('./routes'),
     utils = require('./lib/utils'),
-    version = require('./package').version;
+    version = require('./package').version,
+    i18n = require('webmaker-i18n');
 
 
 habitat.load();
@@ -53,6 +54,15 @@ app.locals({
   GA_ACCOUNT: env.get("GA_ACCOUNT"),
   GA_DOMAIN: env.get("GA_DOMAIN")
 });
+
+// Setup locales with i18n
+app.use( i18n.middleware({
+  supported_languages: [
+    'en-US'
+  ],
+  default_lang: "en-US",
+  translation_directory: path.resolve(__dirname, "locale")
+}));
 
 // Express settings
 app.use(express.favicon());
@@ -94,6 +104,9 @@ app.use( express.static(tmpDir));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
 app.use(express.static(path.join(__dirname, 'templates')));
+// Setting up bower_components
+app.use( "/bower", express.static( path.join(__dirname, "bower_components" )));
+
 
 app.use( function(err, req, res, next) {
   res.send( 500, err );
@@ -111,17 +124,7 @@ app.param('name', parameters.name);
 // Main page
 app.get('/',
         middleware.setNewPageOperation,
-        routes.index(utils, env, appName));
-
-// Legacy route for the main page
-app.get('/en-US/?',
-        middleware.setNewPageOperation,
-        routes.index(utils, env, appName));
-
-// Legacy route for the main page
-app.get('/en-US/editor',
-        middleware.setNewPageOperation,
-        routes.index(utils, env, appName));
+        routes.index(utils, env, nunjucksEnv, appName));
 
 // Remix a published page (from db)
 // Even if this is "our own" page, this URL
@@ -214,9 +217,14 @@ app.post('/publish',
   }
 );
 
+// Localized Strings
+app.get( '/strings/:lang?', i18n.stringsRoute( 'en-US' ) );
+
 app.get( '/external/make-api.js', function( req, res ) {
   res.sendfile( path.resolve( __dirname, "node_modules/makeapi-client/src/make-api.js" ) );
 });
+
+routes.friendlycodeRoutes(app);
 
 // DEVOPS - Healthcheck
 app.get('/healthcheck', function( req, res ) {

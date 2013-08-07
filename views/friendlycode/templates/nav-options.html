@@ -1,0 +1,36 @@
+<div class="nav-options">
+  <div class="editor-pane-nav-options">
+    <!-- editor, undo, redo, text size, hinting -->
+    <div class="editor-nav-item nav-item">
+      <span class="icon">&nbsp;</span>{{ gettext("Editor") }}
+      <div class="pane-indicator enabled"></div>
+    </div>
+    <div class="nav-item"><div class="breadcrumbs"></div></div>
+    <div class="undo-nav-item nav-item responsive"
+         data-restore-help="{{ gettext("rescued your very recent")}}"
+         title="{{ gettext("Undo changes") }}">
+         <span class="icon">&nbsp;</span>{{ gettext("Undo") }}</div>
+    <div class="redo-nav-item nav-item responsive" title="{{ gettext("Redo changes") }}">
+      <span class="icon">&nbsp;</span>{{ gettext("Redo") }}
+    </div>
+    <div class="text-nav-item nav-item responsive enabled" title="{{ gettext("Change text size") }}">
+      <span class="icon">&nbsp;</span>{{ gettext("Size") }}
+      <ul class="text-size-options">
+        <li data-size="small">{{ gettext("Small") }}</li>
+        <li data-size="normal" data-default-size>{{ gettext("Normal") }}</li>
+        <li data-size="large">{{ gettext("Large") }}</li>
+      </ul>
+    </div>
+    <div class="hints-nav-item nav-item enabled" title="{{ gettext("Disable HTML and CSS hints and suggestions") }}">
+      <div class="checkbox on">✓</div> <div class="checkbox-label">{{ gettext("Show hints") }}</div></div>
+  </div>
+  <div class="preview-pane-nav-options">
+    <!-- previous, save draft, publish -->
+     <div class="preview-nav-item nav-item">
+       <span class="icon">&nbsp;</span>{{ gettext("Preview") }}<span class="preview-title"></span><div class="pane-indicator enabled"></div>
+     </div>
+     <div class="nav-item buttons">
+       <div class="publish-button wm-button wm-button-blue short">{{ gettext("Publish") }}</div>
+     </div>
+  </div>
+</div>

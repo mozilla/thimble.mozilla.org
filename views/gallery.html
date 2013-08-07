@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{lang}}" dir="{{lang_dir}}">
   <head>
     <link rel="stylesheet" href="/stylesheets/gallery.css">
   </head>
@@ -7,7 +7,7 @@
     <h3>{{title}}</h3>
     <ul>
     {% for project in projects %}
-      <li><span>{{project.title}}</span><a href='{{project.view}}'>view</a><a href='{{project.remix}}'>remix</a></li>
+      <li><span>{{project.title}}</span><a href='{{project.view}}'>{{ gettext("view") }}</a><a href='{{project.remix}}'>{{ gettext("remix") }}</a></li>
     {% endfor %}
     </ul>
   </body>
