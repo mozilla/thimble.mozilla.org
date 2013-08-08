@@ -11,14 +11,17 @@
     ], function($, ThimblePage) {
       var publishButton = $('.publish-button'),
           myProjects = $( ".my-projects-iframe" ),
-          loggedIn = false;
+          loggedIn = false,
+          projectURL = "{{audience}}/me?app={{appname}}";
 
       publishButton.hide();
 
       navigator.idSSO.app = {
         onlogin: function(loggedInUser, displayName) {
           publishButton.show();
-          myProjects.attr("src", "{{audience}}/me?app={{appname}}");
+          var newMyProjects = $("<iframe class='my-projects-iframe' src='" + projectURL + "'></iframe>");
+          myProjects.replaceWith(newMyProjects);
+          myProjects = newMyProjects;
         },
         onlogout: function() {
           publishButton.hide();
