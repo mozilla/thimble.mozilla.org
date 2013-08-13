@@ -115,6 +115,11 @@ app.get('/',
         routes.index(utils, env, appName));
 
 // Legacy route for the main page
+app.get('/en-US/?',
+        middleware.setNewPageOperation,
+        routes.index(utils, env, appName));
+
+// Legacy route for the main page
 app.get('/en-US/editor',
         middleware.setNewPageOperation,
         routes.index(utils, env, appName));
