@@ -97,6 +97,7 @@ app.use(express.static(path.join(__dirname, 'learning_projects')));
 app.use(express.static(path.join(__dirname, 'templates')));
 
 app.use( function(err, req, res, next) {
+  console.error(err);
   res.send( 500, err );
 });
 
