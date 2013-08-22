@@ -111,64 +111,12 @@
             });
           },
           saveCode: function(data, originalURL, cb) {
-            var codeMirror = document.querySelector(".CodeMirror").CodeMirror,
-                code = codeMirror.getValue(),
-                fragment = (function() {
-                  var div = document.createElement("div");
-                  div.innerHTML = code;
-                  return div;
-                }()),
-                nodeList = Array.prototype.slice.apply(fragment.querySelectorAll('meta')),
-                metaData = {
-                  tags: []
-                },
-                metaDataTags = [],
-                metaName,
-                metaNames = {
-                  'description': function(node) {
-                    metaData.description = node.content;
-                  },
-                  'author': function(node) {
-                    metaData.author = node.content;
-                  },
-                  'webmaker:tags': function(node) {
-                    var content = node.content.replace(/webmaker:recommended/g, "")
-                                              .replace(/webmaker:featured/g, "")
-                                              .replace(/webmaker:template/g, "");
-                    metaDataTags = metaDataTags.concat(content.split(","));
-                  },
-                  'webmaker:thumbnail': function(node) {
-                    metaData.thumbnail = node.content;
-                  },
-                  'webmaker:locale': function(node) {
-                    metaData.locale = node.content;
-                  },
-                  'webmaker:tutorial': function(node) {
-                    metaDataTags.push("tutorial-" + escape(node.content));
-                  }
-                };
-
-            var title = fragment.querySelector("title");
-            if (title) {
-              // TODO: does this need sanitizing?
-              metaData.title = title.innerHTML;
-            }
-
-            for (var i = 0; i < nodeList.length; i++) {
-              metaName = nodeList[i].name;
-              if (metaNames[metaName]) {
-                metaNames[metaName](nodeList[i]);
-              }
-            }
-
-            metaData.tags = metaDataTags.join(",");
-
             $.ajax({
               type: "POST",
               url: options.hackpubURL + "/publish",
               data: {
-                'html': data,
-                'metaData': metaData,
+                'html': data.html,
+                'metaData': data.metaData,
                 'pageOperation': $("meta[name='thimble-operation']").attr("content"),
                 'origin': $("meta[name='thimble-project-origin']").attr("content")
               },
@@ -201,11 +149,15 @@
      * publication and remixing.
      */
     define("thimblePage",
-           ["jquery", "friendlycode", "hackpub", "webmaker-nav"],
+           ["jquery",
+           "friendlycode",
+           "hackpub",
+           "webmaker-nav"
+           ],
            function($, FriendlycodeEditor, Hackpub, nav) {
-      var tutorialUrl = "{{tutorialUrl}}";
-      if (tutorialUrl) {
-        nav.loadTutorials(tutorialUrl);
+      var makeUrl = "{{makeUrl}}";
+      if (makeUrl) {
+        nav.loadTutorials(makeUrl);
       }
       return FriendlycodeEditor({
         allowJS: true,
