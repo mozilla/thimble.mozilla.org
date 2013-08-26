@@ -111,11 +111,17 @@
             });
           },
           saveCode: function(data, originalURL, cb) {
-            var iframeDocument = document.querySelector('.preview-holder iframe')
-                                         .contentDocument,
-                nodeList = Array.prototype.slice.apply(iframeDocument.querySelectorAll('meta')),
-                metaData = {},
-                metaDataTags = [],
+            var codeMirror = document.querySelector(".CodeMirror").CodeMirror,
+                code = codeMirror.valueOf(),
+                fragment = (function() {
+                  var div = document.createElement("div");
+                  div.innerHTML = code;
+                  return div;
+                }()),
+                nodeList = Array.prototype.slice.apply(fragment.querySelectorAll('meta')),
+                metaData = {
+                  tags: []
+                },
                 metaName,
                 metaNames = {
                   'description': function(node) {
@@ -140,9 +146,9 @@
                     metaDataTags.push("tutorial-" + escape(node.content));
                   }
                 };
-
-            if (iframeDocument.title) {
-              metaData.title = iframeDocument.title;
+            var title = fragment.querySelector("title");
+            if (title) {
+              metaData.title = title;
             }
 
             for (var i = 0; i < nodeList.length; i++) {
@@ -199,7 +205,8 @@
         nav.loadTutorials(tutorialUrl);
       }
       return FriendlycodeEditor({
-        allowJS: false,
+        allowJS: true,
+        previewLoader: 'https://mozillathimblelivepreview.net/loader.html',
         defaultContent: '{{content|safe}}',
         pageToLoad: '{{pageToLoad}}',
         publisher: Hackpub({
