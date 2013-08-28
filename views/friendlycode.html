@@ -112,7 +112,7 @@
           },
           saveCode: function(data, originalURL, cb) {
             var codeMirror = document.querySelector(".CodeMirror").CodeMirror,
-                code = codeMirror.valueOf(),
+                code = codeMirror.getValue(),
                 fragment = (function() {
                   var div = document.createElement("div");
                   div.innerHTML = code;
@@ -122,6 +122,7 @@
                 metaData = {
                   tags: []
                 },
+                metaDataTags = [],
                 metaName,
                 metaNames = {
                   'description': function(node) {
@@ -146,9 +147,11 @@
                     metaDataTags.push("tutorial-" + escape(node.content));
                   }
                 };
+
             var title = fragment.querySelector("title");
             if (title) {
-              metaData.title = title;
+              // TODO: does this need sanitizing?
+              metaData.title = title.innerHTML;
             }
 
             for (var i = 0; i < nodeList.length; i++) {
