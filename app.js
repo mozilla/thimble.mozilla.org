@@ -8,7 +8,6 @@ if ( process.env.NEW_RELIC_ENABLED ) {
  */
 var ajax = require('request'),
     async = require('async'),
-    bleach = require( "./lib/bleach"),
     db = require('./lib/database'),
     express = require('express'),
     fs = require('fs'),
@@ -97,7 +96,6 @@ app.use(express.static(path.join(__dirname, 'learning_projects')));
 app.use(express.static(path.join(__dirname, 'templates')));
 
 app.use( function(err, req, res, next) {
-  console.error(err);
   res.send( 500, err );
 });
 
@@ -198,7 +196,6 @@ app.post('/publish',
          middleware.ensureMetaData,
          middleware.sanitizeMetaData,
          middleware.checkPageOperation(databaseAPI),
-         bleach.bleachData(env.get("BLEACH_ENDPOINT")),
          middleware.saveData(databaseAPI, env.get('HOSTNAME')),
          middleware.rewritePublishId(databaseAPI),
          middleware.generateUrls(appName, env.get('S3'), env.get('USER_SUBDOMAIN')),
