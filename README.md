@@ -6,18 +6,6 @@ HTML and CSS right in your browser (https://thimble.webmaker.org) from its
 Playdoh-embedded python implementation to a dedicated ust-Thimble Node.js
 implementation.
 
-While the python implementation relied on Bleach for sanitization, no such
-module exists (satisfactorily) for Node.js, so this version relies on a
-RESTful Bleach endpoint; the code for this endpoint can be found at:
-
-```
-https://github.com/pomax/htmlsanitizer.org
-```
-
-The Thimble port and its custom Bleach endpoint are dev-deployed at
-http://calm-headland-1764.herokuapp.com and http://peaceful-crag-3591.herokuapp.com,
-respectively.
-
 Setup
 -----
 
@@ -33,17 +21,10 @@ You can find node on http://nodejs.org or your package manager.
 git clone git@github.com:[yourname]/thimble.webmaker.org.git --recursive
 ```
 
-3) you'll also need to clone the custom sanitization REST service that Thimble uses:
+3a) you may need the XCode console tools (on OSX) or the VC++ express + windows SKD 7.1 stack (on Windows) in order for node-gyp to compile some npm dependencies
+3b) go into the thimble.webmaker.org dir and run ```npm install```
 
-```
-git clone git://github.com/Pomax/htmlsanitizer.org.git
-```
-(this is a version of htmlsanitizer.org with a modified Bleach that can deal with
-full documents, rather than document fragments)
-
-4) go into the thimble.webmaker.org dir and run ```npm install```
-
-5) as an optional step, when you don't want to test with a live AWS-S3 instance, you
+4) as an optional step, when you don't want to test with a live AWS-S3 instance, you
 can set up fake-s3 to handle the S3 publication:
 
 ```
@@ -53,7 +34,7 @@ mkdir fakes3
 
 **NOTE:** this requires ruby. If you do not have this installed, visit http://ruby-lang.org
 
-6) set up the environment variables (see next section).
+5) set up the environment variables (see next section).
 
 You are now ready to run the app, by first starting up the sanitizer in the
 htmlsanitizer.org directory, by running ```python app.py```
@@ -155,21 +136,13 @@ environment:
 > heroku config:set LOGINAPI="http://testuser:password@[login.mofostaging.net instance]"
 > heroku config:set MAKE_ENDPOINT="http://[makeapi instance]/"
 > heroku config:set MAKE_AUTH="testuser:password"
-> heroku config:set BLEACH_ENDPOINT="http://peaceful-crag-3591.herokuapp.com"
 > heroku config:set SESSION_SECRET="irrelephant"
 ```
 
-That should be enough to ensure the deployed version has all the environment
-variables that it will rely on. The BLEACH_ENDPOINT url is where we are
-currently hosting the custom htmlsanitizer.org code. If you want to run
-your own copy, create another heroku instance and read the tutorial on
-setting up a python instance.
-
-All the other services are correspondingly free: If you're running your
-own heroku copies of all the webmaker.org services, then you can simply
-point your heroku instance to the various other instances. If, however,
-you are testing within the greater webmaker.org suite of applications,
-you probably want to use the `*.mofostaging.net` URLs.
+If you're running your own heroku copies of all the webmaker.org services,
+then you can simply point your heroku instance to the various other
+instances. If, however, you are testing within the greater webmaker.org
+suite of applications, you probably want to use the `*.mofostaging.net` URLs.
 
 Also, for Amazon S3, the following values are quite important:
 
