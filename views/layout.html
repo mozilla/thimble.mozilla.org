@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="deployment-type-development">
+<html lang="{{lang}}" dir="{{lang_dir}}" class="deployment-type-development">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -8,7 +8,7 @@
     <meta name="thimble-project-origin" content="{{origin}}">
     <meta name="X-CSRF-Token" content="{{csrf}}">
     <base target="_blank">
-    <title>Mozilla Thimble</title>
+    <title>{{ gettext("Mozilla Thimble") }}</title>
     <link rel="stylesheet" href="{{userbar}}/css/nav.css" />
     <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}friendlycode/css/friendlycode.css">
     <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}stylesheets/friendlycode-overrides.css">

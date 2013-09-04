@@ -3,3 +3,5 @@ node_modules
 thimble.sqlite
 .env
 fakes3
+bower_components
+

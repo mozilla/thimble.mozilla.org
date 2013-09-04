@@ -5,10 +5,10 @@
         <a id="logo" href="/"><img src="/img/thimble-logo.svg" alt="Mozilla Thimble" /></a>
         <ul class="webmaker-nav user-info">
           <li class="user">
-              Hi <span id="identity" class="user-name-container"></span>
+              {{ gettext("Hi") }} <span id="identity" class="user-name-container"></span>
           </li>
-          <li class="tutorial-btn hidden"><button>Tutorials</button></li>
-          <li class="makes"><button>My makes</button></li>
+          <li class="tutorial-btn hidden"><button>{{ gettext("Tutorials") }}</button></li>
+          <li class="makes"><button>{{ gettext("My makes") }}</button></li>
           <li>
             <iframe class="include-frame"></iframe>
           </li>
