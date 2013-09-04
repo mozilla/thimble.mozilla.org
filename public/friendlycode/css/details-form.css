@@ -1,0 +1,165 @@
+
+/*********************************************************
+* New publishing UI
+*/
+
+.makeapi-details {
+  border: none;
+  font-size: 13px;
+  font-family: "Open sans";
+}
+
+.makeapi-details fieldset {
+  border: none;
+  padding: 0;
+  margin-bottom: 1em;
+}
+
+.makeapi-details label {
+  width: 20%;
+  padding: 8px;
+  float: left;
+  color: #999;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.makeapi-details .input {
+  display: inline-block;
+  border: 1px solid #CCC;
+  padding: 8px;
+  font-size: 1em;
+  width: 80%;
+  float: right;
+  font-family: inherit;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  transition: border-color 0.2s linear;
+}
+
+.makeapi-details input:focus,
+.makeapi-details .input:focus {
+  outline: none;
+  border-color: #3FB58E;
+}
+
+.makeapi-details .thumbnail-choices,
+.makeapi-details .tags-output {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  text-align: left;
+}
+
+/*********************************************************
+* Error
+*/
+.makeapi-details .details-error .input {
+  border-color: #D93B3B;
+  color: #D93B3B;
+}
+.makeapi-details .error-message {
+  display: none;
+  color: #D93B3B;
+  width: 80%;
+  float: right;
+  font-size: 0.8em;
+  line-height: 2;
+}
+.makeapi-details .details-error .error-message {
+  display: block;
+}
+
+/*********************************************************
+* Title
+*/
+.makeapi-details input[name="title"] {
+  font-weight: 700;
+}
+
+/*********************************************************
+* Tags
+*/
+
+.makeapi-details .tags-output {
+  display: inline;
+  width: auto;
+}
+
+.makeapi-details .tags-wrapper {
+  vertical-align: top;
+  width: 80%;
+  float: right;
+}
+
+.makeapi-details .tags-input {
+  width: 100px;
+  line-height: 20px;
+  border: none;
+  border-bottom: 1px dashed #DDD;
+  font-size: 1em;
+  font-family: inherit;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.makeapi-details .tags-output li {
+  vertical-align: baseline;
+  display: inline-block;
+  background: #3FB58E;
+  color: #FFF;
+  border: 1px solid #40835B;
+  line-height: 20px;
+  border-radius: 3px;
+  margin: 3px 3px 0 0;
+  cursor: pointer;
+}
+.makeapi-details .tags-output li:before {
+  content: "#";
+  opacity: 0.7;
+}
+
+.makeapi-details .tags-output li:after {
+  content: "x";
+  display: inline-block;
+  position: relative;
+  margin-left: 3px;
+  top: -1px;
+  font-size: 9px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 12px;
+  background: #FFF;
+  background: #40835B;
+  border-radius: 10px;
+  opacity: 0.7;
+  height: 13px;
+  width: 13px;
+  overflow: hidden;
+}
+
+/*********************************************************
+* Thumbnails
+*/
+
+.makeapi-details .thumbnail-choices li {
+  display: inline-block;
+  border: 3px solid white;
+  width: 50px;
+  height: 50px;
+  background-size: cover;
+  background-position: center center;
+  opacity: 0.5;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  transition: all 0.2s linear;
+}
+.makeapi-details .thumbnail-choices li.selected {
+  border-color: #3FB58E; /* @green */
+  opacity: 1;
+}

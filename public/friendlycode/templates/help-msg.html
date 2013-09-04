@@ -1,0 +1,11 @@
+<div class="up-arrow"></div>
+<div class="icon"></div>
+<div class="content">
+  <%= html %>
+  <% if (type == "cssSelector") { %>
+    <span class="selector-matches"> L10N:selector-matches[[[It currently matches <%- matchCount %> element(s).]]]</span>
+  <% } %>
+  <a class="learn-more" href="<%- url %>">L10N[[[more…]]]</a>
+</div>
+<div class="dismiss">L10N[[[dismiss]]]</div>
+<div class="down-arrow"></div>
