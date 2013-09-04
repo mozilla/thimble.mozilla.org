@@ -1,4 +1,0 @@
-[submodule "public/friendlycode"]
-	path = public/friendlycode
-	url = https://github.com/mozilla/friendlycode.git
-  
