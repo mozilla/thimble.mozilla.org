@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html class="deployment-type-development">
+  <head>
+    <meta charset="utf-8">
+    <base target="_blank">
+
+    <title>Friendlycode Editor with Transifex Localization</title>
+    <link rel="stylesheet" href="../css/friendlycode.css">
+    <style>
+    #language-selector-wrapper {
+      position: absolute;
+      height: 30px;
+      width: 100%;
+      z-index: 100000;
+      background: lightgray;
+      font-family: "Open Sans", "Helvetica Neue", Helvetica, sans-serif;
+      font-size: 12px;
+      padding: 5px;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    
+    #language-selector-wrapper .about { float: right; }
+    
+    #fc-wrapper {
+      position: absolute;
+      top: 30px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+    </style>
+  </head>
+  <body style="margin: 0">
+    <div id="language-selector-wrapper">
+      Locale: <select name="locale"></select>
+      <div class="about">Localize this app at <a href="https://www.transifex.com/projects/p/friendlycode/">Transifex</a>, 
+        and read or contribute to the <a href="https://etherpad.mozilla.org/thimble-l10n">FAQ</a>.</div>
+    </div>
+    <div id="fc-wrapper">
+      <div id="bare-fc-holder" class="friendlycode-loading"></div>
+    </div>
+
+    <script src="../js/require-config.js"></script>
+    <script>
+    // This is the Transifex locale that corresponds to the requirejs
+    // i18n plugin's "root" locale.
+    var ROOT_LOCALE = "en";
+    // Object holding all query string arguments. Taken from
+    // http://stackoverflow.com/a/647272.
+    var queryString = (function getQueryString() {
+      var result = {}, queryString = location.search.substring(1),
+          re = /([^&=]+)=([^&]*)/g, m;
+
+      while (m = re.exec(queryString))
+        result[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+
+      return result;
+    })();
+    var setQueryString = function(qs) {
+      location.search = '?' + Object.keys(qs).map(function(key) {
+        return encodeURIComponent(key) + '=' + encodeURIComponent(qs[key]);
+      }).join('&');
+    };
+    // The current locale we're on, based on the query string.
+    var currentLocale = (queryString.locale || ROOT_LOCALE).toLowerCase();
+    
+    // We need to change the requirejs configuration to redirect
+    // all i18n bundles to transifex.
+    ['fc/nls', 'slowparse-errors/nls'].forEach(function(i18nBundle) {
+      var baseUrl = "http://transifex-to-requirejs-i18n-server.toolness.org/";
+      if (queryString.local == "1") baseUrl = "../transifex/";
+      require.paths[i18nBundle] = baseUrl + i18nBundle;
+    });
+
+    // Tell the requirejs i18n plugin what locale we're using.
+    require.config.i18n = {locale: currentLocale};
+    </script>
+    <script src="../vendor/require.min.js"></script>
+    <script>
+    require([
+      "jquery",
+      "friendlycode",
+      "fc/nls/ui"
+    ], function($, FriendlycodeEditor, locales) {
+      Object.keys(locales).forEach(function addLocaleToWidget(locale) {
+        if (locale == "root") locale = ROOT_LOCALE;
+        var option = $('<option></option>').attr("value", locale)
+          .text(locale).appendTo("#language-selector-wrapper select");
+        if (locale == currentLocale) option[0].selected = true;
+      });
+      $("#language-selector-wrapper select").change(function() {
+        queryString.locale = this.value;
+        setQueryString(queryString);
+      });
+      return FriendlycodeEditor({
+        publishURL: "https://webpagemaker-dev.allizom.org",
+        container: $("#bare-fc-holder")
+      });
+    });
+    </script>
+  </body>
+</html>

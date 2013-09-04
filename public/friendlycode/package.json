@@ -1,0 +1,29 @@
+{
+  "name": "build-require",
+  "version": "0.0.0",
+  "private": true,
+  "description": "requirejs optimization script",
+  "main": "build-require.js",
+  "dependencies": {
+    "requirejs": "2.1.2",
+    "jsdom": "0.2.19",
+    "tap": "0.3.x",
+    "express": "2.5.x",
+    "request": "2.12.0",
+    "mkpath": "0.1.0",
+    "commander": "1.1.x"
+  },
+  "engines": {
+    "node": "0.8.x",
+    "npm":  "1.1.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mozilla/friendlycode.git",
+    "defaultBranch": "gh-pages"
+  },
+  "scripts": {
+    "optimize": "node bin/build-require.js",
+    "test": "tap ./test/node-tap --tap"
+  }
+}
