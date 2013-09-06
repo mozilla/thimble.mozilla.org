@@ -91,7 +91,7 @@ var optimize = (node_env !== "development"),
     tmpDir = path.join( require("os").tmpDir(), "mozilla.webmaker.org");
 
 app.use(lessMiddleWare({
-  once: true,
+  once: optimize,
   debug: !optimize,
   dest: tmpDir,
   src: WWW_ROOT,
