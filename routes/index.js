@@ -2,6 +2,13 @@
  * GET for the index.html template
  */
 exports.index = function(utils, env, nunjucksEnv, appName) {
+
+  var allowJS = env.get("JAVASCRIPT_ENABLED", false),
+      appURL = env.get("HOSTNAME"),
+      audience = env.get("AUDIENCE"),
+      makeEndpoint = env.get("MAKE_ENDPOINT"),
+      userbarEndpoint = env.get("USERBAR");
+
   return function(req, res) {
     var content;
 
@@ -21,17 +28,18 @@ exports.index = function(utils, env, nunjucksEnv, appName) {
     }
     res.render('index.html', {
       appname: appName,
-      appURL: env.get("HOSTNAME"),
-      audience: env.get("AUDIENCE"),
+      appURL: appURL,
+      audience: audience,
       content: content,
+      allowJS: allowJS,
       csrf: req.session._csrf,
       email: req.session.email || '',
       HTTP_STATIC_URL: '/',
-      MAKE_ENDPOINT: env.get("MAKE_ENDPOINT"),
+      MAKE_ENDPOINT: makeEndpoint,
       pageOperation: req.body.pageOperation,
       origin: req.params.id,
       makeUrl: req.makeUrl,
-      userbar: env.get("USERBAR")
+      userbar: userbarEndpoint
     });
   };
 };
