@@ -37,7 +37,7 @@ define(['template!details-form'], function (detailsFormHTML) {
 
     // Setup
     $input('tag-input').on('keydown', function (e) {
-      if (e.which === 13 || e.which === 188 ) {
+      if (e.which === 13 || e.which === 188) {
         e.preventDefault();
         self.addTags(this.value);
       }
@@ -141,7 +141,7 @@ define(['template!details-form'], function (detailsFormHTML) {
       tags = tags.split(',');
     }
     tags.forEach(function (item) {
-      var val = item.replace(/,|\#/g, '');
+      var val = item.replace(/,|\#|\s/g, '');
       if (val && self.tags.indexOf(val) === -1) {
         self.tags.push(val);
         $input('tags').val(self.tags.join(','));
