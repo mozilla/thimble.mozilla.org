@@ -40,7 +40,7 @@ define(["i18n!fc/nls/ui"], function(i18nBundle) {
       twitter: {
         id: "twitter-wjs",
         src: "//platform.twitter.com/widgets.js",
-        html: "<a href='https://twitter.com/share'class='twitter-share-button' data-text='" + i18nBundle['default-tweet'] + " ' data-url='"+urlPlaceHolder+"' data-via='Mozilla' data-count='none'>" + i18nBundle['tweet'] + "</a>"
+        html: "<a href='https://twitter.com/share'class='twitter-share-button' data-text='" + i18nBundle['default-tweet'] + " ' data-url='"+urlPlaceHolder+"' data-via='Webmaker' data-count='none'>" + i18nBundle['tweet'] + "</a>"
       },
 
       /**
