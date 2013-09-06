@@ -8,6 +8,7 @@ if ( process.env.NEW_RELIC_ENABLED ) {
  */
 var ajax = require('request'),
     async = require('async'),
+    bleach = require('./lib/bleach'),
     db = require('./lib/database'),
     express = require('express'),
     fs = require('fs'),
@@ -42,6 +43,7 @@ var appName = "thimble",
     databaseAPI = db('thimbleproject', databaseOptions),
     legacyDatabaseAPI = db('legacyproject', databaseOptions, env.get('LEGACY_DB')),
 
+    allowJS = env.get("JAVASCRIPT_ENABLED", false),
     middleware = require('./lib/middleware')(env),
     make = makeAPI(env.get('make')),
     nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'), {
@@ -192,6 +194,17 @@ app.get('/templates/:name',
         middleware.setDefaultPublishOperation,
         routes.index(utils, env, appName));
 
+// flag-controlled script bleaching. If "allowJS", no bleach.
+var sanitizeScript = (function() {
+  if (allowJS) {
+    return function(req, res, next) {
+      req.body.sanitizedHTML = req.body.html;
+      next();
+    };
+  }
+  return bleach.bleachData(env.get("BLEACH_ENDPOINT"));
+}());
+
 // publish a remix (to the db)
 app.post('/publish',
          middleware.checkForAuth,
@@ -199,6 +212,7 @@ app.post('/publish',
          middleware.ensureMetaData,
          middleware.sanitizeMetaData,
          middleware.checkPageOperation(databaseAPI),
+         sanitizeScript,
          middleware.saveData(databaseAPI, env.get('HOSTNAME')),
          middleware.rewritePublishId(databaseAPI),
          middleware.generateUrls(appName, env.get('S3'), env.get('USER_SUBDOMAIN')),
