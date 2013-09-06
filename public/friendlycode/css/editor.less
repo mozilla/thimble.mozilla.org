@@ -1,3 +1,5 @@
+@headerHeight: 65px;
+
 .friendlycode-base {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   overflow: hidden;
@@ -71,10 +73,11 @@
   content: 'Loading...';
 }
 
+
 .friendlycode-toolbar {
   position: absolute;
   z-index: 2;
-  top: 0;
+  top: @headerHeight;
 
   height: 40px;    /* corresponds with .friendlycode-panes.top */
   width: 100%;
@@ -141,6 +144,20 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.nav-options .preview-nav-item {
+  display: block!important;
+  position: absolute;
+  /* 75px is the width of the publish button */
+  right: 75px;
+  left: 0;
+  top: 0;
+  height: 60px;
+  line-height: 40px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: left!important;
 }
 
 .nav-options .nav-item.enabled {
@@ -231,8 +248,9 @@
   position: absolute;
   top: 5px;
   right: 0;
-  width: 7em;
 }
+
+
 
 /* ------ nav button stylings ------ */
 
@@ -247,17 +265,20 @@
 .editor-nav-item .icon,
 .preview-nav-item .icon {
   display: inline-block;
-  width: 30px;
+  width: 24px;
+  height: 24px;
   background-repeat: no-repeat;
   background-position: center center;
-  margin-right: 1em;
+  margin-right: 10px;
 }
 
 .editor-nav-item .icon {
+  margin-left: 8px;
   background-image: url("../img/editor-icon.png");
 }
 
 .preview-nav-item .icon {
+  margin-left: 4px;
   background-image: url("../img/preview-icon.png");
 }
 
@@ -277,9 +298,16 @@
   background-image: url("../img/indicator-arrow.png");
   background-repeat: no-repeat;
   top: 38px;
-  left: 18px;
   width: 25px;
   height: 25px;
+}
+
+.editor-nav-item .pane-indicator {
+  left: 16px;
+}
+
+.preview-nav-item .pane-indicator {
+  left: 9px;
 }
 
 .undo-nav-item .icon {
@@ -372,10 +400,10 @@
 }
 
 .hints-nav-item {
-  left: 100%;
-  margin-left: -100px;
   position: absolute;
-  top: 11px;
+  right: 0;
+  top: 0;
+  line-height: 40px;
 }
 
 .hints-nav-item .checkbox {
@@ -411,7 +439,7 @@
 
 .friendlycode-panes {
   position: absolute;
-  top: 30px;       /* corresponds to .friendlycode-toolbar.height */
+  top: (@headerHeight + 30);     /* corresponds to .friendlycode-toolbar.height */
   left: 0;
   right: 0;
   bottom: 0;    /* corresponds to 20 + footer.height */
