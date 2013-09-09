@@ -6,18 +6,17 @@
  * they click the like button and we don't like that kind of
  * monitoring behaviour.
  */
-define(["i18n!fc/nls/ui"], function(i18nBundle) {
+define(["localized"], function(localized) {
+  localized.ready(function(){});
   return function SocialMedia() {
     var urlPlaceHolder = "__URL__PLACE__HOLDER__";
-
     /**
      * The various social media all have the same API.
      */
     var self = {
       facebook: {
         id: "facebook-jssdk",
-        src: "//connect.facebook.net/" +
-             i18nBundle['facebook-locale'] + "/all.js#xfbml=1",
+        src: "//connect.facebook.net/en_US/all.js#xfbml=1",
         html: "<div class='fb-like' data-href='"+urlPlaceHolder+"' data-send='false' data-action='recommend' data-layout='button_count' data-show-faces='false' data-font='tahoma'></div>",
         afterHotLoad: function() {
           // Facebook needs additional help, because it needs
@@ -40,7 +39,7 @@ define(["i18n!fc/nls/ui"], function(i18nBundle) {
       twitter: {
         id: "twitter-wjs",
         src: "//platform.twitter.com/widgets.js",
-        html: "<a href='https://twitter.com/share'class='twitter-share-button' data-text='" + i18nBundle['default-tweet'] + " ' data-url='"+urlPlaceHolder+"' data-via='Webmaker' data-count='none'>" + i18nBundle['tweet'] + "</a>"
+        html: "<a href='https://twitter.com/share'class='twitter-share-button' data-text='" + localized.get('default-tweet') + " ' data-url='"+urlPlaceHolder+"' data-via='Webmaker' data-count='none'>" + localized.get('tweet') + "</a>"
       },
 
       /**
@@ -70,7 +69,6 @@ define(["i18n!fc/nls/ui"], function(i18nBundle) {
           socialMedium.afterHotLoad();
       }
     };
-
     return self;
   };
 });
