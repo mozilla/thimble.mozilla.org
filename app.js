@@ -74,7 +74,8 @@ if (!!env.get("FORCE_SSL") ) {
   app.enable("trust proxy");
 }
 app.use(express.compress());
-app.use(express.bodyParser());
+app.use(express.json());
+app.use(express.urlencoded());
 app.use(express.cookieParser());
 app.use(express.cookieSession({
   key: "thimble.sid",
