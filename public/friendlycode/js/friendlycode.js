@@ -3,7 +3,6 @@ define(function(require) {
       Preferences = require("fc/prefs"),
       Editor = require("fc/ui/editor"),
       Modals = require("fc/ui/modals"),
-      Parachute = require("fc/parachute"),
       CurrentPageManager = require("fc/current-page-manager"),
       Publisher = require("fc/publisher"),
       PublishUI = require("fc/ui/publish"),
@@ -37,7 +36,6 @@ define(function(require) {
       publisher: publisher,
       remixURLTemplate: remixURLTemplate
     });
-    var parachute = Parachute(window, editor.panes.codeMirror);
     var pageManager = CurrentPageManager({
       window: window,
       currentPage: pageToLoad
@@ -47,13 +45,6 @@ define(function(require) {
       editor.container.removeClass("friendlycode-loading");
       editor.panes.codeMirror.clearHistory();
       editor.toolbar.refresh();
-      if (parachute.restore()) {
-        editor.toolbar.showDataRestoreHelp();
-      } else {
-        // Only save data on page unload if it's different from
-        // the URL we just (hopefully) loaded.
-        parachute.refresh();
-      }
       editor.panes.codeMirror.reparse();
       editor.panes.codeMirror.focus();
       editor.panes.codeMirror.refresh();
@@ -63,22 +54,11 @@ define(function(require) {
     editor.toolbar.setStartPublish(publishUI.start);
     editor.container.addClass("friendlycode-loading");
     publishUI.on("publish", function(info) {
-      // If the user clicks their back button, we don't want to show
-      // them the page they just published--we want to show them the
-      // page the current page is based on.
-      parachute.clearCurrentPage();
-      parachute.changePage(info.path);
-      // It's possible that the server sanitized some stuff that the
-      // user will be confused by, so save the new state of the page
-      // to be what they expect it to be, just in case.
-      parachute.save();
       // Set the URL to be the new URL to remix the page the user just
       // published, so they can share/bookmark the URL and it'll be what
       // they expect it to be.
       pageManager.changePage(info.path, info.remixURL);
     });
-
-    parachute.changePage(pageManager.currentPage());
 
     if (!pageManager.currentPage()) {
       setTimeout(function() {
@@ -102,7 +82,6 @@ define(function(require) {
       editor: editor,
       codeMirror: editor.panes.codeMirror,
       publishUI: publishUI,
-      parachute: parachute,
       ready: ready
     };
   };
