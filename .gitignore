@@ -4,4 +4,4 @@ thimble.sqlite
 .env
 fakes3
 bower_components
-
+.htaccess
