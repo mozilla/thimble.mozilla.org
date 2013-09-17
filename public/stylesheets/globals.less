@@ -1,0 +1,263 @@
+// SPACING
+@HEADER_SPACING: 62px;
+@TRAY_HEIGHT: 205px;
+@TRAY_SPACING: @TRAY_HEIGHT - 10;
+@TRAY_SPACING_MINIMIZED: 35px;
+@TABZILLA_HEIGHT: 210px;
+
+// Z INDEXES
+@BASE_Z_INDEX: 100000000;
+@HEADER_Z_INDEX: @BASE_Z_INDEX + 10;
+@TRAY_Z_INDEX: @BASE_Z_INDEX + 1;
+@EDITOR_Z_INDEX: @BASE_Z_INDEX + 1;
+@MODAL_Z_INDEX: @BASE_Z_INDEX + 100;
+
+// EDITOR
+@EDITOR_WIDTH: 350px;
+
+// COLORS
+@COLOR_SELECTION: #FEF49C;
+@baseDark: #052938;
+@baseLight: #F4F5F5;
+@baseStage: #E7EDF0;
+@green: #3FB58E;
+@greyGreen: #c2c6b3;
+@red: #CB3E21;
+@baseLightOutline: #CCC;
+@baseText: #555;
+@editorOutline: #CCC;
+@midGrey: #D9DDDD;
+@darkGrey: #3A3C3C;
+
+// MIXINS
+.selectable(@param) {
+  -webkit-touch-callout: @param;
+  -webkit-user-select: @param;
+  -moz-user-select: @param;
+  -ms-user-select: @param;
+  user-select: @param;
+}
+
+// GRADIENTS
+// Usage:
+//  .gradient( "vertical", red, blue );         -> Creates a gradient from top = red to bottom = blue.
+//  .gradient( "horizonal", red, blue );        -> Creates a gradient from left = red to right = blue.
+//  .gradient( "vertical", red, blue, true );   -> Creates a gradient with a solid-color fallback. This is
+//                                                 necessary for IE9 when the container has a border-radius of 2+
+
+._gradient( @color1, @color2, @startLoc, @endLoc, @from, @to, @ieFallback: false, @ieGradientType: 0 ) when ( @ieFallback ) {
+  // Internal mixin for generating gradients when there are rounded corners
+  background: @color1;
+  background: -webkit-gradient( linear, @startLoc, @endLoc, color-stop( @from, @color1 ), color-stop( @to, @color2 ) );
+  background: -webkit-linear-gradient( @startLoc, @color1 @from, @color2 @to );
+  background: -moz-linear-gradient( @startLoc, @color1 @from, @color2 @to );
+  background: -ms-linear-gradient( @startLoc, @color1 @from, @color2 @to );
+  background: -o-linear-gradient( @startLoc, @color1 @from, @color2 @to );
+  background: linear-gradient( @startLoc, @color1 );
+}
+
+._gradient( @color1, @color2, @startLoc, @endLoc, @from, @to, @ieFallback: false, @ieGradientType: 0 ) when not ( @ieFallback ) {
+  // Internal mixin for generating gradients when there are no rounded corners
+  filter: e( %( "progid:DXImageTransform.Microsoft.Gradient(startColorstr='%d', endColorstr='%d', GradientType=%d)", @color1, @color2, @ieGradientType ) );
+  background: -webkit-gradient( linear, @startLoc, @endLoc, color-stop( @from, @color1 ), color-stop( @to, @color2 ) );
+  background: -webkit-linear-gradient( @startLoc, @color1 @from, @color2 @to );
+  background: -moz-linear-gradient( @startLoc, @color1 @from, @color2 @to );
+  background: -ms-linear-gradient( @startLoc, @color1 @from, @color2 @to );
+  background: -o-linear-gradient( @startLoc, @color1 @from, @color2 @to );
+  background: linear-gradient( @startLoc, @color1 );
+}
+
+.gradient( "vertical", @color1, @color2, @fallback: false ) {
+  ._gradient( @color1, @color2, top, bottom, 0%, 100%, @fallback, 0 );
+}
+
+.gradient( "horizontal", @color1, @color2, @fallback: false ) {
+  ._gradient( @color1, @color2, left, right, 0%, 100%, @fallback, 1 );
+}
+
+.gradient( "center top", @color1, @color2, @fallback: false ) {
+  ._gradient( @color1, @color2, left, right, 0%, 100%, @fallback, 1 );
+}
+
+.transition(@transition1) {
+  -webkit-transition: @transition1;
+  -moz-transition: @transition1;
+  -o-transition: @transition1;
+  -ms-transition: @transition1;
+  transition: @transition1;
+}
+.transition(@transition1, @transition2) {
+  -webkit-transition: @transition1, @transition2;
+  -moz-transition: @transition1, @transition2;
+  -o-transition: @transition1, @transition2;
+  -ms-transition: @transition1, @transition2;
+  transition: @transition1, @transition2;
+}
+.transition(@transition1, @transition2, @transition3) {
+  -webkit-transition: @transition1, @transition2, @transition3;
+  -moz-transition: @transition1, @transition2, @transition3;
+  -o-transition: @transition1, @transition2, @transition3;
+  -ms-transition: @transition1, @transition2, @transition3;
+  transition: @transition1, @transition2, @transition3;
+}
+.animation( @animation ) {
+  -webkit-animation: @animation;
+  -moz-animation: @animation;
+  -o-animation: @animation;
+  -ms-animation: @animation;
+}
+.transform( @transformation ) {
+  -webkit-transform: @transformation;
+  -moz-transform: @transformation;
+  -o-transform: @transformation;
+  -ms-transform: @transformation;
+  transform: @transformation;
+}
+.transform-origin( @transformation ) {
+  -webkit-transform-origin: @transformation;
+  -moz-transform-origin: @transformation;
+  -o-transform-origin: @transformation;
+  -ms-transform-origin: @transformation;
+  transform-origin: @transformation;
+}
+
+.transformAnimation(@startProperty, @endProperty) {
+  @-webkit-keyframes spin {
+    0% {
+      -webkit-transform: @startProperty;
+      transform: @startProperty;
+    }
+    100% {
+      -webkit-transform: @endProperty;
+      transform: @endProperty;
+    }
+  }
+  @-moz-keyframes spin {
+    0% {
+      -moz-transform: @startProperty;
+      transform: @startProperty;
+    }
+    100% {
+      -moz-transform: @endProperty;
+      transform: @endProperty;
+    }
+  }
+}
+
+.boxOrient(@direction) {
+  -webkit-box-orient: @direction;
+  -moz-box-orient: @direction;
+  -ms-box-orient: @direction;
+  box-orient: @direction;
+}
+.boxAlign(@property) {
+  -webkit-box-align: @property;
+  -moz-box-align: @property;
+  -ms-box-align: @property;
+  box-align: @property;
+}
+.box-sizing( @property ) {
+  // https://developer.mozilla.org/En/CSS/Box-sizing
+  -webkit-box-sizing: @property; // Chrome 10-
+  -moz-box-sizing: @property;
+  -ms-box-sizing: @property; // IE 8+
+  box-sizing: @property; // Opera, Safari 5.1+, Chrome 10+
+}
+
+// *********************************************************
+// POSITIONING
+//
+
+.clearfix() {
+  *zoom: 1;
+  &:before,
+  &:after {
+    content: "";
+    display: table;
+  }
+  &:after { clear: both; }
+}
+
+.triangle( "right", @size, @color, @borderSize, @borderColor ) {
+  &:after, &:before {
+    left: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  &:after {
+    border-left-color: @color;
+    border-width: @size;
+    top: 50%;
+    margin-top: -@size;
+  }
+  &:before {
+    border-left-color: @borderColor;
+    border-width: @size + @borderSize + 1;
+    top: 50%;
+    margin-top: -( @size + @borderSize + 1 );
+  }
+}
+
+
+// FONT AWESOME
+@import "../external/font-awesome/font-awesome";
+.font-awesome {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em;
+}
+
+
+// *********************************************************
+// MEDIA QUERIES
+//
+// Usage:
+// .wrapper {
+//   @media @medium {
+//     font-size: 16px;
+//   }
+//  .butter-header-spacing & {
+//    @media @medium-in-editor {
+//      font-size: 16px;
+//    }
+//  }
+// }
+
+// These are the widths chosen for each supported size.
+@small-w: 560;
+@medium-w: 640;
+@large-w: 853;
+@xlarge-w: 1280;
+
+@small-w-px: @small-w + 0px;
+@medium-w-px: @medium-w + 0px;
+@large-w-px: @large-w + 0px;
+@xlarge-w-px: @xlarge-w + 0px;
+
+// Heights are calculated based on 16:9 standard video aspect ratio.
+@aspectratio: 0.5625;
+
+// Editor width
+@in-editor-offset-w: ~`parseInt( "@{EDITOR_WIDTH}" )`;
+@in-editor-offset-h: ~`parseInt( "@{TRAY_HEIGHT}" ) + parseInt( "@{HEADER_SPACING}" )`;
+
+// ~`...` is javascript evaluation in LESS http://lesscss.org/#-javascript-evaluation
+// This has to use parseInt because the LESS variables have px in them
+@small: ~`"only screen and (min-width : 0px) and (min-width: 0px)"`;
+// This can't actually be replaced by (max-width: @medium-w) and (max-height: @medium-h) because there would be a case where
+// width > @medium-w` (out of range) but `height < @medium-h` (in-range) or vice versa that isn't covered by any media query.
+@medium: ~`"only screen and (min-width : @{medium-w}px) and (min-height : " + (@{medium-w} * @{aspectratio}) + "px)"`;
+@large: ~`"only screen and (min-width : @{large-w}px) and (min-height : " + (@{large-w} * @{aspectratio}) + "px)"`;
+@xlarge: ~`"only screen and (min-width : @{xlarge-w}px) and (min-height : " + (@{xlarge-w} * @{aspectratio}) + "px)"`;
+
+@small-in-editor: ~`"only screen and (min-width : 0px) and (min-width: 0px)"`;
+@medium-in-editor: ~`"only screen and (min-width : " + (@{medium-w} + @{in-editor-offset-w} ) + "px) and (min-height : " + (@{medium-w} * @{aspectratio} + @{in-editor-offset-h}) + "px)"`;
+@large-in-editor: ~`"only screen and (min-width : " + (@{large-w} + @{in-editor-offset-w}) + "px) and (min-height : " + (@{large-w} * @{aspectratio} + @{in-editor-offset-h}) + "px)"`;
+@xlarge-in-editor: ~`"only screen and (min-width : " + (@{xlarge-w} + @{in-editor-offset-w}) + "px) and (min-height : " + (@{xlarge-w} * @{aspectratio} + @{in-editor-offset-h}) + "px)"`;

@@ -1,57 +1,40 @@
-@userbarHeight: 30px;
+@import "globals";
+@import "webfonts";
+@import "buttons";
+@import "header";
 
-#webmaker-nav .webmaker-create-user {
+#webmaker-nav {
+  border-bottom: 1px solid lightgrey;
+  height: 63px;
+}
+
+.webmaker-nav-container a.logo {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.webmaker-nav-container .webmaker-logo-icon.webmaker-icon {
+  background: url('/img/webmaker-main_01.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 30px 30px;
+  width: 30px;
+  height: 40px;
+}
+
+.icon {
+  background-size: 0 0;
+  line-height: 1.4em;
+}
+
+.hidden {
+  display: none;
+}
+
+.webmaker-create-user {
+  display: block;
+  z-index: 10;
   position: relative;
-  z-index: 5;
-}
-
-.webmaker-nav-container {
-  background: #FFF;
-  border-bottom: 1px solid #DDD;
-}
-
-#webmaker-nav iframe.include-frame {
-  top: 0;
-}
-
-.webmaker-nav .user img {
-  top: 0;
-}
-
-.user-info {
-  margin-top: 15px;
-  > li {
-    height: @userbarHeight;
-    margin: 0;
-    line-height: @userbarHeight;
-    border-right: none;
-    &.makes {
-      border-right: 1px solid #B5B7B8;
-    }
-  }
-}
-
-.webmaker-icon {
-  float: left;
-  background: url("../img/webmaker-main_01.png") no-repeat;
-  background-position: center;
-  background-size: @userbarHeight @userbarHeight;
-  height: @userbarHeight;
-  width: @userbarHeight;
-  margin-left: -7px;
-  margin-right: 7px;
-}
-
-.back-to-webmaker {
-  display: inline-block;
-  line-height: @userbarHeight;
-  margin-left: 15px;
-  a {
-    color: #555;
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
+  border-top: 1px solid lightgrey;
 }
