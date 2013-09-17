@@ -160,7 +160,7 @@ define(['template!details-form'], function (detailsFormHTML) {
 
     switch (field) {
       case 'title':
-        val = val || currentVal || self.getCodeMirrorValue().find('title').text();
+        val = val || self.getCodeMirrorValue().find('title').text() || currentVal;
         $fieldInput.val(val);
         break;
       case 'thumbnail':
