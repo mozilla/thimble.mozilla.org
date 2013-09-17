@@ -30,6 +30,7 @@ var appName = "thimble",
     app = express(),
     env = new habitat(),
     node_env = env.get('NODE_ENV'),
+    emulate_s3 = env.get('S3_EMULATION') || !env.get('S3_KEY'),
     WWW_ROOT = path.resolve(__dirname, 'public'),
     /**
       We're using two databases here: the first is our normal database, the second is
@@ -269,3 +270,9 @@ require('webmaker-loginapi')(app, {
 app.listen(env.get("PORT"), function(){
   console.log('Express server listening on ' + env.get("HOSTNAME"));
 });
+
+// If we're in running in emulated S3 mode, run a mini
+// server for serving up the "s3" published content.
+if (emulate_s3) {
+  require("mox-server").runServer(env);
+}
