@@ -24,28 +24,10 @@ git clone git@github.com:[yourname]/thimble.webmaker.org.git --recursive
 3a) you may need the XCode console tools (on OSX) or the VC++ express + windows SKD 7.1 stack (on Windows) in order for node-gyp to compile some npm dependencies
 3b) go into the thimble.webmaker.org dir and run ```npm install```
 
-4) as an optional step, when you don't want to test with a live AWS-S3 instance, you
-can set up fake-s3 to handle the S3 publication:
+4) set up the environment variables (see next section).
 
-```
-gem install fakes3
-mkdir fakes3
-```
+You can now run Thimble from the thimble.webmaker.org directory using
 
-**NOTE:** this requires ruby. If you do not have this installed, visit http://ruby-lang.org
-
-5) set up the environment variables (see next section).
-
-You are now ready to run the app, by first starting up the sanitizer in the
-htmlsanitizer.org directory, by running ```python app.py```
-
-In addition, launch the fake S3 service in a terminal with:
-
-```
-fakes3 -r ./fakes3 -h localhost -p 6060
-```
-
-You can then run Thimble from the thimble.webmaker.org directory using
 ```node app```
 
 Finally, there is a special variable that enables an additional route
@@ -66,26 +48,6 @@ cp env.dist .env
 ```
 
 and the Thimble code will pick up on it when run through node.
-
-**NOTE:** If you are using fakes3, you will need to make sure that
-[bucket].localhost points to localhost, which most likely requires
-you to add the following rule to your hosts file:
-
-```
-127.0.0.1 bucketName.localhost
-```
-
-If your bucket name is "test", then this rule should point to
-test.localhost, if your bucket name is "potato", point to potato.localhost,
-etc.
-
-Note that this file is used on all conventional operation systems, but
-lives in different places:
-
-* on *n*x, it is located at ```<systemroot>/etc/hosts```
-* on OSX, it is located at ```<systemroot>/private/etc/hosts```
-* on Windows, it is located at ```<systemroot>\system32\drivers\etc\hosts```
-
 
 Development additionals
 -----------------------
@@ -127,7 +89,6 @@ commands to make sure things work. This is mostly making sure that all the
 variables that are found in the `env.dist` file also exist in your heroku
 environment:
 
-
 ```
 > heroku config:set NODE_ENV="development"
 > heroku config:set HOSTNAME="htt:// ...heroku instance..."
@@ -152,26 +113,16 @@ Also, for Amazon S3, the following values are quite important:
 > heroku config:set S3_SECRET="your private S3 secret string"
 ```
 
-Unless you're using FakeS3, in which case you can scroll up to the FakeS3
-section, which explains the environment variables when using fake publishing.
-Although FakeS3 also gets reset when your app gets restarted, so if you
-want persistent data, it is strongly recommended to use a real S3 bucket.
+Note that when deploying to heroku, there will be no S3 emulation available.
 
 A note on credentials
 ---------------------
 
-The login credentials  in the `LOGINAPI` variable map to the `ALLOWED_USERS`
-variable used by the login instance that you rely on. This login regulates
-who can ask the login service for user information. It is not the list of
-"which persona user is allowed to access the login service".
+The login credentials  in the `LOGINAPI` variable map to the `ALLOWED_USERS` variable used by the login instance that you rely on. This login regulates who can ask the login service for user information. It is not the list of "which persona user is allowed to access the login service".
 
-The makeapi credentials map to the `ALLOWED_USERS` variable for the
-MakeAPI instance, and regulate who can query and push to the makeAPI.
-Again, this is not related to persona logins in any way.
+The makeapi credentials map to the `ALLOWED_USERS` variable for the MakeAPI instance, and regulate who can query and push to the makeAPI. Again, this is not related to persona logins in any way.
 
-Also note that the `SESSION_SECRET` environment variable is the secret
-that Thimble uses for setting its own local cookie, and can be any
-string you like (except an empty string).
+Also note that the `SESSION_SECRET` environment variable is the secret that Thimble uses for setting its own local cookie, and can be any string you like (except an empty string).
 
 New Relic
 ---------
