@@ -274,5 +274,8 @@ app.listen(env.get("PORT"), function(){
 // If we're in running in emulated S3 mode, run a mini
 // server for serving up the "s3" published content.
 if (emulate_s3) {
-  require("mox-server").runServer(env);
+  require("mox-server").runServer({
+    port: env.get("MOX_PORT", 12319),
+    bucket: env.get("S3_BUCKET", "")
+  });
 }
