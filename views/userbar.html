@@ -5,6 +5,13 @@
 
         <a class="logo" href="/"><img src="/img/thimble-logo.svg" alt="Mozilla Thimble" /></a>
 
+        <div class="lang-picker">
+          <select id="lang-picker">
+          {% for language in supportedLanguages %}
+            <option {% if lang == language %} selected="selected" {% endif %} value="{{language}}">{{ languageNameFor(language) }}</option>
+          {% endfor %}
+          </select>
+        </div>
         <div class="tutorial-btn hidden"><button class="butter-btn btn-white">{{ gettext("Tutorials") }}</button></div>
 
         <div class="butter-btn-menu-container butter-project-menu">
@@ -24,7 +31,7 @@
           </div>
           <ul class="menu-container">
             <li class="makes my-makes"><span class="icon icon-th-large"></span><button>{{ gettext("My makes") }}</button></li>
-            <li class="login"><span class="icon icon-signout"></span><iframe src="{{audience}}/sso/include.html" class="include-frame"></iframe>
+            <li class="login"><span class="icon icon-signout"></span><iframe src="{{audience}}/{{lang}}/sso/include.html" class="include-frame"></iframe>
             </li>
           </ul>
         </div>
