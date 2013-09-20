@@ -18,7 +18,6 @@ var ajax = require('request'),
     makeAPI = require('./lib/makeapi'),
     nunjucks = require('nunjucks'),
     path = require('path'),
-    routes = require('./routes'),
     utils = require('./lib/utils'),
     version = require('./package').version,
     i18n = require('webmaker-i18n');
@@ -49,6 +48,7 @@ var appName = "thimble",
     nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'), {
       autoescape: true
     }),
+    routes = require('./routes')( utils, env, nunjucksEnv, appName ),
     parameters = require('./lib/parameters');
 
 nunjucksEnv.express(app);
@@ -127,19 +127,19 @@ app.param('name', parameters.name);
 // Main page
 app.get('/',
         middleware.setNewPageOperation,
-        routes.index(utils, env, nunjucksEnv, appName));
+        routes.index );
 
 // Remix a published page (from db)
 // Even if this is "our own" page, this URL
 // will effect a new page upon publication.
 app.get('/project/:id/remix',
         middleware.setDefaultPublishOperation,
-        routes.index(utils, env, appName));
+        routes.index );
 
 // Legacy route for remixing old user content
 app.get('/p/:oldid/remix',
         middleware.setDefaultPublishOperation,
-        routes.index(utils, env, appName));
+        routes.index );
 
 // Edit a published page (from db).
 // If this is not "our own" page, this will
@@ -148,13 +148,13 @@ app.get('/p/:oldid/remix',
 // existing page instead.
 app.get('/project/:id/edit',
         middleware.setPublishAsUpdate,
-        routes.index(utils, env, appName));
+        routes.index );
 
 // Legacy route for new premade content
 // See: https://bugzilla.mozilla.org/show_bug.cgi?id=874986
 app.get('/en-US/projects/:name/edit',
         middleware.setDefaultPublishOperation,
-        routes.index(utils, env, appName));
+        routes.index );
 
 // Legacy route for old user content
 // see: https://bugzilla.mozilla.org/show_bug.cgi?id=880768
@@ -167,7 +167,7 @@ app.get('/p/:oldid/edit',
         // this will be a remix, since there's no new
         // data to "edit"; old thimble was anonymous.
         middleware.setDefaultPublishOperation,
-        routes.index(utils, env, appName));
+        routes.index );
 
 // learning project listing
 app.get('/projects', function(req, res) {
@@ -188,12 +188,12 @@ app.get('/projects', function(req, res) {
 // learning project lookup
 app.get('/projects/:name',
         middleware.setDefaultPublishOperation,
-        routes.index(utils, env, appName));
+        routes.index );
 
 // project template lookups
 app.get('/templates/:name',
         middleware.setDefaultPublishOperation,
-        routes.index(utils, env, appName));
+        routes.index );
 
 // flag-controlled script bleaching. If "allowJS", no bleach.
 var sanitizeScript = (function() {
