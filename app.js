@@ -29,7 +29,7 @@ var appName = "thimble",
     app = express(),
     env = new habitat(),
     node_env = env.get('NODE_ENV'),
-    emulate_s3 = env.get('S3_EMULATION') || !env.get('S3_KEY'),
+    emulate_s3 = !env.get('S3_KEY') || env.get('S3_EMULATION'),
     WWW_ROOT = path.resolve(__dirname, 'public'),
     /**
       We're using two databases here: the first is our normal database, the second is
