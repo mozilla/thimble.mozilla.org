@@ -68,7 +68,7 @@ app.use( i18n.middleware({
 }));
 
 // Express settings
-app.use(express.favicon());
+app.use(express.favicon(__dirname + '/public/img/favicon.ico'));
 app.use(express.logger("dev"));
 if (!!env.get("FORCE_SSL") ) {
   app.use(helmet.hsts());
