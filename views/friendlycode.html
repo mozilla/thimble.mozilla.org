@@ -152,10 +152,17 @@
            ["jquery",
            "friendlycode",
            "hackpub",
-           "webmaker-nav"
+           "webmaker-nav",
+           "/bower/webmaker-ui/ui.js"
            ],
-           function($, FriendlycodeEditor, Hackpub, nav) {
+           function($, FriendlycodeEditor, Hackpub, nav, UI) {
       var makeUrl = "{{makeUrl}}";
+
+      var langSelector = document.querySelector('#lang-picker');
+
+      // URL redirector for language picker
+      UI.langPicker(langSelector);
+
       if (makeUrl) {
         nav.loadTutorials(makeUrl);
       }

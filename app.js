@@ -53,16 +53,18 @@ var appName = "thimble",
     parameters = require('./lib/parameters');
 
 nunjucksEnv.express(app);
+
+var supportedLanguages = ['en-US'];
+
 app.locals({
   GA_ACCOUNT: env.get("GA_ACCOUNT"),
-  GA_DOMAIN: env.get("GA_DOMAIN")
+  GA_DOMAIN: env.get("GA_DOMAIN"),
+  supportedLanguages: supportedLanguages
 });
 
 // Setup locales with i18n
 app.use( i18n.middleware({
-  supported_languages: [
-    'en-US'
-  ],
+  supported_languages: supportedLanguages,
   default_lang: "en-US",
   translation_directory: path.resolve(__dirname, "locale")
 }));
