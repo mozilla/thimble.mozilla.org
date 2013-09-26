@@ -24,7 +24,7 @@
   },
   "optionalDependencies": {
     "mysql": "2.0.0-alpha7",
-    "sqlite3": "2.1.7"
+    "sqlite3": "2.1.17"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
