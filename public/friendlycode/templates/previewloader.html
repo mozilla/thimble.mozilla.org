@@ -26,7 +26,32 @@
         left: 0;
       }
     </style>
-    <script>
+    <script>(function() {
+
+      // whoever has embedded us, we need to be able to talk back to.
+      var owner = false;
+
+      /**
+       * Set up event proxying for Togetherjs session events on our preview iframe
+       */
+      function monitorFrame(iframeDocument) {
+        var mapping = {
+          mousemove: "cursor-update",
+          click: "cursor-click"
+        };
+        Object.keys(mapping).forEach(function(eventName) {
+          iframeDocument.addEventListener(eventName, function(evt) {
+            if(owner === false) return;
+            var str = JSON.stringify({
+              type: mapping[eventName],
+              offsetX: evt.clientX,
+              offsetY: evt.clientY
+            });
+            owner.postMessage(str, "*");
+          });
+        });
+      }
+
       /**
        * content management object
        */
@@ -41,6 +66,9 @@
           doc.open();
           doc.write(sourceCode);
           doc.close();
+
+          // listen for events in the iframe
+          monitorFrame(doc);
 
           // kill off old iframe
           document.body.removeChild(document.querySelector("iframe"));
@@ -61,13 +89,21 @@
        *                      with a new iframe, with the new content.
        */
       window.addEventListener("message", function(event) {
+        if(event.source === window) return;
+
         try {
           data = JSON.parse(event.data);
-          // currently we only support "overwrite",
+
+          // Currently we only support "overwrite",
           // but once a good DOM diff solution is avaible,
           // we want to extend this instruction set to
           // also allow selecting diff-based updating.
           if(data.type && data.type === "overwrite") {
+
+            // This source told us to update - it is therefore
+            // our owner and we will inform it of events.
+            if(!owner) { owner = event.source; }
+
             if ("sourceCode" in data && typeof data.sourceCode === "string") {
               content[data.type](data.sourceCode);
             } else {
@@ -80,7 +116,8 @@
           console.error("JSON.parse failed for preview payload", event.data);
         }
       });
-    </script>
+
+    }());</script>
   </head>
   <body>
     <iframe></iframe>

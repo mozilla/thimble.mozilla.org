@@ -7,11 +7,12 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
       appURL = env.get("HOSTNAME"),
       audience = env.get("AUDIENCE"),
       makeEndpoint = env.get("MAKE_ENDPOINT"),
+      previewLoader = env.get("PREVIEW_LOADER"),
+      together = env.get("TOGETHERJS"),
       userbarEndpoint = env.get("USERBAR");
 
   return {
     index: function(req, res) {
-
       var content;
 
       if (req.pageData) {
@@ -28,6 +29,7 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
       if (req.body.pageOperation === "remix") {
         content = content.replace(/<title([^>]*)>/, "<title$1>Remix of ");
       }
+
       res.render('index.html', {
         appname: appName,
         appURL: appURL,
@@ -39,11 +41,14 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
         HTTP_STATIC_URL: '/',
         MAKE_ENDPOINT: makeEndpoint,
         pageOperation: req.body.pageOperation,
+        previewLoader: previewLoader,
         origin: req.params.id,
         makeUrl: req.makeUrl,
+        together: together,
         userbar: userbarEndpoint
       });
     },
+
     friendlycodeRoutes: function(app) {
       app.get( '/default-content', function( req, res ) {
         res.render('friendlycode/templates/default-content.html');
