@@ -16,6 +16,8 @@
     "menu": "HTML элемент <em>меню</em> (<code>&lt;menu&gt;</code>) представляет собой неупорядоченный список пунктов меню или команд.",
     "tweet": "Твитнуть",
     "No": "Нет",
+    "Start Togetherjs": "Сотрудничать",
+    "Stop Togetherjs": "В одиночку",
     "tr": "HTML элемент <em>строка таблицы</em> (<code>&lt;tr&gt;</code>) определяет ряд клеток в таблице. Это может быть сочетание элементов <code><a rel=\"custom\" href=\"https://developer.mozilla.org/en/HTML/Element/td\">&lt;td&gt;</a></code>\n и <code><a rel=\"custom\" href=\"https://developer.mozilla.org/en/HTML/Element/th\">&lt;th&gt;</a></code>.",
     "Undo": "Отменить",
     "li": "HTML элемент <em>пункт списка</em> (<code>&lt;li&gt;</code>) используется, чтобы представлять собой пункт списка. Он должен содержаться в упорядоченном списке (<code><a rel=\"custom\" href=\"https://developer.mozilla.org/en/HTML/Element/ol\">&lt;ol&gt;</a></code>), неупорядоченном списке (<code><a rel=\"custom\" href=\"https://developer.mozilla.org/en/HTML/Element/ul\">&lt;ul&gt;</a></code>) или в меню (<code><a rel=\"custom\" href=\"https://developer.mozilla.org/en/HTML/Element/menu\">&lt;menu&gt;</a></code>), где он представляет собой единственный предмет в том списке.",

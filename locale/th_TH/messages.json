@@ -16,6 +16,8 @@
     "menu": "HTML <em>menu</em> element (<code>&lt;menu&gt;</code>) แสดงให้เห็นถึงรายการที่เรียงของเมนูเช่นตัวเลือกหรือคำสั่ง",
     "tweet": "Tweet",
     "No": "ไม่",
+    "Start Togetherjs": "ร่วมมือ",
+    "Stop Togetherjs": "เริ่มคนเดียว",
     "tr": "<em>HTML Table Row Element</em> (<code>&lt;tr&gt;</code>) กำหนดแถวในเซลของตาราง. มันสามารถรวมกันด้วย <code><a rel=\"custom\" href=\"https://developer.mozilla.org/en/HTML/Element/td\">&lt;td&gt;</a></code>\n และ <code><a rel=\"custom\" href=\"https://developer.mozilla.org/en/HTML/Element/th\">&lt;th&gt;</a></code>\n elements.",
     "Undo": "ย้อนกลับ",
     "li": "<em>HTML List item element</em> (<code>&lt;li&gt;</code>) ใช้ในการแสดงรายการสิ่งของ มันควรที่จะใช้ในการรวมสิ่งของที่เรียงกัน (<code><a rel=\"custom\" href=\"https://developer.mozilla.org/en/HTML/Element/ol\">&lt;ol&gt;</a></code>), หรือไม่เรียง (<code><a rel=\"custom\" href=\"https://developer.mozilla.org/en/HTML/Element/ul\">&lt;ul&gt;</a></code>) หรือเมนู (<code><a rel=\"custom\" href=\"https://developer.mozilla.org/en/HTML/Element/menu\">&lt;menu&gt;</a></code>), ใช้ในการแสดงรายการต่างๆ",
