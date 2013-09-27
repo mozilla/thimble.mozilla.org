@@ -11,7 +11,13 @@ define(["jquery", "backbone-events"], function($, BackboneEvents) {
         previewArea = options.previewArea,
         telegraph;
 
-    // set up the loader script for the preview iframe
+    // set up the iframe so that it always triggers an initial
+    // content injection by telling codemirror to reparse on load:
+    iframe.onload = function() {
+      codeMirror.reparse();
+    };
+
+    // then set up the preview load from URL
     iframe.src = previewLoader;
 
     // set up the code-change handling.
