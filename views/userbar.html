@@ -2,7 +2,6 @@
     <!-- webmaker user bar -->
     <div id="webmaker-nav">
       <nav class="webmaker-nav-container">
-
         <a class="logo" href="/"><img src="/img/thimble-logo.svg" alt="Mozilla Thimble" /></a>
 
         <div class="lang-picker">
@@ -32,12 +31,12 @@
           <ul class="menu-container">
             <li class="makes my-makes"><span class="icon icon-th-large"></span><button>{{ gettext("My makes") }}</button></li>
             <li class="login"><span class="icon icon-signout"></span><iframe src="{{audience}}/{{lang}}/sso/include.html" class="include-frame"></iframe>
+            {% include "together.html" %}
             </li>
           </ul>
         </div>
 
         <div class="back-to-webmaker"><span class="webmaker-logo-icon webmaker-icon"></span> <a href="{{audience}}">Webmaker.org</a></div>
-
       </nav>
       <div class="my-projects-container">
         <iframe class="my-projects-iframe"></iframe>

@@ -49,6 +49,23 @@ cp env.dist .env
 
 and the Thimble code will pick up on it when run through node.
 
+Together.js
+-----------
+
+There is a special library that we hook into for collaborative work called
+together.js, https://togetherjs.com, which can be run either online or
+localhost.
+
+For most purposes you want to set the `TOGETHERJS` environment variable
+in your `.env` to `https://togetherjs.com` so that thimble picks the standard
+together.js library to do the collaboration work.
+
+If you wish to test with a local together.js library and hub server, it
+is strongly recommended that you use the webmaker-suite, instead, which
+has together.js as one of the locally run components. Please visit
+https://github.com/mozilla/webmaker-suite for more information on the suite.
+
+
 Development additionals
 -----------------------
 
@@ -142,5 +159,5 @@ Various scripts are present that will assist in migrating old data sets along wi
 
 * `migrations/ThimbleProjectMigration.js`
     * Used to retrieve the `makeid` for any `ThimbleProject` that has already been published to the **MakeAPI**. This only needs to be run once.
-        * `node migrations/ThimbleProjectMakeIDMigration.js` will execute this script, assuming proper `.env` variables have already been setup (instructions above). 
+        * `node migrations/ThimbleProjectMakeIDMigration.js` will execute this script, assuming proper `.env` variables have already been setup (instructions above).
 
