@@ -10,7 +10,7 @@
         // ensure that SSO is triggered only after the login/logout handling has been set up
         require(["jquery", "{{userbar}}/js/sso-ux.js"], function($) {
           // once we have it all ready, setup the login iframe
-          $(".include-frame").attr("src", "{{audience}}/{{lang}}/sso/include.html");
+          $(".include-frame").attr("src", "{{audience}}/{{localeInfo.lang}}/sso/include.html");
         });
       });
     </script>

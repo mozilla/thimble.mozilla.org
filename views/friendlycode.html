@@ -113,7 +113,7 @@
           saveCode: function(data, originalURL, cb) {
             $.ajax({
               type: "POST",
-              url: options.hackpubURL + "/" + "{{lang}}" + "/publish",
+              url: options.hackpubURL + "/" + "{{localeInfo.lang}}" + "/publish",
               data: {
                 'html': data.html,
                 'metaData': data.metaData,
@@ -175,7 +175,7 @@
           hackpubURL: "{{appURL}}",
           publishURL: "{{appURL}}/project",
         }),
-        remixURLTemplate: "{{appURL}}/" + "{{lang}}" + "/project/\{\{VIEW_URL\}\}/edit",
+        remixURLTemplate: "{{appURL}}/" + "{{localeInfo.lang}}" + "/project/\{\{VIEW_URL\}\}/edit",
         container: $("#bare-fc-holder")
       });
     });
