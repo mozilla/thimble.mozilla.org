@@ -2,7 +2,7 @@
     <!-- webmaker user bar -->
     <div id="webmaker-nav">
       <nav class="webmaker-nav-container">
-        <a class="logo" href="/"><img src="/img/thimble-logo.svg" alt="Mozilla Thimble" /></a>
+        <a class="logo" href="/{{localeInfo.lang}}"><img src="/img/thimble-logo.svg" alt="Mozilla Thimble" /></a>
 
         <div class="lang-picker">
           <select id="lang-picker">
@@ -36,7 +36,7 @@
           </ul>
         </div>
 
-        <div class="back-to-webmaker"><span class="webmaker-logo-icon webmaker-icon"></span> <a href="{{audience}}">Webmaker.org</a></div>
+        <div class="back-to-webmaker"><span class="webmaker-logo-icon webmaker-icon"></span> <a href="{{audience}}/{{localeInfo.lang}}">Webmaker.org</a></div>
       </nav>
       <div class="my-projects-container">
         <iframe class="my-projects-iframe"></iframe>
