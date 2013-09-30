@@ -142,7 +142,7 @@ define(['template!details-form'], function (detailsFormHTML) {
     }
     tags.forEach(function (item) {
       var val = item.replace(/[,#\s]/g, '');
-      if (val && self.tags.indexOf(val) === -1 && val.indexOf( ":" ) == -1 ) {
+      if (val && self.tags.indexOf(val) === -1 && val.indexOf( ":" ) === -1 ) {
         self.tags.push(val);
         $input('tags').val(self.tags.join(','));
         $input('tag-output').append('<li>' + val + '</li>');
