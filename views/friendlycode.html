@@ -166,7 +166,7 @@
       if (makeUrl) {
         nav.loadTutorials(makeUrl);
       }
-      return FriendlycodeEditor({
+      var editor = FriendlycodeEditor({
         allowJS: {{ allowJS }},
         previewLoader: '{{previewLoader}}',
         defaultContent: '{{content|safe}}',
@@ -178,6 +178,12 @@
         remixURLTemplate: "{{appURL}}/" + "{{localeInfo.lang}}" + "/project/\{\{VIEW_URL\}\}/edit",
         container: $("#bare-fc-holder")
       });
+
+      if (typeof TogetherJS !== "undefined") {
+        TogetherJS.reinitialize();
+      }
+
+      return editor;
     });
     </script>
 {% endblock %}

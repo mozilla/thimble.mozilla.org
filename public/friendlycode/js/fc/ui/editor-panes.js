@@ -20,8 +20,8 @@ define(function(require) {
         div = options.container,
         initialValue = options.value || "",
         allowJS = options.allowJS || false,
-        sourceCode = $('<div class="source-code"></div>').appendTo(div),
-        previewArea = $('<div class="preview-holder"></div>').appendTo(div),
+        sourceCode = $('<div class="source-code"></div>').attr('id','webmaker-source-code-pane').appendTo(div),
+        previewArea = $('<div class="preview-holder"></div>').attr('id','webmaker-preview-holder-pane').appendTo(div),
         helpArea = $('<div class="help hidden"></div>').appendTo(div),
         errorArea =  $('<div class="error hidden"></div>').appendTo(div);
 
