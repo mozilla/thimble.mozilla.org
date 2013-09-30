@@ -10,7 +10,7 @@
       });
       return {
         loadTutorials: function(publishedUrl) {
-          make.tags("tutorial-" + escape(publishedUrl)).then(function(err, results) {
+          make.tags("tutorial-" + encodeURIComponent(publishedUrl)).then(function(err, results) {
             var tutorialBtn = $(".tutorial-btn"),
                 tutorialList = $(".tutorial-list"),
                 iframe = $(".tutorial-iframe"),
