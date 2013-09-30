@@ -8,7 +8,7 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
       audience = env.get("AUDIENCE"),
       makeEndpoint = env.get("MAKE_ENDPOINT"),
       previewLoader = env.get("PREVIEW_LOADER"),
-      together = env.get("TOGETHERJS"),
+      together = env.get("USE_TOGETHERJS") ? env.get("TOGETHERJS") : false,
       userbarEndpoint = env.get("USERBAR");
 
   return {
