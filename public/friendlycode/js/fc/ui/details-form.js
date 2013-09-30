@@ -39,11 +39,11 @@ define(['template!details-form'], function (detailsFormHTML) {
     $input('tag-input').on('keydown', function (e) {
       if (e.which === 13 || e.which === 188) {
         e.preventDefault();
-        self.addTags(this.value);
+        self.addTags(encodeURIComponent(this.value));
       }
     });
     $input('tag-input').on('blur', function (e) {
-      self.addTags(this.value);
+      self.addTags(encodeURIComponent(this.value));
     });
     $input('tag-output').click(function (e) {
       if (e.target.tagName === 'LI') {
@@ -145,7 +145,7 @@ define(['template!details-form'], function (detailsFormHTML) {
       if (val && self.tags.indexOf(val) === -1) {
         self.tags.push(val);
         $input('tags').val(self.tags.join(','));
-        $input('tag-output').append('<li>' + val + '</li>');
+        $input('tag-output').append('<li>' + decodeURIComponent( val ) + '</li>');
       }
     });
     $input('tag-input').val('');
