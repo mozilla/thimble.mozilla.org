@@ -112,7 +112,7 @@
 	"param": "<strong>Parameter </strong>element which defines parameters for <code><a rel=\"custom\" href=\"https://developer.mozilla.org/en/HTML/Element/object\">&lt;object&gt;</a></code>\n.",
 	"please log in first": "please log in first",
 	"pre": "This element represents preformatted text. Text within this element is typically displayed in a non-proportional font exactly as it is laid out in the file. Whitespaces inside this element are displayed as typed.",
-	"Preview": "Preview",
+	"Preview for": "Preview for <span class=\"preview-title\"></span>",
 	"progress": "The HTML <em>progress</em> (<code>&lt;progress&gt;</code>) element is used to view the completion progress of a task. While the specifics of how it's displayed is left up to the browser developer, it's typically displayed as a progress bar.",
 	"Project not Found": "Project not Found",
 	"Publish": "Publish",
