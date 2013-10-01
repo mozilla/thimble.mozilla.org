@@ -7,6 +7,7 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
       appURL = env.get("HOSTNAME"),
       audience = env.get("AUDIENCE"),
       makeEndpoint = env.get("MAKE_ENDPOINT"),
+      moment = require("moment"),
       previewLoader = env.get("PREVIEW_LOADER"),
       together = env.get("TOGETHERJS"),
       userbarEndpoint = env.get("USERBAR");
@@ -14,6 +15,7 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
   return {
     index: function(req, res) {
       var content;
+      moment.lang(req.localeInfo.momentLang);
 
       if (req.pageData) {
         content = req.pageData.replace(/'/g, '\\\'').replace(/\n/g, '\\n').replace(/\//g,'\\\/');
@@ -21,7 +23,7 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
         var tpl = nunjucksEnv.getTemplate("friendlycode/templates/default-content.html");
         content = tpl.render({
           title: req.gettext("Your Awesome Webpage created on"),
-          time: new Date(Date.now()).toUTCString(),
+          time: moment().format('llll'),
           text: req.gettext("Make something amazing with the web")
         });
       }
