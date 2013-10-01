@@ -39,6 +39,11 @@ define(['template!details-form'], function (detailsFormHTML) {
     $input('tag-input').on('keydown', function (e) {
       if (e.which === 13 || e.which === 188) {
         e.preventDefault();
+        // FIXME: https://bugzilla.mozilla.org/show_bug.cgi?id=922724
+        // We encode user input tags because
+        // currently tags with colons are stripped.
+        // Tutorial urls contain a colon,
+        // so in order to not have it stripped, we escape it.
         self.addTags(encodeURIComponent(this.value));
       }
     });
@@ -145,6 +150,10 @@ define(['template!details-form'], function (detailsFormHTML) {
       if (val && self.tags.indexOf(val) === -1) {
         self.tags.push(val);
         $input('tags').val(self.tags.join(','));
+        // FIXME: https://bugzilla.mozilla.org/show_bug.cgi?id=922724
+        // We decode any tags for now because
+        // currently tags with colons are stripped.
+        // So when we save a tag, we escape colons, so when we try to display it, unescape it.
         $input('tag-output').append('<li>' + decodeURIComponent( val ) + '</li>');
       }
     });
@@ -169,6 +178,9 @@ define(['template!details-form'], function (detailsFormHTML) {
         break;
       case 'tags':
         val = val || currentVal || self.findMetaTagInfo('tags');
+        // FIXME: https://bugzilla.mozilla.org/show_bug.cgi?id=922724
+        // We do not decode tags directly from the makeapi,
+        // this means it was stored with a colon, and is created outside of thimble.
         self.addTags(val);
         break;
       default:
