@@ -67,7 +67,6 @@
     "canvas": "<em>Canvas</em> (<code>&lt;canvas&gt;</code>) HTML element สามารถใช้ในการวาดภาพกราฟฟิคโดยใช้ scripting (ปกติแล้ว <a title=\"en/JavaScript\" rel=\"internal\" href=\"https://developer.mozilla.org/en/JavaScript\">JavaScript</a>). ตัวอย่างเช่นมันสามารถเขียนภาพกราฟ ภาพเคลื่อนไหว หรือภาพแต่ง",
     "you will have to choose a new title": "คุณจำเป็นต้องเปลี่ยนหัวข้อ",
     "sub": "<em>HTML Subscript Element</em> (<code>&lt;sub&gt;</code>) ระบุ ตัวหนังสือใน span ที่ควรที่จะแสดงสำหรับให้เหตุผล หรือต่ำกว่าตัวหนังสือใน span",
-    "for": "สำหรับ",
     "section": "<em>HTML Section Element</em> (<code>&lt;section&gt;</code>) ใช้แสดงส่วนของเอกสารปกติมักใชัในการจัดกลุ่มหรือแสดงหัวเอกสาร",
     "bdi": "<em>HTML Bi-directional Isolation Element</em> (<code>&lt;bdi&gt;</code>) แยกข้อความจาก span ที่จัดรูปในแบบอื่นจากข้อความที่อยู่ด้านนอก.",
     "label": "<em>HTML Label Element</em> (<code>&lt;label&gt;</code>) แสดงถึง caption สำหรับวัตถุที่เห็นจากผู้ใช้ มันเกี่ยวข้องและถูกบังคับจากการใช้ <code>for</code> attribute, หรือการวาง element ใน <code>label</code> element. ตัวควบคุมนี้เรียกว่า <em>labeled control</em> ของ label element.",
