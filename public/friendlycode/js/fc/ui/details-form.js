@@ -39,11 +39,16 @@ define(['template!details-form'], function (detailsFormHTML) {
     $input('tag-input').on('keydown', function (e) {
       if (e.which === 13 || e.which === 188) {
         e.preventDefault();
-        self.addTags(this.value);
+        // FIXME: https://bugzilla.mozilla.org/show_bug.cgi?id=922724
+        // We encode user input tags because
+        // currently tags with colons are stripped.
+        // Tutorial urls contain a colon,
+        // so in order to not have it stripped, we escape it.
+        self.addTags(encodeURIComponent(this.value));
       }
     });
     $input('tag-input').on('blur', function (e) {
-      self.addTags(this.value);
+      self.addTags(encodeURIComponent(this.value));
     });
     $input('tag-output').click(function (e) {
       if (e.target.tagName === 'LI') {
@@ -142,10 +147,14 @@ define(['template!details-form'], function (detailsFormHTML) {
     }
     tags.forEach(function (item) {
       var val = item.replace(/[,#\s]/g, '');
-      if (val && self.tags.indexOf(val) === -1) {
+      if (val && self.tags.indexOf(val) === -1 && val.indexOf( ":" ) === -1 ) {
         self.tags.push(val);
         $input('tags').val(self.tags.join(','));
-        $input('tag-output').append('<li>' + val + '</li>');
+        // FIXME: https://bugzilla.mozilla.org/show_bug.cgi?id=922724
+        // We decode any tags for now because
+        // currently tags with colons are stripped.
+        // So when we save a tag, we escape colons, so when we try to display it, unescape it.
+        $input('tag-output').append('<li>' + decodeURIComponent( val ) + '</li>');
       }
     });
     $input('tag-input').val('');
@@ -169,6 +178,9 @@ define(['template!details-form'], function (detailsFormHTML) {
         break;
       case 'tags':
         val = val || currentVal || self.findMetaTagInfo('tags');
+        // FIXME: https://bugzilla.mozilla.org/show_bug.cgi?id=922724
+        // We do not decode tags directly from the makeapi,
+        // this means it was stored with a colon, and is created outside of thimble.
         self.addTags(val);
         break;
       default:

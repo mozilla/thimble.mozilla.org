@@ -5,7 +5,7 @@
         <a class="logo" href="/{{localeInfo.lang}}"><img src="/img/thimble-logo.svg" alt="Mozilla Thimble" /></a>
 
         <div class="lang-picker">
-          <select id="lang-picker">
+          <select id="lang-picker" data-supported="{{supportedLanguages}}">
           {% for language in listDropdownLang %}
             <option {% if languageNameFor(localeInfo.lang) == languageNameFor(language) %} selected="selected" {% endif %} value="{{language}}">{{ languageNameFor(language) }}</option>
           {% endfor %}
@@ -31,7 +31,7 @@
           <ul class="menu-container">
             <li class="makes my-makes"><span class="icon icon-th-large"></span><button>{{ gettext("My makes") }}</button></li>
             <li class="login"><span class="icon icon-signout"></span><iframe src="{{audience}}/{{localeInfo.lang}}/sso/include.html" class="include-frame"></iframe>
-            {% include "together.html" %}
+            {% if together %}{% include "together.html" %}{% endif %}
             </li>
           </ul>
         </div>

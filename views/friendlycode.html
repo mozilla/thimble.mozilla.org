@@ -10,7 +10,7 @@
       });
       return {
         loadTutorials: function(publishedUrl) {
-          make.tags("tutorial-" + escape(publishedUrl)).then(function(err, results) {
+          make.tags("tutorial-" + encodeURIComponent(publishedUrl)).then(function(err, results) {
             var tutorialBtn = $(".tutorial-btn"),
                 tutorialList = $(".tutorial-list"),
                 iframe = $(".tutorial-iframe"),
@@ -166,7 +166,7 @@
       if (makeUrl) {
         nav.loadTutorials(makeUrl);
       }
-      return FriendlycodeEditor({
+      var editor = FriendlycodeEditor({
         allowJS: {{ allowJS }},
         previewLoader: '{{previewLoader}}',
         defaultContent: '{{content|safe}}',
@@ -178,6 +178,12 @@
         remixURLTemplate: "{{appURL}}/" + "{{localeInfo.lang}}" + "/project/\{\{VIEW_URL\}\}/edit",
         container: $("#bare-fc-holder")
       });
+
+      if (typeof TogetherJS !== "undefined") {
+        TogetherJS.reinitialize();
+      }
+
+      return editor;
     });
     </script>
 {% endblock %}
