@@ -4,92 +4,11 @@
     <script src="{{HTTP_STATIC_URL}}friendlycode/js/require-config.js"></script>
     <script src="{{HTTP_STATIC_URL}}friendlycode/vendor/require.min.js"></script>
     <script>
-    define("webmaker-nav", ["/external/make-api.js"], function(Make) {
-      var make = Make({
-        apiURL: "{{MAKE_ENDPOINT}}"
-      });
-      return {
-        loadTutorials: function(publishedUrl) {
-          make.tags("tutorial-" + encodeURIComponent(publishedUrl)).then(function(err, results) {
-            var tutorialBtn = $(".tutorial-btn"),
-                tutorialList = $(".tutorial-list"),
-                iframe = $(".tutorial-iframe"),
-                tutorialView = $(".tutorial-view"),
-                viewTitle = $(".tutorial-view-title"),
-                iframeCover = $(".tutorial-iframe-cover"),
-                closeButton = $(".tutorial-close-button");
-
-            if (err) {
-              return err;
-            }
-
-            // Search was successful, just found nothing.
-            // Return early because we have nothing to display.
-            if (!results.length) {
-              return;
-            }
-
-            tutorialBtn.removeClass("hidden");
-
-            var onCoverMouseUp = function() {
-              iframeCover.css("display", "none");
-              tutorialView.mousedown(onCoverMouseDown);
-              document.removeEventListener("mouseup", onCoverMouseUp, false);
-            };
-
-            var onCoverMouseDown = function() {
-              iframeCover.css("display", "block");
-              tutorialView.off("mousedown", onCoverMouseDown);
-              document.addEventListener("mouseup", onCoverMouseUp, false);
-            };
-
-            function createTutorialItem(item) {
-              var tutorialElement = $("<div class='tutorial-list-item'></div>");
-              tutorialElement.html(item.title);
-              tutorialElement.click(function() {
-                iframe.attr("src", item.url + "?details=hidden");
-                viewTitle.html("Tutorial: " + item.title);
-                tutorialView.removeClass("closed");
-                tutorialView.css({
-                  "height": "",
-                  "width": ""
-                });
-              });
-              tutorialList.append(tutorialElement);
-            }
-
-            tutorialView.mousedown(onCoverMouseDown);
-
-            closeButton.disableSelection();
-            closeButton.click(function() {
-              tutorialView.addClass("closed");
-              tutorialView.css({
-                "height": 0,
-                "width": 0
-              });
-            });
-
-            tutorialBtn.click(function() {
-              tutorialList.toggleClass("open");
-            });
-
-            tutorialView.draggable({
-              cancel: "iframe"
-            });
-            tutorialView.resizable();
-
-            for (var i = 0; i < results.length; i++) {
-              createTutorialItem(results[i]);
-            }
-          });
-        }
-      };
-    });
 
     /**
      * ...
      */
-    define("hackpub", ["jquery", "webmaker-nav"], function($, nav) {
+    define("hackpub", ["jquery"], function($) {
 
       // set up CSRF handling
       var csrf_token = $("meta[name='X-CSRF-Token']").attr("content");
@@ -152,20 +71,17 @@
            ["jquery",
            "friendlycode",
            "hackpub",
-           "webmaker-nav",
+           "/scripts/tutorials.js",
            "/bower/webmaker-ui/ui.js"
            ],
-           function($, FriendlycodeEditor, Hackpub, nav, UI) {
-      var makeUrl = "{{makeUrl}}";
-
-      var langSelector = document.querySelector('#lang-picker');
+           function($, FriendlycodeEditor, Hackpub, tutorials, UI) {
+      var makeUrl = "{{makeUrl}}",
+          makeEndpoint = "{{MAKE_ENDPOINT}}",
+          langSelector = document.querySelector('#lang-picker');
 
       // URL redirector for language picker
       UI.langPicker(langSelector);
 
-      if (makeUrl) {
-        nav.loadTutorials(makeUrl);
-      }
       var editor = FriendlycodeEditor({
         allowJS: {{ allowJS }},
         previewLoader: '{{previewLoader}}',
@@ -178,6 +94,10 @@
         remixURLTemplate: "{{appURL}}/" + "{{localeInfo.lang}}" + "/project/\{\{VIEW_URL\}\}/edit",
         container: $("#bare-fc-holder")
       });
+
+      if (makeUrl) {
+        tutorials.load(makeUrl, makeEndpoint, editor.editor);
+      }
 
       if (typeof TogetherJS !== "undefined") {
         TogetherJS.reinitialize();

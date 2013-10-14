@@ -158,6 +158,7 @@
   "title": "<em>HTML Title Element</em> (<code>&lt;title&gt;</code>) กำหนดหัวข้อของเอกสารที่จะแสดงในเบราเซอร์แทบด้านบนหรือในแท็บของเพจ มันสามารถใส่ตัวอักษรเท่านั้นและไม่สามารถใส่แท็คในการแสดงได้.",
   "Title": "หัวข้อ",
   "tr": "<em>HTML Table Row Element</em> (<code>&lt;tr&gt;</code>) กำหนดแถวในเซลล์ของตาราง. มันอาจจะมีรูปแบบได้ทั้ง <code><a rel=\"custom\" href=\"https://developer.mozilla.org/en/HTML/Element/td\">&lt;td&gt;</a></code>\n และ <code><a rel=\"custom\" href=\"https://developer.mozilla.org/en/HTML/Element/th\">&lt;th&gt;</a></code>\n elements.",
+  "Tutorial": "แนะนำการใช้งาน",
   "Tutorials": "การสอน",
   "tweet": "Tweet",
   "Twitter": "Twitter",
