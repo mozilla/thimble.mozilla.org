@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="{{ localeInfo.lang }}" dir="{{ localeInfo.direction }}">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ gettext("errorTitle") }} {{status}}</title>
+    <link rel="stylesheet" href="/stylesheets/error.css">
+  </head>
+  <body>
+    <div class="container">
+      <img src="/img/webmaker-loose-thread.png" alt="Webmaker logo">
+      <p>{{status}}: {{message}}</p>
+      <p>{{ gettext("errorMessage") | instantiate | safe }}</p>
+    </div>
+  </body>
+</html>

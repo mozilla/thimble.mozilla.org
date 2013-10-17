@@ -45,12 +45,15 @@ var appName = "thimble",
 
     allowJS = env.get("JAVASCRIPT_ENABLED", false),
     middleware = require('./lib/middleware')(env),
+    errorhandling= require('./lib/errorhandling'),
     make = makeAPI(env.get('make')),
     nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'), {
       autoescape: true
     }),
     routes = require('./routes')( utils, env, nunjucksEnv, appName ),
     parameters = require('./lib/parameters');
+
+    require("./lib/extendnunjucks").extend(nunjucksEnv, nunjucks);
 
 nunjucksEnv.express(app);
 
@@ -119,10 +122,9 @@ app.use(express.static(path.join(__dirname, 'templates')));
 // Setting up bower_components
 app.use( "/bower", express.static( path.join(__dirname, "bower_components" )));
 
-
-app.use( function(err, req, res, next) {
-  res.send( 500, err );
-});
+// Error handler
+app.use(errorhandling.errorHandler);
+app.use(errorhandling.pageNotFoundHandler);
 
 // what do we do when a project request comes in by id (:id route)?
 app.param('id', parameters.id(databaseAPI));
