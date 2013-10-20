@@ -1,6 +1,6 @@
 {
   "name": "thimble",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "private": true,
   "dependencies": {
     "async": "0.2.7",
