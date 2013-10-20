@@ -1,8 +1,23 @@
 {% block tutorialbar %}
-    <div class="tutorial-view closed">
-      <div class="tutorial-view-title"></div>
-      <iframe class="tutorial-iframe"></iframe>
-      <div class="tutorial-iframe-cover"></div>
-      <div class="icon icon-x tutorial-close-button"></div>
+    <div class="tutorial-view">
+      <div class="tutorial-view-title nav-options">
+        <div class="tutorial-buttons">
+          <span title="{{ gettext('More') }}" class="tutorial-btn icon-ellipsis-horizontal">
+            <div class="tutorial-list">
+            </div>
+          </span>
+          <span title="{{ gettext('Resize') }}" class="tutorial-resize-button icon-resize-full"></span>
+          <span title="{{ gettext('Hide tutorial') }}" class="tutorial-close-button icon-chevron-left"></span>
+        </div>
+      	<div class="nav-item editor-nav-item tutorial-nav-item">
+      		<span class="icon-lightbulb">&nbsp;</span>
+      		<span class="tutorial-title">{{ gettext("Tutorial") }}</span>
+          <div class="pane-indicator enabled"></div>
+      	</div>
+      </div>
+      <div class="tutorial-iframe-wrapper">
+        <iframe class="tutorial-iframe"></iframe>
+      </div>
+      <div title="{{ gettext('Show tutorial') }}" class="tutorial-show-button"><span class="icon-lightbulb"></span></div>
     </div>
 {% endblock %}

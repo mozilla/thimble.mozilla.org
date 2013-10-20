@@ -158,6 +158,7 @@
   "title": "HTML элемент <em>название</em> (<code>&lt;title&gt;</code>) определяет название документа, показанное в строке заголовка окна браузера или на ярлыке страницы. Он может содержать только текст, а любые теги в нём не интерпретируются.",
   "Title": "Название",
   "tr": "HTML элемент <em>строка таблицы</em> (<code>&lt;tr&gt;</code>) определяет ряд клеток в таблице. Это может быть сочетание элементов <code><a rel=\"custom\" href=\"https://developer.mozilla.org/en/HTML/Element/td\">&lt;td&gt;</a></code>\n и <code><a rel=\"custom\" href=\"https://developer.mozilla.org/en/HTML/Element/th\">&lt;th&gt;</a></code>.",
+  "Tutorial": "Учебное пособие",
   "Tutorials": "Учебные пособия",
   "tweet": "Твитнуть",
   "Twitter": "Твиттер",

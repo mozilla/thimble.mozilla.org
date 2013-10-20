@@ -1,0 +1,98 @@
+body {
+  margin: 60px 20px;
+  font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  color: #333;
+}
+
+a {
+  color: #3887F3;
+}
+
+.tutorial-nav {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 5px 5px 5px 10px;
+  border-bottom: 1px solid #ccc;
+  background-color: #f9f9f9;
+  font-size: 12px;
+}
+
+.tutorial-nav .buttons {
+  float: right;
+}
+
+.tutorial-nav button {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin: 0 0 0 5px;
+  background-color: #3887F3;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tutorial-nav button:focus {
+  background-color: #3887F3;
+  outline: none;
+}
+
+.tutorial-nav button:active,
+.tutorial-nav button:hover {
+  background-color: #2662D2;
+  outline: none;
+}
+
+.tutorial-nav button.disabled,
+.tutorial-nav button.disabled:hover {
+  cursor: default;
+  background-color: #AACBF6;
+}
+
+.tutorial-nav .previous,
+.tutorial-nav .next {
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+  line-height: 20px;
+}
+
+.tutorial-nav .steps {
+  float: left;
+  padding: 4px 6px 3px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  background-color: #fff;
+  color: #888;
+  font-weight: bold;
+}
+
+section {
+  margin-bottom: 20px;
+}
+
+code {
+  font-weight: bold;
+}
+
+.tutorial-line {
+  border-bottom: 1px dotted #444;
+  font-weight: bold;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.tutorial-line:hover {
+  background-color: #AACBF6;
+}
