@@ -1,7 +1,7 @@
 {
   "name": "thimble.webmaker.org",
   "dependencies": {
-    "webmaker-i18n": "https://github.com/mozilla/node-webmaker-i18n/archive/v0.2.4.tar.gz",
+    "webmaker-i18n": "https://github.com/mozilla/node-webmaker-i18n/archive/v0.2.7.tar.gz",
     "webmaker-ui": "0.0.12"
   }
 }
