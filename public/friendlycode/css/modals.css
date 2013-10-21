@@ -8,8 +8,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-color: rgba(0,0,0,0.2); 
-  height: 100%; 
+  background-color: rgba(0,0,0,0.2);
+  height: 100%;
   width: 100%;
 }
 
@@ -54,7 +54,7 @@
   -webkit-transform: rotate(45deg);
   -o-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
-  transform: rotate(45deg); 
+  transform: rotate(45deg);
 
   border: 1px solid #C0C0C0;
   border-width: 1px 0 0 1px;
@@ -97,7 +97,7 @@
   font-size: 14px;
 
   background-color: #3A84FC;
-  
+
   color: white;
 }
 
@@ -241,6 +241,7 @@ html.deployment-type-development .confirm-dialog .development-note {
   -moz-transition: opacity 0.5s;
   -webkit-transition: opacity 0.5s;
   -o-transition: opacity 0.5s;
+  border: none;
 }
 
 .confirmation-button:hover {

@@ -8,8 +8,8 @@
   position: absolute;
   top: 0px;
   left: 0px;
-  background-color: rgba(0,0,0,0.45); 
-  height: 100%; 
+  background-color: rgba(0,0,0,0.45);
+  height: 100%;
   width: 100%;
 }
 
@@ -94,11 +94,12 @@
   margin: auto;
   color: white;
   margin: 0px 1em;
+  border: none;
 }
 
 .confirmation-button.yes-button {
   background-color: #1DBF84;
-} 
+}
 
 .confirmation-button.no-button {
   background-color: #F14D2A;

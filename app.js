@@ -243,6 +243,30 @@ app.post('/publish',
   }
 );
 
+// Title verification function, used to make sure users are warned if
+// they try to save a project with a title that already exists, before
+// they actually press the "publish" button.
+app.post('/checktitle',
+         middleware.checkForAuth,
+         middleware.ensureMetaData,
+         function(req, res, next) {
+           req.body.metaData.title = req.body.title;
+           next();
+         },
+         middleware.checkPageOperation(databaseAPI),
+         middleware.checkTitleAvailability(databaseAPI),
+  function(req, res) {
+    if (res.locals.titleAvailability === 500) {
+      res.json({status: 500, reason: "an error occurred querying the database against your title"});
+    } else if (res.locals.titleAvailability === 409) {
+      res.json({status: 409, reason: "the title you have chosen is already in use"});
+    } else {
+      res.json({status: 200});
+    }
+  }
+);
+
+
 // Localized Strings
 app.get( '/strings/:lang?', i18n.stringsRoute( 'en-US' ) );
 
