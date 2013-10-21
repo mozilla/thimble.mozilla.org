@@ -18,7 +18,7 @@
     "node-statsd": "0.0.7",
     "noxmox": "0.2.4",
     "nunjucks": "0.1.10",
-    "webmaker-i18n": "https://github.com/mozilla/node-webmaker-i18n/archive/v0.2.4.tar.gz",
+    "webmaker-i18n": "https://github.com/mozilla/node-webmaker-i18n/archive/v0.2.7.tar.gz",
     "request": "2.21.0",
     "sequelize": "1.6.0",
     "webmaker-loginapi": "https://github.com/mozilla/node-webmaker-loginapi/tarball/v0.1.16"
