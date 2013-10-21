@@ -1,5 +1,11 @@
           <li class="together-btn">
             <span class="icon icon-comments-alt"></span>
+            <script>
+              // disable webrtc functionality for now
+              var TogetherJSConfig = {
+                disableWebRTC: true
+              };
+            </script>
             <script src="{{ together }}/togetherjs-min.js"></script>
           	<button class="together-toggle">{{ gettext("Start Togetherjs") }}</button>
             <script>
