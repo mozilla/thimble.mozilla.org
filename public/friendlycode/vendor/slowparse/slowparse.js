@@ -37,6 +37,20 @@ var Slowparse = (function() {
     amp: "&"
   };
 
+  //Define a property checker for https page
+  var checkMixedContent = (window.location.protocol === "https:");
+
+  //Define activeContent with tag-attribute pairs
+  function isActiveContent (tagName, attrName) {
+    if (attrName === "href") {
+      return ["a", "link"].indexOf(tagName) > -1;
+    }
+    if (attrName === "src") {
+      return ["script", "iframe"].indexOf(tagName) > -1;
+    }
+    return false;
+  }
+
   // `replaceEntityRefs()` will replace named character entity references
   // (e.g. `&lt;`) in the given text string and return the result. If an
   // entity name is unrecognized, don't replace it at all. Writing HTML
@@ -203,6 +217,25 @@ var Slowparse = (function() {
           start: parser.domBuilder.currentNode.parseInfo.closeTag.start,
           end: end
         }
+      };
+    },
+    //Special error type for a http link does not work in a https page
+    HTTP_LINK_FROM_HTTPS_PAGE: function(parser, nameTok, valueTok) {
+      return {
+        openTag: this._combine({
+          name: parser.domBuilder.currentNode.nodeName.toLowerCase()
+        }, parser.domBuilder.currentNode.parseInfo.openTag),
+        attribute: {
+          name: {
+            value: nameTok.value,
+            start: nameTok.interval.start,
+            end: nameTok.interval.end
+          },
+          value: {
+            start: valueTok.interval.start + 1,
+            end: valueTok.interval.end - 1
+          }
+        },
       };
     },
     // These are CSS errors.
@@ -1178,7 +1211,7 @@ var Slowparse = (function() {
        *        either cleanly terminate or throw a ParseError anyway? */
       while (!this.stream.end()) {
         if (this.stream.eatWhile(/[A-Za-z\-]/)) {
-          this._parseAttribute();
+          this._parseAttribute(tagName);
         }
         else if (this.stream.eatSpace()) {
           this.stream.makeToken();
@@ -1225,7 +1258,7 @@ var Slowparse = (function() {
     },
     // This helper function parses an HTML tag attribute. It expects
     // the stream to be right after the end of an attribute name.
-    _parseAttribute: function() {
+    _parseAttribute: function(tagName) {
       var nameTok = this.stream.makeToken();
       nameTok.value = nameTok.value.toLowerCase();
       this.stream.eatSpace();
@@ -1251,6 +1284,12 @@ var Slowparse = (function() {
           throw new ParseError("UNTERMINATED_ATTR_VALUE", this, nameTok);
         }
         var valueTok = this.stream.makeToken();
+
+        //Add a new validator to check if there is a http link in a https page
+        if (checkMixedContent && valueTok.value.match(/http:/) && isActiveContent(tagName, nameTok.value)) {
+          throw new ParseError("HTTP_LINK_FROM_HTTPS_PAGE", this, nameTok, valueTok);
+        }
+
         var unquotedValue = replaceEntityRefs(valueTok.value.slice(1, -1));
         this.domBuilder.attribute(nameTok.value, unquotedValue, {
           name: nameTok.interval,

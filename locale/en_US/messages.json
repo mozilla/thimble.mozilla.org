@@ -170,6 +170,7 @@
 	"UNFINISHED_CSS_VALUE": "<p>Value <em data-highlight='[[cssValue.start]],[[cssValue.end]]'>[[cssValue.value]]</em> still needs finalising with ;</p>",
 	"UNQUOTED_ATTR_VALUE": "<p>The Attribute value <em data-highlight='[[start]]'>here</em> should start with an opening double quote.</p>",
 	"UNTERMINATED_ATTR_VALUE": "<p>The <code>&lt;[[openTag.name]]&gt;</code> tag's <code>[[attribute.name.value]]</code> attribute has a value <em data-highlight='[[attribute.value.start]]'>here</em> that doesn't end with a closing double quote.</p>",
+	"HTTP_LINK_FROM_HTTPS_PAGE":"<p>The <code>&lt;[[openTag.name]]&gt;</code> tag's <code>[[attribute.name.value]]</code> attribute points to a HTTP resource <em data-highlight='[[attribute.value.start]],[[attribute.value.end]]'>here</em>, but the page itself is hosted on HTTPS. Most browsers will not be able to load this resource because of mixed-content restrictions. Either point to an HTTPS resource, or include the data as content in an on-page <code>&lt;[[openTag.name]]&gt;</code> element instead.</p>",
 	"UNTERMINATED_CLOSE_TAG": "<p>The closing <code>&lt;/[[closeTag.name]]&gt;</code> tag <em data-highlight='[[closeTag.start]],[[closeTag.end]]'>here</em> doesn't end with a <code>&gt;</code>.</p>",
 	"UNTERMINATED_COMMENT": "<p>The comment <em data-highlight='[[start]]'>here</em> doesn't end with a <code>--&gt;</code>.</p>",
 	"UNTERMINATED_CSS_COMMENT": "<p>The CSS comment <em data-highlight='[[start]]'>here</em> doesn't end with a <code>*/</code>.</p>",
