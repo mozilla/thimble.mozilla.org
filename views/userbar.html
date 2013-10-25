@@ -28,7 +28,7 @@
               {{ gettext("Hi") }} <span id="identity" class="user-name-container"></span> <span class="icon icon-caret-down"></span>
           </div>
           <ul class="menu-container">
-            <li class="makes my-makes"><span class="icon icon-th-large"></span><button>{{ gettext("My makes") }}</button></li>
+            <li class="makes my-makes"><span class="icon icon-th-large"></span><button class="my-makes-toggle">{{ gettext("My makes") }}</button></li>
             <li class="login"><span class="icon icon-signout"></span><iframe src="{{audience}}/{{localeInfo.lang}}/sso/include.html" class="include-frame"></iframe>
             {% if together %}{% include "together.html" %}{% endif %}
             </li>
