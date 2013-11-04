@@ -45,6 +45,7 @@
 	"embed": "The <em>HTML&nbsp;Embed Element</em> (<code>&lt;embed&gt;</code>) represents an integration point for an external application or interactive content (in other words, a plug-in).",
 	"error-warning": "<strong>Warning:</strong> Your code appears to contain errors, and the published page may not appear as you intend.",
 	"errorMessage": "Please try a <a href='https://webmaker.org/{{localeInfo.lang}}/search'>search</a> or visit our <a href='https://webmaker.org/{{localeInfo.lang}}'>homepage</a>.",
+	"errorTitle": "Oops, you've found a",
 	"EVENT_HANDLER_ATTR_NOT_ALLOWED": "<p>Sorry, but security restrictions on this site prevent you from using the JavaScript event handler attribute <em data-highlight='[[name.start]],[[name.end]]'>here</em>. If you really need to use JavaScript, consider using <a href='http://jsbin.com/'>jsbin</a> or <a href='http://jsfiddle.net/'>jsfiddle</a>.</p>",
 	"Facebook": "Facebook",
 	"fieldset": "The HTML&nbsp;element<em> fieldset </em>(<span style=\"font-family: Courier New;\">&lt;fieldset&gt;</span>) is used to group several controls as well as labels (<code><a rel=\"custom\" href=\"https://developer.mozilla.org/en/HTML/Element/label\">&lt;label&gt;</a></code>\n) within a web form.",
