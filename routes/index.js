@@ -1,42 +1,41 @@
 /**
  * GET for the index.html template
  */
+var moment = require("moment");
+
+// Content-fetching function used for generating the output
+// on http://[...]/data routes via the index.rawData function.
+function getPageData(req) {
+  var content = "";
+  if (req.pageData) {
+    content = req.pageData;
+    if (req.query.mode && req.query.mode === "remix") {
+      content = content.replace(/<title([^>]*)>/, "<title$1>Remix of ");
+    }
+  }
+  return content;
+}
+
 module.exports = function(utils, env, nunjucksEnv, appName) {
 
   var allowJS = env.get("JAVASCRIPT_ENABLED", false),
       appURL = env.get("HOSTNAME"),
       audience = env.get("AUDIENCE"),
       makeEndpoint = env.get("MAKE_ENDPOINT"),
-      moment = require("moment"),
       previewLoader = env.get("PREVIEW_LOADER"),
       together = env.get("USE_TOGETHERJS") ? env.get("TOGETHERJS") : false,
       userbarEndpoint = env.get("USERBAR");
 
   return {
     index: function(req, res) {
-      var content;
-      moment.lang(req.localeInfo.momentLang);
-
-      if (req.pageData) {
-        content = req.pageData.replace(/'/g, '\\\'').replace(/\n/g, '\\n').replace(/\//g,'\\\/');
-      } else {
-        var tpl = nunjucksEnv.getTemplate("friendlycode/templates/default-content.html");
-        content = tpl.render({
-          title: req.gettext("Your Awesome Webpage created on"),
-          time: moment().format('llll'),
-          text: req.gettext("Make something amazing with the web")
-        });
+      res.locals.pageToLoad = '';
+      if (req.requestId) {
+        res.locals.pageToLoad = appURL + "/" + req.localeInfo.lang + "/project/" + req.requestId + "/data";
       }
-
-      if (req.body.pageOperation === "remix") {
-        content = content.replace(/<title([^>]*)>/, "<title$1>Remix of ");
-      }
-
       res.render('index.html', {
         appname: appName,
         appURL: appURL,
         audience: audience,
-        content: content,
         allowJS: allowJS,
         csrf: req.session._csrf,
         email: req.session.email || '',
@@ -51,9 +50,20 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
       });
     },
 
+    rawData: function(req, res) {
+      res.type('text/plain; charset=utf-8');
+      res.send(getPageData(req));
+    },
+
     friendlycodeRoutes: function(app) {
       app.get( '/default-content', function( req, res ) {
-        res.render('friendlycode/templates/default-content.html');
+        moment.lang(req.localeInfo.momentLang);
+        res.type('text/plain; charset=utf-8');
+        res.render('friendlycode/templates/default-content.html', {
+          title: req.gettext("Your Awesome Webpage created on"),
+          time: moment().format('llll'),
+          text: req.gettext("Make something amazing with the web")
+        });
       });
 
       app.get( '/error-dialog', function( req, res ) {

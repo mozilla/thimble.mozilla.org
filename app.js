@@ -135,6 +135,13 @@ app.get('/',
         middleware.setNewPageOperation,
         routes.index );
 
+// Raw data route, for loading pages to remix
+app.get('/project/:id/data', routes.rawData );
+
+// Legacy route for old user content
+app.get('/p/:oldid/data', routes.rawData );
+
+
 // Remix a published page (from db)
 // Even if this is "our own" page, this URL
 // will effect a new page upon publication.
