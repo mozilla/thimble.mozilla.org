@@ -86,27 +86,29 @@ $.fn.tutorial = function(options){
           change = textLength - removed;
 
       if (change !== 0) {
-        $('.tutorial-line').each(function(){
+        $('.tutorial-line > [data-line]').each(function(){
             var line = parseInt($(this).attr('data-line'), 10) - 1;
             if (line > from) {
               line = line + change;
               $(this)
                 .attr('data-line', parseInt(line + 1, 10))
-                .text("line " + parseInt(line + 1, 10));
+                .text(parseInt(line + 1, 10));
             }
         });
       }
     };
 
     // mark up any mentions of lines
-    var re = /((lines*) ([0-9]+))/ig,
-        value = '<span class="tutorial-line" data-line="$3">$2 <span class="line">$3</span></span>';
+    var re = /(lines?\s*)([0-9]+)(\s*-\s*|\s*to\s*)?([0-9]+)?/ig,
+        value = '<span class="tutorial-line" data-line="$2">$1' +
+                '<span data-line="$2" class="line-from">$2</span>$3' +
+                '<span data-line="$4" class="line-to">$4</span>' +
+                '</span>';
 
     sections
       .each(function(){
         $(this).html($(this).html().replace(re, value));
-      })
-      .first().show();
+      });
 
     // add postmessage event handlers
     if (!!window.postMessage) {
@@ -117,11 +119,14 @@ $.fn.tutorial = function(options){
 
       var generateEventHandler = function(action){
         return function() {
-          var num = parseInt($(this).attr('data-line'), 10),
+          var lines = {
+                from: parseInt($(this).find(".line-from").attr('data-line'), 10),
+                to: parseInt($(this).find(".line-to").attr('data-line'), 10)
+              },
               message = JSON.stringify({
                 type: "tutorial",
                 action: action,
-                line: num
+                lines: lines
               });
           top.postMessage(message, '*');
         };

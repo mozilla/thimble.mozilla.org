@@ -65,8 +65,20 @@ define(["jquery", "/external/make-api.js", "/external/requestAnimationFrameShim.
         }
 
         function smartlines(data, source) {
-          var line = data.line - 1,
-              codeMirror = editor.panes.codeMirror;
+          var codeMirror = editor.panes.codeMirror,
+              lineFrom,
+              lineTo,
+              i;
+
+          if (data.lines) {
+            lineFrom = data.lines.from - 1;
+            lineTo = data.lines.to ? data.lines.to - 1 : lineFrom;
+
+            if (lineFrom > lineTo) {
+              lineFrom = lineTo;
+              lineTo = data.lines.from - 1;
+            }
+          }
 
           if (data.action === "init") {
             codeMirror.on("change", function(instance, obj){
@@ -79,23 +91,29 @@ define(["jquery", "/external/make-api.js", "/external/requestAnimationFrameShim.
                 source.postMessage(JSON.stringify(message), "*");
               }
             });
-          } else if (line < 0 || line > codeMirror.lastLine()){
+          } else if (lineTo < 0 || lineFrom > codeMirror.lastLine()){
             return;
           } else if (data.action === "highlight") {
-            var mark = document.createElement("span");
-            $(mark).attr("class","gutter-mark tutorial-class");
-            mark.innerHTML = "...";
-            codeMirror.setGutterMarker(line, "gutter-markers", mark);
-            codeMirror.addLineClass(line, "background", "tutorial-highlight");
+            var mark;
+
+            for (i = lineFrom; i <= lineTo; i++) {
+              mark = document.createElement("span");
+              $(mark).attr("class","gutter-mark tutorial-class");
+              mark.innerHTML = "...";
+              codeMirror.setGutterMarker(i, "gutter-markers", mark);
+              codeMirror.addLineClass(i, "background", "tutorial-highlight");
+            }
           } else if (data.action === "unhighlight") {
-            codeMirror.setGutterMarker(line, "gutter-markers", null);
-            codeMirror.removeLineClass(line, "background", "tutorial-highlight");
+            for (i = lineFrom; i <= lineTo; i++) {
+              codeMirror.setGutterMarker(i, "gutter-markers", null);
+              codeMirror.removeLineClass(i, "background", "tutorial-highlight");
+            }
           } else if (data.action === "scroll") {
             var codeMirrorLine = document.querySelector(".CodeMirror-code > div"),
                 lineHeight = parseFloat(getComputedStyle(codeMirrorLine).height),
                 margin = 5 * lineHeight, // how many lines are displayed above targetted line
                 position = codeMirror.getScrollInfo().top,
-                target = codeMirror.heightAtLine(line, "local") - margin,
+                target = codeMirror.heightAtLine(lineFrom, "local") - margin,
                 distance,
                 stepSize,
                 steps = 0;
