@@ -57,26 +57,20 @@ var appName = "thimble",
 
 nunjucksEnv.express(app);
 
-// List of supported languages - Add them in the .env file
-var listDropdownLang = env.get( "SUPPORTED_LANGS" ),
-    // We create another array based on listDropdownLang to use it in the i18n.middleware
-    // supported_language which will be modified from the i18n mapping function
-    supportedLanguages = listDropdownLang.slice(0);
-
-app.locals({
-  GA_ACCOUNT: env.get("GA_ACCOUNT"),
-  GA_DOMAIN: env.get("GA_DOMAIN"),
-  supportedLanguages: supportedLanguages,
-  listDropdownLang: listDropdownLang
-});
-
 // Setup locales with i18n
 app.use( i18n.middleware({
-  supported_languages: supportedLanguages,
+  supported_languages: env.get( "SUPPORTED_LANGS" ),
   default_lang: "en-US",
   mappings: env.get( "LANG_MAPPINGS" ),
   translation_directory: path.resolve( __dirname, "locale" )
 }));
+
+app.locals({
+  GA_ACCOUNT: env.get("GA_ACCOUNT"),
+  GA_DOMAIN: env.get("GA_DOMAIN"),
+  supportedLanguages: i18n.getLanguages(),
+  listDropdownLang: env.get( "SUPPORTED_LANGS" )
+});
 
 // Express settings
 app.use(express.favicon(__dirname + '/public/img/favicon.ico'));
