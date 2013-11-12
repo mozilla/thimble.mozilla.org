@@ -68,6 +68,7 @@ define(["jquery", "/external/make-api.js", "/external/requestAnimationFrameShim.
           var codeMirror = editor.panes.codeMirror,
               lineFrom,
               lineTo,
+              lineString,
               i;
 
           if (data.lines) {
@@ -77,6 +78,12 @@ define(["jquery", "/external/make-api.js", "/external/requestAnimationFrameShim.
             if (lineFrom > lineTo) {
               lineFrom = lineTo;
               lineTo = data.lines.from - 1;
+            }
+
+            if (lineFrom === lineTo) {
+              lineString = "line " + (lineFrom+1);
+            } else {
+              lineString = "lines " + (lineFrom+1) + " - " + (lineTo+1);
             }
           }
 
@@ -94,7 +101,17 @@ define(["jquery", "/external/make-api.js", "/external/requestAnimationFrameShim.
           } else if (lineTo < 0 || lineFrom > codeMirror.lastLine()){
             return;
           } else if (data.action === "highlight") {
-            var mark;
+            var top = codeMirror.getScrollInfo().top,
+                clientHeight = codeMirror.getScrollInfo().clientHeight,
+                viewportTop = codeMirror.lineAtHeight(top + 10, "local"),
+                viewportBottom = codeMirror.lineAtHeight(top + clientHeight, "local"),
+                mark;
+
+            if (lineTo < viewportTop) {
+              $(".tutorial-pointer").text(lineString).show();
+            } else if (lineFrom > viewportBottom) {
+              $(".tutorial-pointer").text(lineString).addClass("down").show();
+            }
 
             for (i = lineFrom; i <= lineTo; i++) {
               mark = document.createElement("span");
@@ -104,6 +121,7 @@ define(["jquery", "/external/make-api.js", "/external/requestAnimationFrameShim.
               codeMirror.addLineClass(i, "background", "tutorial-highlight");
             }
           } else if (data.action === "unhighlight") {
+            $(".tutorial-pointer").hide().removeClass("down");
             for (i = lineFrom; i <= lineTo; i++) {
               codeMirror.setGutterMarker(i, "gutter-markers", null);
               codeMirror.removeLineClass(i, "background", "tutorial-highlight");
@@ -117,6 +135,10 @@ define(["jquery", "/external/make-api.js", "/external/requestAnimationFrameShim.
                 distance,
                 stepSize,
                 steps = 0;
+
+            $(".tutorial-pointer").fadeOut(function(){
+              $(this).removeClass("down");
+            });
 
             if (target < 0) {
               target = 0;
@@ -152,6 +174,9 @@ define(["jquery", "/external/make-api.js", "/external/requestAnimationFrameShim.
         }
 
         function loadTutorialHandlers() {
+          $("body").addClass("tutorial");
+          $("#webmaker-source-code-pane").append('<div class="tutorial-pointer"></div>');
+
           tutorialList.on("click", ".tutorial-list-item", function(event) {
             event.stopPropagation();
             var url = $(this).attr("data-url");
@@ -178,7 +203,7 @@ define(["jquery", "/external/make-api.js", "/external/requestAnimationFrameShim.
 
           showButton.click(function() {
             $("body").addClass("tutorial");
-          });
+          }).show();
 
           window.addEventListener('message', function(event){
             try {
@@ -198,8 +223,6 @@ define(["jquery", "/external/make-api.js", "/external/requestAnimationFrameShim.
         }
 
         loadTutorialHandlers();
-        $("body").addClass("tutorial");
-        showButton.show();
       });
     }
   };

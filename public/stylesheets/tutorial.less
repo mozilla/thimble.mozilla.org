@@ -231,3 +231,47 @@ body.tutorial .tutorial-show-button {
 .tutorial-highlight {
   background-color: #AACBF6;
 }
+
+.tutorial-pointer {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  left: 40px;
+  top: 20px;
+  bottom: auto;
+  padding: 6px 15px;
+  background-color: #3887F3;
+  border-radius: 25px;
+  text-align: center;
+  line-height: 100%;
+  font-size: 13px;
+  color: #fff;
+
+  &:before {
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    margin-top: -10px;
+    margin-left: -8px;
+    border-top: none;
+    border-bottom: 14px solid #3887F3;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+  }
+
+  &.down {
+    top: auto;
+    bottom: 20px;
+
+    &:before {
+      bottom: 0;
+      margin-top: auto;
+      margin-bottom: -10px;
+      border-top: 14px solid #3887F3;
+      border-bottom: none;
+    }
+  }
+}
