@@ -124,10 +124,11 @@ var Slowparse = (function() {
     },
     // These are HTML errors.
     UNCLOSED_TAG: function(parser) {
+      var currentNode = parser.domBuilder.currentNode;
       return {
         openTag: this._combine({
-          name: parser.domBuilder.currentNode.nodeName.toLowerCase()
-        }, parser.domBuilder.currentNode.parseInfo.openTag)
+          name: currentNode.nodeName.toLowerCase()
+        }, currentNode.parseInfo.openTag)
       };
     },
     INVALID_TAG_NAME: function(tagName, token) {
@@ -167,10 +168,11 @@ var Slowparse = (function() {
       };
     },
     UNTERMINATED_ATTR_VALUE: function(parser, nameTok) {
+      var currentNode = parser.domBuilder.currentNode;
       return {
         openTag: this._combine({
-          name: parser.domBuilder.currentNode.nodeName.toLowerCase()
-        }, parser.domBuilder.currentNode.parseInfo.openTag),
+          name: currentNode.nodeName.toLowerCase()
+        }, currentNode.parseInfo.openTag),
         attribute: {
           name: {
             value: nameTok.value,
@@ -192,11 +194,12 @@ var Slowparse = (function() {
       };
     },
     UNTERMINATED_OPEN_TAG: function(parser) {
+      var currentNode = parser.domBuilder.currentNode;
       return {
         openTag: {
-          start: parser.domBuilder.currentNode.parseInfo.openTag.start,
+          start: currentNode.parseInfo.openTag.start,
           end: parser.stream.pos,
-          name: parser.domBuilder.currentNode.nodeName.toLowerCase()
+          name: currentNode.nodeName.toLowerCase()
         }
       };
     },
@@ -208,23 +211,25 @@ var Slowparse = (function() {
       };
     },
     UNTERMINATED_CLOSE_TAG: function(parser) {
+      var currentNode = parser.domBuilder.currentNode;
       var end = parser.stream.pos;
       if (!parser.stream.end())
         end = parser.stream.makeToken().interval.start;
       return {
         closeTag: {
-          name: parser.domBuilder.currentNode.nodeName.toLowerCase(),
-          start: parser.domBuilder.currentNode.parseInfo.closeTag.start,
+          name: currentNode.nodeName.toLowerCase(),
+          start: currentNode.parseInfo.closeTag.start,
           end: end
         }
       };
     },
     //Special error type for a http link does not work in a https page
     HTTP_LINK_FROM_HTTPS_PAGE: function(parser, nameTok, valueTok) {
+      var currentNode = parser.domBuilder.currentNode;
       return {
         openTag: this._combine({
-          name: parser.domBuilder.currentNode.nodeName.toLowerCase()
-        }, parser.domBuilder.currentNode.parseInfo.openTag),
+          name: currentNode.nodeName.toLowerCase()
+        }, currentNode.parseInfo.openTag),
         attribute: {
           name: {
             value: nameTok.value,
