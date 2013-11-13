@@ -21,7 +21,7 @@ define([
         // If we see an error on 0/0, the error is actually somewhere
         // else in the document, and we need to move the cursor to
         // the end of the erroneous code first.
-        var index = result.error.closeTag.end,
+        var index = result.error.closeTag ? result.error.closeTag.end : result.error.openTag.start,
             pos = codeMirror.posFromIndex(index);
         codeMirror.setCursor(pos);
       }
