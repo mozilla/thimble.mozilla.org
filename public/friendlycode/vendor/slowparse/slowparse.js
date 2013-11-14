@@ -48,6 +48,9 @@ var Slowparse = (function() {
     if (attrName === "src") {
       return ["script", "iframe"].indexOf(tagName) > -1;
     }
+    if (attrName === "data") {
+      return ["object"].indexOf(tagName) > -1;
+    }
     return false;
   }
 
@@ -307,6 +310,21 @@ var Slowparse = (function() {
           start: start,
           end: end,
           value: value
+        }
+      };
+    },
+	// Add a new error type for mixed active content in css values
+    CSS_MIXED_ACTIVECONTENT: function(parser, property, propertyStart, value, valueStart, valueEnd) {
+      return {
+        cssProperty: {
+          property: property,
+          start: propertyStart,
+          end: propertyStart + property.length
+        },
+        cssValue: {
+          value: value,
+          start: valueStart,
+          end: valueEnd
         }
       };
     },
@@ -928,7 +946,11 @@ var Slowparse = (function() {
         throw new ParseError("UNFINISHED_CSS_VALUE", this, valueStart,
                              valueEnd, value);
       }
-
+      //Add a new validator to check if there is mixed active content in css value
+      if (checkMixedContent && value.match(/,?\s*url\(\s*['"]?http:\/\/.+\)/)) {
+        valueStart = valueStart + value.indexOf('url');
+        throw new ParseError("CSS_MIXED_ACTIVECONTENT", this, property, propertyStart, value, valueStart, valueEnd);
+      }
       if (next === ';') {
         // This is normal CSS rule termination; try to read a new
         // property/value pair.
