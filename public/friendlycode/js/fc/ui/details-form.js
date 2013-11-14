@@ -195,7 +195,7 @@ define(['template!details-form'], function (detailsFormHTML) {
         // We decode any tags for now because
         // currently tags with colons are stripped.
         // So when we save a tag, we escape colons, so when we try to display it, unescape it.
-        $input('tag-output').append('<li>' + decodeURIComponent( val ) + '</li>');
+        $input('tag-output').append($('<li>').text(decodeURIComponent(val)));
       }
     });
     $input('tag-input').val('');
