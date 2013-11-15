@@ -73,6 +73,7 @@ app.locals({
 });
 
 // Express settings
+app.disable('x-powered-by');
 app.use(express.favicon(__dirname + '/public/img/favicon.ico'));
 app.use(express.logger("dev"));
 if (!!env.get("FORCE_SSL") ) {
