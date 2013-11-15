@@ -28,6 +28,7 @@
     "sqlite3": "2.1.17"
   },
   "devDependencies": {
+    "bower": "1.2.7",
     "grunt": "~0.4.1",
     "grunt-contrib-csslint": "~0.1.2",
     "grunt-recess": "0.3.3",
