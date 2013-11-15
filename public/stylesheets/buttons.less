@@ -6,7 +6,7 @@
 @_btnTotalHeight: 35px; // It turns out that the total height of our buttons is 35px.
 
 // Base
-.butter-btn {
+.btn {
   display: inline-block;
   text-decoration: none;
   font-size: 13px;
@@ -25,10 +25,10 @@
 }
 
 // Disabled states
-.butter-btn-slide-out {
+.btn-slide-out {
   display: block;
   overflow: hidden;
-  .butter-btn {
+  .btn {
     float: left;
     margin-right: 5px;
     .transition( all 0.2s ease-in );
@@ -40,9 +40,9 @@
 }
 
 // Active
-.butter-btn-active,
-.butter-btn-active:hover,
-.butter-btn:active {
+.btn-active,
+.btn-active:hover,
+.btn:active {
   &.btn-light {
     background: darken( @baseLight, 15% );
     border-color: darken( @baseLight, 35% );
@@ -67,7 +67,7 @@
 // Colors
 
 .btn-white,
-.btn-white.butter-disabled:hover {
+.btn-white.disabled:hover {
   background: #FFF;
   color: @baseText;
   border-radius: 0;
@@ -78,8 +78,8 @@
 }
 
 .btn-light,
-.btn-light.butter-disabled:hover,
-.btn-light.butter-disabled:active {
+.btn-light.disabled:hover,
+.btn-light.disabled:active {
   background: @baseLight;
   color: @baseText;
   border: 1px solid darken( @baseLight, 20% );
@@ -95,8 +95,8 @@
 }
 
 .btn-green,
-.btn-green.butter-disabled:hover,
-.btn-green.butter-disabled:active {
+.btn-green.disabled:hover,
+.btn-green.disabled:active {
   background: @green;
   color: #FFF;
   border: 1px solid darken( @green, 15% );
@@ -111,8 +111,8 @@
   }
 
 .btn-red,
-.btn-red.butter-disabled:hover,
-.btn-red.butter-disabled:active {
+.btn-red.disabled:hover,
+.btn-red.disabled:active {
   background: #D3473C;
   color: #FFF;
   border: 1px solid #A32630;
@@ -125,7 +125,7 @@
 }
 
 // States
-.butter-btn.butter-disabled {
+.btn.disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -138,18 +138,18 @@
     margin-left: -5px;
     border-right-width: 0;
   }
-  .butter-btn:first-of-type {
+  .btn:first-of-type {
     margin-left: 0;
     border-radius: 2px 0 0 2px;
   }
-  .butter-btn:last-of-type {
+  .btn:last-of-type {
     border-radius: 0 2px 2px 0;
     border-right-width: 1px;
   }
 }
 
 // Menu group
-.butter-btn-menu-container {
+.btn-menu-container {
   z-index: 20;
   display: inline-block;
   position: relative;
@@ -157,7 +157,7 @@
   .selectable( none );
 }
 
-.butter-btn-menu-control {
+.btn-menu-control {
   border: 1px solid @baseLightOutline;
   background: #FFF;
   border-radius: 0;
@@ -170,7 +170,7 @@
   z-index: 1;
   font-size: 16px;
   margin-right: 10px;
-  .butter-btn-menu-container:hover & {
+  .btn-menu-container:hover & {
     border-bottom-color: transparent;
     border-radius: 2px 2px 0 0;
     >.icon {
@@ -179,7 +179,7 @@
   }
 }
 
-.butter-btn-menu {
+.btn-menu {
   border: 1px solid @baseLightOutline;
   list-style: none;
   padding: 0;
@@ -193,7 +193,7 @@
 
   //States
   visibility: hidden;
-  .butter-btn-menu-container:hover & {
+  .btn-menu-container:hover & {
     visibility: visible;
   }
 
@@ -212,9 +212,9 @@
   }
   // The link inside the menu item
   > li > a,
-  > li > a.butter-disabled,
-  > li > a.butter-disabled:hover,
-  > li > a.butter-disabled:active {
+  > li > a.disabled,
+  > li > a.disabled:hover,
+  > li > a.disabled:active {
     color: @baseText;
     padding: 0 15px;
     min-width: 80px;

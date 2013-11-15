@@ -7,17 +7,17 @@
 @HEADER_ALIGN_MIDDLE: 2.7;
 
 // Adds room to template to account for header
-.butter-header-spacing {
+.header-spacing {
   padding-top: @HEADER_SPACING;
 }
 
-.butter-editor-spacing {
-  .butter-header {
+.editor-spacing {
+  .header {
     right: 0;
   }
 }
 
-.butter-header {
+.header {
   z-index: @HEADER_Z_INDEX;
   position: fixed;
   left: 0;
@@ -36,7 +36,7 @@
 * Primary white nav bar
 */
 
-.butter-header-primary {
+.header-primary {
   position: relative;
   background: #FFF;
   color: lighten( @baseText, 10% );
@@ -48,7 +48,7 @@
   .clearfix();
 }
 
-.butter-logo {
+.logo {
   position: absolute;
   top: 0;
   left: 15px;
@@ -58,7 +58,7 @@
   background-size: contain;
 }
 
-.butter-nav {
+.nav {
   position: absolute;
   top: 0;
   margin: 0;
@@ -71,7 +71,7 @@
   > li {
     float: left;
     padding: 0 20px;
-    &.butter-breadcrumbs {
+    &.breadcrumbs {
       position: relative;
       padding: 0;
       margin-right: 10px;
@@ -83,7 +83,7 @@
   }
 }
 
-.butter-project-title {
+.project-title {
   text-align: left;
   font-weight: 600;
   font-size: 16px;
@@ -109,7 +109,7 @@
     }
   }
 
-  a.butter-project-name {
+  a.project-name {
     display: block;
     overflow: hidden;
     white-space: nowrap;
@@ -283,17 +283,17 @@
 * Buttons
 */
 
-.butter-header {
-  .butter-btn {
+.header {
+  .btn {
     text-shadow: none;
   }
 }
 
-.butter-login-project-info {
+.login-project-info {
   position: relative;
 }
 
-.butter-login-project-info > ul {
+.login-project-info > ul {
   position: absolute;
   top: 48px;
   left: 28px;
