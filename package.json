@@ -13,6 +13,7 @@
     "makeapi-client": "https://github.com/mozilla/makeapi-client/tarball/v0.5.6",
     "less-middleware": "0.1.12",
     "newrelic": "1.1.1",
+    "messina": "0.1.1",
     "moment": "2.2.1",
     "mox-server": "https://github.com/Pomax/mox-server/archive/master.tar.gz",
     "node-statsd": "0.0.7",

@@ -22,7 +22,6 @@ var ajax = require('request'),
     version = require('./package').version,
     i18n = require('webmaker-i18n');
 
-
 habitat.load();
 
 var appName = "thimble",
@@ -51,9 +50,11 @@ var appName = "thimble",
       autoescape: true
     }),
     routes = require('./routes')( utils, env, nunjucksEnv, appName ),
-    parameters = require('./lib/parameters');
+    parameters = require('./lib/parameters'),
+    messina,
+    logger;
 
-    require("./lib/extendnunjucks").extend(nunjucksEnv, nunjucks);
+require("./lib/extendnunjucks").extend(nunjucksEnv, nunjucks);
 
 nunjucksEnv.express(app);
 
@@ -75,7 +76,16 @@ app.locals({
 // Express settings
 app.disable('x-powered-by');
 app.use(express.favicon(__dirname + '/public/img/favicon.ico'));
-app.use(express.logger("dev"));
+
+if ( env.get( "ENABLE_GELF_LOGS" ) ) {
+  messina = require( "messina" );
+  logger = messina( "thimble.webmaker.org-" + env.get( "NODE_ENV" ) || "development" );
+  logger.init();
+  app.use( logger.middleware() );
+} else {
+  app.use( express.logger() );
+}
+
 if (!!env.get("FORCE_SSL") ) {
   app.use(helmet.hsts());
   app.enable("trust proxy");
