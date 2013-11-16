@@ -3,7 +3,7 @@
 <div class="content">
   <%= html %>
   <% if (type == "cssSelector") { %>
-    <span class="selector-matches"> L10N:selector-matches[[[It currently matches <%- matchCount %> element(s).]]]</span>
+    <span class="selector-matches"><%- matchCount %></span>
   <% } %>
   <a class="learn-more" href="<%- url %>">{{ gettext("more...") }}</a>
 </div>
