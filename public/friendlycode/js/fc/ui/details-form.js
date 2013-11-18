@@ -24,7 +24,7 @@ define(['template!details-form'], function (detailsFormHTML) {
         $error = $(".title-error.error-message"),
         $button = $(".confirmation-button.yes-button"),
         title = this.value.toLowerCase(),
-        csrf_token = $("meta[name='X-CSRF-Token']").attr("content");
+        csrf_token = $("meta[name='csrf-token']").attr("content");
 
     $.ajax({
       type: "POST",
@@ -36,7 +36,7 @@ define(['template!details-form'], function (detailsFormHTML) {
       },
       dataType: 'json',
       beforeSend: function(request) {
-        request.setRequestHeader('X-CSRF-Token', csrf_token);
+        request.setRequestHeader('X-CSRF-Token', csrf_token); // express.js uses a non-standard name for csrf-token
       },
       error: function(req) {
         console.log("error while validating the title of your page")
