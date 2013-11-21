@@ -65,6 +65,32 @@
     return false;
   }
 
+  //define a container to store the omittable html Element temporarily
+  var activeTagNode = false;
+
+  //define a container to store the parent html Element temporarily
+  var parentTagNode = false;
+
+  //define a function to 'foresee' if there is no more content in the parent element,
+  //and the parent element is not an a element in the case of activeTag is a p element
+  function isNextTagParent(stream, parentTagName) {
+    return stream.findNext(/<\/([\w\-]+)\s*>/, 1) === parentTagName;
+  }
+
+  //define a function to 'foresee' if the next tag is a close tag
+  function isNextCloseTag(stream) {
+    return stream.findNext(/<\/([\w\-]+)\s*>/, 1);
+  }
+
+  // Check exception for Tag omission rules:
+  // for p tag, if there is no more content in the parent element and the parent element is not an a element.
+  function allowsOmmitedEndTag(parentTagName, tagName) {
+    if (tagName === "p") {
+      return ["a"].indexOf(parentTagName) > -1;
+    }
+    return false;
+  }
+
   // `replaceEntityRefs()` will replace named character entity references
   // (e.g. `&lt;`) in the given text string and return the result. If an
   // entity name is unrecognized, don't replace it at all. Writing HTML
@@ -558,6 +584,22 @@
         if (consume)
           this.pos += string.length;
         return true;
+      }
+      return false;
+    },
+    // `Stream.findNext()` is a look-ahead match that doesn't update the stream position
+    // by a given regular expression
+    findNext: function(pattern, groupNumber) {
+      var currentPos = this.pos;
+      this.eatWhile(/[^>]/);
+      this.next();
+      var nextPos = this.pos;
+      this.pos = currentPos;
+      var token = this.substream(nextPos - currentPos);
+      var captureGroups = token.match(pattern);
+      this.pos = currentPos;
+      if(captureGroups) {
+        return captureGroups[groupNumber];
       }
       return false;
     }
@@ -1079,6 +1121,23 @@
                        "img", "input", "keygen", "link", "meta", "param",
                        "source", "track", "wbr"],
 
+    // Tag Omission Rules, based on the rules on optional tags as outlined in
+    // http://www.w3.org/TR/html5/syntax.html#optional-tags
+
+    // HTML elements that with omittable close tag
+    omittableCloseTagHtmlElements: ["p", "li", "td", "th"],
+
+    // HTML elements that paired with omittable close tag list
+    omittableCloseTags: {
+      "p": ["address", "article", "aside", "blockquote", "dir", "div", "dl",
+            "fieldset", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6",
+            "header", "hgroup", "hr", "main", "nav", "ol", "p", "pre",
+            "section", "table", "ul"],
+      "th": ["th", "td"],
+      "td": ["th", "td"],
+      "li": ["li"]
+    },
+
     // We keep a list of all valid HTML5 elements.
     htmlElements: ["a", "abbr", "address", "area", "article", "aside",
                    "audio", "b", "base", "bdi", "bdo", "bgsound", "blink",
@@ -1139,6 +1198,16 @@
     // is a void HTML element tag.
     _knownVoidHTMLElement: function(tagName) {
       return this.voidHtmlElements.indexOf(tagName) > -1;
+    },
+    // This is a helper function to determine whether a given string
+    // is a HTML element tag which can optional omit its close tag.
+    _knownOmittableCloseTagHtmlElement: function(tagName) {
+      return this.omittableCloseTagHtmlElements.indexOf(tagName) > -1;
+    },
+    // This is a helper function to determine whether a given string
+    // is in the list of ommittableCloseTags which enable an active tag omit its close tag.
+    _knownOmittableCloseTags: function(activeTagName, foundTagName) {
+      return this.omittableCloseTags[activeTagName].indexOf(foundTagName) > -1;
     },
     // #### The HTML Master Parse Function
     //
@@ -1211,6 +1280,7 @@
       // We want to report useful errors about whether the tag is unexpected
       // or doesn't match with the most recent opening tag.
       if (tagName[0] == '/') {
+        activeTagNode = false;
         var closeTagName = tagName.slice(1).toLowerCase();
         if (closeTagName === "svg")
           this.parsingSVG = false;
@@ -1236,6 +1306,17 @@
 
         var parseInfo = { openTag: { start: token.interval.start }};
         var nameSpace = (this.parsingSVG ? this.svgNameSpace : undefined);
+
+        // If the preceding tag and the active tag is omittableCloseTag pairs,
+        // we tell our DOM builder that we're done.
+        if (activeTagNode && parentTagNode != this.domBuilder.fragment){
+          var activeTagName = activeTagNode.nodeName.toLowerCase();
+          if(this._knownOmittableCloseTags(activeTagName, tagName)) {
+            this.domBuilder.popElement();
+          }
+        }
+        // Store currentNode as the parentTagNode
+        parentTagNode = this.domBuilder.currentNode;
         this.domBuilder.pushElement(tagName, parseInfo, nameSpace);
 
         if (!this.stream.end())
@@ -1333,6 +1414,13 @@
           if (tagName && ((selfClosing && this._knownSVGElement(tagName)) || this._knownVoidHTMLElement(tagName)))
             this.domBuilder.popElement();
 
+          // If the open tag represents a optional-omit-close-tag element, there may be
+          // an optional closing element, so we save the currentNode into activeTag for next step check.
+          activeTagNode = false;
+          if (tagName && this._knownOmittableCloseTagHtmlElement(tagName)){
+            activeTagNode = this.domBuilder.currentNode;
+          }
+
           // If the opening tag represents a `<style>` element, we hand
           // off parsing to our CSS parser.
           if (!this.stream.end() && tagName === "style") {
@@ -1358,6 +1446,15 @@
             this.domBuilder.pushContext("html", this.stream.pos);
           }
 
+          // if there is no more content in the parent element, we tell DOM builder that we're done.
+          if(parentTagNode && parentTagNode != this.domBuilder.fragment) {
+            var parentTagName = parentTagNode.nodeName.toLowerCase();
+            if(isNextTagParent(this.stream, parentTagName) && !allowsOmmitedEndTag(parentTagName, tagName) || this._knownOmittableCloseTagHtmlElement(parentTagName) && isNextCloseTag(this.stream)) {
+              if(this._knownOmittableCloseTagHtmlElement(tagName)) {
+                this.domBuilder.popElement();
+              }
+            }
+          }
           return;
         }
         // error cases: bad attribute name, or unclosed tag
