@@ -3,7 +3,7 @@
 <div class="content">
   <%= html %>
   <% if (type == "cssSelector") { %>
-    <span class="selector-matches"><%- matchCount %></span>
+    <span class="selector-matches">{{ gettext("matchCount") | safe }}</span>
   <% } %>
   <a class="learn-more" href="<%- url %>">{{ gettext("more...") }}</a>
 </div>

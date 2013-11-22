@@ -68,7 +68,7 @@ define([
     return tagName;
   }
 
-  // Recursively build the help index mapping source code indices 
+  // Recursively build the help index mapping source code indices
   // to context-sensitive help.
   function buildHelpIndex(element, helpIndex, html) {
     var i, child,
@@ -118,7 +118,7 @@ define([
       }
     }
   }
-  
+
   var Help = {
     Index: HelpIndex,
     // URLs for help on the Mozilla Developer Network.
