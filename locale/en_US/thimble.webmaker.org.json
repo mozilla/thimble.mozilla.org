@@ -193,6 +193,7 @@
 	"wbr": "The <em>Word Break Opportunity</em> (<code>&lt;wbr&gt;</code>) HTML element represents a position within text where the browser may optionally break a line, though its line-breaking rules would not otherwise create a break at that location.",
 	"Webmaker": "Webmaker",
 	"Yes": "Yes",
+	"You have unsaved project data": "You have unsaved project data for this Thimble page.",
 	"you will have to choose a new title": "you will have to choose a new title",
 	"Your Awesome Webpage created on": "Your Awesome Webpage created on"
 }

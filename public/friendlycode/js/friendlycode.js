@@ -1,5 +1,6 @@
 define(function(require) {
   var $ = require("jquery"),
+      DataProtector = require("fc/dataprotector"),
       Preferences = require("fc/prefs"),
       Editor = require("fc/ui/editor"),
       Modals = require("fc/ui/modals"),
@@ -10,6 +11,9 @@ define(function(require) {
       Localized = require("localized");
 
   Preferences.fetch();
+
+  // turn on data protection so users can't reload/leave accidentally
+  DataProtector.enableDataProtection();
 
   return function FriendlycodeEditor(options) {
     var publishURL = options.publishURL,
