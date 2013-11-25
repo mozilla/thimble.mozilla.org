@@ -57,6 +57,10 @@ define(["jquery", "backbone-events"], function($, BackboneEvents) {
       }
     });
 
+    var setTitleLink = self.setTitleLink = function(link) {
+      self.trigger("change:titlelink", link);
+    }
+
     BackboneEvents.mixin(self);
     return self;
   };

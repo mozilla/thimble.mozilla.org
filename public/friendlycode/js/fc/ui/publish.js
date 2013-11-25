@@ -9,7 +9,7 @@ define(function (require) {
       ConfirmDialogTemplate = require("template!confirm-dialog"),
       PublishDialogTemplate = require("template!publish-dialog"),
       Localized = require("localized");
-  
+
   function makeSharingHotLoader(options) {
     return function hotLoadEventHandler() {
       var socialMedia = options.socialMedia,
