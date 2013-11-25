@@ -83,7 +83,7 @@ if ( env.get( "ENABLE_GELF_LOGS" ) ) {
   logger.init();
   app.use( logger.middleware() );
 } else {
-  app.use( express.logger() );
+  app.use( express.logger( "dev" ) );
 }
 
 if (!!env.get("FORCE_SSL") ) {
