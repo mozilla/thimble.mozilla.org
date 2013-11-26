@@ -9,19 +9,19 @@
       "jquery",
       "thimblePage"
     ], function($, ThimblePage) {
-      var publishButton = $('.publish-button'),
+      var buttons = $('.save-button, .publish-button'),
           myProjects = $( ".my-projects-iframe" ),
           loggedIn = false;
 
-      publishButton.hide();
+      buttons.hide();
 
       navigator.idSSO.app = {
         onlogin: function(loggedInUser, displayName) {
-          publishButton.show();
+          buttons.show();
           myProjects.attr("src", "{{audience}}/{{localeInfo.lang}}/me?app={{appname}}");
         },
         onlogout: function() {
-          publishButton.hide();
+          buttons.hide();
           myProjects.attr("src", "");
         }
       };

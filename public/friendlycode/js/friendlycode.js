@@ -55,7 +55,12 @@ define(function(require) {
       ready.resolve();
     }
 
-    editor.toolbar.setStartPublish(publishUI.start);
+    // save and publish buttons effect different publish options
+    var saveOnly = false,
+        saveAndPublish = true;
+    editor.toolbar.setStartSave(publishUI.start(saveOnly));
+    editor.toolbar.setStartPublish(publishUI.start(saveAndPublish));
+
     editor.container.addClass("friendlycode-loading");
     publishUI.on("publish", function(info) {
       // Set the URL to be the new URL to remix the page the user just

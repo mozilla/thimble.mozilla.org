@@ -25,6 +25,13 @@
   box-sizing: border-box;
 }
 
+.makeapi-details label[for='details-published'] {
+  width: auto;
+}
+.makeapi-details input[name='published'] {
+  height: 2.25em;
+}
+
 .makeapi-details .input {
   display: inline-block;
   border: 1px solid #CCC;
