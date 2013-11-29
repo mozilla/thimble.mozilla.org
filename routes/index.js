@@ -28,7 +28,6 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
 
   return {
     index: function(req, res) {
-      res.locals.pageToLoad = '';
       if (req.requestId) {
         res.locals.pageToLoad = appURL + "/" + req.localeInfo.lang + "/project/" + req.requestId + "/data";
       }
