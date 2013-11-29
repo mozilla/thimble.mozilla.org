@@ -70,7 +70,7 @@ app.locals({
   GA_ACCOUNT: env.get("GA_ACCOUNT"),
   GA_DOMAIN: env.get("GA_DOMAIN"),
   supportedLanguages: i18n.getLanguages(),
-  listDropdownLang: env.get( "SUPPORTED_LANGS" )
+  listDropdownLang: i18n.getSupportLanguages()
 });
 
 // Express settings
