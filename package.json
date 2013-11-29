@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "async": "0.2.7",
-    "express": "3.2.6",
+    "express": "3.4.5",
     "habitat": "0.4.1",
     "helmet": "0.0.11",
     "htmlsanitizer": "0.0.2",
