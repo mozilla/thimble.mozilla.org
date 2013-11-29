@@ -43,13 +43,13 @@
 .thimble-btn-active,
 .thimble-btn-active:hover,
 .thimble-btn:active {
-  &.thimble-btn-light {
+  &.btn-light {
     background: darken( @baseLight, 15% );
     border-color: darken( @baseLight, 35% );
     box-shadow: inset 0 1px 0 darken( @baseLight, 22% );
     color: #000;
   }
-  &.thimble-btn-green {
+  &.btn-green {
     background: darken( @green, 12% );
     border-color: darken( @green, 25% );
     box-shadow: 0 -1px 0 #FFF,
@@ -67,7 +67,7 @@
 // Colors
 
 .btn-white,
-.btn-white.disabled:hover {
+.btn-white.thimble-disabled:hover {
   background: #FFF;
   color: @baseText;
   border-radius: 0;
@@ -78,8 +78,8 @@
 }
 
 .btn-light,
-.thimble-btn-light.disabled:hover,
-.thimble-btn-light.disabled:active {
+.btn-light.thimble-disabled:hover,
+.btn-light.thimble-disabled:active {
   background: @baseLight;
   color: @baseText;
   border: 1px solid darken( @baseLight, 20% );
@@ -94,9 +94,9 @@
   color: darken( @baseText, 10% );
 }
 
-.thimble-btn-green,
-.thimble-btn-green.disabled:hover,
-.thimble-btn-green.disabled:active {
+.btn-green,
+.btn-green.thimble-disabled:hover,
+.btn-green.thimble-disabled:active {
   background: @green;
   color: #FFF;
   border: 1px solid darken( @green, 15% );
@@ -105,34 +105,34 @@
   box-shadow: inset 0 1px 0 lighten( @green, 10% );
 }
 
-.thimble-btn-green:hover {
+.btn-green:hover {
     background: lighten( @green, 5% );
     color: #FFF;
   }
 
-.thimble-btn-red,
-.thimble-btn-red.disabled:hover,
-.thimble-btn-red.disabled:active {
+.btn-red,
+.btn-red.thimble-disabled:hover,
+.btn-red.thimble-disabled:active {
   background: #D3473C;
   color: #FFF;
   border: 1px solid #A32630;
   box-shadow: inset 0 1px 0 lighten( #D3473C, 10% );
 }
 
-.thimble-btn-red:hover {
+.btn-red:hover {
   background: lighten( @red, 5% );
   color: #FFF;
 }
 
 // States
-.thimble-btn.disabled {
+.thimble-btn.thimble-disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
 
 // Button group
-.thimble-btn-group {
+.btn-group {
   display: inline-block;
   a, button {
     margin-left: -5px;
