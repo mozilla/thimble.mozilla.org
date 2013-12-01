@@ -7,17 +7,17 @@
 @HEADER_ALIGN_MIDDLE: 2.7;
 
 // Adds room to template to account for header
-.header-spacing {
+.thimble-header-spacing {
   padding-top: @HEADER_SPACING;
 }
 
-.editor-spacing {
-  .header {
+.thimble-editor-spacing {
+  .thimble-header {
     right: 0;
   }
 }
 
-.header {
+.thimble-header {
   z-index: @HEADER_Z_INDEX;
   position: fixed;
   left: 0;
@@ -36,7 +36,7 @@
 * Primary white nav bar
 */
 
-.header-primary {
+.thimble-header-primary {
   position: relative;
   background: #FFF;
   color: lighten( @baseText, 10% );
@@ -48,7 +48,7 @@
   .clearfix();
 }
 
-.logo {
+.thimble-logo {
   position: absolute;
   top: 0;
   left: 15px;
@@ -58,7 +58,7 @@
   background-size: contain;
 }
 
-.nav {
+.thimble-nav {
   position: absolute;
   top: 0;
   margin: 0;
@@ -71,7 +71,7 @@
   > li {
     float: left;
     padding: 0 20px;
-    &.breadcrumbs {
+    &.thimble-breadcrumbs {
       position: relative;
       padding: 0;
       margin-right: 10px;
@@ -83,7 +83,7 @@
   }
 }
 
-.project-title {
+.thimble-project-title {
   text-align: left;
   font-weight: 600;
   font-size: 16px;
@@ -109,7 +109,7 @@
     }
   }
 
-  a.project-name {
+  a.thimble-project-name {
     display: block;
     overflow: hidden;
     white-space: nowrap;
@@ -283,17 +283,17 @@
 * Buttons
 */
 
-.header {
+.thimble-header {
   .btn {
     text-shadow: none;
   }
 }
 
-.login-project-info {
+.thimble-login-project-info {
   position: relative;
 }
 
-.login-project-info > ul {
+.thimble-login-project-info > ul {
   position: absolute;
   top: 48px;
   left: 28px;

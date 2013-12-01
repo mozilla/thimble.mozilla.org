@@ -6,7 +6,7 @@
 @_btnTotalHeight: 35px; // It turns out that the total height of our buttons is 35px.
 
 // Base
-.btn {
+.thimble-btn {
   display: inline-block;
   text-decoration: none;
   font-size: 13px;
@@ -25,10 +25,10 @@
 }
 
 // Disabled states
-.btn-slide-out {
+.thimble-btn-slide-out {
   display: block;
   overflow: hidden;
-  .btn {
+  .thimble-btn {
     float: left;
     margin-right: 5px;
     .transition( all 0.2s ease-in );
@@ -40,9 +40,9 @@
 }
 
 // Active
-.btn-active,
-.btn-active:hover,
-.btn:active {
+.thimble-btn-active,
+.thimble-btn-active:hover,
+.thimble-btn:active {
   &.btn-light {
     background: darken( @baseLight, 15% );
     border-color: darken( @baseLight, 35% );
@@ -67,7 +67,7 @@
 // Colors
 
 .btn-white,
-.btn-white.disabled:hover {
+.btn-white.thimble-disabled:hover {
   background: #FFF;
   color: @baseText;
   border-radius: 0;
@@ -78,8 +78,8 @@
 }
 
 .btn-light,
-.btn-light.disabled:hover,
-.btn-light.disabled:active {
+.btn-light.thimble-disabled:hover,
+.btn-light.thimble-disabled:active {
   background: @baseLight;
   color: @baseText;
   border: 1px solid darken( @baseLight, 20% );
@@ -95,8 +95,8 @@
 }
 
 .btn-green,
-.btn-green.disabled:hover,
-.btn-green.disabled:active {
+.btn-green.thimble-disabled:hover,
+.btn-green.thimble-disabled:active {
   background: @green;
   color: #FFF;
   border: 1px solid darken( @green, 15% );
@@ -111,8 +111,8 @@
   }
 
 .btn-red,
-.btn-red.disabled:hover,
-.btn-red.disabled:active {
+.btn-red.thimble-disabled:hover,
+.btn-red.thimble-disabled:active {
   background: #D3473C;
   color: #FFF;
   border: 1px solid #A32630;
@@ -125,7 +125,7 @@
 }
 
 // States
-.btn.disabled {
+.thimble-btn.thimble-disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -138,18 +138,18 @@
     margin-left: -5px;
     border-right-width: 0;
   }
-  .btn:first-of-type {
+  .thimble-btn:first-of-type {
     margin-left: 0;
     border-radius: 2px 0 0 2px;
   }
-  .btn:last-of-type {
+  .thimble-btn:last-of-type {
     border-radius: 0 2px 2px 0;
     border-right-width: 1px;
   }
 }
 
 // Menu group
-.btn-menu-container {
+.thimble-btn-menu-container {
   z-index: 20;
   display: inline-block;
   position: relative;
@@ -157,7 +157,7 @@
   .selectable( none );
 }
 
-.btn-menu-control {
+.thimble-btn-menu-control {
   border: 1px solid @baseLightOutline;
   background: #FFF;
   border-radius: 0;
@@ -170,7 +170,7 @@
   z-index: 1;
   font-size: 16px;
   margin-right: 10px;
-  .btn-menu-container:hover & {
+  .thimble-btn-menu-container:hover & {
     border-bottom-color: transparent;
     border-radius: 2px 2px 0 0;
     >.icon {
@@ -179,7 +179,7 @@
   }
 }
 
-.btn-menu {
+.thimble-btn-menu {
   border: 1px solid @baseLightOutline;
   list-style: none;
   padding: 0;
@@ -193,7 +193,7 @@
 
   //States
   visibility: hidden;
-  .btn-menu-container:hover & {
+  .thimble-btn-menu-container:hover & {
     visibility: visible;
   }
 
@@ -212,9 +212,9 @@
   }
   // The link inside the menu item
   > li > a,
-  > li > a.disabled,
-  > li > a.disabled:hover,
-  > li > a.disabled:active {
+  > li > a.thimble-disabled,
+  > li > a.thimble-disabled:hover,
+  > li > a.thimble-disabled:active {
     color: @baseText;
     padding: 0 15px;
     min-width: 80px;
@@ -373,4 +373,3 @@ li.lang-picker:first-child {
   text-align: left;
   border: 1px solid #dddddd;
 }
-
