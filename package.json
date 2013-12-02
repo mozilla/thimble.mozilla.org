@@ -6,7 +6,7 @@
     "async": "0.2.7",
     "express": "3.4.5",
     "habitat": "0.4.1",
-    "helmet": "0.0.11",
+    "helmet": "0.1.2",
     "htmlsanitizer": "0.0.2",
     "knox": "0.8.5",
     "makeapi-client": "https://github.com/mozilla/makeapi-client/tarball/v0.5.12",

@@ -86,6 +86,9 @@ if ( env.get( "ENABLE_GELF_LOGS" ) ) {
   app.use( express.logger( "dev" ) );
 }
 
+app.use(helmet.iexss());
+app.use(helmet.contentTypeOptions());
+
 if (!!env.get("FORCE_SSL") ) {
   app.use(helmet.hsts());
   app.enable("trust proxy");
