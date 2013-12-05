@@ -18,12 +18,26 @@ define([
       // sits on line 0, column 0, as any kind of typing will move
       // the cursor to a non-zero position.
       if (result.error && curPos.line === 0 && curPos.ch === 0) {
+
         // If we see an error on 0/0, the error is actually somewhere
         // else in the document, and we need to move the cursor to
         // the end of the erroneous code first.
-        var index = result.error.closeTag ? result.error.closeTag.end : result.error.openTag.start,
-            pos = codeMirror.posFromIndex(index);
-        codeMirror.setCursor(pos);
+        var index = 0;
+
+        // Find correct cursor position based on slowparse-signalled HTML errors
+        if(result.error.closeTag) {
+          index = result.error.closeTag.end;
+        }
+        else if(result.error.openTag) {
+          index = result.error.openTag.start;
+        }
+
+        // Find correct cursor position based on slowparse-signalled CSS errors
+        else if(result.error.cssValue) {
+          index = result.error.cssValue.start;
+        }
+
+        codeMirror.setCursor(codeMirror.posFromIndex(index));
       }
 
       // handle (possible) errors
