@@ -207,6 +207,17 @@ var Slowparse = (function() {
         start: pos
       };
     },
+    INVALID_ATTR_NAME: function(parser, attrToken) {
+      return {
+        start: attrToken.interval.start,
+        end: attrToken.interval.end,
+        attribute: {
+          name: {
+            value: attrToken.value
+          }
+        }
+      };
+    },
     UNTERMINATED_OPEN_TAG: function(parser) {
       var currentNode = parser.domBuilder.currentNode;
       return {
@@ -1245,12 +1256,14 @@ var Slowparse = (function() {
     // its tag name, looking for `attribute="value"` data until a
     // `>` is encountered.
     _parseEndOpenTag: function(tagName) {
+      var startMark = this.stream.pos;
       while (!this.stream.end()) {
         if (this.stream.eat(nameStartChar) && this.stream.eatWhile(nameChar)) {
           this._parseAttribute(tagName);
         }
         else if (this.stream.eatSpace()) {
           this.stream.makeToken();
+          startMark = this.stream.pos;
         }
         else if (this.stream.peek() == '>' || this.stream.match("/>")) {
           var selfClosing = this.stream.match("/>", true);
@@ -1288,8 +1301,13 @@ var Slowparse = (function() {
           }
 
           return;
-        } else
-          throw new ParseError("UNTERMINATED_OPEN_TAG", this);
+        }
+        else {
+          this.stream.eatWhile(/[^'"\s=\<\>]/);
+          var attrToken = this.stream.makeToken();
+          attrToken.interval.start = startMark;
+          throw new ParseError("INVALID_ATTR_NAME", this, attrToken);
+        }
       }
     },
     // This helper function parses an HTML tag attribute. It expects
