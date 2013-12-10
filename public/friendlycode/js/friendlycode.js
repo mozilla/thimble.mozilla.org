@@ -65,7 +65,7 @@ define(function(require) {
 
       // Also update the preview pane so that to the title
       // points to the published URL
-      editor.panes.preview.setTitleLink(info.viewURL);
+      editor.panes.preview.setViewLink(info.viewURL);
     });
 
     if (!pageManager.currentPage()) {

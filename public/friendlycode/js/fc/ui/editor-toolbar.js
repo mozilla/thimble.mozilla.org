@@ -59,13 +59,18 @@ define(function(require) {
     panes.preview.on("change:title", onChangeTitle);
     onChangeTitle(panes.preview.title);
 
-    // Project link handling - make the title an active link
-    // when there is a real URL to go to.
-    function onChangeTitleLink(link) {
-      $(".preview-title-link", navOptions).attr("href", link);
+    // published-page link handling
+    function onChangeViewLink(link) {
+      var viewButton = $(".page-view-button", navOptions),
+          viewLink = $(".page-view-link");
+      viewLink.attr("href", "#");
+      if (link) {
+        viewButton.css("display", "inline-block");
+        viewLink.attr("href", link);
+      }
     }
-    panes.preview.on("change:titlelink", onChangeTitleLink);
-    onChangeTitleLink( $('body').data('make-url') || ".");
+    panes.preview.on("change:viewlink", onChangeViewLink);
+    onChangeViewLink( $('body').data('make-url') || false);
 
 
     // If the editor has no content, disable the publish button.
