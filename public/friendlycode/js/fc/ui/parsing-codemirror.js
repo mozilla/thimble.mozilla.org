@@ -40,6 +40,22 @@ define([
         codeMirror.setCursor(codeMirror.posFromIndex(index));
       }
 
+      // For autocomplete purposes, figure out which mode the document
+      // is in, at the current cursor position, so that ctrl-space will
+      // use the correct autocomplete wordlist.
+      if (CodeMirror.hint) {
+        var cpos = codeMirror.indexFromPos(codeMirror.getCursor()),
+            marker = false;
+        result.contexts.forEach(function(ctx) {
+          if(ctx.position <= cpos) {
+            marker = ctx;
+          }
+        });
+        if (marker) {
+          CodeMirror.hint.currentMode = marker.context;
+        }
+      }
+
       // handle (possible) errors
       CodeMirror.signal(codeMirror, "reparse", {
         error: result.error,

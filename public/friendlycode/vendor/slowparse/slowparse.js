@@ -1148,7 +1148,9 @@ var Slowparse = (function() {
         throw new Error('assertion failed, expected to be on "<"');
 
       if (this.stream.match('!--', true)) {
+        this.domBuilder.pushContext("text", this.stream.pos);
         this._parseComment();
+        this.domBuilder.pushContext("html", this.stream.pos);
         return;
       }
 
@@ -1284,20 +1286,26 @@ var Slowparse = (function() {
           // If the opening tag represents a `<style>` element, we hand
           // off parsing to our CSS parser.
           if (!this.stream.end() && tagName === "style") {
+            this.domBuilder.pushContext("css", this.stream.pos);
             var cssBlock = this.cssParser.parse();
+            this.domBuilder.pushContext("html", this.stream.pos);
             this.domBuilder.text(cssBlock.value, cssBlock.parseInfo);
           }
 
           // If the opening tag represents a `<textarea>` element, we need
           // to parse all its contents as CDATA (unparsed character data)
           if (tagName && tagName === "script") {
+            this.domBuilder.pushContext("javascript", this.stream.pos);
             this._parseCDATA("script");
+            this.domBuilder.pushContext("html", this.stream.pos);
           }
 
           // If the opening tag represents a `<textarea>` element, we need
           // to parse all its contents as CDATA (unparsed character data)
           if (tagName && tagName === "textarea") {
+            this.domBuilder.pushContext("text", this.stream.pos);
             this._parseCDATA("textarea");
+            this.domBuilder.pushContext("html", this.stream.pos);
           }
 
           return;
@@ -1371,6 +1379,8 @@ var Slowparse = (function() {
     this.document = document;
     this.fragment = document.createDocumentFragment();
     this.currentNode = this.fragment;
+    this.contexts = [];
+    this.pushContext("html", 0);
   }
 
   DOMBuilder.prototype = {
@@ -1388,6 +1398,13 @@ var Slowparse = (function() {
     // making its parent element the currently active element.
     popElement: function() {
       this.currentNode = this.currentNode.parentNode;
+    },
+    // record the cursor position for a context change (text/html/css/script)
+    pushContext: function(context, position) {
+      this.contexts.push({
+        context: context,
+        position: position
+      });
     },
     // This method appends an HTML comment node to the currently active
     // element.
@@ -1456,10 +1473,7 @@ var Slowparse = (function() {
           parser,
           error = null;
 
-      if (document.pushElement)
-        domBuilder = document;
-      else
-        domBuilder = new DOMBuilder(document);
+      domBuilder = document.pushElement ? document : new DOMBuilder(document);
       parser = new HTMLParser(stream, domBuilder);
 
       try {
@@ -1478,6 +1492,7 @@ var Slowparse = (function() {
 
       return {
         document: domBuilder.fragment,
+        contexts: domBuilder.contexts,
         error: error
       };
     },

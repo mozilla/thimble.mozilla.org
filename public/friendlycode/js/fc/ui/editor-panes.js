@@ -37,9 +37,9 @@ define(function(require) {
       ],
       value: initialValue,
       parse: function(html) {
-        return Slowparse.HTML(document, html,
-                              allowJS ? [] : [TreeInspectors.forbidJS]);
-      }
+        return Slowparse.HTML(document, html, allowJS ? [] : [TreeInspectors.forbidJS]);
+      },
+      extraKeys: {"Ctrl-Space": "autocomplete"}
     });
     var relocator = Relocator(codeMirror);
     var cursorHelp = self.cursorHelp = ContextSensitiveHelp({
