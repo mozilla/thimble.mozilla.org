@@ -1256,7 +1256,9 @@ var Slowparse = (function() {
     // its tag name, looking for `attribute="value"` data until a
     // `>` is encountered.
     _parseEndOpenTag: function(tagName) {
-      var startMark = this.stream.pos;
+      var tagMark = this.stream.pos,
+          startMark = this.stream.pos;
+
       while (!this.stream.end()) {
         if (this.stream.eat(nameStartChar) && this.stream.eatWhile(nameChar)) {
           this._parseAttribute(tagName);
@@ -1302,9 +1304,15 @@ var Slowparse = (function() {
 
           return;
         }
+        // error cases: bad attribute name, or unclosed tag
         else {
           this.stream.eatWhile(/[^'"\s=\<\>]/);
           var attrToken = this.stream.makeToken();
+          if (!attrToken) {
+            this.stream.tokenStart = tagMark;
+            attrToken = this.stream.makeToken();
+            throw new ParseError("UNTERMINATED_OPEN_TAG", this);
+          }
           attrToken.interval.start = startMark;
           throw new ParseError("INVALID_ATTR_NAME", this, attrToken);
         }
