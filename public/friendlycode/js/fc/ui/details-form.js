@@ -4,7 +4,8 @@ define(['template!details-form'], function (detailsFormHTML) {
     'title',
     'thumbnail',
     'description',
-    'tags'
+    'tags',
+    'published'
   ];
 
   var $container;
@@ -201,6 +202,14 @@ define(['template!details-form'], function (detailsFormHTML) {
     $input('tag-input').val('');
   };
 
+  DetailsForm.prototype.setPublished = function (state) {
+    state = state || false;
+    if (typeof state === 'string') {
+      state = (state !== 'false');
+    }
+    $input('published').attr('checked', state);
+  }
+
   // Update a given field
   DetailsForm.prototype.setValue = function (field, val) {
     var self = this;
@@ -224,6 +233,9 @@ define(['template!details-form'], function (detailsFormHTML) {
         // We do not decode tags directly from the makeapi,
         // this means it was stored with a colon, and is created outside of thimble.
         self.addTags(val);
+        break;
+      case 'published':
+        self.setPublished(val);
         break;
       default:
         val = val || currentVal || self.findMetaTagInfo(field)[0];
@@ -249,7 +261,8 @@ define(['template!details-form'], function (detailsFormHTML) {
     var obj = {};
 
     fields.forEach(function (item) {
-      var val = $input(item).val();
+      var input = $input(item);
+      var val = input.attr("type") === "checkbox" ? input[0].checked : input.val();
       obj[item] = val;
     });
 
