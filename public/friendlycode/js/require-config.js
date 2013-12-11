@@ -32,6 +32,36 @@ var require = {
     codemirror: {
       exports: "CodeMirror"
     },
+    // autocomplete
+    "codemirror/autocomplete/js": {
+      deps: ["codemirror"],
+      exports: "CodeMirror"
+    },
+    "codemirror/autocomplete/xml": {
+      deps: ["codemirror"],
+      exports: "CodeMirror"
+    },
+    "codemirror/autocomplete/html": {
+      deps: [
+        "codemirror",
+        "codemirror/autocomplete/xml"
+      ],
+      exports: "CodeMirror"
+    },
+    "codemirror/autocomplete/css": {
+      deps: ["codemirror"],
+      exports: "CodeMirror"
+    },
+    "codemirror/autocomplete": {
+      deps: [
+        "codemirror",
+        "codemirror/autocomplete/js",
+        "codemirror/autocomplete/html",
+        "codemirror/autocomplete/css",
+      ],
+      exports: "CodeMirror"
+    },
+    // input data modes:
     "codemirror/xml": {
       deps: ["codemirror"],
       exports: "CodeMirror"
@@ -48,7 +78,8 @@ var require = {
       deps: [
         "codemirror/xml",
         "codemirror/javascript",
-        "codemirror/css"
+        "codemirror/css",
+        "codemirror/autocomplete"
       ],
       exports: "CodeMirror"
     }
@@ -62,11 +93,20 @@ var require = {
     "underscore": "../vendor/underscore.min",
     "backbone": "../vendor/backbone.min",
     "slowparse": "../vendor/slowparse",
+    // code editor library
     "codemirror": "../vendor/" + codemirror + "/lib/codemirror",
+    // code editor autocomplete
+    "codemirror/autocomplete": "../vendor/" + codemirror + "/addon/hint/show-hint",
+    "codemirror/autocomplete/js": "../vendor/" + codemirror + "/addon/hint/javascript-hint",
+    "codemirror/autocomplete/xml": "../vendor/" + codemirror + "/addon/hint/xml-hint",
+    "codemirror/autocomplete/html": "../vendor/" + codemirror + "/addon/hint/html-hint",
+    "codemirror/autocomplete/css": "../vendor/" + codemirror + "/addon/hint/css-hint",
+    // code editor modes
     "codemirror/xml": "../vendor/" + codemirror + "/mode/xml/xml",
     "codemirror/javascript": "../vendor/" + codemirror + "/mode/javascript/javascript",
     "codemirror/css": "../vendor/" + codemirror + "/mode/css/css",
     "codemirror/html": "../vendor/" + codemirror + "/mode/htmlmixed/htmlmixed",
+    // some independent functions
     "text": "../vendor/require.text",
     "i18n": "../vendor/require.i18n",
     "lscache": "../vendor/lscache",
