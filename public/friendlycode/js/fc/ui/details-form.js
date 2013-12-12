@@ -23,14 +23,15 @@ define(['template!details-form'], function (detailsFormHTML) {
     var $this = $(this),
         $error = $(".title-error.error-message"),
         $button = $(".confirmation-button.yes-button"),
-        title = this.value.toLowerCase(),
+        title = this.value;
+        title_lc = title.toLowerCase(),
         csrf_token = $("meta[name='csrf-token']").attr("content");
 
     $.ajax({
       type: "POST",
       url: "/checktitle",
       data: {
-        'title': title,
+        'title': title_lc,
         'pageOperation': $("meta[name='thimble-operation']").attr("content"),
         'origin': $("meta[name='thimble-project-origin']").attr("content")
       },
@@ -48,6 +49,8 @@ define(['template!details-form'], function (detailsFormHTML) {
         } else {
           $error.hide();
           $button.show();
+          // see parsing-codemirror.js for the event handler
+          CodeMirror.signal(codeMirror, "title-update", { title: title });
         }
       }
     });

@@ -7,7 +7,17 @@ define([
   "backbone-events",
   "./indexable-codemirror"
 ], function(BackboneEvents, IndexableCodeMirror) {
+
   return function ParsingCodeMirror(place, givenOptions) {
+
+    // The number of milliseconds to wait before re-parsing the editor
+    // content.
+    var parseDelay = givenOptions.parseDelay || 300;
+    var time = givenOptions.time || window;
+    var reparseTimeout;
+    var codeMirror = IndexableCodeMirror(place, givenOptions);
+    var currentTitle = "";
+
     // Called whenever content of the editor area changes.
     function reparse() {
       var sourceCode = codeMirror.getValue();
@@ -63,19 +73,22 @@ define([
         document: result.document
       });
 
+      // fetch title, and communicate to publish dialog if there is one
+      var match = sourceCode.match(/title[^>]*>([^<]+)</);
+      if (match) {
+        match = match[1];
+        if (match !== currentTitle) {
+          currentTitle = match;
+          // note: this depends on what details-form.html uses!
+          document.querySelector(".makeapi-details input[name=title]").value = currentTitle;
+        }
+      }
+
       // Cursor activity would've been fired before us, so call it again
       // to make sure it displays the right context-sensitive help based
       // on the new state of the document.
       CodeMirror.signal(codeMirror, "cursor-activity");
     }
-
-    // The number of milliseconds to wait before re-parsing the editor
-    // content.
-    var parseDelay = givenOptions.parseDelay || 300;
-    var time = givenOptions.time || window;
-    var reparseTimeout;
-
-    var codeMirror = IndexableCodeMirror(place, givenOptions);
 
     codeMirror.on("change", function(cm, event) {
       if (reparseTimeout !== undefined) {
@@ -89,6 +102,24 @@ define([
     codeMirror.on("cursorActivity", function(cm, activity) {
       CodeMirror.signal(codeMirror, "cursor-activity");
     });
+
+    // See details-form.js for where this event is thrown
+    codeMirror.on("title-update", function(evt) {
+      var title = evt.title,
+          content = codeMirror.getValue();
+      // do we have a title element? If not, we need to make one.
+      if (content.indexOf("<title") === -1) {
+        // do we have a head element? If not, we need to make one.
+        if (content.indexOf("<head") === -1) {
+          content = content.replace(/<html([^>]*)>/, "<html$1>\n  <head>\n    <meta charset=\"utf-8\">\n  </head>");
+        }
+        content = content.replace(/[\r\n\s]*<\/head/, "\n    <title></title>\n  </head");
+      }
+      // replace the title we had, with the one the user wants
+      content = content.replace(/(title[^>]*)>([^<]*)</, "$1>"+title+"<");
+      codeMirror.setValue(content);
+    });
+
 
     codeMirror.reparse = reparse;
     codeMirror.reparseEnabled = true;
