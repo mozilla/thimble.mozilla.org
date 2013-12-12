@@ -7,7 +7,16 @@ define([
   "backbone-events",
   "./indexable-codemirror"
 ], function(BackboneEvents, IndexableCodeMirror) {
+
   return function ParsingCodeMirror(place, givenOptions) {
+
+    // The number of milliseconds to wait before re-parsing the editor
+    // content.
+    var parseDelay = givenOptions.parseDelay || 300;
+    var time = givenOptions.time || window;
+    var reparseTimeout;
+    var codeMirror = IndexableCodeMirror(place, givenOptions);
+
     // Called whenever content of the editor area changes.
     function reparse() {
       var sourceCode = codeMirror.getValue();
@@ -69,14 +78,6 @@ define([
       CodeMirror.signal(codeMirror, "cursor-activity");
     }
 
-    // The number of milliseconds to wait before re-parsing the editor
-    // content.
-    var parseDelay = givenOptions.parseDelay || 300;
-    var time = givenOptions.time || window;
-    var reparseTimeout;
-
-    var codeMirror = IndexableCodeMirror(place, givenOptions);
-
     codeMirror.on("change", function(cm, event) {
       if (reparseTimeout !== undefined) {
         time.clearTimeout(reparseTimeout);
@@ -89,6 +90,15 @@ define([
     codeMirror.on("cursorActivity", function(cm, activity) {
       CodeMirror.signal(codeMirror, "cursor-activity");
     });
+
+    // See details-form.js for where this event is thrown
+    codeMirror.on("title-update", function(evt) {
+      var title = evt.title,
+          content = codeMirror.getValue(),
+          updated = content.replace(/(title[^>]*)>([^<]+)</, "$1>"+title+"<");
+      codeMirror.setValue(updated);
+    });
+
 
     codeMirror.reparse = reparse;
     codeMirror.reparseEnabled = true;
