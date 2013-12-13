@@ -8,6 +8,8 @@ define([
   "./indexable-codemirror"
 ], function(BackboneEvents, IndexableCodeMirror) {
   return function ParsingCodeMirror(place, givenOptions) {
+    var dataProtector = givenOptions.dataProtector;
+
     // Called whenever content of the editor area changes.
     function reparse() {
       var sourceCode = codeMirror.getValue();
@@ -84,6 +86,9 @@ define([
       if (codeMirror.reparseEnabled) {
         reparseTimeout = time.setTimeout(reparse, parseDelay);
       }
+      // On changes to the code editor, signal that we need
+      // accidental page-navigation protection again.
+      dataProtector.enableDataProtection();
     });
 
     codeMirror.on("cursorActivity", function(cm, activity) {

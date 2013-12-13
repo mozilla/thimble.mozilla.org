@@ -9,7 +9,7 @@ define(function (require) {
       ConfirmDialogTemplate = require("template!confirm-dialog"),
       PublishDialogTemplate = require("template!publish-dialog"),
       Localized = require("localized");
-  
+
   function makeSharingHotLoader(options) {
     return function hotLoadEventHandler() {
       var socialMedia = options.socialMedia,
@@ -31,6 +31,7 @@ define(function (require) {
         publishDialog = $(PublishDialogTemplate()),
         dialogs = confirmDialog.add(publishDialog),
         codeMirror = options.codeMirror,
+        dataProtector = options.dataProtector,
         publisher = options.publisher,
         baseRemixURL = options.remixURLTemplate,
         shareResult = $(".share-result", publishDialog),
@@ -80,9 +81,11 @@ define(function (require) {
       // time the transition has finished, the user's page is published.
       var code = codeMirror.getValue(),
           publishErrorOccurred = false;
+
       publisher.saveCode({
         html: code,
-        metaData: detailsForm.getValue()
+        metaData: detailsForm.getValue(),
+        dataProtector: dataProtector
       }, currURL, function(err, info) {
         if (err) {
           publishDialog.stop().hide();
