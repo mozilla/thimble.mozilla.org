@@ -1,5 +1,3 @@
-"use strict";
-
 // Slowparse is a token stream parser for HTML and CSS text,
 // recording regions of interest during the parse run and
 // signaling any errors detected accompanied by relevant
@@ -26,6 +24,8 @@
 //   [error specification]: spec/
 //   [README]: https://github.com/mozilla/slowparse#readme
 var Slowparse = (function() {
+  "use strict";
+
   // ### Character Entity Parsing
   //
   // We currently only parse the most common named character entities.
@@ -138,73 +138,92 @@ var Slowparse = (function() {
     },
     // These are HTML errors.
     UNCLOSED_TAG: function(parser) {
-      var currentNode = parser.domBuilder.currentNode;
+      var currentNode = parser.domBuilder.currentNode,
+          openTag = this._combine({
+            name: currentNode.nodeName.toLowerCase()
+          }, currentNode.parseInfo.openTag);
       return {
-        openTag: this._combine({
-          name: currentNode.nodeName.toLowerCase()
-        }, currentNode.parseInfo.openTag)
+        openTag: openTag,
+        cursor: openTag.start
       };
     },
     INVALID_TAG_NAME: function(tagName, token) {
+      var openTag = this._combine({
+            name: tagName
+          }, token.interval);
       return {
-        openTag: this._combine({
-          name: tagName
-        }, token.interval)
+        openTag: openTag,
+        cursor: openTag.start
       };
     },
     UNEXPECTED_CLOSE_TAG: function(parser, closeTagName, token) {
+      var closeTag = this._combine({
+            name: closeTagName
+          }, token.interval);
       return {
-        closeTag: this._combine({
-          name: closeTagName
-        }, token.interval)
+        closeTag: closeTag,
+        cursor: closeTag.start
       };
     },
     MISMATCHED_CLOSE_TAG: function(parser, openTagName, closeTagName, token) {
+      var openTag = this._combine({
+            name: openTagName
+          }, parser.domBuilder.currentNode.parseInfo.openTag),
+          closeTag = this._combine({
+            name: closeTagName
+          }, token.interval);
       return {
-        openTag: this._combine({
-          name: openTagName
-        }, parser.domBuilder.currentNode.parseInfo.openTag),
-        closeTag: this._combine({
-          name: closeTagName
-        }, token.interval)
+        openTag: openTag,
+        closeTag: closeTag,
+        cursor: closeTag.start
       };
     },
     CLOSE_TAG_FOR_VOID_ELEMENT: function(parser, closeTagName, token) {
+      var closeTag = this._combine({
+            name: closeTagName
+          }, token.interval);
       return {
-        closeTag: this._combine({
-          name: closeTagName
-        }, token.interval)
+        closeTag: closeTag,
+        cursor: closeTag.start
       };
     },
     UNTERMINATED_COMMENT: function(token) {
+      var commentStart = token.interval.start;
       return {
-        start: token.interval.start
+        start: commentStart,
+        cursor: commentStart
       };
     },
     UNTERMINATED_ATTR_VALUE: function(parser, nameTok) {
-      var currentNode = parser.domBuilder.currentNode;
+      var currentNode = parser.domBuilder.currentNode,
+          openTag = this._combine({
+            name: currentNode.nodeName.toLowerCase()
+          }, currentNode.parseInfo.openTag),
+          valueTok = parser.stream.makeToken(),
+          attribute = {
+            name: {
+              value: nameTok.value,
+              start: nameTok.interval.start,
+              end: nameTok.interval.end
+            },
+            value: {
+              start: valueTok.interval.start
+            }
+          };
       return {
-        openTag: this._combine({
-          name: currentNode.nodeName.toLowerCase()
-        }, currentNode.parseInfo.openTag),
-        attribute: {
-          name: {
-            value: nameTok.value,
-            start: nameTok.interval.start,
-            end: nameTok.interval.end
-          },
-          value: {
-            start: parser.stream.makeToken().interval.start
-          }
-        },
+        openTag: openTag,
+        attribute: attribute,
+        cursor: attribute.value.start
       };
     },
     UNQUOTED_ATTR_VALUE: function(parser) {
       var pos = parser.stream.pos;
-      if (!parser.stream.end())
+      if (!parser.stream.end()) {
         pos = parser.stream.makeToken().interval.start;
+      }
       return {
-        start: pos
+        start: pos,
+        cursor: pos
       };
     },
     INVALID_ATTR_NAME: function(parser, attrToken) {
@@ -215,57 +234,69 @@ var Slowparse = (function() {
           name: {
             value: attrToken.value
           }
-        }
+        },
+        cursor: attrToken.interval.start
       };
     },
     UNTERMINATED_OPEN_TAG: function(parser) {
-      var currentNode = parser.domBuilder.currentNode;
+      var currentNode = parser.domBuilder.currentNode,
+          openTag = {
+            start: currentNode.parseInfo.openTag.start,
+            end: parser.stream.pos,
+            name: currentNode.nodeName.toLowerCase()
+          };
       return {
-        openTag: {
-          start: currentNode.parseInfo.openTag.start,
-          end: parser.stream.pos,
-          name: currentNode.nodeName.toLowerCase()
-        }
+        openTag: openTag,
+        cursor: openTag.start
       };
     },
     SELF_CLOSING_NON_VOID_ELEMENT: function(parser, tagName) {
+      var start = parser.domBuilder.currentNode.parseInfo.openTag.start,
+          end = parser.stream.makeToken().interval.end;
       return {
         name: tagName,
-        start: parser.domBuilder.currentNode.parseInfo.openTag.start,
-        end: parser.stream.makeToken().interval.end
+        start: start,
+        end: end,
+        cursor: start
       };
     },
     UNTERMINATED_CLOSE_TAG: function(parser) {
       var currentNode = parser.domBuilder.currentNode;
       var end = parser.stream.pos;
-      if (!parser.stream.end())
+      if (!parser.stream.end()) {
         end = parser.stream.makeToken().interval.start;
+      }
+      var closeTag = {
+            name: currentNode.nodeName.toLowerCase(),
+            start: currentNode.parseInfo.closeTag.start,
+            end: end
+          };
       return {
-        closeTag: {
-          name: currentNode.nodeName.toLowerCase(),
-          start: currentNode.parseInfo.closeTag.start,
-          end: end
-        }
+        closeTag: closeTag,
+        cursor: closeTag.start
       };
     },
     //Special error type for a http link does not work in a https page
     HTTP_LINK_FROM_HTTPS_PAGE: function(parser, nameTok, valueTok) {
-      var currentNode = parser.domBuilder.currentNode;
+      var currentNode = parser.domBuilder.currentNode,
+          openTag = this._combine({
+            name: currentNode.nodeName.toLowerCase()
+          }, currentNode.parseInfo.openTag),
+          attribute = {
+            name: {
+              value: nameTok.value,
+              start: nameTok.interval.start,
+              end: nameTok.interval.end
+            },
+            value: {
+              start: valueTok.interval.start + 1,
+              end: valueTok.interval.end - 1
+            }
+          };
       return {
-        openTag: this._combine({
-          name: currentNode.nodeName.toLowerCase()
-        }, currentNode.parseInfo.openTag),
-        attribute: {
-          name: {
-            value: nameTok.value,
-            start: nameTok.interval.start,
-            end: nameTok.interval.end
-          },
-          value: {
-            start: valueTok.interval.start + 1,
-            end: valueTok.interval.end - 1
-          }
-        },
+        openTag: openTag,
+        attribute: attribute,
+        cursor: attribute.value.start
       };
     },
     // These are CSS errors.
@@ -274,7 +305,8 @@ var Slowparse = (function() {
         cssBlock: {
           start: start,
           end: end
-        }
+        },
+        cursor: start
       };
     },
     UNFINISHED_CSS_SELECTOR: function(parser, start, end, selector) {
@@ -283,7 +315,8 @@ var Slowparse = (function() {
           start: start,
           end: end,
           selector: selector
-        }
+        },
+        cursor: start
       };
     },
     MISSING_CSS_BLOCK_OPENER: function(parser, start, end, selector) {
@@ -292,7 +325,8 @@ var Slowparse = (function() {
           start: start,
           end: end,
           selector: selector
-        }
+        },
+        cursor: start
       };
     },
     INVALID_CSS_PROPERTY_NAME: function(parser, start, end, property) {
@@ -301,7 +335,8 @@ var Slowparse = (function() {
           start: start,
           end: end,
           property: property
-        }
+        },
+        cursor: start
       };
     },
     MISSING_CSS_PROPERTY: function(parser, start, end, selector) {
@@ -310,7 +345,8 @@ var Slowparse = (function() {
           start: start,
           end: end,
           selector: selector
-        }
+        },
+        cursor: start
       };
     },
     UNFINISHED_CSS_PROPERTY: function(parser, start, end, property) {
@@ -319,7 +355,8 @@ var Slowparse = (function() {
           start: start,
           end: end,
           property: property
-        }
+        },
+        cursor: start
       };
     },
     MISSING_CSS_VALUE: function(parser, start, end, property) {
@@ -328,7 +365,8 @@ var Slowparse = (function() {
           start: start,
           end: end,
           property: property
-        }
+        },
+        cursor: start
       };
     },
     UNFINISHED_CSS_VALUE: function(parser, start, end, value) {
@@ -337,22 +375,25 @@ var Slowparse = (function() {
           start: start,
           end: end,
           value: value
-        }
+        },
+        cursor: start
       };
     },
-	// Add a new error type for mixed active content in css values
     CSS_MIXED_ACTIVECONTENT: function(parser, property, propertyStart, value, valueStart, valueEnd) {
+      var cssProperty = {
+            property: property,
+            start: propertyStart,
+            end: propertyStart + property.length
+          },
+          cssValue = {
+            value: value,
+            start: valueStart,
+            end: valueEnd
+          };
       return {
-        cssProperty: {
-          property: property,
-          start: propertyStart,
-          end: propertyStart + property.length
-        },
-        cssValue: {
-          value: value,
-          start: valueStart,
-          end: valueEnd
-        }
+        cssProperty: cssProperty,
+        cssValue: cssValue,
+        cursor: cssValue.start
       };
     },
     MISSING_CSS_BLOCK_CLOSER: function(parser, start, end, value) {
@@ -361,7 +402,8 @@ var Slowparse = (function() {
           start: start,
           end: end,
           value: value
-        }
+        },
+        cursor: start
       };
     },
     UNCAUGHT_CSS_PARSE_ERROR: function(parser, start, end, msg) {
@@ -370,12 +412,14 @@ var Slowparse = (function() {
           start: start,
           end: end,
           msg: msg
-        }
+        },
+        cursor: start
       };
     },
     UNTERMINATED_CSS_COMMENT: function(start) {
       return {
-        start: start
+        start: start,
+        cursor: start
       };
     },
     HTML_CODE_IN_CSS_BLOCK: function(parser, start, end) {
@@ -383,8 +427,9 @@ var Slowparse = (function() {
         html: {
           start: start,
           end: end
-        }
-      }
+        },
+        cursor: start
+      };
     }
   };
 
@@ -862,15 +907,15 @@ var Slowparse = (function() {
     // * `<` end of `<style>` element, start of `</style>`
     //   (ERROR: missing value)
     _parseProperty: function(selector, selectorStart) {
-      var property = this.stream.eatCSSWhile(/[^\{\}<;:]/),
-          token = this.stream.makeToken();
+      this.stream.eatCSSWhile(/[^\{\}<;:]/);
+      var token = this.stream.makeToken();
 
       if (token === null) {
         throw new ParseError("MISSING_CSS_PROPERTY", this, selectorStart,
                              selectorStart + selector.length, selector);
       }
 
-      this.filterComments(token)
+      this.filterComments(token);
       var property = token.value,
           propertyStart = token.interval.start,
           propertyEnd = token.interval.end;
@@ -967,7 +1012,7 @@ var Slowparse = (function() {
         value: value,
         start: valueStart,
         end: valueEnd
-      }
+      };
 
       if ((this.stream.end() && next !== ';') || next === '<') {
         throw new ParseError("UNFINISHED_CSS_VALUE", this, valueStart,
@@ -1004,7 +1049,7 @@ var Slowparse = (function() {
       this.currentRule.declarations.properties.push(this.currentProperty);
       this.currentProperty = null;
     }
-  }
+  };
 
 
   // ### HTML Parsing
@@ -1314,7 +1359,7 @@ var Slowparse = (function() {
         }
         // error cases: bad attribute name, or unclosed tag
         else {
-          this.stream.eatWhile(/[^'"\s=\<\>]/);
+          this.stream.eatWhile(/[^'"\s=<>]/);
           var attrToken = this.stream.makeToken();
           if (!attrToken) {
             this.stream.tokenStart = tagMark;

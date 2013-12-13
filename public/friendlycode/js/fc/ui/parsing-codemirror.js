@@ -16,30 +16,21 @@ define([
       var result = givenOptions.parse(sourceCode);
       var curPos = codeMirror.getCursor();
 
-      // Errors cannot occur based on user input while the cursor
-      // sits on line 0, column 0, as any kind of typing will move
-      // the cursor to a non-zero position.
-      if (result.error && curPos.line === 0 && curPos.ch === 0) {
-
-        // If we see an error on 0/0, the error is actually somewhere
-        // else in the document, and we need to move the cursor to
-        // the end of the erroneous code first.
-        var index = 0;
-
-        // Find correct cursor position based on slowparse-signalled HTML errors
-        if(result.error.closeTag) {
-          index = result.error.closeTag.end;
+      if (result.error) {
+        if (!result.error.cursor) {
+          // This should, ideally, never happen. But it might, so tell the user
+          // what's wrong so they can include that information in a bug report.
+          console.error("Friendlycode could not find the cursor location "+
+                        " associated with an error. Error:", result.error);
         }
-        else if(result.error.openTag) {
-          index = result.error.openTag.start;
+        // If this is a clean load, or a full document paste, we need to
+        // put the cursor in a "real" place before we can add the error dialog.
+        var line = curPos.line;
+        if (curPos.ch === 0 && (line === 0 || line === codeMirror.lastLine())) {
+          var index = result.error.cursor || 0;
+          curPos = codeMirror.posFromIndex(index);
+          codeMirror.setCursor(curPos);
         }
-
-        // Find correct cursor position based on slowparse-signalled CSS errors
-        else if(result.error.cssValue) {
-          index = result.error.cssValue.start;
-        }
-
-        codeMirror.setCursor(codeMirror.posFromIndex(index));
       }
 
       // For autocomplete purposes, figure out which mode the document
