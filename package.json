@@ -21,6 +21,7 @@
     "webmaker-i18n": "https://github.com/mozilla/node-webmaker-i18n/archive/v0.3.2.tar.gz",
     "request": "2.21.0",
     "sequelize": "1.6.0",
+    "webmaker-download-locales": "0.0.6",
     "webmaker-loginapi": "https://github.com/mozilla/node-webmaker-loginapi/tarball/v0.1.18"
   },
   "optionalDependencies": {
@@ -35,6 +36,7 @@
     "grunt-contrib-jshint": "~0.4.3"
   },
   "scripts": {
-    "postinstall": "bower install"
+    "postinstall": "bower install",
+    "download-locales":  "webmaker-download-locales thimble"
   }
 }
