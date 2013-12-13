@@ -39,14 +39,15 @@ module.exports = function( grunt ) {
           "public/stylesheets/*.less"
         ]
       }
-    }      
+    }
     },
     jshint: {
       files: [
         "Gruntfile.js",
         "app.js",
         "lib/**/*.js",
-        "routes/**/*.js"
+        "routes/**/*.js",
+        "public/friendlycode/vendor/slowparse/slowparse.js"
       ]
     }
   });
