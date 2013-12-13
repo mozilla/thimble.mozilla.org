@@ -1,6 +1,6 @@
 {
   "name": "thimble",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "private": true,
   "dependencies": {
     "async": "0.2.7",
@@ -38,6 +38,6 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "download-locales":  "webmaker-download-locales thimble"
+    "download-locales": "webmaker-download-locales thimble"
   }
 }
