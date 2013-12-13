@@ -16,7 +16,8 @@ define([
       container: panesDiv,
       value: value,
       allowJS: options.allowJS,
-      previewLoader: options.previewLoader
+      previewLoader: options.previewLoader,
+      dataProtector: options.dataProtector
     });
     var toolbar = EditorToolbar({
       container: toolbarDiv,

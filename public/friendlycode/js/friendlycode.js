@@ -12,9 +12,6 @@ define(function(require) {
 
   Preferences.fetch();
 
-  // turn on data protection so users can't reload/leave accidentally
-  DataProtector.enableDataProtection();
-
   return function FriendlycodeEditor(options) {
     var publishURL = options.publishURL,
         pageToLoad = options.pageToLoad,
@@ -25,7 +22,8 @@ define(function(require) {
         editor = Editor({
           container: options.container,
           allowJS: options.allowJS,
-          previewLoader: options.previewLoader
+          previewLoader: options.previewLoader,
+          dataProtector: DataProtector
         }),
         ready = $.Deferred();
 
@@ -38,7 +36,8 @@ define(function(require) {
       modals: modals,
       codeMirror: editor.panes.codeMirror,
       publisher: publisher,
-      remixURLTemplate: remixURLTemplate
+      remixURLTemplate: remixURLTemplate,
+      dataProtector: DataProtector
     });
     var pageManager = CurrentPageManager({
       window: window,
@@ -52,6 +51,7 @@ define(function(require) {
       editor.panes.codeMirror.reparse();
       editor.panes.codeMirror.focus();
       editor.panes.codeMirror.refresh();
+      DataProtector.disableDataProtection();
       ready.resolve();
     }
 

@@ -39,7 +39,8 @@ define(function(require) {
       parse: function(html) {
         return Slowparse.HTML(document, html, allowJS ? [] : [TreeInspectors.forbidJS]);
       },
-      extraKeys: {"Ctrl-Space": "autocomplete"}
+      extraKeys: {"Ctrl-Space": "autocomplete"},
+      dataProtector: options.dataProtector
     });
     var relocator = Relocator(codeMirror);
     var cursorHelp = self.cursorHelp = ContextSensitiveHelp({
