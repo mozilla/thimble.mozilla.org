@@ -1,5 +1,3 @@
-"use strict";
-
 define({
   description: 'Miscellaneous context-sensitive help URLs.',
   root: {

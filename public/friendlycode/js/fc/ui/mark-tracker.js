@@ -1,9 +1,9 @@
-"use strict";
-
 // This helper class keeps track of different kinds of highlighting in
 // a CodeMirror instance.
 define(["jquery"], function($) {
-  return function MarkTracker(codeMirror) {
+  "use strict";
+
+  return function markTracker(codeMirror) {
     var classNames = {};
     var marks = [];
 
@@ -37,11 +37,12 @@ define(["jquery"], function($) {
           // I guess we're just garbage collecting here.
           mark.clear();
         });
-        var wrapper = codeMirror.getWrapperElement();
+        var wrapper = codeMirror.getWrapperElement(),
+            removeClass = function(element) {
+              $(element).removeClass(className);
+            };
         for (var className in classNames) {
-          classNames[className].forEach(function(element) {
-            $(element).removeClass(className);
-          });
+          classNames[className].forEach(removeClass);
           $("." + className, wrapper).removeClass(className);
         }
 

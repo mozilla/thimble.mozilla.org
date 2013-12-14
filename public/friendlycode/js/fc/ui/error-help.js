@@ -1,8 +1,8 @@
-"use strict";
-
 // Provides helpful Slowparse-based error suggestions for a
 // ParsingCodeMirror.
-define(["jquery-slowparse", "./mark-tracker"], function($, MarkTracker) {
+define(["jquery-slowparse", "./mark-tracker"], function($, markTracker) {
+  "use strict";
+
   // Display an animated arrow pointing at a particular position in a
   // codeMirror instance. It disappears after a short delay.
   function pointAtPosition(codeMirror, pos) {
@@ -46,7 +46,7 @@ define(["jquery-slowparse", "./mark-tracker"], function($, MarkTracker) {
     });
 
     // Keep track of error highlighting.
-    var errorHelpMarks = MarkTracker(codeMirror, relocator);
+    var errorHelpMarks = markTracker(codeMirror, relocator);
 
     // Report the given Slowparse error.
     function reportError(error) {

@@ -59,7 +59,7 @@ define(["jquery", "backbone-events"], function($, BackboneEvents) {
 
     BackboneEvents.mixin(self);
     return self;
-  };
+  }
 
   return LivePreview;
 });

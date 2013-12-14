@@ -1,8 +1,8 @@
-"use strict";
-
 // This class is responsible for communicating with a publishing server
 // to save and load published code.
 define(["jquery"], function($) {
+  "use strict";
+
   var myOrigin = window.location.protocol + "//" + window.location.host;
 
   function Publisher(baseURL) {

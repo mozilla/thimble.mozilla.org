@@ -1,23 +1,23 @@
-"use strict";
-
 define(["jquery", "fc/prefs"], function($, Preferences) {
+  "use strict";
+
   return function(options) {
     var codeMirror = options.codeMirror;
     var navItem = options.navItem;
     var menu = navItem.find("ul");
     var menuItems = menu.find("li");
-    
+
     function menuItem(size) {
       var item = $("li[data-size=" + size + "]", menu);
       return item.length ? item : null;
     }
-    
+
     Preferences.on("change:textSize", function() {
       var size = $("li[data-default-size]", menu).attr("data-size");
       var prefSize = Preferences.get("textSize");
       if (prefSize && typeof(prefSize) == "string" && menuItem(prefSize))
         size = prefSize;
-      
+
       $(codeMirror.getWrapperElement()).attr("data-size", size);
       codeMirror.refresh();
 
@@ -50,7 +50,7 @@ define(["jquery", "fc/prefs"], function($, Preferences) {
       Preferences.save();
       menu.hide();
     });
-    
+
     Preferences.trigger("change:textSize");
   };
 });

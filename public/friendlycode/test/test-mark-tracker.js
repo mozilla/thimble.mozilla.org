@@ -4,8 +4,8 @@ defineTests([
   "jquery",
   "fc/ui/mark-tracker",
   "codemirror"
-], function($, MarkTracker, CodeMirror) {
-  module("MarkTracker");
+], function($, markTracker, CodeMirror) {
+  module("markTracker");
 
   var className = "cm-debug";
 
@@ -14,7 +14,7 @@ defineTests([
       var place = $("<div></div>");
       place.appendTo(document.body);
       var cm = CodeMirror(place[0]);
-      var mt = MarkTracker(cm);
+      var mt = markTracker(cm);
       try {
         cb(place, cm, mt);
       } finally {

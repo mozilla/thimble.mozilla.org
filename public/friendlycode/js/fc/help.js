@@ -1,9 +1,9 @@
-"use strict";
-
 define([
   "i18n!fc/nls/resourcelinks",
   "localized"
 ], function(Resourcelinks, Localized) {
+  "use strict";
+
   // A help index provides context-sensitive help for an HTML document,
   // indexed by characters in the HTML source code.
   function HelpIndex() {
@@ -77,6 +77,23 @@ define([
           type: "tag",
           value: normalizeTagName(element.nodeName),
           highlights: []
+        },
+        parseRule = function(rule) {
+          var selectorInfo = {
+            type: "cssSelector",
+            highlights: [rule.selector]
+          };
+          for (var i = rule.selector.start; i < rule.selector.end; i++)
+            helpIndex[i] = selectorInfo;
+          rule.declarations.properties.forEach(function(prop) {
+            var cssInfo = {
+              type: "cssProperty",
+              value: html.slice(prop.name.start, prop.name.end).toLowerCase(),
+              highlights: [prop.name]
+            };
+            for (var i = prop.name.start; i < prop.name.end; i++)
+              helpIndex[i] = cssInfo;
+          });
         };
     if (pi) {
       if (pi.openTag) {
@@ -98,23 +115,7 @@ define([
         buildHelpIndex(child, helpIndex, html);
       }
       if (element.nodeName == "STYLE" && child.parseInfo.rules) {
-        child.parseInfo.rules.forEach(function(rule) {
-          var selectorInfo = {
-            type: "cssSelector",
-            highlights: [rule.selector]
-          };
-          for (var i = rule.selector.start; i < rule.selector.end; i++)
-            helpIndex[i] = selectorInfo;
-          rule.declarations.properties.forEach(function(prop) {
-            var cssInfo = {
-              type: "cssProperty",
-              value: html.slice(prop.name.start, prop.name.end).toLowerCase(),
-              highlights: [prop.name]
-            };
-            for (var i = prop.name.start; i < prop.name.end; i++)
-              helpIndex[i] = cssInfo;
-          });
-        });
+        child.parseInfo.rules.forEach(parseRule);
       }
     }
   }
