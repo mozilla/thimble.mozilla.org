@@ -1,7 +1,7 @@
-"use strict";
-
 // code will relocate an error or help message to near where the error actually is in CodeMirror.
 define(["jquery", "./gutter-pointer"], function($, gutterPointer) {
+  "use strict";
+
   return function Relocator(codeMirror) {
     var lastPos = null;
     var lastElement = null;
@@ -68,7 +68,7 @@ define(["jquery", "./gutter-pointer"], function($, gutterPointer) {
           codeMirror.setGutterMarker(l, "gutter-markers", mark);
         }
 
-        gutterPointer(codeMirror, highlightClass)
+        gutterPointer(codeMirror, highlightClass);
 
         codeMirror.addWidget(lastPos, lastElement[0], false);
         $(".up-arrow, .down-arrow", lastElement).css({

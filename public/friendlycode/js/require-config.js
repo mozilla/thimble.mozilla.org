@@ -57,7 +57,7 @@ var require = {
         "codemirror",
         "codemirror/autocomplete/js",
         "codemirror/autocomplete/html",
-        "codemirror/autocomplete/css",
+        "codemirror/autocomplete/css"
       ],
       exports: "CodeMirror"
     },

@@ -1,12 +1,12 @@
-"use strict";
-
 // A subclass of IndexableCodeMirror which continuously re-parses
 // the code in its editor. Also adds a Backbone.Events interface
 // for extension points to hook into.
 define([
   "backbone-events",
   "./indexable-codemirror"
-], function(BackboneEvents, IndexableCodeMirror) {
+], function(BackboneEvents, indexableCodeMirror) {
+  "use strict";
+
   return function ParsingCodeMirror(place, givenOptions) {
     var dataProtector = givenOptions.dataProtector;
 
@@ -68,7 +68,7 @@ define([
     var time = givenOptions.time || window;
     var reparseTimeout;
 
-    var codeMirror = IndexableCodeMirror(place, givenOptions);
+    var codeMirror = indexableCodeMirror(place, givenOptions);
 
     codeMirror.on("change", function(cm, event) {
       if (reparseTimeout !== undefined) {

@@ -1,6 +1,6 @@
-"use strict";
+define(["jquery", "./mark-tracker"], function($, markTracker) {
+  "use strict";
 
-define(["jquery", "./mark-tracker"], function($, MarkTracker) {
   // Given a descendant of the given root element, returns a CSS
   // selector that uniquely selects only the descendant from the
   // root element.
@@ -15,11 +15,11 @@ define(["jquery", "./mark-tracker"], function($, MarkTracker) {
       selector = nodeName + ':nth-of-type(' + n + ')';
       parts.push(selector);
     }
-    
+
     parts.reverse();
     return ' > ' + parts.join(' > ');
   }
-  
+
   function nodeToCode(node, docFrag) {
     var parallelNode = getParallelNode(node, docFrag);
     var result = null;
@@ -71,7 +71,7 @@ define(["jquery", "./mark-tracker"], function($, MarkTracker) {
 
   function PreviewToEditorMapping(livePreview) {
     var codeMirror = livePreview.codeMirror;
-    var marks = MarkTracker(codeMirror);
+    var marks = markTracker(codeMirror);
     $(".CodeMirror-lines", codeMirror.getWrapperElement())
       .on("mouseup", marks.clear);
     livePreview.on("refresh", function(event) {
@@ -98,10 +98,10 @@ define(["jquery", "./mark-tracker"], function($, MarkTracker) {
       });
     });
   }
-  
+
   PreviewToEditorMapping._pathTo = pathTo;
   PreviewToEditorMapping._nodeToCode = nodeToCode;
   PreviewToEditorMapping._getParallelNode = getParallelNode;
-  
+
   return PreviewToEditorMapping;
 });

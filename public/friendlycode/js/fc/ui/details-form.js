@@ -1,4 +1,6 @@
 define(['template!details-form'], function (detailsFormHTML) {
+  "use strict";
+
   var DEFAULT_THUMBNAIL = 'https://webmaker.org/img/thumbs/thimble-grey.png';
   var ALL_FIELDS = [
     'title',
@@ -19,11 +21,10 @@ define(['template!details-form'], function (detailsFormHTML) {
   // Validation function that asks Thimble whether
   // a particular title has already been saved before
   // by the currently logged-in user.
-  function validateTitle() {
-    var $this = $(this),
-        $error = $(".title-error.error-message"),
+  function validateTitle(evt) {
+    var $error = $(".title-error.error-message"),
         $button = $(".confirmation-button.yes-button"),
-        title = this.value.toLowerCase(),
+        title = evt.target.value.toLowerCase(),
         csrf_token = $("meta[name='csrf-token']").attr("content");
 
     $.ajax({
@@ -39,7 +40,7 @@ define(['template!details-form'], function (detailsFormHTML) {
         request.setRequestHeader('X-CSRF-Token', csrf_token); // express.js uses a non-standard name for csrf-token
       },
       error: function(req) {
-        console.log("error while validating the title of your page")
+        console.log("error while validating the title of your page");
       },
       success: function(response) {
         if(response.status !== 200) {
@@ -51,7 +52,7 @@ define(['template!details-form'], function (detailsFormHTML) {
         }
       }
     });
-  };
+  }
 
   var DetailsForm = function (options) {
     var self = this;
@@ -59,6 +60,7 @@ define(['template!details-form'], function (detailsFormHTML) {
       container: '.publish-panel',
       documentIframe: '.preview-holder iframe'
     };
+    var option;
 
     for (option in options) {
       defaults[option] = options[option] || defaults[option];
@@ -176,7 +178,7 @@ define(['template!details-form'], function (detailsFormHTML) {
     });
 
     return content;
-  }
+  };
 
   DetailsForm.prototype.addTags = function (tags) {
     var self = this;
@@ -212,7 +214,7 @@ define(['template!details-form'], function (detailsFormHTML) {
         val = val || currentVal || self.getCodeMirrorValue().find('title').text();
         $fieldInput.val(val);
         // validate this title against Thimble's known titles for this user
-        validateTitle.call($fieldInput[0]);
+        validateTitle({ target: $fieldInput[0] });
         break;
       case 'thumbnail':
         val = val || currentVal || self.findMetaTagInfo('thumbnail')[0];
@@ -236,7 +238,6 @@ define(['template!details-form'], function (detailsFormHTML) {
   DetailsForm.prototype.updateAll = function (data) {
     var self = this;
     data = data || {};
-    var self = this;
     ALL_FIELDS.forEach(function (field, i) {
       self.setValue(field, data[field]);
     });

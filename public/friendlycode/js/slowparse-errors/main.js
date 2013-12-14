@@ -1,10 +1,10 @@
-"use strict";
-
 define([
   'jquery-slowparse',
   'i18n!./nls/base',
   'i18n!./nls/forbidjs'
 ], function($, base, forbidjs) {
+  "use strict";
+
   function addI18nBundleToErrorTemplates(bundle) {
     Object.keys(bundle).forEach(function(key) {
       var div = $('<div></div>').html(bundle[key])
@@ -12,6 +12,6 @@ define([
       $.errorTemplates = $.errorTemplates.add(div);
     });
   }
-  
+
   [base, forbidjs].forEach(addI18nBundleToErrorTemplates);
 });

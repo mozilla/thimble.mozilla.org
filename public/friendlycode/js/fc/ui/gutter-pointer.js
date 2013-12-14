@@ -1,5 +1,3 @@
-"use strict";
-
 // gutterPointer(codeMirror, highlightClass)
 //
 // This function creates and returns an SVG shape that looks like this:
@@ -29,6 +27,8 @@
 // the CodeMirror manual at http://codemirror.net/doc/manual.html.
 
 define(["jquery"], function($) {
+  "use strict";
+
   var SVG_NS = "http://www.w3.org/2000/svg";
 
   function attrs(element, attributes) {

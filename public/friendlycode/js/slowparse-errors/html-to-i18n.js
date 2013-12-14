@@ -1,6 +1,6 @@
 define(["text", "localized"], function(text, localized) {
   var buildMap = {};
-  
+
   function htmlToI18nBundle(document, html) {
     var result = {};
     var div = document.createElement('div');
@@ -11,13 +11,13 @@ define(["text", "localized"], function(text, localized) {
       result[name] = el.innerHTML;
     });
     return result;
-  };
+  }
 
   return {
     load: function(name, req, onLoad, config) {
       name = name.replace( /^\//, "/" + localized.getCurrentLang() + "/" );
       var url = req.toUrl(name).replace(".js", ".html");
-      
+
       text.get(url, function(html) {
         if (config.isBuild) {
           buildMap[name] = htmlToI18nBundle(config.makeDocument(), html);

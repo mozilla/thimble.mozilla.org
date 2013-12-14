@@ -42,11 +42,15 @@ module.exports = function( grunt ) {
     }
     },
     jshint: {
+      options: {
+        "-W069": true // ignore "['...'] is better written in dot notation." warnings
+      },
       files: [
         "Gruntfile.js",
         "app.js",
         "lib/**/*.js",
         "routes/**/*.js",
+        "public/friendlycode/js/**/*.js",
         "public/friendlycode/vendor/slowparse/slowparse.js"
       ]
     }

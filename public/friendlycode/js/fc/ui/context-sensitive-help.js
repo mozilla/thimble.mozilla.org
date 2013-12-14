@@ -1,12 +1,12 @@
-"use strict";
-
 // Provides context-sensitive help for a ParsingCodeMirror based on
 // the current cursor position.
 define([
   "jquery",
   "fc/prefs",
   "./mark-tracker"
-], function($, Preferences, MarkTracker) {
+], function($, Preferences, markTracker) {
+  "use strict";
+
   return function ContextSensitiveHelp(options) {
     var self = {};
     var codeMirror = options.codeMirror;
@@ -34,7 +34,7 @@ define([
     });
 
     // Keep track of context-sensitive help highlighting.
-    var cursorHelpMarks = MarkTracker(codeMirror);
+    var cursorHelpMarks = markTracker(codeMirror);
 
     codeMirror.on("reparse", function(event) {
       clearHelp();

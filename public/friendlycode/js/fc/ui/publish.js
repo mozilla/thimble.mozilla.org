@@ -1,13 +1,13 @@
-"use strict";
-
 define(function (require) {
+  "use strict";
+
   var $ = require("jquery"),
       BackboneEvents = require("backbone-events"),
-      SocialMedia = require("./social-media"),
+      createSocialMedia = require("./social-media"),
       DetailsForm = require('./details-form'),
       Make = require('/external/make-api.js'),
-      ConfirmDialogTemplate = require("template!confirm-dialog"),
-      PublishDialogTemplate = require("template!publish-dialog"),
+      confirmDialogTemplate = require("template!confirm-dialog"),
+      publishDialogTemplate = require("template!publish-dialog"),
       Localized = require("localized");
 
   function makeSharingHotLoader(options) {
@@ -27,8 +27,8 @@ define(function (require) {
 
   return function(options) {
     var modals = options.modals,
-        confirmDialog = $(ConfirmDialogTemplate()),
-        publishDialog = $(PublishDialogTemplate()),
+        confirmDialog = $(confirmDialogTemplate()),
+        publishDialog = $(publishDialogTemplate()),
         dialogs = confirmDialog.add(publishDialog),
         codeMirror = options.codeMirror,
         dataProtector = options.dataProtector,
@@ -40,7 +40,7 @@ define(function (require) {
         accordions = $("div.accordion", publishDialog),
         origShareHTML = $(".thimble-additionals", shareResult).html(),
         currURL = null,
-        socialMedia = SocialMedia(),
+        socialMedia = createSocialMedia(),
         detailsForm,
         makeData;
 
@@ -62,7 +62,7 @@ define(function (require) {
     var makeEndpoint = $('body').data('make-endpoint');
     var makeUrl = $('body').data('make-url');
     if ( makeUrl ) {
-      var make = Make({ apiURL: makeEndpoint });
+      var make = new Make({ apiURL: makeEndpoint });
       make.find({
         url: makeUrl
       }).then(function(err, data) {

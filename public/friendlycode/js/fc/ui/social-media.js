@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * A tiny library for load-loading social media share buttons.
  * If we don't do this, social media will track users even before
@@ -7,6 +5,8 @@
  * monitoring behaviour.
  */
 define(["localized"], function(localized) {
+  "use strict";
+
   localized.ready(function(){});
   return function SocialMedia() {
     var urlPlaceHolder = "__URL__PLACE__HOLDER__";
