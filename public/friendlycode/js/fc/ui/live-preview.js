@@ -57,6 +57,10 @@ define(["jquery", "backbone-events"], function($, BackboneEvents) {
       }
     });
 
+    var setViewLink = self.setViewLink = function(link) {
+      self.trigger("change:viewlink", link);
+    }
+
     BackboneEvents.mixin(self);
     return self;
   }

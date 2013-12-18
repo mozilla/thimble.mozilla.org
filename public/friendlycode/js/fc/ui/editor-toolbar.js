@@ -4,19 +4,19 @@ define(function(require) {
       HistoryUI = require("fc/ui/history"),
       NavOptionsTemplate = require("template!nav-options"),
       TextUI = require("fc/ui/text");
-  
+
   function HintsUI(options) {
     var self = {},
         hintsNavItem = options.navItem,
         hintsCheckbox = hintsNavItem.find(".checkbox");
-    
+
     Preferences.on("change:showHints", function() {
       if (Preferences.get("showHints") === false)
         hintsCheckbox.removeClass("on").addClass("off");
       else
         hintsCheckbox.removeClass("off").addClass("on");
     });
-    
+
     hintsNavItem.click(function() {
       var isDisabled = (Preferences.get("showHints") === false);
       Preferences.set("showHints", isDisabled);
@@ -26,7 +26,7 @@ define(function(require) {
     Preferences.trigger("change:showHints");
     return self;
   }
-  
+
   return function Toolbar(options) {
     var self = {},
         div = options.container,
@@ -35,7 +35,7 @@ define(function(require) {
         publishButton = navOptions.find(".publish-button"),
         undoNavItem = navOptions.find(".undo-nav-item"),
         startPublish;
-    
+
     var historyUI = HistoryUI({
       codeMirror: panes.codeMirror,
       undo: undoNavItem,
@@ -49,16 +49,30 @@ define(function(require) {
       navItem: navOptions.find(".hints-nav-item")
     });
 
+    // Title change handling
     function onChangeTitle(title) {
       if (title.length)
         $(".preview-title", navOptions).text(title).show();
       else
         $(".preview-title", navOptions).hide();
     }
-    
     panes.preview.on("change:title", onChangeTitle);
     onChangeTitle(panes.preview.title);
-    
+
+    // published-page link handling
+    function onChangeViewLink(link) {
+      var viewButton = $(".page-view-button", navOptions),
+          viewLink = $(".page-view-link");
+      viewLink.attr("href", "#");
+      if (link) {
+        viewButton.css("display", "inline-block");
+        viewLink.attr("href", link);
+      }
+    }
+    panes.preview.on("change:viewlink", onChangeViewLink);
+    onChangeViewLink( $('body').data('make-url') || false);
+
+
     // If the editor has no content, disable the publish button.
     panes.codeMirror.on("change", function() {
       var codeLength = panes.codeMirror.getValue().trim().length;
@@ -67,7 +81,7 @@ define(function(require) {
     publishButton.click(function(){
       if ($(this).hasClass("enabled")) startPublish(this);
     });
-    
+
     self.refresh = function() {
       historyUI.refresh();
     };
@@ -93,7 +107,7 @@ define(function(require) {
       }).tipsy("show");
       setTimeout(function() { undoNavItem.tipsy("hide"); }, 6000);
     };
-    
+
     self.setStartPublish(null);
     return self;
   };
