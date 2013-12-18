@@ -43,6 +43,10 @@
   box-shadow: 0 4px 7px -4px rgba(0, 0, 0, 0.6);
 }
 
+.wm-button.wm-button-blue[disabled] {
+  opacity: 0.5;
+}
+
 .wm-button.short {
   height: 28px;
   line-height: 26px;

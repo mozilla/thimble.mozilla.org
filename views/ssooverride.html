@@ -9,19 +9,28 @@
       "jquery",
       "thimblePage"
     ], function($, ThimblePage) {
-      var publishButton = $('.publish-button'),
+      var publishButton = $('.publish-button')[0],
           myProjects = $( ".my-projects-iframe" ),
           loggedIn = false;
 
-      publishButton.hide();
+      publishButton.enable = function() {
+        publishButton.removeAttribute("disabled");
+        publishButton.removeAttribute("title");
+      }
+      publishButton.disable = function() {
+        publishButton.disabled = true;
+        publishButton.setAttribute("title", "{{ gettext("Login to publish your project!") }}");
+      }
+
+      publishButton.disable();
 
       navigator.idSSO.app = {
         onlogin: function(loggedInUser, displayName) {
-          publishButton.show();
+          publishButton.enable();
           myProjects.attr("src", "{{audience}}/{{localeInfo.lang}}/me?app={{appname}}");
         },
         onlogout: function() {
-          publishButton.hide();
+          publishButton.disable();
           myProjects.attr("src", "");
         }
       };
