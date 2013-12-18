@@ -108,7 +108,7 @@ environment:
 
 ```
 > heroku config:set NODE_ENV="development"
-> heroku config:set HOSTNAME="htt:// ...heroku instance..."
+> heroku config:set APP_HOSTNAME="htt:// ...heroku instance..."
 > heroku config:set AUDIENCE="http://[webmaker.org instance]"
 > heroku config:set USERBAR="http://[login.webmaker.org instance]"
 > heroku config:set LOGINAPI="http://testuser:password@[login.mofostaging.net instance]"

@@ -19,7 +19,7 @@ function getPageData(req) {
 module.exports = function(utils, env, nunjucksEnv, appName) {
 
   var allowJS = env.get("JAVASCRIPT_ENABLED", false),
-      appURL = env.get("HOSTNAME"),
+      appURL = env.get("APP_HOSTNAME"),
       audience = env.get("AUDIENCE"),
       makeEndpoint = env.get("MAKE_ENDPOINT"),
       previewLoader = env.get("PREVIEW_LOADER"),
