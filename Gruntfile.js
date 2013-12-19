@@ -51,7 +51,10 @@ module.exports = function( grunt ) {
         "lib/**/*.js",
         "routes/**/*.js",
         "public/friendlycode/js/**/*.js",
-        "public/friendlycode/vendor/slowparse/slowparse.js"
+        "public/friendlycode/vendor/slowparse/slowparse.js",
+        "public/friendlycode/vendor/slowparse/test/nodetest.js",
+        "public/friendlycode/vendor/slowparse/test/test-slowparse.js",
+        "public/friendlycode/vendor/slowparse/test/node/qunit-shim.js"
       ]
     }
   });

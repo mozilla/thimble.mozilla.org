@@ -23,7 +23,7 @@
 //   [RequireJS]: http://requirejs.org/
 //   [error specification]: spec/
 //   [README]: https://github.com/mozilla/slowparse#readme
-var Slowparse = (function() {
+(function() {
   "use strict";
 
   // ### Character Entity Parsing
@@ -49,7 +49,7 @@ var Slowparse = (function() {
   var nameChar = new RegExp("[" + attributeNameChar + "]");
 
   //Define a property checker for https page
-  var checkMixedContent = (window.location.protocol === "https:");
+  var checkMixedContent = (typeof window !== "undefined" ? (window.location.protocol === "https:") : false);
 
   //Define activeContent with tag-attribute pairs
   function isActiveContent (tagName, attrName) {
@@ -1556,8 +1556,18 @@ var Slowparse = (function() {
     }
   };
 
-  if (typeof(define) == "function") {
+  // AMD context
+  if (typeof define !== "undefined") {
     define(function() { return Slowparse; });
-  } else
-    return Slowparse;
-})();
+  }
+
+  // Node.js context
+  else if(typeof module !== "undefined" && module.exports) {
+    module.exports = Slowparse;
+  }
+
+  // browser context
+  else if (typeof window !== "undefined") {
+    window.Slowparse = Slowparse;
+  }
+}());
