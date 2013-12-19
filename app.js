@@ -240,14 +240,14 @@ app.post('/publish',
          middleware.sanitizeMetaData,
          middleware.checkPageOperation(databaseAPI),
          sanitizeScript,
-         middleware.saveData(databaseAPI, env.get('HOSTNAME')),
+         middleware.saveData(databaseAPI, env.get('APP_HOSTNAME')),
          middleware.rewritePublishId(databaseAPI),
          middleware.generateUrls(appName, env.get('S3'), env.get('USER_SUBDOMAIN')),
          middleware.finalizeProject(nunjucksEnv, env),
          middleware.publishData(env.get('S3')),
          middleware.rewriteUrl,
          // update the database now that we have a S3-published URL
-         middleware.saveUrl(databaseAPI, env.get('HOSTNAME')),
+         middleware.saveUrl(databaseAPI, env.get('APP_HOSTNAME')),
          middleware.getRemixedFrom(databaseAPI, make),
          middleware.publishMake(make),
   function(req, res) {
@@ -317,7 +317,7 @@ require('webmaker-loginapi')(app, {
 
 // run server
 app.listen(env.get("PORT"), function(){
-  console.log('Express server listening on ' + env.get("HOSTNAME"));
+  console.log('Express server listening on ' + env.get("APP_HOSTNAME"));
 });
 
 // If we're in running in emulated S3 mode, run a mini
