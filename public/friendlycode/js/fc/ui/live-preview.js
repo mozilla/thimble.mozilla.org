@@ -47,15 +47,12 @@ define(["jquery", "backbone-events"], function($, BackboneEvents) {
           throw e;
         }
 
-        // check if we need to update the title for the live preview pane
-        var titleMatch = event.sourceCode.match(/<[tT][iI][tT][lL][eE][^>]*>([^<]*)<\/[tT][iI][tT][lL][eE]>/),
-            title = (titleMatch ? titleMatch[1] : false);
-        if (title != self.title) {
-          self.title = title;
-          self.trigger("change:title", self.title);
-        }
       }
     });
+
+    var setViewLink = self.setViewLink = function(link) {
+      self.trigger("change:viewlink", link);
+    }
 
     BackboneEvents.mixin(self);
     return self;
