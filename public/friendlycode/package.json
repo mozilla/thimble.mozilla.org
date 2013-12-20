@@ -6,7 +6,6 @@
   "main": "build-require.js",
   "dependencies": {
     "requirejs": "2.1.2",
-    "jsdom": "0.2.19",
     "tap": "0.3.x",
     "express": "2.5.x",
     "request": "2.12.0",
@@ -15,7 +14,7 @@
   },
   "engines": {
     "node": "0.8.x",
-    "npm":  "1.1.x"
+    "npm": "1.1.x"
   },
   "repository": {
     "type": "git",
@@ -25,5 +24,8 @@
   "scripts": {
     "optimize": "node bin/build-require.js",
     "test": "tap ./test/node-tap --tap"
+  },
+  "devDependencies": {
+    "jsdom": "~0.2.19"
   }
 }
