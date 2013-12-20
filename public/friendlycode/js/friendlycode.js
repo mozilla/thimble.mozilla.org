@@ -62,6 +62,10 @@ define(function(require) {
       // published, so they can share/bookmark the URL and it'll be what
       // they expect it to be.
       pageManager.changePage(info.path, info.remixURL);
+
+      // Also update the preview pane so that to the title
+      // points to the published URL
+      editor.panes.preview.setViewLink(info.viewURL);
     });
 
     if (!pageManager.currentPage()) {
