@@ -10,7 +10,6 @@
       "thimblePage"
     ], function($, ThimblePage) {
       var publishButton = $('.publish-button')[0],
-          myProjects = $( ".my-projects-iframe" ),
           loggedIn = false;
 
       publishButton.enable = function() {
@@ -27,11 +26,9 @@
       navigator.idSSO.app = {
         onlogin: function(loggedInUser, displayName) {
           publishButton.enable();
-          myProjects.attr("src", "{{audience}}/{{localeInfo.lang}}/me?app={{appname}}");
         },
         onlogout: function() {
           publishButton.disable();
-          myProjects.attr("src", "");
         }
       };
     });
