@@ -1307,7 +1307,10 @@
           startMark = this.stream.pos;
 
       while (!this.stream.end()) {
-        if (this.stream.eat(nameStartChar) && this.stream.eatWhile(nameChar)) {
+        if (this.stream.eat(nameStartChar)) {
+          if (this.stream.peek !== "=") {
+            this.stream.eatWhile(nameChar);
+          }
           this._parseAttribute(tagName);
         }
         else if (this.stream.eatSpace()) {
