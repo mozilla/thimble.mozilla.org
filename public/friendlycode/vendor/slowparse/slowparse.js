@@ -1089,7 +1089,7 @@
                    "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5",
                    "h6", "head", "header", "hgroup", "hr", "html", "i",
                    "iframe", "img", "input", "ins", "kbd", "keygen", "label",
-                   "legend", "li", "link", "map", "mark", "marquee", "menu",
+                   "legend", "li", "link", "main", "map", "mark", "marquee", "menu",
                    "meta", "meter", "nav", "nobr", "noscript", "object", "ol",
                    "optgroup", "option", "output", "p", "param", "pre",
                    "progress", "q", "rp", "rt", "ruby", "samp", "script",
