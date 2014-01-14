@@ -32,9 +32,11 @@ define(function(require) {
         div = options.container,
         panes = options.panes,
         navOptions = $(NavOptionsTemplate()).appendTo(div),
+        saveButton = navOptions.find(".save-button"),
         publishButton = navOptions.find(".publish-button"),
-        undoNavItem = navOptions.find(".undo-nav-item"),
-        startPublish;
+        startSave,
+        startPublish,
+        undoNavItem = navOptions.find(".undo-nav-item");
 
     var historyUI = HistoryUI({
       codeMirror: panes.codeMirror,
@@ -62,43 +64,44 @@ define(function(require) {
     panes.preview.on("change:viewlink", onChangeViewLink);
     onChangeViewLink( $('body').data('make-url') || false);
 
-
-    // If the editor has no content, disable the publish button.
+    // If the editor has no content, disable the save and publish button.
     panes.codeMirror.on("change", function() {
       var codeLength = panes.codeMirror.getValue().trim().length;
-      publishButton.toggleClass("enabled", codeLength ? true : false);
+      [saveButton, publishButton].forEach(function(button) {
+        button.attr("disabled", codeLength ? false : true);
+      });
     });
-    publishButton.click(function(){
-      if ($(this).hasClass("enabled")) startPublish(this);
+
+    saveButton.click(function() {
+      if (!$(this).attr("disabled")) {
+        startSave(this);
+      }
+    });
+
+    publishButton.click(function() {
+      if (!$(this).attr("disabled")) {
+        startPublish(this);
+      }
     });
 
     self.refresh = function() {
       historyUI.refresh();
     };
+    self.setStartSave = function(func) {
+      startSave = func;
+      saveButton.toggle(!!startSave);
+    };
     self.setStartPublish = function(func) {
       startPublish = func;
       publishButton.toggle(!!startPublish);
     };
-    self.showDataRestoreHelp = function() {
-      // Display a non-modal message telling the user that their
-      // previous data has been restored, and that they can click 'undo'
-      // to go back to the original version of the editor content.
-      // This is just a temporary workaround to avoid confusion until
-      // we figure out a better solution; see this issue for more
-      // discussion:
-      //
-      // https://github.com/mozilla/webpagemaker/issues/53
-      undoNavItem.tipsy({
-        gravity: 'n',
-        fade: true,
-        trigger: 'manual',
-        title: 'data-restore-help',
-        className: 'friendlycode-base'
-      }).tipsy("show");
-      setTimeout(function() { undoNavItem.tipsy("hide"); }, 6000);
-    };
 
+    // defaults are bound in friendlycode.js,
+    // as publishUI.start(saveOnly) and as
+    // publishUI.start(saveAndPublish), respectively.
+    self.setStartSave(null);
     self.setStartPublish(null);
+
     return self;
   };
 });
