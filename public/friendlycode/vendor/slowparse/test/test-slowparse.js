@@ -546,5 +546,31 @@ module.exports = function(Slowparse, window, document, validators) {
     ok(Slowparse.CSS_PROPERTY_NAMES.indexOf("color") != -1);
   });
 
+  test("parsing elements with optional close tags: <p>", function() {
+    var html = '<div><p>text\n<p>more text</div>';
+    var result = Slowparse.HTML(document, html);
+    ok(!result.error, "no error on omitted </p>");
+  });
+
+  test("intentional fail for optional close tag (incorrect use)", function() {
+    var html = '<div><p>text\n<a>more text</a></div>';
+    var result = Slowparse.HTML(document, html);
+    var expected = {
+      type: 'MISMATCHED_CLOSE_TAG',
+      openTag: {
+        name: 'p',
+        start: 5,
+        end: 8
+      },
+      closeTag: {
+        name: 'div',
+        start: 29,
+        end: 34
+      },
+      cursor: 29
+    };
+    equal(result.error, expected, "bad omission error for <p>");
+  });
+
   return validators.getFailCount();
 };
