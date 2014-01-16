@@ -252,7 +252,7 @@ app.post('/publish',
          middleware.saveData(databaseAPI, env.get('HOSTNAME')),
          middleware.rewritePublishId(databaseAPI),
          middleware.generateUrls(appName, env.get('S3'), env.get('USER_SUBDOMAIN')),
-         middleware.finalizeProject(nunjucksEnv, env),
+         middleware.finalizeProject(env.get("HOSTNAME")),
          middleware.publishData(env.get('S3')),
          middleware.rewriteUrl,
          // update the database now that we have a S3-published URL
