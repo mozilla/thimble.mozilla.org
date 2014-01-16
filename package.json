@@ -39,6 +39,7 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "download-locales": "webmaker-download-locales thimble"
+    "download-locales": "webmaker-download-locales thimble",
+    "test": "grunt"
   }
 }
