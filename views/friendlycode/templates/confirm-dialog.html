@@ -7,7 +7,7 @@
           <div class="details-container"></div>
           <div class="error-warning">{{ gettext("error-warning") | safe }}</div>
           <div class="confirmation-buttons">
-            <button class="confirmation-button yes-button">{{ gettext("Publish") }}</button>
+            <button class="confirmation-button yes-button" data-save="{{ gettext("Save") }}" data-publish="{{ gettext("Publish") }}">{{ gettext("Publish") }}</button>
             <button class="confirmation-button no-button" data-close-modal>{{ gettext("Cancel") }}</button>
           </div>
         </div>
