@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <title>Tutorial</title>
     <!-- this stylesheet provides default styles for tutorials -->
-    <link href="//thimble.webmaker.org/learning_projects/tutorial/tutorial.css" rel="stylesheet">
+    <link href="{{ hostname }}/learning_projects/tutorial/tutorial.css" rel="stylesheet">
     <!-- these scripts turn your make into a tutorial -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="//thimble.webmaker.org/learning_projects/tutorial/tutorial.js"></script>
+    <script src="{{ hostname }}/learning_projects/tutorial/tutorial.js"></script>
     <script>
       jQuery(document).ready(function($){
         $('body').tutorial();

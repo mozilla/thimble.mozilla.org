@@ -16,9 +16,9 @@ Let's get started.
   <head>
     <meta charset="utf-8">
     <title>Avatar-o-Matic</title>
-  
+
     <style>
-/* 
+/*
 Everything contained within this <style> tag is called CSS and it is used to define the presentational components of the page, like fonts, colors, containers, positioning, etc. Remember that in CSS, comments are enclosed in '/*'. You can edit this CSS to change the background of your avatar.
 */
 
@@ -38,30 +38,30 @@ Start by choosing a background for your avatar. Notice the numbers next to each 
 */
 
       .avatar01 {
-        background-image: url(/learning_projects/avataromatic/blackstripes.png);
+        background-image: url({{ hostname }}/learning_projects/avataromatic/blackstripes.png);
       }
 
       .avatar02 {
-        background-image: url(/learning_projects/avataromatic/body_green_top.png), url(/learning_projects/avataromatic/body_green-bottom.png);
+        background-image: url({{ hostname }}/learning_projects/avataromatic/body_green_top.png), url({{ hostname }}/learning_projects/avataromatic/body_green-bottom.png);
         background-position: top center, bottom center;
       }
 
       .avatar03 {
-        background-image: url(/learning_projects/avataromatic/body_pink_top.png), url(/learning_projects/avataromatic/body_pink_bottom.png);
+        background-image: url({{ hostname }}/learning_projects/avataromatic/body_pink_top.png), url({{ hostname }}/learning_projects/avataromatic/body_pink_bottom.png);
         background-position: top center, bottom center;
       }
 
       .avatar04 {
-        background-image: url(/learning_projects/avataromatic/bluestripes.png);
+        background-image: url({{ hostname }}/learning_projects/avataromatic/bluestripes.png);
       }
 
       .avatar05 {
-        background-image: url(/learning_projects/avataromatic/body_yellow_top.png), url(/learning_projects/avataromatic/body_yellow_bottom.png);
+        background-image: url({{ hostname }}/learning_projects/avataromatic/body_yellow_top.png), url({{ hostname }}/learning_projects/avataromatic/body_yellow_bottom.png);
         background-position: top center, bottom center;
       }
 
       .avatar06 {
-        background-image: url(/learning_projects/avataromatic/greenstripes.png);
+        background-image: url({{ hostname }}/learning_projects/avataromatic/greenstripes.png);
       }
 
       body {
@@ -86,12 +86,12 @@ Start by choosing a background for your avatar. Notice the numbers next to each 
       a {
         color: yellow;
       }
-      
+
       li {
         list-style-position: inside;
       }
     </style>
- 
+
 <!-- NOTE: The style tag is closed above so we are back to the HTML -->
 
   </head>
@@ -102,40 +102,40 @@ Start by choosing a background for your avatar. Notice the numbers next to each 
 Choose a set of eyes and a mouth! Each <div> below includes different eye and mouth images. Find the ones you like, and then move the appropriate <img> tags into the <div> that has the avatar number you selected above. So if you selected "avatar06" above, copy and paste the eye and mouth <img> tags that you selected into that <div>. Delete or comment out the other divs so that you only see your avatar! To comment in HTML, surround the entire element with the ! and - tags you see in this comment.
 -->
       <div class="avatar01">
-        <img class="eyes" src="/learning_projects/avataromatic/eyes1.png"/>
-        <img class="mouth" src="/learning_projects/avataromatic/moustache1.png"/>
+        <img class="eyes" src="{{ hostname }}/learning_projects/avataromatic/eyes1.png"/>
+        <img class="mouth" src="{{ hostname }}/learning_projects/avataromatic/moustache1.png"/>
       </div>
 
       <div class="avatar02">
-        <img class="eyes" src="/learning_projects/avataromatic/eyes2.png"/>
-        <img class="mouth" src="/learning_projects/avataromatic/moustache2.png"/>
+        <img class="eyes" src="{{ hostname }}/learning_projects/avataromatic/eyes2.png"/>
+        <img class="mouth" src="{{ hostname }}/learning_projects/avataromatic/moustache2.png"/>
       </div>
 
       <div class="avatar03">
-        <img class="eyes" src="/learning_projects/avataromatic/eyes3.png"/>
-        <img class="mouth" src="/learning_projects/avataromatic/mouth3.png"/>
+        <img class="eyes" src="{{ hostname }}/learning_projects/avataromatic/eyes3.png"/>
+        <img class="mouth" src="{{ hostname }}/learning_projects/avataromatic/mouth3.png"/>
       </div>
 
       <div class="avatar04">
-        <img class="eyes" src="/learning_projects/avataromatic/eyes4.png"/>
-        <img class="mouth" src="/learning_projects/avataromatic/mouth4.png"/>
+        <img class="eyes" src="{{ hostname }}/learning_projects/avataromatic/eyes4.png"/>
+        <img class="mouth" src="{{ hostname }}/learning_projects/avataromatic/mouth4.png"/>
       </div>
 
       <div class="avatar05">
-        <img class="eyes" src="/learning_projects/avataromatic/eyes5.png"/>
-        <img class="mouth" src="/learning_projects/avataromatic/mouth5.png"/>
+        <img class="eyes" src="{{ hostname }}/learning_projects/avataromatic/eyes5.png"/>
+        <img class="mouth" src="{{ hostname }}/learning_projects/avataromatic/mouth5.png"/>
       </div>
 
       <div class="avatar06">
-        <img class="eyes" src="/learning_projects/avataromatic/eyes6.png"/>
-        <img class="mouth" src="/learning_projects/avataromatic/mouth6.png"/>
+        <img class="eyes" src="{{ hostname }}/learning_projects/avataromatic/eyes6.png"/>
+        <img class="mouth" src="{{ hostname }}/learning_projects/avataromatic/mouth6.png"/>
       </div>
 
     </div>
 <!--
 Congrats on building your avatar! You can change your tagline by changing the text within the <h1> tag. <h1> is used for headings - the "h" stands for header and the "1" stands for most important (versus h2, h3, etc.). Try a different headline for your avatar.
 -->
-    
+
     <div class="webmaker">
       <h1> I AM A __________ WEBMAKER</h1>
 
@@ -148,13 +148,13 @@ You can also link out to projects you've done or sites you love by using the <a>
         <li>Add a list of things you want to make</li>
         <li>Show us a project that you have made, add a <a href="http://www.mozilla.org">link</a></li>
       </ul>
-      
+
 <!-- =======================================================================
 As you share your work and pictures remember that even though there are many fascinating things to do and explore online, just like in the offline world, it’s important to keep yourself safe and secure. When creating a webpage, you want to make sure that you don't share things like your address or your phone number. To stay updated on the best practices when it comes to sharing your data online and browsing safely watch this video with 5 tips from Google http://www.youtube.com/watch?feature=player_embedded&v=o5wC826_Z18.
 =========================================================================== -->
     </div>
 
-<!-- 
+<!--
 Congrats on completing your Webmaker avatar page! You can still go back and change things - that's the beauty of the Web. You might have missed it, but you actually learned some stuff in this project. You now know how to do comments in HTML and CSS, manipulate some CSS, work with headers (the <h1> tag), use lists (<ul> and <ol>) and bullets (<li>), add hyperlinks to text (<a> tag) and even a little about Web safety and privacy. Way to go, Webmaker!
 -->
   </body>

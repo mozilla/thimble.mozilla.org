@@ -46,7 +46,10 @@ var appName = "thimble",
     middleware = require('./lib/middleware')(env),
     errorhandling= require('./lib/errorhandling'),
     make = makeAPI(env.get('make')),
-    nunjucksEnv = new nunjucks.Environment(new nunjucks.FileSystemLoader('views'), {
+    nunjucksEnv = new nunjucks.Environment([
+      new nunjucks.FileSystemLoader('views'),
+      new nunjucks.FileSystemLoader('learning_projects')
+    ], {
       autoescape: true
     }),
     routes = require('./routes')( utils, env, nunjucksEnv, appName ),
@@ -215,6 +218,12 @@ app.get('/projects', function(req, res) {
 app.get('/projects/:name',
         middleware.setDefaultPublishOperation,
         routes.index );
+
+app.get('/templated_projects/:project', function(req, res) {
+  res.render(req.params.project, {
+    hostname: env.get('HOSTNAME')
+  });
+});
 
 // project template lookups
 app.get('/templates/:name',

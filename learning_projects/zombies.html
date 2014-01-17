@@ -13,7 +13,7 @@ Let's get started.
 <html>
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="/learning_projects/zombies/zombies.css">
+        <link rel="stylesheet" href="{{ hostname }}/learning_projects/zombies/zombies.css">
         <title>Get off my lawn!!!</title>
         <style type="text/css">
 /*
@@ -82,12 +82,12 @@ Finally, you can also use percentages for positioning...the %, as you would expe
 Remember all those things we were moving... well they are these images below! You can tell they are images because they are in <img> tags and the src attribute gives the URL to each image. Try copying and pasting one of the URLs into a different browser window to see the image. You can swap out these images with ones of your own - you just need to know the URL of your image.
 -->
     	<section id="barricades">
-    	    <img src="/learning_projects/zombies/cooker.png" alt="cooker" id="cooker" />
-    	    <img src="/learning_projects/zombies/fridge.png" alt="fridge" id="fridge" />
-    	    <img src="/learning_projects/zombies/snofa.png" alt="snow-sofa" id="snow-sofa" />
-    	    <img src="/learning_projects/zombies/sofa.png" alt="sofa" id="sofa" />
-    	    <img src="/learning_projects/zombies/wardrobe.png" alt="wardrobe" id="wardrobe" />
-    	    <img src="/learning_projects/zombies/bin.png" alt="bin" id="bin" />
+    	    <img src="{{ hostname }}/learning_projects/zombies/cooker.png" alt="cooker" id="cooker" />
+    	    <img src="{{ hostname }}/learning_projects/zombies/fridge.png" alt="fridge" id="fridge" />
+    	    <img src="{{ hostname }}/learning_projects/zombies/snofa.png" alt="snow-sofa" id="snow-sofa" />
+    	    <img src="{{ hostname }}/learning_projects/zombies/sofa.png" alt="sofa" id="sofa" />
+    	    <img src="{{ hostname }}/learning_projects/zombies/wardrobe.png" alt="wardrobe" id="wardrobe" />
+    	    <img src="{{ hostname }}/learning_projects/zombies/bin.png" alt="bin" id="bin" />
     	</section>
 
 
@@ -96,17 +96,17 @@ Remember all those things we were moving... well they are these images below! Yo
 <!--
 So we now know how to defeat the zombies, but why not make them be other people? Try removing the comment tags on the image below that you see before	and after this text to reveal a new person.
 -->
-		<!-- <img src="/learning_projects/zombies/supergirl.png" alt="" class="zombie" id="zombie1"> -->
+		<!-- <img src="{{ hostname }}/learning_projects/zombies/supergirl.png" alt="" class="zombie" id="zombie1"> -->
 
 <!-- She doesn't look that scary but one can never be too careful, better block her too! -->
 
 <!--
 Now try making your own zombies. Find an image of one of your friends, right-click, and choose "copy image address" or in Flickr, choose Share and copy the URL. Then replace the src URL below with the link to the picture of your friend... what happens now?-->
-			<img src="/learning_projects/zombies/zombie.png" alt="zombie" class="zombie" id="zombie2" />
-			<img src="/learning_projects/zombies/zombie.png" alt="zombie" class="zombie" id="zombie3" />
-			<img src="/learning_projects/zombies/zombie.png" alt="zombie" class="zombie" id="zombie4" />
-			<img src="/learning_projects/zombies/zombie.png" alt="zombie" class="zombie" id="zombie5" />
-			<img src="/learning_projects/zombies/zombie.png" alt="zombie" class="zombie" id="zombie6" />
+			<img src="{{ hostname }}/learning_projects/zombies/zombie.png" alt="zombie" class="zombie" id="zombie2" />
+			<img src="{{ hostname }}/learning_projects/zombies/zombie.png" alt="zombie" class="zombie" id="zombie3" />
+			<img src="{{ hostname }}/learning_projects/zombies/zombie.png" alt="zombie" class="zombie" id="zombie4" />
+			<img src="{{ hostname }}/learning_projects/zombies/zombie.png" alt="zombie" class="zombie" id="zombie5" />
+			<img src="{{ hostname }}/learning_projects/zombies/zombie.png" alt="zombie" class="zombie" id="zombie6" />
 
 
 <!--
@@ -114,19 +114,19 @@ Congrats on conquering the zombies and making the game your own! Did you realize
 -->
 
 <!-- Try to change this one, if you are up for a spook-tacular adventure.-->
-			<img src="/learning_projects/zombies/zombie-house-inside.png" alt="House" />
+			<img src="{{ hostname }}/learning_projects/zombies/zombie-house-inside.png" alt="House" />
 		</section>
 
 
 
 <!-- Don't worry about things below this line they just make the noises. -->
 		<audio autoplay="true">
-			<source src="/learning_projects/zombies/snarl.ogg" />
-			<source src="/learning_projects/zombies/snarl.mp3" />
+			<source src="{{ hostname }}/learning_projects/zombies/snarl.ogg" />
+			<source src="{{ hostname }}/learning_projects/zombies/snarl.mp3" />
 		</audio>
 		<audio autoplay="true">
-			<source src="/learning_projects/zombies/zombie-crowd.ogg" />
-			<source src="/learning_projects/zombies/zombie-crowd.mp3" />
+			<source src="{{ hostname }}/learning_projects/zombies/zombie-crowd.ogg" />
+			<source src="{{ hostname }}/learning_projects/zombies/zombie-crowd.mp3" />
 		</audio>
     </body>
 </html>
