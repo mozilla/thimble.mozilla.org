@@ -26,6 +26,8 @@ git clone git@github.com:[yourname]/thimble.webmaker.org.git --recursive
 
 4) set up the environment variables (see next section).
 
+5) [make-valet](https://github.com/mozilla/make-valet)
+
 You can now run Thimble from the thimble.webmaker.org directory using
 
 ```node app```
