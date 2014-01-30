@@ -1,4 +1,4 @@
-define(['template!details-form'], function (detailsFormHTML) {
+define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHTML, $) {
   "use strict";
 
   var DEFAULT_THUMBNAIL = 'https://webmaker.org/img/thumbs/thimble-grey.png';
@@ -60,7 +60,9 @@ define(['template!details-form'], function (detailsFormHTML) {
       container: '.publish-panel',
       documentIframe: '.preview-holder iframe'
     };
-    var option;
+    var option,
+        tagInput,
+        makeEndpoint = $('body').data('make-endpoint');
 
     for (option in options) {
       defaults[option] = options[option] || defaults[option];
@@ -71,12 +73,36 @@ define(['template!details-form'], function (detailsFormHTML) {
     $container = $(options.container);
     $container.html(detailsFormHTML());
 
+    tagInput = $input('tag-input');
+
     codeMirror = options.codeMirror;
     $thumbnailChoices = $('.thumbnail-choices', $container);
 
+    function blurCallback (e) {
+      self.addTags(encodeURIComponent(tagInput.val()));
+    }
 
-    // Setup
-    $input('tag-input').on('keydown', function (e) {
+    // Setup autocomplete widget
+    tagInput.autocomplete({
+      source: function( request, response ) {
+        var term = request.term;
+        $.getJSON( makeEndpoint + "/api/20130724/make/tags?t=" + term, function( data ) {
+          response( data.tags.map(function( item ) {
+            return item.term;
+          }));
+        });
+      },
+      minLength: 1,
+      focus: function () {
+        tagInput.off('blur', blurCallback);
+      },
+      close: function () {
+        tagInput.on('blur', blurCallback);
+      }
+    });
+
+    // Setup tag input/output event handlers
+    tagInput.on('keydown', function (e) {
       if (e.which === 13 || e.which === 188) {
         e.preventDefault();
         // FIXME: https://bugzilla.mozilla.org/show_bug.cgi?id=922724
@@ -85,11 +111,11 @@ define(['template!details-form'], function (detailsFormHTML) {
         // Tutorial urls contain a colon,
         // so in order to not have it stripped, we escape it.
         self.addTags(encodeURIComponent(this.value));
+        tagInput.autocomplete('close');
+        this.value = "";
       }
     });
-    $input('tag-input').on('blur', function (e) {
-      self.addTags(encodeURIComponent(this.value));
-    });
+    tagInput.on('blur', blurCallback);
     $input('tag-output').click(function (e) {
       if (e.target.tagName === 'LI') {
         var $target = $(e.target);

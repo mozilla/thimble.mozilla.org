@@ -15,6 +15,9 @@ var require = {
     "jquery.min": {
       exports: 'jQuery'
     },
+    "jquery-ui": {
+      deps: ["jquery"]
+    },
     "jquery-tipsy": {
       deps: ["jquery"],
       exports: 'jQuery'
@@ -88,6 +91,7 @@ var require = {
   paths: {
     // Vendor paths
     "jquery.min": "../vendor/jquery.min",
+    "jquery-ui": "../vendor/jquery-ui.min",
     "jquery-tipsy": "../vendor/jquery.tipsy",
     "jquery-slowparse": "../vendor/slowparse/spec/errors.jquery",
     "underscore": "../vendor/underscore.min",
