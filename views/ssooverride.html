@@ -9,26 +9,29 @@
       "jquery",
       "thimblePage"
     ], function($, ThimblePage) {
-      var publishButton = $('.publish-button')[0],
+      var buttons = $('.save-button, .publish-button'),
+          saveButton = $('.save-button'),
+          publishButton = $('.publish-button'),
           loggedIn = false;
 
-      publishButton.enable = function() {
-        publishButton.removeAttribute("disabled");
-        publishButton.removeAttribute("title");
-      }
-      publishButton.disable = function() {
-        publishButton.disabled = true;
-        publishButton.setAttribute("title", "{{ gettext("Login to publish your project!") }}");
+      function enable() {
+        buttons.attr("disabled", false).attr("title", '');
+      };
+
+      function disable() {
+        buttons.attr("disabled", true);
+        saveButton.attr("title", "{{ gettext("Login to save") }}");
+        publishButton.attr("title", "{{ gettext("Login to publish") }}");
       }
 
-      publishButton.disable();
+      disable();
 
       navigator.idSSO.app = {
         onlogin: function(loggedInUser, displayName) {
-          publishButton.enable();
+          enable();
         },
         onlogout: function() {
-          publishButton.disable();
+          disable();
         }
       };
     });
