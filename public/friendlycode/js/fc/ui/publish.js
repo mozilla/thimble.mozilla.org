@@ -8,7 +8,8 @@ define(function (require) {
       Make = require('/external/make-api.js'),
       confirmDialogTemplate = require("template!confirm-dialog"),
       publishDialogTemplate = require("template!publish-dialog"),
-      Localized = require("localized");
+      Localized = require("localized"),
+      analytics = require("analytics");
 
   function makeSharingHotLoader(options) {
     return function hotLoadEventHandler() {
@@ -120,6 +121,8 @@ define(function (require) {
             remixURL: remixURL,
             path: info.path
           });
+
+          analytics.event("publish");
         }
       });
 
