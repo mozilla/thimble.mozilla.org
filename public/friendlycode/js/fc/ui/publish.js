@@ -94,6 +94,10 @@ define(function (require) {
             text: Localized.get('publish-err') + " " + err.responseText
           });
           publishErrorOccurred = true;
+          analytics.event("Error", {
+            label: "Error Publishing",
+            nonInteraction: true
+          });
         } else {
           var viewURL = info.url;
           var remixURL = baseRemixURL.replace("{{VIEW_URL}}",
@@ -122,7 +126,7 @@ define(function (require) {
             path: info.path
           });
 
-          analytics.event("publish");
+          analytics.event("Publish");
         }
       });
 
