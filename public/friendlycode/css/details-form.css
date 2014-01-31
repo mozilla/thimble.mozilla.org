@@ -142,6 +142,16 @@
   overflow: hidden;
 }
 
+/* need to override default z-index so the autocomplete list
+   isn't stepped on by the modal dialog */
+.ui-front {
+  z-index: 100000 !important;
+}
+
+.ui-corner-all {
+  font-family: "Open sans", sans-serif;
+}
+
 /*********************************************************
 * Thumbnails
 */
@@ -162,4 +172,14 @@
 .makeapi-details .thumbnail-choices li.selected {
   border-color: #3FB58E; /* @green */
   opacity: 1;
+}
+
+.ui-menu-item a.ui-state-active,
+.ui-menu-item a.ui-state-focus {
+  background: #e3eaee;
+}
+
+.ui-widget-content .ui-menu-item a {
+  color: #000;
+  font-size: 0.9em;
 }
