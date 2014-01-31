@@ -116,7 +116,8 @@ var require = {
     "template": "require.template",
     "test": "../test",
     "templates": "../templates",
-    "localized": "/bower/webmaker-i18n/localized"
+    "localized": "/bower/webmaker-i18n/localized",
+    "analytics": "/bower/webmaker-analytics/analytics"
   },
   config: {
     template: {
