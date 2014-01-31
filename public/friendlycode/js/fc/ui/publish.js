@@ -8,7 +8,8 @@ define(function (require) {
       Make = require('/external/make-api.js'),
       confirmDialogTemplate = require("template!confirm-dialog"),
       publishDialogTemplate = require("template!publish-dialog"),
-      Localized = require("localized");
+      Localized = require("localized"),
+      analytics = require("analytics");
 
   function makeSharingHotLoader(options) {
     return function hotLoadEventHandler() {
@@ -93,6 +94,10 @@ define(function (require) {
             text: Localized.get('publish-err') + " " + err.responseText
           });
           publishErrorOccurred = true;
+          analytics.event("Error", {
+            label: "Error Publishing",
+            nonInteraction: true
+          });
         } else {
           var viewURL = info.url;
           var remixURL = baseRemixURL.replace("{{VIEW_URL}}",
@@ -120,6 +125,8 @@ define(function (require) {
             remixURL: remixURL,
             path: info.path
           });
+
+          analytics.event("Publish");
         }
       });
 
