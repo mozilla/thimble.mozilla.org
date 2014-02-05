@@ -4,7 +4,7 @@
     "nav-global": "https://github.com/admix/nav-global/archive/v0.1.3.tar.gz",
     "open-sans-fontface": "1.0.4",
     "webmaker-analytics": "0.0.4",
-    "webmaker-i18n": "https://github.com/mozilla/node-webmaker-i18n/archive/v0.3.2.tar.gz",
+    "webmaker-i18n": "https://github.com/mozilla/node-webmaker-i18n/archive/v0.3.8.tar.gz",
     "webmaker-ui": "0.0.12"
   }
 }
