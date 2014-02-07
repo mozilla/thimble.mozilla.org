@@ -28,6 +28,20 @@
     </style>
     <script>(function() {
 
+      // find the route to this element
+      var route = function(e) {
+        var route = [];
+        var p = e.parentNode;
+        if(e.localName === "body" || e.localName === "html") return route;
+        while(p && e.localName !== "body") {
+          route = route.concat([Array.prototype.indexOf.call(p.childNodes, e)]);
+          e = p;
+          p = p.parentNode;
+        }
+        return route;
+      };
+
+
       // whoever has embedded us, we need to be able to talk back to.
       var owner = false;
 
@@ -73,6 +87,14 @@
           // kill off old iframe
           document.body.removeChild(document.querySelector("iframe"));
           iframe.style.opacity = 1.0;
+          doc.addEventListener("click", function(evt) {
+            var clickEvent = JSON.stringify({
+              element: evt.target.localName,
+              route: route(evt.target),
+              type: "previewloader:click"
+            });
+            owner.postMessage(clickEvent, "*");
+          });
 
           // also insert a BASE tag with new tab/window as default target,
           // so that links don't open in our embed iframe.
