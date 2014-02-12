@@ -2,6 +2,8 @@
 define(function() {
   "use strict";
 
+  var analytics = require("analytics");
+
   return function HistoryUI(options) {
     var undo = options.undo;
     var redo = options.redo;
@@ -14,11 +16,13 @@ define(function() {
     }
 
     undo.click(function() {
+      analytics.event("Undo");
       codeMirror.undo();
       codeMirror.reparse();
       refreshButtons();
     });
     redo.click(function() {
+      analytics.event("Redo");
       codeMirror.redo();
       codeMirror.reparse();
       refreshButtons();
