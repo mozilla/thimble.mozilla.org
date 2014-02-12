@@ -3,7 +3,8 @@ define(function(require) {
       Preferences = require("fc/prefs"),
       HistoryUI = require("fc/ui/history"),
       NavOptionsTemplate = require("template!nav-options"),
-      TextUI = require("fc/ui/text");
+      TextUI = require("fc/ui/text"),
+      analytics = require("analytics");
 
   function HintsUI(options) {
     var self = {},
@@ -18,8 +19,11 @@ define(function(require) {
     });
 
     hintsNavItem.click(function() {
-      var isDisabled = (Preferences.get("showHints") === false);
-      Preferences.set("showHints", isDisabled);
+      var showHints = !Preferences.get("showHints");
+      analytics.event( "Show Hints", {
+        label: showHints ? "Enabled" : "Disabled"
+      });
+      Preferences.set("showHints", showHints);
       Preferences.save();
     });
 

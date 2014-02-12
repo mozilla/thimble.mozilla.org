@@ -1,4 +1,4 @@
-define(["jquery", "fc/prefs"], function($, Preferences) {
+define(["jquery", "fc/prefs", "analytics"], function($, Preferences, analytics) {
   "use strict";
 
   return function(options) {
@@ -46,7 +46,11 @@ define(["jquery", "fc/prefs"], function($, Preferences) {
      * bind the resize behaviour to the various text resize options
      */
     menuItems.click(function() {
-      Preferences.set("textSize", $(this).attr("data-size"));
+      var textSize = $(this).attr("data-size");
+      analytics.event("Font Size", {
+        label: textSize
+      });
+      Preferences.set("textSize", textSize);
       Preferences.save();
       menu.hide();
     });
