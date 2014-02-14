@@ -14,7 +14,7 @@
     "messina": "0.1.1",
     "moment": "2.2.1",
     "mox-server": "https://github.com/Pomax/mox-server/archive/master.tar.gz",
-    "newrelic": "1.2.0",
+    "newrelic": "1.3.2",
     "node-statsd": "0.0.7",
     "noxmox": "0.2.4",
     "nunjucks": "0.1.10",
