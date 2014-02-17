@@ -9,8 +9,8 @@ define(["localized"], function(localized) {
 
   return function SocialMedia() {
     var urlPlaceHolder = "__URL__PLACE__HOLDER__",
-        text = "__TEXT__",
-        tweet = "__TWEET__";
+        tweetTextPlaceHolder = "__TEXT__",
+        tweetPlaceHolder = "__TWEET__";
 
     /**
      * The various social media all have the same API.
@@ -41,7 +41,7 @@ define(["localized"], function(localized) {
       twitter: {
         id: "twitter-wjs",
         src: "//platform.twitter.com/widgets.js",
-        html: "<a href='https://twitter.com/share'class='twitter-share-button' data-text='" + text + " ' data-url='"+urlPlaceHolder+"' data-via='Webmaker' data-count='none'>" + tweet + "</a>"
+        html: "<a href='https://twitter.com/share'class='twitter-share-button' data-text='" + tweetTextPlaceHolder + " ' data-url='"+urlPlaceHolder+"' data-via='Webmaker' data-count='none'>" + tweetPlaceHolder + "</a>"
       },
 
       /**
@@ -60,8 +60,8 @@ define(["localized"], function(localized) {
         // is trusted, but we may still want to do it.
 
         var html = socialMedium.html.replace(urlPlaceHolder, url)
-          .replace(text, localized.get('default-tweet'))
-          .replace(tweet, localized.get('tweet'));
+          .replace(tweetTextPlaceHolder, localized.get('default-tweet'))
+          .replace(tweetPlaceHolder, localized.get('tweet'));
 
         element.innerHTML = html;
         (function(document, id, src, url) {
