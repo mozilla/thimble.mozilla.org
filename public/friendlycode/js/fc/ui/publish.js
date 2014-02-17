@@ -175,9 +175,16 @@ define(function (require) {
           var confirmButton = $(".yes-button", confirmDialog),
               publishCheckbox = $("input[name=published]", confirmDialog);
 
-          confirmButton.click(function() {
+          // The publish call is a one-time deal. Once chosen, it
+          // prevents the user from clicking again by virtue of
+          // unsetting itself. It gets rebound when the dialog
+          // window is brought back into view.
+          var publishAction = function() {
+            confirmButton.off("click", publishAction);
             performPublish(publishCheckbox.attr("checked") === "true")();
-          });
+          };
+
+          confirmButton.click(publishAction);
 
           // Set up label behaviour so that the button shows
           // either 'save' or 'publish' when the save/publish
