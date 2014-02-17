@@ -7,9 +7,8 @@
 define(["localized"], function(localized) {
   "use strict";
 
-  localized.ready(function(){});
   return function SocialMedia() {
-    var urlPlaceHolder = "__URL__PLACE__HOLDER__";
+
     /**
      * The various social media all have the same API.
      */
@@ -17,7 +16,9 @@ define(["localized"], function(localized) {
       facebook: {
         id: "facebook-jssdk",
         src: "//connect.facebook.net/en_US/all.js#xfbml=1",
-        html: "<div class='fb-like' data-href='"+urlPlaceHolder+"' data-send='false' data-action='recommend' data-layout='button_count' data-show-faces='false' data-font='tahoma'></div>",
+        html: function(url) {
+          return "<div class='fb-like' data-href='"+url+"' data-send='false' data-action='recommend' data-layout='button_count' data-show-faces='false' data-font='tahoma'></div>";
+        },
         afterHotLoad: function() {
           // Facebook needs additional help, because it needs
           // to be told that it has to refresh its button, rather
@@ -33,13 +34,17 @@ define(["localized"], function(localized) {
       google: {
         id: "google-plus",
         src: "//apis.google.com/js/plusone.js",
-        html: "<g:plusone annotation='none' href='"+urlPlaceHolder+"'></g:plusone>"
+        html: function(url) {
+          return "<g:plusone annotation='none' href='"+url+"'></g:plusone>";
+        }
       },
 
       twitter: {
         id: "twitter-wjs",
         src: "//platform.twitter.com/widgets.js",
-        html: "<a href='https://twitter.com/share'class='twitter-share-button' data-text='" + localized.get('default-tweet') + " ' data-url='"+urlPlaceHolder+"' data-via='Webmaker' data-count='none'>" + localized.get('tweet') + "</a>"
+        html: function(url) {
+          return "<a href='https://twitter.com/share'class='twitter-share-button' data-text='" + localized.get('default-tweet') + " ' data-url='"+url+"' data-via='Webmaker' data-count='none'>" + localized.get('tweet') + "</a>";
+        }
       },
 
       /**
@@ -56,7 +61,7 @@ define(["localized"], function(localized) {
         // TODO: Should we escape url? It's likely
         // to not contain any characters that need escaping, and its value
         // is trusted, but we may still want to do it.
-        var html = socialMedium.html.replace(urlPlaceHolder, url);
+        var html = socialMedium.html(url);
         element.innerHTML = html;
         (function(document, id, src, url) {
           var script = document.createElement("script");
