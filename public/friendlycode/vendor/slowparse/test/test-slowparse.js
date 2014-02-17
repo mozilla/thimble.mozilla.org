@@ -552,6 +552,24 @@ module.exports = function(Slowparse, window, document, validators) {
     ok(!result.error, "no error on omitted </p>");
   });
 
+  test("parsing elements with nested optional close tags: <li><p></li>", function() {
+    var html = '<ul><li><p></li></ul>';
+    var result = Slowparse.HTML(document, html);
+    ok(!result.error, "no error on omitted </p>");
+  });
+
+  test("parsing elements with nested optional close tags: <li><p>x</li>", function() {
+    var html = '<ul><li><p>x</li></ul>';
+    var result = Slowparse.HTML(document, html);
+    ok(!result.error, "no error on omitted </p>");
+  });
+
+  test("parsing elements with nested optional close tags: <li><p>x</p></li>", function() {
+    var html = '<ul><li><p>x</p></li></ul>';
+    var result = Slowparse.HTML(document, html);
+    ok(!result.error, "no error on omitted </p>");
+  });
+
   test("intentional fail for optional close tag (incorrect use)", function() {
     var html = '<div><p>text\n<a>more text</a></div>';
     var result = Slowparse.HTML(document, html);
