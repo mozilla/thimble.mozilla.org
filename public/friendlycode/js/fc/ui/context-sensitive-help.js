@@ -52,9 +52,17 @@ define([
         // not an actual HTML document, implied elements like <body> may not
         // be captured here.
         var selector = help.highlights[0].value;
-        var matches = lastEvent.document.querySelectorAll(selector).length;
-        help.matchCount = matches;
+        try {
+          var matches = lastEvent.document.querySelectorAll(selector);
+          help.matchCount = matches.length;
+        } catch (e) {
+          // if the selector throws, it's because if an "impossible" selector
+          // like "@font-face" or a keyframes "0%". In this case, we simply
+          // ignore the throw, because we shouldn't try to place help info.
+          return;
+        }
       }
+
       var oldOffset = helpArea.offset();
       helpArea.html(template(help)).show();
       var startMark = null,
