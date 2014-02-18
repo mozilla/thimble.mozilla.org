@@ -6,6 +6,8 @@ HTML and CSS right in your browser (https://thimble.webmaker.org) from its
 Playdoh-embedded python implementation to a dedicated ust-Thimble Node.js
 implementation.
 
+**NOTE: This README assumes that you have all the required external dependencies installed and have a working dev environment. New to Webmaker? Make sure to read our [developer guide](https://wiki.mozilla.org/Webmaker/Code) for everything you need in order to get started!**
+
 Setup
 -----
 
