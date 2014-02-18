@@ -180,10 +180,12 @@ define(function (require) {
           // unsetting itself. It gets rebound when the dialog
           // window is brought back into view.
           var publishAction = function() {
-            confirmButton.off("click", publishAction);
             performPublish(publishCheckbox.attr("checked") === "true")();
           };
 
+          // strip any lingering click handlers from the dialog getting
+          // revealed/hidden/revealed/hidden/etc. before binding
+          confirmButton.off("click");
           confirmButton.click(publishAction);
 
           // Set up label behaviour so that the button shows
