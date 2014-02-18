@@ -61,9 +61,7 @@ define(["localized"], function(localized) {
         // TODO: Should we escape url? It's likely
         // to not contain any characters that need escaping, and its value
         // is trusted, but we may still want to do it.
-        var html = socialMedium.html;
-
-        html = html(url);
+        var html = socialMedium.html(url);
         element.innerHTML = html;
         (function(document, id, src, url) {
           var script = document.createElement("script");
