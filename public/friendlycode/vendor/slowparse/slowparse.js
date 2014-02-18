@@ -65,25 +65,25 @@
     return false;
   }
 
-  //define a container to store the omittable html Element temporarily
+  // the current active omittable html Element
   var activeTagNode = false;
 
-  //define a container to store the parent html Element temporarily
+  // the parent html Element for optional closing tag tags
   var parentTagNode = false;
 
-  //define a function to 'foresee' if there is no more content in the parent element,
-  //and the parent element is not an a element in the case of activeTag is a p element
+  // 'foresee' if there is no more content in the parent element, and the
+  // parent element is not an a element in the case of activeTag is a p element.
   function isNextTagParent(stream, parentTagName) {
     return stream.findNext(/<\/([\w\-]+)\s*>/, 1) === parentTagName;
   }
 
-  //define a function to 'foresee' if the next tag is a close tag
+  // 'foresee' if the next tag is a close tag
   function isNextCloseTag(stream) {
     return stream.findNext(/<\/([\w\-]+)\s*>/, 1);
   }
 
-  // Check exception for Tag omission rules:
-  // for p tag, if there is no more content in the parent element and the parent element is not an a element.
+  // Check exception for Tag omission rules: for p tag, if there is no more
+  // content in the parent element and the parent element is not an a element.
   function allowsOmmitedEndTag(parentTagName, tagName) {
     if (tagName === "p") {
       return ["a"].indexOf(parentTagName) > -1;
@@ -1448,8 +1448,12 @@
 
           // if there is no more content in the parent element, we tell DOM builder that we're done.
           if(parentTagNode && parentTagNode != this.domBuilder.fragment) {
-            var parentTagName = parentTagNode.nodeName.toLowerCase();
-            if(isNextTagParent(this.stream, parentTagName) && !allowsOmmitedEndTag(parentTagName, tagName) || this._knownOmittableCloseTagHtmlElement(parentTagName) && isNextCloseTag(this.stream)) {
+            var parentTagName = parentTagNode.nodeName.toLowerCase(),
+                nextIsParent = isNextTagParent(this.stream, parentTagName),
+                needsEndTag = !allowsOmmitedEndTag(parentTagName, tagName),
+                optionalEndTag = this._knownOmittableCloseTagHtmlElement(parentTagName),
+                nextTagCloses = isNextCloseTag(this.stream);
+            if(nextIsParent && (needsEndTag || (optionalEndTag && nextTagCloses))) {
               if(this._knownOmittableCloseTagHtmlElement(tagName)) {
                 this.domBuilder.popElement();
               }
