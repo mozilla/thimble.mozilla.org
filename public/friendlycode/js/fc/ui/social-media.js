@@ -8,9 +8,6 @@ define(["localized"], function(localized) {
   "use strict";
 
   return function SocialMedia() {
-    var urlPlaceHolder = "__URL__PLACE__HOLDER__",
-        tweetTextPlaceHolder = "__TEXT__",
-        tweetPlaceHolder = "__TWEET__";
 
     /**
      * The various social media all have the same API.
@@ -19,7 +16,9 @@ define(["localized"], function(localized) {
       facebook: {
         id: "facebook-jssdk",
         src: "//connect.facebook.net/en_US/all.js#xfbml=1",
-        html: "<div class='fb-like' data-href='"+urlPlaceHolder+"' data-send='false' data-action='recommend' data-layout='button_count' data-show-faces='false' data-font='tahoma'></div>",
+        html: function(url) {
+          return "<div class='fb-like' data-href='"+url+"' data-send='false' data-action='recommend' data-layout='button_count' data-show-faces='false' data-font='tahoma'></div>";
+        },
         afterHotLoad: function() {
           // Facebook needs additional help, because it needs
           // to be told that it has to refresh its button, rather
@@ -36,7 +35,7 @@ define(["localized"], function(localized) {
         id: "google-plus",
         src: "//apis.google.com/js/plusone.js",
         html: function(url) {
-          return "<g:plusone annotation='none' href='"+urlPlaceHolder+"'></g:plusone>";
+          return "<g:plusone annotation='none' href='"+url+"'></g:plusone>";
         }
       },
 
@@ -63,11 +62,8 @@ define(["localized"], function(localized) {
         // to not contain any characters that need escaping, and its value
         // is trusted, but we may still want to do it.
         var html = socialMedium.html;
-        if(typeof html === "function") {
-          html = html(url);
-        } else {
-          html = socialMedium.html.replace(urlPlaceHolder, url);
-        }
+
+        html = html(url);
         element.innerHTML = html;
         (function(document, id, src, url) {
           var script = document.createElement("script");
