@@ -27,9 +27,11 @@
       }
     </style>
     <script>(function() {
+      // whoever has embedded us, we need to be able to talk back to.
+      var owner = false;
 
       // find the route to this element
-      var route = function(e) {
+      var findRoute = function(e) {
         var route = [];
         var p = e.parentNode;
         if(e.localName === "body" || e.localName === "html") return route;
@@ -41,29 +43,20 @@
         return route;
       };
 
-
-      // whoever has embedded us, we need to be able to talk back to.
-      var owner = false;
-
-      /**
-       * Set up event proxying for Togetherjs session events on our preview iframe
-       */
-      function monitorFrame(iframeDocument) {
-        var mapping = {
-          mousemove: "cursor-update",
-          click: "cursor-click"
-        };
-        Object.keys(mapping).forEach(function(eventName) {
-          iframeDocument.addEventListener(eventName, function(evt) {
-            if(owner === false) return;
-            var str = JSON.stringify({
-              type: mapping[eventName],
-              offsetX: evt.clientX,
-              offsetY: evt.clientY
+      // event monitoring for content inside the preview iframe
+      var monitorIFrame = function(doc) {
+        if(owner) {
+          ["click", "mouseover", "mouseout"].forEach(function(evtName) {
+            doc.addEventListener(evtName, function(evt) {
+              var clickEvent = JSON.stringify({
+                element: evt.target.localName,
+                route: findRoute(evt.target),
+                type: "previewloader:" + evtName
+              });
+              owner.postMessage(clickEvent, "*");
             });
-            owner.postMessage(str, "*");
           });
-        });
+        }
       }
 
       /**
@@ -81,20 +74,10 @@
           doc.write(sourceCode);
           doc.close();
 
-          // listen for events in the iframe
-          monitorFrame(doc);
-
-          // kill off old iframe
+          // kill off old iframe, reveal new iframe
           document.body.removeChild(document.querySelector("iframe"));
           iframe.style.opacity = 1.0;
-          doc.addEventListener("click", function(evt) {
-            var clickEvent = JSON.stringify({
-              element: evt.target.localName,
-              route: route(evt.target),
-              type: "previewloader:click"
-            });
-            owner.postMessage(clickEvent, "*");
-          });
+          monitorIFrame(doc);
 
           // also insert a BASE tag with new tab/window as default target,
           // so that links don't open in our embed iframe.
