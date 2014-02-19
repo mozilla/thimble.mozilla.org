@@ -74,6 +74,7 @@ define(["jquery", "./mark-tracker"], function($, markTracker) {
     var marks = markTracker(codeMirror);
     $(".CodeMirror-lines", codeMirror.getWrapperElement())
       .on("mouseup", marks.clear);
+
     livePreview.on("refresh", function(event) {
       var docFrag = event.documentFragment;
       marks.clear();
@@ -97,6 +98,7 @@ define(["jquery", "./mark-tracker"], function($, markTracker) {
                      "preview-to-editor-highlight");
       });
     });
+
   }
 
   PreviewToEditorMapping._pathTo = pathTo;
