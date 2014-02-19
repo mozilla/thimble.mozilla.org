@@ -326,6 +326,15 @@
       };
     },
     // These are CSS errors.
+    UNKOWN_CSS_KEYWORD: function(parser, start, end) {
+      return {
+        cssKeyword: {
+          start: start,
+          end: end
+        },
+        cursor: start
+      };
+    },
     MISSING_CSS_SELECTOR: function(parser, start, end) {
       return {
         cssBlock: {
@@ -487,6 +496,13 @@
     next: function() {
       if (!this.end())
         return this.text[this.pos++];
+    },
+    // `Stream.rewind()` rewinds the stream position by X places.
+    rewind: function(x) {
+      this.pos -= x;
+      if (this.pos < 0) {
+        this.pos = 0;
+      }
     },
     // `Stream.end()` returns true only if the stream is at the end of the
     // text.
@@ -715,12 +731,12 @@
       this.comments = [];
 
       // Parsing is based on finite states, and a call
-      // to `_parseSelector()` will run through any number
+      // to `_parseBlockType()` will run through any number
       // of states until it either throws an error,
       // or terminates cleanly.
       var sliceStart = this.stream.pos;
       this.stream.markTokenStartAfterSpace();
-      this._parseSelector();
+      this._parseBlockType();
       var sliceEnd = this.stream.pos;
 
       // If we get here, the CSS block has no errors,
@@ -797,6 +813,41 @@
       // commit text change
       token.value = stripped;
     },
+    _parseBlockType: function() {
+      // Depending on our state, we may be coming from having just parsed
+      // a rule. If that's the case, add it to our list of rules.
+      if (this.currentRule) {
+        this.rules.push(this.currentRule);
+        this.currentRule = null;
+      }
+
+      this.stream.markTokenStartAfterSpace();
+
+      // are we looking at an @block?
+      if (this.stream.peek() === "@") {
+        this.stream.eatCSSWhile(/[^\{]/);
+        var token = this.stream.makeToken(),
+            name = token.value.trim();
+
+        // we currently support @keyframes (with prefixes)
+        if(name.match(/@[^k]*keyframes/)) {
+          this.stream.next();
+          return this._parseSelector();
+        }
+
+        // and @font-face
+        if(name === "@font-face") {
+          this.stream.rewind(token.value.length);
+          this.stream.markTokenStart();
+          return this._parseSelector();
+        }
+
+        // anything else is completely unknown
+        throw new ParseError("UNKOWN_CSS_KEYWORD", this, token.interval.start, token.interval.end);
+      }
+
+      this._parseSelector();
+    },
     // #### CSS Selector Parsing
     //
     // A selector is a string, and terminates on `{`, which signals
@@ -812,17 +863,17 @@
     // Note that we cannot flag `:` as an error because pseudo-classes use
     // it as their prefix.
     _parseSelector: function() {
-      // Depending on our state, we may be coming from having just parsed
-      // a rule. If that's the case, add it to our list of rules.
-      if (this.currentRule) {
-        this.rules.push(this.currentRule);
-        this.currentRule = null;
-      }
-
       // Gobble all characters that could be part of the selector.
       this.stream.eatCSSWhile(/[^\{;\}<]/);
       var token = this.stream.makeToken(),
           peek = this.stream.peek();
+
+      // if we encounter } we're actually inside a block, like
+      // @keyframes or the like, and need to try for a new block.
+      if (peek === "}") {
+        this.stream.next();
+        return this._parseBlockType();
+      }
 
       // If there was nothing to select, we're either done,
       // or an error occurred.
@@ -830,13 +881,11 @@
         if (!this.stream.end() && this.stream.peek() === '<') {
           // if this is the start of <!-- make sure to throw an error
           if (this.stream.substream(2) !== "</") {
-            throw new ParseError("HTML_CODE_IN_CSS_BLOCK", this, this.stream.pos-1,
-                                 this.stream.pos);
+            throw new ParseError("HTML_CODE_IN_CSS_BLOCK", this, this.stream.pos-1, this.stream.pos);
           }
           return;
         }
-        throw new ParseError("MISSING_CSS_SELECTOR", this, this.stream.pos-1,
-                             this.stream.pos);
+        throw new ParseError("MISSING_CSS_SELECTOR", this, this.stream.pos-1, this.stream.pos);
       }
 
       // If we get here, we have a selector string.
@@ -847,7 +896,7 @@
           selectorEnd = token.interval.end;
 
       if (selector === '') {
-        this._parseSelector();
+        this._parseBlockType();
         return;
       }
 
@@ -869,14 +918,12 @@
       // or whether we're in a terminal state, based on the
       // next character in the stream.
       if (this.stream.end() || peek === '<') {
-        throw new ParseError("UNFINISHED_CSS_SELECTOR", this, selectorStart,
-                             selectorEnd, selector);
+        throw new ParseError("UNFINISHED_CSS_SELECTOR", this, selectorStart, selectorEnd, selector);
       }
 
       if (!this.stream.end()) {
         var next = this.stream.next(),
-            errorMsg = "[_parseSelector] Expected {, }, ; or :, " +
-                       "instead found " + next;
+            errorMsg = "[_parseBlockType] Expected {, }, ; or :, instead found " + next;
         if (next === '{') {
           // The only legal continuation after a selector is the opening
           // `{` character. If that's the character we see, we can mark the
@@ -886,19 +933,15 @@
         } else if (next === ';' || next === '}') {
           // Otherwise, this is a parse error; we should have seen `{`
           // instead.
-          throw new ParseError("MISSING_CSS_BLOCK_OPENER", this,
-                               selectorStart, selectorEnd, selector);
+          throw new ParseError("MISSING_CSS_BLOCK_OPENER", this, selectorStart, selectorEnd, selector);
         } else {
           // We get here if an unexpected character was found.
-          throw new ParseError("UNCAUGHT_CSS_PARSE_ERROR", this,
-                               token.interval.start, token.interval.end,
-                               errorMsg);
+          throw new ParseError("UNCAUGHT_CSS_PARSE_ERROR", this, token.interval.start, token.interval.end, errorMsg);
         }
       } else {
         // If the stream ended after the selector, we want the user to follow
         // up with `{`.
-        throw new ParseError("MISSING_CSS_BLOCK_OPENER", this, selectorStart,
-                             selectorEnd, selector);
+        throw new ParseError("MISSING_CSS_BLOCK_OPENER", this, selectorStart, selectorEnd, selector);
       }
     },
     // #### CSS Declaration Parsing
@@ -915,18 +958,17 @@
         this.stream.next();
         this.currentRule.declarations.end = this.stream.pos;
         this.stream.markTokenStartAfterSpace();
-        this._parseSelector();
+        this._parseBlockType();
       }
       // Administratively important: there are two ways for this function
-      // to have been called. One is from `_parseSelector()`, which is
+      // to have been called. One is from `_parseBlockType()`, which is
       // "the normal way", the other from `_parseValue()`, after finding a
       // properly closed `property:value;` pair. In this case *value* will be
       // the last declaration's value, which will let us throw a sensible
       // debug error in case the stream is empty at this point, or points to
       // `</style>`.
       else if (value && (this.stream.end() || peek === '<')) {
-        throw new ParseError("MISSING_CSS_BLOCK_CLOSER", this, selectorStart,
-                             selectorStart+value.length, value);
+        throw new ParseError("MISSING_CSS_BLOCK_CLOSER", this, selectorStart, selectorStart+value.length, value);
       }
 
       // If we're still in this function at this point, all is well
@@ -953,8 +995,7 @@
       var token = this.stream.makeToken();
 
       if (token === null) {
-        throw new ParseError("MISSING_CSS_PROPERTY", this, selectorStart,
-                             selectorStart + selector.length, selector);
+        throw new ParseError("MISSING_CSS_PROPERTY", this, selectorStart, selectorStart + selector.length, selector);
       }
 
       this.filterComments(token);
@@ -968,19 +1009,16 @@
       }
 
       var next = this.stream.next(),
-          errorMsg = "[_parseProperty] Expected }, {, <, ; or :, " +
-                     "instead found " + next;
+          errorMsg = "[_parseProperty] Expected }, {, <, ; or :, instead found " + next;
 
       if (next === '{') {
-        throw new ParseError("MISSING_CSS_BLOCK_CLOSER", this, selectorStart,
-                             propertyStart, selector);
+        throw new ParseError("MISSING_CSS_BLOCK_CLOSER", this, selectorStart, propertyStart, selector);
       }
 
 
       if ((this.stream.end() && next !== ':') || next === '<' ||
           next === '}') {
-        throw new ParseError("UNFINISHED_CSS_PROPERTY", this, propertyStart,
-                             propertyEnd, property);
+        throw new ParseError("UNFINISHED_CSS_PROPERTY", this, propertyStart, propertyEnd, property);
       }
 
       // We record `property: value` pairs as we run through the stream,
@@ -1000,22 +1038,18 @@
       if (next === ':') {
         // Before we continue, we must make sure the string we found is a real
         // CSS property.
-        if (!( property && property.match(/^[a-z\-]+$/)) ||
-            !this._knownCSSProperty(property))
-          throw new ParseError("INVALID_CSS_PROPERTY_NAME", this,
-                               propertyStart, propertyEnd, property);
+        if (!( property && property.match(/^[a-z\-]+$/)) || !this._knownCSSProperty(property)) {
+          throw new ParseError("INVALID_CSS_PROPERTY_NAME", this, propertyStart, propertyEnd, property);
+        }
         this.stream.markTokenStartAfterSpace();
         this._parseValue(selector, selectorStart, property, propertyStart);
       }
       // Otherwise, anything else at this point constitutes an error.
       else if (next === ';') {
-        throw new ParseError("MISSING_CSS_VALUE", this, propertyStart,
-                             propertyEnd, property);
+        throw new ParseError("MISSING_CSS_VALUE", this, propertyStart, propertyEnd, property);
       }
       else {
-        throw new ParseError("UNCAUGHT_CSS_PARSE_ERROR", this,
-                             token.interval.start, token.interval.end,
-                             errorMsg);
+        throw new ParseError("UNCAUGHT_CSS_PARSE_ERROR", this, token.interval.start, token.interval.end, errorMsg);
       }
     },
     // #### CSS Value Parsing
@@ -1029,13 +1063,11 @@
           token = this.stream.makeToken();
 
       if(token === null) {
-        throw new ParseError("MISSING_CSS_VALUE", this, propertyStart,
-                             propertyStart+property.length, property);
+        throw new ParseError("MISSING_CSS_VALUE", this, propertyStart, propertyStart+property.length, property);
       }
 
       var next = (!this.stream.end() ? this.stream.next() : "end of stream"),
           errorMsg = "[_parseValue] Expected }, <, or ;, instead found "+next;
-
 
       this.filterComments(token);
       var value = token.value,
@@ -1043,8 +1075,7 @@
           valueEnd = token.interval.end;
 
       if (value === '') {
-        throw new ParseError("MISSING_CSS_VALUE", this, this.stream.pos-1,
-                             this.stream.pos);
+        throw new ParseError("MISSING_CSS_VALUE", this, this.stream.pos-1, this.stream.pos);
       }
 
       // At this point we can fill in the *value* part of the current
@@ -1077,12 +1108,10 @@
         this.currentRule.declarations.end = this.stream.pos;
         this._bindCurrentRule();
         this.stream.markTokenStartAfterSpace();
-        this._parseSelector();
+        this._parseBlockType();
       }
       else {
-        throw new ParseError("UNCAUGHT_CSS_PARSE_ERROR", this,
-                             token.interval.start, token.interval.end,
-                             errorMsg);
+        throw new ParseError("UNCAUGHT_CSS_PARSE_ERROR", this, token.interval.start, token.interval.end, errorMsg);
       }
     },
     // This helper function binds the currrent `property: value` object

@@ -11,6 +11,8 @@ module.exports = function(Slowparse, window, document, validators) {
   var testManySnippets = validators.testManySnippets;
   var testStyleSheet = validators.testStyleSheet;
 
+  var parse = function(html) { return Slowparse.HTML(document, html); };
+
   test("Stream.match()", function() {
     var stream = new Slowparse.Stream("blArgle");
     ok(stream.match("blArgle"));
@@ -40,7 +42,7 @@ module.exports = function(Slowparse, window, document, validators) {
 
   test("parsing of misplaced DOCTYPE", function() {
     var html = '<p>hi</p><!DOCTYPE html>';
-    var result = Slowparse.HTML(document, html);
+    var result = parse(html);
     equal(result.error, {
       "openTag": {
         "end": 10,
@@ -548,43 +550,43 @@ module.exports = function(Slowparse, window, document, validators) {
 
   test("parsing elements with optional close tags: <p>", function() {
     var html = '<div><p>text\n<p>more text</div>';
-    var result = Slowparse.HTML(document, html);
+    var result = parse(html);
     ok(!result.error, "no error on omitted </p>");
   });
 
   test("parsing elements with nested optional close tags: <li><p></li>", function() {
     var html = '<ul><li><p></li></ul>';
-    var result = Slowparse.HTML(document, html);
+    var result = parse(html);
     ok(!result.error, "no error on omitted </p>");
   });
 
   test("parsing elements with nested optional close tags: <li><p>x</li>", function() {
     var html = '<ul><li><p>x</li></ul>';
-    var result = Slowparse.HTML(document, html);
+    var result = parse(html);
     ok(!result.error, "no error on omitted </p>");
   });
 
   test("parsing elements with nested optional close tags: <li><p>x</p></li>", function() {
     var html = '<ul><li><p>x</p></li></ul>';
-    var result = Slowparse.HTML(document, html);
+    var result = parse(html);
     ok(!result.error, "no error on omitted </p>");
   });
 
   test("parsing elements with nested optional close tags: <li><p>x</p>m</li>", function() {
     var html = '<ul><li><p>x</p>m</li></ul>';
-    var result = Slowparse.HTML(document, html);
+    var result = parse(html);
     ok(!result.error, "no error on omitted </p>");
   });
 
   test("parsing elements with nested optional close tags: <li><p>x<p>y</li>", function() {
     var html = '<ul><li><p>x<p>y</li></ul>';
-    var result = Slowparse.HTML(document, html);
+    var result = parse(html);
     ok(!result.error, "no error on omitted </p>");
   });
 
-  test("intentional fail for optional close tag (incorrect use)", function() {
+  test("intentional fail for optional close tag (incorrect use). pass = not accepted", function() {
     var html = '<div><p>text\n<a>more text</a></div>';
-    var result = Slowparse.HTML(document, html);
+    var result = parse(html);
     var expected = {
       type: 'MISMATCHED_CLOSE_TAG',
       openTag: {
@@ -600,6 +602,58 @@ module.exports = function(Slowparse, window, document, validators) {
       cursor: 29
     };
     equal(result.error, expected, "bad omission error for <p>");
+  });
+
+  test("@keyframes css block", function() {
+    var html = "<style>@keyframes { 0% { opacity: 0; } 100% { opacity: 1.0; } } .test { opacity: 0; }</style>";
+    var result = parse(html);
+    ok(!result.error, "@keyframes accepted</p>");
+  });
+
+  test("@keyframes css block with named frame", function() {
+    var html = "<style>@keyframes animation1 { 0% { left: 260px; top: -10%; } 100% { left: 260px; top: 100%; } }</style>";
+    var result = parse(html);
+    ok(!result.error, "@keyframes accepted</p>");
+  });
+
+  test("@keyframes css block with typo (@keyfarmes). pass = not accepted", function() {
+    var html = "<style>@keyfarmes { 0% { opacity: 0; } 100% { opacity: 1.0; } } .test { opacity: 0; }</style>";
+    var result = parse(html);
+    var expected = {
+      type: 'UNKOWN_CSS_KEYWORD',
+      cssKeyword: {
+        start: 7,
+        end: 18
+      },
+      cursor: 7
+    };
+    equal(result.error, expected, "keyfarmes is not accepted as @keyword");
+  });
+
+  test("@-moz-keyframes css block", function() {
+    var html = "<style>@-moz-keyframes { 0% { opacity: 0; } 100% { opacity: 1.0; } } .test { opacity: 0; }</style>";
+    var result = parse(html);
+    ok(!result.error, "@-*-keyframes accepted</p>");
+  });
+
+  test("@font-face rule", function() {
+    var html = "<style>@font-face { font-family: 'snickerdoodle'; } .test { opacity: 0; }</style>";
+    var result = parse(html);
+    ok(!result.error, "@font-face accepted</p>");
+  });
+
+  test("@font-face rule with type (@font-faec). pass = not accepted", function() {
+    var html = "<style>@font-faec { font-family: 'snickerdoodle'; } .test { opacity: 0; }</style>";
+    var result = parse(html);
+    var expected = {
+      type: 'UNKOWN_CSS_KEYWORD',
+      cssKeyword: {
+        start: 7,
+        end: 18
+      },
+      cursor: 7
+    };
+    equal(result.error, expected, "font-faec is not accepted as @keyword");
   });
 
   return validators.getFailCount();
