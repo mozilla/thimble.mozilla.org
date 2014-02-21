@@ -114,17 +114,17 @@ app.use(helmet.xframe());
 app.use(app.router);
 
 var optimize = (node_env !== "development"),
-    tmpDir = path.join( require("os").tmpDir(), "mozilla.webmaker.org");
+    tmpDir = path.join( require("os").tmpDir(), "mozilla.webmaker.org"),
+    rtltrForLess = require("rtltr-for-less");
 
-app.use(lessMiddleWare({
+app.use(lessMiddleWare(rtltrForLess({
   once: optimize,
-  debug: !optimize,
   dest: tmpDir,
   src: WWW_ROOT,
   compress: true,
   yuicompress: optimize,
   optimization: optimize ? 0 : 2
-}));
+})));
 
 app.use( express.static(tmpDir));
 app.use(express.static(path.join(__dirname, 'public')));
