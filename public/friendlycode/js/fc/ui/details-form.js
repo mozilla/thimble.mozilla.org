@@ -140,9 +140,14 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
     $input('title').on('input', validateTitle);
   };
 
+  // construct a new document fragment for sandbox code evaluation
+  // such as finding the document title, etc.
   DetailsForm.prototype.getCodeMirrorValue = function() {
-    var self = this;
-    return $('<div></div>').html(codeMirror.getValue());
+    var sandbox = document.createDocumentFragment(),
+        contentElement = document.createElement("body");
+    contentElement.innerHTML = codeMirror.getValue();
+    sandbox.appendChild(contentElement);
+    return $(contentElement);
   };
 
   // Update thumbnail choices based on contents of documentIframe
