@@ -27,8 +27,9 @@ define(["jquery", "backbone-events", "./mark-tracker"], function($, BackboneEven
           while(route.length > 0) {
             e = e.childNodes[route.splice(0,1)[0]];
           }
-          var start = e.parseInfo.openTag.start,
-              end = e.parseInfo.closeTag.end;
+          var parseInfo = e.parseInfo,
+              start = parseInfo.openTag.start,
+              end = (parseInfo.closeTag ? parseInfo.closeTag.end : parseInfo.openTag.end);
           marks.mark(start, end, "preview-to-editor-highlight");
           if (message.type === "previewloader:click") {
             codeMirror.scrollIntoView(codeMirror.posFromIndex(start));
