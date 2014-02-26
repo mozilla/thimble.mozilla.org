@@ -28,12 +28,60 @@
 }
 
 .hidden {
-  display: none;
+  display: none!important;
 }
 
-.webmaker-create-user {
-  display: block;
-  z-index: 10;
+#webmaker-nav .loginbutton {
+  color: #FFF;
+  background: #27aae1;
+  display: inline-block;
+  font-size: 120%;
+  font-family: "Open Sans",sans-serif;
+  font-weight: normal;
+  line-height: 2em;
   position: relative;
-  border-top: 1px solid lightgrey;
+  text-decoration: none;
+  text-shadow: 0 1px rgba(0,0,0,0.5),0 0 1px rgba(0,0,0,0.2);
+  margin-right: 1.5em;
+}
+
+#webmaker-nav .loginbutton .icon {
+  background: transparent url("/bower/persona-btn/persona-guy.svg") left center no-repeat;
+  width: 3em;
+  background-size: contain;
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  z-index: 10;
+}
+
+#webmaker-nav .loginbutton .label {
+  display: inline-block;
+  padding: 0 0.2em 0 2.8em;
+  margin-left: 5px;
+  white-space: nowrap;
+}
+
+#webmaker-nav .loginbutton .tip {
+  background: url("/bower/persona-btn/point.svg") left center no-repeat;
+  background-size: contain;
+  position: absolute;
+  left: 100%;
+  margin-left: -2px;
+  top: 0;
+  height: 100%;
+  width: 1.2em;
+  overflow: hidden;
+}
+
+#webmaker-nav .loginbutton,
+#webmaker-nav .logoutbutton .label {
+  cursor: pointer;
+}
+
+#webmaker-nav .logoutbutton .label:hover {
+  text-decoration: underline;
 }
