@@ -73,13 +73,9 @@
      * publication and remixing.
      */
     define("thimblePage",
-           ["jquery",
-           "friendlycode",
-           "hackpub",
-           "/scripts/tutorials.js",
-           "/bower/webmaker-ui/ui.js"
-           ],
+           ["jquery", "friendlycode", "hackpub", "/scripts/tutorials.js", "/bower/webmaker-ui/ui.js"],
            function($, FriendlycodeEditor, Hackpub, tutorials, UI) {
+
       var makeUrl = "{{makeUrl}}",
           makeEndpoint = "{{MAKE_ENDPOINT}}",
           langSelector = document.querySelector('#lang-picker');
@@ -110,4 +106,5 @@
       return editor;
     });
     </script>
+
 {% endblock %}

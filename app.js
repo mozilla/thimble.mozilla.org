@@ -14,13 +14,14 @@ var ajax = require('request'),
     fs = require('fs'),
     habitat = require('habitat'),
     helmet = require("helmet"),
+    i18n = require('webmaker-i18n'),
     lessMiddleWare = require("less-middleware"),
     makeAPI = require('./lib/makeapi'),
     nunjucks = require('nunjucks'),
     path = require('path'),
     utils = require('./lib/utils'),
     version = require('./package').version,
-    i18n = require('webmaker-i18n');
+    WebmakerAuth = require('webmaker-auth');
 
 habitat.load();
 
@@ -45,29 +46,37 @@ var appName = "thimble",
     allowJS = env.get("JAVASCRIPT_ENABLED", false),
     middleware = require('./lib/middleware')(env),
     errorhandling= require('./lib/errorhandling'),
+    logger,
     make = makeAPI(env.get('make')),
+    messina,
     nunjucksEnv = new nunjucks.Environment([
       new nunjucks.FileSystemLoader('views'),
       new nunjucks.FileSystemLoader('learning_projects')
     ], {
       autoescape: true
     }),
-    routes = require('./routes')( utils, env, nunjucksEnv, appName ),
     parameters = require('./lib/parameters'),
-    messina,
-    logger;
+    routes = require('./routes')( utils, env, nunjucksEnv, appName ),
+    webmakerAuth = new WebmakerAuth({
+      loginURL: env.get('LOGIN_URL'),
+      secretKey: env.get('SESSION_SECRET')
+    });
 
 require("./lib/extendnunjucks").extend(nunjucksEnv, nunjucks);
 
 nunjucksEnv.express(app);
 
-// Setup locales with i18n
 app.use( i18n.middleware({
   supported_languages: env.get( "SUPPORTED_LANGS" ),
   default_lang: "en-US",
   mappings: require("webmaker-locale-mapping"),
   translation_directory: path.resolve( __dirname, "locale" )
 }));
+
+i18n.addLocaleObject({
+  // Adding an external JSON file to our existing one for the specified locale
+  "en-US": require("./bower_components/webmaker-auth-client/locale/en_US/create-user-form.json")
+}, function(){} );
 
 app.locals({
   GA_ACCOUNT: env.get("GA_ACCOUNT"),
@@ -99,16 +108,10 @@ if (!!env.get("FORCE_SSL") ) {
 app.use(express.compress());
 app.use(express.json());
 app.use(express.urlencoded());
-app.use(express.cookieParser());
-app.use(express.cookieSession({
-  key: "thimble.sid",
-  secret: env.get("SESSION_SECRET"),
-  cookie: {
-    maxAge: 2678400000, // 31 days. Persona saves session data for 1 month
-    secure: !!env.get("FORCE_SSL")
-  },
-  proxy: true
-}));
+
+app.use(webmakerAuth.cookieParser());
+app.use(webmakerAuth.cookieSession());
+
 app.use(express.csrf());
 app.use(helmet.xframe());
 app.use(app.router);
@@ -145,6 +148,13 @@ app.param('oldid', parameters.oldid(legacyDatabaseAPI));
 
 // what do we do when a project request comes in by name (:name route)?
 app.param('name', parameters.name);
+
+// Webmaker SSO
+app.post('/verify', webmakerAuth.handlers.verify);
+app.post('/authenticate', webmakerAuth.handlers.authenticate);
+app.post('/create', webmakerAuth.handlers.create);
+app.post('/logout', webmakerAuth.handlers.logout);
+app.post('/check-username', webmakerAuth.handlers.exists);
 
 // Main page
 app.get('/',
@@ -317,12 +327,6 @@ if (!!env.get("DELETE_ENABLED")) {
   app.get('/project/:id/delete', middleware.deleteProject(databaseAPI));
 }
 
-
-// WEBMAKER SSO
-require('webmaker-loginapi')(app, {
-  loginURL: env.get('LOGINAPI'),
-  audience: env.get('AUDIENCE')
-});
 
 // run server
 app.listen(env.get("PORT"), function(){

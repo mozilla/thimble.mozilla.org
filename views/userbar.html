@@ -1,6 +1,7 @@
 {% block userbar %}
     <!-- webmaker user bar -->
     <div id="webmaker-nav">
+      <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}stylesheets/userbar-overrides.css">
       <nav class="webmaker-nav-container">
         <a class="logo" href="/{{localeInfo.lang}}"><img src="/img/thimble-logo.svg" alt="Mozilla Thimble" /></a>
 
@@ -16,10 +17,6 @@
           <a class="butter-btn btn-white butter-project-menu-control butter-btn-menu-control"><span class="icon icon-only icon-reorder"></span></a>
           <ul class="butter-btn-menu">
             <li><a href="/{{localeInfo.lang}}/" target="_blank"> <span class="icon icon-file-alt"></span> {{ gettext("New") }}</a></li>
-            <!--
-              More menu options to follow
-              <li><a class="butter-reset-history-btn" target="_blank"> <span class="icon icon-remove"></span> {{ gettext("Reset") }}</a></li>
-            -->
           </ul>
         </div>
 
@@ -28,14 +25,24 @@
               {{ gettext("Hi") }} <span id="identity" class="user-name-container"></span> <span class="icon icon-caret-down"></span>
           </div>
           <ul class="menu-container">
-            <li><span class="icon icon-th-large"></span> <a href="{{audience}}/{{localeInfo.lang}}/me" target="_blank">{{ gettext("My makes") }}</a></li>
-            <li class="login"><span class="icon icon-signout"></span><iframe src="{{audience}}/{{localeInfo.lang}}/sso/include.html" class="include-frame"></iframe>
+            <li>
+              <span class="icon icon-th-large"></span>
+              <a href="{{webmaker}}/{{localeInfo.lang}}/me" target="_blank">{{ gettext("My makes") }}</a>
+            </li>
             {% if together %}{% include "together.html" %}{% endif %}
+            <li class="login">
+              <span class="loginbutton"><span class="icon"></span><span class="label">{{ gettext("Sign in") }}<span class="tip"></span></span></span>
+              <span class="logoutbutton hidden"><span class="icon icon-signout"></span><span class="label">{{ gettext("Sign out" )}}</span></span>
             </li>
           </ul>
         </div>
 
-        <div class="back-to-webmaker"><span class="webmaker-logo-icon webmaker-icon"></span> <a href="{{audience}}/{{localeInfo.lang}}">Webmaker.org</a></div>
+        <div class="back-to-webmaker"><span class="webmaker-logo-icon webmaker-icon"></span> <a href="{{webmaker}}/{{localeInfo.lang}}">Webmaker.org</a></div>
+
       </nav>
     </div>
+
+    <link rel="stylesheet" href="bower/webmaker-auth-client/create-user/create-user-form.css">
+    {% include "bower_components/webmaker-auth-client/create-user/create-user-form.html" %}
+
 {% endblock %}
