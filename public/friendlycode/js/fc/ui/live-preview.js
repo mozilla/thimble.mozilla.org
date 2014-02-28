@@ -25,7 +25,7 @@ define(["jquery", "backbone-events", "./mark-tracker"], function($, BackboneEven
         if(route.length > 0) {
           var e = knownDoc.querySelector("body");
           while(route.length > 0) {
-            e = e.childNodes[route.splice(0,1)[0]];
+            e = e.childNodes[route.pop()];
           }
           var parseInfo = e.parseInfo,
               start = parseInfo.openTag.start,
