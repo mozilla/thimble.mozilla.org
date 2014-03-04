@@ -26,9 +26,52 @@
         left: 0;
       }
     </style>
+    <script type="css/template">
+      {
+        box-shadow: 0 0 6px 0 rgba(57, 133, 237, 1),
+                    inset 0 0 10px 0 rgba(57, 133, 237, 0.5);
+        border-radius: 2px;
+      }
+    </script>
     <script>(function() {
       // whoever has embedded us, we need to be able to talk back to.
       var owner = false;
+
+      // persistent "highlighted by cursor" element
+      var generateRandomClass = (function() {
+        var characters = "abcdefghijklmnopqrstuvwyxw";
+        characters = characters + characters.toUpperCase();
+        return function() {
+          var string = ""
+          for(i=0; i<16; i++) {
+            string += characters[(Math.random()*characters.length) | 0];
+          }
+          return string;
+        };
+      }());
+
+      var curHighlight;
+      var highlightClass = generateRandomClass();
+      var highlightCSS = "<style>." + highlightClass + document.querySelector("script[type='css/template']").innerHTML + "</style>";
+
+      var handleCursorPositioning = function(route) {
+        if(curHighlight) {
+          curHighlight.classList.remove(highlightClass);
+        }
+        if(route === false) return;
+        var element = doc.querySelector("html");
+        if(route instanceof Array) {
+          while(route.length > 0) {
+            element = element.children[route.splice(0,1)[0]];
+          }
+        } else { element = route; }
+        var tag = element.localName.toLowerCase();
+        if(tag === "body" || tag === "html") {
+          return;
+        }
+        element.classList.add(highlightClass);
+        curHighlight = element;
+      }
 
       // find the route to this element
       var findRoute = function(e) {
@@ -48,9 +91,16 @@
         if(owner) {
           ["click", "mouseover", "mouseout"].forEach(function(evtName) {
             doc.addEventListener(evtName, function(evt) {
+              if(evtName === "mouseover") {
+                handleCursorPositioning(evt.target);
+              }
+              if(evtName === "mouseout") {
+                handleCursorPositioning(false);
+              }
+              route = findRoute(evt.target);
               var clickEvent = JSON.stringify({
                 element: evt.target.localName,
-                route: findRoute(evt.target),
+                route: route,
                 type: "previewloader:" + evtName
               });
               owner.postMessage(clickEvent, "*");
@@ -58,6 +108,9 @@
           });
         }
       }
+
+      // persistent iframe#document reference
+      var doc;
 
       /**
        * content management object
@@ -71,7 +124,7 @@
           // set new content
           doc = iframe.contentDocument;
           doc.open();
-          doc.write(sourceCode);
+          doc.write(sourceCode.replace("</body", highlightCSS + "</body"));
           doc.close();
 
           // kill off old iframe, reveal new iframe
@@ -103,17 +156,25 @@
           // but once a good DOM diff solution is avaible,
           // we want to extend this instruction set to
           // also allow selecting diff-based updating.
-          if(data.type && data.type === "overwrite") {
+          if(data.type) {
 
-            // This source told us to update - it is therefore
-            // our owner and we will inform it of events.
-            if(!owner) { owner = event.source; }
+            if(data.type === "overwrite") {
 
-            if ("sourceCode" in data && typeof data.sourceCode === "string") {
-              content[data.type](data.sourceCode);
-            } else {
-              console.error("preview payload had no associated, valid sourceCode", event.data);
+              // This source told us to update - it is therefore
+              // our owner and we will inform it of events.
+              if(!owner) { owner = event.source; }
+
+              if ("sourceCode" in data && typeof data.sourceCode === "string") {
+                content[data.type](data.sourceCode);
+              } else {
+                console.error("preview payload had no associated, valid sourceCode", event.data);
+              }
             }
+
+            if(data.type === "setcursor") {
+              handleCursorPositioning(data.route);
+            }
+
           } else {
             console.error("preview payload had no associated instruction type", event.data);
           }
