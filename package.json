@@ -33,9 +33,11 @@
   "devDependencies": {
     "bower": "1.2.7",
     "grunt": "~0.4.1",
-    "grunt-contrib-csslint": "~0.1.2",
+    "grunt-contrib-csslint": "0.1.2",
+    "grunt-contrib-jshint": "0.4.3",
+    "grunt-execute": "0.1.5",
     "grunt-recess": "0.3.3",
-    "grunt-contrib-jshint": "~0.4.3"
+    "jsdom": "0.10.1"
   },
   "scripts": {
     "postinstall": "bower install",

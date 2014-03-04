@@ -28,18 +28,18 @@ module.exports = function( grunt ) {
           "public/learning_projects/**/*.css"
         ]
       },
-    recess: {
-      dist: {
-        options: {
-          noOverQualifying: false,
-          noIDs: false,
-          strictPropertyOrder: false
-        },
-        src: [
-          "public/stylesheets/*.less"
-        ]
+      recess: {
+        dist: {
+         options: {
+            noOverQualifying: false,
+            noIDs: false,
+            strictPropertyOrder: false
+          },
+          src: [
+            "public/stylesheets/*.less"
+          ]
+        }
       }
-    }
     },
     jshint: {
       options: {
@@ -56,11 +56,19 @@ module.exports = function( grunt ) {
         "public/friendlycode/vendor/slowparse/test/test-slowparse.js",
         "public/friendlycode/vendor/slowparse/test/node/qunit-shim.js"
       ]
+    },
+    execute: {
+      target: {
+        src: [
+          "public/friendlycode/vendor/slowparse/test.js"
+        ]
+      }
     }
   });
 
   grunt.loadNpmTasks( "grunt-contrib-csslint" );
   grunt.loadNpmTasks( "grunt-contrib-jshint" );
+  grunt.loadNpmTasks( "grunt-execute" );
 
-  grunt.registerTask( "default", [ "csslint", "jshint" ]);
+  grunt.registerTask( "default", [ "csslint", "jshint", "execute" ]);
 };
