@@ -59,7 +59,8 @@ var appName = "thimble",
     routes = require('./routes')( utils, env, nunjucksEnv, appName ),
     webmakerAuth = new WebmakerAuth({
       loginURL: env.get('LOGIN_URL'),
-      secretKey: env.get('SESSION_SECRET')
+      secretKey: env.get('SESSION_SECRET'),
+      domain: env.get('COOKIE_DOMAIN')
     });
 
 require("./lib/extendnunjucks").extend(nunjucksEnv, nunjucks);
