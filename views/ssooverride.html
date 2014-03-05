@@ -36,8 +36,7 @@
       editor.ready.done(function() {
         var userfield = $("#identity"),
             buttons = $('.save-button, .publish-button'),
-            saveButton = $('.save-button'),
-            publishButton = $('.publish-button');
+            saveButton = $('.save-button');
 
         function enable(user) {
           buttons.attr("disabled", false).attr("title", '');
@@ -49,7 +48,6 @@
           displayLogin();
           buttons.attr("disabled", true);
           saveButton.attr("title", "{{ gettext("Login to save") }}");
-          publishButton.attr("title", "{{ gettext("Login to publish") }}");
           html.classList.remove("loggedin");
         }
 

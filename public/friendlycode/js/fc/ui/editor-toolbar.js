@@ -37,8 +37,6 @@ define(function(require) {
         panes = options.panes,
         navOptions = $(NavOptionsTemplate()).appendTo(div),
         saveButton = navOptions.find(".save-button"),
-        publishButton = navOptions.find(".publish-button"),
-        startSave,
         startPublish,
         undoNavItem = navOptions.find(".undo-nav-item");
 
@@ -68,21 +66,15 @@ define(function(require) {
     panes.preview.on("change:viewlink", onChangeViewLink);
     onChangeViewLink( $('body').data('make-url') || false);
 
-    // If the editor has no content, disable the save and publish button.
+    // If the editor has no content, disable the save button.
     panes.codeMirror.on("change", function() {
       var codeLength = panes.codeMirror.getValue().trim().length;
-      [saveButton, publishButton].forEach(function(button) {
+      [saveButton].forEach(function(button) {
         button.attr("disabled", codeLength ? false : true);
       });
     });
 
     saveButton.click(function() {
-      if (!$(this).attr("disabled")) {
-        startSave(this);
-      }
-    });
-
-    publishButton.click(function() {
       if (!$(this).attr("disabled")) {
         startPublish(this);
       }
@@ -91,19 +83,13 @@ define(function(require) {
     self.refresh = function() {
       historyUI.refresh();
     };
-    self.setStartSave = function(func) {
-      startSave = func;
-      saveButton.toggle(!!startSave);
-    };
     self.setStartPublish = function(func) {
       startPublish = func;
-      publishButton.toggle(!!startPublish);
+      saveButton.toggle(!!startPublish);
     };
 
     // defaults are bound in friendlycode.js,
-    // as publishUI.start(saveOnly) and as
-    // publishUI.start(saveAndPublish), respectively.
-    self.setStartSave(null);
+    // as publishUI.start(...)
     self.setStartPublish(null);
 
     return self;

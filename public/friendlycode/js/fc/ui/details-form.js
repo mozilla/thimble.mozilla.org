@@ -46,10 +46,10 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
       success: function(response) {
         if(response.status !== 200) {
           $error.show();
-          $button.hide();
+          $button.attr("disabled","disabled");
         } else {
           $error.hide();
-          $button.show();
+          $button.removeAttr("disabled");
         }
       }
     });
@@ -268,7 +268,7 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
         self.addTags(val);
         break;
       case 'published':
-        self.setPublished(val);
+        self.setPublished(typeof val === "undefined" ? true : val);
         break;
       default:
         val = val || currentVal || self.findMetaTagInfo(field)[0];

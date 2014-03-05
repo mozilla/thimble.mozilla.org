@@ -237,7 +237,6 @@ html.deployment-type-development .confirm-dialog .development-note {
   font-weight: 700;
   font-size: 16px;
   padding: 0.8em 1em;
-  opacity: 0.75;
   -moz-transition: opacity 0.5s;
   -webkit-transition: opacity 0.5s;
   -o-transition: opacity 0.5s;
@@ -250,6 +249,9 @@ html.deployment-type-development .confirm-dialog .development-note {
 
 .confirmation-button.yes-button {
   background: #3FB58E;
+}
+.confirmation-button.yes-button[disabled] {
+  opacity: 0.5;
 }
 
 .confirmation-button.no-button {
