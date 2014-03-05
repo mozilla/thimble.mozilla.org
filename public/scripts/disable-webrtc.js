@@ -1,0 +1,3 @@
+var TogetherJSConfig = {
+  disableWebRTC: true
+};
