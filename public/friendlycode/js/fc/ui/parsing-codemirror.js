@@ -33,6 +33,7 @@ define([
         }
       }
 
+
       // For autocomplete purposes, figure out which mode the document
       // is in, at the current cursor position, so that ctrl-space will
       // use the correct autocomplete wordlist.
@@ -49,11 +50,52 @@ define([
         }
       }
 
+      /**
+       * Route finder for the slowparse-generated document
+       */
+      var findElementRoute = (function(fragment) {
+        var html = false;
+        if(fragment.children && fragment.children[0]) {
+          html = fragment.children[0];
+        }
+        if(!html) return false;
+
+        var _findElement = function _findElement(element, position) {
+          var pi = element.parseInfo,
+              ot = pi.openTag,
+              ct = pi.closeTag,
+              range = {
+                begin: ot.start,
+                end: ct ? ct.end : ot.end
+              };
+          return (position >= range.begin && position <= range.end);
+        };
+
+        var _findElementRoute = function _findElementRoute(element, position) {
+          var route = [];
+          var children = Array.prototype.slice.call(element.children);
+          for(var i=0, last=children.length, node; i<last; i++) {
+            node = children[i];
+            if (_findElement(node, position)) {
+              route.push(i);
+              route = route.concat(_findElementRoute(node, position));
+            }
+          }
+          return route;
+        };
+
+        return function(position) {
+          return _findElementRoute(html, position);
+        };
+      }(result.document));
+
+
       // handle (possible) errors
       CodeMirror.signal(codeMirror, "reparse", {
         error: result.error,
         sourceCode: sourceCode,
-        document: result.document
+        document: result.document,
+        findElementRoute: findElementRoute
       });
 
       // Cursor activity would've been fired before us, so call it again
