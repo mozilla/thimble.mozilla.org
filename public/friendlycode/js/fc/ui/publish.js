@@ -173,14 +173,14 @@ define(function (require) {
           detailsForm.updateAll(makeData);
 
           var confirmButton = $(".yes-button", confirmDialog),
-              publishCheckbox = $("input[name=published]", confirmDialog);
+              publishCheckbox = $("#details-published");
 
           // The publish call is a one-time deal. Once chosen, it
           // prevents the user from clicking again by virtue of
           // unsetting itself. It gets rebound when the dialog
           // window is brought back into view.
           var publishAction = function() {
-            performPublish(publishCheckbox.attr("checked") === "true")();
+            performPublish(publishCheckbox[0].checked)();
           };
 
           // strip any lingering click handlers from the dialog getting
@@ -194,16 +194,12 @@ define(function (require) {
           var cb = $("#details-published");
           cb.click(function() {
             var state = !!this.checked;
-            confirmButton.text(state ? confirmButton.data("publish") : confirmButton.data("save"));
           });
 
           // massage the confirmation dialog based on whether
           // this is a save, or a save-and-publish operation
           if (saveAndPublish) {
-            publishCheckbox.attr("checked", saveAndPublish);
-            confirmButton.text(confirmButton.data("publish"));
-          } else {
-            confirmButton.text(confirmButton.data("save"));
+            publishCheckbox[0].checked = true;
           }
 
           confirmDialog.fadeIn();

@@ -55,11 +55,9 @@ define(function(require) {
       ready.resolve();
     }
 
-    // save and publish buttons effect different publish options
-    var saveOnly = false,
-        saveAndPublish = true;
-    editor.toolbar.setStartSave(publishUI.start(saveOnly));
-    editor.toolbar.setStartPublish(publishUI.start(saveAndPublish));
+    // set up save to automatically save + publish to makeAPI,
+    // used in editor-toolbar.js
+    editor.toolbar.setStartPublish(publishUI.start(true));
 
     editor.container.addClass("friendlycode-loading");
     publishUI.on("publish", function(info) {
