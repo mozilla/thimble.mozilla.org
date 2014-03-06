@@ -1,62 +1,11 @@
           <li class="together-btn">
             <span class="icon icon-comments-alt"></span>
-            <script>
-              // disable webrtc functionality for now
-              var TogetherJSConfig = {
-                disableWebRTC: true
-              };
-            </script>
+            <script src="/scripts/disable-webrtc.js"></script>
             <script src="{{ together }}/togetherjs-min.js"></script>
-          	<button class="together-toggle">{{ gettext("Start Togetherjs") }}</button>
-            <script>
-            (function() {
-
-            	var btn = document.querySelector(".together-toggle"),
-                    started = false,
-                    setStartState = function(state) {
-                      return function () {
-                        started = state;
-                        btn.innerHTML = (started ? "{{ gettext('Stop Togetherjs') }}" : "{{ gettext('Start Togetherjs') }}");
-                      };
-                    };
-
-              // Start and stop notification, so that the preview
-              // iframe doesn't spam us with events when togetherjs
-              // is not actually running.
-              TogetherJS.on("ready", setStartState(true));
-              TogetherJS.on("close", setStartState(false));
-
-              // proxy the mousemoved event from the preview iframe
-              window.addEventListener("message", function(evt) {
-                if(evt.source === window) return;
-
-                try {
-                  var obj = JSON.parse(evt.data),
-                      elementFinder = TogetherJS.require("elementFinder"),
-                      element = document.querySelector(".preview-holder iframe"),
-                      location = elementFinder.elementLocation(element);
-
-                  if(["cursor-update", "cursor-click"].indexOf(obj.type) !== -1) {
-                    TogetherJS.require(["session"], function (session) {
-                      if(!started) return;
-                      session.send({
-                        type: obj.type,
-                        element: location,
-                        offsetX: obj.offsetX,
-                        offsetY: obj.offsetY
-                      });
-                    });
-                  }
-
-                } catch (e) { }
-              });
-
-            	btn.addEventListener("click", function toggleTogether() {
-                TogetherJS(btn);
-                return false;
-              });
-
-              TogetherJS.reinitialize();
-
-            }());</script>
+            <button class="together-toggle">{{ gettext("Start Togetherjs") }}</button>
+            <script id="together-toggle" src="/scripts/together-toggle-script.js"
+                    data-stop-together="{{ gettext('Stop Togetherjs') }}"
+                    data-start-together="{{ gettext('Start Togetherjs') }}"
+                    async>
+            </script>
           </li>
