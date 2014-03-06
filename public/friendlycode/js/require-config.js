@@ -121,6 +121,9 @@ var require = {
     "test": "../test",
     "templates": "../templates",
     "localized": "/bower/webmaker-i18n/localized",
+    "languages": "/bower/webmaker-language-picker/js/languages",
+    'list': '/bower/listjs/dist/list.min',
+    'fuzzySearch': '/bower/list.fuzzysearch.js/dist/list.fuzzysearch.min',
     "analytics": "/bower/webmaker-analytics/analytics"
   },
   config: {

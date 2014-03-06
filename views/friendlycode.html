@@ -73,15 +73,14 @@
      * publication and remixing.
      */
     define("thimblePage",
-           ["jquery", "friendlycode", "hackpub", "/scripts/tutorials.js", "/bower/webmaker-ui/ui.js"],
-           function($, FriendlycodeEditor, Hackpub, tutorials, UI) {
+           ["jquery", "friendlycode", "hackpub", "/scripts/tutorials.js", "languages"],
+           function($, FriendlycodeEditor, Hackpub, tutorials, Languages) {
 
       var makeUrl = "{{makeUrl}}",
-          makeEndpoint = "{{MAKE_ENDPOINT}}",
-          langSelector = document.querySelector('#lang-picker');
+          makeEndpoint = "{{MAKE_ENDPOINT}}";
 
-      // URL redirector for language picker
-      UI.langPicker(langSelector);
+      // Call this when language picker element is ready.
+      Languages.ready({ position: "bottom", arrow: "top" }, true);
 
       var editor = FriendlycodeEditor({
         allowJS: {{ allowJS }},

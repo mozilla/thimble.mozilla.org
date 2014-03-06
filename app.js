@@ -83,8 +83,7 @@ i18n.addLocaleObject({
 app.locals({
   GA_ACCOUNT: env.get("GA_ACCOUNT"),
   GA_DOMAIN: env.get("GA_DOMAIN"),
-  supportedLanguages: i18n.getLanguages(),
-  listDropdownLang: i18n.getSupportLanguages()
+  languages: i18n.getSupportLanguages()
 });
 
 // Express settings

@@ -5,12 +5,8 @@
       <nav class="webmaker-nav-container">
         <a class="logo" href="/{{localeInfo.lang}}"><img src="/img/thimble-logo.svg" alt="Mozilla Thimble" /></a>
 
-        <div class="lang-picker">
-          <select id="lang-picker" data-supported="{{supportedLanguages}}">
-          {% for language in listDropdownLang %}
-            <option {% if languageNameFor(localeInfo.lang) == languageNameFor(language) %} selected="selected" {% endif %} value="{{language}}">{{ languageNameFor(language) }}</option>
-          {% endfor %}
-          </select>
+        <div class="langPicker">
+          {% include "bower_components/webmaker-language-picker/template/partial.html" %}
         </div>
 
         <div class="butter-btn-menu-container butter-project-menu">
