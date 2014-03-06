@@ -116,10 +116,20 @@
        * content management object
        */
       var content = {
-        overwrite: function overwriteIFrame(sourceCode) {
+        overwrite: function overwriteIFrame(data) {
+          var sourceCode = data.sourceCode,
+              runjs = !!data.runjs;
           var iframe = document.createElement("iframe");
           iframe.style.opacity = 0.0;
           document.body.appendChild(iframe);
+
+          // disable scripts if so instructed. We don't
+          // actually strip them, we just give them a
+          // script type that is non-executing.
+          if(!runjs) {
+            var script = /<script\s*(type=["'][^\/]+\/javascript["'])?>/g;
+            sourceCode = sourceCode.replace(script, "<script type='text/disabled'>");
+          }
 
           // set new content
           doc = iframe.contentDocument;
@@ -165,7 +175,7 @@
               if(!owner) { owner = event.source; }
 
               if ("sourceCode" in data && typeof data.sourceCode === "string") {
-                content[data.type](data.sourceCode);
+                content["overwrite"](data);
               } else {
                 console.error("preview payload had no associated, valid sourceCode", event.data);
               }
