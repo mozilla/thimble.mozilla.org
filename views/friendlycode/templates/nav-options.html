@@ -27,7 +27,13 @@
   <div class="preview-pane-nav-options">
     <!-- previous, save draft, publish -->
      <div class="preview-nav-item nav-item">
-       <span class="icon">&nbsp;</span>{{ gettext("Preview") }}<div class="pane-indicator enabled"></div>
+       <span class="icon">&nbsp;</span>{{ gettext("Preview") }}
+       <button class="reload-button wm-button wm-button-blue short">{{ gettext("reload") }}</button>
+       <fieldset>
+         <input type="checkbox" id="preview-run-js" checked>
+         <label for="preview-run-js">{{ gettext("auto-run JS") }}</label>
+       </fieldset>
+       <div class="pane-indicator enabled"></div>
      </div>
      <div class="nav-item buttons">
        <a class="page-view-link" href="" target="_blank"><div class="page-view-button wm-button wm-button-blue short">{{ gettext("View") }}</div></a>

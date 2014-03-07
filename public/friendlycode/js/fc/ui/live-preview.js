@@ -54,6 +54,9 @@ define(["jquery", "backbone-events", "./mark-tracker"], function($, BackboneEven
         // add the preview iframe to the editor on the first
         // attempt to parse the Code Mirror text.
         if(!iframe.contentWindow) {
+          document.querySelector(".reload-button").onclick = function() {
+            codeMirror.reparse();
+          };
           previewArea.append(iframe);
           telegraph = iframe.contentWindow;
           listenForEvents();
@@ -63,6 +66,7 @@ define(["jquery", "backbone-events", "./mark-tracker"], function($, BackboneEven
         // we treat all changes as a full refresh.
         var message = JSON.stringify({
           type: "overwrite",
+          runjs: document.getElementById('preview-run-js').checked,
           sourceCode: event.sourceCode
         });
 
