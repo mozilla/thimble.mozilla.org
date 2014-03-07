@@ -175,7 +175,7 @@
               if(!owner) { owner = event.source; }
 
               if ("sourceCode" in data && typeof data.sourceCode === "string") {
-                content["overwrite"](data);
+                content.overwrite(data);
               } else {
                 console.error("preview payload had no associated, valid sourceCode", event.data);
               }
