@@ -67,11 +67,15 @@ define(function(require) {
     onChangeViewLink( $('body').data('make-url') || false);
 
     // If the editor has no content, disable the save button.
+    // Enable it only when the user is loggede in.
+    var authStatus = $("html");
     panes.codeMirror.on("change", function() {
-      var codeLength = panes.codeMirror.getValue().trim().length;
-      [saveButton].forEach(function(button) {
-        button.attr("disabled", codeLength ? false : true);
-      });
+      if(authStatus.hasClass("loggedin")) {
+        var codeLength = panes.codeMirror.getValue().trim().length;
+        [saveButton].forEach(function(button) {
+          button.attr("disabled", codeLength ? false : true);
+        });
+      }
     });
 
     saveButton.click(function() {
