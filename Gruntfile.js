@@ -27,19 +27,32 @@ module.exports = function( grunt ) {
         src: [
           "public/learning_projects/**/*.css"
         ]
-      },
-      recess: {
-        dist: {
-         options: {
-            noOverQualifying: false,
-            noIDs: false,
-            strictPropertyOrder: false
-          },
-          src: [
-            "public/stylesheets/*.less"
-          ]
-        }
       }
+    },
+    lesslint: {
+      src: ["public/stylesheets/userbar-overrides.less"],
+        options: {
+          csslint: {
+            "adjoining-classes": false,
+            "box-model": false,
+            "box-sizing": false,
+            "bulletproof-font-face": false,
+            "compatible-vendor-prefixes": false,
+            "ids": false,
+            "important": false,
+            "outline-none": false,
+            "overqualified-elements": false,
+            "qualified-headings": false,
+            "regex-selectors": false,
+            "star-property-hack": false,
+            "underscore-property-hack": false,
+            "universal-selector": false,
+            "unique-headings": false,
+            "unqualified-attributes": false,
+            "vendor-prefix": false,
+            "zero-units": false
+          }
+        }
     },
     jshint: {
       options: {
@@ -67,8 +80,10 @@ module.exports = function( grunt ) {
   });
 
   grunt.loadNpmTasks( "grunt-contrib-csslint" );
+  grunt.loadNpmTasks( "grunt-lesslint" );
   grunt.loadNpmTasks( "grunt-contrib-jshint" );
   grunt.loadNpmTasks( "grunt-execute" );
 
-  grunt.registerTask( "default", [ "csslint", "jshint", "execute" ]);
+  grunt.registerTask( "default", [ "csslint", "jshint", "execute", "lesslint" ]);
 };
+

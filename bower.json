@@ -7,6 +7,6 @@
     "webmaker-analytics": "0.0.4",
     "webmaker-auth-client": "0.0.28",
     "webmaker-i18n": "https://github.com/mozilla/node-webmaker-i18n/archive/v0.3.8.tar.gz",
-    "webmaker-language-picker": "0.0.19"
+    "webmaker-language-picker": "0.0.20"
   }
 }
