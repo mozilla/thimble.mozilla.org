@@ -4,106 +4,13 @@
     <link rel="stylesheet" type="text/css" href="{{HTTP_STATIC_URL}}friendlycode/vendor/codemirror3/addon/hint/show-hint.css">
     <script src="{{HTTP_STATIC_URL}}friendlycode/js/require-config.js"></script>
     <script src="{{HTTP_STATIC_URL}}friendlycode/vendor/require.min.js"></script>
-    <script>
-
-    /**
-     * ...
-     */
-    define("hackpub", ["jquery"], function($) {
-
-      // set up CSRF handling
-      var csrf_token = $("meta[name='csrf-token']").attr("content");
-
-      return function Hackpub(options) {
-        return {
-          loadCode: function(path, cb) {
-            var url = path;
-            $.ajax({
-              type: "GET",
-              url: url,
-              dataType: 'text',
-              error: function(req) {
-                cb(req);
-              },
-              success: function(html) {
-                cb(null, html, url);
-              }
-            });
-          },
-          saveCode: function(data, originalURL, cb) {
-            $.ajax({
-              type: "POST",
-              url: options.hackpubURL + "/" + "{{localeInfo.lang}}" + "/publish",
-              data: {
-                'html': data.html,
-                'metaData': data.metaData,
-                'published': data.published,
-                'pageOperation': $("meta[name='thimble-operation']").attr("content"),
-                'origin': $("meta[name='thimble-project-origin']").attr("content")
-              },
-              dataType: 'json',
-              beforeSend: function(request) {
-                request.setRequestHeader('X-CSRF-Token', csrf_token); // express.js uses a non-standard name for csrf-token
-              },
-              error: function(req) {
-                cb(req);
-              },
-              success: function(result) {
-                var origin = $("meta[name='thimble-project-origin']").attr("content");
-                cb(null, {path: result['remix-id'], url: result['published-url']});
-                // If we were a remix, update the new page's origin.
-                if ($("meta[name='thimble-operation']").attr("content") === "remix" || !origin) {
-                  origin = result['remix-id'];
-                  $("meta[name='thimble-project-origin']").attr("content",origin);
-                }
-                $("meta[name='thimble-operation']").attr("content","edit");
-
-                // Disable the accidental page-navigation protection
-                // right after a publish:
-                data.dataProtector.disableDataProtection();
-              }
-            });
-          }
-        };
-      };
-    });
-
-    /**
-     * This code sets up the various Friendlycode values for
-     * publication and remixing.
-     */
-    define("thimblePage",
-           ["jquery", "friendlycode", "hackpub", "/scripts/tutorials.js", "languages"],
-           function($, FriendlycodeEditor, Hackpub, tutorials, Languages) {
-
-      var makeUrl = "{{makeUrl}}",
-          makeEndpoint = "{{MAKE_ENDPOINT}}";
-
-      // Call this when language picker element is ready.
-      Languages.ready({ position: "bottom", arrow: "top" }, true);
-
-      var editor = FriendlycodeEditor({
-        allowJS: {{ allowJS }},
-        previewLoader: '{{previewLoader}}',
-        pageToLoad: '{{pageToLoad}}',
-        publisher: Hackpub({
-          hackpubURL: "{{appURL}}",
-          publishURL: "{{appURL}}/project",
-        }),
-        remixURLTemplate: "{{appURL}}/" + "{{localeInfo.lang}}" + "/project/\{\{VIEW_URL\}\}/edit",
-        container: $("#bare-fc-holder")
-      });
-
-      if (makeUrl) {
-        tutorials.load(makeUrl, makeEndpoint, editor.editor);
-      }
-
-      if (typeof TogetherJS !== "undefined") {
-        TogetherJS.reinitialize();
-      }
-
-      return editor;
-    });
+    <script id="friendly-code" src="/scripts/friendlycode.js"
+            data-localeInfo-lang="{{ localeInfo.lang }}"
+            data-make-url="{{ makeUrl }}"
+            data-make-endpoint="{{ MAKE_ENDPOINT }}"
+            data-preview-loader="{{ previewLoader }}"
+            data-page-to-load="{{ pageToLoad }}"
+            data-app-url="{{ appURL }}"
+            data-allow-js="{{ allowJS }}">
     </script>
-
 {% endblock %}
