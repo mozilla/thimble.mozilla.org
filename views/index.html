@@ -2,7 +2,12 @@
 {% block body %}
     <script src="{{ personaHost }}/include.js"></script>
     {% include 'userbar.html' %}
-    {% include 'webmaker-auth-client.html' %}
+    <script src="bower/eventEmitter/EventEmitter.js"></script>
+    <script src="bower/webmaker-auth-client/webmaker-auth-client.js"></script>
+    <script id="webmaker-auth-client" src="/scripts/auth-login.js"
+            data-csrf="{{ csrf }}"
+            async>
+    </script>
     {% include 'tutorialbar.html' %}
     {% include 'friendlycode.html' %}
     {% block ssooverride %}
