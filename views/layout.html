@@ -18,7 +18,13 @@
     <script src="https://cdn.optimizely.com/js/206878104.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.js"></script>
-    {% include "googleanalytics.html" %}
+    {% if GA_ACCOUNT %}
+    <script id="google-analytics-js" src="/scripts/google-analytics.js"
+            data-ga-account="{{ GA_ACCOUNT }}"
+            data-ga-domain="{{ GA_DOMAIN }}"
+            async>
+    </script>        
+    {% endif %}
   </head>
   <body style="margin: 0" data-make-url="{{ makeUrl }}" data-make-endpoint="{{ MAKE_ENDPOINT }}">
     {% block body %}{% endblock %}
