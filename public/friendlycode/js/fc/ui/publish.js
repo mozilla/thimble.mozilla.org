@@ -1,15 +1,18 @@
-define(function (require) {
+define([
+    "slowparse/slowparse",
+    "jquery.min",
+    "backbone-events",
+    "./social-media",
+    "./details-form",
+    "/external/make-api.js",
+    "template!confirm-dialog",
+    "template!publish-dialog",
+    "localized",
+    "analytics",
+    "./URLProxy"
+  ],
+  function (slowparse, $, BackboneEvents, createSocialMedia, DetailsForm, Make, confirmDialogTemplate, publishDialogTemplate, localized, analytics, URLProxy) {
   "use strict";
-
-  var $ = require("jquery"),
-      BackboneEvents = require("backbone-events"),
-      createSocialMedia = require("./social-media"),
-      DetailsForm = require('./details-form'),
-      Make = require('/external/make-api.js'),
-      confirmDialogTemplate = require("template!confirm-dialog"),
-      publishDialogTemplate = require("template!publish-dialog"),
-      Localized = require("localized"),
-      analytics = require("analytics");
 
   function makeSharingHotLoader(options) {
     return function hotLoadEventHandler() {
@@ -85,8 +88,18 @@ define(function (require) {
         var code = codeMirror.getValue(),
             publishErrorOccurred = false;
 
+        // perform URL replacements for any http-on-https URLs
+        var proxied = (function(sourceCode) {
+          var result = slowparse.HTML(document, sourceCode);
+          if (!result.warnings) {
+            return false;
+          }
+          return URLProxy.proxyURLs(sourceCode, result.warnings);
+        }(code));
+
         publisher.saveCode({
           html: code,
+          proxied: proxied,
           metaData: detailsForm.getValue(),
           dataProtector: dataProtector,
           published: saveAndPublish
