@@ -5,5 +5,11 @@
     {% include 'webmaker-auth-client.html' %}
     {% include 'tutorialbar.html' %}
     {% include 'friendlycode.html' %}
-    {% include 'ssooverride.html' %}
+    {% block ssooverride %}
+      <script id="ssooverride" src="/scripts/ssooverride.js"
+              data-hostname="{{ hostname }}"
+              data-login-to-save="{{ gettext('Login to save') }}"
+              async>
+      </script>
+    {% endblock %}
 {% endblock %}
