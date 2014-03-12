@@ -627,9 +627,10 @@
   // `CSSParser` is our internal CSS token stream parser object. This object
   // has references to the stream, as well as the HTML DOM builder that is
   // used by the HTML parser.
-  function CSSParser(stream, domBuilder) {
+  function CSSParser(stream, domBuilder, warnings) {
     this.stream = stream;
     this.domBuilder = domBuilder;
+    this.warnings = warnings;
   }
 
   CSSParser.prototype = {
@@ -1094,7 +1095,9 @@
       //Add a new validator to check if there is mixed active content in css value
       if (checkMixedContent && value.match(/,?\s*url\(\s*['"]?http:\/\/.+\)/)) {
         valueStart = valueStart + value.indexOf('url');
-        throw new ParseError("CSS_MIXED_ACTIVECONTENT", this, property, propertyStart, value, valueStart, valueEnd);
+        this.warnings.push(
+          new ParseError("CSS_MIXED_ACTIVECONTENT", this, property, propertyStart, value, valueStart, valueEnd)
+        );
       }
       if (next === ';') {
         // This is normal CSS rule termination; try to read a new
@@ -1129,9 +1132,10 @@
   // as well as a DOM builder that is used to construct the DOM while we
   // run through the token stream.
   function HTMLParser(stream, domBuilder) {
+    this.warnings = [];
     this.stream = stream;
     this.domBuilder = domBuilder;
-    this.cssParser = new CSSParser(stream, domBuilder);
+    this.cssParser = new CSSParser(stream, domBuilder, this.warnings);
   }
 
   HTMLParser.prototype = {
@@ -1274,6 +1278,11 @@
       // we test for that.
       if (this.domBuilder.currentNode != this.domBuilder.fragment)
         throw new ParseError("UNCLOSED_TAG", this);
+
+      return {
+        warnings: (this.warnings.length > 0 ? this.warnings : false)
+      };
+
     },
     // This is a helper to build a DOM text node.
     _buildTextNode: function() {
@@ -1535,7 +1544,9 @@
 
         //Add a new validator to check if there is a http link in a https page
         if (checkMixedContent && valueTok.value.match(/http:/) && isActiveContent(tagName, nameTok.value)) {
-          throw new ParseError("HTTP_LINK_FROM_HTTPS_PAGE", this, nameTok, valueTok);
+          this.warnings.push(
+            new ParseError("HTTP_LINK_FROM_HTTPS_PAGE", this, nameTok, valueTok)
+          );
         }
 
         var unquotedValue = replaceEntityRefs(valueTok.value.slice(1, -1));
@@ -1657,13 +1668,17 @@
       var stream = new Stream(html),
           domBuilder,
           parser,
+          warnings = null,
           error = null;
 
       domBuilder = document.pushElement ? document : new DOMBuilder(document);
       parser = new HTMLParser(stream, domBuilder);
 
       try {
-        parser.parse();
+        var _ = parser.parse();
+        if (_.warnings) {
+          warnings = _.warnings;
+        }
       } catch (e) {
         if (e.parseInfo) {
           error = e.parseInfo;
@@ -1679,6 +1694,7 @@
       return {
         document: domBuilder.fragment,
         contexts: domBuilder.contexts,
+        warnings: warnings,
         error: error
       };
     },

@@ -33,7 +33,6 @@ define([
         }
       }
 
-
       // For autocomplete purposes, figure out which mode the document
       // is in, at the current cursor position, so that ctrl-space will
       // use the correct autocomplete wordlist.
@@ -89,8 +88,15 @@ define([
         };
       }(result.document));
 
+      // handle (possible) warnings - these do not lead to a "bad" make.
+      (function handleWarnings() {
+        // shim warnings-as-errors for now
+        if(!result.error && result.warnings) {
+          result.error = result.warnings[0].parseInfo;
+        }
+      }());
 
-      // handle (possible) errors
+      // handle (possible) errors - these do lead to a "bad" make.
       CodeMirror.signal(codeMirror, "reparse", {
         error: result.error,
         sourceCode: sourceCode,
