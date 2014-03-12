@@ -43,6 +43,7 @@
 	"publish-err": "Sorry, an error occurred while trying to publish.",
 	"Redo changes": "Redo changes",
 	"Redo": "Redo",
+	"reload": "reload",
 	"Remix": "Remix",
 	"remix": "remix",
 	"request did not point to a project": "request did not point to a project",
