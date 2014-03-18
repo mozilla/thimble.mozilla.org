@@ -251,7 +251,7 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
 
     switch (field) {
       case 'title':
-        val = val || currentVal || self.getCodeMirrorValue().find('title').text();
+        val = val || self.getCodeMirrorValue().find('title').text() || currentVal;
         $fieldInput.val(val);
         // validate this title against Thimble's known titles for this user
         validateTitle({ target: $fieldInput[0] });
