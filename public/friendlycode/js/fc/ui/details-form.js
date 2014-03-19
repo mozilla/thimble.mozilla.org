@@ -237,7 +237,7 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
   };
 
   DetailsForm.prototype.setLocale = function (locale) {
-
+    $("[name=locale]").val(locale);
   };
 
   DetailsForm.prototype.setPublished = function (state) {

@@ -98,7 +98,6 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
       app.get( '/details-form', function( req, res ) {
         res.render('friendlycode/templates/details-form.html', {
           locales: Object.keys(langmap),
-          current: req.localeInfo.lang,
           langmap: langmap
         });
       });
