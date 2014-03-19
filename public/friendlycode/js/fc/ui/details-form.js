@@ -1,8 +1,6 @@
 define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHTML, $) {
   "use strict";
 
-  console.log("loading!");
-
   var DEFAULT_THUMBNAIL = 'https://webmaker.org/img/thumbs/thimble-grey.png';
   var ALL_FIELDS = [
     'title',
@@ -275,7 +273,6 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
         self.addTags(val);
         break;
       case 'locale':
-        console.log(val);
         self.setLocale(val);
         break;
       case 'published':
@@ -307,7 +304,6 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
       var input = $input(item),
           e = input[0],
           val;
-      console.log(e);
       if (input.attr("type") === "checkbox") {
         val = e.checked;
       }

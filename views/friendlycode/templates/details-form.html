@@ -25,7 +25,11 @@
   </fieldset>
   <fieldset>
     <label>{{ gettext("Locale") }}</label>
-    {% include "bower_components/webmaker-language-picker/template/picker.html" %}
+    <select name="locale">
+      {% for locale in locales %}<option value="{{ locale }}"{%
+      if locale == localeInfo.lang %} selected="selected"{% endif
+      %}>{{ langmap[locale].nativeName }}</option>{% endfor %}
+    </select>
   </fieldset>
   <fieldset>
     <label for="details-published">{{ gettext("Searchable on webmaker.org") }}</label>
