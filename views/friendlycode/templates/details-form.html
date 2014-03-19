@@ -24,6 +24,10 @@
     <textarea name="description" class="input"></textarea>
   </fieldset>
   <fieldset>
+    <label>{{ gettext("Locale") }}</label>
+    {% include "bower_components/webmaker-language-picker/template/picker.html" %}
+  </fieldset>
+  <fieldset>
     <label for="details-published">{{ gettext("Searchable on webmaker.org") }}</label>
     <input type="checkbox" name="published" id="details-published">
   </fieldset>
