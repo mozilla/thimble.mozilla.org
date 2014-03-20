@@ -6,10 +6,14 @@ define(function(require) {
       TextUI = require("fc/ui/text"),
       analytics = require("analytics");
 
-  function HintsUI(options) {
-    var self = {},
-        hintsNavItem = options.navItem,
+  function SettingsUI(options) {
+    var self = {};
+    var hintsNavItem = options.hintItem,
         hintsCheckbox = hintsNavItem.find(".checkbox");
+    var mapNavItem = options.mapItem,
+        mapCheckbox = mapNavItem.find(".checkbox");
+
+    // HINTS
 
     Preferences.on("change:showHints", function() {
       if (Preferences.get("showHints") === false)
@@ -27,7 +31,26 @@ define(function(require) {
       Preferences.save();
     });
 
+    // MAPPINGS
+
+    Preferences.on("change:showMapping", function() {
+      if (Preferences.get("showMapping") === false)
+        mapCheckbox.removeClass("on").addClass("off");
+      else
+        mapCheckbox.removeClass("off").addClass("on");
+    });
+
+    mapNavItem.click(function() {
+      var showMapping = !Preferences.get("showMapping");
+      analytics.event( "Show Mapping", {
+        label: showMapping ? "Enabled" : "Disabled"
+      });
+      Preferences.set("showMapping", showMapping);
+      Preferences.save();
+    });
+
     Preferences.trigger("change:showHints");
+    Preferences.trigger("change:showMapping");
     return self;
   }
 
@@ -49,8 +72,9 @@ define(function(require) {
       codeMirror: panes.codeMirror,
       navItem: navOptions.find(".text-nav-item")
     });
-    var hintsUI = HintsUI({
-      navItem: navOptions.find(".hints-nav-item")
+    var settingsUI = SettingsUI({
+      hintItem: navOptions.find(".hints-nav-item"),
+      mapItem:  navOptions.find(".mapping-nav-item")
     });
 
     // published-page link handling
