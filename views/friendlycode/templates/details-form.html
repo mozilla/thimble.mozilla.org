@@ -24,6 +24,14 @@
     <textarea name="description" class="input"></textarea>
   </fieldset>
   <fieldset>
+    <label>{{ gettext("Locale") }}</label>
+    <select name="locale">
+      {% for locale in locales %}<option value="{{ locale }}"{%
+      if locale == localeInfo.lang %} selected="selected"{% endif
+      %}>{{ langmap[locale].nativeName }}</option>{% endfor %}
+    </select>
+  </fieldset>
+  <fieldset>
     <label for="details-published">{{ gettext("Searchable on webmaker.org") }}</label>
     <input type="checkbox" name="published" id="details-published">
   </fieldset>

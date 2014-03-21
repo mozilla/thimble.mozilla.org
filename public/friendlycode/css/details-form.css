@@ -191,3 +191,13 @@
   color: #000;
   font-size: 0.9em;
 }
+
+
+/*********************************************************
+* Locales
+*/
+.makeapi-details select[name=locale] {
+  vertical-align: -0.5em;
+  line-height: 2em;
+  height: 2em;
+}

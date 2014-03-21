@@ -7,6 +7,7 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
     'thumbnail',
     'description',
     'tags',
+    'locale',
     'published'
   ];
 
@@ -235,6 +236,10 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
     $input('tag-input').val('');
   };
 
+  DetailsForm.prototype.setLocale = function (locale) {
+    $("[name=locale]").val(locale);
+  };
+
   DetailsForm.prototype.setPublished = function (state) {
     state = state || false;
     if (typeof state === "string") {
@@ -267,6 +272,9 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
         // this means it was stored with a colon, and is created outside of thimble.
         self.addTags(val);
         break;
+      case 'locale':
+        self.setLocale(val);
+        break;
       case 'published':
         self.setPublished(typeof val === "undefined" ? true : val);
         break;
@@ -293,8 +301,15 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
     var obj = {};
 
     fields.forEach(function (item) {
-      var input = $input(item);
-      var val = input.attr("type") === "checkbox" ? input[0].checked : input.val();
+      var input = $input(item),
+          e = input[0],
+          val;
+      if (input.attr("type") === "checkbox") {
+        val = e.checked;
+      }
+      else {
+        val = input.val();
+      }
       obj[item] = val;
     });
 
