@@ -94,7 +94,7 @@ define([
 
           publisher.saveCode({
             html: sourceCode,
-            proxied: proxied,
+            proxied: proxied === sourceCode ? false : proxied,
             metaData: detailsForm.getValue(),
             dataProtector: dataProtector,
             published: saveAndPublish
