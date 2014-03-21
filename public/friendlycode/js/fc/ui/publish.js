@@ -107,7 +107,7 @@ define([
           if (err) {
             publishDialog.stop().hide();
             modals.showErrorDialog({
-              text: Localized.get('publish-err') + " " + err.responseText
+              text: localized.get('publish-err') + " " + err.responseText
             });
             publishErrorOccurred = true;
             analytics.event("Error", {
