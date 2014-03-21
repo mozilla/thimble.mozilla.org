@@ -4,7 +4,7 @@
 define([
   "backbone-events",
   "./indexable-codemirror",
-  "./URLproxy"
+  "./URLProxy"
 ], function(BackboneEvents, indexableCodeMirror, URLProxy) {
   "use strict";
 
