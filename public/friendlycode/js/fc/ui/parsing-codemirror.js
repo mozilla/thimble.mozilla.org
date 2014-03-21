@@ -3,10 +3,15 @@
 // for extension points to hook into.
 define([
   "backbone-events",
-  "./indexable-codemirror"
-], function(BackboneEvents, indexableCodeMirror) {
+  "./indexable-codemirror",
+  "./URLproxy"
+], function(BackboneEvents, indexableCodeMirror, URLProxy) {
   "use strict";
 
+  /**
+   * Our wrapper for codemirror that adds in sourcecode parsing before sending
+   * that code on for live-previewing in the live-preview.js file.
+   */
   return function ParsingCodeMirror(place, givenOptions) {
     var dataProtector = givenOptions.dataProtector;
 
@@ -52,7 +57,7 @@ define([
       /**
        * Route finder for the slowparse-generated document
        */
-      var findElementRoute = (function(fragment) {
+      var findElementRoute = (function generateFindElementRoute(fragment) {
         var html = false;
         if(fragment.children && fragment.children[0]) {
           html = fragment.children[0];
@@ -88,23 +93,25 @@ define([
         };
       }(result.document));
 
-      // handle (possible) warnings - these do not lead to a "bad" make.
-      (function handleWarnings() {
-        // shim warnings-as-errors for now
-        if(!result.error && result.warnings) {
-          result.error = result.warnings[0].parseInfo;
-        }
-      }());
+      // If the user is not logged in, we don't do any link proxying.
+      // Instead, we notify them that their resources are http-on-https.
+      if (!$("html").hasClass("loggedin") && result.warnings) {
+        result.error = result.warnings[0].parseInfo;
+        result.warnings = [];
+      }
 
-      // handle (possible) errors - these do lead to a "bad" make.
-      CodeMirror.signal(codeMirror, "reparse", {
-        error: result.error,
-        sourceCode: sourceCode,
-        document: result.document,
-        findElementRoute: findElementRoute
+      // handle (possible) warnings (these do not lead to a "bad" make)
+      // as well as (possible) errors (these will lead to a "bad" make).
+      URLProxy.proxyURLs(sourceCode, result.warnings, function(sourceCode) {
+        CodeMirror.signal(codeMirror, "reparse", {
+          error: result.error,
+          sourceCode: sourceCode,
+          document: result.document,
+          findElementRoute: findElementRoute
+        });
       });
 
-      // Cursor activity would've been fired before us, so call it again
+      // Cursor activity would have been fired before us, so call it again
       // to make sure it displays the right context-sensitive help based
       // on the new state of the document.
       CodeMirror.signal(codeMirror, "cursor-activity");

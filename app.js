@@ -8,7 +8,6 @@ if ( process.env.NEW_RELIC_ENABLED ) {
  */
 var ajax = require('request'),
     async = require('async'),
-    bleach = require('./lib/bleach'),
     db = require('./lib/database'),
     express = require('express'),
     fs = require('fs'),
@@ -62,7 +61,8 @@ var appName = "thimble",
       loginURL: env.get('LOGIN_URL'),
       secretKey: env.get('SESSION_SECRET'),
       domain: env.get('COOKIE_DOMAIN')
-    });
+    }),
+    webmakerProxy = require('./lib/proxy')(env);
 
 require("./lib/extendnunjucks").extend(nunjucksEnv, nunjucks);
 
@@ -157,6 +157,9 @@ app.post('/create', webmakerAuth.handlers.create);
 app.post('/logout', webmakerAuth.handlers.logout);
 app.post('/check-username', webmakerAuth.handlers.exists);
 
+// resource proxying for http-on-https
+webmakerProxy(app, middleware.checkForAuth);
+
 // Main page
 app.get('/',
         middleware.setNewPageOperation,
@@ -241,17 +244,6 @@ app.get('/templates/:name',
         middleware.setDefaultPublishOperation,
         routes.index );
 
-// flag-controlled script bleaching. If "allowJS", no bleach.
-var sanitizeScript = (function() {
-  if (allowJS) {
-    return function(req, res, next) {
-      req.body.sanitizedHTML = req.body.html;
-      next();
-    };
-  }
-  return bleach.bleachData(env.get("BLEACH_ENDPOINT"));
-}());
-
 // publish a remix (to the db)
 app.post('/publish',
          middleware.checkForAuth,
@@ -259,7 +251,7 @@ app.post('/publish',
          middleware.ensureMetaData,
          middleware.sanitizeMetaData,
          middleware.checkPageOperation(databaseAPI),
-         sanitizeScript,
+         middleware.sanitizeHTML,
          middleware.saveData(databaseAPI, env.get('HOSTNAME')),
          middleware.rewritePublishId(databaseAPI),
          middleware.generateUrls(appName, env.get('S3'), env.get('USER_SUBDOMAIN')),

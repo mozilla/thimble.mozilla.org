@@ -36,6 +36,7 @@
             url: options.hackpubURL + "/" + localeInfo_lang + "/publish",
             data: {
               'html': data.html,
+              'proxied': data.proxied,
               'metaData': data.metaData,
               'published': data.published,
               'pageOperation': $("meta[name='thimble-operation']").attr("content"),
