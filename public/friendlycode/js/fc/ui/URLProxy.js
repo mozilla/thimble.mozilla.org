@@ -69,7 +69,9 @@ define(function() {
           sourceCode = sourceCode.substring(0,start) + knownURLs[url] + sourceCode.substring(end);
         });
         // done!
-        whenProxyResolves(sourceCode);
+        if(whenProxyResolves) {
+          whenProxyResolves(sourceCode);
+        }
       }
     };
 
