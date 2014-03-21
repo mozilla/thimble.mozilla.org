@@ -85,79 +85,75 @@ define([
 
         // Start the actual publishing process, so that hopefully by the
         // time the transition has finished, the user's page is published.
-        var code = codeMirror.getValue(),
+        var sourceCode = codeMirror.getValue(),
             publishErrorOccurred = false;
 
         // perform URL replacements for any http-on-https URLs
-        var proxied = (function(sourceCode) {
-          var result = slowparse.HTML(document, sourceCode);
-          if (!result.warnings) {
-            return false;
-          }
-          return URLProxy.proxyURLs(sourceCode, result.warnings);
-        }(code));
+        var result = slowparse.HTML(document, sourceCode);
+        URLProxy.proxyURLs(sourceCode, result.warnings, function(proxied) {
 
-        publisher.saveCode({
-          html: code,
-          proxied: proxied,
-          metaData: detailsForm.getValue(),
-          dataProtector: dataProtector,
-          published: saveAndPublish
-        }, currURL, function(err, info) {
-          if (err) {
-            publishDialog.stop().hide();
-            modals.showErrorDialog({
-              text: localized.get('publish-err') + " " + err.responseText
-            });
-            publishErrorOccurred = true;
-            analytics.event("Error", {
-              label: "Error Publishing",
-              nonInteraction: true
-            });
-          } else {
-            var viewURL = info.url;
-            var remixURL = baseRemixURL.replace("{{VIEW_URL}}", escape(info.path));
-            viewLink.attr('href', viewURL).text(viewURL);
-            remixLink.attr('href', remixURL).text(remixURL);
+          publisher.saveCode({
+            html: sourceCode,
+            proxied: proxied === sourceCode ? false : proxied,
+            metaData: detailsForm.getValue(),
+            dataProtector: dataProtector,
+            published: saveAndPublish
+          }, currURL, function(err, info) {
+            if (err) {
+              publishDialog.stop().hide();
+              modals.showErrorDialog({
+                text: localized.get('publish-err') + " " + err.responseText
+              });
+              publishErrorOccurred = true;
+              analytics.event("Error", {
+                label: "Error Publishing",
+                nonInteraction: true
+              });
+            } else {
+              var viewURL = info.url;
+              var remixURL = baseRemixURL.replace("{{VIEW_URL}}", escape(info.path));
+              viewLink.attr('href', viewURL).text(viewURL);
+              remixLink.attr('href', remixURL).text(remixURL);
 
-            shareResult.bind('click.hotLoad', makeSharingHotLoader({
-              urlToShare: viewURL,
-              socialMedia: socialMedia
-            }));
+              shareResult.bind('click.hotLoad', makeSharingHotLoader({
+                urlToShare: viewURL,
+                socialMedia: socialMedia
+              }));
 
-            // If the user has selected the sharing accordion while
-            // we were publishing, hot-load the sharing UI immediately.
-            if (!shareResult.hasClass("collapsed")) {
-              shareResult.click();
+              // If the user has selected the sharing accordion while
+              // we were publishing, hot-load the sharing UI immediately.
+              if (!shareResult.hasClass("collapsed")) {
+                shareResult.click();
+              }
+
+              // The user is now effectively remixing the page they just
+              // published.
+              currURL = viewURL;
+              publishDialog.removeClass("is-publishing");
+              self.trigger("publish", {
+                viewURL: viewURL,
+                remixURL: remixURL,
+                path: info.path
+              });
+
+              analytics.event("Publish");
             }
+          });
 
-            // The user is now effectively remixing the page they just
-            // published.
-            currURL = viewURL;
-            publishDialog.removeClass("is-publishing");
-            self.trigger("publish", {
-              viewURL: viewURL,
-              remixURL: remixURL,
-              path: info.path
-            });
+          // We want the dialogs to transition while the page-sized translucent
+          // overlay stays in place. Because each dialog has its own overlay,
+          // however, this is a bit tricky. Eventually we might want to move
+          // to a DOM structure where each modal dialog shares the same overlay.
+          $(".thimble-modal-menu", confirmDialog).fadeOut(function() {
+            $(this).show();
+            confirmDialog.hide();
+            if (!publishErrorOccurred) {
+              publishDialog.show();
+              $(".thimble-modal-menu", publishDialog).hide().fadeIn();
+            }
+          });
 
-            analytics.event("Publish");
-          }
         });
-
-        // We want the dialogs to transition while the page-sized translucent
-        // overlay stays in place. Because each dialog has its own overlay,
-        // however, this is a bit tricky. Eventually we might want to move
-        // to a DOM structure where each modal dialog shares the same overlay.
-        $(".thimble-modal-menu", confirmDialog).fadeOut(function() {
-          $(this).show();
-          confirmDialog.hide();
-          if (!publishErrorOccurred) {
-            publishDialog.show();
-            $(".thimble-modal-menu", publishDialog).hide().fadeIn();
-          }
-        });
-
       };
     };
     // end of return for performPublish()
