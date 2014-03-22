@@ -12,7 +12,7 @@
     {% include 'friendlycode.html' %}
     {% block ssooverride %}
       <script id="ssooverride" src="/scripts/ssooverride.js"
-              data-hostname="{{ hostname }}"
+              data-hostname="{{ APP_HOSTNAME }}"
               data-login-to-save="{{ gettext('Login to save') }}"
               async>
       </script>
