@@ -19,42 +19,6 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
     return $('[name="' + name + '"]', $container);
   }
 
-  // Validation function that asks Thimble whether
-  // a particular title has already been saved before
-  // by the currently logged-in user.
-  function validateTitle(evt) {
-    var $error = $(".title-error.error-message"),
-        $button = $(".confirmation-button.yes-button"),
-        title = evt.target.value.toLowerCase(),
-        csrf_token = $("meta[name='csrf-token']").attr("content");
-
-    $.ajax({
-      type: "POST",
-      url: "/checktitle",
-      data: {
-        'title': title,
-        'pageOperation': $("meta[name='thimble-operation']").attr("content"),
-        'origin': $("meta[name='thimble-project-origin']").attr("content")
-      },
-      dataType: 'json',
-      beforeSend: function(request) {
-        request.setRequestHeader('X-CSRF-Token', csrf_token); // express.js uses a non-standard name for csrf-token
-      },
-      error: function(req) {
-        console.log("error while validating the title of your page");
-      },
-      success: function(response) {
-        if(response.status !== 200) {
-          $error.show();
-          $button.attr("disabled","disabled");
-        } else {
-          $error.hide();
-          $button.removeAttr("disabled");
-        }
-      }
-    });
-  }
-
   var DetailsForm = function (options) {
     var self = this;
     var defaults = {
@@ -135,9 +99,6 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
 
     // Store tags
     self.tags = [];
-
-    // bind change listener for the title
-    $input('title').on('input', validateTitle);
   };
 
   // construct a new document fragment for sandbox code evaluation
@@ -253,8 +214,6 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
       case 'title':
         val = val || currentVal || self.getCodeMirrorValue().find('title').text();
         $fieldInput.val(val);
-        // validate this title against Thimble's known titles for this user
-        validateTitle({ target: $fieldInput[0] });
         break;
       case 'thumbnail':
         val = val || currentVal || self.findMetaTagInfo('thumbnail')[0];
