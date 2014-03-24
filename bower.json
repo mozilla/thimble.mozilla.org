@@ -1,7 +1,7 @@
 {
   "name": "thimble.webmaker.org",
   "dependencies": {
-    "nav-global": "https://github.com/admix/nav-global/archive/v0.1.3.tar.gz",
+    "nav-global": "https://github.com/mozilla/nav-global/archive/v0.1.4.tar.gz",
     "open-sans-fontface": "1.0.4",
     "persona-btn": "0.0.11",
     "webmaker-analytics": "0.0.4",
