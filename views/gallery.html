@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{localeInfo.lang}}" dir="{{localeInfo.direction}}">
   <head>
+    {{ newrelic.getBrowserTimingHeader() | safe }}
     <link rel="stylesheet" href="/stylesheets/gallery.css">
   </head>
   <body>

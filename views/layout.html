@@ -2,6 +2,7 @@
 <html lang="{{localeInfo.lang}}" dir="{{localeInfo.direction}}" class="deployment-type-development">
   <head>
     <meta charset="utf-8">
+    {{ newrelic.getBrowserTimingHeader() | safe }}
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="persona-email" content="{{email}}">
     <meta name="thimble-operation" content="{{pageOperation}}">
@@ -23,7 +24,7 @@
             data-ga-account="{{ GA_ACCOUNT }}"
             data-ga-domain="{{ GA_DOMAIN }}"
             async>
-    </script>        
+    </script>
     {% endif %}
   </head>
   <body style="margin: 0" data-make-url="{{ makeUrl }}" data-make-endpoint="{{ MAKE_ENDPOINT }}">
