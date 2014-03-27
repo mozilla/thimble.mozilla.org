@@ -243,7 +243,7 @@ app.get('/projects/:name',
 
 app.get('/templated_projects/:project', function(req, res) {
   res.render(req.params.project, {
-    hostname: env.get('HOSTNAME')
+    hostname: env.get('APP_HOSTNAME')
   });
 });
 
@@ -260,14 +260,14 @@ app.post('/publish',
          middleware.sanitizeMetaData,
          middleware.checkPageOperation(databaseAPI),
          middleware.sanitizeHTML,
-         middleware.saveData(databaseAPI, env.get('HOSTNAME')),
+         middleware.saveData(databaseAPI, env.get('APP_HOSTNAME')),
          middleware.rewritePublishId(databaseAPI),
          middleware.generateUrls(appName, env.get('S3'), env.get('USER_SUBDOMAIN'), databaseAPI),
-         middleware.finalizeProject(env.get("HOSTNAME")),
+         middleware.finalizeProject(env.get("APP_HOSTNAME")),
          middleware.publishData(env.get('S3')),
          middleware.rewriteUrl,
          // update the database now that we have a S3-published URL
-         middleware.saveUrl(databaseAPI, env.get('HOSTNAME')),
+         middleware.saveUrl(databaseAPI, env.get('APP_HOSTNAME')),
          middleware.getRemixedFrom(databaseAPI, make),
          middleware.publishMake(make),
   function(req, res) {
@@ -307,7 +307,7 @@ if (!!env.get("DELETE_ENABLED")) {
 
 // run server
 app.listen(env.get("PORT"), function(){
-  console.log('Express server listening on ' + env.get("HOSTNAME"));
+  console.log('Express server listening on ' + env.get("APP_HOSTNAME"));
 });
 
 // If we're in running in emulated S3 mode, run a mini

@@ -112,7 +112,7 @@ environment:
 
 ```
 > heroku config:set NODE_ENV="development"
-> heroku config:set HOSTNAME="htt:// ...heroku instance..."
+> heroku config:set APP_HOSTNAME="http:// ...heroku instance..."
 > heroku config:set AUDIENCE="http://[webmaker.org instance]"
 > heroku config:set USERBAR="http://[login.webmaker.org instance]"
 > heroku config:set LOGINAPI="http://testuser:password@[login.mofostaging.net instance]"
@@ -164,4 +164,3 @@ Various scripts are present that will assist in migrating old data sets along wi
 * `migrations/ThimbleProjectMigration.js`
     * Used to retrieve the `makeid` for any `ThimbleProject` that has already been published to the **MakeAPI**. This only needs to be run once.
         * `node migrations/ThimbleProjectMakeIDMigration.js` will execute this script, assuming proper `.env` variables have already been setup (instructions above).
-
