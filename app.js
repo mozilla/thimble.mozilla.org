@@ -61,7 +61,7 @@ var appName = "thimble",
     ], {
       autoescape: true
     }),
-    parameters = require('./lib/parameters'),
+    parameters = require('./lib/parameters')(env),
     routes = require('./routes')( utils, env, nunjucksEnv, appName ),
     webmakerAuth = new WebmakerAuth({
       forceSSL: env.get('FORCE_SSL'),
