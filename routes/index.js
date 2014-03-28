@@ -40,6 +40,7 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
         personaHost: personaHost,
         allowJS: allowJS,
         csrf: req.csrfToken(),
+        LOGIN_URL: env.get("LOGIN_URL"),
         email: req.session.email || '',
         HTTP_STATIC_URL: '/',
         MAKE_ENDPOINT: makeEndpoint,
