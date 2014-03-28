@@ -57,7 +57,7 @@ define(function(require) {
     });
     var preview = self.preview = LivePreview({
       codeMirror: codeMirror,
-      ignoreErrors: true,
+      ignoreErrors: options.ignoreErrors || false,
       previewArea: previewArea,
       previewLoader: options.previewLoader
     });
