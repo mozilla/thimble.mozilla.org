@@ -4,7 +4,7 @@
  * the persona SSO that we employ for webmaker.org
  */
 (function() {
-  var hostname = document.getElementById("ssooverride").getAttribute("data-hostname");
+  var hostname = document.getElementById("ssooverride").getAttribute("data-login-hostname");
   var loginToSave = document.getElementById("ssooverride").getAttribute("data-login-to-save");
 
   require(["jquery", "thimblePage"], function($, editor) {
