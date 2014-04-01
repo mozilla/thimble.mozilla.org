@@ -34,6 +34,17 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
       } else if (req.oldid) {
         res.locals.pageToLoad = appURL + "/p/" + req.oldid;
       }
+
+      var makedetails = '{}';
+      if(req.make) {
+        makedetails = encodeURIComponent(JSON.stringify({
+          title: req.make.title,
+          tags: req.make.tags,
+          description: req.make.description,
+          published: req.make.published
+        }));
+      }
+
       res.render('index.html', {
         appname: appName,
         appURL: appURL,
@@ -50,7 +61,8 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
         makeUrl: req.makeUrl,
         together: together,
         userbar: userbarEndpoint,
-        webmaker: webmaker
+        webmaker: webmaker,
+        makedetails: makedetails
       });
     },
 

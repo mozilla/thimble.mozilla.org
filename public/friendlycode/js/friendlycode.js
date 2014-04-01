@@ -25,6 +25,7 @@ define(function(require) {
           previewLoader: options.previewLoader,
           dataProtector: DataProtector
         }),
+        makeDetails = options.makeDetails,
         ready = $.Deferred();
 
     var modals = Modals({
@@ -37,6 +38,7 @@ define(function(require) {
       codeMirror: editor.panes.codeMirror,
       publisher: publisher,
       remixURLTemplate: remixURLTemplate,
+      makeDetails: makeDetails,
       dataProtector: DataProtector
     });
     var pageManager = CurrentPageManager({

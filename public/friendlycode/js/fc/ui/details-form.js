@@ -253,7 +253,9 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
 
     fields.forEach(function (item) {
       var input = $input(item);
-      var val = input.attr("type") === "checkbox" ? input[0].checked : input.val();
+      var element = input[0];
+      // if we use val() for checkboxes, it'll generate "yes"/"no" instead of true/false
+      var val = element.getAttribute("type") === "checkbox" ? element.checked : input.val();
       obj[item] = val;
     });
 

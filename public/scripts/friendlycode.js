@@ -4,7 +4,10 @@
       pageToLoad = document.getElementById("friendly-code").getAttribute("data-page-to-load"),
       appUrl = document.getElementById("friendly-code").getAttribute("data-app-url"),
       allowJS = document.getElementById("friendly-code").getAttribute("data-allow-js");
+      makeDetails = document.getElementById("friendly-code").getAttribute("data-make-details");
 
+  // unpack makedetails
+  makeDetails = JSON.parse(decodeURIComponent(makeDetails));
 
   /**
    * ...
@@ -92,7 +95,8 @@
         publishURL: appUrl + "/project",
       }),
       remixURLTemplate: appUrl + "/" + localeInfo_lang + "/project/\{\{VIEW_URL\}\}/edit",
-      container: $("#bare-fc-holder")
+      container: $("#bare-fc-holder"),
+      makeDetails: makeDetails
     });
 
     if (makeUrl) {

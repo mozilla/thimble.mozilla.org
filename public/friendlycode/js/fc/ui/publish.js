@@ -46,7 +46,7 @@ define([
         currURL = null,
         socialMedia = createSocialMedia(),
         detailsForm,
-        makeData;
+        makeDetails = options.makeDetails;
 
     modals.add(dialogs);
 
@@ -61,18 +61,6 @@ define([
       var hasErrors = event.error ? true : false;
       confirmDialog.toggleClass("has-errors", hasErrors);
     });
-
-    // Search for the make, and apply details to metadata form
-    var makeEndpoint = $('body').data('make-endpoint');
-    var makeUrl = $('body').data('make-url');
-    if (makeUrl) {
-      var make = new Make({ apiURL: makeEndpoint });
-      make.find({
-        url: makeUrl
-      }).then(function(err, data) {
-        makeData = data[0];
-      });
-    }
 
     var performPublish = function(saveAndPublish) {
       return function() {
@@ -171,15 +159,15 @@ define([
             top: bounds.bottom + 'px',
             left: (bounds.right - dialogBoxes.width()) + 'px'
           });
+
           if (!detailsForm) {
             detailsForm = new DetailsForm({
               container: '.details-container',
               codeMirror: codeMirror,
               saveAndPublish: saveAndPublish
             });
+            detailsForm.updateAll(makeDetails);
           }
-
-          detailsForm.updateAll(makeData);
 
           var confirmButton = $(".yes-button", confirmDialog),
               publishCheckbox = $("#details-published");
@@ -204,12 +192,6 @@ define([
           cb.click(function() {
             var state = !!this.checked;
           });
-
-          // massage the confirmation dialog based on whether
-          // this is a save, or a save-and-publish operation
-          if (saveAndPublish) {
-            publishCheckbox[0].checked = true;
-          }
 
           confirmDialog.fadeIn();
         };
