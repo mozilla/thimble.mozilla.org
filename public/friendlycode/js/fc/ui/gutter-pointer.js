@@ -44,8 +44,12 @@ define(["jquery"], function($) {
         selector = ".gutter-mark."+highlightClass,
         collection = $(selector, wrapper),
         first = collection.first()[0],
-        last = collection.last()[0],
-        h = last.getBoundingClientRect().bottom - first.getBoundingClientRect().top;
+        last = collection.last()[0];
+
+    // HOTFIX FOR ERROR PLACEMENT FAILURES, SEE https://bugzilla.mozilla.org/show_bug.cgi?id=994348
+    if (!last) return;
+
+    var h = last.getBoundingClientRect().bottom - first.getBoundingClientRect().top;
 
     attrs(svg, {
       'class': "gutter-pointer " + highlightClass,
