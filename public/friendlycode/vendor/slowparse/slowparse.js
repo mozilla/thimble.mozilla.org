@@ -831,7 +831,7 @@
             name = token.value.trim();
 
         // we currently support @keyframes (with prefixes)
-        if(name.match(/@[^k]*keyframes/)) {
+        if(name.match(/@(-[^-]+-)?keyframes/)) {
           this.stream.next();
           return this._parseSelector();
         }

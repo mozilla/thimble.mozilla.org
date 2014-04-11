@@ -636,6 +636,12 @@ module.exports = function(Slowparse, window, document, validators) {
     ok(!result.error, "@-*-keyframes accepted</p>");
   });
 
+  test("@-webkit-keyframes css block", function() {
+    var html = "<style>@-webkit-keyframes { 0% { opacity: 0; } 100% { opacity: 1.0; } } .test { opacity: 0; }</style>";
+    var result = parse(html);
+    ok(!result.error, "@-*-keyframes accepted</p>");
+  });
+
   test("@font-face rule", function() {
     var html = "<style>@font-face { font-family: 'snickerdoodle'; } .test { opacity: 0; }</style>";
     var result = parse(html);
