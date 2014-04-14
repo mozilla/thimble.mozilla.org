@@ -22,7 +22,7 @@
     "request": "2.21.0",
     "sequelize": "1.6.0",
     "uslug": "1.0.3",
-    "webmaker-download-locales": "0.1.0",
+    "webmaker-download-locales": "0.1.2",
     "webmaker-locale-mapping": "latest",
     "webmaker-auth": "0.0.11"
   },
