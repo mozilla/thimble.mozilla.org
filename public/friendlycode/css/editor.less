@@ -420,6 +420,11 @@
     height: 40px;
     display: inline-block;
     background-repeat: no-repeat;
+    /* prevent text-selection if the icon's double clicked */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
   }
 
   display: inline-block;
