@@ -403,44 +403,94 @@
   font-size: 18px;
 }
 
+/**
+ * Settings for thimble
+ */
+
 .fc-settings {
-  display: table-cell;
+
+  .icon {
+    visibility: visible;
+    margin-left: 4px;
+    background-image: url("../img/editor-settings.png");
+    position: absolute;
+    top: -40px;
+    right: 0;
+    width: 20px;
+    height: 40px;
+    display: inline-block;
+    background-repeat: no-repeat;
+  }
+
+  display: inline-block;
+  visibility: hidden;
   position: absolute;
-  right: 0;
+  right: 5px;
   top: 0;
   line-height: 40px;
-}
 
-.fc-settings div {
-  display: inline-block;
-}
+  background: white;
+  border: 1px solid lightgrey;
+  margin-top: 50px;
+  padding-left: 5px;
 
-.fc-settings div .checkbox {
-  border: 1px solid grey;
-  border-radius: 2px;
-  background-color: white;
-  background-image: url("../img/checkbox-gradient.png");
-  background-repeat: repeat-x;
-  background-position: left center;
+  cursor: pointer;
 
-  color: black;
-  width: 10px;
-  height: 10px;
-  line-height: 10px;
+  &.enabled {
+    visibility: visible;
+    margin-right: -1px;
 
-  font-family: OpenSymbolCropped;
-  font-size: 21px;
-  line-height: 9px;
-  vertical-align: middle;
-}
+    .icon, .pane-indicator {
+      width: 100%;
+      background-position: top right;
+    }
 
-.fc-settings .checkbox-label {
-  display: inline-block;
-  vertical-align: middle;
-}
+    .pane-indicator {
+      display: block;
+      position: absolute;
+      top: -13px;
+      right: 0;
+      background-image: url("../img/indicator-up-arrow.png");
+      background-repeat: no-repeat;
+      height: 25px;
+    }
 
-.fc-settings .checkbox.off {
-  color: transparent;
+    .nav-item {
+      float: left;
+      display: block;
+      clear: both;
+
+      .checkbox {
+        display: inline-block;
+
+        border: 1px solid grey;
+        border-radius: 2px;
+        background-color: white;
+        background-image: url("../img/checkbox-gradient.png");
+        background-repeat: repeat-x;
+        background-position: left center;
+
+        color: black;
+        width: 10px;
+        height: 10px;
+        line-height: 10px;
+
+        font-family: OpenSymbolCropped;
+        font-size: 21px;
+        line-height: 9px;
+        vertical-align: middle;
+
+        &.off {
+          color: transparent;
+        }
+      }
+
+      .checkbox-label {
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+  }
 }
 
 

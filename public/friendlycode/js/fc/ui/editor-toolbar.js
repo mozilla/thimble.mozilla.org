@@ -13,6 +13,18 @@ define(function(require) {
     var mapNavItem = options.mapItem,
         mapCheckbox = mapNavItem.find(".checkbox");
 
+
+    // set up settings reveal/hide
+    var settings = $(".fc-settings");
+
+    settings.find(".icon").click(function() {
+      settings.toggleClass("enabled");
+    });
+
+    settings.mouseleave(function() {
+      settings.removeClass("enabled");
+    });
+
     // HINTS
 
     Preferences.on("change:showHints", function() {
