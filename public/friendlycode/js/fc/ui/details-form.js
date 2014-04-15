@@ -7,12 +7,14 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
     'thumbnail',
     'description',
     'tags',
+    'locales',
     'published'
   ];
 
   var $container;
   var $thumbnailChoices;
   var codeMirror;
+  var localePicker;
 
   // selector function for returning a form element
   function $input(name) {
@@ -99,6 +101,9 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
 
     // Store tags
     self.tags = [];
+
+    // convert list
+    localePicker = $('#locales').selectize()[0].selectize;
   };
 
   // construct a new document fragment for sandbox code evaluation
@@ -196,6 +201,11 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
     $input('tag-input').val('');
   };
 
+  DetailsForm.prototype.setLocale = function (locale) {
+    localePicker.clear();
+    localePicker.addItem(locale);
+  };
+
   DetailsForm.prototype.setPublished = function (state) {
     state = state || false;
     if (typeof state === "string") {
@@ -226,6 +236,10 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
         // this means it was stored with a colon, and is created outside of thimble.
         self.addTags(val);
         break;
+      case 'locales':
+        val = val || currentVal || self.findMetaTagInfo('locale');
+        self.setLocale(val);
+        break;
       case 'published':
         self.setPublished(typeof val === "undefined" ? true : val);
         break;
@@ -254,8 +268,9 @@ define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHT
     fields.forEach(function (item) {
       var input = $input(item);
       var element = input[0];
+      var type = element.getAttribute("type") || "";
       // if we use val() for checkboxes, it'll generate "yes"/"no" instead of true/false
-      var val = element.getAttribute("type") === "checkbox" ? element.checked : input.val();
+      var val = type === "checkbox" ? element.checked : input.val();
       obj[item] = val;
     });
 

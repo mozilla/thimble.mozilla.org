@@ -18,11 +18,11 @@
     "node-statsd": "0.0.7",
     "noxmox": "0.2.4",
     "nunjucks": "0.1.10",
-    "webmaker-i18n": "https://github.com/mozilla/node-webmaker-i18n/archive/v0.3.11.tar.gz",
     "request": "2.21.0",
     "sequelize": "1.6.0",
     "uslug": "1.0.3",
     "webmaker-download-locales": "0.1.2",
+    "webmaker-i18n": "https://github.com/mozilla/node-webmaker-i18n/archive/v0.3.15.tar.gz",
     "webmaker-locale-mapping": "latest",
     "webmaker-auth": "0.0.11"
   },
