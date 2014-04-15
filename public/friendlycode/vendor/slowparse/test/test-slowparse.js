@@ -623,7 +623,8 @@ module.exports = function(Slowparse, window, document, validators) {
       type: 'UNKOWN_CSS_KEYWORD',
       cssKeyword: {
         start: 7,
-        end: 18
+        end: 18,
+        value: "@keyfarmes"
       },
       cursor: 7
     };
@@ -660,14 +661,15 @@ module.exports = function(Slowparse, window, document, validators) {
     ok(!result.error, "@font-face accepted</p>");
   });
 
-  test("@font-face rule with type (@font-faec). pass = not accepted", function() {
+  test("@font-face rule with typo (@font-faec). pass = not accepted", function() {
     var html = "<style>@font-faec { font-family: 'snickerdoodle'; } .test { opacity: 0; }</style>";
     var result = parse(html);
     var expected = {
       type: 'UNKOWN_CSS_KEYWORD',
       cssKeyword: {
         start: 7,
-        end: 18
+        end: 18,
+        value: "@font-faec"
       },
       cursor: 7
     };

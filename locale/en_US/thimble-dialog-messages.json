@@ -24,6 +24,7 @@
 	"UNFINISHED_CSS_PROPERTY": "<p>Property <em data-highlight='[[cssProperty.start]],[[cssProperty.end]]'>[[cssProperty.property]]</em> still needs finalizing with :</p>",
 	"UNFINISHED_CSS_SELECTOR": "<p>Selector <em data-highlight='[[cssSelector.start]],[[cssSelector.end]]'>[[cssSelector.selector]]</em> still needs finalizing with {</p>",
 	"UNFINISHED_CSS_VALUE": "<p>Value <em data-highlight='[[cssValue.start]],[[cssValue.end]]'>[[cssValue.value]]</em> still needs finalizing with ;</p>",
+	"UNKOWN_CSS_KEYWORD": "<p>The CSS @keyword <em data-highlight='[[cssKeyword.start]],[[cssKeyword.end]]'>[[cssKeyword.value]]</em> does not match any known @keywords.</p>",
 	"UNQUOTED_ATTR_VALUE": "<p>The Attribute value <em data-highlight='[[start]]'>here</em> should start with an opening double quote.</p>",
 	"UNTERMINATED_ATTR_VALUE": "<p>The <code>&lt;[[openTag.name]]&gt;</code> tag's <code>[[attribute.name.value]]</code> attribute has a value <em data-highlight='[[attribute.value.start]]'>here</em> that doesn't end with a closing double quote.</p>",
 	"UNTERMINATED_CLOSE_TAG": "<p>The closing <code>&lt;/[[closeTag.name]]&gt;</code> tag <em data-highlight='[[closeTag.start]],[[closeTag.end]]'>here</em> doesn't end with a <code>&gt;</code>.</p>",
