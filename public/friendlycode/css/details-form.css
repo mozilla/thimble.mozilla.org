@@ -191,3 +191,21 @@
   color: #000;
   font-size: 0.9em;
 }
+
+/*********************************************************
+ * Locales
+ */
+.makeapi-details select[name=locale] {
+  vertical-align: -0.5em;
+  line-height: 2em;
+  height: 2em;
+}
+
+.selectize-control.single .selectize-input, .selectize-dropdown.single {
+  width: 80%;
+  z-index: 10;
+}
+
+.selectize-dropdown-content {
+  max-height: 175px!important;
+}

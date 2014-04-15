@@ -20,6 +20,10 @@
     <ul class="thumbnail-choices input"></ul>
   </fieldset>
   <fieldset>
+    <label>{{ gettext("Language") }}</label>
+    {% include "bower_components/webmaker-language-picker/template/alllanguages.html" %}
+  </fieldset>
+  <fieldset>
     <label>{{ gettext("Description") }}</label>
     <textarea name="description" class="input"></textarea>
   </fieldset>

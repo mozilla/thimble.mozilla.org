@@ -2,6 +2,8 @@
  * GET for the index.html template
  */
 var moment = require("moment");
+var i18n = require("webmaker-i18n");
+var langmap = i18n.getAllLocaleCodes();
 
 // Content-fetching function used for generating the output
 // on http://[...]/data routes via the index.rawData function.
@@ -40,6 +42,7 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
         makedetails = encodeURIComponent(JSON.stringify({
           title: req.make.title,
           tags: req.make.tags,
+          locales: req.make.locale,
           description: req.make.description,
           published: req.make.published
         }));
@@ -107,7 +110,10 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
       });
 
       app.get( '/details-form', function( req, res ) {
-        res.render('friendlycode/templates/details-form.html');
+        res.render('friendlycode/templates/details-form.html', {
+          locales: Object.keys(langmap),
+          langmap: langmap
+        });
       });
 
       app.get( '/slowparse/spec/errors.base.html', function( req, res ) {
