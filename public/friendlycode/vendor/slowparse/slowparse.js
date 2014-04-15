@@ -836,6 +836,12 @@
           return this._parseSelector();
         }
 
+        // and media queries
+        if(name.match(/@media\s*\([^{)]+\)/)) {
+          this.stream.next();
+          return this._parseSelector();
+        }
+
         // and @font-face
         if(name === "@font-face") {
           this.stream.rewind(token.value.length);
