@@ -642,6 +642,18 @@ module.exports = function(Slowparse, window, document, validators) {
     ok(!result.error, "@-*-keyframes accepted</p>");
   });
 
+  test("@media rule", function() {
+    var html = "<style>@media (max-width: 100px) { .class { background: white; } }</style>";
+    var result = parse(html);
+    ok(!result.error, "@media accepted</p>");
+  });
+
+  test("@media rule (complex)", function() {
+    var html = "<style>@media (min-width: 700px), handheld and (orientation: landscape) { .class { background: white; } }</style>";
+    var result = parse(html);
+    ok(!result.error, "@media accepted</p>");
+  });
+
   test("@font-face rule", function() {
     var html = "<style>@font-face { font-family: 'snickerdoodle'; } .test { opacity: 0; }</style>";
     var result = parse(html);
