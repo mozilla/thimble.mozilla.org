@@ -326,11 +326,12 @@
       };
     },
     // These are CSS errors.
-    UNKOWN_CSS_KEYWORD: function(parser, start, end) {
+    UNKOWN_CSS_KEYWORD: function(parser, start, end, value) {
       return {
         cssKeyword: {
           start: start,
-          end: end
+          end: end,
+          value: value
         },
         cursor: start
       };
@@ -850,7 +851,7 @@
         }
 
         // anything else is completely unknown
-        throw new ParseError("UNKOWN_CSS_KEYWORD", this, token.interval.start, token.interval.end);
+        throw new ParseError("UNKOWN_CSS_KEYWORD", this, token.interval.start, token.interval.end, name);
       }
 
       this._parseSelector();
