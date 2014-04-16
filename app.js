@@ -27,7 +27,8 @@ var ajax = require('request'),
     path = require('path'),
     utils = require('./lib/utils'),
     version = require('./package').version,
-    WebmakerAuth = require('webmaker-auth');
+    WebmakerAuth = require('webmaker-auth'),
+    wts = require('webmaker-translation-stats');
 
 habitat.load();
 
@@ -289,9 +290,17 @@ routes.friendlycodeRoutes(app);
 
 // DEVOPS - Healthcheck
 app.get('/healthcheck', function( req, res ) {
-  res.json({
-    http: "okay",
+  var healthcheckObject = {
+    http: 'okay',
     version: version
+  };
+  wts(i18n.getSupportLanguages(), path.join(__dirname, 'locale'), function(err, data) {
+    if(err) {
+      healthcheckObject.locales = err.toString();
+    } else {
+      healthcheckObject.locales = data;
+    }
+    res.json(healthcheckObject);
   });
 });
 
