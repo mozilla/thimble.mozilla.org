@@ -76,6 +76,13 @@ require("./lib/extendnunjucks").extend(nunjucksEnv, nunjucks);
 
 nunjucksEnv.express(app);
 
+// adding Content Security Policy (CSP)
+app.use(middleware.addCSP({
+  personaHost: env.get('PERSONA_HOST'),
+  previewLoader: env.get('PREVIEW_LOADER'),
+  togetherJS: env.get('TOGETHERJS')
+}));
+
 app.use( i18n.middleware({
   supported_languages: env.get( "SUPPORTED_LANGS" ),
   default_lang: "en-US",
