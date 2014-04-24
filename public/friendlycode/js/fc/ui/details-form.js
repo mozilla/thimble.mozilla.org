@@ -1,4 +1,4 @@
-define(['template!details-form', 'jquery', 'jquery-ui'], function (detailsFormHTML, $) {
+define(['template!details-form', 'jquery', 'selectize', 'jquery-ui'], function (detailsFormHTML, $, selectize) {
   "use strict";
 
   var DEFAULT_THUMBNAIL = 'https://webmaker.org/img/thumbs/thimble-grey.png';
