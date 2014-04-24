@@ -1222,12 +1222,21 @@
                            "dir", "font", "isindex", "listing", "noframes",
                            "plaintext", "s", "strike", "tt", "xmp"],
 
+    webComponentElements: ["template", "shadow", "content"],
+
+    // This is a helper function to determine whether a given string
+    // is a custom HTML element as per Custom Elements spec
+    // (see http://www.w3.org/TR/2013/WD-custom-elements-20130514/#terminology).
+    _isCustomElement: function(tagName) {
+      return tagName.search(/^[\w\d]+-[\w\d]+$/) > -1;
+    },
     // This is a helper function to determine whether a given string
     // is a legal HTML5 element tag.
     _knownHTMLElement: function(tagName) {
       return this.voidHtmlElements.indexOf(tagName) > -1 ||
               this.htmlElements.indexOf(tagName) > -1 ||
-              this.obsoleteHtmlElements.indexOf(tagName) > -1;
+              this.obsoleteHtmlElements.indexOf(tagName) > -1 ||
+              this.webComponentElements.indexOf(tagName) > -1;
     },
     // This is a helper function to determine whether a given string
     // is a legal SVG element tag.
@@ -1314,7 +1323,7 @@
       }
 
       this.stream.eat(/\//);
-      this.stream.eatWhile(/[\w\d]/);
+      this.stream.eatWhile(/[\w\d-]/);
       var token = this.stream.makeToken();
       var tagName = token.value.slice(1).toLowerCase();
 
@@ -1346,8 +1355,16 @@
       }
 
       else {
-        if (!tagName || (tagName && ((this.parsingSVG && !this._knownSVGElement(tagName)) || (!this.parsingSVG && !this._knownHTMLElement(tagName)))))
+        if (tagName) {
+          var badSVG = this.parsingSVG && !this._knownSVGElement(tagName);
+          var badHTML = !this.parsingSVG && !this._knownHTMLElement(tagName) && !this._isCustomElement(tagName);
+          if (badSVG || badHTML) {
+            throw new ParseError("INVALID_TAG_NAME", tagName, token);
+          }
+        }
+        else {
           throw new ParseError("INVALID_TAG_NAME", tagName, token);
+        }
 
         var parseInfo = { openTag: { start: token.interval.start }};
         var nameSpace = (this.parsingSVG ? this.svgNameSpace : undefined);
