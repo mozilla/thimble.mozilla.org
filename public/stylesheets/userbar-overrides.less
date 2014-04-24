@@ -2,9 +2,11 @@
 @import "webfonts";
 @import "buttons";
 @import "header";
-@import "@{language-bower-path}/webmaker-language-picker/styles/languages";
+@language-bower-path: "../../../bower_components"; // used from webmaker-language-picker/styles location
+@bower-path: "../../bower_components"; // used from public/stylesheets location
+@colors-path: "../../../public/stylesheets"; // used for colors.less from webmaker-language-picker/styles location
+@import "@{bower-path}/webmaker-language-picker/styles/languages";
 
-@language-bower-path: "../../bower_components";
 
 /***************************************************
 * Start New Language Picker

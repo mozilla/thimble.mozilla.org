@@ -38,7 +38,7 @@
     "grunt-contrib-csslint": "0.1.2",
     "grunt-contrib-jshint": "0.4.3",
     "grunt-execute": "0.1.5",
-    "grunt-recess": "0.3.3",
+    "grunt-lesslint": "1.1.0",
     "jsdom": "0.10.1"
   },
   "scripts": {
