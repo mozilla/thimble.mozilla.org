@@ -83,25 +83,6 @@ app.use(middleware.addCSP({
   togetherJS: env.get('TOGETHERJS')
 }));
 
-app.use( i18n.middleware({
-  supported_languages: env.get( "SUPPORTED_LANGS" ),
-  default_lang: "en-US",
-  mappings: require("webmaker-locale-mapping"),
-  translation_directory: path.resolve( __dirname, "locale" )
-}));
-
-i18n.addLocaleObject({
-  // Adding an external JSON file to our existing one for the specified locale
-  "en-US": require("./bower_components/webmaker-auth-client/locale/en_US/create-user-form.json")
-}, function(){} );
-
-app.locals({
-  GA_ACCOUNT: env.get("GA_ACCOUNT"),
-  GA_DOMAIN: env.get("GA_DOMAIN"),
-  languages: i18n.getSupportLanguages(),
-  newrelic: newrelic
-});
-
 // Express settings
 app.disable('x-powered-by');
 app.use(express.favicon(__dirname + '/public/img/favicon.ico'));
@@ -128,6 +109,30 @@ app.use(express.urlencoded());
 
 app.use(webmakerAuth.cookieParser());
 app.use(webmakerAuth.cookieSession());
+
+app.use( i18n.middleware({
+  supported_languages: env.get( "SUPPORTED_LANGS" ),
+  default_lang: "en-US",
+  mappings: require("webmaker-locale-mapping"),
+  translation_directory: path.resolve( __dirname, "locale" )
+}));
+
+i18n.addLocaleObject({
+  // Adding an external JSON file to our existing one for the specified locale
+  "en-US": require("./bower_components/webmaker-auth-client/locale/en_US/create-user-form.json")
+}, function (err, res) {
+  if (err) {
+    console.error(err);
+  }
+});
+
+app.locals({
+  GA_ACCOUNT: env.get("GA_ACCOUNT"),
+  GA_DOMAIN: env.get("GA_DOMAIN"),
+  languages: i18n.getSupportLanguages(),
+  newrelic: newrelic,
+  bower_path: "bower_components"
+});
 
 app.use(express.csrf());
 app.use(helmet.xframe());

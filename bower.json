@@ -5,8 +5,8 @@
     "open-sans-fontface": "1.0.4",
     "persona-btn": "0.0.11",
     "webmaker-analytics": "0.0.4",
-    "webmaker-auth-client": "0.0.28",
+    "webmaker-auth-client": "0.0.29",
     "webmaker-i18n": "https://github.com/mozilla/node-webmaker-i18n/archive/v0.3.8.tar.gz",
-    "webmaker-language-picker": "0.0.20"
+    "webmaker-language-picker": "0.0.22"
   }
 }

@@ -12,10 +12,11 @@
   /**
    * ...
    */
-  define("hackpub", ["jquery"], function($) {
+  define("hackpub", ["jquery", "selectize"], function($, selectize) {
 
     // set up CSRF handling
     var csrf_token = $("meta[name='csrf-token']").attr("content");
+    $("#supportedLocales").selectize();
 
     return function Hackpub(options) {
       return {
