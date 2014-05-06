@@ -204,6 +204,22 @@
         cursor: closeTag.start
       };
     },
+    ATTRIBUTE_IN_CLOSING_TAG: function(parser) {
+      var currentNode = parser.domBuilder.currentNode;
+      var end = parser.stream.pos;
+      if (!parser.stream.end()) {
+        end = parser.stream.makeToken().interval.start;
+      }
+      var closeTag = {
+        name: currentNode.nodeName.toLowerCase(),
+        start: currentNode.parseInfo.closeTag.start,
+        end: end
+      };
+      return {
+        closeTag: closeTag,
+        cursor: closeTag.start
+      };
+    },
     CLOSE_TAG_FOR_VOID_ELEMENT: function(parser, closeTagName, token) {
       var closeTag = this._combine({
             name: closeTagName
@@ -1414,13 +1430,22 @@
       }
       throw new ParseError("UNCLOSED_TAG", this);
     },
+    // This helper function checks if the current tag contains an attribute
+    containsAttribute: function (stream) {
+      return stream.eat(nameStartChar);
+    },
     // This helper function parses the end of a closing tag. It expects
     // the stream to be right after the end of the closing tag's tag
     // name.
     _parseEndCloseTag: function() {
       this.stream.eatSpace();
-      if (this.stream.next() != '>')
-        throw new ParseError("UNTERMINATED_CLOSE_TAG", this);
+      if (this.stream.next() != '>') {
+        if(this.containsAttribute(this.stream)) {
+          throw new ParseError("ATTRIBUTE_IN_CLOSING_TAG", this);
+        } else {
+          throw new ParseError("UNTERMINATED_CLOSE_TAG", this);
+        }
+      }
       var end = this.stream.makeToken().interval.end;
       this.domBuilder.currentNode.parseInfo.closeTag.end = end;
       this.domBuilder.popElement();
@@ -1433,7 +1458,7 @@
           startMark = this.stream.pos;
 
       while (!this.stream.end()) {
-        if (this.stream.eat(nameStartChar)) {
+        if (this.containsAttribute(this.stream)) {
           if (this.stream.peek !== "=") {
             this.stream.eatWhile(nameChar);
           }

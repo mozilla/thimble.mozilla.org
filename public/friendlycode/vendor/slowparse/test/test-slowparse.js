@@ -540,6 +540,18 @@ module.exports = function(Slowparse, window, document, validators) {
     equal(error.closeTag.end, html.length);
   });
 
+  test("ATTRIBUTE_IN_CLOSING_TAG works when attribute is included in closing tag", function() {
+    var html = "<a href=\"http://www.foo.com/\">Foo</a href>";
+    var error = Slowparse.HTML(document, html).error;
+    equal(error.type, "ATTRIBUTE_IN_CLOSING_TAG", "error.type should be ATTRIBUTE_IN_CLOSING_TAG, but was " + error.type);
+  });
+
+  test("Space at the end of a closing tag (with no attributes) produces no error", function() {
+    var html = "<a href=\"http://www.foo.com/\">Foo</a  >";
+    var error = Slowparse.HTML(document, html).error;
+    equal(error, null, "Valid closing tag with extra space should produce no error.");
+  });
+
   test("Slowparse.HTML_ELEMENT_NAMES", function() {
     ok(Slowparse.HTML_ELEMENT_NAMES.indexOf("p") != -1);
   });
