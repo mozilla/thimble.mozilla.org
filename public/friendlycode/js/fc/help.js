@@ -38,8 +38,8 @@ define([
       if (help.type == "tag")
         return {
           type: help.type,
-          html: Localized.get(help.value),
-          url: Help.MDN_URLS.html + help.value,
+          html: Localized.get(help.customElement ? 'custom-element' : help.value),
+          url: help.customElement ? Help.MDN_URLS.customElements : Help.MDN_URLS.html + help.value,
           highlights: help.highlights
         };
       else if (help.type == "cssProperty")
@@ -75,6 +75,7 @@ define([
         pi = element.parseInfo,
         tagInfo = {
           type: "tag",
+          customElement: false,
           value: normalizeTagName(element.nodeName),
           highlights: []
         },
@@ -97,6 +98,9 @@ define([
         };
     if (pi) {
       if (pi.openTag) {
+        if (element.nodeName.search(/^\w+-\w+$/) > -1) {
+          tagInfo.customElement = true;
+        }
         tagInfo.highlights.push(pi.openTag);
         for (i = pi.openTag.start + 1;
              i < pi.openTag.start + element.nodeName.length + 2;
@@ -126,7 +130,8 @@ define([
     MDN_URLS: {
       html: Resourcelinks["mdn_url_html"],
       css: Resourcelinks["mdn_url_css"],
-      cssSelectors: Resourcelinks["mdn_url_css_selectors"]
+      cssSelectors: Resourcelinks["mdn_url_css_selectors"],
+      customElements: Resourcelinks["mdn_url_custom_elements"]
     }
   };
 

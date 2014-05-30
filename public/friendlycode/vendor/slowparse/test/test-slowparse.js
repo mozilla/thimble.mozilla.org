@@ -676,5 +676,27 @@ module.exports = function(Slowparse, window, document, validators) {
     equal(result.error, expected, "font-faec is not accepted as @keyword");
   });
 
+  test("Custom Elements are allowed", function () {
+    var html = "<p-q style=\"color: green;\">hello</p-q>";
+    var result = parse(html);
+    ok(!result.error, "custom element p-q accepted");
+  });
+
+  test("Custom Elements with attributes are allowed", function () {
+    var html = "<p-q style=\"color: green;\">hello</p-q>";
+    var result = parse(html);
+    ok(!result.error, "custom element p-q with attribtues accepted");
+  });
+
+  test("Custom Element tag names must be <[a-z]-[a-z]>", function () {
+    var html = "<-></->";
+    var result = parse(html);
+    equal(result.error, {
+      type: 'INVALID_TAG_NAME',
+      openTag: { name: '-', start: 0, end: 2 },
+      cursor: 0
+    });
+  });
+
   return validators.getFailCount();
 };
