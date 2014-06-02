@@ -169,6 +169,30 @@ module.exports = function(Slowparse, window, document, validators) {
           "serialization of generated DOM matches original HTML");
   });
 
+  test("parsing <img src='bogus' onerror='prompt(document.domain)'> (active attributes should be left intact)", function() {
+    // https://github.com/mozilla/slowparse/issues/6
+    var html = "<img src='bogus' onerror='prompt(document.domain)'>";
+    var doc = parseWithoutErrors(html);
+    var attr = doc.childNodes[0].attributes[0];
+    equal(attr.nodeName, 'src');
+    equal(attr.nodeValue, 'bogus');
+    attr = doc.childNodes[0].attributes[1];
+    equal(attr.nodeName, 'onerror');
+    equal(attr.nodeValue, 'prompt(document.domain)');
+  });
+
+  test("parsing <img src='bogus' onerror='prompt(document.domain)'> (active attributes should become \"active\"", function() {
+    // https://github.com/mozilla/slowparse/issues/6
+    var html = "<img src='bogus' onerror='prompt(document.domain)'>";
+    var doc = parseWithoutErrors(html, { disallowActiveAttributes: true });
+    var attr = doc.childNodes[0].attributes[0];
+    equal(attr.nodeName, 'src');
+    equal(attr.nodeValue, 'bogus');
+    attr = doc.childNodes[0].attributes[1];
+    equal(attr.nodeName, 'onerror');
+    equal(attr.nodeValue, '');
+  });
+
   test("parsing of HTML comments with '--' in them", function() {
     var html = '<!-- allow\n--\nin comments plz -->';
     var doc = parseWithoutErrors(html);
@@ -199,28 +223,6 @@ module.exports = function(Slowparse, window, document, validators) {
       equal(doc.childNodes[0].nodeName, 'P');
       equal(doc.childNodes[0].getAttribute('class'), 'FOO');
     });
-  });
-
-  test("DOMBuilder is called with lowercased element/attrs", function() {
-    var elements = [];
-    var attributes = [];
-    var fakeBuilder = {
-      currentNode: {},
-      pushElement: function(tagName, parseInfo) {
-        this.currentNode.parseInfo = parseInfo;
-        this.currentNode.nodeName = tagName.toUpperCase();
-        elements.push(tagName);
-      },
-      popElement: function() {},
-      attribute: function(name, value) {
-        attributes.push(name);
-      }
-    };
-    fakeBuilder.fragment = fakeBuilder.currentNode;
-    var result = Slowparse.HTML(fakeBuilder, '<P CLASS="FOO"></P>');
-    equal(result.error, null);
-    equal(elements, ['p'], "tag names are lowercased");
-    equal(attributes, ['class'], "attribute names are lowercased");
   });
 
   test("parsing of SVG elements", function() {

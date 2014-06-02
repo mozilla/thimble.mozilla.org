@@ -136,8 +136,9 @@ module.exports = function(Slowparse, jsdom) {
 
   // Parse the given HTML, ensure it has no errors, and return the
   // parsed document.
-  function parseWithoutErrors(html) {
-    var result = Slowparse.HTML(jsdom(html), html);
+  function parseWithoutErrors(html, options) {
+    options = options || {};
+    var result = Slowparse.HTML(jsdom(html), html, options);
     ok(result.document, "document is returned");
     equal(result.error, null, "no errors are reported");
     return result.document;
