@@ -36,7 +36,10 @@ define(function(require) {
       ],
       value: initialValue,
       parse: function(html) {
-        return Slowparse.HTML(document, html, allowJS ? [] : [TreeInspectors.forbidJS]);
+        return Slowparse.HTML(document, html, {
+          disallowActiveAttributes: true,
+          errorDetectors: allowJS ? [] : [TreeInspectors.forbidJS]
+        });
       },
       extraKeys: {"Ctrl-Space": "autocomplete"},
       dataProtector: options.dataProtector

@@ -1596,12 +1596,13 @@
   //
   // The DOM builder is given a single document DOM object that will
   // be used to create all necessary DOM nodes.
-  function DOMBuilder(document) {
+  function DOMBuilder(document, disallowActiveAttributes) {
     this.document = document;
     this.fragment = document.createDocumentFragment();
     this.currentNode = this.fragment;
     this.contexts = [];
     this.pushContext("html", 0);
+    this.disallowActiveAttributes = disallowActiveAttributes;
   }
 
   DOMBuilder.prototype = {
@@ -1639,7 +1640,11 @@
     attribute: function(name, value, parseInfo) {
       var attrNode = this.document.createAttribute(name);
       attrNode.parseInfo = parseInfo;
-      attrNode.nodeValue = value;
+      if (this.disallowActiveAttributes && name.substring(0,2).toLowerCase() === "on") {
+        attrNode.nodeValue = "";
+      } else {
+        attrNode.nodeValue = value;
+      }
       this.currentNode.attributes.setNamedItem(attrNode);
     },
     // This method appends a text node to the currently active element.
@@ -1688,14 +1693,17 @@
     // This can be used for further error checking on the parsed document.
     //
     //   [error specification]: spec/
-    HTML: function(document, html, errorDetectors) {
+    HTML: function(document, html, options) {
+      options = options || {};
       var stream = new Stream(html),
           domBuilder,
           parser,
           warnings = null,
-          error = null;
+          error = null,
+          errorDetectors = options.errorDetectors || [],
+          disallowActiveAttributes = (typeof options.disallowActiveAttributes === "undefined") ? false : options.disallowActiveAttributes;
 
-      domBuilder = document.pushElement ? document : new DOMBuilder(document);
+      domBuilder = new DOMBuilder(document, disallowActiveAttributes);
       parser = new HTMLParser(stream, domBuilder);
 
       try {
@@ -1710,7 +1718,7 @@
           throw e;
       }
 
-      (errorDetectors || []).forEach(function(detector) {
+      errorDetectors.forEach(function(detector) {
         if (!error)
           error = detector(html, domBuilder.fragment) || null;
       });
