@@ -20,43 +20,92 @@ var dbConfig = env.get( "DB" ),
     }),
     db = require( "../lib/database" ),
     dbAPI = db( "thimbleproject", dbConfig ),
-    completed = 0,
-    skipped = 0,
-    q;
+    emailMap = {},
+    processed = 0,
+    updated = 0,
+    limit = 50,
+    lastpid = 0;
 
-function processThimbleProject( project, callback ) {
-  client.get.byEmail( project.email, function( err, resp ) {
-    if ( err ) {
-      return callback( err );
-    }
-    if ( !resp || !resp.user ) {
-      console.log( "no user account found for: " + project.email + ", skipping" );
-      skipped++;
-      return callback();
-    }
-    project.userid = resp.user.id;
-    project.save().error(function( error ) {
-      callback( err );
-    }).success(function() {
-      completed++;
+function getProjectEmailSet( callback ) {
+  dbAPI.model.findAll({
+    where: "email IS NOT NULL",
+    group: "email",
+    attributes: ["email"]
+  }).success(function(hits) {
+    async.eachLimit( hits, 5, function emailIterator( hit, callback ) {
+      client.get.byEmail( hit.email, function( err, resp ) {
+        if ( err ) {
+          return callback( err );
+        }
+        if ( !resp || !resp.user ) {
+          console.log( "no user account found for: " + hit.email + ".." );
+          return callback();
+        }
+        emailMap[ hit.email ] = resp.user.id;
+        callback();
+      });
+    }, function complete( err ) {
+      if ( err ) {
+        console.error( err );
+        process.exit( 1 );
+      }
+      console.log( "Email - userid map generated, Fetching and updating projects...." );
       callback();
-    });
+    })
+  })
+}
+
+function setUserid( project, callback ) {
+  lastpid = project.id;
+  if ( !emailMap[ project.email ] ) {
+    console.log("no account exists for project owner, skipping.");
+    return callback();
+  }
+
+  project.userid = emailMap[ project.email ];
+  project.save(["userid"]).error(callback).success(function() {
+    updated++;
+    console.log( project.id + " successfully updated with userid " + project.userid );
+    callback();
   });
 }
 
-q = async.queue( processThimbleProject, 5 );
-
-q.drain = function() {
-  console.log( completed + " projects updated successfully.\n" + skipped + " projects skipped (no existing webmaker account for project)." );
-  process.exit( 0 );
-};
-
-console.log( "Fetching all projects... This could take some time." );
-dbAPI.model.findAll().success(function(projects) {
-  q.push(projects, function(error) {
-    if ( error ) {
-      console.error( "Something went wrong: " + console.log( JSON.stringify( error ) ) );
-      return process.exit( 1 );
-    }
+function getNextSet( callback ) {
+  dbAPI.model.findAll({
+    where: {
+      id: {
+        gt: lastpid
+      },
+      userid: null
+    },
+    limit: limit,
+    order: "id ASC"
+  }).complete(function( err, projects ) {
+    async.eachSeries( projects, setUserid, callback );
   });
-});
+}
+
+function migrate() {
+  dbAPI.model.count({
+    where: {
+      userid: null
+    }
+  }).success(function( count ) {
+    console.log( "Found " + count + " projects without userid..." );
+    async.doWhilst( getNextSet, function() {
+      processed += limit;
+      if ( processed < count ) {
+        return true
+      }
+      return false;
+    }, function( err ) {
+      if ( err ) {
+        console.error( "Error: ", err );
+      }
+      console.log( updated + " Projects updated." );
+      process.exit( 0 );
+    });
+  })
+}
+
+getProjectEmailSet( migrate );
