@@ -9,6 +9,7 @@
     "helmet": "0.1.2",
     "hood": "0.2.1",
     "htmlsanitizer": "0.0.2",
+    "hyperquest": "0.3.0",
     "knox": "0.8.9",
     "makeapi-client": "https://github.com/mozilla/makeapi-client/tarball/v0.5.21",
     "less-middleware": "0.1.12",
@@ -20,13 +21,14 @@
     "noxmox": "0.2.4",
     "nunjucks": "0.1.10",
     "request": "2.21.0",
-    "sequelize": "1.6.0",
+    "sequelize": "^1.7.8",
     "uslug": "1.0.3",
     "webmaker-download-locales": "0.1.2",
     "webmaker-i18n": "0.3.20",
     "webmaker-locale-mapping": "latest",
     "webmaker-translation-stats": "0.0.1",
-    "webmaker-auth": "0.0.11"
+    "webmaker-auth": "0.0.11",
+    "webmaker-user-client": "0.1.0"
   },
   "optionalDependencies": {
     "mysql": "2.0.0-alpha7",
