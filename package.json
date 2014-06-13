@@ -10,7 +10,7 @@
     "hood": "0.2.1",
     "htmlsanitizer": "0.0.2",
     "knox": "0.8.9",
-    "makeapi-client": "https://github.com/mozilla/makeapi-client/tarball/v0.5.21",
+    "makeapi-client": "0.5.25",
     "less-middleware": "0.1.12",
     "messina": "0.1.1",
     "moment": "2.2.1",
