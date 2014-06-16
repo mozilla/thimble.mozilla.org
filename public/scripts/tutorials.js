@@ -6,7 +6,7 @@ define(["jquery", "/external/make-api.js", "/external/requestAnimationFrameShim.
         apiURL: endpoint
       });
 
-      make.url(encodeURIComponent(publishedUrl)).then(function(err, results) {
+      make.url(publishedUrl).then(function(err, results) {
         if (err || results.length === 0) {
           return;
         }
