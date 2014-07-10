@@ -132,6 +132,12 @@ define([
       if (codeMirror.reparseEnabled) {
         reparseTimeout = time.setTimeout(reparse, parseDelay);
       }
+
+      if (cm.getValue().match(/<\/script\s*\>/i)) {
+        $("#run-js-opt").removeClass('hide-run-js');
+      } else {
+        $("#run-js-opt").addClass('hide-run-js');
+      }
       // On changes to the code editor, signal that we need
       // accidental page-navigation protection again.
       dataProtector.enableDataProtection();
