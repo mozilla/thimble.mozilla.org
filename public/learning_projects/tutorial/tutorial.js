@@ -67,6 +67,10 @@ $.fn.tutorial = function(options){
 
       sections.hide();
       sections.eq(current - 1).show();
+
+      // ensure we're scrolled all the way up
+      scrollTo(0,0);
+
       $('.current').text(current);
     };
 
