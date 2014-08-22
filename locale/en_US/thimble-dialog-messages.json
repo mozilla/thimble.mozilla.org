@@ -6,6 +6,8 @@
 	"HTML_CODE_IN_CSS_BLOCK": "<p>HTML code was detected in CSS context starting <em data-highlight='[[html.start]],[[html.end]]'>here</em></p>",
 	"HTTP_LINK_FROM_HTTPS_PAGE": "<p>The <code>&lt;[[openTag.name]]&gt;</code> tag's <code>[[attribute.name.value]]</code> attribute (<em data-highlight='[[attribute.value.start]],[[attribute.value.end]]'>here</em>) currently points to an insecure resource. You can make this error disappear by logging into webmaker. For more information on how modern browsers signal insecure content, visit <a href='https://developer.mozilla.org/en-US/docs/Security/MixedContent'>this link</a>.</p>",
 	"INVALID_ATTR_NAME": "<p>The attribute <em data-highlight='[[start]],[[end]]'>here</em> has a name that is not permitted under HTML5 naming conventions.</p>",
+	"UNSUPPORTED_ATTR_NAMESPACE": "<p>The attribute <em data-highlight='[[start]],[[end]]'>here</em> uses an attribute namespace that is not permitted under HTML5 conventions.</p>",
+	"MULTIPLE_ATTR_NAMESPACES": "<p>The attribute <em data-highlight='[[start]],[[end]]'>here</em> has multiple namespaces. Check your text and make sure there's only a single namespace prefix for the attribute.</p>",
 	"INVALID_CSS_DECLARATION": "<p><em data-highlight='[[cssDeclaration.start]],[[cssDeclaration.end]]'>This</em> CSS declaration never closes.</p>",
 	"INVALID_CSS_PROPERTY_NAME": "<p>CSS property <em data-highlight='[[cssProperty.start]],[[cssProperty.end]]'>[[cssProperty.property]]</em> does not exist. You may want to see a <a href='https://developer.mozilla.org/en/CSS/CSS_Reference'>list of CSS properties</a>.</p>",
 	"INVALID_CSS_RULE": "<p><em data-highlight='[[cssRule.start]],[[cssRule.end]]'>This</em> CSS rule is not legal CSS.</p>",
