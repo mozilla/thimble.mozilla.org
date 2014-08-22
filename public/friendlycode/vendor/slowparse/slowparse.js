@@ -747,7 +747,12 @@
       "vertical-align","visibility","voice-balance","voice-duration",
       "voice-family","voice-pitch","voice-pitch-range","voice-rate",
       "voice-stress","voice-volume","volume","white-space","widows","width",
-      "word-break","word-spacing","word-wrap","z-index"],
+      "word-break","word-spacing","word-wrap","z-index",
+      // flexbox:
+      "align-content", "align-items", "align-self", "flex", "flex-basis",
+      "flex-direction", "flex-flow", "flex-grow", "flex-shrink", "flex-wrap",
+      "justify-content"],
+
     // This helper verifies that a specific string is a known CSS property.
     // We include vendor-prefixed known CSS properties, like `-o-transition`.
     _knownCSSProperty: function(propertyName) {
