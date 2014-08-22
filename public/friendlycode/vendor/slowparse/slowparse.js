@@ -45,7 +45,7 @@
   //       cannot cope with unciode characters with points over 0xFFFF.
   var attributeNameStartChar = "A-Za-z_\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD";
   var nameStartChar = new RegExp("[" + attributeNameStartChar + "]");
-  var attributeNameChar = attributeNameStartChar + "0-9\\-\\.\\u00B7\\u0300-\\u036F\\u203F-\\u2040";
+  var attributeNameChar = attributeNameStartChar + "0-9\\-\\.\\u00B7\\u0300-\\u036F\\u203F-\\u2040:";
   var nameChar = new RegExp("[" + attributeNameChar + "]");
 
   //Define a property checker for https page
@@ -269,6 +269,30 @@
       };
     },
     INVALID_ATTR_NAME: function(parser, attrToken) {
+      return {
+        start: attrToken.interval.start,
+        end: attrToken.interval.end,
+        attribute: {
+          name: {
+            value: attrToken.value
+          }
+        },
+        cursor: attrToken.interval.start
+      };
+    },
+    MULTIPLE_ATTR_NAMESPACES: function(parser, attrToken) {
+      return {
+        start: attrToken.interval.start,
+        end: attrToken.interval.end,
+        attribute: {
+          name: {
+            value: attrToken.value
+          }
+        },
+        cursor: attrToken.interval.start
+      };
+    },
+    UNSUPPORTED_ATTR_NAMESPACE: function(parser, attrToken) {
       return {
         start: attrToken.interval.start,
         end: attrToken.interval.end,
@@ -1232,6 +1256,9 @@
                    "set", "stop", "style", "svg", "switch", "symbol", "text",
                    "textpath", "title", "tref", "tspan", "use", "view", "vkern"],
 
+    // HTML5 doesn't use namespaces, but actually it does. These are supported:
+    attributeNamespaces: ["xlink", "xml"],
+
     // We also keep a list of HTML elements that are now obsolete, but
     // may still be encountered in the wild on popular sites.
     obsoleteHtmlElements: ["acronym", "applet", "basefont", "big", "center",
@@ -1246,6 +1273,7 @@
     _isCustomElement: function(tagName) {
       return tagName.search(/^[\w\d]+-[\w\d]+$/) > -1;
     },
+
     // This is a helper function to determine whether a given string
     // is a legal HTML5 element tag.
     _knownHTMLElement: function(tagName) {
@@ -1254,26 +1282,37 @@
               this.obsoleteHtmlElements.indexOf(tagName) > -1 ||
               this.webComponentElements.indexOf(tagName) > -1;
     },
+
     // This is a helper function to determine whether a given string
     // is a legal SVG element tag.
     _knownSVGElement: function(tagName) {
       return this.svgElements.indexOf(tagName) > -1;
     },
+
     // This is a helper function to determine whether a given string
     // is a void HTML element tag.
     _knownVoidHTMLElement: function(tagName) {
       return this.voidHtmlElements.indexOf(tagName) > -1;
     },
+
     // This is a helper function to determine whether a given string
     // is a HTML element tag which can optional omit its close tag.
     _knownOmittableCloseTagHtmlElement: function(tagName) {
       return this.omittableCloseTagHtmlElements.indexOf(tagName) > -1;
     },
+
     // This is a helper function to determine whether a given string
     // is in the list of ommittableCloseTags which enable an active tag omit its close tag.
     _knownOmittableCloseTags: function(activeTagName, foundTagName) {
       return this.omittableCloseTags[activeTagName].indexOf(foundTagName) > -1;
     },
+
+    // This is a helper function to determine whether an attribute namespace
+    // is supposed in the HTML spec. Currently these are "xlink" and "xml".
+    _supportedAttributeNameSpace: function(ns) {
+      return this.attributeNamespaces.indexOf(ns) !== -1;
+    },
+
     // #### The HTML Master Parse Function
     //
     // The HTML master parse function works the same as the CSS
@@ -1314,8 +1353,8 @@
       return {
         warnings: (this.warnings.length > 0 ? this.warnings : false)
       };
-
     },
+
     // This is a helper to build a DOM text node.
     _buildTextNode: function() {
       var token = this.stream.makeToken();
@@ -1323,6 +1362,7 @@
         this.domBuilder.text(replaceEntityRefs(token.value), token.interval);
       }
     },
+
     // #### HTML Tag Parsing
     //
     // This is the entry point for parsing the beginning of an HTML tag.
@@ -1573,6 +1613,20 @@
       // attribute.
       if (this.stream.peek() == '=') {
         this.stream.next();
+
+        if(nameTok.value.indexOf(":") !== -1) {
+          var parts = nameTok.value.split(":");
+          if(parts.length > 2) {
+            throw new ParseError("MULTIPLE_ATTR_NAMESPACES", this, nameTok);
+          }
+          var nameSpace = parts[0],
+              attributeName = parts[1];
+          if(!this._supportedAttributeNameSpace(nameSpace)) {
+            throw new ParseError("UNSUPPORTED_ATTR_NAMESPACE", this, nameTok);
+          }
+        }
+
+
         // Currently, we only support quoted attribute values, even
         // though the HTML5 standard allows them to sometimes go unquoted.
         this.stream.eatSpace();

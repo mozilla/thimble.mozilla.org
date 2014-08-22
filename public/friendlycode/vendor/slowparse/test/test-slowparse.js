@@ -712,5 +712,49 @@ module.exports = function(Slowparse, window, document, validators) {
     });
   });
 
+  test("HTML with SVG that uses xlink:* attributes", function () {
+    var html = "<svg><use xlink:href='#triangle' transform='scale(-1,1)'/></svg>";
+    var result = parse(html);
+    ok(!result.error, "xlink:*  attributes accepted");
+  });
+
+  test("HTML that uses xml:* attributes", function () {
+    var html = "<p xml:spaces='2'>test</p>";
+    var result = parse(html);
+    ok(!result.error, "xml:*  attributes accepted");
+  });
+
+  test("HTML with nonsense:attribute should not be rejected", function () {
+    var html = "<p nonsense:attribute='triangle'>test</p>";
+    var result = parse(html);
+    ok(result.error, {
+      type: 'UNSUPPORTED_ATTR_NAMESPACE',
+      start: 3,
+      end: 21,
+      attribute: {
+        name: {
+          value: 'nonsense:attribute'
+        }
+      },
+      cursor: 3
+    });
+  });
+
+  test("Attributes with multiple namespaces should be rejected", function () {
+    var html = "<svg><rect xml:xlink:href='#triangle' /></svg>";
+    var result = parse(html);
+    equal(result.error, {
+      type: 'MULTIPLE_ATTR_NAMESPACES',
+      start: 11,
+      end: 25,
+      attribute: {
+        name: {
+          value: 'xml:xlink:href'
+        }
+      },
+      cursor: 11
+    });
+  });
+
   return validators.getFailCount();
 };
