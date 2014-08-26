@@ -20,7 +20,7 @@ $.fn.tutorial = function(options){
     smartlines: true
   }, options);
 
-  var sections = this.children();
+  var sections = this.children('section');
   if (settings.target) {
     sections = sections.filter(settings.target);
   }
