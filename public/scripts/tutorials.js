@@ -217,7 +217,15 @@ define(["jquery", "/external/make-api.js", "/external/requestAnimationFrameShim.
             }
 
             if (!!window.postMessage) {
-              smartlines(data, event.source);
+              if (data.action == "getvalue") {
+                event.source.postMessage(JSON.stringify({
+                  type: "tutorial",
+                  action: "value",
+                  value: editor.panes.codeMirror.getValue()
+                }), "*");
+              } else {
+                smartlines(data, event.source);
+              }
             }
           });
         }
