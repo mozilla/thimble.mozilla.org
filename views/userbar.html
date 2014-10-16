@@ -3,7 +3,7 @@
     <div id="webmaker-nav">
       <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}stylesheets/userbar-overrides.css">
       <nav class="webmaker-nav-container">
-        <a class="logo" href="/{{localeInfo.lang}}"><img src="/img/thimble-logo.svg" alt="Mozilla Thimble" /></a>
+        <a class="logo" href="/{{localeInfo.lang}}" target="_blank"><img src="/img/thimble-logo.svg" alt="Mozilla Thimble" /></a>
 
         <div class="langPicker">
           {% include "bower_components/webmaker-language-picker/template/partial.html" %}
@@ -35,7 +35,7 @@
           </ul>
         </div>
 
-        <div class="back-to-webmaker"><span class="webmaker-logo-icon webmaker-icon"></span> <a href="{{webmaker}}/{{localeInfo.lang}}">Webmaker.org</a></div>
+        <div class="back-to-webmaker"><span class="webmaker-logo-icon webmaker-icon"></span> <a href="{{webmaker}}/{{localeInfo.lang}}" target="_blank">Webmaker.org</a></div>
 
       </nav>
     </div>
