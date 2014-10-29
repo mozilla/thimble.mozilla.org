@@ -149,15 +149,18 @@
 .nav-options .preview-nav-item {
   display: block!important;
   position: absolute;
-  /* 75px is the width of the publish button */
-  right: 75px;
   left: 0;
   top: 0;
-  height: 60px;
+  height: 40px;
   line-height: 40px;
   text-overflow: ellipsis;
-  overflow: hidden;
   text-align: left!important;
+  //background: fade(red, 30%);
+  .wm-button {
+    margin-top: -5px;
+    margin-left: 5px;
+    vertical-align: middle;
+  }
 }
 
 .nav-options .nav-item.enabled {
@@ -275,6 +278,7 @@
   background-repeat: no-repeat;
   background-position: center center;
   margin-right: 10px;
+  margin-top: -4px;
 }
 
 .editor-nav-item .icon {
@@ -285,6 +289,7 @@
 .preview-nav-item .icon {
   margin-left: 4px;
   background-image: url("../img/preview-icon.png");
+  vertical-align: middle;
 }
 
 .preview-nav-item .preview-title {
@@ -311,7 +316,7 @@
 }
 
 .preview-nav-item .pane-indicator {
-  left: 9px;
+  left: 8px;
 }
 
 .undo-nav-item .icon {
@@ -413,7 +418,7 @@
     margin-left: 4px;
     background-image: url("../img/editor-settings.png");
     position: absolute;
-    top: -40px;
+    top: -43px;
     right: 0;
     width: 20px;
     height: 40px;

@@ -60,6 +60,19 @@
       var loginEl = document.querySelector('#webmaker-nav .signin-button');
       var logoutEl = document.querySelector('#webmaker-nav .logoutbutton');
 
+      $('.dropdown').each(function (index, el) {
+        var dropDownMenu = el.querySelector('.dropdown-menu');
+        var dropDownToggle = el.querySelector('.dropdown-toggle');
+        dropDownToggle.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (dropDownMenu.style.display === 'block') {
+            dropDownMenu.style.display = '';
+          } else {
+            dropDownMenu.style.display = 'block';
+          }
+        }, false);
+      });
+
       var thimbleAuth = new WebmakerLogin({
         csrfToken: csrf,
         showCTA: false

@@ -8,6 +8,54 @@
 @bower-path: "../../bower_components"; // used from public/stylesheets location
 @colors-path: "../../../public/stylesheets"; // used for colors.less from webmaker-language-picker/styles location
 
+.navbar-collapse {
+    position: relative;
+}
+
+.nav>li>.navbar-user-info {
+    height: auto;
+    padding: 7px;
+    line-height: inherit;
+}
+
+.navbar-nav {
+    margin: 0 5px;
+}
+
+.navbar-nav>li>.dropdown-menu {
+    margin-top: -1px;
+}
+
+.navbar-webmaker {
+    .navbar-form {
+        margin-top: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .dropdown-toggle {
+        border: 1px solid #CCC;
+        padding: 10px;
+        margin-top: 10px;
+    }
+    .dropdown-menu {
+        background: #FFF;
+        border: 1px solid #CCC;
+    }
+    .navbar-button {
+        padding: 10px 14px;
+    }
+}
+
+.icon-globe {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome; // shortening font declaration
+    font-size: inherit; // can't have font-size inherit on line above, so need to override
+    text-rendering: auto; // optimizelegibility throws things off #1094
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    &:before {content: "\f0ac";}
+}
+
 a#current-language {
   color: #000;
   text-decoration: none;
