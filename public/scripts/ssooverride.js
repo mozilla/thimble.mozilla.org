@@ -7,26 +7,10 @@
   var hostname = document.getElementById("ssooverride").getAttribute("data-login-hostname");
   var loginToSave = document.getElementById("ssooverride").getAttribute("data-login-to-save");
 
-  require(["jquery", "thimblePage"], function($, editor) {
+  require(["jquery", "thimblePage", "url-template"], function($, editor, urlTemplate) {
 
     // we chronicle login status with a "loggedin" class on the <html> tag
     var html = document.getElementsByTagName("html")[0];
-
-    function displayLogin(userData) {
-      var userElement = $( "div.user" );
-      var placeHolder = $( "#identity" );
-      var html = document.querySelector( "html" );
-      var lang = html && html.lang ? html.lang : "en-US"
-
-      if (userData) {
-        placeHolder.html('<a href="' + hostname + '/' + lang + '/account">' + userData.username + "</a>");
-        placeHolder.parent().children('img').attr('src', userData.avatar);
-        userElement.show();
-      } else {
-        placeHolder.text("");
-        userElement.hide();
-      }
-    }
 
     /**
      * This kicks in when Friendlycode is well and truly done building itself.
@@ -35,30 +19,56 @@
       var userfield = $("#identity");
       var buttons = $('.save-button, .publish-button');
       var saveButton = $('.save-button');
-      var loginButtonSpan = $("#webmaker-nav .signin-button");
-      var logoutButtonSpan = $("#webmaker-nav .logoutbutton");
+      var csrf = document.getElementById("ssooverride").getAttribute("data-csrf");
+      var joinEl = $('#webmaker-nav .join-button');
+      var loginEl = $('#webmaker-nav .signin-button');
+      var logoutEl = $('#webmaker-nav .logout-button');
+      var userInfoDropdown = $('#webmaker-nav .user-info-dropdown');
+      var avatarEl = userInfoDropdown.find('img[data-avatar]');
+      var usernameEl = userInfoDropdown.find('strong[data-username]');
+      var adminEl = userInfoDropdown.find('span[data-admin]');
+      var supermentorEl = userInfoDropdown.find('span[data-supermentor]');
+      var mentorEl = userInfoDropdown.find('span[data-mentor]');
+      var profileEl = userInfoDropdown.find('a[data-profile]');
 
       function enable(user) {
-        loginButtonSpan.addClass("hidden");
-        logoutButtonSpan.removeClass("hidden");
+        joinEl.addClass("hidden");
+        loginEl.addClass("hidden");
+
+        avatarEl.attr("src", user.avatar);
+        usernameEl.text(user.username);
+        if (user.isAdmin) {
+          adminEl.removeClass("hidden");
+          supermentorEl.addClass("hidden");
+          mentorEl.addClass("hidden");
+        } else if (user.isSuperMentor) {
+          adminEl.addClass("hidden");
+          supermentorEl.removeClass("hidden");
+          mentorEl.addClass("hidden");
+        } else if (user.isMentor) {
+          adminEl.addClass("hidden");
+          supermentorEl.addClass("hidden");
+          mentorEl.removeClass("hidden");
+        } else {
+          adminEl.addClass("hidden");
+          supermentorEl.addClass("hidden");
+          mentorEl.addClass("hidden");
+        }
+        profileEl.attr("href", urlTemplate.parse(profileEl.attr("data-href-template")).expand(user));
+
+        userInfoDropdown.removeClass("hidden");
         buttons.attr("disabled", false).attr("title", '');
-        displayLogin(user);
         html.classList.add("loggedin");
       };
 
       function disable() {
-        loginButtonSpan.removeClass("hidden");
-        logoutButtonSpan.addClass("hidden");
-        displayLogin();
+        joinEl.removeClass("hidden");
+        loginEl.removeClass("hidden");
+        userInfoDropdown.addClass("hidden");
         buttons.attr("disabled", true);
         saveButton.attr("title", loginToSave);
         html.classList.remove("loggedin");
       }
-
-      var csrf = document.getElementById("ssooverride").getAttribute("data-csrf");
-      var createEl = document.querySelector('#webmaker-nav .join-button');
-      var loginEl = document.querySelector('#webmaker-nav .signin-button');
-      var logoutEl = document.querySelector('#webmaker-nav .logoutbutton');
 
       $('.dropdown').each(function (index, el) {
         var dropDownMenu = el.querySelector('.dropdown-menu');
@@ -78,13 +88,13 @@
         showCTA: false
       });
 
-      createEl.addEventListener('click', function() {
+      joinEl.on('click', function() {
         thimbleAuth.create();
       });
-      loginEl.addEventListener('click', function() {
+      loginEl.on('click', function() {
         thimbleAuth.login();
       });
-      logoutEl.addEventListener('click', function() {
+      logoutEl.on('click', function() {
         thimbleAuth.logout();
       });
 

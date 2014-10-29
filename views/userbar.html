@@ -16,37 +16,48 @@
           <div class="navbar-collapse collapse">
 
             <div class="navbar-form navbar-right">
+              <a href="{{ webmaker }}/{{ localeInfo.lang }}">
+                <img src="/img/webmaker-main_01.png" height="45">Webmaker.org
+              </a>
+            </div>
+
+            <div class="navbar-form navbar-right">
               <button class="btn btn-secondary-nav signin-button navbar-button navbar-right">{{ gettext("Sign in") }}</button>
               <button class="btn btn-primary join-button navbar-button navbar-right">{{ gettext("Join Webmaker") }}</button>
             </div>
-            <p class="logoutbutton hidden navbar-text navbar-right">{{ gettext("Sign out" )}}</p>
 
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right user-info-dropdown hidden">
               <li class="dropdown">
                 <a class="navbar-user-info dropdown-toggle" data-toggle="dropdown">
-                  <img
-                    class="user-info-avatar"
-                    src="https://i1.wp.com/stuff.webmaker.org/avatars/webmaker-avatar-200x200.png">
-                  Hi <strong>webmaker123</strong>
-                 <span class="hidden label label-primary">admin</span>
-                 <span class="hidden label label-info">supermentor</span>
-                 <span class="hidden label label-warning">mentor</span>
-                 <span class="caret"></span>
+                  <img class="user-info-avatar" data-avatar>
+                  {{ gettext("Hi") }} <strong data-username></strong>
+                  <span class="hidden label label-primary" data-admin>admin</span>
+                  <span class="hidden label label-info" data-supermentor>supermentor</span>
+                  <span class="hidden label label-warning" data-mentor>mentor</span>
+                  <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">
-                    <span class="fa fa-fw fa-th-large"></span> My makes
-                  </a></li>
-                  <li><a href="#">
-                    <span class="fa fa-fw fa-user"></span> My profile
-                  </a></li>
-                  <li><a href="#">
-                    <span class="fa fa-fw fa-cog"></span> My settings
-                  </a></li>
+                  <li>
+                    <a href="{{ webmaker }}/{{ localeInfo.lang }}/me">
+                      <span class="fa fa-fw fa-th-large"></span> My makes
+                    </a>
+                  </li>
+                  <li>
+                    <a data-profile data-href-template="{{ webmaker }}/{{ localeInfo.lang }}/user/{username}">
+                      <span class="fa fa-fw fa-user"></span> My profile
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{{ LOGIN_URL }}/{{ localeInfo.lang }}/account">
+                      <span class="fa fa-fw fa-cog"></span> My settings
+                    </a>
+                  </li>
                   <li class="divider"></li>
-                  <li><a href="#" data-log-out>
-                    <span class="fa fa-fw fa-sign-out"></span>Sign out
-                  </a></li>
+                  <li>
+                    <a class="logout-button">
+                      <span class="fa fa-fw fa-sign-out"></span> Sign out
+                    </a>
+                  </li>
                 </ul>
               </li>
             </ul>
@@ -61,9 +72,9 @@
               </li>
             </ul>
 
-            <p class="navbar-text navbar-right">
+            <div class="navbar-text navbar-right">
               {% include "bower_components/webmaker-language-picker/template/partial.html" %}
-            </p>
+            </div>
 
           </div>
         </div>

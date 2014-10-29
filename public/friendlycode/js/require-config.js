@@ -125,7 +125,8 @@ var require = {
     "selectize": "/bower/selectize/dist/js/standalone/selectize.min",
     "list": "/bower/listjs/dist/list.min",
     "fuzzySearch": "/bower/list.fuzzysearch.js/dist/list.fuzzysearch.min",
-    "analytics": "/bower/webmaker-analytics/analytics"
+    "analytics": "/bower/webmaker-analytics/analytics",
+    "url-template": "/bower/url-template/lib/url-template"
   },
   config: {
     template: {

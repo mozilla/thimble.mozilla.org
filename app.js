@@ -165,6 +165,7 @@ app.param('oldid', parameters.oldid(legacyDatabaseAPI));
 app.param('name', parameters.name);
 
 // Webmaker SSO
+app.post( "/authenticate", webmakerAuth.handlers.authenticate );
 app.post( "/logout", webmakerAuth.handlers.logout );
 app.post( "/verify", webmakerAuth.handlers.verify );
 

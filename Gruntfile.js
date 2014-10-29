@@ -38,6 +38,8 @@ module.exports = function( grunt ) {
             "box-sizing": false,
             "bulletproof-font-face": false,
             "compatible-vendor-prefixes": false,
+            "floats": false,
+            "font-sizes": false,
             "ids": false,
             "important": false,
             "outline-none": false,
