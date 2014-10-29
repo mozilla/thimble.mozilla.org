@@ -13,12 +13,10 @@
     var html = document.getElementsByTagName("html")[0];
 
     function displayLogin(userData) {
-      var userElement = $( "div.user" ),
-          placeHolder = $( "#identity" ),
-          html = document.querySelector( "html" );
-          lang = html && html.lang ? html.lang : "en-US",
-          loginButtonSpan = $("#webmaker-nav .loginbutton"),
-          logoutButtonSpan = $("#webmaker-nav .logoutbutton");
+      var userElement = $( "div.user" );
+      var placeHolder = $( "#identity" );
+      var html = document.querySelector( "html" );
+      var lang = html && html.lang ? html.lang : "en-US"
 
       if (userData) {
         placeHolder.html('<a href="' + hostname + '/' + lang + '/account">' + userData.username + "</a>");
@@ -34,38 +32,62 @@
      * This kicks in when Friendlycode is well and truly done building itself.
      */
     editor.ready.done(function() {
-      var userfield = $("#identity"),
-          buttons = $('.save-button, .publish-button'),
-          saveButton = $('.save-button');
+      var userfield = $("#identity");
+      var buttons = $('.save-button, .publish-button');
+      var saveButton = $('.save-button');
+      var loginButtonSpan = $("#webmaker-nav .signin-button");
+      var logoutButtonSpan = $("#webmaker-nav .logoutbutton");
 
       function enable(user) {
+        loginButtonSpan.addClass("hidden");
+        logoutButtonSpan.removeClass("hidden");
         buttons.attr("disabled", false).attr("title", '');
         displayLogin(user);
         html.classList.add("loggedin");
       };
 
       function disable() {
+        loginButtonSpan.removeClass("hidden");
+        logoutButtonSpan.addClass("hidden");
         displayLogin();
         buttons.attr("disabled", true);
         saveButton.attr("title", loginToSave);
         html.classList.remove("loggedin");
       }
 
+      var csrf = document.getElementById("ssooverride").getAttribute("data-csrf");
+      var createEl = document.querySelector('#webmaker-nav .join-button');
+      var loginEl = document.querySelector('#webmaker-nav .signin-button');
+      var logoutEl = document.querySelector('#webmaker-nav .logoutbutton');
+
+      var thimbleAuth = new WebmakerLogin({
+        csrfToken: csrf,
+        showCTA: false
+      });
+
+      createEl.addEventListener('click', function() {
+        thimbleAuth.create();
+      });
+      loginEl.addEventListener('click', function() {
+        thimbleAuth.login();
+      });
+      logoutEl.addEventListener('click', function() {
+        thimbleAuth.logout();
+      });
+
       // Attach event listeners!
-      thimbleAuth.on('login', function(user, debuggingInfo) {
-        enable(user);
-        loginButtonSpan.addClass("hidden");
-        logoutButtonSpan.removeClass("hidden");
+      thimbleAuth.on('login', enable);
+      thimbleAuth.on('logout', disable);
+      thimbleAuth.on('verified', function(user) {
+        if (user) {
+          enable(user);
+        } else {
+          disable();
+        }
       });
 
-      thimbleAuth.on('logout', function() {
-        disable();
-        loginButtonSpan.removeClass("hidden");
-        logoutButtonSpan.addClass("hidden");
-      });
-
+      // Default state is signed-out
       disable();
-      thimbleAuth.verify();
     });
   });
 }());

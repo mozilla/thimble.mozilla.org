@@ -1,15 +1,13 @@
 {
   "name": "thimble.webmaker.org",
   "dependencies": {
-    "nav-global": "https://github.com/mozilla/nav-global/archive/v0.1.4.tar.gz",
-    "open-sans-fontface": "1.0.4",
-    "persona-btn": "0.0.11",
+    "makerstrap": "~0.2.7",
     "webmaker-analytics": "0.1.0",
-    "webmaker-auth-client": "0.1.11",
     "webmaker-i18n": "https://github.com/mozilla/node-webmaker-i18n/archive/v0.3.8.tar.gz",
-    "webmaker-language-picker": "0.0.25"
+    "webmaker-language-picker": "0.0.26",
+    "webmaker-login-ux": "~1.1.0"
   },
   "resolutions": {
-    "webmaker-analytics": "0.1.0"
+    "selectize": "0.10.1"
   }
 }

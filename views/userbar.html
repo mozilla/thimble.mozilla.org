@@ -1,46 +1,68 @@
 {% block userbar %}
     <!-- webmaker user bar -->
     <div id="webmaker-nav">
-      <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}stylesheets/userbar-overrides.css">
-      <nav class="webmaker-nav-container">
-        <a class="logo" href="/{{localeInfo.lang}}"><img src="/img/thimble-logo.svg" alt="Mozilla Thimble" /></a>
-
-        <div class="langPicker">
-          {% include "bower_components/webmaker-language-picker/template/partial.html" %}
-        </div>
-
-        <div class="butter-btn-menu-container butter-project-menu">
-          <a class="butter-btn btn-white butter-project-menu-control butter-btn-menu-control"><span class="icon icon-only icon-reorder"></span></a>
-          <ul class="butter-btn-menu">
-            <li><a href="/{{localeInfo.lang}}/" target="_blank"> <span class="icon icon-file-alt"></span> {{ gettext("New") }}</a></li>
-            <li><a href="https://support.mozilla.org/{{localeInfo.lang}}/products/webmaker/thimble/" target="_blank"> <span class="icon icon-info"></span> {{ gettext("Help") }}</a></li>
-          </ul>
-        </div>
-
-        <div class="webmaker-nav user-info">
-          <div class="user">
-              <img alt=""></img>
-              {{ gettext("Hi") }} <span id="identity" class="user-name-container"></span> <span class="icon icon-caret-down"></span>
+      <nav class="navbar navbar-webmaker">
+        <div class="container-flex">
+          <div class="navbar-header">
+            <button class="navbar-toggle" nav-toggle>
+              <span class="sr-only">Toggle navigation</span>
+              <span class="fa fa-bars fa-lg"></span>
+            </button>
+            <a href="/{{localeInfo.lang}}" class="logo webmaker-logo">
+              <img src="/img/thimble-logo.svg">
+            </a>
           </div>
-          <ul class="menu-container">
-            <li>
-              <span class="icon icon-th-large"></span>
-              <a href="{{webmaker}}/{{localeInfo.lang}}/me" target="_blank">{{ gettext("My makes") }}</a>
-            </li>
-            {% if together %}{% include "together.html" %}{% endif %}
-            <li class="login">
-              <span class="loginbutton"><span class="icon"></span><span class="label">{{ gettext("Sign in") }}<span class="tip"></span></span></span>
-              <span class="logoutbutton hidden"><span class="icon icon-signout"></span><span class="label">{{ gettext("Sign out" )}}</span></span>
-            </li>
-          </ul>
+
+          <div class="navbar-collapse collapse">
+            <p class="navbar-text navbar-right">
+              {% include "bower_components/webmaker-language-picker/template/partial.html" %}
+            </p>
+
+            <button class="btn btn-secondary-nav signin-button navbar-button navbar-right">{{ gettext("Sign in") }}</button>
+            <button class="btn btn-primary join-button navbar-button navbar-right">{{ gettext("Join Webmaker") }}</button>
+            <p class="logoutbutton hidden navbar-text navbar-right">{{ gettext("Sign out" )}}</p>
+
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-bars"></span><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/{{localeInfo.lang}}" target="_blank"> <span class="icon icon-file-alt"></span> {{ gettext("New") }}</a></li>
+                  <li><a href="https://support.mozilla.org/{{localeInfo.lang}}/products/webmaker/thimble/" target="_blank"> <span class="icon icon-info"></span> {{ gettext("Help") }}</a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right hidden">
+              <li class="dropdown">
+                <a class="navbar-user-info dropdown-toggle" data-toggle="dropdown">
+                  <img
+                    class="user-info-avatar"
+                    src="https://i1.wp.com/stuff.webmaker.org/avatars/webmaker-avatar-200x200.png">
+                  Hi <strong>webmaker123</strong>
+                 <span class="hidden label label-primary">admin</span>
+                 <span class="hidden label label-info">supermentor</span>
+                 <span class="hidden label label-warning">mentor</span>
+                 <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">
+                    <span class="fa fa-fw fa-th-large"></span> My makes
+                  </a></li>
+                  <li><a href="#">
+                    <span class="fa fa-fw fa-user"></span> My profile
+                  </a></li>
+                  <li><a href="#">
+                    <span class="fa fa-fw fa-cog"></span> My settings
+                  </a></li>
+                  <li class="divider"></li>
+                  <li><a href="#" data-log-out>
+                    <span class="fa fa-fw fa-sign-out"></span>Sign out
+                  </a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
         </div>
-
-        <div class="back-to-webmaker"><span class="webmaker-logo-icon webmaker-icon"></span> <a href="{{webmaker}}/{{localeInfo.lang}}">Webmaker.org</a></div>
-
       </nav>
     </div>
-
-    <link rel="stylesheet" href="/bower/webmaker-auth-client/create-user/create-user-form.css">
-    {% include "bower_components/webmaker-auth-client/create-user/create-user-form.html" %}
 
 {% endblock %}

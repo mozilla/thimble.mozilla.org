@@ -2,15 +2,12 @@
 {% block body %}
     <script src="{{ personaHost }}/include.js"></script>
     {% include 'userbar.html' %}
-    <script src="/bower/webmaker-auth-client/dist/webmaker-auth-client.min.js"></script>
-    <script id="webmaker-auth-client" src="/scripts/auth-login.js"
-            data-csrf="{{ csrf }}"
-            async>
-    </script>
+    <script src="/bower/webmaker-login-ux/dist/min/webmakerLogin.min.js"></script>
     {% include 'tutorialbar.html' %}
     {% include 'friendlycode.html' %}
     {% block ssooverride %}
       <script id="ssooverride" src="/scripts/ssooverride.js"
+              data-csrf="{{ csrf }}"
               data-login-hostname="{{ LOGIN_URL }}"
               data-login-to-save="{{ gettext('Login to save') }}"
               async>

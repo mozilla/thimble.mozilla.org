@@ -66,6 +66,7 @@ var appName = "thimble",
     routes = require('./routes')( utils, env, nunjucksEnv, appName ),
     webmakerAuth = new WebmakerAuth({
       forceSSL: env.get('FORCE_SSL'),
+      loginHost: env.get('APP_HOSTNAME'),
       loginURL: env.get('LOGIN_URL'),
       authLoginURL: env.get('LOGIN_URL_WITH_AUTH'),
       secretKey: env.get('SESSION_SECRET'),
@@ -118,15 +119,6 @@ app.use( i18n.middleware({
   translation_directory: path.resolve( __dirname, "locale" )
 }));
 
-i18n.addLocaleObject({
-  // Adding an external JSON file to our existing one for the specified locale
-  "en-US": require("./bower_components/webmaker-auth-client/locale/en_US/create-user-form.json")
-}, function (err, res) {
-  if (err) {
-    console.error(err);
-  }
-});
-
 app.locals({
   GA_ACCOUNT: env.get("GA_ACCOUNT"),
   GA_DOMAIN: env.get("GA_DOMAIN"),
@@ -173,11 +165,16 @@ app.param('oldid', parameters.oldid(legacyDatabaseAPI));
 app.param('name', parameters.name);
 
 // Webmaker SSO
-app.post('/verify', webmakerAuth.handlers.verify);
-app.post('/authenticate', webmakerAuth.handlers.authenticate);
-app.post('/create', webmakerAuth.handlers.create);
-app.post('/logout', webmakerAuth.handlers.logout);
-app.post('/check-username', webmakerAuth.handlers.exists);
+app.post( "/logout", webmakerAuth.handlers.logout );
+app.post( "/verify", webmakerAuth.handlers.verify );
+
+app.post( "/auth/v2/create", webmakerAuth.handlers.createUser );
+app.post( "/auth/v2/uid-exists", webmakerAuth.handlers.uidExists );
+app.post( "/auth/v2/request", webmakerAuth.handlers.request );
+app.post( "/auth/v2/authenticateToken", webmakerAuth.handlers.authenticateToken );
+app.post( "/auth/v2/verify-password", webmakerAuth.handlers.verifyPassword );
+app.post( "/auth/v2/request-reset-code", webmakerAuth.handlers.requestResetCode );
+app.post( "/auth/v2/reset-password", webmakerAuth.handlers.resetPassword );
 
 // resource proxying for http-on-https
 webmakerProxy(app, middleware.checkForAuth);
