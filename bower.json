@@ -5,7 +5,7 @@
     "webmaker-analytics": "0.1.0",
     "webmaker-i18n": "https://github.com/mozilla/node-webmaker-i18n/archive/v0.3.8.tar.gz",
     "webmaker-language-picker": "0.0.26",
-    "webmaker-login-ux": "1.1.13",
+    "webmaker-login-ux": "1.1.15",
     "url-template": "~2.0.4"
   },
   "resolutions": {
