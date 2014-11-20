@@ -55,7 +55,7 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
         allowJS: allowJS,
         csrf: req.csrfToken(),
         LOGIN_URL: env.get("LOGIN_URL"),
-        email: req.session.email || '',
+        email: req.session.user ? req.session.user.email : '',
         HTTP_STATIC_URL: '/',
         MAKE_ENDPOINT: makeEndpoint,
         pageOperation: req.body.pageOperation,
