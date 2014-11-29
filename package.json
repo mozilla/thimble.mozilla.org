@@ -21,6 +21,7 @@
     "nunjucks": "0.1.10",
     "request": "2.21.0",
     "sequelize": "1.6.0",
+    "slowparse": "1.0.x",
     "uslug": "1.0.3",
     "webmaker-auth": "1.0.1",
     "webmaker-download-locales": "0.1.2",
