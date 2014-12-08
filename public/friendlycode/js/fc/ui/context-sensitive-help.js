@@ -23,7 +23,7 @@ define([
       clearTimeout(timeout);
       lastHelp = null;
       cursorHelpMarks.clear();
-      helpArea.hide();
+      helpArea.addClass("hidden");
       relocator.cleanup();
     }
 
@@ -64,7 +64,7 @@ define([
       }
 
       var oldOffset = helpArea.offset();
-      helpArea.html(template(help)).show();
+      helpArea.html(template(help)).removeClass("hidden");
       var startMark = null,
           endMark = null;
       help.highlights.forEach(function(interval) {
@@ -83,7 +83,7 @@ define([
         var newOffset = helpArea.offset();
         if (newOffset.top != oldOffset.top ||
             newOffset.left != oldOffset.left) {
-          helpArea.hide();
+          helpArea.addClass("hidden");
           helpArea.fadeIn();
         }
       }
