@@ -28,7 +28,7 @@ define(["jquery", "./gutter-pointer"], function($, gutterPointer) {
           lastPos = null;
         }
         if (lastElement) {
-          lastElement.addClass("hidden");
+          lastElement.hide();
           lastElement = null;
         }
         if (lastGutterPointer) {
@@ -83,18 +83,14 @@ define(["jquery", "./gutter-pointer"], function($, gutterPointer) {
       // set up the end-of-line marker for hint/error toggling
       setupMarker: function(type) {
         var cursorPosition = codeMirror.getCursor();
-        lastElement.addClass("hidden");
+        lastElement.hide();
         lastToggle.lastElement = lastElement;
         codeMirror.addWidget(lastPos, lastToggle, false);
         lastToggle.onclick = function() {
-          if (lastToggle.lastElement.hasClass("hidden")) {
-            lastToggle.lastElement.removeClass("hidden");
-          } else {
-            lastToggle.lastElement.addClass("hidden");
-          }
+          lastToggle.lastElement.toggle();
           codeMirror.focus();
         };
-        $(lastToggle).attr("class", "hint-marker-positioning hint-marker-" + type).removeClass("hidden");
+        $(lastToggle).attr("class", "hint-marker-positioning hint-marker-" + type).show();
       }
     };
 
