@@ -93,7 +93,7 @@ var require = {
     "jquery.min": "../vendor/jquery.min",
     "jquery-ui": "../vendor/jquery-ui.min",
     "jquery-tipsy": "../vendor/jquery.tipsy",
-    "jquery-slowparse": "../vendor/slowparse/spec/errors.jquery",
+    "jquery-slowparse": "../vendor/slowparse/src/shim/errors.jquery",
     "underscore": "../vendor/underscore.min",
     "backbone": "../vendor/backbone.min",
     "slowparse": "../vendor/slowparse",
