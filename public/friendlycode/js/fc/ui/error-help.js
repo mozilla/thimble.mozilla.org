@@ -35,7 +35,7 @@ define(["jquery-slowparse", "./mark-tracker"], function($, markTracker) {
     function clearError() {
       clearTimeout(timeout);
       errorHelpMarks.clear();
-      errorArea.hide();
+      errorArea.addClass("hidden");
       relocator.cleanup();
     }
 
@@ -53,7 +53,7 @@ define(["jquery-slowparse", "./mark-tracker"], function($, markTracker) {
       var startMark = null,
           endMark = null,
           errorHTML = $("<div></div>").fillError(error);
-      errorArea.html(template({error: errorHTML.html()})).show();
+      errorArea.html(template({error: errorHTML.html()})).removeClass("hidden");
       errorArea.eachErrorHighlight(function(start, end, i) {
         // Point the error message's arrow at the first occurrence of
         // the word "here" in the error message.
@@ -75,7 +75,7 @@ define(["jquery-slowparse", "./mark-tracker"], function($, markTracker) {
         dismiss.click(clearError);
       }
 
-      errorArea.hide();
+      errorArea.addClass("hidden");
     }
 
     codeMirror.on("change", clearError);
