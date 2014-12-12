@@ -1,7 +1,6 @@
 define(function(require) {
   var $ = require("jquery"),
       Slowparse = require("slowparse/slowparse"),
-      TreeInspectors = require("slowparse/tree-inspectors"),
       ParsingCodeMirror = require("fc/ui/parsing-codemirror"),
       Help = require("fc/help"),
       LivePreview = require("fc/ui/live-preview"),
@@ -37,8 +36,7 @@ define(function(require) {
       value: initialValue,
       parse: function(html) {
         return Slowparse.HTML(document, html, {
-          disallowActiveAttributes: true,
-          errorDetectors: allowJS ? [] : [TreeInspectors.forbidJS]
+          disallowActiveAttributes: true
         });
       },
       extraKeys: {"Ctrl-Space": "autocomplete"},
