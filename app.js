@@ -148,8 +148,13 @@ app.use( express.static(tmpDir));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
 app.use(express.static(path.join(__dirname, 'templates')));
+
 // Setting up bower_components
 app.use( "/bower", express.static( path.join(__dirname, "bower_components" )));
+
+// Shim the slowparse library so that friendlycode thinks it
+// still lives in public/friendlycode/vendor/slowparse
+app.use( "/friendlycode/vendor/slowparse", express.static( path.join(__dirname, "node_modules/slowparse" )));
 
 // Error handler
 app.use(errorhandling.errorHandler);
