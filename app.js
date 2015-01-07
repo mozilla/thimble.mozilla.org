@@ -1,3 +1,5 @@
+process.env.NEW_RELIC_BROWSER_MONITOR_ENABLE = false;
+
 // New Relic Server monitoring support
 var newrelic;
 if ( process.env.NEW_RELIC_ENABLED ) {
