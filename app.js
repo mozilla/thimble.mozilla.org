@@ -147,7 +147,15 @@ app.use(lessMiddleWare({
 }));
 
 app.use( express.static(tmpDir));
-app.use(express.static(path.join(__dirname, 'public')));
+
+// Allows us to embed our version of brackets
+// in an iframe on the client
+app.use(function(req, res, next) {
+  res.set('X-Frame-Options', "SAMEORIGIN");
+  next();
+}, express.static(path.join(__dirname, 'public/friendlycode/vendor/brackets/src')));
+
+app.use( express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
 app.use(express.static(path.join(__dirname, 'templates')));
 
