@@ -34,6 +34,8 @@ define([
     });
 
     // Keep track of context-sensitive help highlighting.
+    // XXX - Investigate whether this can be kept with simple modifications
+    //       of brackets code
     var cursorHelpMarks = markTracker(codeMirror);
 
     codeMirror.on("reparse", function(event) {
@@ -98,6 +100,7 @@ define([
     codeMirror.on("cursor-activity", function() {
       clearTimeout(timeout);
 
+      // XXX - TODO: Hook preferences up with brackets iframe
       if (Preferences.get("showHints") === false)
         return;
 
@@ -123,6 +126,7 @@ define([
       }
     });
 
+    // XXX - TODO: Hook preferences up with brackets iframe
     Preferences.on("change:showHints", function() {
       if (Preferences.get("showHints") === false)
         clearHelp();

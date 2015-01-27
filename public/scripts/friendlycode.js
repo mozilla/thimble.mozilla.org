@@ -97,7 +97,8 @@
       }),
       remixURLTemplate: appUrl + "/" + localeInfo_lang + "/project/\{\{VIEW_URL\}\}/edit",
       container: $("#bare-fc-holder"),
-      makeDetails: makeDetails
+      makeDetails: makeDetails,
+      appUrl: appUrl
     });
 
     if (makeUrl) {

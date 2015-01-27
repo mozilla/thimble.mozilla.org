@@ -15,6 +15,7 @@ define(function(require) {
   return function FriendlycodeEditor(options) {
     var publishURL = options.publishURL,
         pageToLoad = options.pageToLoad,
+        appUrl = options.appUrl,
         defaultContent = options.defaultContent || DefaultContentTemplate(),
         remixURLTemplate = options.remixURLTemplate ||
           location.protocol + "//" + location.host +
@@ -23,7 +24,8 @@ define(function(require) {
           container: options.container,
           allowJS: options.allowJS,
           previewLoader: options.previewLoader,
-          dataProtector: DataProtector
+          dataProtector: DataProtector,
+          appUrl: appUrl
         }),
         makeDetails = options.makeDetails,
         ready = $.Deferred();
@@ -75,21 +77,22 @@ define(function(require) {
 
     if (!pageManager.currentPage()) {
       setTimeout(function() {
-        editor.panes.codeMirror.setValue(defaultContent);
+        editor.panes.codeMirror.init(defaultContent);
         doneLoading();
       }, 0);
-    } else
+    } else {
       publisher.loadCode(pageManager.currentPage(), function(err, data, url) {
         if (err) {
           modals.showErrorDialog({
             text: Localized.get('page-load-err')
           });
         } else {
-          editor.panes.codeMirror.setValue(data);
+          editor.panes.codeMirror.init(data);
           publishUI.setCurrentURL(url);
           doneLoading();
         }
       });
+    }
 
     return {
       editor: editor,
