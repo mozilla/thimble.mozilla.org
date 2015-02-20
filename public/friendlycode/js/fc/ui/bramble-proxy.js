@@ -7,7 +7,9 @@ define(["backbone-events"], function(BackboneEvents) {
 
   var eventCBs = {
     "change": [],
-    "reparse": []
+    "reparse": [],
+    "loaded": [],
+    "viewlink": []
   };
 
   function BrambleProxy(place, options) {
@@ -37,6 +39,13 @@ define(["backbone-events"], function(BackboneEvents) {
           type: "bramble:init",
           source: latestSource
         }), "*");
+        return;
+      }
+      if (message.type === "bramble:loaded") {
+        eventCBs["loaded"].forEach(function(cb) {
+          cb();
+        });
+        return;
       }
     });
 
@@ -55,6 +64,10 @@ define(["backbone-events"], function(BackboneEvents) {
       // Attach the iframe to the dom
       place.append(iframe);
     }
+
+    this.getWrapperElement = function() {
+      return place;
+    }
   }
 
   BrambleProxy.prototype.on = function on(event, callback) {
@@ -62,6 +75,10 @@ define(["backbone-events"], function(BackboneEvents) {
       eventCBs.change.push(callback);
     } else if(event === "reparse") {
       eventCBs.reparse.push(callback);
+    } else if(event === "loaded") {
+      eventCBs.loaded.push(callback);
+    } else if(event === "change:viewlink") {
+      eventCBs.viewlink.push(callback)
     }
   };
 
@@ -87,9 +104,10 @@ define(["backbone-events"], function(BackboneEvents) {
   // Called to trigger an update to the Thimble link
   // to view this make separate from the editor.
   BrambleProxy.prototype.setViewLink = function(link) {
-    this.trigger("change:viewlink", link);
+    eventCBs["viewlink"].forEach(function (cb) {
+      cb(link);
+    });
   };
-  BackboneEvents.mixin(BrambleProxy.prototype);
 
   return BrambleProxy;
 });
