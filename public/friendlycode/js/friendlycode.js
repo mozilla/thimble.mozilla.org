@@ -49,14 +49,16 @@ define(function(require) {
     });
 
     function doneLoading() {
-      editor.container.removeClass("friendlycode-loading");
-      editor.panes.codeMirror.clearHistory();
-      editor.toolbar.refresh();
-      editor.panes.codeMirror.reparse();
-      editor.panes.codeMirror.focus();
-      editor.panes.codeMirror.refresh();
-      DataProtector.disableDataProtection();
-      ready.resolve();
+      editor.panes.codeMirror.on("loaded", function() {
+        editor.container.removeClass("friendlycode-loading");
+        editor.panes.codeMirror.clearHistory();
+        editor.toolbar.refresh();
+        editor.panes.codeMirror.reparse();
+        editor.panes.codeMirror.focus();
+        editor.panes.codeMirror.refresh();
+        DataProtector.disableDataProtection();
+        ready.resolve();
+      });
     }
 
     // set up save to automatically save + publish to makeAPI,
