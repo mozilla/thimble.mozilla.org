@@ -1,3 +1,3 @@
 [submodule "public/friendlycode/vendor/brackets"]
 	path = public/friendlycode/vendor/brackets
-	url = git@github.com:humphd/brackets.git
+	url = https://github.com/humphd/brackets.git

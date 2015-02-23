@@ -2,6 +2,7 @@
 node_modules
 thimble.sqlite
 .env
+.heroku
 fakes3
 bower_components
 .htaccess
