@@ -58,7 +58,7 @@ define(["backbone-events"], function(BackboneEvents) {
       latestSource = make;
 
       // Tell the iframe to load bramble
-      iframe.src = options.appUrl + "/friendlycode/vendor/brackets/src";
+      iframe.src = options.appUrl + "/friendlycode/vendor/brackets/dist";
       iframe.id = "webmaker-bramble";
 
       // Attach the iframe to the dom
