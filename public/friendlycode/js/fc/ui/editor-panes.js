@@ -22,6 +22,7 @@ define(function(require) {
       },
       dataProtector: options.dataProtector,
       appUrl: options.appUrl,
+      editorUrl: options.editorUrl,
       source: initialValue
     });
 
