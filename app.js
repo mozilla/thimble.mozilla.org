@@ -74,7 +74,15 @@ var appName = "thimble",
       secretKey: env.get('SESSION_SECRET'),
       domain: env.get('COOKIE_DOMAIN')
     }),
-    webmakerProxy = require('./lib/proxy')(env);
+    webmakerProxy = require('./lib/proxy')(env),
+
+    bracketsPath;
+
+if (env.get("NODE_ENV") === "development") {
+  bracketsPath = '/public/friendlycode/vendor/brackets/src';
+} else {
+  bracketsPath = '/public/friendlycode/vendor/brackets/dist';
+}
 
 require("./lib/extendnunjucks").extend(nunjucksEnv, nunjucks);
 
@@ -147,7 +155,15 @@ app.use(lessMiddleWare({
 }));
 
 app.use( express.static(tmpDir));
-app.use(express.static(path.join(__dirname, 'public')));
+
+// Allows us to embed our version of brackets
+// in an iframe
+app.use(function(req, res, next) {
+  res.set('X-Frame-Options', "SAMEORIGIN");
+  next();
+}, express.static(path.join(__dirname, bracketsPath)));
+
+app.use( express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
 app.use(express.static(path.join(__dirname, 'templates')));
 

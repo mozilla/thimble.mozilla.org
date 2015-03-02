@@ -15,6 +15,7 @@ define(function(require) {
   return function FriendlycodeEditor(options) {
     var publishURL = options.publishURL,
         pageToLoad = options.pageToLoad,
+        appUrl = options.appUrl,
         defaultContent = options.defaultContent || DefaultContentTemplate(),
         remixURLTemplate = options.remixURLTemplate ||
           location.protocol + "//" + location.host +
@@ -23,7 +24,9 @@ define(function(require) {
           container: options.container,
           allowJS: options.allowJS,
           previewLoader: options.previewLoader,
-          dataProtector: DataProtector
+          dataProtector: DataProtector,
+          appUrl: appUrl,
+          editorUrl: options.editorUrl
         }),
         makeDetails = options.makeDetails,
         ready = $.Deferred();
@@ -47,14 +50,16 @@ define(function(require) {
     });
 
     function doneLoading() {
-      editor.container.removeClass("friendlycode-loading");
-      editor.panes.codeMirror.clearHistory();
-      editor.toolbar.refresh();
-      editor.panes.codeMirror.reparse();
-      editor.panes.codeMirror.focus();
-      editor.panes.codeMirror.refresh();
-      DataProtector.disableDataProtection();
-      ready.resolve();
+      editor.panes.codeMirror.on("loaded", function() {
+        editor.container.removeClass("friendlycode-loading");
+        editor.panes.codeMirror.clearHistory();
+        editor.toolbar.refresh();
+        editor.panes.codeMirror.reparse();
+        editor.panes.codeMirror.focus();
+        editor.panes.codeMirror.refresh();
+        DataProtector.disableDataProtection();
+        ready.resolve();
+      });
     }
 
     // set up save to automatically save + publish to makeAPI,
@@ -75,21 +80,22 @@ define(function(require) {
 
     if (!pageManager.currentPage()) {
       setTimeout(function() {
-        editor.panes.codeMirror.setValue(defaultContent);
+        editor.panes.codeMirror.init(defaultContent);
         doneLoading();
       }, 0);
-    } else
+    } else {
       publisher.loadCode(pageManager.currentPage(), function(err, data, url) {
         if (err) {
           modals.showErrorDialog({
             text: Localized.get('page-load-err')
           });
         } else {
-          editor.panes.codeMirror.setValue(data);
+          editor.panes.codeMirror.init(data);
           publishUI.setCurrentURL(url);
           doneLoading();
         }
       });
+    }
 
     return {
       editor: editor,

@@ -3,8 +3,9 @@
       previewLoader = document.getElementById("friendly-code").getAttribute("data-preview-loader"),
       pageToLoad = document.getElementById("friendly-code").getAttribute("data-page-to-load"),
       appUrl = document.getElementById("friendly-code").getAttribute("data-app-url"),
-      allowJS = document.getElementById("friendly-code").getAttribute("data-allow-js");
-      makeDetails = document.getElementById("friendly-code").getAttribute("data-make-details");
+      allowJS = document.getElementById("friendly-code").getAttribute("data-allow-js"),
+      makeDetails = document.getElementById("friendly-code").getAttribute("data-make-details"),
+      editorUrl = document.getElementById("friendly-code").getAttribute("data-editor-url");
 
   // unpack makedetails
   makeDetails = JSON.parse(decodeURIComponent(makeDetails));
@@ -97,7 +98,9 @@
       }),
       remixURLTemplate: appUrl + "/" + localeInfo_lang + "/project/\{\{VIEW_URL\}\}/edit",
       container: $("#bare-fc-holder"),
-      makeDetails: makeDetails
+      makeDetails: makeDetails,
+      appUrl: appUrl,
+      editorUrl: editorUrl
     });
 
     if (makeUrl) {

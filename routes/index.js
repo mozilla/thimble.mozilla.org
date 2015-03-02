@@ -29,6 +29,14 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
       userbarEndpoint = env.get("USERBAR"),
       webmaker = env.get("WEBMAKER_URL");
 
+  var editorURL;
+
+  if (env.get("NODE_ENV") === "development") {
+    editorURL = '/friendlycode/vendor/brackets/src';
+  } else {
+    editorURL = '/friendlycode/vendor/brackets/dist';
+  }
+
   return {
     index: function(req, res) {
       if (req.requestId) {
@@ -65,7 +73,8 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
         together: together,
         userbar: userbarEndpoint,
         webmaker: webmaker,
-        makedetails: makedetails
+        makedetails: makedetails,
+        editorURL: editorURL
       });
     },
 

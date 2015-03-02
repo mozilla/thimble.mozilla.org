@@ -99,7 +99,7 @@ define(function(require) {
         viewLink.attr("href", link);
       }
     }
-    panes.preview.on("change:viewlink", onChangeViewLink);
+    panes.codeMirror.on("change:viewlink", onChangeViewLink);
     onChangeViewLink( $('body').data('make-url') || false);
 
     // If the editor has no content, disable the save button.

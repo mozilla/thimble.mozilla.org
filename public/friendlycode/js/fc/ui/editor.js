@@ -17,7 +17,9 @@ define([
       value: value,
       allowJS: options.allowJS,
       previewLoader: options.previewLoader,
-      dataProtector: options.dataProtector
+      dataProtector: options.dataProtector,
+      appUrl: options.appUrl,
+      editorUrl: options.editorUrl
     });
     var toolbar = EditorToolbar({
       container: toolbarDiv,
