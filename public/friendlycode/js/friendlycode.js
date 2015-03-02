@@ -25,7 +25,8 @@ define(function(require) {
           allowJS: options.allowJS,
           previewLoader: options.previewLoader,
           dataProtector: DataProtector,
-          appUrl: appUrl
+          appUrl: appUrl,
+          editorUrl: options.editorUrl
         }),
         makeDetails = options.makeDetails,
         ready = $.Deferred();
