@@ -11,11 +11,12 @@ define(["backbone-events"], function(BackboneEvents) {
     "loaded": [],
     "viewlink": []
   };
+  var telegraph;
+  var iframe;
 
   function BrambleProxy(place, options) {
-    var iframe = document.createElement("iframe");
+    iframe = document.createElement("iframe");
     var latestSource = "(none)";
-    var telegraph;
 
     // Event listening for proxied event messages from our editor iframe.
     window.addEventListener("message", function(evt) {
@@ -69,6 +70,56 @@ define(["backbone-events"], function(BackboneEvents) {
       return place;
     }
   }
+
+  
+  BrambleProxy.prototype.undo = function () {
+    this.onButton("_undo");
+  };
+  BrambleProxy.prototype.redo = function () {
+    this.onButton("_redo");
+  };
+  /* This function handles all the button presses thimble has,
+   * It takes in 2 parameters, a string representing the command, and an object called options
+   * It packages a JSON object and sends it over post to thimble proxy inside brackets
+   * categoryCommand refers to what type of command should be fired inside brackets, these types being:
+   *    menuCommand: Menu Command, refers to any command outlined in the menu
+   *    viewCommand: View Command, refers to commands inside the ViewHandler
+   * command is the function that will be run within brackets
+   * params is used in conjunction with vieCommand to send extra paramters needed for viewCommand
+   */
+  BrambleProxy.prototype.onButton = function(button, options) {
+    var commandCategory = "menuCommand";
+    var command;
+    var params;
+    if (button === "_undo") {
+      command = "EDIT_UNDO";
+    }
+    else if (button === "_redo") {
+      command = "EDIT_REDO";
+    }
+    else if (button === "_fontSize") {
+      commandCategory = "viewCommand";
+      command = "setFontSize";
+      if (options.data === "small") {
+        params =  "10";
+      }
+      else if (options.data === "normal") {
+        params =  "12";
+      }
+      else if (options.data === "large") {
+        params =  "18";
+      }
+      params+= "px";
+    }
+
+    telegraph.postMessage(JSON.stringify({
+      commandCategory: commandCategory,
+      command: command,
+      params: params
+    }), "*");
+  };
+  
+
 
   BrambleProxy.prototype.on = function on(event, callback) {
     if (event === "change") {
