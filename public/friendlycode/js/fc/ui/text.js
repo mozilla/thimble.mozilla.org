@@ -51,6 +51,7 @@ define(["jquery", "fc/prefs", "analytics"], function($, Preferences, analytics) 
         label: textSize
       });
       Preferences.set("textSize", textSize);
+      codeMirror.onButton("_fontSize", { data : textSize } );
       Preferences.save();
       menu.hide();
     });
