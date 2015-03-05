@@ -2,7 +2,7 @@
 // (like publishing) and bramble's codemirror instance. It was designed to map to existing
 // friendlycode use of codemirror, with the exception of duplicate functionality
 // between bramble and friendlycode that bramble already provides (or will)
-define(["backbone-events"], function(BackboneEvents) {
+define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
   "use strict";
 
   var eventCBs = {
@@ -17,7 +17,8 @@ define(["backbone-events"], function(BackboneEvents) {
   function BrambleProxy(place, options) {
     iframe = document.createElement("iframe");
     var latestSource = "(none)";
-
+    var prefSize = Preferences.get("textSize");
+    var that = this;
     // Event listening for proxied event messages from our editor iframe.
     window.addEventListener("message", function(evt) {
       // Set the communication channel to our iframe
@@ -46,6 +47,7 @@ define(["backbone-events"], function(BackboneEvents) {
         eventCBs["loaded"].forEach(function(cb) {
           cb();
         });
+        that.onButton("_fontSize", { data : prefSize });
         return;
       }
     });
@@ -87,7 +89,7 @@ define(["backbone-events"], function(BackboneEvents) {
    * command is the function that will be run within brackets
    * params is used in conjunction with vieCommand to send extra paramters needed for viewCommand
    */
-  BrambleProxy.prototype.onButton = function(button, options) {
+  BrambleProxy.prototype.onButton = function onButton(button, options) {
     var commandCategory = "menuCommand";
     var command;
     var params;
