@@ -19,6 +19,7 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
     var latestSource = "(none)";
     var prefSize = Preferences.get("textSize");
     var that = this;
+    
     // Event listening for proxied event messages from our editor iframe.
     window.addEventListener("message", function(evt) {
       // Set the communication channel to our iframe
@@ -89,7 +90,7 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
    * command is the function that will be run within brackets
    * params is used in conjunction with vieCommand to send extra paramters needed for viewCommand
    */
-  BrambleProxy.prototype.onButton = function onButton(button, options) {
+  BrambleProxy.prototype.onButton = function(button, options) {
     var commandCategory = "menuCommand";
     var command;
     var params;
