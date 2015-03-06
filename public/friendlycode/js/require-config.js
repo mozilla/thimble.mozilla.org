@@ -36,7 +36,7 @@ var require = {
   paths: {
     // Vendor paths
     "jquery.min": "../vendor/jquery.min",
-    "jquery-ui": "../vendor/jquery-ui.min",
+    "jquery-ui": "../vendor/jquery-ui-1.11.3.custom/jquery-ui.min",
     "jquery-tipsy": "../vendor/jquery.tipsy",
     "jquery-slowparse": "../vendor/slowparse/src/shim/errors.jquery",
     "underscore": "../vendor/underscore.min",
