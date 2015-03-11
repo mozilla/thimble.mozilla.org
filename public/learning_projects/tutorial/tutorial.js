@@ -142,6 +142,8 @@ $.fn.tutorial = function(options){
         .click(generateEventHandler("scroll"));
 
       window.addEventListener('message', function(event) {
+        var data;
+
         try {
           data = JSON.parse(event.data);
           if(data.type && data.type === "tutorial" && !data.action) {

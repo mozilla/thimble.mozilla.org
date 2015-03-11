@@ -19,7 +19,35 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
     var latestSource = "(none)";
     var prefSize = Preferences.get("textSize");
     var that = this;
-    
+    var lastLine = 0;
+    var scrollInfo;
+
+    function communicateEditMessage(fn) {
+      var argLen = arguments.length;
+      var callback = typeof arguments[argLen - 1] === "function" ? arguments[argLen - 1] : undefined;
+      var params = Array.prototype.slice.call(arguments, 1, callback ? argLen - 1 : argLen);
+
+      if(callback) {
+        window.addEventListener("message", function editReceiver(e) {
+          var message = JSON.parse(e.data);
+
+          if(message.type !== "bramble:edit" || message.fn !== fn) {
+            return;
+          }
+
+          window.removeEventListener("message", editReceiver);
+
+          callback(message.value);
+        });
+      }
+
+      telegraph.postMessage(JSON.stringify({
+        type: "bramble:edit",
+        fn: fn,
+        params: params
+      }), "*");
+    }
+
     // Event listening for proxied event messages from our editor iframe.
     window.addEventListener("message", function(evt) {
       // Set the communication channel to our iframe
@@ -27,16 +55,22 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
       // by sending a postMessage
       telegraph = iframe.contentWindow;
       var message = JSON.parse(evt.data);
+
       if (typeof message.type !== "string" || message.type.indexOf("bramble") === -1) {
         return;
       }
+
       if (message.type === "bramble:change") {
         latestSource = message.sourceCode;
+        lastLine = message.lastLine;
+        if(message.scrollInfo) scrollInfo = message.scrollInfo;
+
         eventCBs["change"].forEach(function(cb) {
           cb();
         });
         return;
       }
+
       if (message.type === "bramble:init") {
         telegraph.postMessage(JSON.stringify({
           type: "bramble:init",
@@ -44,6 +78,7 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
         }), "*");
         return;
       }
+
       if (message.type === "bramble:loaded") {
         eventCBs["loaded"].forEach(function(cb) {
           cb();
@@ -51,11 +86,52 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
         that.onButton("_fontSize", { data : prefSize });
         return;
       }
+
+      if (message.type === "bramble:viewportChange") {
+        scrollInfo = message.scrollInfo;
+      }
     });
 
     // Create CodeMirror-like interface for friendlycode to use
     this.getValue = function() {
       return latestSource;
+    };
+
+    // Stub for CodeMirror's method to get the last line in the editor
+    this.lastLine = function() {
+      return lastLine;
+    };
+
+    this.getScrollInfo = function() {
+      return scrollInfo;
+    };
+
+    this.lineAtHeight = function(height, mode, callback) {
+      communicateEditMessage("lineAtHeight", height, mode, callback);
+    };
+
+    this.setGutterMarker = function(line, gutterID, element, callback) {
+      communicateEditMessage("setGutterMarker", line, gutterID, element, callback);
+    };
+
+    this.addLineClass = function(line, where, cssClass, callback) {
+      communicateEditMessage("addLineClass", line, where, cssClass, callback);
+    };
+
+    this.removeLineClass = function(line, where, cssClass, callback) {
+      communicateEditMessage("removeLineClass", line, where, cssClass, callback);
+    };
+
+    this.heightAtLine = function(line, mode, callback) {
+      communicateEditMessage("heightAtLine", line, mode, callback);
+    };
+
+    this.getLineHeight = function(selector, callback) {
+      communicateEditMessage("getLineHeight", selector, callback);
+    };
+
+    this.scrollTo = function(x, y) {
+      communicateEditMessage("scrollTo", x, y);
     };
 
     this.init = function(make) {
@@ -67,20 +143,21 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
 
       // Attach the iframe to the dom
       place.append(iframe);
-    }
+    };
 
     this.getWrapperElement = function() {
       return place;
-    }
+    };
   }
 
-  
+
   BrambleProxy.prototype.undo = function () {
     this.onButton("_undo");
   };
   BrambleProxy.prototype.redo = function () {
     this.onButton("_redo");
   };
+
   /* This function handles all the button presses thimble has,
    * It takes in 2 parameters, a string representing the command, and an object called options
    * It packages a JSON object and sends it over post to thimble proxy inside brackets
@@ -94,24 +171,23 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
     var commandCategory = "menuCommand";
     var command;
     var params;
+
     if (button === "_undo") {
       command = "EDIT_UNDO";
-    }
-    else if (button === "_redo") {
+    } else if (button === "_redo") {
       command = "EDIT_REDO";
-    }
-    else if (button === "_fontSize") {
+    } else if (button === "_fontSize") {
       commandCategory = "viewCommand";
       command = "setFontSize";
+
       if (options.data === "small") {
         params =  "10";
-      }
-      else if (options.data === "normal") {
+      } else if (options.data === "normal") {
         params =  "12";
-      }
-      else if (options.data === "large") {
+      } else if (options.data === "large") {
         params =  "18";
       }
+
       params+= "px";
     }
 
@@ -121,8 +197,6 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
       params: params
     }), "*");
   };
-  
-
 
   BrambleProxy.prototype.on = function on(event, callback) {
     if (event === "change") {
