@@ -3,8 +3,9 @@
 // for extension points to hook into.
 define([
   "./bramble-proxy",
-  "./URLProxy"
-], function(CodeMirrorProxy, URLProxy) {
+  "./URLProxy",
+  "jquery"
+], function(CodeMirrorProxy, URLProxy, $) {
   "use strict";
 
   /**
