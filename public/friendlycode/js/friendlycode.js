@@ -54,7 +54,6 @@ define(function(require) {
         editor.container.removeClass("friendlycode-loading");
         editor.panes.codeMirror.clearHistory();
         editor.toolbar.refresh();
-        editor.panes.codeMirror.reparse();
         editor.panes.codeMirror.focus();
         editor.panes.codeMirror.refresh();
         DataProtector.disableDataProtection();

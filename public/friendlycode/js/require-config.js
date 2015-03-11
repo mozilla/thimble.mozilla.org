@@ -21,10 +21,6 @@ var require = {
       deps: ["jquery"],
       exports: 'jQuery'
     },
-    "jquery-slowparse": {
-      deps: ["jquery"],
-      exports: "jQuery"
-    },
     backbone: {
       deps: ["underscore", "jquery"],
       exports: function() {
@@ -32,16 +28,13 @@ var require = {
       }
     }
   },
-  packages: ['slowparse-errors'],
   paths: {
     // Vendor paths
     "jquery.min": "../vendor/jquery.min",
     "jquery-ui": "../vendor/jquery-ui-1.11.3.custom/jquery-ui.min",
     "jquery-tipsy": "../vendor/jquery.tipsy",
-    "jquery-slowparse": "../vendor/slowparse/src/shim/errors.jquery",
     "underscore": "../vendor/underscore.min",
     "backbone": "../vendor/backbone.min",
-    "slowparse": "../vendor/slowparse",
     // some independent functions
     "text": "../vendor/require.text",
     "i18n": "../vendor/require.i18n",

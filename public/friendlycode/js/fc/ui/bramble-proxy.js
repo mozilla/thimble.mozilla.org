@@ -2,6 +2,7 @@
 // (like publishing) and bramble's codemirror instance. It was designed to map to existing
 // friendlycode use of codemirror, with the exception of duplicate functionality
 // between bramble and friendlycode that bramble already provides (or will)
+/*global define */
 define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
   "use strict";
 
@@ -206,7 +207,7 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
     } else if(event === "loaded") {
       eventCBs.loaded.push(callback);
     } else if(event === "change:viewlink") {
-      eventCBs.viewlink.push(callback)
+      eventCBs.viewlink.push(callback);
     }
   };
 
@@ -214,20 +215,10 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
   // risk breaking Thimble's functionality,
   // but with a proper code audit they'll no
   // longer be needed
-  function empty() {};
+  function empty() {}
   BrambleProxy.prototype.refresh = empty;
   BrambleProxy.prototype.clearHistory = empty;
   BrambleProxy.prototype.focus = empty;
-
-  BrambleProxy.signal = function signal(proxyInstance, eventType, data) {
-    eventCBs["reparse"].forEach(function (cb) {
-      cb({
-        error: data.error,
-        sourceCode: data.sourceCode,
-        document: data.document
-      });
-    });
-  };
 
   // Called to trigger an update to the Thimble link
   // to view this make separate from the editor.

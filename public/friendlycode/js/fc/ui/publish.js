@@ -1,5 +1,4 @@
 define([
-    "slowparse/slowparse",
     "jquery.min",
     "backbone-events",
     "./social-media",
@@ -11,7 +10,7 @@ define([
     "analytics",
     "./URLProxy"
   ],
-  function (slowparse, $, BackboneEvents, createSocialMedia, DetailsForm, Make, confirmDialogTemplate, publishDialogTemplate, localized, analytics, URLProxy) {
+  function ($, BackboneEvents, createSocialMedia, DetailsForm, Make, confirmDialogTemplate, publishDialogTemplate, localized, analytics, URLProxy) {
   "use strict";
 
   function makeSharingHotLoader(options) {
@@ -77,7 +76,7 @@ define([
             publishErrorOccurred = false;
 
         // perform URL replacements for any http-on-https URLs
-        var result = slowparse.HTML(document, sourceCode);
+        var result = {};
         URLProxy.proxyURLs(sourceCode, result.warnings, function(proxied) {
 
           publisher.saveCode({
