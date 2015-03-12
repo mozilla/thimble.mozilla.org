@@ -6,13 +6,6 @@
  * [1] http://www.stevesouders.com/blog/2009/04/09/dont-use-import/
  */
 
-@import url(../vendor/codemirror3/lib/codemirror.css);
-
-@import url(jsbin-codemirror-theme.css);
-@import url(tipsy.css);
-@import url(ubuntumono/stylesheet.css);
-@import url(opensymbolcropped/stylesheet.css);
-@import url(opensans/stylesheet.css);
 @import url(editor.css);
 @import url(errorhelp.css);
 @import url(modals.css);
