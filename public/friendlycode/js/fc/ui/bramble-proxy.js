@@ -84,7 +84,8 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
         eventCBs["loaded"].forEach(function(cb) {
           cb();
         });
-        that.onButton("_fontSize", { data : prefSize });
+        that.executeCommand("_fontSize", { data : prefSize });
+        that.executeCommand("_spaceUnits", { data : 2 });
         return;
       }
 
@@ -153,10 +154,10 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
 
 
   BrambleProxy.prototype.undo = function () {
-    this.onButton("_undo");
+    this.executeCommand("_undo");
   };
   BrambleProxy.prototype.redo = function () {
-    this.onButton("_redo");
+    this.executeCommand("_redo");
   };
 
   /* This function handles all the button presses thimble has,
@@ -168,7 +169,7 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
    * command is the function that will be run within brackets
    * params is used in conjunction with vieCommand to send extra paramters needed for viewCommand
    */
-  BrambleProxy.prototype.onButton = function(button, options) {
+  BrambleProxy.prototype.executeCommand = function(button, options) {
     var commandCategory = "menuCommand";
     var command;
     var params;
@@ -180,7 +181,6 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
     } else if (button === "_fontSize") {
       commandCategory = "viewCommand";
       command = "setFontSize";
-
       if (options.data === "small") {
         params =  "10";
       } else if (options.data === "normal") {
@@ -188,8 +188,11 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
       } else if (options.data === "large") {
         params =  "18";
       }
-
       params+= "px";
+    } else if (button === "_spaceUnits") {
+      commandCategory = "editorCommand";
+      command = "setSpaceUnits";
+      params = options.data;
     }
 
     telegraph.postMessage(JSON.stringify({
@@ -215,7 +218,7 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
   // risk breaking Thimble's functionality,
   // but with a proper code audit they'll no
   // longer be needed
-  function empty() {}
+  function empty() {};
   BrambleProxy.prototype.refresh = empty;
   BrambleProxy.prototype.clearHistory = empty;
   BrambleProxy.prototype.focus = empty;
