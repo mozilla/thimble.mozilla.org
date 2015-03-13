@@ -30,7 +30,7 @@ var require = {
   },
   paths: {
     // Vendor paths
-    "jquery.min": "../vendor/jquery.min",
+    "jquery.min": "https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min",
     "jquery-ui": "../vendor/jquery-ui-1.11.3.custom/jquery-ui.min",
     "jquery-tipsy": "../vendor/jquery.tipsy",
     "underscore": "../vendor/underscore.min",
