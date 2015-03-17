@@ -132,7 +132,7 @@ module.exports = function( grunt ) {
                 // clarity. Their actual values
                 // will be set by the `publish` task.
                 branch: GIT_BRANCH
-            },
+            }
         }
     }
   });

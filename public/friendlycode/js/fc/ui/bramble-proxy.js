@@ -218,7 +218,7 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
   // risk breaking Thimble's functionality,
   // but with a proper code audit they'll no
   // longer be needed
-  function empty() {};
+  function empty() {}
   BrambleProxy.prototype.refresh = empty;
   BrambleProxy.prototype.clearHistory = empty;
   BrambleProxy.prototype.focus = empty;
