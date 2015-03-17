@@ -41,8 +41,13 @@
     "grunt-contrib-csslint": "0.1.2",
     "grunt-contrib-jshint": "0.4.3",
     "grunt-execute": "0.1.5",
+    "grunt-git": "^0.3.4",
     "grunt-lesslint": "1.1.13",
-    "jsdom": "0.10.1"
+    "grunt-npm": "git://github.com/sedge/grunt-npm.git#branchcheck",
+    "grunt-update-submodules": "^0.4.1",
+    "jit-grunt": "^0.9.1",
+    "jsdom": "0.10.1",
+    "time-grunt": "^1.1.0"
   },
   "scripts": {
     "postinstall": "node_modules/.bin/bower install",

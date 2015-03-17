@@ -1,4 +1,20 @@
 module.exports = function( grunt ) {
+  // Make grunt auto-load 3rd party tasks
+  // and show the elapsed time of each task when
+  // it runs
+  require('time-grunt')(grunt);
+  require('jit-grunt')(grunt, {
+    checkBranch: 'grunt-npm',
+    gitadd: 'grunt-git'
+  });
+
+  var habitat = require('habitat');
+  habitat.load();
+  env = new habitat();
+
+  var GIT_BRANCH = env.get('THIMBLE_MAIN_BRANCH');
+  var GIT_REMOTE = env.get('THIMBLE_MAIN_REMOTE');
+
   grunt.initConfig({
     pkg: grunt.file.readJSON( "package.json" ),
 
@@ -78,13 +94,81 @@ module.exports = function( grunt ) {
           "public/friendlycode/vendor/slowparse/test.js"
         ]
       }
+    },
+
+    // Bramble tasks
+    'npm-checkBranch': {
+        options: {
+            branch: GIT_BRANCH
+        }
+    },
+    "update_submodules": {
+        publish: {
+            options: {
+                params: "--remote -- public/friendlycode/vendor/brackets"
+            }
+        }
+    },
+    gitcommit: {
+        module: {
+            options: {
+                // This is replaced during the 'publish' task
+                message: "Placeholder"
+            }
+        }
+    },
+    gitadd: {
+        modules: {
+            files: {
+                src: ['./public/friendlycode/vendor/brackets']
+            }
+        }
+    },
+    gitpush: {
+        smart: {
+            options: {
+                remote: GIT_REMOTE,
+                // These options are left in for
+                // clarity. Their actual values
+                // will be set by the `publish` task.
+                branch: GIT_BRANCH
+            },
+        }
     }
   });
 
-  grunt.loadNpmTasks( "grunt-contrib-csslint" );
-  grunt.loadNpmTasks( "grunt-lesslint" );
-  grunt.loadNpmTasks( "grunt-contrib-jshint" );
-  grunt.loadNpmTasks( "grunt-execute" );
+  // Thimble-task: smartPush
+  //   Checks out to the branch provided as a target.
+  //   Takes:
+  //    [branch] - The branch to push to
+  //    [force] - If true, forces a push
+  grunt.registerTask('smartPush', function(branch, force) {
+      force = force == "true" ? true : false;
+
+      grunt.config('gitpush.smart.options.branch', branch);
+      grunt.config('gitpush.smart.options.force', force);
+      grunt.task.run('gitpush:smart');
+  });
+
+
+  // Thimble-task: update
+  //   Updates the brackets submodule, committing and
+  //   pushing the result.
+  grunt.registerTask( "update", function() {
+    var date = new Date(Date.now()).toString();
+    grunt.config("gitcommit.module.options.message", "Submodule update on " + date);
+
+    grunt.task.run([
+        // Confirm we're ready to start
+        'checkBranch',
+
+        // Update submodules, commit and push to "master"
+        'update_submodules:publish',
+        'gitadd:modules',
+        'gitcommit:module',
+        'smartPush:' + GIT_BRANCH + ":false"
+    ]);
+  });
 
   grunt.registerTask( "default", [ "csslint", "jshint", "execute", "lesslint" ]);
 };
