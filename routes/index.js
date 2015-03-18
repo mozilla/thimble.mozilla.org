@@ -29,12 +29,13 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
       userbarEndpoint = env.get("USERBAR"),
       webmaker = env.get("WEBMAKER_URL");
 
+  var editorHOST = env.get("BRAMBLE_URI");
   var editorURL;
 
   if (env.get("NODE_ENV") === "development") {
-    editorURL = '/friendlycode/vendor/brackets/src';
+    editorURL = env.get("BRAMBLE_URI") + '/src';
   } else {
-    editorURL = '/friendlycode/vendor/brackets/dist';
+    editorURL = env.get("BRAMBLE_URI") + '/dist';
   }
 
   return {
@@ -74,7 +75,8 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
         userbar: userbarEndpoint,
         webmaker: webmaker,
         makedetails: makedetails,
-        editorURL: editorURL
+        editorURL: editorURL,
+        editorHOST: editorHOST
       });
     },
 

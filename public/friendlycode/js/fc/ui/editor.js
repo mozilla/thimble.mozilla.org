@@ -18,8 +18,8 @@ define([
       allowJS: options.allowJS,
       previewLoader: options.previewLoader,
       dataProtector: options.dataProtector,
-      appUrl: options.appUrl,
-      editorUrl: options.editorUrl
+      editorUrl: options.editorUrl,
+      editorHost: options.editorHost
     });
     var toolbar = EditorToolbar({
       container: toolbarDiv,

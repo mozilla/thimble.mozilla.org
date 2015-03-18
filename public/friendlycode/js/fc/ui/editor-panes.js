@@ -13,8 +13,9 @@ define(function(require) {
     // This is not an actual codemirror instance. See: bramble-proxy.js
     var codeMirror = self.codeMirror = ParsingCodeMirror(editor, {
       dataProtector: options.dataProtector,
-      appUrl: options.appUrl,
+      editorHost: options.editorHost,
       editorUrl: options.editorUrl,
+      appUrl: options.appUrl,
       source: initialValue
     });
 

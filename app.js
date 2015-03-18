@@ -92,7 +92,8 @@ nunjucksEnv.express(app);
 app.use(middleware.addCSP({
   personaHost: env.get('PERSONA_HOST'),
   previewLoader: env.get('PREVIEW_LOADER'),
-  togetherJS: env.get('TOGETHERJS')
+  togetherJS: env.get('TOGETHERJS'),
+  brambleHost: env.get('BRAMBLE_URI')
 }));
 
 // Express settings

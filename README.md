@@ -30,9 +30,19 @@ git clone git@github.com:[yourname]/thimble.webmaker.org.git --recursive
 
 5) [make-valet](https://github.com/mozilla/make-valet)
 
+6) A way to statically serve the `/public/vendor/friendlycode/brackets` directory (examples below)
+
 You can now run Thimble from the thimble.webmaker.org directory using
 
 ```node app```
+
+and can serve the brackets application in a variety of ways:
+
+```cd public/vendor/friendlycode/brackets && python -m SimpleHTTPServer```
+or
+```npm install -g live-server && cd public/vendor/friendlycode/brackets && live-server```
+
+**NOTE:** Pay special attention to the ENV variable for this (`BRACKETS_URI`), since it must point at the url of the local server you run to serve the brackets resources
 
 Finally, there is a special variable that enables an additional route
 in the app for testing content deletion, `DELETE_ENABLED`. See app.js

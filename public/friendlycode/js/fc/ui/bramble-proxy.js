@@ -23,6 +23,8 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
     var lastLine = 0;
     var scrollInfo;
 
+    var editorHost = this.editorHost = options.editorHost;
+
     function communicateEditMessage(fn) {
       var argLen = arguments.length;
       var callback = typeof arguments[argLen - 1] === "function" ? arguments[argLen - 1] : undefined;
@@ -31,6 +33,12 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
       if(callback) {
         window.addEventListener("message", function editReceiver(e) {
           var message = JSON.parse(e.data);
+
+          // Make sure we only take postMessages seriously
+          // when they come from our editor
+          if (e.origin !== editorHost) {
+            return;
+          }
 
           if(message.type !== "bramble:edit" || message.fn !== fn) {
             return;
@@ -46,7 +54,7 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
         type: "bramble:edit",
         fn: fn,
         params: params
-      }), "*");
+      }), editorHost);
     }
 
     // Event listening for proxied event messages from our editor iframe.
@@ -56,6 +64,12 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
       // by sending a postMessage
       telegraph = iframe.contentWindow;
       var message = JSON.parse(evt.data);
+
+      // Make sure we only take postMessages seriously
+      // when they come from our editor
+      if (evt.origin !== editorHost) {
+        return;
+      }
 
       if (typeof message.type !== "string" || message.type.indexOf("bramble") === -1) {
         return;
@@ -76,7 +90,7 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
         telegraph.postMessage(JSON.stringify({
           type: "bramble:init",
           source: latestSource
-        }), "*");
+        }), editorHost);
         return;
       }
 
@@ -140,7 +154,7 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
       latestSource = make;
 
       // Tell the iframe to load bramble
-      iframe.src = options.appUrl + options.editorUrl;
+      iframe.src = options.editorUrl;
       iframe.id = "webmaker-bramble";
 
       // Attach the iframe to the dom
@@ -151,7 +165,6 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
       return place;
     };
   }
-
 
   BrambleProxy.prototype.undo = function () {
     this.executeCommand("_undo");
@@ -199,7 +212,7 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
       commandCategory: commandCategory,
       command: command,
       params: params
-    }), "*");
+    }), this.editorHost);
   };
 
   BrambleProxy.prototype.on = function on(event, callback) {
