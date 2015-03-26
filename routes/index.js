@@ -4,6 +4,7 @@
 var moment = require("moment");
 var i18n = require("webmaker-i18n");
 var langmap = i18n.getAllLocaleCodes();
+var url = require("url");
 
 // Content-fetching function used for generating the output
 // on http://[...]/data routes via the index.rawData function.
@@ -29,7 +30,11 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
       userbarEndpoint = env.get("USERBAR"),
       webmaker = env.get("WEBMAKER_URL");
 
-  var editorHOST = env.get("BRAMBLE_URI");
+  // We make sure to grab just the protocol and hostname for
+  // postmessage security.
+  var editorHOST = url.parse(env.get("BRAMBLE_URI"));
+  editorHOST = editorHOST.protocol +"//"+ editorHOST.hostname;
+
   var editorURL;
 
   if (env.get("NODE_ENV") === "development") {
