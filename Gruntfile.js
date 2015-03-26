@@ -161,7 +161,7 @@ module.exports = function( grunt ) {
     if (remote) {
       grunt.config("gitpush.smart.remote", remote);
     }
-    var branch = branch || GIT_BRANCH;
+    branch = branch || GIT_BRANCH;
 
     grunt.task.run([
         // Confirm we're ready to start
