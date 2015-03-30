@@ -33,7 +33,7 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
   // We make sure to grab just the protocol and hostname for
   // postmessage security.
   var editorHOST = url.parse(env.get("BRAMBLE_URI"));
-  editorHOST = editorHOST.protocol +"//"+ editorHOST.hostname;
+  editorHOST = editorHOST.protocol +"//"+ editorHOST.host;
 
   var editorURL;
 
