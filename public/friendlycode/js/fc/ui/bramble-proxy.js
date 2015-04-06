@@ -98,6 +98,12 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
         eventCBs["loaded"].forEach(function(cb) {
           cb();
         });
+        
+        // This event is triggered when the reload button is clicked
+        document.querySelector(".reload-button").onclick = function() {
+          that.executeCommand("_reload");
+        };
+
         that.executeCommand("_fontSize", { data : prefSize });
         that.executeCommand("_spaceUnits", { data : 2 });
         return;
@@ -206,6 +212,8 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
       commandCategory = "editorCommand";
       command = "setSpaceUnits";
       params = options.data;
+    } else if (button === "_reload") { 
+      commandCategory = "reloadCommand";
     }
 
     telegraph.postMessage(JSON.stringify({
