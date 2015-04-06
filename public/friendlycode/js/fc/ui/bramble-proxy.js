@@ -184,7 +184,7 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
    * It packages a JSON object and sends it over post to thimble proxy inside brackets
    * categoryCommand refers to what type of command should be fired inside brackets, these types being:
    *    menuCommand: Menu Command, refers to any command outlined in the menu
-   *    viewCommand: View Command, refers to commands inside the ViewHandler
+   *    fontChange: font Change, refers to a method in which we use to change the font size
    * command is the function that will be run within brackets
    * params is used in conjunction with vieCommand to send extra paramters needed for viewCommand
    */
@@ -198,8 +198,8 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
     } else if (button === "_redo") {
       command = "EDIT_REDO";
     } else if (button === "_fontSize") {
-      commandCategory = "viewCommand";
-      command = "setFontSize";
+      commandCategory = "fontChange";
+      command = "VIEW_RESTORE_FONT_SIZE";
       if (options.data === "small") {
         params =  "10";
       } else if (options.data === "normal") {
@@ -207,7 +207,6 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
       } else if (options.data === "large") {
         params =  "18";
       }
-      params+= "px";
     } else if (button === "_spaceUnits") {
       commandCategory = "editorCommand";
       command = "setSpaceUnits";
