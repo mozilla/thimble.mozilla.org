@@ -104,6 +104,10 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
           that.executeCommand("_reload");
         };
 
+        document.getElementById("preview-run-js").onclick = function() {
+          that.executeCommand("_runJavascript");
+        };
+
         that.executeCommand("_fontSize", { data : prefSize });
         that.executeCommand("_spaceUnits", { data : 2 });
         return;
@@ -213,6 +217,9 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
       params = options.data;
     } else if (button === "_reload") { 
       commandCategory = "reloadCommand";
+    } else if (button === "_runJavascript") { 
+      commandCategory = "runJavascript";
+      command = document.getElementById('preview-run-js').checked;
     }
 
     telegraph.postMessage(JSON.stringify({
