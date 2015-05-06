@@ -117,11 +117,11 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
       });
 
       app.get( '/slowparse/spec/errors.base.html', function( req, res ) {
-        res.render('/slowparse/spec/errors.base.html');
+        res.render('slowparse/spec/errors.base.html');
       });
 
       app.get( '/slowparse/spec/errors.forbidjs.html', function( req, res ) {
-        res.render('/slowparse/spec/errors.forbidjs.html');
+        res.render('slowparse/spec/errors.forbidjs.html');
       });
     }
   };
