@@ -60,7 +60,8 @@ var appName = "thimble",
     messina,
     nunjucksEnv = new nunjucks.Environment([
       new nunjucks.FileSystemLoader('views'),
-      new nunjucks.FileSystemLoader('learning_projects')
+      new nunjucks.FileSystemLoader('learning_projects'),
+      new nunjucks.FileSystemLoader('bower_components')
     ], {
       autoescape: true
     }),
@@ -136,7 +137,7 @@ app.use(app.router);
 var optimize = (node_env !== "development"),
     tmpDir = path.join( require("os").tmpDir(), "mozilla.webmaker.org");
 
-app.use(lessMiddleWare({
+app.use(lessMiddleWare('public', {
   once: optimize,
   debug: !optimize,
   dest: tmpDir,

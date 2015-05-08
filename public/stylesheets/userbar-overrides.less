@@ -1,12 +1,20 @@
-@import "../../bower_components/makerstrap/less/build/makerstrap.complete.less";
-@makerstrap-bower-path: "../../bower_components";
+@bower-path: "../../bower_components";
 
-@import "../../bower_components/webmaker-login-ux/src/less/webmakerLogin";
+// Makerstrap things --
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700);
+@import url(https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
+// Makerstrap itself
+@makerstrap-bower-path: "../../../bower_components";
+@import "../../bower_components/makerstrap/less/makerstrap.less";
 
+// For webmaker-language-picker/styles/... dependencies:
+@base-location: "../../..";
+@colors-path: "@{base-location}/public/stylesheets";
+@language-bower-path: "@{base-location}/bower_components";
+
+// For other webmaker-xxx dependencies:
+@import "@{bower-path}/webmaker-login-ux/src/less/webmakerLogin";
 @import "@{bower-path}/webmaker-language-picker/styles/languages";
-@language-bower-path: "../../../bower_components"; // used from webmaker-language-picker/styles location
-@bower-path: "../../bower_components"; // used from public/stylesheets location
-@colors-path: "../../../public/stylesheets"; // used for colors.less from webmaker-language-picker/styles location
 
 #webmaker-nav .navbar {
   border-bottom: 1px solid #D3D3D3;
