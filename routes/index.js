@@ -84,7 +84,7 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
         userbar: userbarEndpoint,
         webmaker: webmaker,
         makedetails: makedetails,
-        editorURL: editorURL + queryString,
+        editorURL: editorURL + '/index.html' + queryString,
         editorHOST: editorHOST
       });
     },
