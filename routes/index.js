@@ -62,6 +62,10 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
         }));
       }
 
+      // We forward query string params down to the editor iframe so that
+      // it's easy to do things like enableExtensions/disableExtensions
+      var queryString = url.parse(req.url).search || '';
+
       res.render('index.html', {
         appname: appName,
         appURL: appURL,
@@ -80,7 +84,7 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
         userbar: userbarEndpoint,
         webmaker: webmaker,
         makedetails: makedetails,
-        editorURL: editorURL,
+        editorURL: editorURL + queryString,
         editorHOST: editorHOST
       });
     },
