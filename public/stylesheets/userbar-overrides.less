@@ -75,3 +75,57 @@ a#current-language {
   color: #000;
   text-decoration: none;
 }
+
+.webmaker-logo {
+    margin-left: 50px;
+}
+
+#new-thimble-corner-ribbon {
+  width: 250px;
+  background: #e43;
+  position: absolute;
+  top: 25px;
+  left: -80px;
+  text-align: center;
+  line-height: 35px;
+  letter-spacing: 1px;
+  color: #f0f0f0;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  z-index: 5;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#new-thimble-dialog {
+    position: absolute;
+    top: 85px;
+    left: 90px;
+    display:none;
+    width: 550px;
+    padding: 15px;
+    background-color: white;
+    z-index: 100;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    text-align: justify;
+}
+
+#new-thimble-dialog:after {
+  content:"";
+  position:absolute;
+  border-style:solid;
+  display:block;
+  width:0;
+  top:-20px; /* value = - border-top-width - border-bottom-width */
+  bottom:auto;
+  left:auto;
+  border-width:20px 0 0 20px; /* vary these values to change the angle of the vertex */
+  border-color:transparent #000000;
+}

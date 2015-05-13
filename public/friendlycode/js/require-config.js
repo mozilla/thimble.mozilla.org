@@ -126,7 +126,8 @@ var require = {
     "list": "/bower/listjs/dist/list.min",
     "fuzzySearch": "/bower/list.fuzzysearch.js/dist/list.fuzzysearch.min",
     "analytics": "/bower/webmaker-analytics/analytics",
-    "url-template": "/bower/url-template/lib/url-template"
+    "url-template": "/bower/url-template/lib/url-template",
+    "cookies-js": "/bower/cookies-js/dist/cookies.min"
   },
   config: {
     template: {
