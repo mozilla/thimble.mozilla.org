@@ -3,7 +3,7 @@ node_js:
 - '0.10'
 before_script:
 - npm install -g grunt-cli
-after_script:
+after_install:
 - npm run download-locales
 sudo: false
 cache:
