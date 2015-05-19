@@ -199,7 +199,7 @@ define(["jquery", "/external/make-api.js", "/external/requestAnimationFrameShim.
           resizeButton.click(function(){
             $("body").toggleClass('tutorial-large');
             $(".icon-resize-full, .icon-resize-small").toggleClass("icon-resize-full icon-resize-small");
-          });
+          }).click();
 
           showButton.click(function() {
             $("body").addClass("tutorial");
