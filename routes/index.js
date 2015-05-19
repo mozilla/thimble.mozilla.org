@@ -62,9 +62,16 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
         }));
       }
 
+      //We add the localization code to the query params through a URL object
+      //and set search prop to nothing forcing query to be used during url.format()
+      var urlObj = url.parse(req.url, true);
+      urlObj.search = "";
+      urlObj.query["locale"] = req.localeInfo.lang;
+      var thimbleUrl = url.format(urlObj);
+
       // We forward query string params down to the editor iframe so that
       // it's easy to do things like enableExtensions/disableExtensions
-      var queryString = url.parse(req.url).search || '';
+      var queryString = url.parse(thimbleUrl).search || '';
 
       res.render('index.html', {
         appname: appName,
