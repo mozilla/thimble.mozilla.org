@@ -32,11 +32,9 @@ var ajax = require('request'),
     WebmakerAuth = require('webmaker-auth'),
     wts = require('webmaker-translation-stats');
 
-habitat.load();
-
 var appName = "thimble",
     app = express(),
-    env = new habitat(),
+    env = require('./lib/environment'),
     node_env = env.get('NODE_ENV'),
     emulate_s3 = env.get('S3_EMULATION') || !env.get('S3_KEY'),
     WWW_ROOT = path.resolve(__dirname, 'public'),
@@ -53,7 +51,7 @@ var appName = "thimble",
     legacyDatabaseAPI = db('legacyproject', databaseOptions, env.get('LEGACY_DB')),
 
     allowJS = env.get("JAVASCRIPT_ENABLED", false),
-    middleware = require('./lib/middleware')(env),
+    middleware = require('./lib/middleware')(),
     errorhandling= require('./lib/errorhandling'),
     logger,
     make = makeAPI(env.get('make')),
@@ -64,19 +62,35 @@ var appName = "thimble",
     ], {
       autoescape: true
     }),
-    parameters = require('./lib/parameters')(env),
-    routes = require('./routes')( utils, env, nunjucksEnv, appName ),
-    webmakerAuth = new WebmakerAuth({
-      forceSSL: env.get('FORCE_SSL'),
-      loginHost: env.get('APP_HOSTNAME'),
-      loginURL: env.get('LOGIN_URL'),
-      authLoginURL: env.get('LOGIN_URL_WITH_AUTH'),
-      secretKey: env.get('SESSION_SECRET'),
-      domain: env.get('COOKIE_DOMAIN')
-    }),
-    webmakerProxy = require('./lib/proxy')(env),
+    parameters = require('./lib/parameters')(),
+    routes = require('./routes')( utils, nunjucksEnv, appName ),
+    webmakerProxy = require('./lib/proxy')(),
 
     bracketsPath;
+
+function configuredCookieSession() {
+  var options = {
+    key: "mozillaThimble",
+    secret: env.get('SESSION_SECRET'),
+    cookie: {
+      expires: false,
+      secure: env.get('FORCE_SSL')
+    },
+    proxy: true
+  };
+
+  var cookieSessionMiddleware = express.cookieSession(options);
+
+  // This is a work-around for cross-origin OPTIONS requests
+  // See https://github.com/senchalabs/connect/issues/323
+  return function (req, res, next) {
+    if (req.method.toLowerCase() === 'options') {
+      return next();
+    } else {
+      cookieSessionMiddleware(req, res, next);
+    }
+  };
+}
 
 if (env.get("NODE_ENV") === "development") {
   bracketsPath = '/public/friendlycode/vendor/brackets/src';
@@ -120,8 +134,8 @@ app.use(express.compress());
 app.use(express.json());
 app.use(express.urlencoded());
 
-app.use(webmakerAuth.cookieParser());
-app.use(webmakerAuth.cookieSession());
+app.use(express.cookieParser());
+app.use(configuredCookieSession());
 
 app.use( i18n.middleware({
   supported_languages: env.get( "SUPPORTED_LANGS" ),
@@ -188,18 +202,8 @@ app.param('oldid', parameters.oldid(legacyDatabaseAPI));
 // what do we do when a project request comes in by name (:name route)?
 app.param('name', parameters.name);
 
-// Webmaker SSO
-app.post( "/authenticate", webmakerAuth.handlers.authenticate );
-app.post( "/logout", webmakerAuth.handlers.logout );
-app.post( "/verify", webmakerAuth.handlers.verify );
-
-app.post( "/auth/v2/create", webmakerAuth.handlers.createUser );
-app.post( "/auth/v2/uid-exists", webmakerAuth.handlers.uidExists );
-app.post( "/auth/v2/request", webmakerAuth.handlers.request );
-app.post( "/auth/v2/authenticateToken", webmakerAuth.handlers.authenticateToken );
-app.post( "/auth/v2/verify-password", webmakerAuth.handlers.verifyPassword );
-app.post( "/auth/v2/request-reset-code", webmakerAuth.handlers.requestResetCode );
-app.post( "/auth/v2/reset-password", webmakerAuth.handlers.resetPassword );
+// oauth2
+app.get("/callback", routes.oauth2Callback);
 
 // resource proxying for http-on-https
 webmakerProxy(app, middleware.checkForAuth);
@@ -207,6 +211,7 @@ webmakerProxy(app, middleware.checkForAuth);
 // Main page
 app.get('/',
         middleware.setNewPageOperation,
+        middleware.setUserIfTokenExists,
         routes.index );
 
 // Raw data route, for loading pages to remix
@@ -347,7 +352,6 @@ if (!!env.get("DELETE_ENABLED")) {
   **/
   app.get('/project/:id/delete', middleware.deleteProject(databaseAPI));
 }
-
 
 // run server
 app.listen(env.get("PORT"), function(){
