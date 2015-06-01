@@ -98,7 +98,7 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
         eventCBs["loaded"].forEach(function(cb) {
           cb();
         });
-        
+
         // This event is triggered when the reload button is clicked
         document.querySelector(".reload-button").onclick = function() {
           that.executeCommand("_reload");
@@ -215,11 +215,13 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
       commandCategory = "editorCommand";
       command = "setSpaceUnits";
       params = options.data;
-    } else if (button === "_reload") { 
+    } else if (button === "_reload") {
       commandCategory = "reloadCommand";
-    } else if (button === "_runJavascript") { 
+    } else if (button === "_runJavascript") {
       commandCategory = "runJavascript";
       command = document.getElementById('preview-run-js').checked;
+    } else if (button === "_switchTheme") {
+      command 
     }
 
     telegraph.postMessage(JSON.stringify({
