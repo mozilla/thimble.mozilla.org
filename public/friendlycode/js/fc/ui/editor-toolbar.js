@@ -132,6 +132,12 @@ define(function(require) {
     // as publishUI.start(...)
     self.setStartPublish(null);
 
+    // Toggle theme
+    var themeButton = navOptions.find(".theme-button");
+    themeButton.click(function() {
+      codeMirror.executeCommand("_switchTheme");
+    });
+
     return self;
   };
 });
