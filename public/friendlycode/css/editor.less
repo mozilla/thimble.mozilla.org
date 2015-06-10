@@ -1,5 +1,5 @@
 @headerHeight: 60px;
-@toolbarHeight: 65px;
+@toolbarHeight: 60px;
 
 .friendlycode-base {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -23,18 +23,16 @@
   z-index: 2;
   top: @headerHeight;
 
-  height: 60px;
+  height: @toolbarHeight;
   width: 100%;
   margin: 0;
   padding: 0;
--webkit-box-shadow: 0px 9px 7px -5px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 9px 7px -5px rgba(0,0,0,0.75);
-box-shadow: 0px 9px 7px -5px rgba(0,0,0,0.75);
+-webkit-box-shadow: 0 8px 6px -6px #999;
+       -moz-box-shadow: 0 8px 6px -6px #999;
+            box-shadow: 0 8px 6px -6px #999;
 }
 
-.nav-options {
-  font-size: 12px;
-
+.editor-nav {
   position: absolute;
   display: block;
   top: 0;
@@ -42,7 +40,8 @@ box-shadow: 0px 9px 7px -5px rgba(0,0,0,0.75);
   height: 0;
 }
 
-.editor-pane-nav-options {
+/* ------ LEFT PANE ------ */
+.editor-pane-nav {
   position: absolute;
   top: 0;
   left: 0;
@@ -50,16 +49,24 @@ box-shadow: 0px 9px 7px -5px rgba(0,0,0,0.75);
   z-index: 2;
   height: @toolbarHeight;
   background-color: #3F3F3F;
+  color: #757575;
+  line-height: @toolbarHeight;
 }
 
 .editor-pane-nav-title {
   color: #9D9D9D;
   font-weight: bold;
   font-size: 1em;
-  line-height: 65px;
 }
 
-.preview-pane-nav-options {
+#editor-pane-nav-fileview {
+  background-color: #1E1E1E;
+  width: 35px;
+  height: 35px;
+}
+
+/* ------ RIGHT PANE ------ */
+.preview-pane-nav {
   position: absolute;
   top: 0;
   left: 50%;
@@ -67,85 +74,40 @@ box-shadow: 0px 9px 7px -5px rgba(0,0,0,0.75);
   height: @toolbarHeight;
   z-index: 2;
   background-color: white;
+  line-height: @toolbarHeight;
 }
 
+.preview-pane-nav-title {
+  color: #A9A9A9;
+  font-weight: bold;
+  font-size: 1em;
+}
 
+/* ------ MIXINS ------ */
+.pull-right {
+  margin-left: auto;
+}
 
-
-.nav-options .nav-item {
-  display: table-cell;
-  height: 41px;
-  text-align: center;
+.icon {
+  width: 25px;
   vertical-align: middle;
-  color: gray;
-  padding: 0 5px;
-  padding-right: 2em;
-  white-space: nowrap;
-  cursor: default;
-  font-size: 14px;
-  opacity: 0.33;
-  -moz-transition: opacity 0.5s;
-  -webkit-transition: opacity 0.5s;
-  -o-transition: opacity 0.5s;
-
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
-.nav-options .preview-nav-item {
-  display: block!important;
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 40px;
-  line-height: 40px;
-  text-overflow: ellipsis;
-  text-align: left!important;
-  //background: fade(red, 30%);
-  .wm-button {
-    margin-top: -5px;
-    margin-left: 5px;
-    vertical-align: middle;
-  }
+.flex-container {
+  display: inline-flex;
 }
 
-.nav-options .nav-item.enabled {
-  cursor: pointer;
-  opacity: 1.0;
-}
-
-.nav-options .nav-item.enabled:hover {
-  color: #3D59FE;
-}
-
-.nav-options .nav-item ul li {
-  color: #666;
-}
-
-.nav-options .nav-item ul li:hover {
-  color: #666;
-}
-
-.preview-pane-nav-options > div.nav-item.buttons {
-  cursor: default;
-  opacity: 1.0;
-}
-
-.nav-options .nav-item.buttons {
-  position: absolute;
-  top: 5px;
-  right: 0;
+.nav-container {
+  width: 100%;
+  padding-right: 20px;
+  padding-left: 20px;
 }
 
 /* ------ CONTENT AREA ------ */
 
 .friendlycode-panes {
   position: absolute;
-  top: (@headerHeight + @toolbarHeight) - 10;
+  top: (@headerHeight + @toolbarHeight) - 10px;
   left: 0;
   right: 0;
   bottom: 0;    /* corresponds to 20 + footer.height */
