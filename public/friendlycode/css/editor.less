@@ -1,4 +1,5 @@
-@headerHeight: 65px;
+@headerHeight: 60px;
+@toolbarHeight: 65px;
 
 .friendlycode-base {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -17,85 +18,18 @@
   border: 0 none;
 }
 
-.friendlycode-loading > * {
-  visibility: hidden;
-}
-
-.friendlycode-loading {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  left: 0;
-  right: 0;
-  height: 41px;
-  background: white;
-  color: lightgray;
-  border-bottom: 1px solid #D6D6D6;
-  font-family: sans-serif;
-  font-size: 12px;
-  padding: 14px 0 0 42px;
-  background-image: url(../img/throbber.gif);
-  background-position: 20px 12px;
-  background-repeat: no-repeat;
-  -webkit-box-shadow: 0 5px 5px 0 rgba(233,233,233,0.5);
-  box-shadow: 0 5px 5px 0 rgba(233,233,233,0.5);
-
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-
-  -moz-animation-duration: 4s;
-  -moz-animation-name: friendlycode-loading-fadein;
-  -webkit-animation-duration: 4s;
-  -webkit-animation-name: friendlycode-loading-fadein;
-}
-
-@-moz-keyframes friendlycode-loading-fadein {
-  /* Slowly fade-in the loading message, so that users on really slow
-   * connections will see it, but users on fast connections won't
-   * see the distracting flicker of a loading message that only shows
-   * itself for a split-second. */
-
-  from {
-    color: white;
-  }
-
-  to {
-    color: lightgray;
-  }
-}
-
-@-webkit-keyframes friendlycode-loading-fadein {
-  from {
-    color: white;
-  }
-
-  to {
-    color: lightgray;
-  }
-}
-
-.friendlycode-loading:before {
-  content: 'Loading...';
-}
-
-
 .friendlycode-toolbar {
   position: absolute;
   z-index: 2;
   top: @headerHeight;
 
-  height: 40px;    /* corresponds with .friendlycode-panes.top */
+  height: 60px;
   width: 100%;
   margin: 0;
   padding: 0;
-
-  border-bottom: 1px solid #D6D6D6;
-
-  background: white;
-
-  -webkit-box-shadow: 0 5px 5px 0 rgba(233,233,233,0.5);
-  box-shadow: 0 5px 5px 0 rgba(233,233,233,0.5);
+-webkit-box-shadow: 0px 9px 7px -5px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 9px 7px -5px rgba(0,0,0,0.75);
+box-shadow: 0px 9px 7px -5px rgba(0,0,0,0.75);
 }
 
 .nav-options {
@@ -113,10 +47,16 @@
   top: 0;
   left: 0;
   width: 50%;
-  height: 100%;
-  border-right: 1px solid #D6D6D6;
   z-index: 2;
-  height: 41px;
+  height: @toolbarHeight;
+  background-color: #3F3F3F;
+}
+
+.editor-pane-nav-title {
+  color: #9D9D9D;
+  font-weight: bold;
+  font-size: 1em;
+  line-height: 65px;
 }
 
 .preview-pane-nav-options {
@@ -124,9 +64,13 @@
   top: 0;
   left: 50%;
   width: 50%;
-  height: 100%;
-  z-index: 1;
+  height: @toolbarHeight;
+  z-index: 2;
+  background-color: white;
 }
+
+
+
 
 .nav-options .nav-item {
   display: table-cell;
@@ -178,68 +122,6 @@
   color: #3D59FE;
 }
 
-@media screen and (max-width: 980px) {
-  .nav-options .responsive,
-  .nav-options .responsive:hover,
-  .nav-options .nav-item.responsive.enabled {
-    max-width: 30px;
-    overflow: hidden;
-    background-position: center center;
-    color: transparent !important;
-  }
-  .nav-options .nav-item ul,
-  .nav-options .nav-item ul li {
-    max-width: 999px !important;
-    width: auto !important;
-    padding-right: 1em;
-    color: black;
-  }
-  .nav-options .nav-item {
-    border: none;
-  }
-}
-
-@media screen and (max-width: 785px) {
-  .editor-pane-nav-options {
-    border: none;
-  }
-  .preview-pane-nav-options {
-   left: 65%;
-  }
-  .preview-nav-item .icon {
-    margin-right: 0 !important;
-  }
-  .preview-nav-item {
-    border-left: 1px solid #D6D6D6 !important;
-    border-right: 1px solid #D6D6D6 !important;
-    padding-right: 10px !important;
-  }
-  .nav-options .nav-item.buttons {
-    right: 30% !important;
-  }
-  .hints-nav-item {
-    margin-left: 0 !important;
-    left: 310px !important;
-  }
-}
-
-@media screen and (max-width: 620px) {
-  .editor-nav-item.nav-item,
-  .preview-nav-item.nav-item {
-    display: none !important;
-  }
-  .hints-nav-item {
-    left: 180px !important;
-  }
-}
-
-@media screen and (max-width: 420px) {
-  .preview-pane-nav-options > div.nav-item.buttons {
-    left: 0 !important;
-    right: auto !important;
-  }
-}
-
 .nav-options .nav-item ul li {
   color: #666;
 }
@@ -259,264 +141,11 @@
   right: 0;
 }
 
-
-
-/* ------ nav button stylings ------ */
-
-
-.nav-item.buttons .page-view-button {
-  display: none;
-}
-
-.nav-options .editor-nav-item,
-.nav-options .preview-nav-item {
-  font-weight: bold;
-  font-size: 16px;
-  opacity: 1.0;
-  color: #3887F3;
-}
-
-.editor-nav-item .icon,
-.preview-nav-item .icon {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  background-repeat: no-repeat;
-  background-position: center center;
-  margin-right: 10px;
-  margin-top: -4px;
-}
-
-.editor-nav-item .icon {
-  margin-left: 8px;
-  background-image: url("../img/editor-icon.png");
-}
-
-.preview-nav-item .icon {
-  margin-left: 4px;
-  background-image: url("../img/preview-icon.png");
-  vertical-align: middle;
-}
-
-.preview-nav-item .preview-title {
-  font-weight: bold;
-  display: none;
-}
-
-.preview-nav-item .preview-title-for {
-  font-weight: normal;
-}
-
-.editor-nav-item .pane-indicator,
-.preview-nav-item .pane-indicator {
-  position: absolute;
-  background-image: url("../img/indicator-arrow.png");
-  background-repeat: no-repeat;
-  top: 38px;
-  width: 25px;
-  height: 25px;
-}
-
-.editor-nav-item .pane-indicator {
-  left: 16px;
-}
-
-.preview-nav-item .pane-indicator {
-  left: 8px;
-}
-
-.undo-nav-item .icon {
-  display: inline-block;
-  width: 30px;
-
-  background-image: url("../img/undo-grey.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-.undo-nav-item.enabled:hover .icon {
-  background-image: url("../img/undo-blue.png");
-}
-
-.redo-nav-item .icon {
-  display: inline-block;
-  width: 30px;
-
-  background-image: url("../img/redo-grey.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-.redo-nav-item.enabled:hover .icon {
-  background-image: url("../img/redo-blue.png");
-}
-
-.text-nav-item .icon {
-  display: inline-block;
-  width: 40px;
-
-  background-image: url("../img/text-size.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-.text-nav-item.enabled:hover .icon {
-  background-image: url("../img/text-size-blue.png");
-}
-
-.text-size-options {
-  position: absolute;
-  display: none;
-  list-style: none;
-  text-align: left;
-  padding-top: 14px;
-}
-
-.text-nav-item ul {
-  margin: 0;
-  padding: 0;
-  padding-top: 35px;
-}
-
-.text-nav-item li {
-  background-color: white;
-  border: 1px solid C0C0C0;
-  border-top: none;
-  padding: 10px;
-
-  background-repeat: no-repeat;
-  background-position: 0 center;
-  padding-left: 40px;
-
-  border: 1px solid #D6D6D6;
-  margin-top: -1px;
-}
-
-.text-size-options li.selected {
-  background-color: #F4F4F4;
-}
-
-.text-size-options li:hover {
-  background-color: rgb(200,235,255);
-}
-
-.text-size-options li[data-size=small] {
-  background-image: url("../img/text-size-small.png");
-  font-size: 12px;
-}
-.text-size-options li[data-size=normal] {
-  background-image: url("../img/text-size-normal.png");
-  font-size: 14px;
-}
-.text-size-options li[data-size=large] {
-  background-image: url("../img/text-size-large.png");
-  font-size: 18px;
-}
-
-/**
- * Settings for thimble
- */
-
-.fc-settings {
-
-  .icon {
-    visibility: visible;
-    margin-left: 4px;
-    background-image: url("../img/editor-settings.png");
-    position: absolute;
-    top: -43px;
-    right: 0;
-    width: 20px;
-    height: 40px;
-    display: inline-block;
-    background-repeat: no-repeat;
-    /* prevent text-selection if the icon's double clicked */
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-  }
-
-  display: inline-block;
-  visibility: hidden;
-  position: absolute;
-  right: 5px;
-  top: 0;
-  line-height: 40px;
-
-  background: white;
-  border: 1px solid lightgrey;
-  margin-top: 50px;
-  padding-left: 5px;
-
-  cursor: pointer;
-
-  &.enabled {
-    visibility: visible;
-    margin-right: -1px;
-
-    .icon, .pane-indicator {
-      width: 100%;
-      background-position: top right;
-    }
-
-    .pane-indicator {
-      display: block;
-      position: absolute;
-      top: -13px;
-      right: 0;
-      background-image: url("../img/indicator-up-arrow.png");
-      background-repeat: no-repeat;
-      height: 25px;
-    }
-
-    .nav-item {
-      float: left;
-      display: block;
-      clear: both;
-
-      .checkbox {
-        display: inline-block;
-
-        border: 1px solid grey;
-        border-radius: 2px;
-        background-color: white;
-        background-image: url("../img/checkbox-gradient.png");
-        background-repeat: repeat-x;
-        background-position: left center;
-
-        padding-left: 0px;
-        padding-top: 7px;
-
-        color: black;
-        min-width:22px;
-        height: 10px;
-        line-height: 10px;
-
-        font-family: OpenSymbolCropped;
-        font-size: 21px;
-        line-height: 9px;
-        vertical-align: middle;
-
-        &.off {
-          color: transparent;
-        }
-      }
-
-      .checkbox-label {
-        display: inline-block;
-        vertical-align: middle;
-      }
-    }
-  }
-}
-
-
 /* ------ CONTENT AREA ------ */
 
 .friendlycode-panes {
   position: absolute;
-  top: (@headerHeight + 30);     /* corresponds to .friendlycode-toolbar.height */
+  top: (@headerHeight + @toolbarHeight) - 10;
   left: 0;
   right: 0;
   bottom: 0;    /* corresponds to 20 + footer.height */
@@ -547,37 +176,6 @@ div.editor-actions {
 .tipsy.friendlycode-base {
   /* Make tipsy tooltips slightly larger than the default. */
   font-size: 12px;
-}
-
-.friendlycode-base .breadcrumbs {
-  position: relative;
-  display: inline-block;
-  width: 1px;
-  height: 100%;
-  margin: 0;
-  border-right: 1px solid #848484;
-}
-.friendlycode-base .breadcrumbs:after,
-.friendlycode-base .breadcrumbs:before {
-  left: 100%;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-}
-.friendlycode-base .breadcrumbs:after {
-  border-left-color: #fff;
-  border-width: 5px;
-  top: 50%;
-  margin-top: -5px;
-}
-.friendlycode-base .breadcrumbs:before {
-  border-left-color: #848484;
-  border-width: 7px;
-  top: 50%;
-  margin-top: -7px;
 }
 
 .source-code .CodeMirror {

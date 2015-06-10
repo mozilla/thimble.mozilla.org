@@ -20,10 +20,6 @@ define(["jquery", "fc/prefs", "analytics"], function($, Preferences, analytics) 
 
       $(codeMirror.getWrapperElement()).attr("data-size", size);
       codeMirror.refresh();
-
-      // Mark text size in drop-down.
-      menuItems.removeClass("selected");
-      menuItem(size).addClass("selected");
     });
 
     /**

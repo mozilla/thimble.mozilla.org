@@ -98,15 +98,6 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
         eventCBs["loaded"].forEach(function(cb) {
           cb();
         });
-        
-        // This event is triggered when the reload button is clicked
-        document.querySelector(".reload-button").onclick = function() {
-          that.executeCommand("_reload");
-        };
-
-        document.getElementById("preview-run-js").onclick = function() {
-          that.executeCommand("_runJavascript");
-        };
 
         that.executeCommand("_fontSize", { data : prefSize });
         that.executeCommand("_spaceUnits", { data : 2 });

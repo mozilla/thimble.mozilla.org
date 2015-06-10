@@ -80,8 +80,8 @@
    * publication and remixing.
    */
   define("thimblePage",
-         ["jquery", "friendlycode", "hackpub", "/scripts/tutorials.js", "languages"],
-         function($, FriendlycodeEditor, Hackpub, tutorials, Languages) {
+         ["jquery", "friendlycode", "hackpub", "languages"],
+         function($, FriendlycodeEditor, Hackpub, Languages) {
 
     var makeUrl = document.getElementById("friendly-code").getAttribute("data-make-url"),
         makeEndpoint = document.getElementById("friendly-code").getAttribute("data-make-endpoint");
@@ -104,10 +104,6 @@
       editorHost: editorHost,
       appUrl: appUrl
     });
-
-    if (makeUrl) {
-      tutorials.load(makeUrl, makeEndpoint, editor.editor);
-    }
 
     if (typeof TogetherJS !== "undefined") {
       TogetherJS.reinitialize();

@@ -1,68 +1,39 @@
 {% block userbar %}
     <!-- webmaker user bar -->
-    <div id="webmaker-nav">
-      <nav class="navbar navbar-webmaker">
-        <div class="container-flex">
-          <div class="navbar-header">
-            <button class="navbar-toggle" nav-toggle>
-              <span class="sr-only">Toggle navigation</span>
-              <span class="fa fa-bars fa-lg"></span>
-            </button>
-            <a href="/{{localeInfo.lang}}" class="logo webmaker-logo">
-              <img src="/img/thimble-logo.svg">
+    <nav class="navbar-thimble container-flex">
+
+      <div id="navbar-left" class="container-flex">
+          <div class="navbar-logo-container">
+            <a href="/{{localeInfo.lang}}" class="logo">
+              <img src="/img/thimble-logo.svg" class="thimble-logo">
             </a>
           </div>
-
-          <div class="navbar-collapse collapse">
-
-            <div class="navbar-form navbar-right">
-              <a href="{{ webmaker }}/{{ localeInfo.lang }}">
-                <img src="/img/webmaker-main_01.png" height="45">Webmaker.org
-              </a>
-            </div>
-
-            <div class="navbar-form navbar-right">
-              <button class="btn btn-secondary-nav signin-button navbar-button navbar-right">{{ gettext("Sign in") }}</button>
-              <button class="btn btn-primary join-button navbar-button navbar-right">{{ gettext("Join Webmaker") }}</button>
-            </div>
-
-            <ul class="nav navbar-nav navbar-right user-info-dropdown hidden">
-              <li class="dropdown">
-                <a class="navbar-user-info dropdown-toggle" data-toggle="dropdown">
-                  <img class="user-info-avatar" data-avatar>
-                  {{ gettext("Hi") }} <strong data-username></strong>
-                  <span class="hidden label label-primary" data-admin>admin</span>
-                  <span class="hidden label label-info" data-supermentor>supermentor</span>
-                  <span class="hidden label label-warning" data-mentor>mentor</span>
-                  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a class="logout-button">
-                      <span class="fa fa-fw fa-sign-out"></span> Sign out
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-              <li id="thimble-dropdown-menu" class="dropdown">
-                <a href="#" class="dropdown-toggle"><span class="fa fa-bars fa-lg"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="/{{localeInfo.lang}}" target="_blank"> <span class="fa fa-fw fa-file"></span> {{ gettext("New") }}</a></li>
-                  <li><a href="https://support.mozilla.org/{{localeInfo.lang}}/products/webmaker/thimble/" target="_blank"> <span class="fa fa-fw fa-info"></span> {{ gettext("Help") }}</a></li>
-                </ul>
-              </li>
-            </ul>
-
-            <div class="navbar-text navbar-right">
-              {% include "bower_components/webmaker-language-picker/template/partial.html" %}
-            </div>
-
+          <div id="navbar-project-title">
+          New Project
+          <a href="" title="Rename Project" id="navbar-rename-project">
+            <img src="/img/icon/edit.svg" class="icon-edit">
+          </a>
           </div>
+          <div id="navbar-save-indicator">
+          </div>
+      </div>
+
+      <div id="navbar-right" class="container-flex">
+        <div id="navbar-help">
+              <img src="/img/icon/question-mark.svg" class="icon-question-mark">
+              Help
         </div>
-      </nav>
-    </div>
+        <div id="navbar-login">
+          <a href="" class="navbar-login">Log in</a> or <a href="" class="navbar-login">Sign Up</a> to Save
+        </div>
+        <div id="navbar-publish">
+          <a href="" class="navbar-publish-button">
+            <img src="/img/icon/publish.svg" class="icon-publish">
+            Publish
+          </a>
+        </div>
+      </div>
+
+    </nav>
 
 {% endblock %}

@@ -1,16 +1,4 @@
-@import "../../bower_components/makerstrap/less/build/makerstrap.complete.less";
-@makerstrap-bower-path: "../../bower_components";
-
-@import "../../bower_components/webmaker-login-ux/src/less/webmakerLogin";
-
-@import "@{bower-path}/webmaker-language-picker/styles/languages";
-@language-bower-path: "../../../bower_components"; // used from webmaker-language-picker/styles location
-@bower-path: "../../bower_components"; // used from public/stylesheets location
-@colors-path: "../../../public/stylesheets"; // used for colors.less from webmaker-language-picker/styles location
-
-#webmaker-nav .navbar {
-  border-bottom: 1px solid #D3D3D3;
-}
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300);
 
 #webmaker-source-code-pane {
   border-right: 1px solid #D6D6D6;
@@ -20,62 +8,107 @@
   border: 0;
 }
 
-.navbar-collapse {
-    position: relative;
+.container-flex {
+    display: inline-flex;
+    -webkit-align-content: space-between;
+    align-content: space-between;
 }
 
-.nav>li>.navbar-user-info {
-    height: auto;
-    padding: 7px;
-    line-height: inherit;
-}
-
-.navbar-nav {
-    margin: 0 5px;
-}
-
-.navbar-nav>li>.dropdown-menu {
-    margin-top: -1px;
-}
-
-.navbar-webmaker {
-    .navbar-form {
-        margin-top: 10px;
-        padding-left: 5px;
-        padding-right: 5px;
-    }
-    .dropdown-toggle {
-        border: 1px solid #CCC;
-        padding: 10px;
+.navbar-thimble {
+    background-color: #55986C;
+    width: 100%;
+    height: 60px;
+    border: 0;
+    color: #B9D6C3;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1em;
+    font-weight: lighter;
+    font-weight: 300;
+    
+    .navbar-logo-container {
+        margin-right: 10px;
         margin-top: 10px;
     }
-    .dropdown-menu {
-        background: #FFF;
-        border: 1px solid #CCC;
+    .thimble-logo {
+        height: 30px;
+        width: 28px;
     }
-    .navbar-button {
-        padding: 10px 14px;
+
+    #navbar-project-title {
+    color: white;
+    font-size: 1.1em;
     }
-    .logout-button {
-      cursor: pointer;
+
+    img.icon-edit {
+        width: 15px;
+        vertical-align: middle;
+    }
+    img.icon-question-mark {
+        width: 15px;
+        vertical-align: middle;
+    }
+
+    img.icon-publish {
+        width: 20px;
+        vertical-align: middle;
+    }
+
+    #rename-project {
+        margin-left: 3px;
+    }
+    #navbar-login {
+        padding-left: 15px;
+        margin-left: 15px;
+        padding-right: 15px;
+        margin-right: 15px;
+        border-left: 1px solid #7DAF8F;
+        border-right: 1px solid #7DAF8F;
+    }
+
+    #navbar-left {
+        height: 100%;
+        margin-left: 15px;
+        float: left;
+    }
+    #navbar-right {
+        margin-left: auto;
+        margin-right: 15px;
+        height: 100%;
+        float: right;
+        text-align: right;
+        right: 0px;
+    }
+    #navbar-left, #navbar-right {
+        line-height: 60px;
     }
 }
 
-.language-picker-box { 
-    width: auto;
+/* Link for login section */
+a.navbar-login {
+    color: white;
+    text-decoration: none;
+    font-weight: normal;
+    -o-transition:.5s;
+    -ms-transition:.5s;
+    -moz-transition:.5s;
+    -webkit-transition:.5s;
+    transition:.5s;
+}
+a.navbar-login:visited {
+    color: white;
+}
+a.navbar-login:hover {
+    color: #B9D6C3;
+}
+a.navbar-login:active {
 }
 
-.icon-globe {
-    display: inline-block;
-    font: normal normal normal 14px/1 FontAwesome; // shortening font declaration
-    font-size: inherit; // can't have font-size inherit on line above, so need to override
-    text-rendering: auto; // optimizelegibility throws things off #1094
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    &:before {content: "\f0ac";}
-}
+/* Publish button */
 
-a#current-language {
-  color: #000;
-  text-decoration: none;
+.navbar-publish-button {
+    background-color: white;
+    color: #55986C;
+    text-decoration: none;
+    padding: 5px;
+    border-bottom: 1px solid #B9D6C3;
 }
