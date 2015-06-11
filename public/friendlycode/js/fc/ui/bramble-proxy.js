@@ -3,7 +3,8 @@
 // friendlycode use of codemirror, with the exception of duplicate functionality
 // between bramble and friendlycode that bramble already provides (or will)
 /*global define */
-define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
+define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
+  function(BackboneEvents, Preferences, BrambleUIBridge) {
   "use strict";
 
   var eventCBs = {
@@ -156,7 +157,7 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
           url: "http://localhost:8000/src/index.html",
           hideUntilReady: false, 
           ready: function(){
-            console.log("Bramble Ready");
+            BrambleUIBridge.init(bramble);
           }
         });
         console.log(bramble);
