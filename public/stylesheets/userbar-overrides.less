@@ -40,12 +40,11 @@
     #navbar-project-title {
         color: white;
         font-size: 1.1em;
+        padding: 5px;
         .icon;
         .transition;
         img.icon-edit {
-            margin-left: 3px;
             width: 15px;
-            vertical-align: middle;
             opacity: 0.35;
             filter: alpha(opacity=35);
             .transition;
@@ -66,7 +65,6 @@
         .icon;
         color: white;
         img.icon-question-mark {
-            width: 15px;
             vertical-align: middle;
         }
     }
@@ -113,9 +111,13 @@
     }
 
     #navbar-left {
-        height: 100%;
         margin-left: 20px;
-        float: left;
+        margin-top: auto;
+        margin-bottom: auto;
+        * {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
     }
     #navbar-right {
         margin-left: auto;
@@ -125,7 +127,7 @@
         text-align: right;
         right: 0px;
     }
-    #navbar-left, #navbar-right {
+    #navbar-right {
         line-height: 60px;
     }
 }
@@ -165,6 +167,8 @@
   filter: alpha(opacity=50);
   opacity: 0.5;
 }
+
+
 
 /* Link for login section */
 a.navbar-login {

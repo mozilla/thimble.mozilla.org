@@ -1,6 +1,9 @@
 @headerHeight: 60px;
 @toolbarHeight: 60px;
 
+/* Transition time for hover effects */
+@transitionTime: 0.5s;
+
 .friendlycode-base {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   overflow: hidden;
@@ -58,7 +61,7 @@
 }
 
 .editor-pane-nav-title {
-  color: #9D9D9D;
+  color: white;
   font-weight: bold;
   font-size: 1em;
   .vertical-align;
@@ -80,12 +83,31 @@
   background-color: #2B2B2B;
   border-radius: 25px;
   height: 20px;
-  padding: 5px;
+  padding: 5px 10px 5px 10px;
   .icon;
+  img {
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+    .transition;
+  }
   span {
     vertical-align: top;
+    opacity: 0.4;
+    filter: alpha(opacity=40);
   }
 }
+#editor-pane-nav-undo:hover {
+  img {
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+  }
+  span {
+    vertical-align: top;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+  }
+}
+
 
 #editor-pane-nav-redo {
   background-color: #2B2B2B;
@@ -96,10 +118,28 @@
   margin-left: 10px;
   margin-right: 10px;
   .icon;
+  img {
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+    .transition;
+  }
+}
+#editor-pane-nav-redo:hover {
+  img {
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+  }
 }
 
 #editor-pane-nav-options {
   .icon;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+  .transition;
+}
+#editor-pane-nav-options:hover {
+    opacity: 0.6;
+    filter: alpha(opacity=60);
 }
 
 /* ------ RIGHT PANE ------ */
@@ -128,7 +168,18 @@
   border-radius: 50%;
   margin-left: 10px;
   margin-right: 10px;
+  img {
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+    .transition;
+  }
   .icon;
+}
+#preview-pane-nav-refresh:hover {
+  img {
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+  }
 }
 
 #preview-pane-nav-desktop {
@@ -138,13 +189,27 @@
 }
 
 #preview-pane-nav-phone {
+  opacity: 0.3;
+  filter: alpha(opacity=30);
   .icon;
+  .transition;
 }
-
+#preview-pane-nav-phone:hover {
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+}
 
 /* ------ MIXINS ------ */
 .pull-right {
   margin-left: auto;
+}
+
+.transition {
+    -webkit-transition: @transitionTime;
+    -moz-transition: @transitionTime;
+    -ms-transition: @transitionTime;
+    -o-transition: @transitionTime;
+    transition: @transitionTime;
 }
 
 .icon {
