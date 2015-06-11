@@ -14,6 +14,10 @@
     border: 0;
 }
 
+#webmaker-source-code-pane {
+  overflow: hidden;
+}
+
 .friendlycode-base img {
   border: 0 none;
 }
@@ -27,9 +31,9 @@
   width: 100%;
   margin: 0;
   padding: 0;
--webkit-box-shadow: 0 8px 6px -6px #999;
-       -moz-box-shadow: 0 8px 6px -6px #999;
-            box-shadow: 0 8px 6px -6px #999;
+  -webkit-box-shadow: 0 8px 6px -6px #999;
+     -moz-box-shadow: 0 8px 6px -6px #999;
+          box-shadow: 0 8px 6px -6px #999;
 }
 
 .editor-nav {
@@ -50,19 +54,52 @@
   height: @toolbarHeight;
   background-color: #3F3F3F;
   color: #757575;
-  line-height: @toolbarHeight;
+  .flex-container;
 }
 
 .editor-pane-nav-title {
   color: #9D9D9D;
   font-weight: bold;
   font-size: 1em;
+  .vertical-align;
 }
 
 #editor-pane-nav-fileview {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
   background-color: #1E1E1E;
-  width: 35px;
-  height: 35px;
+  background-image:url("/img/icon/arrow-right.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 15px 15px;
+  .icon;
+}
+
+#editor-pane-nav-undo {
+  background-color: #2B2B2B;
+  border-radius: 25px;
+  height: 20px;
+  padding: 5px;
+  .icon;
+  span {
+    vertical-align: top;
+  }
+}
+
+#editor-pane-nav-redo {
+  background-color: #2B2B2B;
+  height: 20px;
+  width: 20px;
+  padding: 5px;
+  border-radius: 50%;
+  margin-left: 10px;
+  margin-right: 10px;
+  .icon;
+}
+
+#editor-pane-nav-options {
+  .icon;
 }
 
 /* ------ RIGHT PANE ------ */
@@ -74,7 +111,7 @@
   height: @toolbarHeight;
   z-index: 2;
   background-color: white;
-  line-height: @toolbarHeight;
+  .flex-container;
 }
 
 .preview-pane-nav-title {
@@ -83,14 +120,38 @@
   font-size: 1em;
 }
 
+#preview-pane-nav-refresh {
+  background-color: #EAEAEA;
+  height: 20px;
+  width: 20px;
+  padding: 5px;
+  border-radius: 50%;
+  margin-left: 10px;
+  margin-right: 10px;
+  .icon;
+}
+
+#preview-pane-nav-desktop {
+  .icon;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#preview-pane-nav-phone {
+  .icon;
+}
+
+
 /* ------ MIXINS ------ */
 .pull-right {
   margin-left: auto;
 }
 
 .icon {
-  width: 25px;
-  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none; /* Chrome/Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
 }
 
 .flex-container {
@@ -101,6 +162,17 @@
   width: 100%;
   padding-right: 20px;
   padding-left: 20px;
+  .flex-container;
+
+  /* Hack to perfectly center elements within container (they all vary in heights) */
+  * {
+    .vertical-align;
+  }
+}
+
+.vertical-align {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 /* ------ CONTENT AREA ------ */
@@ -110,7 +182,7 @@
   top: (@headerHeight + @toolbarHeight) - 10px;
   left: 0;
   right: 0;
-  bottom: 0;    /* corresponds to 20 + footer.height */
+  bottom: 0;
 }
 
 div.editor-actions {

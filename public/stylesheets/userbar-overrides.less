@@ -1,5 +1,8 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300);
 
+/* Transition time for hover effects */
+@transitionTime: 0.5s;
+
 #webmaker-source-code-pane {
   border-right: 1px solid #D6D6D6;
 }
@@ -35,27 +38,71 @@
     }
 
     #navbar-project-title {
-    color: white;
-    font-size: 1.1em;
+        color: white;
+        font-size: 1.1em;
+        .icon;
+        .transition;
+        img.icon-edit {
+            margin-left: 3px;
+            width: 15px;
+            vertical-align: middle;
+            opacity: 0.35;
+            filter: alpha(opacity=35);
+            .transition;
+        }
+    }
+    #navbar-project-title:hover {
+        background-color: rgba(0,0,0,.1);
+        img.icon-edit {
+            opacity: 1;
+            filter: alpha(opacity=100);
+        }
     }
 
-    img.icon-edit {
-        width: 15px;
-        vertical-align: middle;
+    #navbar-help {
+        opacity: 0.65;
+        filter: alpha(opacity=65);
+        .transition;
+        .icon;
+        color: white;
+        img.icon-question-mark {
+            width: 15px;
+            vertical-align: middle;
+        }
     }
-    img.icon-question-mark {
-        width: 15px;
-        vertical-align: middle;
+    #navbar-help:hover {
+        opacity: 1;
+        filter: alpha(opacity=100);
     }
 
-    img.icon-publish {
-        width: 20px;
-        vertical-align: middle;
+    .navbar-publish-button {
+        background-color: white;
+        color: #55986C;
+        text-decoration: none;
+        padding: 5px 10px 5px 10px;
+        border-bottom: 1px solid #B9D6C3;
+        opacity: 0.8;
+        filter: alpha(opacity=80);
+        .transition-only-opacity;
+
+        img.icon-publish {
+            width: 20px;
+            vertical-align: middle;
+        }
+    }
+    .navbar-publish-button:hover {
+        opacity: 1;
+        filter: alpha(opacity=100);
+    }
+    .navbar-publish-button:active {
+        opacity: 1;
+        filter: alpha(opacity=100);
+        border-top: solid 2px rgba(0,0,0,.15);
+        padding: 3px 10px 5px 10px;    
     }
 
-    #rename-project {
-        margin-left: 3px;
-    }
+
+
     #navbar-login {
         padding-left: 15px;
         margin-left: 15px;
@@ -83,32 +130,49 @@
     }
 }
 
+
+/* Mix-ins */
+.icon {
+  cursor: pointer;
+  -webkit-user-select: none;   
+  -moz-user-select: none;
+  -ms-user-select: none; 
+}
+
+.transition {
+    -webkit-transition: @transitionTime;
+    -moz-transition: @transitionTime;
+    -ms-transition: @transitionTime;
+    -o-transition: @transitionTime;
+    transition: @transitionTime;
+}
+
+.transition-only-opacity {   
+  -webkit-transition: opacity @transitionTime ease-in-out;
+  -moz-transition: opacity @transitionTime ease-in-out;
+  -ms-transition: opacity @transitionTime ease-in-out;
+  -o-transition: opacity @transitionTime ease-in-out;
+  transition: opacity @transitionTime ease-in-out;
+}
+
+.item:hover {
+  -webkit-transition: none;
+  -moz-transition: none;
+  -ms-transition: none;
+  -o-transition: none;
+  transition: none;
+  zoom: 1;
+  filter: alpha(opacity=50);
+  opacity: 0.5;
+}
+
 /* Link for login section */
 a.navbar-login {
     color: white;
     text-decoration: none;
     font-weight: normal;
-    -o-transition:.5s;
-    -ms-transition:.5s;
-    -moz-transition:.5s;
-    -webkit-transition:.5s;
-    transition:.5s;
-}
-a.navbar-login:visited {
-    color: white;
+    .transition;
 }
 a.navbar-login:hover {
-    color: #B9D6C3;
-}
-a.navbar-login:active {
-}
-
-/* Publish button */
-
-.navbar-publish-button {
-    background-color: white;
-    color: #55986C;
-    text-decoration: none;
-    padding: 5px 10px 5px 10px;
-    border-bottom: 1px solid #B9D6C3;
+    text-decoration: underline;
 }
