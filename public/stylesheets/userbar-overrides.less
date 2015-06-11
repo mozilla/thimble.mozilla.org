@@ -114,6 +114,8 @@
         margin-left: 20px;
         margin-top: auto;
         margin-bottom: auto;
+
+        /* Vertically align immediate children */
         * {
             margin-top: auto;
             margin-bottom: auto;
@@ -156,19 +158,6 @@
   -o-transition: opacity @transitionTime ease-in-out;
   transition: opacity @transitionTime ease-in-out;
 }
-
-.item:hover {
-  -webkit-transition: none;
-  -moz-transition: none;
-  -ms-transition: none;
-  -o-transition: none;
-  transition: none;
-  zoom: 1;
-  filter: alpha(opacity=50);
-  opacity: 0.5;
-}
-
-
 
 /* Link for login section */
 a.navbar-login {
