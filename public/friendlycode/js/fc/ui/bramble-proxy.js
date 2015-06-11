@@ -152,14 +152,15 @@ define(["backbone-events", "fc/prefs"], function(BackboneEvents, Preferences) {
     };
 
     this.init = function(make) {
-      latestSource = make;
-
-      // Tell the iframe to load bramble
-      iframe.src = options.editorUrl;
-      iframe.id = "webmaker-bramble";
-
-      // Attach the iframe to the dom
-      place.append(iframe);
+        var bramble = Bramble.getInstance(
+          "#webmaker-bramble", 
+          { url: "http://localhost:8000/src/index.html", 
+            ready: function(){
+              console.log("Bramble Ready");
+            }
+          });
+        console.log(bramble);
+        iframe = bramble._iframe;
     };
 
     this.getWrapperElement = function() {
