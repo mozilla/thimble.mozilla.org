@@ -10,7 +10,8 @@ define([
         toolbarDiv = $('<div class="friendlycode-toolbar"></div>')
           .appendTo(container),
         panesDiv = $('<div class="friendlycode-panes"></div>')
-          .appendTo(container);
+// TODO: we don't want this, need to remove in a cleaner way
+//          .appendTo(container);
 
     var panes = EditorPanes({
       container: panesDiv,
