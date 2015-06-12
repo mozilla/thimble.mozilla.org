@@ -58,6 +58,23 @@ disableJavaScript() - turns off JavaScript execution for the preview
     $("#preview-pane-nav-phone").click(function() {
       bramble.useMobilePreview();
     });
+
+    // Hook up event listeners
+    bramble.on("layout", function(data) {
+      console.log("thimble side", "layout", data);
+    });
+
+    bramble.on("previewModeChange", function(data) {
+      console.log("thimble side", "previewModeChange", data);
+    });
+
+    bramble.on("sidebarChange", function(data) {
+      console.log("thimble side", "sidebarChange", data);
+    });
+
+    bramble.on("activeEditorChange", function(data) {
+      console.log("thimble side", "activeEditorChange", data);
+    });
   }
 
   return {
