@@ -61,6 +61,8 @@ disableJavaScript() - turns off JavaScript execution for the preview
 
     // Hook up event listeners
     bramble.on("layout", function(data) {
+      $(".editor-pane-nav").width(data.firstPaneWidth + data.sidebarWidth);
+      $(".preview-pane-nav").width(data.firstPaneWidth);
       console.log("thimble side", "layout", data);
     });
 
