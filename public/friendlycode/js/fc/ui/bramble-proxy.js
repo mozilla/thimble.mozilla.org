@@ -17,8 +17,7 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
   var iframe;
 
   function BrambleProxy(place, options) {
-    iframe = document.createElement("iframe");
-    var latestSource = "(none)";
+    var latestSource;
     var prefSize = Preferences.get("textSize");
     var that = this;
     var lastLine = 0;
