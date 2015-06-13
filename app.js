@@ -206,6 +206,14 @@ app.get('/',
         middleware.setUserIfTokenExists,
         routes.index );
 
+app.get('/initializeProject',
+        middleware.checkForAuth,
+        routes.getProject);
+
+app.get('/project/:projectId', routes.openProject);
+
+app.get('/newProject', routes.newProject);
+
 // Localized Strings
 app.get( '/strings/:lang?', i18n.stringsRoute( 'en-US' ) );
 

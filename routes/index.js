@@ -33,7 +33,8 @@ module.exports = function(utils, nunjucksEnv, appName) {
       together = env.get("USE_TOGETHERJS") ? env.get("TOGETHERJS") : false,
       userbarEndpoint = env.get("USERBAR"),
       webmaker = env.get("WEBMAKER_URL"),
-      oauth = env.get("OAUTH");
+      oauth = env.get("OAUTH"),
+      publishURL = env.get("PUBLISH_HOSTNAME");
 
   // We make sure to grab just the protocol and hostname for
   // postmessage security.
@@ -48,65 +49,227 @@ module.exports = function(utils, nunjucksEnv, appName) {
     editorURL = env.get("BRAMBLE_URI") + '/dist';
   }
 
+  function renderUsersProjects(req, res) {
+    var user = req.session.user;
+    var username = encodeURIComponent(user.username);
+    request.get({
+      url: publishURL + '/users?name=' + username,
+      headers: {
+        "Authorization": "token " + cryptr.decrypt(req.session.token)
+      }
+    }, function(err, response, body) {
+      if(err) {
+        console.error('Error sending request', err);
+        // deal with error
+        return;
+      }
+
+      if(response.statusCode !== 200) {
+        console.error('Error retrieving user: ', response);
+        // deal with failure
+        return;
+      }
+
+      var publishUser = req.session.publishUser = JSON.parse(body);
+
+      request.get({
+        url: publishURL + '/users/' + publishUser.id + '/projects',
+        headers: {
+          "Authorization": "token " + cryptr.decrypt(req.session.token)
+        }
+      }, function(err, response, body) {
+        if(err) {
+          console.error('Error sending request', err);
+          // deal with error
+          return;
+        }
+
+        if(response.statusCode !== 200) {
+          console.error('Error retrieving user\'s projects: ', response);
+          // deal with failure
+          return;
+        }
+
+        var options = {
+          csrf: req.csrfToken ? req.csrfToken() : null,
+          HTTP_STATIC_URL: '/',
+          projects: JSON.parse(body),
+          PROJECT_URL: 'project'
+        };
+
+        res.render('projects.html', options);
+      });
+    });
+  }
+
+  function showThimble(req, res) {
+    var makedetails = '{}';
+    var project = req.session.project && req.session.project.meta;
+    if(project && req.session.redirectFromProjectSelection) {
+      makedetails = encodeURIComponent(JSON.stringify({
+        title: project.title,
+        dateCreated: project.date_created,
+        dateUpdated: project.date_updated,
+        tags: project.tags,
+        description: project.description
+      }));
+    }
+
+    var options = {
+      appname: appName,
+      appURL: appURL,
+      personaHost: personaHost,
+      allowJS: allowJS,
+      csrf: req.csrfToken(),
+      LOGIN_URL: env.get("LOGIN_URL"),
+      email: req.session.user ? req.session.user.email : '',
+      HTTP_STATIC_URL: '/',
+      MAKE_ENDPOINT: makeEndpoint,
+      pageOperation: req.body.pageOperation,
+      previewLoader: previewLoader,
+      origin: req.params.id,
+      makeUrl: req.makeUrl,
+      together: together,
+      userbar: userbarEndpoint,
+      webmaker: webmaker,
+      makedetails: makedetails,
+      editorHOST: editorHOST,
+      OAUTH_CLIENT_ID: oauth.client_id,
+      OAUTH_AUTHORIZATION_URL: oauth.authorization_url
+    };
+
+    // We add the localization code to the query params through a URL object
+    // and set search prop to nothing forcing query to be used during url.format()
+    var urlObj = url.parse(req.url, true);
+    urlObj.search = "";
+    urlObj.query["locale"] = req.localeInfo.lang;
+    var thimbleUrl = url.format(urlObj);
+
+    // We forward query string params down to the editor iframe so that
+    // it's easy to do things like enableExtensions/disableExtensions
+    options.editorURL = editorURL + '/index.html' + (url.parse(thimbleUrl).search || '');
+
+    if (req.user) {
+      options.username = req.user.username;
+      options.avatar = req.user.avatar;
+    }
+
+    req.session.redirectFromProjectSelection = false;
+
+    res.render('index.html', options);
+  }
+
+  function index(req, res) {
+    // TODO: login stuff
+    // Hack until login button is set up
+    if(req.query.loggedIn === "yes") {
+      req.session.user = { username: "ag_dubs" };
+      req.session.token = cryptr.encrypt("fake_token");
+    }
+    if(req.session.user && !req.session.redirectFromProjectSelection) {
+      renderUsersProjects(req, res);
+      return;
+    }
+
+    showThimble(req, res);
+  }
+
   return {
-    index: function(req, res) {
-      if (req.requestId) {
-        res.locals.pageToLoad = appURL + "/" + req.localeInfo.lang + "/project/" + req.requestId + "/data";
-      } else if (req.oldid) {
-        res.locals.pageToLoad = appURL + "/p/" + req.oldid;
+    index: index,
+    showThimble: showThimble,
+
+    openProject: function(req, res) {
+      if(!req.session.user) {
+        res.redirect(301, '/');
+        return;
       }
 
-      var makedetails = '{}';
-      if(req.make) {
-        makedetails = encodeURIComponent(JSON.stringify({
-          title: req.make.title,
-          tags: req.make.tags,
-          locales: req.make.locale,
-          description: req.make.description,
-          published: req.make.published
-        }));
+      var projectId = req.params.projectId;
+      if(!projectId) {
+        // TODO: handle error
+        console.error('No project ID specified');
+        return;
       }
 
-      var options = {
-        appname: appName,
-        appURL: appURL,
-        personaHost: personaHost,
-        allowJS: allowJS,
-        csrf: req.csrfToken(),
-        LOGIN_URL: env.get("LOGIN_URL"),
-        email: req.session.user ? req.session.user.email : '',
-        HTTP_STATIC_URL: '/',
-        MAKE_ENDPOINT: makeEndpoint,
-        pageOperation: req.body.pageOperation,
-        previewLoader: previewLoader,
-        origin: req.params.id,
-        makeUrl: req.makeUrl,
-        together: together,
-        userbar: userbarEndpoint,
-        webmaker: webmaker,
-        makedetails: makedetails,
-        editorHOST: editorHOST,
-        OAUTH_CLIENT_ID: oauth.client_id,
-        OAUTH_AUTHORIZATION_URL: oauth.authorization_url
-      };
+      // TODO: UI implementation (progress bar/spinner etc.)
+      //       for blocking code
+      // Get project data from publish.wm.org
+      request.get({
+        url: publishURL + '/projects/' + projectId,
+        headers: {
+          "Authorization": "token " + cryptr.decrypt(req.session.token)
+        }
+      }, function(err, response, body) {
+        if(err) {
+          // TODO: handle error
+          console.error('Failed to get project info');
+          return;
+        }
 
-      // We add the localization code to the query params through a URL object
-      // and set search prop to nothing forcing query to be used during url.format()
-      var urlObj = url.parse(req.url, true);
-      urlObj.search = "";
-      urlObj.query["locale"] = req.localeInfo.lang;
-      var thimbleUrl = url.format(urlObj);
+        if(response.statusCode !== 200) {
+          // TODO: handle error
+          console.error('Error retrieving user\'s projects: ', response);
+          return;
+        }
 
-      // We forward query string params down to the editor iframe so that
-      // it's easy to do things like enableExtensions/disableExtensions
-      options.editorURL = editorURL + '/index.html' + (url.parse(thimbleUrl).search || '');
+        req.session.project = {};
+        req.session.project.meta = JSON.parse(body);
+        req.session.redirectFromProjectSelection = true;
 
-      if (req.user) {
-        options.username = req.user.username;
-        options.avatar = req.user.avatar;
+        res.redirect(301, '/');
+      });
+    },
+
+    newProject: function(req, res) {
+      if(!req.session.user) {
+        res.redirect(301, '/');
+        return;
       }
 
-      res.render('index.html', options);
+
+    },
+
+    getProject: function(req, res) {
+      if(!req.session.user) {
+        res.send(403);
+        return;
+      }
+
+      var projectId = req.session.project.meta.id;
+
+      request.get({
+        url: publishURL + '/projects/' + projectId + '/files',
+        headers: {
+          'Authorization': 'token ' + cryptr.decrypt(req.session.token)
+        }
+      }, function(err, response, body) {
+        if(err) {
+          // TODO: handle error
+          console.error('Failed to execute request for project files');
+          res.send(500);
+          return;
+        }
+
+        if(response.statusCode !== 200) {
+          // TODO: handle error
+          console.error('Error retrieving user\'s project files: ', response);
+          res.send(404);
+          return;
+        }
+
+        var files = JSON.parse(body);
+        req.session.project.files = files.map(function(file) {
+          var fileMeta = JSON.parse(JSON.stringify(file));
+          delete fileMeta.buffer;
+          return fileMeta;
+        });
+
+        res.type('application/json');
+        res.send({
+          project: req.session.project.meta,
+          files: files
+        });
+      });
     },
 
     rawData: function(req, res) {

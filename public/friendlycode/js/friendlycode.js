@@ -7,8 +7,10 @@ define(function(require) {
       CurrentPageManager = require("fc/current-page-manager"),
       Publisher = require("fc/publisher"),
       PublishUI = require("fc/ui/publish"),
+      ProjectUI = require("fc/ui/bramble-project"),
       DefaultContentTemplate = require("template!default-content"),
-      Localized = require("localized");
+      Localized = require("localized"),
+      ProjectFiles = require("fc/load-project-files");
 
   Preferences.fetch();
 
@@ -48,6 +50,7 @@ define(function(require) {
       window: window,
       currentPage: pageToLoad
     });
+    ProjectUI.updateMeta(makeDetails);
 
     function doneLoading() {
       editor.panes.codeMirror.on("loaded", function() {
@@ -77,9 +80,19 @@ define(function(require) {
       editor.panes.preview.setViewLink(info.viewURL);
     });
 
+    // Bramble: Load the project Files into the fs
+    var initFs = function(callback) {
+      if(!makeDetails || !makeDetails.title) {
+        makeDetails = ProjectFiles.generateDefaultProject();
+        return ProjectFiles.load(makeDetails, defaultContent, callback);
+      }
+
+      ProjectFiles.load(makeDetails, callback);
+    };
+
     if (!pageManager.currentPage()) {
       setTimeout(function() {
-        editor.panes.codeMirror.init(defaultContent);
+        editor.panes.codeMirror.init(defaultContent, initFs);
         doneLoading();
       }, 0);
     } else {
@@ -89,7 +102,7 @@ define(function(require) {
             text: Localized.get('page-load-err')
           });
         } else {
-          editor.panes.codeMirror.init(data);
+          editor.panes.codeMirror.init(data, initFs);
           publishUI.setCurrentURL(url);
           doneLoading();
         }
