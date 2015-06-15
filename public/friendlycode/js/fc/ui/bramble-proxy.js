@@ -159,8 +159,7 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
             BrambleUIBridge.init(bramble);
           }
         });
-        console.log(bramble);
-        iframe = bramble._iframe;
+        iframe = bramble.getIFrame();
     };
 
     this.getWrapperElement = function() {
