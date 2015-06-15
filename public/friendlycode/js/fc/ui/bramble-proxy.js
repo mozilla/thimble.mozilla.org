@@ -59,6 +59,10 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
 
     // Event listening for proxied event messages from our editor iframe.
     window.addEventListener("message", function(evt) {
+      return;
+
+
+
       // Set the communication channel to our iframe
       // now that it's signaled that it has content
       // by sending a postMessage
@@ -152,14 +156,36 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
     };
 
     this.init = function(make) {
-        var bramble = Bramble.getInstance("#webmaker-bramble",{
-          url: "http://localhost:8000/src/index.html",
-          hideUntilReady: false, 
-          ready: function(){
-            BrambleUIBridge.init(bramble);
+      Bramble.load("#webmaker-bramble",{
+        url: "http://localhost:8000/src/index.html",
+        hideUntilReady: false,
+        debug: true
+      });
+
+      var fs = Bramble.getFileSystem();
+      fs.mkdir("/project", function(err) {
+        if (err & !err.code === "EEXISTS") {
+          throw err;
+        }
+console.log('tryign to write html');
+        var html = "<html><head><title>bramble</title></head><body>hi</body></html>";
+        fs.writeFile("/project/index.html", html, function(err) {
+console.log('finished write', arguments);          
+          if (err) {
+            throw err;
           }
+
+console.log('write html, trying to mount');
+
+          Bramble.mount("/project", function(err, bramble) {
+            if (err) {
+              throw err;
+            }
+
+            BrambleUIBridge.init(bramble);
+          });
         });
-        iframe = bramble.getIFrame();
+      });
     };
 
     this.getWrapperElement = function() {
