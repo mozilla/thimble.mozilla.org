@@ -159,8 +159,21 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
       // Start loading Bramble
       Bramble.load("#webmaker-bramble",{
         url: "http://localhost:8000/src/index.html",
-        hideUntilReady: false,
-        debug: true
+      });
+
+      // Event listeners
+      Bramble.on("ready", function(bramble) {
+        console.log("ready");
+        // For debugging, attach to window.
+        window.bramble = bramble;
+      });
+
+      Bramble.on("error", function(e, err) {
+        console.log("error", err);
+      })
+
+      Bramble.on("readyStateChange", function(previous, current) {
+        console.log("readyStateChange", previous, current);
       });
 
       // Setup the filesystem while Bramble is loading
