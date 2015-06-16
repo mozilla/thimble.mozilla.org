@@ -180,7 +180,7 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
       var fs = Bramble.getFileSystem();
       fs.mkdir("/project", function(err) {
         // If we run this multiple times, the dir will exist
-        if (err & err.code !== "EEXIST") {
+        if (err && err.code !== "EEXIST") {
           throw err;
         }
 
