@@ -68,6 +68,13 @@ disableJavaScript() - turns off JavaScript execution for the preview
       $("#editor-pane-nav-options-menu").fadeToggle();
     });
 
+    $("#editor-pane-nav-decrease-font").click(function() {
+      bramble.decreaseFontSize();
+    });
+
+    $("#editor-pane-nav-increase-font").click(function() {
+      bramble.increaseFontSize();
+    });
 
     // Refresh Preview
     $("#preview-pane-nav-refresh").click(function() {
@@ -77,15 +84,23 @@ disableJavaScript() - turns off JavaScript execution for the preview
     // Desktop Preview Mode
     $("#preview-pane-nav-desktop").click(function() {
       bramble.useDesktopPreview();
-      $("#preview-pane-nav-desktop").css("opacity", 1);
-      $("#preview-pane-nav-phone").css("opacity", 0.3);
+
+      $("#preview-pane-nav-desktop").removeClass("viewmode-inactive");
+      $("#preview-pane-nav-desktop").addClass("viewmode-active");
+
+      $("#preview-pane-nav-phone").removeClass("viewmode-active");
+      $("#preview-pane-nav-phone").addClass("viewmode-inactive");
     });
 
     // Mobile Preview Mode
     $("#preview-pane-nav-phone").click(function() {
       bramble.useMobilePreview();
-      $("#preview-pane-nav-phone").css("opacity", 1);
-      $("#preview-pane-nav-desktop").css("opacity", 0.3);
+
+      $("#preview-pane-nav-phone").removeClass("viewmode-inactive");
+      $("#preview-pane-nav-phone").addClass("viewmode-active");
+
+      $("#preview-pane-nav-desktop").removeClass("viewmode-active");
+      $("#preview-pane-nav-desktop").addClass("viewmode-inactive");
     });
 
     // Hook up event listeners
