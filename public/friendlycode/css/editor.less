@@ -51,11 +51,46 @@
   height: 0;
 }
 
-/* ------ LEFT PANE ------ */
-.editor-pane-nav {
-  position: absolute;
+
+/* ------ FILETREE PANE ------ */
+.filetree-pane-nav {
   top: 0;
   left: 0;
+  z-index: 2;
+  height: @toolbarHeight;
+  background-color: #212121;
+  display: none;
+  vertical-align: top;
+  float: left;
+}
+
+.filetree-pane-nav-title {
+  color: white;
+  font-weight: bold;
+  font-size: 1em;
+  .vertical-align;
+}
+
+#filetree-pane-nav-add {
+  
+}
+
+#filetree-pane-nav-hide {
+  width: 25px;
+  height: 25px;
+  background-color: #3F3F3F;
+  background-image:url("/img/icon/arrow-left.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 15px 15px;
+  .icon;
+}
+
+
+
+/* ------ LEFT PANE ------ */
+.editor-pane-nav {
+  top: 0;
   width: 50%;
   z-index: 2;
   height: @toolbarHeight;
@@ -145,16 +180,65 @@
     opacity: 0.6;
     filter: alpha(opacity=60);
 }
+#editor-pane-nav-options-menu {
+  display: none;
+  position: absolute;
+  z-index: 6;
+  background-color: white; 
+  border: #7F7F7F solid 3px;
+  min-width: 240px;
+  top: 65px;
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    li {
+     padding: 20px; 
+    }
+    li+li {
+     border-top: 1px solid #E5E5E5;
+    }
+  }
+}
+#editor-pane-nav-options-menu:after {
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 0 15px 15px;
+border-color: #FFFFFF transparent;
+display: block;
+width: 0;
+z-index: 1;
+top: -15px;
+left: 80px;
+}
+#editor-pane-nav-options-menu:before 
+{
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 0 17px 17px;
+border-color: #7F7F7F transparent;
+display: block;
+width: 0;
+z-index: 0;
+top: -20px;
+left: 78px;
+}
+.nav-menu-button {
+  float: right;
+  display:inline-block;
+}
 
 /* ------ RIGHT PANE ------ */
 .preview-pane-nav {
-  position: absolute;
   top: 0;
   left: 50%;
   width: 50%;
   height: @toolbarHeight;
   z-index: 2;
   background-color: white;
+  float: right;
   .flex-container;
 }
 
@@ -187,9 +271,14 @@
 }
 
 #preview-pane-nav-desktop {
-  .icon;
   margin-left: 10px;
   margin-right: 10px;
+  .icon;
+  .transition;
+}
+#preview-pane-nav-desktop:hover{
+  opacity: 0.6;
+  filter: alpha(opacity=60);
 }
 
 #preview-pane-nav-phone {
