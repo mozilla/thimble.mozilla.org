@@ -34,6 +34,10 @@ disableJavaScript() - turns off JavaScript execution for the preview
       $("#editor-pane-nav-options-menu").hide();
     });
 
+    $("#navbar-help").click(function() {
+      window.open("https://support.mozilla.org/en-US/products/webmaker/thimble");
+    });
+
     // Sidebar Fileview
     $("#editor-pane-nav-fileview").click(function() {
       $("#editor-pane-nav-options-menu").hide();
@@ -68,12 +72,30 @@ disableJavaScript() - turns off JavaScript execution for the preview
       $("#editor-pane-nav-options-menu").fadeToggle();
     });
 
+    // Font size
     $("#editor-pane-nav-decrease-font").click(function() {
       bramble.decreaseFontSize();
     });
 
     $("#editor-pane-nav-increase-font").click(function() {
       bramble.increaseFontSize();
+    });
+
+    // Theme change
+    $("#theme-dark").click(function() {
+      bramble.useDarkTheme();
+
+      $("#theme-active").css("position", "absolute").animate({
+        left: 157
+      });
+    });
+
+    $("#theme-light").click(function() {
+      bramble.useLightTheme();
+
+      $("#theme-active").css("position", "absolute").animate({
+        left: 188
+      });
     });
 
     // Refresh Preview

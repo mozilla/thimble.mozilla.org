@@ -263,13 +263,23 @@
   border-radius: 25px;
   height: 20px;
   padding: 5px 10px 5px 10px;
+  div#theme-dark {
+    z-index: 2;
+    margin-right: 10px;
+  }
+  div#theme-light {
+    z-index: 2;
+  }
 
-  div.theme-active {
+  div#theme-active {
     border-radius: 50%;
     background-color: white;
-  }
-  div.theme-inactive {
-    background-color: none;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    z-index: 1;
+    top: 94px;
+    left: 188px;
   }
 }
 
