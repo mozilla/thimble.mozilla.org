@@ -187,7 +187,7 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
 
           // Now that fs is setup, tell Bramble which root dir to mount
           // and which file within that root to open on startup.
-          Bramble.mount("/project", "index.html", function(err, bramble) {
+          Bramble.mount("/project", function(err, bramble) {
             if (err) {
               throw err;
             }
