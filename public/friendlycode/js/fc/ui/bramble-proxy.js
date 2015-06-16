@@ -156,28 +156,38 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
     };
 
     this.init = function(make) {
+      // Start loading Bramble
       Bramble.load("#webmaker-bramble",{
         url: "http://localhost:8000/src/index.html",
         hideUntilReady: false,
         debug: true
       });
 
+      // Setup the filesystem while Bramble is loading
       var fs = Bramble.getFileSystem();
       fs.mkdir("/project", function(err) {
+        // If we run this multiple times, the dir will exist
         if (err & !err.code === "EEXISTS") {
           throw err;
         }
-console.log('tryign to write html');
-        var html = "<html><head><title>bramble</title></head><body>hi</body></html>";
+
+        var html = "<html>\n"                     +
+                   "  <head>\n"                   +
+                   "    <title>Bramble</title>\n" +
+                   "  </head>\n"                  +
+                   "  <body>\n"                   +
+                   "    <p>Hello World</p>\n"     +
+                   "  </body>\n"                  +
+                   "</html>";
+
         fs.writeFile("/project/index.html", html, function(err) {
-console.log('finished write', arguments);          
           if (err) {
             throw err;
           }
 
-console.log('write html, trying to mount');
-
-          Bramble.mount("/project", function(err, bramble) {
+          // Now that fs is setup, tell Bramble which root dir to mount
+          // and which file within that root to open on startup.
+          Bramble.mount("/project", "index.html", function(err, bramble) {
             if (err) {
               throw err;
             }
