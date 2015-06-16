@@ -180,6 +180,8 @@
     opacity: 0.6;
     filter: alpha(opacity=60);
 }
+
+/* ------ EDITOR OPTIONS MENU ------ */
 #editor-pane-nav-options-menu {
   display: none;
   position: absolute;
@@ -188,12 +190,14 @@
   border: #7F7F7F solid 3px;
   min-width: 240px;
   top: 65px;
+
   ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     li {
      padding: 20px; 
+     display: flex;
     }
     li+li {
      border-top: 1px solid #E5E5E5;
@@ -201,34 +205,74 @@
   }
 }
 #editor-pane-nav-options-menu:after {
-content: '';
-position: absolute;
-border-style: solid;
-border-width: 0 15px 15px;
-border-color: #FFFFFF transparent;
-display: block;
-width: 0;
-z-index: 1;
-top: -15px;
-left: 80px;
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 0 15px 15px;
+  border-color: #FFFFFF transparent;
+  display: block;
+  width: 0;
+  z-index: 1;
+  top: -15px;
+  left: 80px;
 }
-#editor-pane-nav-options-menu:before 
-{
-content: '';
-position: absolute;
-border-style: solid;
-border-width: 0 17px 17px;
-border-color: #7F7F7F transparent;
-display: block;
-width: 0;
-z-index: 0;
-top: -20px;
-left: 78px;
+#editor-pane-nav-options-menu:before {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 0 17px 17px;
+  border-color: #7F7F7F transparent;
+  display: block;
+  width: 0;
+  z-index: 0;
+  top: -20px;
+  left: 78px;
 }
-.nav-menu-button {
-  float: right;
-  display:inline-block;
+
+/* Font increase/decrease */
+#editor-pane-nav-decrease-font {
+  margin-left: auto;
+  margin-right: 5px;
 }
+.font-size-button{
+  background-color: #55986C;
+  height: 10px;
+  width: 10px;
+  padding: 10px;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.2em;
+  .icon;
+
+  span.font-size-plus {
+    position:relative;
+    top: -8px;
+  }
+  span.font-size-minus {
+    position:relative;
+    top: -9px;
+    left: 2px;
+  }
+}
+
+/* Theme toggle*/
+#editor-pane-nav-toggle-theme {
+  margin-left: auto;
+  display: flex;
+  background-color: #55986C;
+  border-radius: 25px;
+  height: 20px;
+  padding: 5px 10px 5px 10px;
+
+  div.theme-active {
+    border-radius: 50%;
+    background-color: white;
+  }
+  div.theme-inactive {
+    background-color: none;
+  }
+}
+
 
 /* ------ RIGHT PANE ------ */
 .preview-pane-nav {
@@ -276,20 +320,27 @@ left: 78px;
   .icon;
   .transition;
 }
-#preview-pane-nav-desktop:hover{
-  opacity: 0.6;
-  filter: alpha(opacity=60);
+#preview-pane-nav-desktop:hover {
+  .viewmode-active;
 }
 
 #preview-pane-nav-phone {
-  opacity: 0.3;
-  filter: alpha(opacity=30);
   .icon;
   .transition;
 }
 #preview-pane-nav-phone:hover {
+  .viewmode-active;
+}
+
+
+.viewmode-active {
   opacity: 0.6;
   filter: alpha(opacity=60);
+}
+
+.viewmode-inactive {
+  opacity: 0.3;
+  filter: alpha(opacity=30);
 }
 
 /* ------ MIXINS ------ */

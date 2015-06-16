@@ -37,14 +37,23 @@
           <img id="editor-pane-nav-options" src="/img/icon/gear.svg" width="25px" height="25px">
           <div id="editor-pane-nav-options-menu">
             <ul>
-              <li>Text size 
-                <div class="nav-menu-item">
-                <span id="editor-pane-nav-smaller-font">-</span>
-                <span id="editor-pane-nav-bigger-font">+</span>
-                </div>
+              <li><span>Text size</span>
+                  <div id="editor-pane-nav-decrease-font" class="font-size-button">
+                    <span class="font-size-minus">-</span>
+                  </div>
+                  <div id="editor-pane-nav-increase-font" class="font-size-button">
+                    <span class="font-size-plus" >+</span>
+                  </div>
               </li>
-              <li>Color theme
-
+              <li><span>Color theme</span>
+                <div id="editor-pane-nav-toggle-theme">
+                  <div class="theme-active">
+                    <img src="/img/icon/moon.svg" width="20px" height="20px">
+                  </div>
+                  <div>
+                    <img src="/img/icon/sun.svg" width="20px" height="20px">
+                  </div>
+                </div>
               </li>
             </ul>
           </div>
@@ -61,8 +70,8 @@
         <img src="/img/icon/refresh.svg" width="20px" height="20px">
       </div>
       <div class="flex-container pull-right">
-        <img id="preview-pane-nav-desktop" src="/img/icon/desktop.svg"  width="30px" height="30px">
-        <img id="preview-pane-nav-phone" src="/img/icon/phone-portrait.svg" width="30px" height="30px">
+        <img id="preview-pane-nav-desktop" class="viewmode-active" src="/img/icon/desktop.svg"  width="30px" height="30px">
+        <img id="preview-pane-nav-phone" class="viewmode-inactive" src="/img/icon/phone-portrait.svg" width="30px" height="30px">
       </div>
     </div>
   </div>
