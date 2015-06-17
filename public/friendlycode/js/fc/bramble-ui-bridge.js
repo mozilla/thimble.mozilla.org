@@ -124,6 +124,19 @@ define(["jquery"], function($) {
     bramble.on("activeEditorChange", function(data) {
       console.log("thimble side", "activeEditorChange", data);
     });
+
+    // File Change Events
+    bramble.on("fileChange", function(filename) {
+      console.log("thimble side", "fileChange", filename);
+    });
+
+    bramble.on("fileDelete", function(filename) {
+      console.log("thimble side", "fileDelete", filename);
+    });
+
+    bramble.on("fileRename", function(oldFilename, newFilename) {
+      console.log("thimble side", "fileRename", oldFilename, newFilename);
+    });
   }
 
   return {
