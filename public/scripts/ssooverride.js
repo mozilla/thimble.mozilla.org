@@ -20,110 +20,76 @@
     var html = document.getElementsByTagName("html")[0];
 
     function setStateCookie(state) {
-      var domain;
-
       cookies.expire("state");
       cookies.set("state", state);
     }
 
-    /**
-     * This kicks in when Friendlycode is well and truly done building itself.
-     */
-    editor.ready.done(function() {
-      var userfield = $("#identity");
-      var buttons = $('.save-button, .publish-button');
-      var saveButton = $('.save-button');
-      var csrf = document.getElementById("ssooverride").getAttribute("data-csrf");
-      var joinEl = $('#webmaker-nav .join-button');
-      var loginEl = $('#webmaker-nav .signin-button');
-      var logoutEl = $('#webmaker-nav .logout-button');
-      var userInfoDropdown = $('#webmaker-nav .user-info-dropdown');
-      var avatarEl = userInfoDropdown.find('img[data-avatar]');
-      var usernameEl = userInfoDropdown.find('strong[data-username]');
+    var joinEl = $('#signup-link');
+    var loginEl = $('#login-link');
 
-      function enable(user) {
-        joinEl.addClass("hidden");
-        loginEl.addClass("hidden");
+    function enable(user) {
+      // Logic for UX on detection of a logged in user should
+      // go here
+    };
 
-        avatarEl.attr("src", user.avatar);
-        usernameEl.text(user.username);
+    function disable() {
+      // The default state.
+    }
 
-        userInfoDropdown.removeClass("hidden");
-        buttons.attr("disabled", false).attr("title", '');
-        html.classList.add("loggedin");
-      };
+    var basicQuery = "?" + [
+      "client_id=" + oauthClientId,
+      "response_type=code",
+      "scopes=user email"
+    ].join("&");
 
-      function disable() {
-        joinEl.removeClass("hidden");
-        loginEl.removeClass("hidden");
-        userInfoDropdown.addClass("hidden");
-        buttons.attr("disabled", true);
-        saveButton.attr("title", loginToSave);
-        html.classList.remove("loggedin");
-      }
+    // Signup login flow
+    joinEl.on('click', function(e) {
+      e.preventDefault();
 
-      $('.dropdown').each(function (index, el) {
-        var dropDownMenu = el.querySelector('.dropdown-menu');
-        var dropDownToggle = el.querySelector('.dropdown-toggle');
-        dropDownToggle.addEventListener('click', function (e) {
-          e.preventDefault();
-          if (dropDownMenu.style.display === 'block') {
-            dropDownMenu.style.display = '';
-          } else {
-            dropDownMenu.style.display = 'block';
-          }
-        }, false);
-      });
+      var state = uuid.v4();
+      var oauthRoute = "/login/oauth/authorize";
 
-      var basicQuery = "?" + [
-        "client_id=" + oauthClientId,
-        "response_type=code",
-        "scopes=user email"
+      var query = authHostname + oauthRoute + basicQuery + [
+        "&state=" + state,
+        "action=signup"
       ].join("&");
 
-      // Signup login flow
-      joinEl.on('click', function() {
-        var state = uuid.v4();
-        var oauthRoute = "/login/oauth/authorize";
+      setStateCookie(state);
 
-        var query = authHostname + oauthRoute + basicQuery + [
-          "&state=" + state,
-          "action=signup"
-        ].join("&");
-
-        setStateCookie(state);
-
-        window.location = query;
-      });
-      // Login flow
-      loginEl.on('click', function() {
-        var state = uuid.v4();
-        var oauthRoute = "/login/oauth/authorize";
-
-        var query = authHostname + oauthRoute + basicQuery + [
-          "&state=" + state,
-          "action=signin"
-        ].join("&");
-
-        setStateCookie(state);
-
-        window.location = query;
-      });
-      logoutEl.on('click', function() {
-        // Logout flow
-        var oauthRoute = "/logout";
-
-        var query = authHostname + oauthRoute + "?client_id=" + oauthClientId;
-
-        window.location = query;
-      });
-
-      if (user.username.length > 0) {
-        enable(user);
-      } else {
-        // We disable the publishing UI by default
-        disable();
-      }
+      window.location = query;
     });
+    // Login flow
+    loginEl.on('click', function(e) {
+      e.preventDefault();
+
+      var state = uuid.v4();
+      var oauthRoute = "/login/oauth/authorize";
+
+      var query = authHostname + oauthRoute + basicQuery + [
+        "&state=" + state,
+        "action=signin"
+      ].join("&");
+
+      setStateCookie(state);
+
+      window.location = query;
+    });
+
+    // XXXBramble - This callback must execute on logout:
+    //  function() {
+    //   // Logout flow
+    //   var oauthRoute = "/logout";
+
+    //   var query = authHostname + oauthRoute + "?client_id=" + oauthClientId;
+
+    //   window.location = query;
+    // };
+
+    if (user.username.length > 0) {
+      enable(user);
+    } else {
+      // We disable the publishing UI by default
+      disable();
+    }
   });
 }());
