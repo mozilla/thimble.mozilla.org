@@ -158,17 +158,17 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
     this.init = function(make) {
       // Start loading Bramble
       Bramble.load("#webmaker-bramble",{
-        url: "http://localhost:8000/src/index.html",
+        url: "http://localhost:8000/src/index.html"
       });
 
       // Event listeners
-      Bramble.on("ready", function(bramble) {
-        console.log("ready");
+      Bramble.once("ready", function(bramble) {
         // For debugging, attach to window.
         window.bramble = bramble;
+        BrambleUIBridge.init(bramble);
       });
 
-      Bramble.on("error", function(e, err) {
+      Bramble.on("error", function(err) {
         console.log("error", err);
       })
 
@@ -200,13 +200,7 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
 
           // Now that fs is setup, tell Bramble which root dir to mount
           // and which file within that root to open on startup.
-          Bramble.mount("/project", function(err, bramble) {
-            if (err) {
-              throw err;
-            }
-
-            BrambleUIBridge.init(bramble);
-          });
+          Bramble.mount("/project");
         });
       });
     };
