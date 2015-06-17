@@ -75,7 +75,8 @@
       window.location = query;
     });
 
-    // XXXBramble - This callback must execute on logout:
+    // XXXBramble - This callback should execute on a logout click, when
+    // we have logout UI:
     //  function() {
     //   // Logout flow
     //   var oauthRoute = "/logout";
