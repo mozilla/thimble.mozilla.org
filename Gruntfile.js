@@ -175,6 +175,6 @@ module.exports = function( grunt ) {
     ]);
   });
 
-  grunt.registerTask( "default", [ "csslint", "jshint", "execute", "lesslint" ]);
+  grunt.registerTask( "default", [ "csslint", "jshint", "execute" ]);
 };
 
