@@ -13,12 +13,22 @@ define(["jquery"], function($) {
   function init(bramble) {
     // Align to the current state of the editor's layout on startup
     updateLayout(bramble.getLayout());
+    
+    //Show sidebar nav if it is present on load
+    if(bramble.getLayout().sidebarWidth > 0)
+    {
+      $("#editor-pane-nav-options-menu").hide();
+      bramble.showSidebar();
+      $("#editor-pane-nav-fileview").css("display", "none");
+      $(".filetree-pane-nav").css("display", "inline-flex");
+    }
 
     // Smooths resize
     $(window).resize(function() {
       $("#editor-pane-nav-options-menu").hide();
     });
 
+    // User bar menu help
     $("#navbar-help").click(function() {
       window.open("https://support.mozilla.org/en-US/products/webmaker/thimble");
     });
@@ -52,9 +62,21 @@ define(["jquery"], function($) {
 
     // Options menu
     $("#editor-pane-nav-options").click(function() {
+      //Determines where to horizontally place menu based on cog icon location
       var leftOffset = $("#editor-pane-nav-options").offset().left - 86;
       $("#editor-pane-nav-options-menu").css("left", leftOffset);
       $("#editor-pane-nav-options-menu").fadeToggle();
+    });
+
+    $(document).on('click', function(event) {
+      if (!$(event.target).closest("#editor-pane-nav-options-menu").length
+          && !$(event.target).closest("#editor-pane-nav-options").length) {
+        $("#editor-pane-nav-options-menu").hide();
+      }
+    });
+    $("#webmaker-bramble").click(function() {
+      $("#editor-pane-nav-options-menu").hide();
+      console.log("Within iframe");
     });
 
     // Font size
@@ -69,7 +91,10 @@ define(["jquery"], function($) {
     // Theme change
     $("#theme-dark").click(function() {
       bramble.useDarkTheme();
-
+      $("#moon-green").show();
+      $("#sun-white").show();
+      $("#moon-white").hide();
+      $("#sun-green").hide();
       $("#theme-active").css("position", "absolute").animate({
         left: 157
       });
@@ -77,9 +102,12 @@ define(["jquery"], function($) {
 
     $("#theme-light").click(function() {
       bramble.useLightTheme();
-
+      $("#sun-green").show();
+      $("#moon-white").show();
+      $("#sun-white").hide();
+      $("#moon-green").hide();
       $("#theme-active").css("position", "absolute").animate({
-        left: 188
+        left: 187
       });
     });
 

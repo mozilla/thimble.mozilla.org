@@ -182,6 +182,12 @@
 }
 
 /* ------ EDITOR OPTIONS MENU ------ */
+#editor-pane-options-menu::before {
+  position: fixed;
+  width:100%;
+  height:100%;
+  background-color: rgba(0,0,0,0.5);
+}
 #editor-pane-nav-options-menu {
   display: none;
   position: absolute;
@@ -262,23 +268,41 @@
   background-color: #55986C;
   border-radius: 25px;
   height: 20px;
-  padding: 5px 10px 5px 10px;
+  padding: 7px 6px 5px 14px;
   div#theme-dark {
-    z-index: 2;
+    z-index: 11;
     margin-right: 10px;
+    img {
+      position: relative;
+      left: -4px;
+    }
+    img#moon-green {
+      display: none;
+    }
   }
   div#theme-light {
-    z-index: 2;
+    z-index: 11;
+    
+    img {
+      position: relative;
+      left: -1px;
+    }
+    img#sun-white {
+      display: none;
+    }
   }
+
+
+
 
   div#theme-active {
     border-radius: 50%;
     background-color: white;
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     position: absolute;
-    z-index: 1;
-    top: 94px;
+    z-index: 10;
+    top: 92px;
     left: 188px;
   }
 }
