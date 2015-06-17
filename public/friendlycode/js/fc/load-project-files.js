@@ -42,6 +42,28 @@ define([], function() {
 
     callback = defaultTemplate;
 
+    function relative(path) {
+      if(!Path.isAbsolute(path)) {
+        return path;
+      }
+
+      var temp = path;
+      var relPath = "";
+      var exit = false;
+
+      while(!exit) {
+        if(temp === root) {
+          exit = true;
+        } else {
+          relPath = "/" + Path.basename(temp) + relPath;
+        }
+
+        temp = Path.dirname(temp);
+      }
+
+      return relPath.substr(1);
+    }
+
     function updateFs() {
       if(!defaultProject && request.readyState !== 4) {
         return;
@@ -112,9 +134,9 @@ define([], function() {
       files.forEach(function(file) {
         // TODO: Make this configurable
         if(!filePathToOpen || Path.extname(filePathToOpen) !== ".html") {
-          filePathToOpen = file.path;
+          filePathToOpen = relative(file.path);
         }
-        file.path = Path.join(root, file.path);
+
         writeFile(file.path, new FilerBuffer(file.buffer));
       });
     }
@@ -136,7 +158,7 @@ define([], function() {
   self.generateDefaultFiles = function(defaultTemplate) {
     return [
       {
-        path: "index.html",
+        path: "/New Project/index.html",
         buffer: convertToBuffer(defaultTemplate || "")
       }
     ];

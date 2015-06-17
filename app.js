@@ -214,6 +214,8 @@ app.get('/project/:projectId', routes.openProject);
 
 app.get('/newProject', routes.newProject);
 
+app.post('/updateProjectFile', routes.createOrUpdateProjectFile);
+
 // Localized Strings
 app.get( '/strings/:lang?', i18n.stringsRoute( 'en-US' ) );
 

@@ -10,7 +10,8 @@ define(function(require) {
       ProjectUI = require("fc/ui/bramble-project"),
       DefaultContentTemplate = require("template!default-content"),
       Localized = require("localized"),
-      ProjectFiles = require("fc/load-project-files");
+      ProjectFiles = require("fc/load-project-files"),
+      FileSystemSync = require("fc/filesystem-sync");
 
   Preferences.fetch();
 
@@ -84,11 +85,16 @@ define(function(require) {
     var initFs = function(callback) {
       if(!makeDetails || !makeDetails.title) {
         makeDetails = ProjectFiles.generateDefaultProject();
-        return ProjectFiles.load(makeDetails, defaultContent, callback);
+        ProjectFiles.load(makeDetails, defaultContent, callback);
+        return;
       }
 
       ProjectFiles.load(makeDetails, callback);
     };
+
+    FileSystemSync.init(makeDetails && makeDetails.title, {
+      createOrUpdate: options.appUrl + "/updateProjectFile"
+    }, $("meta[name='csrf-token']").attr("content"));
 
     if (!pageManager.currentPage()) {
       setTimeout(function() {
