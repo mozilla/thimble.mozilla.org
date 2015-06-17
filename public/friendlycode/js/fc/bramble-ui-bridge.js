@@ -16,12 +16,26 @@ define(["jquery"], function($) {
     // Align to the current state of the editor's layout on startup
     updateLayout(bramble.getLayout());
     setNavFilename(bramble.getFilename());
+    checkIfMultiFile();
+
     //Show sidebar nav if it is present on load
-    if(bramble.getLayout().sidebarWidth > 0)
-    {
-      $("#editor-pane-nav-options-menu").hide();
-      $("#editor-pane-nav-fileview").hide();
-      $(".filetree-pane-nav").css("display", "inline-flex");
+    function checkIfMultiFile() {
+      var data = bramble.getLayout();
+
+      if(data.sidebarWidth > 0)
+      {
+        // Total width of window
+        var total = data.sidebarWidth + data.firstPaneWidth + data.secondPaneWidth;
+        
+        // Set width in percent, easier for window resize
+        $(".filetree-pane-nav").width(((data.sidebarWidth / total) * 100) + "%");
+        $(".editor-pane-nav").width(((data.firstPaneWidth / total) * 100) + "%");
+        $(".preview-pane-nav").width(((data.secondPaneWidth / total) * 100) + "%");
+
+        $("#editor-pane-nav-options-menu").hide();
+        $("#editor-pane-nav-fileview").hide();
+        $(".filetree-pane-nav").css("display", "inline-flex");
+      }
     }
 
 
