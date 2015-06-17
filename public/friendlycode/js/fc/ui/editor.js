@@ -9,7 +9,7 @@ define([
           .addClass("friendlycode-base"),
         toolbarDiv = $('<div class="friendlycode-toolbar"></div>')
           .appendTo(container),
-        panesDiv = $('<div class="friendlycode-panes"></div>')
+        panesDiv = $('<div class="friendlycode-panes"></div>');
 // TODO: we don't want this, need to remove in a cleaner way
 //          .appendTo(container);
 

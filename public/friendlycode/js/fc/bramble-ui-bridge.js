@@ -85,8 +85,7 @@ define(["jquery"], function($) {
     });
 
     $(document).on('click', function(event) {
-      if (!$(event.target).closest("#editor-pane-nav-options-menu").length
-          && !$(event.target).closest("#editor-pane-nav-options").length) {
+      if (!$(event.target).closest("#editor-pane-nav-options-menu").length && !$(event.target).closest("#editor-pane-nav-options").length) {
         $("#editor-pane-nav-options-menu").hide();
       }
     });

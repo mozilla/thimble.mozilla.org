@@ -57,62 +57,6 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
       }), editorHost);
     }
 
-    // Event listening for proxied event messages from our editor iframe.
-    window.addEventListener("message", function(evt) {
-      return;
-
-
-
-      // Set the communication channel to our iframe
-      // now that it's signaled that it has content
-      // by sending a postMessage
-      telegraph = iframe.contentWindow;
-      var message = JSON.parse(evt.data);
-
-      // Make sure we only take postMessages seriously
-      // when they come from our editor
-      if (evt.origin !== editorHost) {
-        return;
-      }
-
-      if (typeof message.type !== "string" || message.type.indexOf("bramble") === -1) {
-        return;
-      }
-
-      if (message.type === "bramble:change") {
-        latestSource = message.sourceCode;
-        lastLine = message.lastLine;
-        if(message.scrollInfo) scrollInfo = message.scrollInfo;
-
-        eventCBs["change"].forEach(function(cb) {
-          cb();
-        });
-        return;
-      }
-
-      if (message.type === "bramble:init") {
-        telegraph.postMessage(JSON.stringify({
-          type: "bramble:init",
-          source: latestSource
-        }), editorHost);
-        return;
-      }
-
-      if (message.type === "bramble:loaded") {
-        eventCBs["loaded"].forEach(function(cb) {
-          cb();
-        });
-
-        that.executeCommand("_fontSize", { data : prefSize });
-        that.executeCommand("_spaceUnits", { data : 2 });
-        return;
-      }
-
-      if (message.type === "bramble:viewportChange") {
-        scrollInfo = message.scrollInfo;
-      }
-    });
-
     // Create CodeMirror-like interface for friendlycode to use
     this.getValue = function() {
       return latestSource;
@@ -170,7 +114,7 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
 
       Bramble.on("error", function(err) {
         console.log("error", err);
-      })
+      });
 
       Bramble.on("readyStateChange", function(previous, current) {
         console.log("readyStateChange", previous, current);
