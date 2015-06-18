@@ -53,7 +53,7 @@ module.exports = function(utils, nunjucksEnv, appName) {
     var user = req.session.user;
     var username = encodeURIComponent(user.username);
     request.get({
-      url: publishURL + '/users?name=' + username,
+      url: publishURL + '/users/' + '1',
       headers: {
         "Authorization": "token " + cryptr.decrypt(req.session.token)
       }
@@ -85,7 +85,7 @@ module.exports = function(utils, nunjucksEnv, appName) {
         }
 
         if(response.statusCode !== 200) {
-          console.error('Error retrieving user\'s projects: ', response);
+          console.error('Error retrieving user\'s projects: ', response.body);
           // deal with failure
           return;
         }
@@ -163,7 +163,7 @@ module.exports = function(utils, nunjucksEnv, appName) {
     // TODO: login stuff
     // Hack until login button is set up
     if(req.query.loggedIn === "yes") {
-      req.session.user = { username: "ag_dubs" };
+      req.session.user = { username: "ag-dubs" };
       req.session.token = cryptr.encrypt("fake_token");
     }
     if(req.session.user && !req.session.redirectFromProjectSelection) {
@@ -172,6 +172,24 @@ module.exports = function(utils, nunjucksEnv, appName) {
     }
 
     showThimble(req, res);
+  }
+
+  function authorized(req, res) {
+    if(!req.session.user) {
+      // TODO: handle error
+      console.error('Unauthorized request');
+      res.send(401);
+      return false;
+    }
+
+    if(!req.session.project || !req.session.project.meta) {
+      // TODO: handle error
+      console.error('No project information available for the user');
+      res.send(404);
+      return false;
+    }
+
+    return true;
   }
 
   return {
@@ -208,7 +226,7 @@ module.exports = function(utils, nunjucksEnv, appName) {
 
         if(response.statusCode !== 200) {
           // TODO: handle error
-          console.error('Error retrieving user\'s projects: ', response);
+          console.error('Error retrieving user\'s projects: ', response.body);
           return;
         }
 
@@ -230,17 +248,7 @@ module.exports = function(utils, nunjucksEnv, appName) {
     },
 
     createOrUpdateProjectFile: function(req, res) {
-      if(!req.session.user) {
-        // TODO: handle error
-        console.error('Unauthorized request');
-        res.send(401);
-        return;
-      }
-
-      if(!req.session.project || !req.session.project.meta) {
-        // TODO: handle error
-        console.error('No project information available for the user');
-        res.send(404);
+      if(!authorized(req, res)) {
         return;
       }
 
@@ -253,7 +261,7 @@ module.exports = function(utils, nunjucksEnv, appName) {
 
       var fileReceived = {
         path: req.body.path,
-        buffer: req.body.buffer,
+        buffer: req.body.buffer.data,
         project_id: req.session.project.meta.id
       };
       var existingFile = req.session.project.files[fileReceived.path];
@@ -283,7 +291,7 @@ module.exports = function(utils, nunjucksEnv, appName) {
 
         if((httpMethod === 'POST' && response.statusCode !== 201) ||
            (httpMethod === 'PUT' && response.statusCode !== 200)) {
-          console.error('Error updating project file: ', response);
+          console.error('Error updating project file: ', response.body);
           res.send(response.statusCode);
           return;
         }
@@ -297,6 +305,52 @@ module.exports = function(utils, nunjucksEnv, appName) {
           res.send(201);
           return;
         }
+
+        res.send(200);
+      });
+    },
+
+    deleteProjectFile: function(req, res) {
+      if(!authorized(req, res)) {
+        return;
+      }
+
+      if(!req.body || !req.body.path) {
+        // TODO: handle error
+        console.error('Request body missing data: ', req.body);
+        res.send(400);
+        return;
+      }
+
+      var existingFile = req.session.project.files[req.body.path];
+
+      if(!existingFile) {
+        console.error('No file representation found for ', req.body.path);
+        res.send(400);
+        return;
+      }
+
+      request({
+        method: 'DELETE',
+        uri: publishURL + '/files/' + existingFile.id,
+        headers: {
+          "Authorization": "token " + cryptr.decrypt(req.session.token)
+        }
+      }, function(err, response) {
+        if(err) {
+          // TODO: handle error
+          console.error('Failed to send DELETE request for ', existingFile.path);
+          res.send(500);
+          return;
+        }
+
+        if(response.statusCode !== 204) {
+          console.error('Error deleting project file: ', response.body);
+          res.send(response.statusCode);
+          return;
+        }
+
+        delete req.session.project.files[req.body.path];
 
         res.send(200);
       });
@@ -325,7 +379,7 @@ module.exports = function(utils, nunjucksEnv, appName) {
 
         if(response.statusCode !== 200) {
           // TODO: handle error
-          console.error('Error retrieving user\'s project files: ', response);
+          console.error('Error retrieving user\'s project files: ', response.body);
           res.send(404);
           return;
         }

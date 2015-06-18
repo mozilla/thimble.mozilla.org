@@ -3,10 +3,9 @@ define([], function() {
 
   var Path = Bramble.Filer.Path;
   var FilerBuffer = Bramble.Filer.Buffer;
-  var self = {};
 
   // Taken from http://stackoverflow.com/questions/6965107/converting-between-strings-and-arraybuffers
-  function convertToBuffer(string) {
+  function convertToArrayBuffer(string) {
     var buf = new ArrayBuffer(string.length);
     var bufView = new Uint8Array(buf);
     for(var i = 0, strLen = string.length; i < strLen; i++) {
@@ -15,7 +14,7 @@ define([], function() {
     return buf;
   }
 
-  self.load = function(project, defaultTemplate, callback) {
+  function load(project, defaultTemplate, callback) {
     var fs = Bramble.getFileSystem();
     var shell = new fs.Shell();
     var projectFilesUrl = window.location.protocol + "//" + window.location.host + "/initializeProject";
@@ -35,7 +34,7 @@ define([], function() {
       defaultProject = true;
       project.dateCreated = (new Date()).toISOString();
       project.dateUpdated = project.dateCreated;
-      files = self.generateDefaultFiles(defaultTemplate);
+      files = generateDefaultFiles(defaultTemplate);
       updateFs();
       return;
     }
@@ -115,13 +114,14 @@ define([], function() {
           });
         }
 
-        fs.stat(parent, function(err) {
-          if(!err || err.code !== "ENOENT") {
-            write();
+        shell.mkdirp(parent, function(err) {
+          if(err && err.code !== "EEXIST") {
+            console.error("Failed to create project directory: ", parent);
+            callback(err);
             return;
           }
 
-          shell.mkdirp(parent, write);
+          write();
         });
       }
 
@@ -145,24 +145,28 @@ define([], function() {
     request.responseType = "json";
     request.open("GET", projectFilesUrl, true);
     request.send();
-  };
+  }
 
-  self.generateDefaultProject = function() {
+  function generateDefaultProject() {
     return {
       title: "New Project",
       tags: [],
       description: ""
     };
-  };
+  }
 
-  self.generateDefaultFiles = function(defaultTemplate) {
+  function generateDefaultFiles(defaultTemplate) {
     return [
       {
         path: "/New Project/index.html",
-        buffer: convertToBuffer(defaultTemplate || "")
+        buffer: convertToArrayBuffer(defaultTemplate)
       }
     ];
-  };
+  }
 
-  return self;
+  return {
+    load: load,
+    generateDefaultProject: generateDefaultProject,
+    generateDefaultFiles: generateDefaultFiles
+  };
 });

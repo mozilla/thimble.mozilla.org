@@ -93,7 +93,8 @@ define(function(require) {
     };
 
     FileSystemSync.init(makeDetails && makeDetails.title, {
-      createOrUpdate: options.appUrl + "/updateProjectFile"
+      createOrUpdate: options.appUrl + "/updateProjectFile",
+      del: options.appUrl + "/deleteProjectFile"
     }, $("meta[name='csrf-token']").attr("content"));
 
     if (!pageManager.currentPage()) {

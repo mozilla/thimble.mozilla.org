@@ -22,7 +22,6 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
     var that = this;
     var lastLine = 0;
     var scrollInfo;
-    var _instance;
 
     var editorHost = this.editorHost = options.editorHost;
 

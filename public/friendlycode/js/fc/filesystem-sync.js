@@ -9,7 +9,7 @@ define(["jquery"], function($) {
       headers: {
         "X-Csrf-Token": csrfToken
       },
-      type: "POST",
+      type: "PUT",
       url: url
     };
 
@@ -48,7 +48,35 @@ define(["jquery"], function($) {
     });
   }
 
-  function pushFileDelete() {}
+  function pushFileDelete(url, csrfToken, fs, path) {
+    var request = $.ajax({
+      contentType: "application/json",
+      headers: {
+        "X-Csrf-Token": csrfToken
+      },
+      type: "PUT",
+      url: url,
+      data: JSON.stringify({
+        "path": path
+      })
+    });
+    request.done(function() {
+      if(request.readyState !== 4) {
+        return;
+      }
+
+      if(request.status !== 200) {
+        // TODO: handle error case here
+        console.error("Server did not persist file");
+        return;
+      }
+
+      console.log("Successfully deleted ", path);
+    });
+    request.fail(function(jqXHR, status, err) {
+      console.error("Failed to send request to delete the file to the server with: ", err);
+    });
+  }
 
   function pushFileRename() {}
 
