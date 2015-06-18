@@ -94,7 +94,8 @@ module.exports = function(utils, nunjucksEnv, appName) {
           csrf: req.csrfToken ? req.csrfToken() : null,
           HTTP_STATIC_URL: '/',
           projects: JSON.parse(body),
-          PROJECT_URL: 'project'
+          PROJECT_URL: 'project',
+          editorHOST: editorHOST,
         };
 
         res.render('projects.html', options);
@@ -289,8 +290,7 @@ module.exports = function(utils, nunjucksEnv, appName) {
           return;
         }
 
-        if((httpMethod === 'POST' && response.statusCode !== 201) ||
-           (httpMethod === 'PUT' && response.statusCode !== 200)) {
+        if(response.statusCode !== 201 && response.statusCode !== 200) {
           console.error('Error updating project file: ', response.body);
           res.send(response.statusCode);
           return;

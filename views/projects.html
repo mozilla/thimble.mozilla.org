@@ -1,18 +1,35 @@
 {% extends "layout.html" %}
 {% block body %}
-  <div id="projects">
-  {% for project in projects %}
-    <div id="{{ [ 'project', project.id ] | join('-') }}"
-         class="bramble-user-project"
-    {% for key, value in project %}
-      {{ [ "data", "project", key ] | join("-") }}="{{ value }}"
+  <div id="container">
+     <h2>Your Projects</h2>
+    <table id="project-list">
+
+    {% for project in projects %}
+      <tr class="project bramble-user-project"
+          id="{{ [ 'project', project.id ] | join('-') }}"
+      {% for key, value in project %}
+        {{ [ "data", "project", key ] | join("-") }}="{{ value }}"
+      {% endfor %}
+      >
+        <td class="side-fill"></td>
+        <td class="project-title">
+          {{ project.title }}
+          <span class="project-information">
+          </span>
+        </td>
+        <td class="project-delete">
+          Delete
+        </td>
+        <td class="button-fill"></td>
+         <td class="project-remix">
+          Remix
+        </td>
+        <td class="side-fill"></td>
+      </tr>
     {% endfor %}
-    >
-      {{ project.title }}
-    </div>
-    <br>
-  {% endfor %}
-    <div id="project-0">Create a new project</div>
+
+    </table>
+    <div id="project-0">Create New</div>
+    <script src="/scripts/open-project.js"></script>
   </div>
-  <script src="/scripts/open-project.js"></script>
 {% endblock %}

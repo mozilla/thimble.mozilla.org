@@ -1,0 +1,98 @@
+body {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1em;
+}
+
+#container {
+	width: 80%;
+	margin: 0px auto;
+}
+
+h2 {
+	padding-left: 10px;
+}
+
+
+
+table#project-list {
+	width: 100%;
+	border: 0;
+	padding: 0;
+	border-collapse: collapse;
+	cursor: pointer;
+	-webkit-user-select: none; /* Chrome/Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+}
+
+tr.project:hover {
+	background-color: #EFEFEF;
+}
+tr.project:hover span.project-information {
+	color: #A1A1A1;
+}
+tr.project:hover > td.side-fill {
+	border-bottom: 2px solid #EFEFEF;
+}
+
+tr.project > td:first-child {
+	padding-left: 0px;
+}
+tr.project td:last-child {
+	padding-right: 0px;
+}
+td {
+	padding: 10px 0;
+	vertical-align: bottom;
+	border-bottom: 2px solid #EFEFEF;
+}
+
+td.side-fill {
+	border-bottom: 0;
+	width: 10px;
+}
+td.button-fill {
+	width: 40px;
+}
+
+td.project-title {
+	padding-left: 0px;
+}
+.project-information {
+	font-size: 0.8em;
+	color: #C6C6C6;
+	margin-left: 5px;
+}
+td.project-delete {
+	text-align: right;
+	color: #A1A1A1;
+
+	width: 1%;
+	white-space: nowrap;
+}
+img.icon-garbage-can {
+	width: 15px;
+	height: 15px;
+	position: relative;
+	top: 1px;
+	opacity: 0.3;
+}
+td.project-remix {
+	text-align: right;
+	color: #A1A1A1;
+
+	width: 1%;
+	white-space: nowrap;
+}
+
+#project-0 {
+	margin-top: 10px;
+	margin-left: 10px;
+	padding: 5px 10px 5px 10px;
+	color: white;
+	background-color: #65A17A;
+	display: inline-block;
+	cursor: pointer;
+	text-decoration: none;
+	font-weight: normal;
+}

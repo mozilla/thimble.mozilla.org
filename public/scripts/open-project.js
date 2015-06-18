@@ -1,7 +1,8 @@
 (function(){
-  var projects = document.querySelectorAll("div.bramble-user-project");
+  var projects = document.querySelectorAll("tr.bramble-user-project");
 
-  document.getElementById("project-0").addEventListener("click", function() {
+  document.getElementById("project-0").addEventListener("click", function(e) {
+    e.preventDefault();
     window.location.pathname += "newProject";
   });
 
