@@ -46,7 +46,7 @@ module.exports = function( grunt ) {
       }
     },
     lesslint: {
-      src: ["public/stylesheets/userbar-overrides.less"],
+      src: ["public/stylesheets/userbar.less"],
         options: {
           csslint: {
             "adjoining-classes": false,
