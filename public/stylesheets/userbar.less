@@ -12,6 +12,8 @@
 }
 
 .container-flex {
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
     display: inline-flex;
     -webkit-align-content: space-between;
     align-content: space-between;
@@ -40,12 +42,12 @@
     #navbar-project-title {
         color: white;
         font-size: 1.1em;
+        padding: 5px;
+        display: inline-block;
         .icon;
         .transition;
         img.icon-edit {
-            margin-left: 3px;
             width: 15px;
-            vertical-align: middle;
             opacity: 0.35;
             filter: alpha(opacity=35);
             .transition;
@@ -66,8 +68,9 @@
         .icon;
         color: white;
         img.icon-question-mark {
-            width: 15px;
             vertical-align: middle;
+            position: relative;
+            top: -2px;
         }
     }
     #navbar-help:hover {
@@ -88,6 +91,8 @@
         img.icon-publish {
             width: 20px;
             vertical-align: middle;
+            position: relative;
+            top: -2px;
         }
     }
     .navbar-publish-button:hover {
@@ -113,9 +118,15 @@
     }
 
     #navbar-left {
-        height: 100%;
         margin-left: 20px;
-        float: left;
+        margin-top: auto;
+        margin-bottom: auto;
+
+        /* Vertically align immediate children */
+        * {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
     }
     #navbar-right {
         margin-left: auto;
@@ -125,7 +136,7 @@
         text-align: right;
         right: 0px;
     }
-    #navbar-left, #navbar-right {
+    #navbar-right {
         line-height: 60px;
     }
 }
@@ -155,17 +166,6 @@
   transition: opacity @transitionTime ease-in-out;
 }
 
-.item:hover {
-  -webkit-transition: none;
-  -moz-transition: none;
-  -ms-transition: none;
-  -o-transition: none;
-  transition: none;
-  zoom: 1;
-  filter: alpha(opacity=50);
-  opacity: 0.5;
-}
-
 /* Link for login section */
 a.navbar-login {
     color: white;
@@ -176,248 +176,3 @@ a.navbar-login {
 a.navbar-login:hover {
     text-decoration: underline;
 }
-
-/******** EDITOR BAR ********/
-
-/* VARIABLES */
-@headerHeight: 60px;
-@toolbarHeight: 60px;
-
-
-/* ------ GENERAL ------ */
-.friendlycode-base {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  overflow: hidden;
-  background-color: #F5F5F5;
-  color: #414244;
-}
-
-#webmaker-bramble {
-    width: 100%;
-    height: 100%;
-    border: 0;
-}
-
-#webmaker-source-code-pane {
-  overflow: hidden;
-}
-
-.friendlycode-base img {
-  border: 0 none;
-}
-
-.friendlycode-toolbar {
-  position: absolute;
-  top: @headerHeight;
-
-  height: @toolbarHeight;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  -webkit-box-shadow: 0 8px 6px -6px #999;
-     -moz-box-shadow: 0 8px 6px -6px #999;
-          box-shadow: 0 8px 6px -6px #999;
-}
-
-.editor-nav {
-  position: absolute;
-  display: block;
-  top: 0;
-  width: 100%;
-  height: 0;
-}
-
-/* ------ LEFT PANE ------ */
-.editor-pane-nav {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  z-index: 2;
-  height: @toolbarHeight;
-  background-color: #3F3F3F;
-  color: #757575;
-  .flex-container;
-}
-
-.editor-pane-nav-title {
-  color: #9D9D9D;
-  font-weight: bold;
-  font-size: 1em;
-  .vertical-align;
-}
-
-#editor-pane-nav-fileview {
-  width: 25px;
-  height: 25px;
-  margin-right: 10px;
-  background-color: #1E1E1E;
-  background-image:url("/img/icon/arrow-right.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 15px 15px;
-  .icon;
-}
-
-#editor-pane-nav-undo {
-  background-color: #2B2B2B;
-  border-radius: 25px;
-  height: 20px;
-  padding: 5px;
-  .icon;
-  span {
-    vertical-align: top;
-  }
-}
-
-#editor-pane-nav-redo {
-  background-color: #2B2B2B;
-  height: 20px;
-  width: 20px;
-  padding: 5px;
-  border-radius: 50%;
-  margin-left: 10px;
-  margin-right: 10px;
-  .icon;
-}
-
-#editor-pane-nav-options {
-  .icon;
-}
-
-/* ------ RIGHT PANE ------ */
-.preview-pane-nav {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 50%;
-  height: @toolbarHeight;
-  z-index: 2;
-  background-color: white;
-  .flex-container;
-}
-
-.preview-pane-nav-title {
-  color: #A9A9A9;
-  font-weight: bold;
-  font-size: 1em;
-}
-
-#preview-pane-nav-refresh {
-  background-color: #EAEAEA;
-  height: 20px;
-  width: 20px;
-  padding: 5px;
-  border-radius: 50%;
-  margin-left: 10px;
-  margin-right: 10px;
-  .icon;
-}
-
-#preview-pane-nav-desktop {
-  .icon;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-#preview-pane-nav-phone {
-  .icon;
-}
-
-
-/* ------ MIXINS ------ */
-.pull-right {
-  margin-left: auto;
-}
-
-.icon {
-  cursor: pointer;
-  -webkit-user-select: none; /* Chrome/Safari */        
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE10+ */
-}
-
-.flex-container {
-  display: inline-flex;
-}
-
-.nav-container {
-  width: 100%;
-  padding-right: 20px;
-  padding-left: 20px;
-  .flex-container;
-
-  /* Hack to perfectly center elements within container (they all vary in heights) */
-  * {
-    .vertical-align;
-  }
-}
-
-.vertical-align {
-  margin-top: auto;
-  margin-bottom: auto;
-}
-
-/* ------ EDITOR CONTENT AREA ------ */
-
-.friendlycode-panes {
-  position: absolute;
-  top: (@headerHeight + @toolbarHeight) - 10px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-div.editor-actions {
-  visibility: visible;
-  position: absolute;
-  right: 20px;
-  top: 20px;
-}
-
-.source-code {
-  background-color: #F9F9F9;
-  z-index: 1;
-}
-
-.source-code {
-  width: 100%;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  position: absolute;
-  bottom: 0;
-  top: 10px;
-}
-
-.tipsy.friendlycode-base {
-  /* Make tipsy tooltips slightly larger than the default. */
-  font-size: 12px;
-}
-
-.source-code .CodeMirror {
-  height:100%;
-  overflow:hidden;
-}
-
-.source-code .CodeMirror-scroll {
-  height: 100%;
-  overflow: auto;
-}
-
-.preview-pane-nav-options fieldset {
-  display: inline-block;
-  border: none;
-  margin: 0;
-  padding: 0;
-}
-
-.preview-pane-nav-options fieldset {
-  font-size: 80%;
-}
-
-.nav-options .hide-run-js {
-  display: none;
-}
-
-

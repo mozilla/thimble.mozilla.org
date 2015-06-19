@@ -106,24 +106,44 @@ define(["jquery"], function($) {
     // Theme change
     $("#theme-dark").click(function() {
       bramble.useDarkTheme();
-      $("#moon-green").show();
-      $("#sun-white").show();
-      $("#moon-white").hide();
-      $("#sun-green").hide();
+
+      // Icons
+      $("#moon-green").fadeIn(1000);
+      $("#sun-white").fadeIn(1000);
+      $("#moon-white").fadeOut(1000);
+      $("#sun-green").fadeOut(1000);
+
+      // Active indicator
       $("#theme-active").css("position", "absolute").animate({
         left: 157
       });
+
+      // Toolbar shadow
+      $(".friendlycode-toolbar").css({
+        "-webkit-box-shadow": "0 8px 6px -6px #000",
+        "-moz-box-shadow": "0 8px 6px -6px #000",
+        "box-shadow": "0 8px 6px -6px #000"});
     });
 
     $("#theme-light").click(function() {
       bramble.useLightTheme();
-      $("#sun-green").show();
-      $("#moon-white").show();
-      $("#sun-white").hide();
-      $("#moon-green").hide();
+
+      // Icons
+      $("#sun-green").fadeIn(500);
+      $("#moon-white").fadeIn(500);
+      $("#sun-white").fadeOut(500);
+      $("#moon-green").fadeOut(500);
+
+      // Active Indicator
       $("#theme-active").css("position", "absolute").animate({
         left: 187
       });
+
+      // Toolbar shadow
+      $(".friendlycode-toolbar").css({
+        "-webkit-box-shadow": "0 8px 6px -6px #999",
+        "-moz-box-shadow": "0 8px 6px -6px #999",
+        "box-shadow": "0 8px 6px -6px #999"});
     });
 
     // Refresh Preview
