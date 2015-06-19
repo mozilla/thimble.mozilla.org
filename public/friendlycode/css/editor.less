@@ -59,7 +59,6 @@
   z-index: 2;
   height: @toolbarHeight;
   background-color: #212121;
-  display: none;
   vertical-align: top;
   float: left;
 }
@@ -74,7 +73,7 @@
 }
 
 #filetree-pane-nav-add {
-  
+  /* Add new file button */
 }
 
 #filetree-pane-nav-hide {
@@ -127,6 +126,7 @@
   border-radius: 25px;
   height: 20px;
   padding: 5px 10px 5px 10px;
+  display: inline-block;
   .icon;
   img {
     opacity: 0.5;
@@ -190,14 +190,12 @@
 
 /* ------ EDITOR OPTIONS MENU ------ */
 #editor-pane-nav-options-menu {
-  display: none;
   position: absolute;
   z-index: 6;
   background-color: white; 
   border: #7F7F7F solid 3px;
   min-width: 240px;
   top: 65px;
-
   ul {
     list-style-type: none;
     margin: 0;
@@ -249,6 +247,7 @@
   border-radius: 50%;
   color: white;
   font-size: 1.2em;
+  display: inline-block;
   .icon;
 
   span.font-size-plus {
@@ -265,36 +264,31 @@
 /* Theme toggle*/
 #editor-pane-nav-toggle-theme {
   margin-left: auto;
-  display: flex;
   background-color: #55986C;
   border-radius: 25px;
   height: 20px;
   padding: 7px 6px 5px 14px;
+  width: 45px;
+  .flex-container;
+
   div#theme-dark {
     z-index: 11;
     margin-right: 10px;
     img {
-      position: relative;
-      left: -4px;
-    }
-    img#moon-green {
-      display: none;
+      position: absolute;
+      top: 100px;
+      left: 165px;
     }
   }
   div#theme-light {
     z-index: 11;
     
     img {
-      position: relative;
-      left: -1px;
-    }
-    img#sun-white {
-      display: none;
+      position: absolute;
+      top: 98px;
+      left: 193px;
     }
   }
-
-
-
 
   div#theme-active {
     border-radius: 50%;
@@ -389,6 +383,8 @@
     -ms-transition: @transitionTime;
     -o-transition: @transitionTime;
     transition: @transitionTime;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .icon {
@@ -399,11 +395,15 @@
 }
 
 .flex-container {
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
   display: inline-flex;
 }
 
 .nav-container {
   width: 100%;
+  height: 100%;
+  box-sizing: border-box;
   padding-right: 20px;
   padding-left: 20px;
   .flex-container;
@@ -417,6 +417,10 @@
 .vertical-align {
   margin-top: auto;
   margin-bottom: auto;
+}
+
+.hide {
+  display: none;
 }
 
 /* ------ CONTENT AREA ------ */

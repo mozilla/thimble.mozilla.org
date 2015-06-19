@@ -12,10 +12,11 @@
     <title>{{ gettext("Mozilla Thimble") }}</title>
 
     <script src="{{ editorHOST }}/dist/bramble.js"></script>
+    <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}stylesheets/normalize.css">
     <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}friendlycode/css/friendlycode.css">
     <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}friendlycode/css/details-form.css">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css">
-    <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}stylesheets/userbar-overrides.css">
+    <link rel="stylesheet" href="{{ HTTP_STATIC_URL }}stylesheets/userbar.css">
 
     {% if GA_ACCOUNT %}
     <script id="google-analytics-js" src="/scripts/google-analytics.js"
