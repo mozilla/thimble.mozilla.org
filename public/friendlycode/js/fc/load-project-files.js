@@ -1,4 +1,4 @@
-define([], function() {
+define(["jquery"], function($) {
   "use strict";
 
   var Path = Bramble.Filer.Path;
@@ -14,13 +14,14 @@ define([], function() {
     return buf;
   }
 
-  function load(project, defaultTemplate, callback) {
+  function load(project, options, callback) {
     var fs = Bramble.getFileSystem();
     var shell = new fs.Shell();
     var projectFilesUrl = window.location.protocol + "//" + window.location.host + "/initializeProject";
     var request = new XMLHttpRequest();
     var root = project && project.title;
     var defaultProject = false;
+    var defaultPath;
     var files;
 
     if(!root) {
@@ -30,16 +31,17 @@ define([], function() {
 
     root = Path.join("/", root);
 
-    if(typeof defaultTemplate !== "function") {
+    if(typeof options !== "function") {
       defaultProject = true;
-      project.dateCreated = (new Date()).toISOString();
+      defaultPath = options.isNew ? "/" + project.title : "/New Project";
+      project.dateCreated = project.dateCreated || (new Date()).toISOString();
       project.dateUpdated = project.dateCreated;
-      files = generateDefaultFiles(defaultTemplate);
+      files = generateDefaultFiles(options.defaultTemplate, defaultPath);
       updateFs();
       return;
     }
 
-    callback = defaultTemplate;
+    callback = options;
 
     function relative(path) {
       if(!Path.isAbsolute(path)) {
@@ -88,6 +90,39 @@ define([], function() {
       var completed = 0;
       var filePathToOpen;
 
+      function persistFile(path, data, next) {
+        var request = $.ajax({
+          contentType: "application/json",
+          headers: {
+            "X-Csrf-Token": options.csrfToken
+          },
+          type: "PUT",
+          url: options.persistenceURL,
+          data: JSON.stringify({
+            path: path,
+            buffer: data
+          })
+        });
+        request.done(function() {
+          if(request.readyState !== 4) {
+            return;
+          }
+
+          if(request.status !== 201 && request.status !== 200) {
+            // TODO: handle error case here
+            console.error("Server did not persist file");
+            return callback(new Error("Could not persist file"));
+          }
+
+          console.log("Successfully persisted ", path);
+          next();
+        });
+        request.fail(function(jqXHR, status, err) {
+          console.error("Failed to send request to persist the file to the server with: ", err);
+          callback(err);
+        });
+      }
+
       function checkProjectLoaded() {
         if(completed === length) {
           callback(null, {
@@ -109,8 +144,16 @@ define([], function() {
               return;
             }
 
-            completed++;
-            checkProjectLoaded();
+            if(!options.isNew) {
+              completed++;
+              checkProjectLoaded();
+              return;
+            }
+
+            persistFile(path, data, function() {
+              completed++;
+              checkProjectLoaded();
+            });
           });
         }
 
@@ -147,18 +190,18 @@ define([], function() {
     request.send();
   }
 
-  function generateDefaultProject() {
+  function generateDefaultProject(title) {
     return {
-      title: "New Project",
+      title: title || "New Project",
       tags: [],
       description: ""
     };
   }
 
-  function generateDefaultFiles(defaultTemplate) {
+  function generateDefaultFiles(defaultTemplate, projectPath) {
     return [
       {
-        path: "/New Project/index.html",
+        path: Path.join(projectPath, "index.html"),
         buffer: convertToArrayBuffer(defaultTemplate)
       }
     ];

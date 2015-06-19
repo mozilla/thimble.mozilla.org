@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
   <div id="container">
-     <h2>Your Projects</h2>
+    <h2>Your Projects</h2>
     <table id="project-list">
 
     {% for project in projects %}
@@ -29,7 +29,20 @@
     {% endfor %}
 
     </table>
-    <div id="project-0">Create New</div>
+
+    <div class="project-button" id="project-0">Create New</div>
+
+    <div id="modal_wrapper">
+      <div id="modal_window">
+
+      <div style="text-align: right;"><a id="modal_close" href="#">close <b>X</b></a></div>
+
+      <p><label>Project Name<br>
+      <input id="project-name" type="text" autofocus required size="48" name="name" value=""></label></p>
+      <div id="project-submit" class="project-button">Submit</div>
+      </div> <!-- #modal_window -->
+    </div> <!-- #modal_wrapper -->
+
     <script src="/scripts/open-project.js"></script>
   </div>
 {% endblock %}

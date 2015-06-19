@@ -212,7 +212,9 @@ app.get('/initializeProject',
 
 app.get('/project/:projectId', routes.openProject);
 
-app.get('/newProject', routes.newProject);
+app.get('/projectExists/:projectName', routes.projectExists);
+
+app.get('/newProject/:projectName', routes.newProject);
 
 app.put('/updateProjectFile', routes.createOrUpdateProjectFile);
 

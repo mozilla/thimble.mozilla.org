@@ -85,7 +85,18 @@ define(function(require) {
     var initFs = function(callback) {
       if(!makeDetails || !makeDetails.title) {
         makeDetails = ProjectFiles.generateDefaultProject();
-        ProjectFiles.load(makeDetails, defaultContent, callback);
+        ProjectFiles.load(makeDetails, { defaultTemplate: defaultContent }, callback);
+        return;
+      }
+
+      if(makeDetails.isNew) {
+        makeDetails = ProjectFiles.generateDefaultProject(makeDetails.title);
+        ProjectFiles.load(makeDetails, {
+          isNew: true,
+          defaultTemplate: defaultContent,
+          csrfToken: $("meta[name='csrf-token']").attr("content"),
+          persistenceURL: options.appUrl + "/updateProjectFile"
+        }, callback);
         return;
       }
 

@@ -64,6 +64,7 @@ define(["jquery"], function($) {
       if(request.readyState !== 4) {
         return;
       }
+    console.log("Here");
 
       if(request.status !== 200) {
         // TODO: handle error case here
@@ -74,7 +75,7 @@ define(["jquery"], function($) {
       console.log("Successfully deleted ", path);
     });
     request.fail(function(jqXHR, status, err) {
-      console.error("Failed to send request to delete the file to the server with: ", err);
+      console.error("Failed to send request to delete the file to the server with: ", status);
     });
   }
 
@@ -93,8 +94,7 @@ define(["jquery"], function($) {
         handler.apply(null, arguments);
       };
     }
-
-    Bramble.on("ready", function(bramble) {
+    Bramble.once("ready", function(bramble) {
       bramble.on("fileChange", configHandler(pushFileChange, persistanceUrls.createOrUpdate));
       bramble.on("fileDelete", configHandler(pushFileDelete, persistanceUrls.del));
       bramble.on("fileRename", configHandler(pushFileRename, persistanceUrls.rename));
