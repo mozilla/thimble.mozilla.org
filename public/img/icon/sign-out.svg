@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="13px" height="13px" viewBox="0 0 13 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.2 (12043) - http://www.bohemiancoding.com/sketch -->
+    <title>sign-out</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="sign-out" sketch:type="MSArtboardGroup" fill="#000000">
+            <path d="M11.201,0 C11.573,0 11.902,0.142 12.186,0.427 C12.471,0.712 12.613,1.041 12.613,1.413 L12.613,11.201 C12.613,11.574 12.471,11.902 12.186,12.187 C11.902,12.472 11.573,12.614 11.201,12.614 L1.412,12.614 C1.04,12.614 0.711,12.472 0.427,12.187 C0.142,11.902 0,11.574 0,11.201 L0,8.409 L1.412,8.409 L1.412,11.201 L11.201,11.201 L11.201,1.413 L1.412,1.413 L1.412,4.205 L0,4.205 L0,1.413 C0,1.041 0.142,0.712 0.427,0.427 C0.711,0.142 1.04,0 1.412,0 L11.201,0 L11.201,0 Z M4.96,8.836 L6.766,6.997 L0,6.997 L0,5.617 L6.799,5.617 L4.96,3.778 L5.945,2.793 L9.46,6.307 L5.945,9.822 L4.96,8.836 L4.96,8.836 Z" id="Imported-Layers" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

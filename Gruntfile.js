@@ -85,7 +85,9 @@ module.exports = function( grunt ) {
         "public/friendlycode/vendor/slowparse/slowparse.js",
         "public/friendlycode/vendor/slowparse/test/nodetest.js",
         "public/friendlycode/vendor/slowparse/test/test-slowparse.js",
-        "public/friendlycode/vendor/slowparse/test/node/qunit-shim.js"
+        "public/friendlycode/vendor/slowparse/test/node/qunit-shim.js",
+        //Files not to include in jshint
+        "!public/img/**"
       ]
     },
     execute: {
