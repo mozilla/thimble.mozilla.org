@@ -9,3 +9,5 @@ bower_components
 locale/
 !locale/en_US/*
 !locale/localeinfo.json
+public/friendlycode/css/editor.css
+public/stylesheets/userbar.css
