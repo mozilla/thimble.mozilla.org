@@ -34,10 +34,6 @@
     "webmaker-locale-mapping": "0.0.5",
     "webmaker-translation-stats": "0.0.1"
   },
-  "optionalDependencies": {
-    "mysql": "2.0.0-alpha7",
-    "sqlite3": "3.0.7"
-  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-csslint": "0.1.2",

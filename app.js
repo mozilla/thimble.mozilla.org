@@ -17,7 +17,6 @@ if ( process.env.NEW_RELIC_ENABLED ) {
  */
 var ajax = require('request'),
     async = require('async'),
-    db = require('./lib/database'),
     express = require('express'),
     fs = require('fs'),
     habitat = require('habitat'),
@@ -47,8 +46,6 @@ var appName = "thimble",
       migrated by their owners/remixers.
     **/
     databaseOptions =  env.get('CLEARDB_DATABASE_URL') || env.get('DB'),
-    databaseAPI = db('thimbleproject', databaseOptions),
-    legacyDatabaseAPI = db('legacyproject', databaseOptions, env.get('LEGACY_DB')),
 
     allowJS = env.get("JAVASCRIPT_ENABLED", false),
     middleware = require('./lib/middleware')(),
@@ -194,12 +191,6 @@ app.use( "/friendlycode/vendor/slowparse", express.static( path.join(__dirname, 
 app.use(errorhandling.errorHandler);
 app.use(errorhandling.pageNotFoundHandler);
 
-// what do we do when a project request comes in by id (:id route)?
-app.param('id', parameters.id(databaseAPI));
-
-// what do we do when a project request comes in by id (:oldid route)?
-app.param('oldid', parameters.oldid(legacyDatabaseAPI));
-
 // what do we do when a project request comes in by name (:name route)?
 app.param('name', parameters.name);
 
@@ -213,25 +204,6 @@ webmakerProxy(app, middleware.checkForAuth);
 app.get('/',
         middleware.setNewPageOperation,
         middleware.setUserIfTokenExists,
-        routes.index );
-
-// Raw data route, for loading pages to remix
-app.get('/project/:id/data', routes.rawData );
-
-// Legacy route for old user content
-app.get('/p/:oldid/data', routes.rawData );
-
-
-// Remix a published page (from db)
-// Even if this is "our own" page, this URL
-// will effect a new page upon publication.
-app.get('/project/:id/remix',
-        middleware.setDefaultPublishOperation,
-        routes.index );
-
-// Legacy route for remixing old user content
-app.get('/p/:oldid/remix',
-        middleware.setDefaultPublishOperation,
         routes.index );
 
 // Localized Strings
