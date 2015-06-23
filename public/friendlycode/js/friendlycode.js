@@ -103,14 +103,14 @@ define(function(require) {
       ProjectFiles.load(makeDetails, callback);
     };
 
-    FileSystemSync.init(makeDetails && makeDetails.title, {
+    var fsync = FileSystemSync.init(makeDetails && makeDetails.title, {
       createOrUpdate: options.appUrl + "/updateProjectFile",
       del: options.appUrl + "/deleteProjectFile"
     }, $("meta[name='csrf-token']").attr("content"));
 
     if (!pageManager.currentPage()) {
       setTimeout(function() {
-        editor.panes.codeMirror.init(defaultContent, initFs);
+        editor.panes.codeMirror.init(defaultContent, { sync: fsync }, initFs);
         doneLoading();
       }, 0);
     } else {
@@ -120,7 +120,7 @@ define(function(require) {
             text: Localized.get('page-load-err')
           });
         } else {
-          editor.panes.codeMirror.init(data, initFs);
+          editor.panes.codeMirror.init(data, { sync: fsync }, initFs);
           publishUI.setCurrentURL(url);
           doneLoading();
         }

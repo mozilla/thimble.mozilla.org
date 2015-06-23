@@ -3,7 +3,14 @@ define(["jquery"], function($) {
 
   var FileSystemSync = {};
 
+  function hideFileState(remainingFiles) {
+    if(!remainingFiles) {
+      $("#navbar-save-indicator").addClass("hide");
+    }
+  }
+
   function pushFileChange(url, csrfToken, fs, path) {
+    var context = this;
     var options = {
       contentType: "application/json",
       headers: {
@@ -29,7 +36,11 @@ define(["jquery"], function($) {
         console.log("Successfully persisted ", path);
       });
       request.fail(function(jqXHR, status, err) {
-        console.error("Failed to send request to persist the file to the server with: ", err);
+        console.error("Failed to send request to persist the file to the server with: ", err);$("navbar-save-indicator").addClass("hide");
+      });
+      request.always(function() {
+        context.queueLength--;
+        hideFileState(context.queueLength);
       });
     }
 
@@ -49,6 +60,7 @@ define(["jquery"], function($) {
   }
 
   function pushFileDelete(url, csrfToken, fs, path) {
+    var context = this;
     var request = $.ajax({
       contentType: "application/json",
       headers: {
@@ -76,21 +88,30 @@ define(["jquery"], function($) {
     request.fail(function(jqXHR, status, err) {
       console.error("Failed to send request to delete the file to the server with: ", status);
     });
+    request.always(function() {
+      context.queueLength--;
+      hideFileState(context.queueLength);
+    });
   }
 
   function pushFileRename() {}
 
+  function FSync() {
+    this.queueLength = 0;
+  }
+
   FileSystemSync.init = function(projectName, persistanceUrls, csrfToken) {
     if(!projectName) {
-      return;
+      return null;
     }
 
+    var fsync = new FSync();
     var fs = Bramble.getFileSystem();
 
     function configHandler(handler, url) {
       return function() {
         Array.prototype.unshift.call(arguments, url, csrfToken, fs);
-        handler.apply(null, arguments);
+        handler.apply(fsync, arguments);
       };
     }
     Bramble.once("ready", function(bramble) {
@@ -98,6 +119,8 @@ define(["jquery"], function($) {
       bramble.on("fileDelete", configHandler(pushFileDelete, persistanceUrls.del));
       bramble.on("fileRename", configHandler(pushFileRename, persistanceUrls.rename));
     });
+
+    return fsync;
   };
 
   return FileSystemSync;

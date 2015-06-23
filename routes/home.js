@@ -4,7 +4,7 @@ module.exports = function(config) {
   return function(req, res) {
     var makedetails = "{}";
     var project = req.session.project && req.session.project.meta;
-      console.log(req.session.project.isNew);
+
     if(project && req.session.redirectFromProjectSelection) {
       makedetails = encodeURIComponent(JSON.stringify({
         title: project.title,
@@ -14,6 +14,7 @@ module.exports = function(config) {
         description: project.description,
         isNew: req.session.project.isNew
       }));
+      req.session.project.isNew = false;
     }
 
     var options = {
@@ -56,7 +57,6 @@ module.exports = function(config) {
     }
 
     req.session.redirectFromProjectSelection = false;
-    req.session.project.isNew = false;
 
     res.render("index.html", options);
   };

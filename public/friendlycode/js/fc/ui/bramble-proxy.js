@@ -99,8 +99,13 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
       communicateEditMessage("scrollTo", x, y);
     };
 
-    this.init = function(make, initFs) {
+    this.init = function(make, options, initFs) {
       var self = this;
+
+      if(typeof options === "function") {
+        initFs = options;
+        options = null;
+      }
 
       // Start loading Bramble
       Bramble.load("#webmaker-bramble",{
@@ -111,7 +116,7 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
       Bramble.once("ready", function(bramble) {
         // For debugging, attach to window.
         window.bramble = bramble;
-        BrambleUIBridge.init(bramble);
+        BrambleUIBridge.init(bramble, options);
       });
 
       Bramble.on("error", function(err) {
@@ -126,8 +131,6 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
         if(err) {
           throw err;
         }
-
-        console.log(Bramble.Filer.Path.normalize(config.root));
 
         // Now that fs is setup, tell Bramble which root dir to mount
         // and which file within that root to open on startup.
