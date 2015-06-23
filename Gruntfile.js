@@ -74,17 +74,14 @@ module.exports = function( grunt ) {
         options: {
           "-W069": true // ignore "['...'] is better written in dot notation." warnings
         },
-        files: [
-          "Gruntfile.js",
-          "app.js",
-          "lib/**/*.js",
-          "routes/**/*.js",
-          "public/friendlycode/js/**/*.js",
-          "public/friendlycode/vendor/slowparse/slowparse.js",
-          "public/friendlycode/vendor/slowparse/test/nodetest.js",
-          "public/friendlycode/vendor/slowparse/test/test-slowparse.js",
-          "public/friendlycode/vendor/slowparse/test/node/qunit-shim.js"
-        ]
+        files: {
+          src: [
+            "Gruntfile.js",
+            "app.js",
+            "lib/**/*.js",
+            "routes/**/*.js"
+          ]
+        }
       },
       frontend: {
         files: {
@@ -166,13 +163,14 @@ module.exports = function( grunt ) {
       tasks.push('uglify');
       tasks.push('cssmin');
     } else if (watch) {
-      tasks.push('watch');
+      grunt.task.run(['watch']);
+      return;
     }
 
     grunt.task.run(tasks);
   });
 
-  grunt.registerTask( "test", [ "jshint:server", "jshint:frontend", "lesshint" ])
+  grunt.registerTask( "test", [ "jshint:server", "jshint:frontend", "lesslint" ]);
   grunt.registerTask( "default", [ "test" ]);
 };
 
