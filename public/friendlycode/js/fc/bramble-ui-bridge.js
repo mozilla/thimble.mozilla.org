@@ -26,7 +26,7 @@ define(["jquery"], function($) {
       {
         // Total width of window
         var total = data.sidebarWidth + data.firstPaneWidth + data.secondPaneWidth;
-        
+
         // Set width in percent, easier for window resize
         $(".filetree-pane-nav").width(((data.sidebarWidth / total) * 100) + "%");
         $(".editor-pane-nav").width(((data.firstPaneWidth / total) * 100) + "%");
@@ -120,9 +120,9 @@ define(["jquery"], function($) {
 
       // Toolbar shadow
       $(".friendlycode-toolbar").css({
-        "-webkit-box-shadow": "0 8px 6px -6px #000",
-        "-moz-box-shadow": "0 8px 6px -6px #000",
-        "box-shadow": "0 8px 6px -6px #000"});
+        "-webkit-box-shadow": "0 2px 2px 1px #000",
+        "-moz-box-shadow": "0 2px 2px 1px #000",
+        "box-shadow": "0 2px 2px 1px #000"});
     });
 
     $("#theme-light").click(function() {
@@ -141,9 +141,9 @@ define(["jquery"], function($) {
 
       // Toolbar shadow
       $(".friendlycode-toolbar").css({
-        "-webkit-box-shadow": "0 8px 6px -6px #999",
-        "-moz-box-shadow": "0 8px 6px -6px #999",
-        "box-shadow": "0 8px 6px -6px #999"});
+        "-webkit-box-shadow": "0 2px 2px 1px #999",
+        "-moz-box-shadow": "0 2px 2px 1px #999",
+        "box-shadow": "0 2px 2px 1px #999"});
     });
 
     // Refresh Preview
