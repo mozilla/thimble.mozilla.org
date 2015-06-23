@@ -21,10 +21,10 @@ module.exports = function( grunt ) {
     watch: {
       default: {
         files: [
-          'frontend/scripts/**/*.js',
-          'frontend/scripts/*.js',
-          'frontend/styles/**/*.less',
-          'frontend/styles/*.less'
+          'frontend/src/scripts/**/*.js',
+          'frontend/src/scripts/*.js',
+          'frontend/src/styles/**/*.less',
+          'frontend/src/styles/*.less'
         ],
         tasks: [
           'jshint:frontend',
@@ -42,7 +42,7 @@ module.exports = function( grunt ) {
     // Linting
     lesslint: {
       src: [
-        "./frontend/styles/*.less"
+        "./frontend/src/styles/*.less"
       ],
       options: {
         csslint: {
@@ -70,7 +70,7 @@ module.exports = function( grunt ) {
       }
     },
     jshint: {
-      default: {
+      server: {
         options: {
           "-W069": true // ignore "['...'] is better written in dot notation." warnings
         },
@@ -89,8 +89,8 @@ module.exports = function( grunt ) {
       frontend: {
         files: {
           src: [
-            "./frontend/scripts/**/*.js",
-            "./frontend/scripts/*.js"
+            "./frontend/src/scripts/**/*.js",
+            "./frontend/src/scripts/*.js"
           ]
         }
       }
@@ -100,7 +100,7 @@ module.exports = function( grunt ) {
     uglify: {
       default: {
         files: {
-          'public/scripts/thimble.min.js': ['public/scripts/thimble.js']
+          'frontend/dist/scripts/thimble.min.js': ['frontend/dist/scripts/thimble.js']
         }
       }
     },
@@ -108,9 +108,9 @@ module.exports = function( grunt ) {
       default: {
         files: [{
           expand: true,
-          cwd: 'frontend/styles',
+          cwd: 'frontend/src/styles',
           src: ['*.css'],
-          dest: 'public/styles',
+          dest: 'frontend/dist/styles',
           ext: '.min.css'
         }]
       }
@@ -119,8 +119,8 @@ module.exports = function( grunt ) {
     // Build
     browserify: {
       default: {
-        src: "./frontend/scripts/index.js",
-        dest: "./public/scripts/thimble.js",
+        src: "./frontend/src/scripts/index.js",
+        dest: "./frontend/dist/scripts/thimble.js",
         options: {
           alias: {
             // Specify bower dependencies here for use with commonjs
@@ -139,63 +139,10 @@ module.exports = function( grunt ) {
           compress: true
         },
         files: {
-          "frontend/styles/error.css": "frontend/styles/error.less"
-        }
-      }
-    },
-
-    // Workflow
-    'npm-checkBranch': {
-      options: {
-        branch: GIT_BRANCH
-      }
-    },
-    "update_submodules": {
-      publish: {
-        options: {
-          params: "--remote -- public/friendlycode/vendor/brackets"
-        }
-      }
-    },
-    gitcommit: {
-      module: {
-        options: {
-          // This is replaced during the 'publish' task
-          message: "Placeholder"
-        }
-      }
-    },
-    gitadd: {
-      modules: {
-        files: {
-          src: ['./public/friendlycode/vendor/brackets']
-        }
-      }
-    },
-    gitpush: {
-      smart: {
-        options: {
-          remote: GIT_REMOTE,
-          // These options are left in for
-          // clarity. Their actual values
-          // will be set by the `publish` task.
-          branch: GIT_BRANCH
+          "frontend/src/styles/error.css": "frontend/src/styles/error.less"
         }
       }
     }
-  });
-
-  // Thimble-task: smartPush
-  //   Checks out to the branch provided as a target.
-  //   Takes:
-  //    [branch] - The branch to push to
-  //    [force] - If true, forces a push
-  grunt.registerTask('smartPush', function(branch, force) {
-      force = force == "true" ? true : false;
-
-      grunt.config('gitpush.smart.options.branch', branch);
-      grunt.config('gitpush.smart.options.force', force);
-      grunt.task.run('gitpush:smart');
   });
 
   // Thimble-task: build
@@ -225,6 +172,7 @@ module.exports = function( grunt ) {
     grunt.task.run(tasks);
   });
 
-  grunt.registerTask( "default", [ "csslint", "jshint", "execute" ]);
+  grunt.registerTask( "test", [ "jshint:server", "jshint:frontend", "lesshint" ])
+  grunt.registerTask( "default", [ "test" ]);
 };
 
