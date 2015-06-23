@@ -5,7 +5,7 @@ body {
 
 #container {
 	width: 80%;
-	margin: 0px auto;
+	margin: 0 auto;
 }
 
 h2 {
@@ -22,6 +22,7 @@ table#project-list {
 	-webkit-user-select: none; /* Chrome/Safari */
 	-moz-user-select: none; /* Firefox */
 	-ms-user-select: none; /* IE10+ */
+    user-select: none;
 }
 
 tr.project:hover {
@@ -35,10 +36,10 @@ tr.project:hover > td.side-fill {
 }
 
 tr.project > td:first-child {
-	padding-left: 0px;
+	padding-left: 0;
 }
 tr.project td:last-child {
-	padding-right: 0px;
+	padding-right: 0;
 }
 td {
 	padding: 10px 0;
@@ -55,7 +56,7 @@ td.button-fill {
 }
 
 td.project-title {
-	padding-left: 0px;
+	padding-left: 0;
 }
 .project-information {
 	font-size: 0.8em;
@@ -69,7 +70,7 @@ td.project-delete {
 	width: 1%;
 	white-space: nowrap;
 }
-img.icon-garbage-can {
+img.icon-garbage-can, img.icon-remix {
 	width: 15px;
 	height: 15px;
 	position: relative;

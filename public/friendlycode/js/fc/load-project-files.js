@@ -1,10 +1,12 @@
-define(["jquery"], function($) {
+define(["jquery", "constants"], function($, Constants) {
   "use strict";
 
   var Path = Bramble.Filer.Path;
   var FilerBuffer = Bramble.Filer.Buffer;
 
   // Taken from http://stackoverflow.com/questions/6965107/converting-between-strings-and-arraybuffers
+  // TODO: https://github.com/mozilla/thimble.webmaker.org/issues/601 OR
+  // https://github.com/mozilla/publish.webmaker.org/issues/52
   function convertToArrayBuffer(string) {
     var buf = new ArrayBuffer(string.length);
     var bufView = new Uint8Array(buf);
@@ -17,23 +19,26 @@ define(["jquery"], function($) {
   function load(project, options, callback) {
     var fs = Bramble.getFileSystem();
     var shell = new fs.Shell();
-    var projectFilesUrl = window.location.protocol + "//" + window.location.host + "/initializeProject";
-    var request = new XMLHttpRequest();
-    var root = project && project.title;
+    var projectFilesUrl = "//" + window.location.host + "/initializeProject";
+    var request;
+    var projectTitle = project && project.title;
     var defaultProject = false;
     var defaultPath;
     var files;
 
-    if(!root) {
-      callback(new Error("No project specified"));
+    if(!projectTitle) {
+      callback(new Error("[Bramble] No project specified"));
       return;
     }
 
-    root = Path.join("/", root);
+    var root = Path.join("/", projectTitle);
 
     if(typeof options !== "function") {
       defaultProject = true;
-      defaultPath = options.isNew ? "/" + project.title : "/New Project";
+      // `options.isNew` indicates that a new project was created for a
+      // signed-in user. For the anonymous user case, for now, we default to
+      // `/New Project` as the project root
+      defaultPath = options.isNew ? root : Path.join("/", Constants.ANON_PROJECT_NAME);
       project.dateCreated = project.dateCreated || (new Date()).toISOString();
       project.dateUpdated = project.dateCreated;
       files = generateDefaultFiles(options.defaultTemplate, defaultPath);
@@ -43,6 +48,8 @@ define(["jquery"], function($) {
 
     callback = options;
 
+    // TODO: Remove this once https://github.com/filerjs/filer/issues/357 has
+    // been fixed
     function relative(path) {
       if(!Path.isAbsolute(path)) {
         return path;
@@ -65,25 +72,14 @@ define(["jquery"], function($) {
       return relPath.substr(1);
     }
 
-    function updateFs() {
-      if(!defaultProject && request.readyState !== 4) {
-        return;
-      }
-
+    function updateFs(project) {
       if(!defaultProject && request.status !== 200) {
-        // TODO: handle error case here
-        callback(new Error("Failed to get files for this project"));
+        callback(new Error("[Bramble] Failed to get files for this project"));
         return;
       }
 
       if(!files) {
-        try {
-          files = request.response.files;
-        } catch(e) {
-          // TODO: handle error case here
-          callback(new Error("Failed to get a response"));
-          return;
-        }
+        files = project.files;
       }
 
       var length = files.length;
@@ -104,21 +100,15 @@ define(["jquery"], function($) {
           })
         });
         request.done(function() {
-          if(request.readyState !== 4) {
-            return;
-          }
-
           if(request.status !== 201 && request.status !== 200) {
-            // TODO: handle error case here
-            console.error("Server did not persist file");
-            return callback(new Error("Could not persist file"));
+            console.error("[Bramble] Server did not persist file");
+            return callback(new Error("[Bramble] Could not persist file"));
           }
 
-          console.log("Successfully persisted ", path);
           next();
         });
         request.fail(function(jqXHR, status, err) {
-          console.error("Failed to send request to persist the file to the server with: ", err);
+          console.error("[Bramble] Failed to send request to persist the file to the server with: ", err);
           callback(err);
         });
       }
@@ -138,8 +128,7 @@ define(["jquery"], function($) {
         function write() {
           fs.writeFile(path, data, function(err) {
             if(err) {
-              // TODO: handle error case here
-              console.error("Failed to write: ", path);
+              console.error("[Bramble] Failed to write: ", path);
               callback(err);
               return;
             }
@@ -159,7 +148,7 @@ define(["jquery"], function($) {
 
         shell.mkdirp(parent, function(err) {
           if(err && err.code !== "EEXIST") {
-            console.error("Failed to create project directory: ", parent);
+            console.error("[Bramble] Failed to create project directory: ", parent);
             callback(err);
             return;
           }
@@ -169,13 +158,13 @@ define(["jquery"], function($) {
       }
 
       if(!length) {
-        // TODO: What should we do here? :P
-        callback(new Error("No files to load"));
+        // TODO: https://github.com/mozilla/thimble.webmaker.org/issues/602
+        callback(new Error("[Bramble] No files to load"));
         return;
       }
 
       files.forEach(function(file) {
-        // TODO: Make this configurable
+        // TODO: https://github.com/mozilla/thimble.webmaker.org/issues/603
         if(!filePathToOpen || Path.extname(filePathToOpen) !== ".html") {
           filePathToOpen = relative(file.path);
         }
@@ -184,27 +173,32 @@ define(["jquery"], function($) {
       });
     }
 
-    request.onreadystatechange = updateFs;
-    request.responseType = "json";
-    request.open("GET", projectFilesUrl, true);
-    request.send();
+    request = $.ajax({
+      type: "GET",
+      headers: {
+        "Accept": "application/json"
+      },
+      url: projectFilesUrl
+    });
+    request.done(updateFs);
+    request.fail(function(jqXHR, status, err) {
+      callback(err);
+    });
   }
 
   function generateDefaultProject(title) {
     return {
-      title: title || "New Project",
+      title: title || Constants.ANON_PROJECT_NAME,
       tags: [],
       description: ""
     };
   }
 
   function generateDefaultFiles(defaultTemplate, projectPath) {
-    return [
-      {
-        path: Path.join(projectPath, "index.html"),
-        buffer: convertToArrayBuffer(defaultTemplate)
-      }
-    ];
+    return [{
+      path: Path.join(projectPath, Constants.DEFAULT_FILE_NAME),
+      buffer: convertToArrayBuffer(defaultTemplate)
+    }];
   }
 
   return {

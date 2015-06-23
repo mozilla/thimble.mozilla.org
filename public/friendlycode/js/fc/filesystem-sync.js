@@ -1,6 +1,4 @@
 define(["jquery"], function($) {
-  "use strict";
-
   var FileSystemSync = {};
 
   function hideFileState(remainingFiles) {
@@ -23,20 +21,12 @@ define(["jquery"], function($) {
     function send() {
       var request = $.ajax(options);
       request.done(function() {
-        if(request.readyState !== 4) {
-          return;
-        }
-
         if(request.status !== 201 && request.status !== 200) {
-          // TODO: handle error case here
-          console.error("Server did not persist file");
-          return;
+          console.error("[Bramble] Server did not persist ", path, ". Server responded with status ", request.status);
         }
-
-        console.log("Successfully persisted ", path);
       });
       request.fail(function(jqXHR, status, err) {
-        console.error("Failed to send request to persist the file to the server with: ", err);$("navbar-save-indicator").addClass("hide");
+        console.error("[Bramble] Failed to send request to persist the file to the server with: ", err);
       });
       request.always(function() {
         context.queueLength--;
@@ -46,8 +36,8 @@ define(["jquery"], function($) {
 
     fs.readFile(path, function(err, data) {
       if(err) {
-        // TODO: handle errors
-        throw err;
+        console.error("[Bramble] Failed to read ", path, " with ", err);
+        return;
       }
 
       options.data = JSON.stringify({
@@ -73,20 +63,12 @@ define(["jquery"], function($) {
       })
     });
     request.done(function() {
-      if(request.readyState !== 4) {
-        return;
-      }
-
       if(request.status !== 200) {
-        // TODO: handle error case here
-        console.error("Server did not persist file");
-        return;
+        console.error("[Bramble] Server did not persist ", path, ". Server responded with status ", request.status);
       }
-
-      console.log("Successfully deleted ", path);
     });
     request.fail(function(jqXHR, status, err) {
-      console.error("Failed to send request to delete the file to the server with: ", status);
+      console.error("[Bramble] Failed to send request to delete the file to the server with: ", err);
     });
     request.always(function() {
       context.queueLength--;
@@ -101,6 +83,8 @@ define(["jquery"], function($) {
   }
 
   FileSystemSync.init = function(projectName, persistanceUrls, csrfToken) {
+    // If no project name was provided, then an anonymous user is using thimble
+    // and will not have any persistence of files
     if(!projectName) {
       return null;
     }

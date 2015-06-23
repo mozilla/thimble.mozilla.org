@@ -26,12 +26,8 @@
         </div>
         <div id="navbar-login">
           <div id="navbar-login-inner">
-
-            <div id="navbar-anonymous">
-              <a href="#" id="login-link" class="navbar-login">Log in</a> or <a href="#" id="signup-link" class="navbar-login">Sign Up</a> to Save
-            </div>
-
-            <ul id="navbar-logged-in" class="hide">
+          {% if username %}
+            <ul id="navbar-logged-in">
               <li>
                 <img class="avatar" src="{{avatar}}">
                 <span>Hi, {{username}}</span>
@@ -45,7 +41,7 @@
                     </a>
                   </li>
                   <li>
-                    <a href="/projects" class="dropdown-link">
+                    <a href="/" class="dropdown-link" target="_self">
                       <img src="/img/icon/your-projects.svg" class="dropdown-icon">
                       Your Projects
                     </a>
@@ -71,6 +67,11 @@
                 </ul>
               </li>
             </ul>
+          {% else %}
+            <div id="navbar-anonymous">
+              <a href="#" id="login-link" class="navbar-login">Log in</a> or <a href="#" id="signup-link" class="navbar-login">Sign Up</a> to Save
+            </div>
+          {% endif %}
           </div>
         </div>
         <div id="navbar-publish">

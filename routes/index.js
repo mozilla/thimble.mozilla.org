@@ -40,7 +40,7 @@ module.exports = function(utils, nunjucksEnv, appName) {
 
   return {
     index: function(req, res) {
-      if(req.session.user && !req.session.redirectFromProjectSelection) {
+      if(req.user && !req.session.redirectFromProjectSelection) {
         renderUsersProjects(req, res);
         return;
       }

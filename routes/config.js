@@ -7,24 +7,6 @@ var Cryptr = require("cryptr");
 var editorHOST = url.parse(env.get("BRAMBLE_URI"));
 editorHOST = editorHOST.protocol +"//"+ editorHOST.host + editorHOST.pathname;
 
-function authorized(req, res) {
-  if(!req.session.user) {
-    // TODO: handle error
-    console.error('Unauthorized request');
-    res.send(401);
-    return false;
-  }
-
-  if(!req.session.project || !req.session.project.meta) {
-    // TODO: handle error
-    console.error('No project information available for the user');
-    res.send(404);
-    return false;
-  }
-
-  return true;
-}
-
 module.exports = {
   allowJS: env.get("JAVASCRIPT_ENABLED", false),
   appURL: env.get("APP_HOSTNAME"),
@@ -39,6 +21,5 @@ module.exports = {
   publishURL: env.get("PUBLISH_HOSTNAME"),
   editorHOST: editorHOST,
   editorURL: env.get("NODE_ENV") === "development" ? env.get("BRAMBLE_URI") + "/src" : env.get("BRAMBLE_URI") + "/dist",
-  cryptr: new Cryptr(env.get("SESSION_SECRET")),
-  authorized: authorized
+  cryptr: new Cryptr(env.get("SESSION_SECRET"))
 };

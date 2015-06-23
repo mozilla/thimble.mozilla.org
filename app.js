@@ -208,19 +208,38 @@ app.get('/',
 
 app.get('/initializeProject',
         middleware.checkForAuth,
+        middleware.setUserIfTokenExists,
         routes.getProject);
 
-app.get('/project/:projectId', routes.openProject);
+app.get('/project/:projectId',
+        middleware.checkForAuth,
+        middleware.setUserIfTokenExists,
+        routes.openProject);
 
-app.get('/projectExists/:projectName', routes.projectExists);
+app.get('/projectExists/:projectName',
+        middleware.checkForAuth,
+        middleware.setUserIfTokenExists,
+        routes.projectExists);
 
-app.get('/newProject/:projectName', routes.newProject);
+app.get('/newProject/:projectName',
+        middleware.checkForAuth,
+        middleware.setUserIfTokenExists,
+        routes.newProject);
 
-app['delete']('/deleteProject/:projectId', routes.deleteProject);
+app['delete']('/deleteProject/:projectId',
+              middleware.checkForAuth,
+              middleware.setUserIfTokenExists,
+              routes.deleteProject);
 
-app.put('/updateProjectFile', routes.createOrUpdateProjectFile);
+app.put('/updateProjectFile',
+        middleware.setUserIfTokenExists,
+        middleware.isProjectLoaded,
+        routes.createOrUpdateProjectFile);
 
-app.put('/deleteProjectFile', routes.deleteProjectFile);
+app.put('/deleteProjectFile',
+        middleware.setUserIfTokenExists,
+        middleware.isProjectLoaded,
+        routes.deleteProjectFile);
 
 // Localized Strings
 app.get( '/strings/:lang?', i18n.stringsRoute( 'en-US' ) );

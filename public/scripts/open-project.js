@@ -5,32 +5,26 @@
     function generateUrl(path, date) {
       var url = window.location;
       var qs = url.search;
-      if(qs.length < 1) {
-        qs = "?";
-      }
+      qs = qs.length < 1 ? "?" : qs + "&";
       qs += "now=" + encodeURIComponent(date);
 
-      return url.protocol + "//" + url.host + "/newProject/" + encodeURIComponent(path) + qs;
+      return "//" + url.host + "/newProject/" + encodeURIComponent(path) + qs;
     }
 
     $("#project-submit").on("click", function(e) {
       e.preventDefault();
 
-      var projectName = document.getElementById("project-name");
-      var value = projectName.value;
-
-      if (value.length < 1) {
+      var projectName = $("#new-project-name").val();
+      if (projectName.length < 1) {
         return;
       }
 
-      var request = $.ajax({
+      $.ajax({
         type: "GET",
-        url: "/projectExists/" + encodeURIComponent(value),
+        url: "/projectExists/" + encodeURIComponent(projectName),
         statusCode: {
           404: function() {
-            if (request.status === 404) {
-              window.location.href = generateUrl(value, (new Date()).toISOString());
-            }
+            window.location.href = generateUrl(projectName, (new Date()).toISOString());
           }
         }
       });

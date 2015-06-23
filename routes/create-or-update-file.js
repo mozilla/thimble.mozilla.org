@@ -2,14 +2,8 @@ var request = require("request");
 
 module.exports = function(config) {
   return function(req, res) {
-    if(!config.authorized(req, res)) {
-      return;
-    }
-
     if(!req.body || !req.body.path || !req.body.buffer) {
-      // TODO: handle error
-      console.error('Request body missing data: ', req.body);
-      res.send(400);
+      res.send(400, { error:  "Request body missing data" });
       return;
     }
 
@@ -19,37 +13,34 @@ module.exports = function(config) {
       project_id: req.session.project.meta.id
     };
     var existingFile = req.session.project.files[fileReceived.path];
-    var httpMethod = 'POST';
-    var resource = '/files';
+    var httpMethod = "POST";
+    var resource = "/files";
 
     if(existingFile) {
-      httpMethod = 'PUT';
-      resource += '/' + existingFile.id;
+      httpMethod = "PUT";
+      resource += "/" + existingFile.id;
     }
 
     request({
       method: httpMethod,
       uri: config.publishURL + resource,
       headers: {
-        "Authorization": "token " + config.cryptr.decrypt(req.session.token)
+        "Authorization": "token " + req.user.token
       },
       body: fileReceived,
       json: true
     }, function(err, response, body) {
       if(err) {
-        // TODO: handle error
-        console.error('Failed to send ' + httpMethod + ' request');
-        res.send(500);
+        res.send(500, { error: err });
         return;
       }
 
       if(response.statusCode !== 201 && response.statusCode !== 200) {
-        console.error('Error updating project file: ', response.body);
-        res.send(response.statusCode);
+        res.send(response.statusCode, { error: response.body });
         return;
       }
 
-      if(httpMethod === 'POST') {
+      if(httpMethod === "POST") {
         req.session.project.files[fileReceived.path] = {
           id: body.id,
           path: fileReceived.path,

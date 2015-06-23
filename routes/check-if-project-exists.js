@@ -3,24 +3,16 @@ var request = require("request");
 module.exports = function(config) {
   return function(req, res) {
     var publishURL = config.publishURL;
-    var token = config.cryptr.decrypt(req.session.token);
-
-    if(!req.session.user) {
-      res.redirect(301, '/');
-      return;
-    }
-
+    var token = req.user.token;
     var projectName = req.params.projectName;
     if(!projectName) {
-      // TODO: handle error
-      console.error('No project name specified');
-      res.send(400);
+      res.send(400, { error: "No project name specified" });
       return;
     }
 
     request({
       method: "POST",
-      url: publishURL + '/users/login',
+      url: publishURL + "/users/login",
       headers: {
         "Authorization": "token " + token
       },
@@ -30,38 +22,30 @@ module.exports = function(config) {
       json: true
     }, function(err, response, body) {
       if(err) {
-        console.error('Error sending request', err);
-        res.send(500);
-        // deal with error
+        res.send(500, { error: err });
         return;
       }
 
       if(response.statusCode !== 200 &&  response.statusCode !== 201) {
-        console.error('Error retrieving user: ', response.body);
-        res.send(500);
-        // deal with failure
+        res.send(response.statusCode, { error: response.body });
         return;
       }
 
       var publishUser = req.session.publishUser = body;
 
       request.get({
-        url: publishURL + '/users/' + publishUser.id + '/projects',
+        url: publishURL + "/users/" + publishUser.id + "/projects",
         headers: {
           "Authorization": "token " + token
         }
       }, function(err, response, body) {
         if(err) {
-          console.error('Error sending request', err);
-          // deal with error
-          res.send(500);
+          res.send(500, { error: err });
           return;
         }
 
         if(response.statusCode !== 200) {
-          console.error('Error retrieving user\'s projects: ', response.body);
-          // deal with failure
-          res.send(500);
+          res.send(response.statusCode, { error: response.body });
           return;
         }
 

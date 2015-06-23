@@ -2,36 +2,26 @@ var request = require("request");
 
 module.exports = function(config) {
   return function(req, res) {
-    if(!req.session.user) {
-      res.redirect(301, '/');
-      return;
-    }
-
     var projectId = req.params.projectId;
     if(!projectId) {
-      // TODO: handle error
-      console.error('No project ID specified');
+      res.send(400, { error: "No project ID specified" });
       return;
     }
 
-    // TODO: UI implementation (progress bar/spinner etc.)
-    //       for blocking code
     // Get project data from publish.wm.org
     request.get({
-      url: config.publishURL + '/projects/' + projectId,
+      url: config.publishURL + "/projects/" + projectId,
       headers: {
-        "Authorization": "token " + config.cryptr.decrypt(req.session.token)
+        "Authorization": "token " + req.user.token
       }
     }, function(err, response, body) {
       if(err) {
-        // TODO: handle error
-        console.error('Failed to get project info');
+        res.send(500, { error: err });
         return;
       }
 
       if(response.statusCode !== 200) {
-        // TODO: handle error
-        console.error('Error retrieving user\'s projects: ', response.body);
+        res.send(response.statusCode, { error: response.body });
         return;
       }
 
@@ -39,7 +29,7 @@ module.exports = function(config) {
       req.session.project.meta = JSON.parse(body);
       req.session.redirectFromProjectSelection = true;
 
-      res.redirect(301, '/');
+      res.redirect(301, "/");
     });
   };
 };

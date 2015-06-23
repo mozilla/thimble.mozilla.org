@@ -110,6 +110,7 @@ define(function(require) {
 
     if (!pageManager.currentPage()) {
       setTimeout(function() {
+        // TODO: https://github.com/mozilla/thimble.webmaker.org/issues/604
         editor.panes.codeMirror.init(defaultContent, { sync: fsync }, initFs);
         doneLoading();
       }, 0);
