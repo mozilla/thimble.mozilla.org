@@ -166,7 +166,8 @@ module.exports = function( grunt ) {
       tasks.push('uglify');
       tasks.push('cssmin');
     } else if (watch) {
-      tasks.push('watch');
+      grunt.task.run(['watch']);
+      return;
     }
 
     grunt.task.run(tasks);
