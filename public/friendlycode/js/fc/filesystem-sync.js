@@ -64,7 +64,6 @@ define(["jquery"], function($) {
       if(request.readyState !== 4) {
         return;
       }
-    console.log("Here");
 
       if(request.status !== 200) {
         // TODO: handle error case here

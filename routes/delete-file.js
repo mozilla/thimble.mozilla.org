@@ -2,7 +2,6 @@ var request = require("request");
 
 module.exports = function(config) {
   return function(req, res) {
-console.log("HERERE");
     if(!config.authorized(req, res)) {
       res.send(401);
       return;

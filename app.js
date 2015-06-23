@@ -216,6 +216,8 @@ app.get('/projectExists/:projectName', routes.projectExists);
 
 app.get('/newProject/:projectName', routes.newProject);
 
+app['delete']('/deleteProject/:projectId', routes.deleteProject);
+
 app.put('/updateProjectFile', routes.createOrUpdateProjectFile);
 
 app.put('/deleteProjectFile', routes.deleteProjectFile);

@@ -14,6 +14,7 @@ var projectExists = require("./check-if-project-exists");
 var setProject = require("./set-current-project");
 var getProject = require("./get-current-project");
 var newProject = require("./new-project");
+var deleteProject = require("./delete-project");
 var createOrUpdateProjectFile = require("./create-or-update-file");
 var deleteProjectFile = require("./delete-file");
 
@@ -53,6 +54,7 @@ module.exports = function(utils, nunjucksEnv, appName) {
     createOrUpdateProjectFile: createOrUpdateProjectFile(config),
     deleteProjectFile: deleteProjectFile(config),
     getProject: getProject(config),
+    deleteProject: deleteProject(config),
 
     rawData: function(req, res) {
       res.type('text/plain; charset=utf-8');
