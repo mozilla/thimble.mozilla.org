@@ -1,8 +1,6 @@
 {% block friendlycode %}
     <!-- friendlycode editor -->
     <div id="bare-fc-holder" class="friendlycode-loading"></div>
-    <script src="{{HTTP_STATIC_URL}}friendlycode/js/require-config.js"></script>
-    <script src="{{HTTP_STATIC_URL}}friendlycode/vendor/require.min.js"></script>
     <script id="friendly-code" src="/scripts/friendlycode.js"
             data-localeInfo-lang="{{ localeInfo.lang }}"
             data-make-url="{{ makeUrl }}"

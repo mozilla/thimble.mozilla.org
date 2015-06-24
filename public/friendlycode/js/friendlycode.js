@@ -7,8 +7,11 @@ define(function(require) {
       CurrentPageManager = require("fc/current-page-manager"),
       Publisher = require("fc/publisher"),
       PublishUI = require("fc/ui/publish"),
+      ProjectUI = require("fc/ui/bramble-project"),
       DefaultContentTemplate = require("template!default-content"),
-      Localized = require("localized");
+      Localized = require("localized"),
+      ProjectFiles = require("fc/load-project-files"),
+      FileSystemSync = require("fc/filesystem-sync");
 
   Preferences.fetch();
 
@@ -48,6 +51,7 @@ define(function(require) {
       window: window,
       currentPage: pageToLoad
     });
+    ProjectUI.updateMeta(makeDetails);
 
     function doneLoading() {
       editor.panes.codeMirror.on("loaded", function() {
@@ -77,9 +81,37 @@ define(function(require) {
       editor.panes.preview.setViewLink(info.viewURL);
     });
 
+    // Bramble: Load the project Files into the fs
+    var initFs = function(callback) {
+      if(!makeDetails || !makeDetails.title) {
+        makeDetails = ProjectFiles.generateDefaultProject();
+        ProjectFiles.load(makeDetails, { defaultTemplate: defaultContent }, callback);
+        return;
+      }
+
+      if(makeDetails.isNew) {
+        makeDetails = ProjectFiles.generateDefaultProject(makeDetails.title);
+        ProjectFiles.load(makeDetails, {
+          isNew: true,
+          defaultTemplate: defaultContent,
+          csrfToken: $("meta[name='csrf-token']").attr("content"),
+          persistenceURL: options.appUrl + "/updateProjectFile"
+        }, callback);
+        return;
+      }
+
+      ProjectFiles.load(makeDetails, callback);
+    };
+
+    var fsync = FileSystemSync.init(makeDetails && makeDetails.title, {
+      createOrUpdate: options.appUrl + "/updateProjectFile",
+      del: options.appUrl + "/deleteProjectFile"
+    }, $("meta[name='csrf-token']").attr("content"));
+
     if (!pageManager.currentPage()) {
       setTimeout(function() {
-        editor.panes.codeMirror.init(defaultContent);
+        // TODO: https://github.com/mozilla/thimble.webmaker.org/issues/604
+        editor.panes.codeMirror.init(defaultContent, { sync: fsync }, initFs);
         doneLoading();
       }, 0);
     } else {
@@ -89,7 +121,7 @@ define(function(require) {
             text: Localized.get('page-load-err')
           });
         } else {
-          editor.panes.codeMirror.init(data);
+          editor.panes.codeMirror.init(data, { sync: fsync }, initFs);
           publishUI.setCurrentURL(url);
           doneLoading();
         }

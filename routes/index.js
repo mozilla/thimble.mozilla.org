@@ -4,12 +4,19 @@
 var moment = require("moment");
 var i18n = require("webmaker-i18n");
 var langmap = i18n.getAllLocaleCodes();
-var url = require("url");
-var env = require('../lib/environment');
-var Cryptr = require("cryptr");
 var request = require("request");
+var config = require("./config");
 
-var cryptr = new Cryptr(env.get("SESSION_SECRET"));
+// Bramble routes
+var home = require("./home");
+var usersProjects = require("./view-user-projects");
+var projectExists = require("./check-if-project-exists");
+var setProject = require("./set-current-project");
+var getProject = require("./get-current-project");
+var newProject = require("./new-project");
+var deleteProject = require("./delete-project");
+var createOrUpdateProjectFile = require("./create-or-update-file");
+var deleteProjectFile = require("./delete-file");
 
 // Content-fetching function used for generating the output
 // on http://[...]/data routes via the index.rawData function.
@@ -25,89 +32,29 @@ function getPageData(req) {
 }
 
 module.exports = function(utils, nunjucksEnv, appName) {
-  var allowJS = env.get("JAVASCRIPT_ENABLED", false),
-      appURL = env.get("APP_HOSTNAME"),
-      personaHost = env.get("PERSONA_HOST"),
-      makeEndpoint = env.get("MAKE_ENDPOINT"),
-      previewLoader = env.get("PREVIEW_LOADER"),
-      together = env.get("USE_TOGETHERJS") ? env.get("TOGETHERJS") : false,
-      userbarEndpoint = env.get("USERBAR"),
-      webmaker = env.get("WEBMAKER_URL"),
-      oauth = env.get("OAUTH");
-
-  // We make sure to grab just the protocol and hostname for
-  // postmessage security.
-  var editorHOST = url.parse(env.get("BRAMBLE_URI"));
-  editorHOST = editorHOST.protocol +"//"+ editorHOST.host + editorHOST.pathname;
-
-  var editorURL;
-
-  if (env.get("NODE_ENV") === "development") {
-    editorURL = env.get("BRAMBLE_URI") + '/src';
-  } else {
-    editorURL = env.get("BRAMBLE_URI") + '/dist';
-  }
+  config.appName = appName;
+  var cryptr = config.cryptr;
+  var oauth = config.oauth;
+  var renderHomepage = home(config);
+  var renderUsersProjects = usersProjects(config);
 
   return {
     index: function(req, res) {
-      if (req.requestId) {
-        res.locals.pageToLoad = appURL + "/" + req.localeInfo.lang + "/project/" + req.requestId + "/data";
-      } else if (req.oldid) {
-        res.locals.pageToLoad = appURL + "/p/" + req.oldid;
+      if(req.user && !req.session.redirectFromProjectSelection) {
+        renderUsersProjects(req, res);
+        return;
       }
 
-      var makedetails = '{}';
-      if(req.make) {
-        makedetails = encodeURIComponent(JSON.stringify({
-          title: req.make.title,
-          tags: req.make.tags,
-          locales: req.make.locale,
-          description: req.make.description,
-          published: req.make.published
-        }));
-      }
-
-      var options = {
-        appname: appName,
-        appURL: appURL,
-        personaHost: personaHost,
-        allowJS: allowJS,
-        csrf: req.csrfToken(),
-        LOGIN_URL: env.get("LOGIN_URL"),
-        email: req.session.user ? req.session.user.email : '',
-        HTTP_STATIC_URL: '/',
-        MAKE_ENDPOINT: makeEndpoint,
-        pageOperation: req.body.pageOperation,
-        previewLoader: previewLoader,
-        origin: req.params.id,
-        makeUrl: req.makeUrl,
-        together: together,
-        userbar: userbarEndpoint,
-        webmaker: webmaker,
-        makedetails: makedetails,
-        editorHOST: editorHOST,
-        OAUTH_CLIENT_ID: oauth.client_id,
-        OAUTH_AUTHORIZATION_URL: oauth.authorization_url
-      };
-
-      // We add the localization code to the query params through a URL object
-      // and set search prop to nothing forcing query to be used during url.format()
-      var urlObj = url.parse(req.url, true);
-      urlObj.search = "";
-      urlObj.query["locale"] = req.localeInfo.lang;
-      var thimbleUrl = url.format(urlObj);
-
-      // We forward query string params down to the editor iframe so that
-      // it's easy to do things like enableExtensions/disableExtensions
-      options.editorURL = editorURL + '/index.html' + (url.parse(thimbleUrl).search || '');
-
-      if (req.user) {
-        options.username = req.user.username;
-        options.avatar = req.user.avatar;
-      }
-
-      res.render('index.html', options);
+      renderHomepage(req, res);
     },
+    homepage: renderHomepage,
+    openProject: setProject(config),
+    projectExists: projectExists(config),
+    newProject: newProject(config),
+    createOrUpdateProjectFile: createOrUpdateProjectFile(config),
+    deleteProjectFile: deleteProjectFile(config),
+    getProject: getProject(config),
+    deleteProject: deleteProject(config),
 
     rawData: function(req, res) {
       res.type('text/plain; charset=utf-8');

@@ -10,7 +10,8 @@ define(["jquery"], function($) {
     $(".preview-pane-nav").width(((data.secondPaneWidth / total) * 100) + "%");
   }
 
-  function init(bramble) {
+  function init(bramble, options) {
+    var sync = options.sync;
 
     // *******ON LOAD
     checkIfMultiFile();
@@ -39,6 +40,12 @@ define(["jquery"], function($) {
       }
     }
 
+    function showFileState() {
+      if(sync) {
+        sync.queueLength++;
+        $("#navbar-save-indicator").removeClass("hide");
+      }
+    }
 
     // *******EVENTS
     // Smooths resize
@@ -221,15 +228,18 @@ define(["jquery"], function($) {
     // File Change Events
     bramble.on("fileChange", function(filename) {
       console.log("thimble side", "fileChange", filename);
+      showFileState();
     });
 
     bramble.on("fileDelete", function(filename) {
       console.log("thimble side", "fileDelete", filename);
+      showFileState();
     });
 
     bramble.on("fileRename", function(oldFilename, newFilename) {
       console.log("thimble side", "fileRename", oldFilename, newFilename);
       setNavFilename(newFilename);
+      showFileState();
     });
   }
 

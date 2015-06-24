@@ -99,7 +99,14 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
       communicateEditMessage("scrollTo", x, y);
     };
 
-    this.init = function(make) {
+    this.init = function(make, config, initFs) {
+      var self = this;
+
+      if(typeof config === "function") {
+        initFs = config;
+        config = null;
+      }
+
       // Start loading Bramble
       Bramble.load("#webmaker-bramble",{
         url: options.editorUrl
@@ -109,7 +116,7 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
       Bramble.once("ready", function(bramble) {
         // For debugging, attach to window.
         window.bramble = bramble;
-        BrambleUIBridge.init(bramble);
+        BrambleUIBridge.init(bramble, config);
       });
 
       Bramble.on("error", function(err) {
@@ -120,32 +127,14 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
         console.log("readyStateChange", previous, current);
       });
 
-      // Setup the filesystem while Bramble is loading
-      var fs = Bramble.getFileSystem();
-      fs.mkdir("/project", function(err) {
-        // If we run this multiple times, the dir will exist
-        if (err && err.code !== "EEXIST") {
+      initFs(function(err, config) {
+        if(err) {
           throw err;
         }
 
-        var html = "<html>\n"                     +
-                   "  <head>\n"                   +
-                   "    <title>Bramble</title>\n" +
-                   "  </head>\n"                  +
-                   "  <body>\n"                   +
-                   "    <p>Hello World</p>\n"     +
-                   "  </body>\n"                  +
-                   "</html>";
-
-        fs.writeFile("/project/index.html", html, function(err) {
-          if (err) {
-            throw err;
-          }
-
-          // Now that fs is setup, tell Bramble which root dir to mount
-          // and which file within that root to open on startup.
-          Bramble.mount("/project");
-        });
+        // Now that fs is setup, tell Bramble which root dir to mount
+        // and which file within that root to open on startup.
+        Bramble.mount(config.root, config.open);
       });
     };
 
@@ -193,9 +182,9 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
       commandCategory = "editorCommand";
       command = "setSpaceUnits";
       params = options.data;
-    } else if (button === "_reload") { 
+    } else if (button === "_reload") {
       commandCategory = "reloadCommand";
-    } else if (button === "_runJavascript") { 
+    } else if (button === "_runJavascript") {
       commandCategory = "runJavascript";
       command = document.getElementById('preview-run-js').checked;
     }
