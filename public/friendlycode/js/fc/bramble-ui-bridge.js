@@ -13,10 +13,11 @@ define(["jquery"], function($) {
   function init(bramble) {
 
     // *******ON LOAD
-    // Align to the current state of the editor's layout on startup
-    updateLayout(bramble.getLayout());
-    setNavFilename(bramble.getFilename());
     checkIfMultiFile();
+    if(bramble.getLayout())       {updateLayout(bramble.getLayout());}
+    if(bramble.getFilename())     {setNavFilename(bramble.getFilename());}
+    if(bramble.getTheme())        {activateTheme(bramble.getTheme());}
+    if(bramble.getPreviewMode())  {activatePreviewMode(bramble.getPreviewMode());}
 
     //Show sidebar nav if it is present on load
     function checkIfMultiFile() {
@@ -26,7 +27,7 @@ define(["jquery"], function($) {
       {
         // Total width of window
         var total = data.sidebarWidth + data.firstPaneWidth + data.secondPaneWidth;
-        
+
         // Set width in percent, easier for window resize
         $(".filetree-pane-nav").width(((data.sidebarWidth / total) * 100) + "%");
         $(".editor-pane-nav").width(((data.firstPaneWidth / total) * 100) + "%");
@@ -103,75 +104,78 @@ define(["jquery"], function($) {
       bramble.increaseFontSize();
     });
 
-    // Theme change
-    $("#theme-dark").click(function() {
-      bramble.useDarkTheme();
-
-      // Icons
-      $("#moon-green").fadeIn(1000);
-      $("#sun-white").fadeIn(1000);
-      $("#moon-white").fadeOut(1000);
-      $("#sun-green").fadeOut(1000);
-
-      // Active indicator
-      $("#theme-active").css("position", "absolute").animate({
-        left: 157
-      });
-
-      // Toolbar shadow
-      $(".friendlycode-toolbar").css({
-        "-webkit-box-shadow": "0 8px 6px -6px #000",
-        "-moz-box-shadow": "0 8px 6px -6px #000",
-        "box-shadow": "0 8px 6px -6px #000"});
-    });
-
+    // Theme Toggle
     $("#theme-light").click(function() {
-      bramble.useLightTheme();
-
-      // Icons
-      $("#sun-green").fadeIn(500);
-      $("#moon-white").fadeIn(500);
-      $("#sun-white").fadeOut(500);
-      $("#moon-green").fadeOut(500);
-
-      // Active Indicator
-      $("#theme-active").css("position", "absolute").animate({
-        left: 187
-      });
-
-      // Toolbar shadow
-      $(".friendlycode-toolbar").css({
-        "-webkit-box-shadow": "0 8px 6px -6px #999",
-        "-moz-box-shadow": "0 8px 6px -6px #999",
-        "box-shadow": "0 8px 6px -6px #999"});
+      activateTheme("light-theme");
     });
+    $("#theme-dark").click(function() {
+      activateTheme("dark-theme");
+    });
+
+    function activateTheme(themeType) {
+      if(themeType === "light-theme") {
+        bramble.useLightTheme();
+
+        // Icons
+        $("#sun-green").fadeIn(500);
+        $("#moon-white").fadeIn(500);
+        $("#sun-white").fadeOut(500);
+        $("#moon-green").fadeOut(500);
+
+        // Active Indicator
+        $("#theme-active").css("position", "absolute").animate({
+          left: 187
+        });
+      }
+      else if(themeType === "dark-theme") {
+        bramble.useDarkTheme();
+
+        // Icons
+        $("#moon-green").fadeIn(1000);
+        $("#sun-white").fadeIn(1000);
+        $("#moon-white").fadeOut(1000);
+        $("#sun-green").fadeOut(1000);
+
+        // Active indicator
+        $("#theme-active").css("position", "absolute").animate({
+          left: 157
+        });
+      }
+    }
 
     // Refresh Preview
     $("#preview-pane-nav-refresh").click(function() {
       bramble.refreshPreview();
     });
 
-    // Desktop Preview Mode
+    // Preview Mode Toggle
     $("#preview-pane-nav-desktop").click(function() {
-      bramble.useDesktopPreview();
-
-      $("#preview-pane-nav-desktop").removeClass("viewmode-inactive");
-      $("#preview-pane-nav-desktop").addClass("viewmode-active");
-
-      $("#preview-pane-nav-phone").removeClass("viewmode-active");
-      $("#preview-pane-nav-phone").addClass("viewmode-inactive");
+      activatePreviewMode("desktop");
     });
-
-    // Mobile Preview Mode
     $("#preview-pane-nav-phone").click(function() {
-      bramble.useMobilePreview();
-
-      $("#preview-pane-nav-phone").removeClass("viewmode-inactive");
-      $("#preview-pane-nav-phone").addClass("viewmode-active");
-
-      $("#preview-pane-nav-desktop").removeClass("viewmode-active");
-      $("#preview-pane-nav-desktop").addClass("viewmode-inactive");
+      activatePreviewMode("mobile");
     });
+
+    function activatePreviewMode(mode) {
+      if(mode === "mobile") {
+        bramble.useMobilePreview();
+
+        $("#preview-pane-nav-phone").removeClass("viewmode-inactive");
+        $("#preview-pane-nav-phone").addClass("viewmode-active");
+
+        $("#preview-pane-nav-desktop").removeClass("viewmode-active");
+        $("#preview-pane-nav-desktop").addClass("viewmode-inactive");
+      }
+      else if (mode === "desktop") {
+        bramble.useDesktopPreview();
+
+        $("#preview-pane-nav-desktop").removeClass("viewmode-inactive");
+        $("#preview-pane-nav-desktop").addClass("viewmode-active");
+
+        $("#preview-pane-nav-phone").removeClass("viewmode-active");
+        $("#preview-pane-nav-phone").addClass("viewmode-inactive");
+      }
+    }
 
     //Change file name in editor nav
     function setNavFilename(filename) {
