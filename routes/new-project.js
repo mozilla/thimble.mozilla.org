@@ -1,7 +1,9 @@
 var request = require("request");
+var querystring = require("querystring");
 
 module.exports = function(config) {
   return function(req, res) {
+    var qs;
     var projectName = req.params.projectName;
     if(!projectName) {
       res.send(400, { error: "No project name specified" });
@@ -15,6 +17,12 @@ module.exports = function(config) {
       date_created: cur,
       date_updated: cur
     };
+
+    delete req.query.now;
+    qs = querystring.stringify(req.query);
+    if(qs !== "") {
+      qs = "?" + qs;
+    }
 
     request({
       method: "POST",
@@ -41,7 +49,7 @@ module.exports = function(config) {
       req.session.project.isNew = true;
       req.session.redirectFromProjectSelection = true;
 
-      res.redirect(301, "/");
+      res.redirect(301, "/" + qs);
     });
   };
 };

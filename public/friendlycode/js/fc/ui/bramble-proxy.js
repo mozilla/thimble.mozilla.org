@@ -99,12 +99,12 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
       communicateEditMessage("scrollTo", x, y);
     };
 
-    this.init = function(make, options, initFs) {
+    this.init = function(make, config, initFs) {
       var self = this;
 
-      if(typeof options === "function") {
-        initFs = options;
-        options = null;
+      if(typeof config === "function") {
+        initFs = config;
+        config = null;
       }
 
       // Start loading Bramble
@@ -116,7 +116,7 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
       Bramble.once("ready", function(bramble) {
         // For debugging, attach to window.
         window.bramble = bramble;
-        BrambleUIBridge.init(bramble, options);
+        BrambleUIBridge.init(bramble, config);
       });
 
       Bramble.on("error", function(err) {

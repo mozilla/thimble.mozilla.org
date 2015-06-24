@@ -1,7 +1,12 @@
 var request = require("request");
+var querystring = require("querystring");
 
 module.exports = function(config) {
   return function(req, res) {
+    var qs = querystring.stringify(req.query);
+    if(qs !== "") {
+      qs = "?" + qs;
+    }
     var projectId = req.params.projectId;
     if(!projectId) {
       res.send(400, { error: "No project ID specified" });
@@ -29,7 +34,7 @@ module.exports = function(config) {
       req.session.project.meta = JSON.parse(body);
       req.session.redirectFromProjectSelection = true;
 
-      res.redirect(301, "/");
+      res.redirect(301, "/" + qs);
     });
   };
 };
