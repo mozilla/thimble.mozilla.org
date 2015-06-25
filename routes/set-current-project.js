@@ -3,6 +3,12 @@ var querystring = require("querystring");
 
 module.exports = function(config) {
   return function(req, res) {
+    // We do not want to propogate the `cacheBust` query parameter
+    // that we use to fix the Firefox caching problem on the front-end
+    if(req.query && req.query.cacheBust) {
+      delete req.query.cacheBust;
+    }
+
     var qs = querystring.stringify(req.query);
     if(qs !== "") {
       qs = "?" + qs;

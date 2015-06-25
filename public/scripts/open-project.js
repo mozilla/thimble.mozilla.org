@@ -1,6 +1,13 @@
 (function() {
   require(["jquery"], function($) {
     var projects = document.querySelectorAll("tr.bramble-user-project");
+    var queryString = window.location.search;
+    // We do this to deal with the weird Firefox caching issue
+    // that does not allow a click on the project name to reach the
+    // `/projects/:projectID` route and instead just loads a cached
+    // vaersion of `/`
+    var cacheBust = "cacheBust=" + Date.now();
+    queryString = queryString === "" ? "?" + cacheBust : queryString + "&" + cacheBust;
 
     function generateUrl(path, date) {
       var url = window.location;
@@ -32,7 +39,7 @@
 
     Array.prototype.forEach.call(projects, function(project) {
       $("#" + project.getAttribute("id") + " > .project-title").on("click", function() {
-        window.location.pathname += "project/" + project.getAttribute("data-project-id");
+        window.location.href = "/project/" + project.getAttribute("data-project-id") + queryString;
       });
     });
 
