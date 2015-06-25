@@ -26,6 +26,7 @@
 
     var joinEl = $('#signup-link');
     var loginEl = $('#login-link');
+    var logoutEl = $('#logout-link');
 
     function enable(user) {
       // Logic for UX on detection of a logged in user should
@@ -75,16 +76,14 @@
       window.location = query;
     });
 
-    // XXXBramble - This callback should execute on a logout click, when
-    // we have logout UI:
-    //  function() {
-    //   // Logout flow
-    //   var oauthRoute = "/logout";
+    logoutEl.on('click', function(e) {
+      e.preventDefault();
 
-    //   var query = authHostname + oauthRoute + "?client_id=" + oauthClientId;
+      var oauthRoute = "/logout";
+      var query = authHostname + oauthRoute + "?client_id=" + oauthClientId;
 
-    //   window.location = query;
-    // };
+      window.location = query;
+    });
 
     if (user.username.length > 0) {
       enable(user);
