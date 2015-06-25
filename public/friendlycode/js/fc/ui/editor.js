@@ -18,7 +18,6 @@ define([
       value: value,
       allowJS: options.allowJS,
       previewLoader: options.previewLoader,
-      dataProtector: options.dataProtector,
       editorUrl: options.editorUrl,
       editorHost: options.editorHost
     });

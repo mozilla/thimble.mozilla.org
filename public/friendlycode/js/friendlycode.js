@@ -1,6 +1,5 @@
 define(function(require) {
   var $ = require("jquery"),
-      DataProtector = require("fc/dataprotector"),
       Editor = require("fc/ui/editor"),
       Modals = require("fc/ui/modals"),
       ProjectUI = require("fc/ui/bramble-project"),
@@ -18,7 +17,6 @@ define(function(require) {
           container: options.container,
           allowJS: options.allowJS,
           previewLoader: options.previewLoader,
-          dataProtector: DataProtector,
           editorHost: options.editorHost,
           editorUrl: options.editorUrl,
           appUrl: options.appUrl
@@ -39,7 +37,6 @@ define(function(require) {
         editor.toolbar.refresh();
         editor.panes.codeMirror.focus();
         editor.panes.codeMirror.refresh();
-        DataProtector.disableDataProtection();
         ready.resolve();
       });
     }
