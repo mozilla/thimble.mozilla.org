@@ -1,14 +1,6 @@
 define(function() {
   "use strict";
 
-  function defaultLoadPage(window) {
-    // We don't currently support dynamically changing the URL
-    // without a full page reload, unfortunately, so just trigger a
-    // reload if the user clicked the 'back' button after we pushed
-    // a new URL to it.
-    return function() { window.location.reload(); };
-  }
-
   return function CurrentPageManager(options) {
     var self = {},
         window = options.window,
