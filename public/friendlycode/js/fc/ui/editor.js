@@ -1,39 +1,58 @@
 define([
   "jquery",
-  "./editor-panes",
-  "./editor-toolbar"
-], function($, EditorPanes, EditorToolbar) {
+  "template!nav-options",
+  "fc/bramble-ui-bridge"
+], function($, NavOptionsTemplate, BrambleUIBridge) {
   return function Editor(options) {
-    var value = options.value,
-        container = options.container.empty()
+    var container = options.container.empty()
           .addClass("friendlycode-base"),
         toolbarDiv = $('<div class="friendlycode-toolbar"></div>')
-          .appendTo(container),
-        panesDiv = $('<div class="friendlycode-panes"></div>');
-// TODO: we don't want this, need to remove in a cleaner way
-//          .appendTo(container);
+          .appendTo(container);
 
-    var panes = EditorPanes({
-      container: panesDiv,
-      value: value,
-      allowJS: options.allowJS,
-      previewLoader: options.previewLoader,
-      dataProtector: options.dataProtector,
-      editorUrl: options.editorUrl,
-      editorHost: options.editorHost
-    });
-    var toolbar = EditorToolbar({
-      container: toolbarDiv,
-      panes: panes
-    });
+    // Add the editor toolbar
+    $(NavOptionsTemplate()).appendTo(toolbarDiv);
 
-    container.removeClass("friendlycode-loading");
-    panes.codeMirror.refresh();
+    function init(config, initFs) {
+      var self = this;
+
+      if(typeof config === "function") {
+        initFs = config;
+        config = null;
+      }
+
+      // Start loading Bramble
+      Bramble.load("#webmaker-bramble",{
+        url: options.editorUrl
+      });
+
+      // Event listeners
+      Bramble.once("ready", function(bramble) {
+        // For debugging, attach to window.
+        window.bramble = bramble;
+        BrambleUIBridge.init(bramble, config);
+      });
+
+      Bramble.on("error", function(err) {
+        console.log("error", err);
+      });
+
+      Bramble.on("readyStateChange", function(previous, current) {
+        console.log("readyStateChange", previous, current);
+      });
+
+      initFs(function(err, config) {
+        if(err) {
+          throw err;
+        }
+
+        // Now that fs is setup, tell Bramble which root dir to mount
+        // and which file within that root to open on startup.
+        Bramble.mount(config.root, config.open);
+      });
+    };
 
     return {
-      container: container,
-      panes: panes,
-      toolbar: toolbar
+      init: init
     };
   };
 });

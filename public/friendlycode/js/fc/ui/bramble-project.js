@@ -1,4 +1,4 @@
-define(["jquery.min", "constants"], function($, Constants) {
+define(["jquery", "constants"], function($, Constants) {
   "use strict";
 
   function updateMeta(project) {
