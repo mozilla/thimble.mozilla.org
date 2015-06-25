@@ -6,8 +6,6 @@
 (function() {
   var overrideElement = document.getElementById("ssooverride");
   var authHostname = overrideElement.getAttribute("data-login-authHostname");
-  var thimbleHostname = overrideElement.getAttribute("data-login-thimbleHostname");
-  var loginToSave = overrideElement.getAttribute("data-login-to-save");
   var oauthClientId = overrideElement.getAttribute("data-oauth-clientid");
 
   var user = {
@@ -15,10 +13,7 @@
     avatar: document.getElementById("ssooverride").getAttribute("data-oauth-avatar")
   };
 
-  require(["jquery", "thimblePage", "url-template", "uuid", "cookies"], function($, editor, urlTemplate, uuid, cookies) {
-    // we chronicle login status with a "loggedin" class on the <html> tag
-    var html = document.getElementsByTagName("html")[0];
-
+  require(["jquery", "thimblePage", "uuid", "cookies"], function($, editor, uuid, cookies) {
     function setStateCookie(state) {
       cookies.expire("state");
       cookies.set("state", state);
@@ -26,15 +21,7 @@
 
     var joinEl = $('#signup-link');
     var loginEl = $('#login-link');
-
-    function enable(user) {
-      // Logic for UX on detection of a logged in user should
-      // go here
-    };
-
-    function disable() {
-      // The default state.
-    }
+    var logoutEl = $('#logout-link');
 
     var basicQuery = "?" + [
       "client_id=" + oauthClientId,
@@ -75,22 +62,13 @@
       window.location = query;
     });
 
-    // XXXBramble - This callback should execute on a logout click, when
-    // we have logout UI:
-    //  function() {
-    //   // Logout flow
-    //   var oauthRoute = "/logout";
+    logoutEl.on('click', function(e) {
+      e.preventDefault();
 
-    //   var query = authHostname + oauthRoute + "?client_id=" + oauthClientId;
+      var oauthRoute = "/logout";
+      var query = authHostname + oauthRoute + "?client_id=" + oauthClientId;
 
-    //   window.location = query;
-    // };
-
-    if (user.username.length > 0) {
-      enable(user);
-    } else {
-      // We disable the publishing UI by default
-      disable();
-    }
+      window.location = query;
+    });
   });
 }());

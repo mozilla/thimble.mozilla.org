@@ -99,7 +99,7 @@ define(["backbone-events", "fc/prefs", "fc/bramble-ui-bridge"],
       communicateEditMessage("scrollTo", x, y);
     };
 
-    this.init = function(make, config, initFs) {
+    this.init = function(config, initFs) {
       var self = this;
 
       if(typeof config === "function") {

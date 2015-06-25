@@ -18,14 +18,41 @@ module.exports = function( grunt ) {
   grunt.initConfig({
     pkg: grunt.file.readJSON( "package.json" ),
 
-    csslint: {
-      lax: {
+    watch: {
+      default: {
+        files: [
+          'frontend/src/scripts/**/*.js',
+          'frontend/src/scripts/*.js',
+          'frontend/src/styles/**/*.less',
+          'frontend/src/styles/*.less'
+        ],
+        tasks: [
+          'jshint:frontend',
+          'browserify',
+          'lesslint',
+          'less'
+        ],
         options: {
+          spawn: true,
+          interrupt: true
+        }
+      }
+    },
+
+    // Linting
+    lesslint: {
+      src: [
+        "./frontend/src/styles/*.less"
+      ],
+      options: {
+        csslint: {
           "adjoining-classes": false,
           "box-model": false,
           "box-sizing": false,
           "bulletproof-font-face": false,
           "compatible-vendor-prefixes": false,
+          "floats": false,
+          "font-sizes": false,
           "ids": false,
           "important": false,
           "outline-none": false,
@@ -39,144 +66,111 @@ module.exports = function( grunt ) {
           "unqualified-attributes": false,
           "vendor-prefix": false,
           "zero-units": false
-        },
-        src: [
-          "public/learning_projects/**/*.css"
-        ]
-      }
-    },
-    lesslint: {
-      src: ["public/stylesheets/userbar.less"],
-        options: {
-          csslint: {
-            "adjoining-classes": false,
-            "box-model": false,
-            "box-sizing": false,
-            "bulletproof-font-face": false,
-            "compatible-vendor-prefixes": false,
-            "floats": false,
-            "font-sizes": false,
-            "ids": false,
-            "important": false,
-            "outline-none": false,
-            "overqualified-elements": false,
-            "qualified-headings": false,
-            "regex-selectors": false,
-            "star-property-hack": false,
-            "underscore-property-hack": false,
-            "universal-selector": false,
-            "unique-headings": false,
-            "unqualified-attributes": false,
-            "vendor-prefix": false,
-            "zero-units": false
-          }
         }
+      }
     },
     jshint: {
-      options: {
-        "-W069": true // ignore "['...'] is better written in dot notation." warnings
+      server: {
+        options: {
+          "-W069": true // ignore "['...'] is better written in dot notation." warnings
+        },
+        files: {
+          src: [
+            "Gruntfile.js",
+            "app.js",
+            "lib/**/*.js",
+            "routes/**/*.js"
+          ]
+        }
       },
-      files: [
-        "Gruntfile.js",
-        "app.js",
-        "lib/**/*.js",
-        "routes/**/*.js",
-        "public/friendlycode/js/**/*.js",
-        "public/friendlycode/vendor/slowparse/slowparse.js",
-        "public/friendlycode/vendor/slowparse/test/nodetest.js",
-        "public/friendlycode/vendor/slowparse/test/test-slowparse.js",
-        "public/friendlycode/vendor/slowparse/test/node/qunit-shim.js",
-        //Files not to include in jshint
-        "!public/img/**"
-      ]
-    },
-    execute: {
-      target: {
-        src: [
-          "public/friendlycode/vendor/slowparse/test.js"
-        ]
+      frontend: {
+        files: {
+          src: [
+            "./frontend/src/scripts/**/*.js",
+            "./frontend/src/scripts/*.js"
+          ]
+        }
       }
     },
 
-    // Bramble tasks
-    'npm-checkBranch': {
+    // Minification
+    uglify: {
+      default: {
+        files: {
+          'frontend/dist/scripts/thimble.min.js': ['frontend/dist/scripts/thimble.js']
+        }
+      }
+    },
+    cssmin: {
+      default: {
+        files: [{
+          expand: true,
+          cwd: 'frontend/src/styles',
+          src: ['*.css'],
+          dest: 'frontend/dist/styles',
+          ext: '.min.css'
+        }]
+      }
+    },
+
+    // Build
+    browserify: {
+      default: {
+        src: "./frontend/src/scripts/index.js",
+        dest: "./frontend/dist/scripts/thimble.js",
         options: {
-            branch: GIT_BRANCH
+          alias: {
+            // Specify bower dependencies here for use with commonjs
+            // requires e.g. require('zepto');
+            "zepto": "./bower_components/zepto/zepto.min.js"
+          },
+          browserifyOptions: {
+            commondir: false
+          }
         }
+      },
     },
-    "update_submodules": {
-        publish: {
-            options: {
-                params: "--remote -- public/friendlycode/vendor/brackets"
-            }
+    less: {
+      default: {
+        options: {
+          compress: true
+        },
+        files: {
+          "frontend/src/styles/error.css": "frontend/src/styles/error.less"
         }
-    },
-    gitcommit: {
-        module: {
-            options: {
-                // This is replaced during the 'publish' task
-                message: "Placeholder"
-            }
-        }
-    },
-    gitadd: {
-        modules: {
-            files: {
-                src: ['./public/friendlycode/vendor/brackets']
-            }
-        }
-    },
-    gitpush: {
-        smart: {
-            options: {
-                remote: GIT_REMOTE,
-                // These options are left in for
-                // clarity. Their actual values
-                // will be set by the `publish` task.
-                branch: GIT_BRANCH
-            }
-        }
+      }
     }
   });
 
-  // Thimble-task: smartPush
-  //   Checks out to the branch provided as a target.
+  // Thimble-task: build
+  //   Lints and builds the thimble front-end JavaScript and
+  //   LESS styles. Optional uglification. Optional watchifying
   //   Takes:
-  //    [branch] - The branch to push to
-  //    [force] - If true, forces a push
-  grunt.registerTask('smartPush', function(branch, force) {
-      force = force == "true" ? true : false;
+  //    [environment] - 'dev' or 'prod'
+  //    [watch] - true or false, but [environment] must be 'dev'
+  grunt.registerTask( "build", function(environment, watch) {
+    environment = environment === "prod" ? "prod" : "dev";
+    watch = watch == "true" ? true : false;
 
-      grunt.config('gitpush.smart.options.branch', branch);
-      grunt.config('gitpush.smart.options.force', force);
-      grunt.task.run('gitpush:smart');
-  });
+    var tasks = [
+      "lesslint",
+      "less",
+      "jshint:frontend",
+      "browserify"
+    ];
 
-
-  // Thimble-task: update
-  //   Updates the brackets submodule, committing and
-  //   pushing the result.
-  grunt.registerTask( "update", function(branch, remote) {
-    var date = new Date(Date.now()).toString();
-    grunt.config("gitcommit.module.options.message", "Submodule update on " + date);
-
-    if (remote) {
-      grunt.config("gitpush.smart.remote", remote);
+    if (environment === 'prod') {
+      tasks.push('uglify');
+      tasks.push('cssmin');
+    } else if (watch) {
+      grunt.task.run(['watch']);
+      return;
     }
-    branch = branch || GIT_BRANCH;
 
-    grunt.task.run([
-        // Confirm we're ready to start
-        'checkBranch',
-
-        // Update submodules, commit and push to "master"
-        'update_submodules:publish',
-        'gitadd:modules',
-        'gitcommit:module',
-        'smartPush:' + branch || GIT_BRANCH + ":false"
-    ]);
+    grunt.task.run(tasks);
   });
 
-  grunt.registerTask( "default", [ "csslint", "jshint", "execute" ]);
+  grunt.registerTask( "test", [ "jshint:server", "jshint:frontend", "lesslint" ]);
+  grunt.registerTask( "default", [ "test" ]);
 };
 
