@@ -1,7 +1,10 @@
 {
   "name": "thimble.webmaker.org",
   "dependencies": {
-    "zepto": "~1.1.6"
+    "zepto": "~1.1.6",
+    "cookies-js": "~1.2.1",
+    "node-uuid": "~1.4.3",
+    "webmaker-i18n": "https://github.com/mozilla/node-webmaker-i18n/archive/v0.3.8.tar.gz"
   },
   "resolutions": {
     "selectize": "0.10.1"
