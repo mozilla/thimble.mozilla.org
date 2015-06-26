@@ -183,6 +183,45 @@ define(["jquery"], function($) {
       }
     }
 
+    //Publish button
+    $("#navbar-publish-button").click(function() {
+      showPublishDialog();
+    });
+
+    $("#publish-button-cancel").click(function() {
+      hidePublishDialog();
+    });
+    $("#publish-underlay").click(function() {
+      hidePublishDialog();
+    });
+
+    function hidePublishDialog() {
+        $("#publish-underlay").fadeOut();
+        $("#publish-dialog").fadeOut();
+    }
+    function showPublishDialog() {
+        $("#publish-underlay").fadeIn();
+        $("#publish-dialog").fadeIn();
+    }
+
+    // Variable for the state of publishPublic toggle switch
+    var publishPublic = true;
+    $("#publish-public-gallery-toggle").click(function() {
+      publishPublic = !publishPublic;
+      setPublicGalleryToggle(publishPublic);
+    });
+
+    function setPublicGalleryToggle(publishPublic) {
+      if(publishPublic === true) {
+        $("#publish-public-gallery-toggle>ellipse").animate({cx: 31}, 250);
+        $("#publish-public-gallery-toggle>ellipse").css("fill", "#06a050");
+      }
+      else {
+        $("#publish-public-gallery-toggle>ellipse").animate({cx: 11}, 250);
+        $("#publish-public-gallery-toggle>ellipse").css("fill", "#7C7C7C");
+      }
+    }
+
     //Change file name in editor nav
     function setNavFilename(filename) {
       var fullFilename = filename;

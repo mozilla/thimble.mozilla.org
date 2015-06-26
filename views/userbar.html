@@ -1,87 +1,86 @@
 {% block userbar %}
-    <!-- webmaker user bar -->
-    <nav class="navbar-thimble container-flex">
+  <!-- webmaker user bar -->
+  <nav class="navbar-thimble container-flex">
 
-      <div id="navbar-left" class="container-flex">
-          <div class="navbar-logo-container">
-            <a href="/{{localeInfo.lang}}" class="logo">
-              <img src="/img/thimble-logo.svg" class="thimble-logo">
-            </a>
-          </div>
-          <div id="navbar-project-title">
-          <span id="project-title"></span>
-          <a href="" title="Rename Project" id="navbar-rename-project">
-            <img src="/img/icon/edit.svg" class="icon-edit">
-          </a>
-          </div>
-          <div id="navbar-save-indicator" class="hide">
-            Saving...
-          </div>
+    <div id="navbar-left" class="container-flex">
+      <div class="navbar-logo-container">
+        <a href="/{{localeInfo.lang}}" class="logo">
+          <img src="/img/thimble-logo.svg" class="thimble-logo">
+        </a>
       </div>
+      <div id="navbar-project-title">
+      <span id="project-title"></span>
+      <a href="" title="Rename Project" id="navbar-rename-project">
+        <img src="/img/icon/edit.svg" class="icon-edit">
+      </a>
+      </div>
+      <div id="navbar-save-indicator" class="hide">
+        Saving...
+      </div>
+    </div>
 
-      <div id="navbar-right" class="container-flex">
-        <div id="navbar-help">
-              <img src="/img/icon/question-mark.svg" class="icon-question-mark">
-              Help
-        </div>
-        <div id="navbar-login">
-          <div id="navbar-login-inner">
-          {% if username %}
-            <ul id="navbar-logged-in">
-              <li>
-                <img class="avatar" src="{{avatar}}">
-                <span>Hi, {{username}}</span>
-                <img class="icon-arrow-down" src="/img/icon/dropdown-arrow.svg">
+    <div id="navbar-right" class="container-flex">
+      <div id="navbar-help">
+        <img src="/img/icon/question-mark.svg" class="icon-question-mark">
+        Help
+      </div>
+      <div id="navbar-login">
+        <div id="navbar-login-inner">
+        {% if username %}
+          <ul id="navbar-logged-in">
+            <li>
+              <img class="avatar" src="{{avatar}}">
+              <span>Hi, {{username}}</span>
+              <img class="icon-arrow-down" src="/img/icon/dropdown-arrow.svg">
 
-                <ul class="dropdown">
-                  <li>
-                    <a href="/newProject" class="dropdown-link">
-                      <img src="/img/icon/new-project.svg" class="dropdown-icon">
-                      New Projects
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/{{ queryString }}" class="dropdown-link" target="_self">
-                      <img src="/img/icon/your-projects.svg" class="dropdown-icon">
-                      Your Projects
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/profile" class="dropdown-link">
-                      <img src="/img/icon/user-profile.svg" class="dropdown-icon">
-                      Profile
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/settings" class="dropdown-link">
-                      <img src="/img/icon/gear-black.svg" class="dropdown-icon">
-                      Settings
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" id="logout-link" class="dropdown-link">
-                      <img src="/img/icon/sign-out.svg" class="dropdown-icon">
-                      Sign Out
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          {% else %}
-            <div id="navbar-anonymous">
-              <a href="#" id="login-link" class="navbar-login">Log in</a> or <a href="#" id="signup-link" class="navbar-login">Sign Up</a> to Save
-            </div>
-          {% endif %}
+              <ul class="dropdown">
+                <li>
+                  <a href="/newProject" class="dropdown-link">
+                    <img src="/img/icon/new-project.svg" class="dropdown-icon">
+                    New Projects
+                  </a>
+                </li>
+                <li>
+                  <a href="/{{ queryString }}" class="dropdown-link" target="_self">
+                    <img src="/img/icon/your-projects.svg" class="dropdown-icon">
+                    Your Projects
+                  </a>
+                </li>
+                <li>
+                  <a href="/profile" class="dropdown-link">
+                    <img src="/img/icon/user-profile.svg" class="dropdown-icon">
+                    Profile
+                  </a>
+                </li>
+                <li>
+                  <a href="/settings" class="dropdown-link">
+                    <img src="/img/icon/gear-black.svg" class="dropdown-icon">
+                    Settings
+                  </a>
+                </li>
+                <li>
+                  <a href="#" id="logout-link" class="dropdown-link">
+                    <img src="/img/icon/sign-out.svg" class="dropdown-icon">
+                    Sign Out
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        {% else %}
+          <div id="navbar-anonymous">
+            <a href="#" id="login-link" class="navbar-login">Log in</a> or <a href="#" id="signup-link" class="navbar-login">Sign Up</a> to Save
           </div>
-        </div>
-        <div id="navbar-publish">
-          <a href="" class="navbar-publish-button">
-            <img src="/img/icon/publish.svg" class="icon-publish">
-            Publish
-          </a>
+        {% endif %}
         </div>
       </div>
+      <div id="navbar-publish">
+        <div id="navbar-publish-button">
+          <img src="/img/icon/publish.svg" class="icon-publish">
+          Publish
+        </div>
+      </div>
+    </div>
 
-    </nav>
-
+  </nav>
 {% endblock %}

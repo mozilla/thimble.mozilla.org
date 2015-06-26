@@ -2,6 +2,7 @@
 {% block body %}
     {% include 'userbar.html' %}
     {% include 'friendlycode.html' %}
+    {% include 'publish.html' %}
     {% block ssooverride %}
       <script id="ssooverride" src="/scripts/ssooverride.js"
               data-login-authHostname="{{ OAUTH_AUTHORIZATION_URL }}"
