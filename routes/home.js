@@ -23,18 +23,8 @@ module.exports = function(config) {
     }
 
     var options = {
-      appname: config.appName,
       appURL: config.appURL,
-      personaHost: config.personaHost,
       csrf: req.csrfToken(),
-      LOGIN_URL: config.loginURL,
-      email: req.session.user ? req.session.user.email : "",
-      HTTP_STATIC_URL: "/",
-      pageOperation: req.body.pageOperation,
-      origin: req.params.id,
-      together: config.together,
-      userbar: config.userbarEndpoint,
-      webmaker: config.webmaker,
       makedetails: makedetails,
       editorHOST: config.editorHOST,
       OAUTH_CLIENT_ID: config.oauth.client_id,

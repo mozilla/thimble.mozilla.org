@@ -9,10 +9,7 @@ editorHOST = editorHOST.protocol +"//"+ editorHOST.host + editorHOST.pathname;
 
 module.exports = {
   appURL: env.get("APP_HOSTNAME"),
-  personaHost: env.get("PERSONA_HOST"),
-  userbarEndpoint: env.get("USERBAR"),
   webmaker: env.get("WEBMAKER_URL"),
-  loginURL: env.get("LOGIN_URL"),
   oauth: env.get("OAUTH"),
   publishURL: env.get("PUBLISH_HOSTNAME"),
   editorHOST: editorHOST,
