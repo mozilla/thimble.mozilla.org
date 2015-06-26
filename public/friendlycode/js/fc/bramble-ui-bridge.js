@@ -1,6 +1,4 @@
 define(["jquery"], function($) {
-  "use strict";
-
   function updateLayout(data) {
     // Calculate total width of brackets
     var total = data.sidebarWidth + data.firstPaneWidth + data.secondPaneWidth;

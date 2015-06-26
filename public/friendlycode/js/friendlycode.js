@@ -1,6 +1,4 @@
 define(function(require) {
-  "use strict";
-
   var $ = require("jquery"),
       Editor = require("fc/ui/editor"),
       ProjectUI = require("fc/ui/bramble-project"),

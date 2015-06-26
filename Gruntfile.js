@@ -8,13 +8,6 @@ module.exports = function( grunt ) {
     gitadd: 'grunt-git'
   });
 
-  var habitat = require('habitat');
-  habitat.load();
-  env = new habitat();
-
-  var GIT_BRANCH = env.get('THIMBLE_MAIN_BRANCH');
-  var GIT_REMOTE = env.get('THIMBLE_MAIN_REMOTE');
-
   grunt.initConfig({
     pkg: grunt.file.readJSON( "package.json" ),
 
@@ -22,9 +15,7 @@ module.exports = function( grunt ) {
       default: {
         files: [
           'frontend/src/scripts/**/*.js',
-          'frontend/src/scripts/*.js',
-          'frontend/src/styles/**/*.less',
-          'frontend/src/styles/*.less'
+          'frontend/src/styles/**/*.less'
         ],
         tasks: [
           'jshint:frontend',
@@ -72,7 +63,7 @@ module.exports = function( grunt ) {
     jshint: {
       server: {
         options: {
-          "-W069": true // ignore "['...'] is better written in dot notation." warnings
+          jshintrc: './.jshintrc'
         },
         files: {
           src: [
@@ -144,7 +135,7 @@ module.exports = function( grunt ) {
           compress: true
         },
         files: {
-          "frontend/src/styles/error.css": "frontend/src/styles/error.less"
+          "frontend/dist/styles/error.css": "frontend/src/styles/error.less"
         }
       }
     }

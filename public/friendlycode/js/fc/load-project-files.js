@@ -1,6 +1,4 @@
 define(["jquery", "constants"], function($, Constants) {
-  "use strict";
-
   var Path = Bramble.Filer.Path;
   var FilerBuffer = Bramble.Filer.Buffer;
 

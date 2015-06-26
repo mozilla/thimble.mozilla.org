@@ -3,8 +3,6 @@ define([
   "template!nav-options",
   "fc/bramble-ui-bridge"
 ], function($, navOptionsTemplate, BrambleUIBridge) {
-  "use strict";
-
   return function Editor(options) {
     var container = options.container.empty()
           .addClass("friendlycode-base"),
@@ -34,10 +32,6 @@ define([
 
       Bramble.on("error", function(err) {
         console.log("error", err);
-      });
-
-      Bramble.on("readyStateChange", function(previous, current) {
-        console.log("readyStateChange", previous, current);
       });
 
       initFs(function(err, config) {

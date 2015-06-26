@@ -15,20 +15,14 @@ if ( process.env.NEW_RELIC_ENABLED ) {
 /**
  * Module dependencies.
  */
-var ajax = require('request'),
-    async = require('async'),
-    express = require('express'),
-    fs = require('fs'),
-    habitat = require('habitat'),
+var express = require('express'),
     helmet = require("helmet"),
     i18n = require('webmaker-i18n'),
     lessMiddleWare = require("less-middleware"),
-    makeAPI = require('./lib/makeapi'),
     nunjucks = require('nunjucks'),
     path = require('path'),
     utils = require('./lib/utils'),
     version = require('./package').version,
-    WebmakerAuth = require('webmaker-auth'),
     wts = require('webmaker-translation-stats');
 
 var appName = "thimble",
@@ -37,21 +31,10 @@ var appName = "thimble",
     node_env = env.get('NODE_ENV'),
     emulate_s3 = env.get('S3_EMULATION') || !env.get('S3_KEY'),
     WWW_ROOT = path.resolve(__dirname, 'public'),
-    /**
-      We're using two databases here: the first is our normal database, the second is
-      a legacy database with old the original thimble.webmaker.org data from 2012/2013
-      prior to the webmaker.org reboot. This database is a read-only database, with
-      remixes/edits being published to the new database instead. This is intended as
-      a short-term solution until all the active "old thimble" projects have been
-      migrated by their owners/remixers.
-    **/
-    databaseOptions =  env.get('CLEARDB_DATABASE_URL') || env.get('DB'),
 
-    allowJS = env.get("JAVASCRIPT_ENABLED", false),
     middleware = require('./lib/middleware')(),
     errorhandling= require('./lib/errorhandling'),
     logger,
-    make = makeAPI(env.get('make')),
     messina,
     nunjucksEnv = new nunjucks.Environment([
       new nunjucks.FileSystemLoader('views'),
@@ -265,15 +248,6 @@ app.get('/healthcheck', function( req, res ) {
     res.json(healthcheckObject);
   });
 });
-
-// dev-only route for testing deletes.
-if (!!env.get("DELETE_ENABLED")) {
-  /**
-    This route only exists for testing. Since CSRF cannot be
-    "overruled", this is a .get route, conditional on dev env.
-  **/
-  app.get('/project/:id/delete', middleware.deleteProject(databaseAPI));
-}
 
 // run server
 app.listen(env.get("PORT"), function(){
