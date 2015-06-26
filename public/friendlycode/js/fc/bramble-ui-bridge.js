@@ -213,11 +213,17 @@ define(["jquery"], function($) {
 
     function setPublicGalleryToggle(publishPublic) {
       if(publishPublic === true) {
-        $("#publish-public-gallery-toggle>ellipse").animate({cx: 31}, 250);
+        $({cx:$('#publish-public-gallery-toggle>ellipse').attr('cx')})
+        .animate( {cx: 31}, {duration:250,step:function(now){
+          $('#publish-public-gallery-toggle>ellipse').attr('cx', now);}
+        });
         $("#publish-public-gallery-toggle>ellipse").css("fill", "#06a050");
       }
       else {
-        $("#publish-public-gallery-toggle>ellipse").animate({cx: 11}, 250);
+        $({cx:$('#publish-public-gallery-toggle>ellipse').attr('cx')})
+        .animate({cx: 11}, {duration:250,step:function(now){
+          $('#publish-public-gallery-toggle>ellipse').attr('cx', now);}
+        });
         $("#publish-public-gallery-toggle>ellipse").css("fill", "#7C7C7C");
       }
     }
