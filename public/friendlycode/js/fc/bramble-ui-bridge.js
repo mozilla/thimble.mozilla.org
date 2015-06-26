@@ -1,4 +1,5 @@
 define(["jquery"], function($) {
+  "use strict";
 
   function updateLayout(data) {
     // Calculate total width of brackets

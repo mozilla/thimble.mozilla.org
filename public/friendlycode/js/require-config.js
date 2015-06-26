@@ -3,6 +3,8 @@ var require = {
   shim: {
     underscore: {
       exports: function() {
+        "use strict";
+
         return _.noConflict();
       }
     }

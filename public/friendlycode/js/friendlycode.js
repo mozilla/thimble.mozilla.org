@@ -1,14 +1,15 @@
 define(function(require) {
+  "use strict";
+
   var $ = require("jquery"),
       Editor = require("fc/ui/editor"),
       ProjectUI = require("fc/ui/bramble-project"),
-      DefaultContentTemplate = require("template!default-content"),
-      Localized = require("localized"),
+      defaultContentTemplate = require("template!default-content"),
       ProjectFiles = require("fc/load-project-files"),
       FileSystemSync = require("fc/filesystem-sync");
 
   return function FriendlycodeEditor(options) {
-    var defaultContent = options.defaultContent || DefaultContentTemplate(),
+    var defaultContent = options.defaultContent || defaultContentTemplate(),
         editor = new Editor({
           container: options.container,
           editorHost: options.editorHost,

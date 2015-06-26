@@ -2,7 +2,9 @@ define([
   "jquery",
   "template!nav-options",
   "fc/bramble-ui-bridge"
-], function($, NavOptionsTemplate, BrambleUIBridge) {
+], function($, navOptionsTemplate, BrambleUIBridge) {
+  "use strict";
+
   return function Editor(options) {
     var container = options.container.empty()
           .addClass("friendlycode-base"),
@@ -10,11 +12,9 @@ define([
           .appendTo(container);
 
     // Add the editor toolbar
-    $(NavOptionsTemplate()).appendTo(toolbarDiv);
+    $(navOptionsTemplate()).appendTo(toolbarDiv);
 
     function init(config, initFs) {
-      var self = this;
-
       if(typeof config === "function") {
         initFs = config;
         config = null;
@@ -49,7 +49,7 @@ define([
         // and which file within that root to open on startup.
         Bramble.mount(config.root, config.open);
       });
-    };
+    }
 
     return {
       init: init

@@ -84,8 +84,16 @@ module.exports = function( grunt ) {
         }
       },
       frontend: {
+        options: {
+          jshintrc: './.jshintrc'
+        },
         files: {
           src: [
+            // Temporary, until we shift entirely to browserify
+            "./public/friendlycode/js/fc/**/*.js",
+            "./public/friendlycode/js/constants.js",
+            "./public/friendlycode/js/friendlycode.js",
+
             "./frontend/src/scripts/**/*.js",
             "./frontend/src/scripts/*.js"
           ]
