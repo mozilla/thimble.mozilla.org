@@ -18,12 +18,12 @@ module.exports = function(config) {
       json: true
     }, function(err, response, body) {
       if(err) {
-        res.send(500, { error: err });
+        res.status(500).send({error: err});
         return;
       }
 
       if(response.statusCode !== 200 &&  response.statusCode !== 201) {
-        res.send(response.statusCode, { error: response.body });
+        res.status(response.statusCode).send({error: response.body});
         return;
       }
 
@@ -36,12 +36,12 @@ module.exports = function(config) {
         }
       }, function(err, response, body) {
         if(err) {
-          res.send(500, { error: err });
+          res.status(500).send({error: err});
           return;
         }
 
         if(response.statusCode !== 200) {
-          res.send(response.statusCode, { error: response.body });
+          res.status(response.statusCode).send({error: response.body});
           return;
         }
 

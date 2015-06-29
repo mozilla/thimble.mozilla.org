@@ -3,7 +3,7 @@ var request = require("request");
 module.exports = function(config) {
   return function(req, res) {
     if(!req.body || !req.body.path || !req.body.buffer) {
-      res.send(400, { error:  "Request body missing data" });
+      res.status(400).send({error: "Request body missing data"});
       return;
     }
 
@@ -31,12 +31,12 @@ module.exports = function(config) {
       json: true
     }, function(err, response, body) {
       if(err) {
-        res.send(500, { error: err });
+        res.status(500).send({error: err});
         return;
       }
 
       if(response.statusCode !== 201 && response.statusCode !== 200) {
-        res.send(response.statusCode, { error: response.body });
+        res.status(response.statusCode).send({error: response.body});
         return;
       }
 
@@ -46,11 +46,11 @@ module.exports = function(config) {
           path: fileReceived.path,
           project_id: fileReceived.project_id
         };
-        res.send(201);
+        res.sendStatus(201);
         return;
       }
 
-      res.send(200);
+      res.sendStatus(200);
     });
   };
 };
