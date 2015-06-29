@@ -6,7 +6,7 @@ module.exports = function(config) {
     var token = req.user.token;
     var projectName = req.params.projectName;
     if(!projectName) {
-      res.send(400, { error: "No project name specified" });
+      res.status(400).send({error: "No project name specified"});
       return;
     }
 
@@ -22,12 +22,12 @@ module.exports = function(config) {
       json: true
     }, function(err, response, body) {
       if(err) {
-        res.send(500, { error: err });
+        res.status(500).send({error: err});
         return;
       }
 
       if(response.statusCode !== 200 &&  response.statusCode !== 201) {
-        res.send(response.statusCode, { error: response.body });
+        res.status(response.statusCode).send({error: response.body});
         return;
       }
 
@@ -40,12 +40,12 @@ module.exports = function(config) {
         }
       }, function(err, response, body) {
         if(err) {
-          res.send(500, { error: err });
+          res.status(500).send({error: err});
           return;
         }
 
         if(response.statusCode !== 200) {
-          res.send(response.statusCode, { error: response.body });
+          res.status(response.statusCode).send({error: response.body});
           return;
         }
 
@@ -55,9 +55,9 @@ module.exports = function(config) {
         });
 
         if(doesNotExist) {
-          res.send(404);
+          res.sendStatus(404);
         } else {
-          res.send(200);
+          res.sendStatus(200);
         }
       });
     });

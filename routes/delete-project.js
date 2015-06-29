@@ -6,7 +6,7 @@ module.exports = function(config) {
     var token = req.user.token;
     var projectId = req.params.projectId;
     if(!projectId) {
-      res.send(400, { error: "No project ID specified" });
+      res.status(400).send({error: "No project ID specified"});
       return;
     }
 
@@ -18,16 +18,16 @@ module.exports = function(config) {
       }
     }, function(err, response) {
       if(err) {
-        res.send(500, { error: err });
+        res.status(500).send({error: err});
         return;
       }
 
       if(response.statusCode !== 204) {
-        res.send(response.statusCode, { error: response.body });
+        res.status(response.statusCode).send({error: response.body});
         return;
       }
 
-      res.send(204);
+      res.sendStatus(204);
     });
   };
 };

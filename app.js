@@ -25,6 +25,14 @@ var express = require('express'),
     version = require('./package').version,
     wts = require('webmaker-translation-stats');
 
+var favicon = require('serve-favicon'),
+    cookieSession = require('cookie-session'),
+    cookieParser = require('cookie-parser'),
+    logger = require('morgan'),
+    compress = require('compression'),
+    bodyParser = require('body-parser'),
+    csrf = require('csurf');
+
 var appName = "thimble",
     app = express(),
     env = require('./lib/environment'),
@@ -45,9 +53,8 @@ var appName = "thimble",
     }),
     parameters = require('./lib/parameters')(),
     routes = require('./routes')( utils, nunjucksEnv, appName ),
-    webmakerProxy = require('./lib/proxy')(),
+    webmakerProxy = require('./lib/proxy')();
 
-    bracketsPath;
 
 function configuredCookieSession() {
   var options = {
@@ -60,7 +67,7 @@ function configuredCookieSession() {
     proxy: true
   };
 
-  var cookieSessionMiddleware = express.cookieSession(options);
+  var cookieSessionMiddleware = cookieSession(options);
 
   // This is a work-around for cross-origin OPTIONS requests
   // See https://github.com/senchalabs/connect/issues/323
@@ -71,12 +78,6 @@ function configuredCookieSession() {
       cookieSessionMiddleware(req, res, next);
     }
   };
-}
-
-if (env.get("NODE_ENV") === "development") {
-  bracketsPath = '/public/friendlycode/vendor/brackets/src';
-} else {
-  bracketsPath = '/public/friendlycode/vendor/brackets/dist';
 }
 
 require("./lib/extendnunjucks").extend(nunjucksEnv, nunjucks);
@@ -93,7 +94,7 @@ app.use(middleware.addCSP({
 
 // Express settings
 app.disable('x-powered-by');
-app.use(express.favicon(__dirname + '/public/img/favicon.ico'));
+app.use(favicon(__dirname + '/public/img/favicon.ico'));
 
 if ( env.get( "ENABLE_GELF_LOGS" ) ) {
   messina = require( "messina" );
@@ -101,21 +102,21 @@ if ( env.get( "ENABLE_GELF_LOGS" ) ) {
   logger.init();
   app.use( logger.middleware() );
 } else {
-  app.use( express.logger( "dev" ) );
+  app.use( logger( "dev" ) );
 }
 
-app.use(helmet.iexss());
-app.use(helmet.contentTypeOptions());
+app.use(helmet.xssFilter());
+app.use(helmet.noSniff());
 
 if (!!env.get("FORCE_SSL") ) {
   app.use(helmet.hsts());
   app.enable("trust proxy");
 }
-app.use(express.compress());
-app.use(express.json());
-app.use(express.urlencoded());
+app.use(compress());
+app.use(bodyParser.json({limit: '5MB'}));
+app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(express.cookieParser());
+app.use(cookieParser());
 app.use(configuredCookieSession());
 
 app.use( i18n.middleware({
@@ -125,17 +126,14 @@ app.use( i18n.middleware({
   translation_directory: path.resolve( __dirname, "locale" )
 }));
 
-app.locals({
-  GA_ACCOUNT: env.get("GA_ACCOUNT"),
-  GA_DOMAIN: env.get("GA_DOMAIN"),
-  languages: i18n.getSupportLanguages(),
-  newrelic: newrelic,
-  bower_path: "bower_components"
-});
+app.locals.GA_ACCOUNT = env.get("GA_ACCOUNT");
+app.locals.GA_DOMAIN = env.get("GA_DOMAIN");
+app.locals.languages = i18n.getSupportLanguages();
+app.locals.newrelic = newrelic;
+app.locals.bower_path = "bower_components";
 
-app.use(express.csrf());
+app.use(csrf());
 app.use(helmet.xframe());
-app.use(app.router);
 
 var optimize = (node_env !== "development"),
     tmpDir = path.join( require("os").tmpDir(), "mozilla.webmaker.org");
@@ -150,16 +148,8 @@ app.use(lessMiddleWare('public', {
   optimization: optimize ? 0 : 2
 }));
 
-app.use( express.static(tmpDir));
-
-// Allows us to embed our version of brackets
-// in an iframe
-app.use(function(req, res, next) {
-  res.set('X-Frame-Options', "SAMEORIGIN");
-  next();
-}, express.static(path.join(__dirname, bracketsPath)));
-
-app.use( express.static(path.join(__dirname, 'public')));
+app.use(express.static(tmpDir));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
 app.use(express.static(path.join(__dirname, 'templates')));
 
@@ -169,10 +159,6 @@ app.use( "/bower", express.static( path.join(__dirname, "bower_components" )));
 // Shim the slowparse library so that friendlycode thinks it
 // still lives in public/friendlycode/vendor/slowparse
 app.use( "/friendlycode/vendor/slowparse", express.static( path.join(__dirname, "node_modules/slowparse" )));
-
-// Error handler
-app.use(errorhandling.errorHandler);
-app.use(errorhandling.pageNotFoundHandler);
 
 // what do we do when a project request comes in by name (:name route)?
 app.param('name', parameters.name);
@@ -248,6 +234,10 @@ app.get('/healthcheck', function( req, res ) {
     res.json(healthcheckObject);
   });
 });
+
+// Error handler
+app.use(errorhandling.errorHandler);
+app.use(errorhandling.pageNotFoundHandler);
 
 // run server
 app.listen(env.get("PORT"), function(){

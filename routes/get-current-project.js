@@ -11,12 +11,12 @@ module.exports = function(config) {
       }
     }, function(err, response, body) {
       if(err) {
-        res.send(500, { error: "Failed to execute request for project files" });
+        res.status(500).send({error: "Failed to execute request for project files"});
         return;
       }
 
       if(response.statusCode !== 200) {
-        res.send(404, { error: response.body });
+        res.status(404).send({error: response.body});
         return;
       }
 
