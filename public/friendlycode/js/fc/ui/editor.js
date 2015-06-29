@@ -15,7 +15,7 @@ define([
     function init(config, initFs) {
       if(typeof config === "function") {
         initFs = config;
-        config = null;
+        config = {};
       }
 
       // Start loading Bramble

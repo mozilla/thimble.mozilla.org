@@ -18,6 +18,8 @@ var newProject = require("./new-project");
 var deleteProject = require("./delete-project");
 var createOrUpdateProjectFile = require("./create-or-update-file");
 var deleteProjectFile = require("./delete-file");
+var publish = require("./publish");
+var unpublish = require("./unpublish");
 
 // Content-fetching function used for generating the output
 // on http://[...]/data routes via the index.rawData function.
@@ -62,6 +64,8 @@ module.exports = function(utils, nunjucksEnv, appName) {
     deleteProjectFile: deleteProjectFile(config),
     getProject: getProject(config),
     deleteProject: deleteProject(config),
+    publish: publish(config),
+    unpublish: unpublish(config),
 
     rawData: function(req, res) {
       res.type('text/plain; charset=utf-8');

@@ -1,4 +1,4 @@
-define(["jquery"], function($) {
+define(["jquery", "fc/publisher"], function($, Publisher) {
   function updateLayout(data) {
     // Calculate total width of brackets
     var total = data.sidebarWidth + data.firstPaneWidth + data.secondPaneWidth;
@@ -11,6 +11,7 @@ define(["jquery"], function($) {
 
   function init(bramble, options) {
     var sync = options.sync;
+    var publisher;
 
     // *******ON LOAD
     checkIfMultiFile();
@@ -180,49 +181,23 @@ define(["jquery"], function($) {
       }
     }
 
-    //Publish button
-    $("#navbar-publish-button").click(function() {
-      showPublishDialog();
-    });
-
-    $("#publish-button-cancel").click(function() {
-      hidePublishDialog();
-    });
-    $("#publish-underlay").click(function() {
-      hidePublishDialog();
-    });
-
     function hidePublishDialog() {
-        $("#publish-underlay").fadeOut();
-        $("#publish-dialog").fadeOut();
+      $("#publish-underlay").fadeOut();
+      $("#publish-dialog").fadeOut();
     }
     function showPublishDialog() {
-        $("#publish-underlay").fadeIn();
-        $("#publish-dialog").fadeIn();
+      $("#publish-underlay").fadeIn();
+      $("#publish-dialog").fadeIn();
     }
 
-    // Variable for the state of publishPublic toggle switch
-    var publishPublic = true;
-    $("#publish-public-gallery-toggle").click(function() {
-      publishPublic = !publishPublic;
-      setPublicGalleryToggle(publishPublic);
-    });
+    if(options.authenticated) {
+      //Publish button
+      $("#navbar-publish-button").click(showPublishDialog);
+      $("#publish-button-cancel").click(hidePublishDialog);
+      $("#publish-underlay").click(hidePublishDialog);
 
-    function setPublicGalleryToggle(publishPublic) {
-      if(publishPublic === true) {
-        $({cx:$('#publish-public-gallery-toggle>ellipse').attr('cx')})
-        .animate( {cx: 31}, {duration:250,step:function(now){
-          $('#publish-public-gallery-toggle>ellipse').attr('cx', now);}
-        });
-        $("#publish-public-gallery-toggle>ellipse").css("fill", "#06a050");
-      }
-      else {
-        $({cx:$('#publish-public-gallery-toggle>ellipse').attr('cx')})
-        .animate({cx: 11}, {duration:250,step:function(now){
-          $('#publish-public-gallery-toggle>ellipse').attr('cx', now);}
-        });
-        $("#publish-public-gallery-toggle>ellipse").css("fill", "#7C7C7C");
-      }
+      publisher = new Publisher(options);
+      publisher.init(options.project);
     }
 
     //Change file name in editor nav

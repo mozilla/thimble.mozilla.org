@@ -17,6 +17,7 @@ module.exports = function(config) {
         dateUpdated: project.date_updated,
         tags: project.tags,
         description: project.description,
+        publishUrl: project.publish_url,
         isNew: req.session.project.isNew
       }));
       req.session.project.isNew = false;
