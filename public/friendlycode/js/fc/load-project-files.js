@@ -176,7 +176,7 @@ define(["jquery", "constants"], function($, Constants) {
       headers: {
         "Accept": "application/json"
       },
-      url: projectFilesUrl
+      url: projectFilesUrl + '?cacheBust=' + (new Date()).toISOString()
     });
     request.done(updateFs);
     request.fail(function(jqXHR, status, err) {
