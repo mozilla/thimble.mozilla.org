@@ -1,0 +1,28 @@
+body {
+  background-color: darkred;
+  color: white;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+  text-align: center;
+  padding: 0;
+}
+
+.wrapper {
+  margin: 10px auto;
+  max-width: 300px;
+  padding: 30px;
+  border: 4px double white;
+}
+
+h1 {
+  font-size: 60px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: normal;
+  margin-top: 30px;
+  margin-bottom: 0;
+}
+
+h1 span {
+  display: block;
+  font-size: 50%;
+}

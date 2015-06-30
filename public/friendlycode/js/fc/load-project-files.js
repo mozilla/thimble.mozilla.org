@@ -1,4 +1,5 @@
-define(["jquery", "constants"], function($, Constants) {
+define(["jquery", "constants", "text!fc/stay-calm/index.html", "text!fc/stay-calm/style.css"],
+ function($, Constants, defaultHTML, defaultCSS) {
   var Path = Bramble.Filer.Path;
   var FilerBuffer = Bramble.Filer.Buffer;
 
@@ -192,10 +193,15 @@ define(["jquery", "constants"], function($, Constants) {
     };
   }
 
+  // XXX: For user testing, we're going to start with the "Stay Calm" poster project
   function generateDefaultFiles(defaultTemplate, projectPath) {
     return [{
-      path: Path.join(projectPath, Constants.DEFAULT_FILE_NAME),
-      buffer: convertToArrayBuffer(defaultTemplate)
+      path: Path.join(projectPath, "index.html"),
+      buffer: convertToArrayBuffer(defaultHTML)
+    },
+    {
+      path: Path.join(projectPath, "style.css"),
+      buffer: convertToArrayBuffer(defaultCSS)
     }];
   }
 
