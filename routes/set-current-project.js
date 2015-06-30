@@ -38,7 +38,6 @@ module.exports = function(config) {
 
       req.session.project = {};
       req.session.project.meta = JSON.parse(body);
-      req.session.redirectFromProjectSelection = true;
 
       res.redirect(301, "/" + qs);
     });

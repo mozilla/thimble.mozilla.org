@@ -3,6 +3,7 @@
  */
 var moment = require("moment");
 var i18n = require("webmaker-i18n");
+var querystring = require("querystring");
 var langmap = i18n.getAllLocaleCodes();
 var request = require("request");
 var config = require("./config");
@@ -40,13 +41,19 @@ module.exports = function(utils, nunjucksEnv, appName) {
 
   return {
     index: function(req, res) {
-      if(req.user && !req.session.redirectFromProjectSelection) {
-        renderUsersProjects(req, res);
+      var qs = querystring.stringify(req.query);
+      if(qs !== "") {
+        qs = "?" + qs;
+      }
+
+      if(req.user && !req.session.project) {
+        res.redirect(301, "/projects/" + qs);
         return;
       }
 
       renderHomepage(req, res);
     },
+    projects: renderUsersProjects,
     homepage: renderHomepage,
     openProject: setProject(config),
     projectExists: projectExists(config),

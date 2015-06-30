@@ -180,6 +180,11 @@ app.get('/initializeProject',
         middleware.setUserIfTokenExists,
         routes.getProject);
 
+app.get('/projects',
+        middleware.checkForAuth,
+        middleware.setUserIfTokenExists,
+        routes.projects);
+
 app.get('/project/:projectId',
         middleware.checkForAuth,
         middleware.setUserIfTokenExists,

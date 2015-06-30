@@ -10,7 +10,7 @@ module.exports = function(config) {
     var makedetails = "{}";
     var project = req.session.project && req.session.project.meta;
 
-    if(project && req.session.redirectFromProjectSelection) {
+    if(project) {
       makedetails = encodeURIComponent(JSON.stringify({
         title: project.title,
         dateCreated: project.date_created,
@@ -47,8 +47,6 @@ module.exports = function(config) {
       options.username = req.user.username;
       options.avatar = req.user.avatar;
     }
-
-    req.session.redirectFromProjectSelection = false;
 
     res.render("index.html", options);
   };
