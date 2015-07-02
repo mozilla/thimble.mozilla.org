@@ -1,5 +1,6 @@
-define(["jquery", "constants", "text!fc/stay-calm/index.html", "text!fc/stay-calm/style.css"],
- function($, Constants, defaultHTML, defaultCSS) {
+define(["jquery", "constants", "text!fc/stay-calm/index.html", "text!fc/stay-calm/style.css",
+  "text!fc/stay-calm/crown.svg", "text!fc/stay-calm/thimble.svg"],
+ function($, Constants, defaultHTML, defaultCSS, crownSVG, thimbleSVG) {
   var Path = Bramble.Filer.Path;
   var FilerBuffer = Bramble.Filer.Buffer;
 
@@ -202,6 +203,14 @@ define(["jquery", "constants", "text!fc/stay-calm/index.html", "text!fc/stay-cal
     {
       path: Path.join(projectPath, "style.css"),
       buffer: convertToArrayBuffer(defaultCSS)
+    },
+    {
+      path: Path.join(projectPath, "crown.svg"),
+      buffer: convertToArrayBuffer(crownSVG)
+    },
+    {
+      path: Path.join(projectPath, "thimble.svg"),
+      buffer: convertToArrayBuffer(thimbleSVG)
     }];
   }
 
