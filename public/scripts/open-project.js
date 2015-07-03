@@ -37,10 +37,42 @@
       });
     });
 
+    function getElapsedTime(lastEdited) {
+      var now = Date.now();
+      lastEdited = new Date(lastEdited);
+      var elapsedTime, unit = "";
+      var secondsElapsed = (now - lastEdited) / 1000;
+      var minutesElapsed = secondsElapsed / 60;
+      var hoursElapsed = minutesElapsed / 60;
+      var daysElapsed = hoursElapsed / 24;
+
+      if(daysElapsed > 31) {
+        elapsedTime = "over a month";
+      } else if(daysElapsed >= 1) {
+        elapsedTime = Math.round(daysElapsed);
+        unit = elapsedTime === 1 ? " day" : " days";
+      } else if(hoursElapsed >= 1) {
+        elapsedTime = Math.round(hoursElapsed);
+        unit = elapsedTime === 1 ? " hour" : " hours";
+      } else if(minutesElapsed >= 1) {
+        elapsedTime = Math.round(minutesElapsed);
+        unit = elapsedTime === 1 ? " minute" : " minutes";
+      } else {
+        elapsedTime = Math.round(secondsElapsed);
+        unit = elapsedTime === 1 ? " second" : " seconds";
+      }
+
+      return "Last Edited " + elapsedTime + unit + " ago";
+    }
+
     Array.prototype.forEach.call(projects, function(project) {
-      $("#" + project.getAttribute("id") + " > .project-title").on("click", function() {
+      var projectSelector = "#" + project.getAttribute("id");
+      var lastEdited = project.getAttribute("data-project-date_updated");
+
+      $(projectSelector + " > .project-title").on("click", function() {
         window.location.href = "/project/" + project.getAttribute("data-project-id") + queryString;
       });
+      $(projectSelector + " .project-information").text(getElapsedTime(lastEdited));
     });
 
     /**
