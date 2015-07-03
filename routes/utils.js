@@ -1,6 +1,7 @@
 var request = require("request");
 
-function updateProject(config, token, project, callback) {
+function updateProject(config, token, data, callback) {
+  var project = JSON.parse(JSON.stringify(data));
   var updateURL = config.publishURL + "/projects/" + project.id;
   delete project.id;
   delete project.publish_url;
