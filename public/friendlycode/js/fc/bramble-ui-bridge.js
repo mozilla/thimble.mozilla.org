@@ -16,7 +16,7 @@ define(["jquery"], function($) {
     checkIfMultiFile();
     if(bramble.getLayout())       {updateLayout(bramble.getLayout());}
     if(bramble.getFilename())     {setNavFilename(bramble.getFilename());}
-    if(bramble.getTheme())        {activateTheme(bramble.getTheme());}
+    if(bramble.getTheme())        {setTheme(bramble.getTheme());}
     if(bramble.getPreviewMode())  {activatePreviewMode(bramble.getPreviewMode());}
 
     //Show sidebar nav if it is present on load
@@ -107,15 +107,8 @@ define(["jquery"], function($) {
     });
 
     // Theme Toggle
-    $("#theme-light").click(function() {
-      activateTheme("light-theme");
-    });
-    $("#theme-dark").click(function() {
-      activateTheme("dark-theme");
-    });
-
-    function activateTheme(themeType) {
-      if(themeType === "light-theme") {
+    function setTheme(theme) {
+      if(theme === "light-theme") {
         bramble.useLightTheme();
 
         // Icons
@@ -128,8 +121,7 @@ define(["jquery"], function($) {
         $("#theme-active").css("position", "absolute").animate({
           left: 187
         });
-      }
-      else if(themeType === "dark-theme") {
+      } else if(theme === "dark-theme") {
         bramble.useDarkTheme();
 
         // Icons
@@ -144,6 +136,15 @@ define(["jquery"], function($) {
         });
       }
     }
+    function toggleTheme() {
+      if(bramble.getTheme() === "dark-theme") {
+        setTheme("light-theme");
+      } else {
+        setTheme("dark-theme");
+      }
+    }
+    $("#theme-light").click(toggleTheme);
+    $("#theme-dark").click(toggleTheme);
 
     // Refresh Preview
     $("#preview-pane-nav-refresh").click(function() {
