@@ -89,16 +89,12 @@ define(["jquery"], function($) {
       var leftOffset = $("#editor-pane-nav-options").offset().left - 86;
       $("#editor-pane-nav-options-menu").css("left", leftOffset);
       $("#editor-pane-nav-options-menu").fadeToggle();
+      $("#editor-pane-nav-options-underlay").toggle();
     });
 
-    $(document).on('click', function(event) {
-      if (!$(event.target).closest("#editor-pane-nav-options-menu").length && !$(event.target).closest("#editor-pane-nav-options").length) {
-        $("#editor-pane-nav-options-menu").hide();
-      }
-    });
-    $("#webmaker-bramble").click(function() {
-      $("#editor-pane-nav-options-menu").hide();
-      console.log("Within iframe");
+    $("#editor-pane-nav-options-underlay").click(function() {
+      $("#editor-pane-nav-options-menu").fadeOut();
+      $("#editor-pane-nav-options-underlay").hide();
     });
 
     // Font size
