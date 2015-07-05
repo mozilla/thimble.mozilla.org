@@ -201,7 +201,7 @@
 /* ------ EDITOR OPTIONS MENU ------ */
 #editor-pane-nav-options-menu {
   position: absolute;
-  z-index: 6;
+  z-index: 151;
   background-color: white;
   -webkit-box-shadow: 0 3px 9px rgba(0,0,0,0.24);
   -moz-box-shadow: 0 3px 9px rgba(0,0,0,0.24);
@@ -232,6 +232,16 @@
   z-index: 1;
   top: -15px;
   left: 83px;
+}
+#editor-pane-nav-options-underlay {
+  width: 100%;
+  min-height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 150;
+  overflow: hidden;
 }
 
 /* Font increase/decrease */
