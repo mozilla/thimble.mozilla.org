@@ -28,19 +28,11 @@ git clone git@github.com:[yourname]/thimble.webmaker.org.git
 
 4) set up the environment variables (see next section).
 
-6) A way to statically serve our [bramble code editor](http://github.com/humphd/brackets) (examples below)
+6) A way to statically serve our [bramble code editor](http://github.com/humphd/brackets) ([see below](#Bramble-code-editor))
 
 You can now run Thimble from the thimble.webmaker.org directory using
 
 ```node app```
-
-and can serve the brackets application in a variety of ways:
-
-```cd public/vendor/friendlycode/brackets && python -m SimpleHTTPServer```
-or
-```npm install -g live-server && cd public/vendor/friendlycode/brackets && live-server```
-
-**NOTE:** Pay special attention to the ENV variable for this (`BRACKETS_URI`), since it must point at the url of the local server you run to serve the brackets resources
 
 Environment variables
 ---------------------
@@ -71,10 +63,42 @@ be good to go.
 Building the front-end
 ----------------------
 
-Run `grunt build` to regenerate the front-end logic and css files. For production, 
+Run `grunt build` to regenerate the front-end logic and css files. For production,
 run with `grunt build:prod` to get minified versions, and run `grunt build:prod:true` to enable
 auto building whenever a front-end file changes. See `Gruntfile.js` for details.
 
 **NOTE:** Our front-end is in transition from an older architecture using Requirejs to
 a new one using our build system. Check in our IRC channel (irc.mozilla.org#thimble) for
 the latest state of development.
+
+Bramble code editor
+-------------------
+
+In order to load Thimble, the bramble code editor must be statically served separately.
+The simplest way to do this is to:
+
+1) Clone the editor (outside your cloned Thimble source)
+
+```
+git clone https://github.com/humphd/brackets.git --recursive
+```
+
+2) Install all dependencies (you will need to be in the brackets directory)
+
+```
+npm install && git submodule update --init
+```
+
+3) Serve the root folder of this repo statically. Thimble will look for it on localhost:8000 by default. Here are some examples:
+
+```
+python -m SimpleHTTPServer
+```
+
+   or
+
+```
+npm install -g live-server && live-server --port=8000
+```
+
+**NOTE:** Pay special attention to Thimble's BRACKETS_URI ENV variable, since it must point at the URL of the local server you created in step 3. By default, this would be [http://localhost:8000](http://localhost:8000)
