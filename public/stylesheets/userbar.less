@@ -52,13 +52,45 @@
       filter: alpha(opacity=35);
       .transition;
     }
+    #project-title {
+      background-color: transparent;
+      border: none;
+    }
+    #project-rename-save {
+      display: none;
+      font-size: 1em;
+      background-color: white;
+      color: #55986C;
+      text-decoration: none;
+      padding-left: 5px;
+      padding-right: 5px;
+      border-bottom: 1px solid #B9D6C3;
+      .transition-only-opacity;
+      opacity: 0.8;
+      filter: alpha(opacity=80);
+    }
+    #project-rename-save:hover {
+      opacity: 1;
+      filter: alpha(opacity=100);
+    }
+    #project-rename-save:active {
+      opacity: 1;
+      filter: alpha(opacity=100);
+      border-top: solid 2px rgba(0,0,0,.15);
+    }
+    .text-input {
+      outline: none;
+      border-bottom: 1px solid !important;
+      font-size: 0.9em;
+    }
   }
-  #navbar-project-title:hover {
+  #navbar-project-title.shadow:hover {
     background-color: rgba(0,0,0,.1);
     img.icon-edit {
       opacity: 1;
       filter: alpha(opacity=100);
     }
+    cursor: pointer;
   }
 
   #navbar-help {

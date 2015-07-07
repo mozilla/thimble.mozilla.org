@@ -1,4 +1,8 @@
-define(["jquery", "fc/publisher", "fc/bramble-keyhandler"], function($, Publisher, KeyHandler) {
+define(function(require) {
+  var $ = require("jquery");
+  var Publisher = require("fc/publisher");
+  var KeyHandler = require("fc/bramble-keyhandler");
+  var ProjectNameInput = require("fc/project-name-input");
 
   var _escKeyHandler;
 
@@ -225,6 +229,8 @@ define(["jquery", "fc/publisher", "fc/bramble-keyhandler"], function($, Publishe
       $("#editor-pane-nav-filename").text(filename);
       $("#editor-pane-nav-filename").attr("title", fullFilename);
     }
+
+    (new ProjectNameInput($("#navbar-project-title"), options)).init();
 
     // Hook up event listeners
     bramble.on("layout", updateLayout);
