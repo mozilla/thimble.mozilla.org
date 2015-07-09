@@ -189,7 +189,7 @@ define(["jquery", "constants", "text!fc/stay-calm/index.html", "text!fc/stay-cal
   function generateDefaultProject(title) {
     return {
       title: title || Constants.ANON_PROJECT_NAME,
-      tags: [],
+      tags: "",
       description: ""
     };
   }

@@ -23,6 +23,11 @@ define(["jquery"], function($) {
       request.done(function() {
         if(request.status !== 201 && request.status !== 200) {
           console.error("[Bramble] Server did not persist ", path, ". Server responded with status ", request.status);
+          return;
+        }
+
+        if(context.afterEach) {
+          context.afterEach();
         }
       });
       request.fail(function(jqXHR, status, err) {
@@ -66,6 +71,10 @@ define(["jquery"], function($) {
       if(request.status !== 200) {
         console.error("[Bramble] Server did not persist ", path, ". Server responded with status ", request.status);
       }
+
+      if(context.afterEach) {
+        context.afterEach();
+      }
     });
     request.fail(function(jqXHR, status, err) {
       console.error("[Bramble] Failed to send request to delete the file to the server with: ", err);
@@ -94,6 +103,10 @@ define(["jquery"], function($) {
 
     function configHandler(handler, url) {
       return function() {
+        if(fsync.beforeEach) {
+          fsync.beforeEach();
+        }
+
         Array.prototype.unshift.call(arguments, url, csrfToken, fs);
         handler.apply(fsync, arguments);
       };

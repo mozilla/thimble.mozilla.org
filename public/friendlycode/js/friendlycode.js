@@ -11,9 +11,11 @@ define(function(require) {
         editor = new Editor({
           container: options.container,
           editorHost: options.editorHost,
-          editorUrl: options.editorUrl
+          editorUrl: options.editorUrl,
+          appUrl: options.appUrl
         }),
-        makeDetails = options.makeDetails;
+        makeDetails = options.makeDetails,
+        username = $("#ssooverride").attr("data-oauth-username");
 
     ProjectUI.updateMeta(makeDetails);
 
@@ -44,6 +46,11 @@ define(function(require) {
       del: options.appUrl + "/deleteProjectFile"
     }, $("meta[name='csrf-token']").attr("content"));
 
-    editor.init({ sync: fsync }, initFs);
+    editor.init({
+      sync: fsync,
+      project: makeDetails,
+      appUrl: options.appUrl,
+      authenticated: !!username,
+    }, initFs);
   };
 });

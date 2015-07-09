@@ -215,6 +215,18 @@ app.put('/deleteProjectFile',
         middleware.isProjectLoaded,
         routes.deleteProjectFile);
 
+app.put('/publish',
+        middleware.setUserIfTokenExists,
+        middleware.isProjectLoaded,
+        middleware.validateRequest(["description", "dateUpdated", "public"]),
+        routes.publish);
+
+app.put('/unpublish',
+        middleware.setUserIfTokenExists,
+        middleware.isProjectLoaded,
+        middleware.validateRequest(["description", "dateUpdated", "public"]),
+        routes.unpublish);
+
 // Localized Strings
 app.get( '/strings/:lang?', i18n.stringsRoute( 'en-US' ) );
 
