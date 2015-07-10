@@ -9,7 +9,7 @@ define(function(require) {
   var TEXT_UPDATE_PUBLISH = "Update published version";
 
   function togglePublicVisibility() {
-    var toggle = this.interface.projectVisibility;
+    var toggle = this.dialog.projectVisibility;
     var ellipse = $({ cx: toggle.attr("cx") });
     var cx = 31;
     var fill = "#06a050";
@@ -32,10 +32,10 @@ define(function(require) {
   }
 
   function unpublishedChangesPrompt() {
-    var interface = this.interface;
+    var dialog = this.dialog;
     var publish = this.handlers.publish;
-    interface.published.changed.removeClass("hide");
-    interface.buttons.update
+    dialog.published.changed.removeClass("hide");
+    dialog.buttons.update
       .off("click", publish)
       .on("click", publish);
   }
@@ -44,7 +44,7 @@ define(function(require) {
     this.fsync = options.sync;
     host = options.appUrl;
     this.csrfToken = $("meta[name='csrf-token']").attr("content");
-    this.interface = {
+    this.dialog = {
       buttons: {
         publish: $("#publish-button-publish"),
         update: $("#publish-button-update"),
@@ -62,7 +62,8 @@ define(function(require) {
 
   Publisher.prototype.init = function(project) {
     var publisher = this;
-    var interface = publisher.interface;
+    var dialog = publisher.dialog;
+    publisher.dialog.trackSyncChanges = true;
     publisher.isProjectPublic = true;
     publisher.handlers = {
       publish: publisher.publish.bind(publisher),
@@ -74,7 +75,7 @@ define(function(require) {
     $("#publish-public-gallery-toggle").on("click", publisher.handlers.togglePublicVisibility);
 
     if(project.description) {
-      interface.description.val(project.description);
+      dialog.description.val(project.description);
     }
 
     if(project.publishUrl) {
@@ -82,24 +83,28 @@ define(function(require) {
     }
 
     if(publisher.fsync) {
-      publisher.fsync.beforeEach = function() {
-        publisher.disable();
-      };
-      publisher.fsync.afterEach = function() {
-        publisher.enable();
-        publisher.handlers.unpublishedChangesPrompt();
-      };
+      publisher.fsync.addBeforeEachCallback(function() {
+        if(dialog.trackSyncChanges) {
+          publisher.disable();
+        }
+      });
+      publisher.fsync.addAfterEachCallback(function() {
+        if(dialog.trackSyncChanges) {
+          publisher.enable();
+          publisher.handlers.unpublishedChangesPrompt();
+        }
+      });
     }
 
-    interface.buttons.publish.on("click", publisher.handlers.publish);
+    dialog.buttons.publish.on("click", publisher.handlers.publish);
   };
 
   Publisher.prototype.publish = function() {
     var publisher = this;
-    var interface = publisher.interface;
+    var dialog = publisher.dialog;
 
     function setState(done) {
-      var buttons = interface.buttons;
+      var buttons = dialog.buttons;
       var toggle = done ? "on" : "off";
 
       publisher.togglePublishState(toggle);
@@ -107,30 +112,44 @@ define(function(require) {
       buttons.update.text(done ? TEXT_UPDATE_PUBLISH : TEXT_PUBLISHING);
     }
 
-    setState(false);
+    function run() {
+      var request = publisher.generateRequest("/publish");
+      request.done(function(project) {
+        if(request.status !== 200) {
+          console.error("[Bramble] Server was unable to publish project, responded with status ", request.status);
+          return;
+        }
 
-    var request = publisher.generateRequest("/publish");
-    request.done(function(project) {
-      if(request.status !== 200) {
-        console.error("[Bramble] Server was unable to publish project, responded with status ", request.status);
+        publisher.updateDialog(project.link, true);
+      });
+      request.fail(function(jqXHR, status, err) {
+        console.error("[Bramble] Failed to send request to publish project to the server with: ", err);
+      });
+      request.always(function() {
+        setState(true);
+      });
+    }
+
+    setState(false);
+    dialog.trackSyncChanges = false;
+
+    publisher.fsync.saveAndSyncAll(function(err) {
+      if(err) {
+        console.error("[Bramble] Failed to publish project");
+        setState(true);
         return;
       }
 
-      publisher.updateDialog(project.link, true);
-    });
-    request.fail(function(jqXHR, status, err) {
-      console.error("[Bramble] Failed to send request to publish project to the server with: ", err);
-    });
-    request.always(function() {
-      setState(true);
+      dialog.trackSyncChanges = true;
+      run();
     });
   };
 
   Publisher.prototype.unpublish = function() {
     var publisher = this;
     var handlers = publisher.handlers;
-    var interface = publisher.interface;
-    var buttons = interface.buttons;
+    var dialog = publisher.dialog;
+    var buttons = dialog.buttons;
 
     function setState(done) {
       buttons.publish[done ? "on" : "off"]("click", handlers.publish);
@@ -172,7 +191,7 @@ define(function(require) {
       type: "PUT",
       url: host + route,
       data: JSON.stringify({
-        description: publisher.interface.description.val() || " ",
+        description: publisher.dialog.description.val() || " ",
         public: publisher.isProjectPublic,
         dateUpdated: (new Date()).toISOString()
       })
@@ -180,8 +199,8 @@ define(function(require) {
   };
 
   Publisher.prototype.updateDialog = function(publishUrl, allowUnpublish) {
-    var published = this.interface.published;
-    var unpublishBtn = this.interface.buttons.unpublish;
+    var published = this.dialog.published;
+    var unpublishBtn = this.dialog.buttons.unpublish;
     var unpublish = this.handlers.unpublish;
 
     // Expose the published state with the updated link
@@ -202,21 +221,21 @@ define(function(require) {
   };
 
   Publisher.prototype.enable = function() {
-    var buttons = this.interface.buttons;
+    var buttons = this.dialog.buttons;
     buttons.publish.removeClass("disabled");
     buttons.update.removeClass("disabled");
     this.togglePublishState("on");
   };
 
   Publisher.prototype.disable = function() {
-    var buttons = this.interface.buttons;
+    var buttons = this.dialog.buttons;
     buttons.publish.addClass("disabled");
     buttons.update.addClass("disabled");
     this.togglePublishState("off");
   };
 
   Publisher.prototype.togglePublishState = function(state) {
-    var buttons = this.interface.buttons;
+    var buttons = this.dialog.buttons;
     var handlers = this.handlers;
     buttons.publish[state]("click", handlers.publish);
     buttons.update[state]("click", handlers.publish);
