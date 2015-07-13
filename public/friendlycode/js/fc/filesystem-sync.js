@@ -47,7 +47,8 @@ define(["jquery"], function($) {
 
       options.data = JSON.stringify({
         path: path,
-        buffer: data
+        buffer: data,
+        dateUpdated: (new Date()).toISOString()
       });
 
       send();
@@ -64,7 +65,8 @@ define(["jquery"], function($) {
       type: "PUT",
       url: url,
       data: JSON.stringify({
-        "path": path
+        path: path,
+        dateUpdated: (new Date()).toISOString()
       })
     });
     request.done(function() {

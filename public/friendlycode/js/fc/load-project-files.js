@@ -42,7 +42,7 @@ define(["jquery", "constants", "text!fc/stay-calm/index.html", "text!fc/stay-cal
       project.dateCreated = project.dateCreated || (new Date()).toISOString();
       project.dateUpdated = project.dateCreated;
       files = generateDefaultFiles(options.defaultTemplate, defaultPath);
-      updateFs();
+      updateFs(project);
       return;
     }
 
@@ -96,7 +96,8 @@ define(["jquery", "constants", "text!fc/stay-calm/index.html", "text!fc/stay-cal
           url: options.persistenceURL,
           data: JSON.stringify({
             path: path,
-            buffer: data
+            buffer: data,
+            dateUpdated: project.dateUpdated
           })
         });
         request.done(function() {

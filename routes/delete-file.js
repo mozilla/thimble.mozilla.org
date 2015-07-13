@@ -1,12 +1,15 @@
 var request = require("request");
+var utils = require("./utils");
 
 module.exports = function(config) {
   return function(req, res) {
-    if(!req.body || !req.body.path) {
+    if(!req.body || !req.body.path || !req.body.dateUpdated) {
       res.status(400).send({error: "Request body missing data"});
       return;
     }
 
+    var token = req.user.token;
+    var project = req.session.project.meta;
     var existingFile = req.session.project.files[req.body.path];
 
     if(!existingFile) {
@@ -21,7 +24,8 @@ module.exports = function(config) {
       }
     }, function(err, response) {
       if(err) {
-        res.status(500).send({error: err});
+        console.error("Failed to send request to " + config.publishURL + "/files/" + existingFile.id + " with: ", err);
+        res.sendStatus(500);
         return;
       }
 
@@ -31,8 +35,23 @@ module.exports = function(config) {
       }
 
       delete req.session.project.files[req.body.path];
+      project.date_updated = req.body.dateUpdated;
 
-      res.sendStatus(200);
+      utils.updateProject(config, token, project, function(err, status, project) {
+        if(err) {
+          res.status(status).send({error: err});
+          return;
+        }
+
+        if(status === 500) {
+          res.sendStatus(500);
+          return;
+        }
+
+        req.session.project.meta = project;
+
+        res.sendStatus(200);
+      });
     });
   };
 };
