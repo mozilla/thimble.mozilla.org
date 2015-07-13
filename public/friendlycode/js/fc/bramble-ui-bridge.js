@@ -1,4 +1,7 @@
-define(["jquery", "fc/publisher"], function($, Publisher) {
+define(["jquery", "fc/publisher", "fc/bramble-keyhandler"], function($, Publisher, KeyHandler) {
+
+  var _escKeyHandler;
+
   function updateLayout(data) {
     // Calculate total width of brackets
     var total = data.sidebarWidth + data.firstPaneWidth + data.secondPaneWidth;
@@ -85,18 +88,25 @@ define(["jquery", "fc/publisher"], function($, Publisher) {
     });
 
     // Options menu
+    function closeOptions() {
+      $("#editor-pane-nav-options-menu").fadeOut();
+      $("#editor-pane-nav-options-underlay").hide();
+      _escKeyHandler.stop();
+      _escKeyHandler = null;
+    }
+
     $("#editor-pane-nav-options").click(function() {
       //Determines where to horizontally place menu based on cog icon location
       var leftOffset = $("#editor-pane-nav-options").offset().left - 86;
       $("#editor-pane-nav-options-menu").css("left", leftOffset);
       $("#editor-pane-nav-options-menu").fadeToggle();
       $("#editor-pane-nav-options-underlay").toggle();
+
+      // Listen for ESC to close
+      _escKeyHandler = new KeyHandler.ESC(closeOptions);
     });
 
-    $("#editor-pane-nav-options-underlay").click(function() {
-      $("#editor-pane-nav-options-menu").fadeOut();
-      $("#editor-pane-nav-options-underlay").hide();
-    });
+    $("#editor-pane-nav-options-underlay").click(closeOptions);
 
     // Font size
     $("#editor-pane-nav-decrease-font").click(function() {
@@ -184,10 +194,15 @@ define(["jquery", "fc/publisher"], function($, Publisher) {
     function hidePublishDialog() {
       $("#publish-underlay").fadeOut();
       $("#publish-dialog").fadeOut();
+      _escKeyHandler.stop();
+      _escKeyHandler = null;
     }
     function showPublishDialog() {
       $("#publish-underlay").fadeIn();
       $("#publish-dialog").fadeIn();
+
+      // Listen for ESC to close
+      _escKeyHandler = new KeyHandler.ESC(hidePublishDialog);
     }
 
     if(options.authenticated) {
