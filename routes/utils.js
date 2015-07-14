@@ -30,6 +30,39 @@ function updateProject(config, token, data, callback) {
   });
 }
 
+function updateCurrentProjectFiles(config, token, session, project, callback) {
+  var url = config.publishURL + "/projects/" + project.id + "/files";
+
+  request.get({
+    url: url,
+    headers: {
+      "Authorization": "token " + token
+    }
+  }, function(err, response, body) {
+    if(err) {
+      console.error("Failed to send request to " + url + " with: ", err);
+      callback(null, 500);
+      return;
+    }
+
+    if(response.statusCode !== 200) {
+      callback(response.body, response.statusCode);
+      return;
+    }
+
+    var files = JSON.parse(body);
+    session.project.files = {};
+    files.forEach(function(file) {
+      var fileMeta = JSON.parse(JSON.stringify(file));
+      delete fileMeta.buffer;
+      session.project.files[fileMeta.path] = fileMeta;
+    });
+
+    callback(null, 200, files);
+  });
+}
+
 module.exports = {
-  updateProject: updateProject
+  updateProject: updateProject,
+  updateCurrentProjectFiles: updateCurrentProjectFiles
 };

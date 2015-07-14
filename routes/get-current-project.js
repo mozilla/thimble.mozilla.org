@@ -1,36 +1,23 @@
-var request = require("request");
+var utils = require("./utils");
 
 module.exports = function(config) {
   return function(req, res) {
-    var projectId = req.session.project.meta.id;
+    var project = req.session.project.meta;
 
-    request.get({
-      url: config.publishURL + "/projects/" + projectId + "/files",
-      headers: {
-        "Authorization": "token " + req.user.token
-      }
-    }, function(err, response, body) {
+    utils.updateCurrentProjectFiles(config, req.user.token, req.session, project, function(err, status, files) {
       if(err) {
-        res.status(500).send({error: "Failed to execute request for project files"});
+        res.status(status).send({error: err});
         return;
       }
 
-      if(response.statusCode !== 200) {
-        res.status(404).send({error: response.body});
+      if(status === 500) {
+        res.sendStatus(500);
         return;
       }
-
-      var files = JSON.parse(body);
-      req.session.project.files = {};
-      files.forEach(function(file) {
-        var fileMeta = JSON.parse(JSON.stringify(file));
-        delete fileMeta.buffer;
-        req.session.project.files[fileMeta.path] = fileMeta;
-      });
 
       res.type("application/json");
       res.send({
-        project: req.session.project.meta,
+        project: project,
         files: files
       });
     });

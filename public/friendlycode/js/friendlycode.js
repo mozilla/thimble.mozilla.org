@@ -28,7 +28,7 @@ define(function(require) {
       }
 
       if(makeDetails.isNew) {
-        makeDetails = ProjectFiles.generateDefaultProject(makeDetails.title);
+        makeDetails = ProjectFiles.generateDefaultProject(makeDetails.title, makeDetails.root);
         ProjectFiles.load(makeDetails, {
           isNew: true,
           defaultTemplate: defaultContent,

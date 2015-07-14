@@ -4,12 +4,17 @@ define(function(require) {
   function ProjectNameInput(container, options) {
     this.container = container;
     this.appUrl = options.appUrl;
+    this.authenticated = options.authenticated;
+    this.fs = Bramble.getFileSystem();
   }
 
   ProjectNameInput.prototype.init = function() {
     this.saveButton = $("#project-rename-save");
     this.renameButton = $("#navbar-rename-project");
     this.container.one("click", this.enableInput.bind(this));
+    if(this.authenticated) {
+      this.csrfToken = $("meta[name='csrf-token']").attr("content");
+    }
 
     Object.defineProperty(this, "inputField", {
       get: function() {
@@ -37,7 +42,7 @@ define(function(require) {
     var projectNameInput = this;
     var title = projectNameInput.inputField.val();
 
-    projectNameInput.rename(function(err) {
+    projectNameInput.persist(title, function(err) {
       if(err) {
         console.error("[Bramble] Failed to rename the project with ", err);
         return;
@@ -55,8 +60,36 @@ define(function(require) {
     });
   };
 
-  ProjectNameInput.prototype.rename = function(callback) {
-    callback();
+  ProjectNameInput.prototype.persist = function(title, callback) {
+    var context = this;
+
+    if(!context.authenticated) {
+      callback();
+      return;
+    }
+
+    var request = $.ajax({
+      contentType: "application/json",
+      headers: {
+        "X-Csrf-Token": context.csrfToken
+      },
+      type: "PUT",
+      url: context.appUrl + "/renameProject",
+      data: JSON.stringify({
+        title: title
+      })
+    });
+    request.done(function(data) {
+      if(request.status !== 200) {
+        callback(data);
+        return;
+      }
+
+      callback();
+    });
+    request.fail(function(jqXHR, status, err) {
+      callback(err);
+    });
   };
 
   ProjectNameInput.prototype.generateInputField = function() {

@@ -200,6 +200,13 @@ app['delete']('/deleteProject/:projectId',
               middleware.setUserIfTokenExists,
               routes.deleteProject);
 
+app.put('/renameProject',
+        middleware.checkForAuth,
+        middleware.setUserIfTokenExists,
+        middleware.isProjectLoaded,
+        middleware.validateRequest(["title"]),
+        routes.renameProject);
+
 app.put('/updateProjectFile',
         middleware.setUserIfTokenExists,
         middleware.isProjectLoaded,
