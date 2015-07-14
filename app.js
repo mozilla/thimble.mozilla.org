@@ -190,12 +190,7 @@ app.get('/project/:projectId',
         middleware.setUserIfTokenExists,
         routes.openProject);
 
-app.get('/projectExists/:projectName',
-        middleware.checkForAuth,
-        middleware.setUserIfTokenExists,
-        routes.projectExists);
-
-app.get('/newProject/:projectName',
+app.get('/newProject',
         middleware.checkForAuth,
         middleware.setUserIfTokenExists,
         routes.newProject);
