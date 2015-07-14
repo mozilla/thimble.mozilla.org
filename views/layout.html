@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{localeInfo.lang}}" dir="{{localeInfo.direction}}" class="deployment-type-development">
+<html lang="{{localeInfo.lang}}" dir="{{localeInfo.direction}}">
   <head>
     <meta charset="utf-8">
     {{ newrelic.getBrowserTimingHeader() | safe }}
@@ -11,15 +11,13 @@
     <base target="_blank">
     <title>{{ gettext("Mozilla Thimble") }}</title>
 
-    <script src="{{ editorHOST }}/dist/bramble.js"></script>
     <link rel="stylesheet" href="/stylesheets/normalize.css">
-    <link rel="stylesheet" href="/friendlycode/css/friendlycode.css">
-    <link rel="stylesheet" href="/friendlycode/css/details-form.css">
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css">
+    <link rel="stylesheet" href="/stylesheets/editor.css">
     <link rel="stylesheet" href="/stylesheets/userbar.css">
     <link rel="stylesheet" href="/stylesheets/projects-style.css">
     <link rel="stylesheet" href="/stylesheets/publish.css">
 
+    <script src="{{ editorHOST }}/dist/bramble.js"></script>
     {% if GA_ACCOUNT %}
     <script id="google-analytics-js" src="/scripts/google-analytics.js"
             data-ga-account="{{ GA_ACCOUNT }}"

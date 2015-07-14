@@ -87,8 +87,6 @@ nunjucksEnv.express(app);
 // adding Content Security Policy (CSP)
 app.use(middleware.addCSP({
   personaHost: env.get('PERSONA_HOST'),
-  previewLoader: env.get('PREVIEW_LOADER'),
-  togetherJS: env.get('TOGETHERJS'),
   brambleHost: env.get('BRAMBLE_URI')
 }));
 
@@ -155,10 +153,6 @@ app.use(express.static(path.join(__dirname, 'templates')));
 
 // Setting up bower_components
 app.use( "/bower", express.static( path.join(__dirname, "bower_components" )));
-
-// Shim the slowparse library so that friendlycode thinks it
-// still lives in public/friendlycode/vendor/slowparse
-app.use( "/friendlycode/vendor/slowparse", express.static( path.join(__dirname, "node_modules/slowparse" )));
 
 // what do we do when a project request comes in by name (:name route)?
 app.param('name', parameters.name);

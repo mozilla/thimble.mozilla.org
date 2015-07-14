@@ -81,12 +81,11 @@ module.exports = function( grunt ) {
         files: {
           src: [
             // Temporary, until we shift entirely to browserify
-            "./public/friendlycode/js/fc/**/*.js",
-            "./public/friendlycode/js/constants.js",
-            "./public/friendlycode/js/friendlycode.js",
-
-            "./frontend/src/scripts/**/*.js",
-            "./frontend/src/scripts/*.js"
+            "public/scripts/editor/*.js",
+            "public/scripts/editor/js/**/*.js",
+            "!public/scripts/editor/js/require-config.js",
+            "frontend/src/scripts/**/*.js",
+            "frontend/src/scripts/*.js"
           ]
         }
       }

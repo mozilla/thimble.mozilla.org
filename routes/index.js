@@ -2,9 +2,7 @@
  * GET for the index.html template
  */
 var moment = require("moment");
-var i18n = require("webmaker-i18n");
 var querystring = require("querystring");
-var langmap = i18n.getAllLocaleCodes();
 var request = require("request");
 var config = require("./config");
 
@@ -95,31 +93,8 @@ module.exports = function(utils, nunjucksEnv, appName) {
         res.render('friendlycode/templates/publish-dialog.html');
       });
 
-      app.get( '/help-msg', function( req, res ) {
-        res.render('friendlycode/templates/help-msg.html');
-      });
-
-      app.get( '/error-msg', function( req, res ) {
-        res.render('friendlycode/templates/error-msg.html');
-      });
-
       app.get( '/nav-options', function( req, res ) {
         res.render('friendlycode/templates/nav-options.html');
-      });
-
-      app.get( '/details-form', function( req, res ) {
-        res.render('friendlycode/templates/details-form.html', {
-          locales: Object.keys(langmap),
-          langmap: langmap
-        });
-      });
-
-      app.get( '/slowparse/spec/errors.base.html', function( req, res ) {
-        res.render('slowparse/spec/errors.base.html');
-      });
-
-      app.get( '/slowparse/spec/errors.forbidjs.html', function( req, res ) {
-        res.render('slowparse/spec/errors.forbidjs.html');
       });
     },
 
