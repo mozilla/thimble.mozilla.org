@@ -23,7 +23,6 @@
     "less-middleware": "2.0.1",
     "makeapi-client": "0.5.30",
     "messina": "0.1.1",
-    "moment": "2.2.1",
     "morgan": "^1.6.0",
     "mox-server": "git://github.com/Pomax/mox-server",
     "newrelic": "1.5.5",

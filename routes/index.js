@@ -1,7 +1,6 @@
 /**
  * GET for the index.html template
  */
-var moment = require("moment");
 var querystring = require("querystring");
 var request = require("request");
 var config = require("./config");
