@@ -1,5 +1,6 @@
 var request = require("request");
 var querystring = require("querystring");
+var utils = require("./utils");
 
 module.exports = function(config) {
   return function(req, res) {
@@ -40,6 +41,7 @@ module.exports = function(config) {
 
       req.session.project = {};
       req.session.project.meta = body;
+      req.session.project.root = utils.getProjectRoot(body);
       req.session.project.files = {};
       req.session.project.isNew = true;
       req.session.redirectFromProjectSelection = true;

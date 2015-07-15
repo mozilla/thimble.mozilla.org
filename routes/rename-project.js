@@ -17,6 +17,7 @@ module.exports = function(config) {
       }
 
       req.session.project.meta = project;
+      req.session.project.root = utils.getProjectRoot(project);
 
       utils.updateCurrentProjectFiles(config, req.user.token, req.session, project, function(err, status) {
         if(err) {

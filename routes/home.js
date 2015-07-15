@@ -1,6 +1,5 @@
 var url = require("url");
 var querystring = require("querystring");
-var Path = require("path");
 
 module.exports = function(config) {
   return function(req, res) {
@@ -13,7 +12,7 @@ module.exports = function(config) {
 
     if(project) {
       makedetails = encodeURIComponent(JSON.stringify({
-        root: Path.join("/", project.user_id.toString(), "projects", project.id.toString()),
+        root: req.session.project.root,
         title: project.title,
         dateCreated: project.date_created,
         dateUpdated: project.date_updated,
