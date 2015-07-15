@@ -28,7 +28,7 @@ define(function(require) {
       }
 
       if(makeDetails.isNew) {
-        makeDetails = ProjectFiles.generateDefaultProject(makeDetails.title);
+        makeDetails = ProjectFiles.generateDefaultProject(makeDetails.title, makeDetails.root);
         ProjectFiles.load(makeDetails, {
           isNew: true,
           defaultTemplate: defaultContent,
@@ -41,10 +41,13 @@ define(function(require) {
       ProjectFiles.load(makeDetails, callback);
     };
 
-    var fsync = FileSystemSync.init(makeDetails && makeDetails.title, {
-      createOrUpdate: options.appUrl + "/updateProjectFile",
-      del: options.appUrl + "/deleteProjectFile"
-    }, $("meta[name='csrf-token']").attr("content"));
+    var fsync;
+    if(makeDetails && makeDetails.title) {
+      fsync = FileSystemSync.init(makeDetails.root, {
+        createOrUpdate: options.appUrl + "/updateProjectFile",
+        del: options.appUrl + "/deleteProjectFile"
+      }, $("meta[name='csrf-token']").attr("content"));
+    }
 
     editor.init({
       sync: fsync,

@@ -96,8 +96,9 @@ define(["jquery"], function($) {
 
   function pushFileRename() {}
 
-  function FSync() {
+  function FSync(root) {
     this.queueLength = 0;
+    this.root = root;
     // Holds a list of callbacks that can be attached
     // using `fsync.addBeforeEachCallback` and `fsync.addAfterEachCallback`
     // and will run before and after (respectively) a file
@@ -108,14 +109,8 @@ define(["jquery"], function($) {
     };
   }
 
-  FileSystemSync.init = function(projectName, persistanceUrls, csrfToken) {
-    // If no project name was provided, then an anonymous user is using thimble
-    // and will not have any persistence of files
-    if(!projectName) {
-      return null;
-    }
-
-    var fsync = new FSync();
+  FileSystemSync.init = function(root, persistanceUrls, csrfToken) {
+    var fsync = new FSync(root);
     var fs = Bramble.getFileSystem();
 
     function configHandler(handler, url) {

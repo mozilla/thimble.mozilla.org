@@ -190,12 +190,7 @@ app.get('/project/:projectId',
         middleware.setUserIfTokenExists,
         routes.openProject);
 
-app.get('/projectExists/:projectName',
-        middleware.checkForAuth,
-        middleware.setUserIfTokenExists,
-        routes.projectExists);
-
-app.get('/newProject/:projectName',
+app.get('/newProject',
         middleware.checkForAuth,
         middleware.setUserIfTokenExists,
         routes.newProject);
@@ -204,6 +199,13 @@ app['delete']('/deleteProject/:projectId',
               middleware.checkForAuth,
               middleware.setUserIfTokenExists,
               routes.deleteProject);
+
+app.put('/renameProject',
+        middleware.checkForAuth,
+        middleware.setUserIfTokenExists,
+        middleware.isProjectLoaded,
+        middleware.validateRequest(["title"]),
+        routes.renameProject);
 
 app.put('/updateProjectFile',
         middleware.setUserIfTokenExists,

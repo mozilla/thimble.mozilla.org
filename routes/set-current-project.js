@@ -1,5 +1,6 @@
 var request = require("request");
 var querystring = require("querystring");
+var utils = require("./utils");
 
 module.exports = function(config) {
   return function(req, res) {
@@ -36,8 +37,10 @@ module.exports = function(config) {
         return;
       }
 
+      var project = JSON.parse(body);
       req.session.project = {};
-      req.session.project.meta = JSON.parse(body);
+      req.session.project.meta = project;
+      req.session.project.root = utils.getProjectRoot(project);
 
       res.redirect(301, "/" + qs);
     });

@@ -11,11 +11,11 @@ var config = require("./config");
 // Bramble routes
 var home = require("./home");
 var usersProjects = require("./view-user-projects");
-var projectExists = require("./check-if-project-exists");
 var setProject = require("./set-current-project");
 var getProject = require("./get-current-project");
 var newProject = require("./new-project");
 var deleteProject = require("./delete-project");
+var renameProject = require("./rename-project");
 var createOrUpdateProjectFile = require("./create-or-update-file");
 var deleteProjectFile = require("./delete-file");
 var publish = require("./publish");
@@ -58,12 +58,12 @@ module.exports = function(utils, nunjucksEnv, appName) {
     projects: renderUsersProjects,
     homepage: renderHomepage,
     openProject: setProject(config),
-    projectExists: projectExists(config),
     newProject: newProject(config),
     createOrUpdateProjectFile: createOrUpdateProjectFile(config),
     deleteProjectFile: deleteProjectFile(config),
     getProject: getProject(config),
     deleteProject: deleteProject(config),
+    renameProject: renameProject(config),
     publish: publish(config),
     unpublish: unpublish(config),
 
