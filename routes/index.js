@@ -70,34 +70,6 @@ module.exports = function(utils, nunjucksEnv, appName) {
       res.send(getPageData(req));
     },
 
-    friendlycodeRoutes: function(app) {
-      app.get( '/default-content', function( req, res ) {
-        moment.lang(req.localeInfo.momentLang);
-        res.type('text/plain; charset=utf-8');
-        res.render('friendlycode/templates/default-content.html', {
-          title: req.gettext("Your Awesome Webpage created on"),
-          time: moment().format('llll'),
-          text: req.gettext("Make something amazing with the web")
-        });
-      });
-
-      app.get( '/error-dialog', function( req, res ) {
-        res.render('friendlycode/templates/error-dialog.html');
-      });
-
-      app.get( '/confirm-dialog', function( req, res ) {
-        res.render('friendlycode/templates/confirm-dialog.html');
-      });
-
-      app.get( '/publish-dialog', function( req, res ) {
-        res.render('friendlycode/templates/publish-dialog.html');
-      });
-
-      app.get( '/nav-options', function( req, res ) {
-        res.render('friendlycode/templates/nav-options.html');
-      });
-    },
-
     oauth2Callback: function(req, res, next) {
       if (req.query.logout) {
         req.session = null;

@@ -5,13 +5,6 @@
 /* Transition time for hover effects */
 @transitionTime: 0.5s;
 
-.friendlycode-base {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  overflow: hidden;
-  background-color: #F5F5F5;
-  color: #414244;
-}
-
 #webmaker-bramble {
     position: absolute;
     display: block;
@@ -27,11 +20,7 @@
   overflow: hidden;
 }
 
-.friendlycode-base img {
-  border: 0 none;
-}
-
-.friendlycode-toolbar {
+.bramble-toolbar {
   position: absolute;
   z-index: 2;
   top: @headerHeight;
@@ -438,14 +427,6 @@
 
 /* ------ CONTENT AREA ------ */
 
-.friendlycode-panes {
-  position: absolute;
-  top: (@headerHeight + @toolbarHeight) - 10px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
 div.editor-actions {
   visibility: visible;
   position: absolute;
@@ -466,11 +447,6 @@ div.editor-actions {
   position: absolute;
   bottom: 0;
   top: 10px;
-}
-
-.tipsy.friendlycode-base {
-  /* Make tipsy tooltips slightly larger than the default. */
-  font-size: 12px;
 }
 
 .source-code .CodeMirror {

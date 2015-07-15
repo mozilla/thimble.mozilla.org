@@ -228,8 +228,6 @@ app.get( '/external/make-api.js', function( req, res ) {
   res.sendfile( path.resolve( __dirname, "node_modules/makeapi-client/src/make-api.js" ) );
 });
 
-routes.friendlycodeRoutes(app);
-
 // DEVOPS - Healthcheck
 app.get('/healthcheck', function( req, res ) {
   var healthcheckObject = {
