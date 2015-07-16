@@ -1,4 +1,5 @@
 var request = require("request");
+var Path = require("path");
 
 function updateProject(config, token, data, callback) {
   var project = JSON.parse(JSON.stringify(data));
@@ -30,6 +31,16 @@ function updateProject(config, token, data, callback) {
   });
 }
 
+function getProjectRoot(project) {
+  return Path.join("/", project.user_id.toString(), "projects", project.id.toString());
+}
+
+function stripProjectRoot(root, path) {
+  return Path.join("/", Path.relative(root, path));
+}
+
 module.exports = {
-  updateProject: updateProject
+  updateProject: updateProject,
+  getProjectRoot: getProjectRoot,
+  stripProjectRoot: stripProjectRoot
 };

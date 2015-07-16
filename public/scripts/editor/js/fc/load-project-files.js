@@ -21,56 +21,20 @@ define(["jquery", "constants", "text!fc/stay-calm/index.html", "text!fc/stay-cal
     var shell = new fs.Shell();
     var projectFilesUrl = "//" + window.location.host + "/initializeProject";
     var request;
-    var projectTitle = project && project.title;
+    var root = project.root;
     var defaultProject = false;
-    var defaultPath;
     var files;
-
-    if(!projectTitle) {
-      callback(new Error("[Bramble] No project specified"));
-      return;
-    }
-
-    var root = Path.join("/", projectTitle);
 
     if(typeof options !== "function") {
       defaultProject = true;
-      // `options.isNew` indicates that a new project was created for a
-      // signed-in user. For the anonymous user case, for now, we default to
-      // `/New Project` as the project root
-      defaultPath = options.isNew ? root : Path.join("/", Constants.ANON_PROJECT_NAME);
       project.dateCreated = project.dateCreated || (new Date()).toISOString();
       project.dateUpdated = project.dateCreated;
-      files = generateDefaultFiles(defaultPath);
+      files = generateDefaultFiles(root);
       updateFs(project);
       return;
     }
 
     callback = options;
-
-    // TODO: Remove this once https://github.com/filerjs/filer/issues/357 has
-    // been fixed
-    function relative(path) {
-      if(!Path.isAbsolute(path)) {
-        return path;
-      }
-
-      var temp = path;
-      var relPath = "";
-      var exit = false;
-
-      while(!exit) {
-        if(temp === root) {
-          exit = true;
-        } else {
-          relPath = "/" + Path.basename(temp) + relPath;
-        }
-
-        temp = Path.dirname(temp);
-      }
-
-      return relPath.substr(1);
-    }
 
     function updateFs(project) {
       if(!defaultProject && request.status !== 200) {
@@ -167,7 +131,7 @@ define(["jquery", "constants", "text!fc/stay-calm/index.html", "text!fc/stay-cal
       files.forEach(function(file) {
         // TODO: https://github.com/mozilla/thimble.webmaker.org/issues/603
         if(!filePathToOpen || Path.extname(filePathToOpen) !== ".html") {
-          filePathToOpen = relative(file.path);
+          filePathToOpen = Path.relative(root, file.path);
         }
 
         writeFile(file.path, new FilerBuffer(file.buffer));
@@ -187,9 +151,11 @@ define(["jquery", "constants", "text!fc/stay-calm/index.html", "text!fc/stay-cal
     });
   }
 
-  function generateDefaultProject(title) {
+  function generateDefaultProject(title, root) {
+    title = title || Constants.ANON_PROJECT_NAME;
     return {
-      title: title || Constants.ANON_PROJECT_NAME,
+      root: root || Path.join("/", title),
+      title: title,
       tags: "",
       description: ""
     };

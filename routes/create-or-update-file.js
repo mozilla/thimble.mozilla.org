@@ -11,7 +11,7 @@ module.exports = function(config) {
     var token = req.user.token;
     var project = req.session.project.meta;
     var fileReceived = {
-      path: req.body.path,
+      path: utils.stripProjectRoot(req.session.project.root, req.body.path),
       buffer: req.body.buffer.data,
       project_id: project.id
     };

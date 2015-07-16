@@ -12,6 +12,7 @@ module.exports = function(config) {
 
     if(project) {
       makedetails = encodeURIComponent(JSON.stringify({
+        root: req.session.project.root,
         title: project.title,
         dateCreated: project.date_created,
         dateUpdated: project.date_updated,

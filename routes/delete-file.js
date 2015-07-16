@@ -8,12 +8,13 @@ module.exports = function(config) {
       return;
     }
 
+    var path = utils.stripProjectRoot(req.session.project.root, req.body.path);
     var token = req.user.token;
     var project = req.session.project.meta;
     var existingFile = req.session.project.files[req.body.path];
 
     if(!existingFile) {
-      res.status(400).send({error: "No file representation found for " + req.body.path});
+      res.status(400).send({error: "No file representation found for " + path});
       return;
     }
     request({
@@ -34,7 +35,7 @@ module.exports = function(config) {
         return;
       }
 
-      delete req.session.project.files[req.body.path];
+      delete req.session.project.files[path];
       project.date_updated = req.body.dateUpdated;
 
       utils.updateProject(config, token, project, function(err, status, project) {
