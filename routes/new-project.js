@@ -5,21 +5,16 @@ var utils = require("./utils");
 module.exports = function(config) {
   return function(req, res) {
     var qs;
-    var projectName = req.params.projectName;
-    if(!projectName) {
-      res.status(400).send({error: "No project name specified"});
-      return;
-    }
-
     var cur = req.query.now || (new Date()).toISOString();
     var project = {
-      title: projectName,
+      title: config.constants.NEW_PROJECT,
       user_id: req.session.publishUser.id,
       date_created: cur,
       date_updated: cur
     };
 
     delete req.query.now;
+    delete req.query.cacheBust;
     qs = querystring.stringify(req.query);
     if(qs !== "") {
       qs = "?" + qs;

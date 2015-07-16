@@ -8,7 +8,6 @@ var config = require("./config");
 // Bramble routes
 var home = require("./home");
 var usersProjects = require("./view-user-projects");
-var projectExists = require("./check-if-project-exists");
 var setProject = require("./set-current-project");
 var getProject = require("./get-current-project");
 var newProject = require("./new-project");
@@ -55,7 +54,6 @@ module.exports = function(utils, nunjucksEnv, appName) {
     projects: renderUsersProjects,
     homepage: renderHomepage,
     openProject: setProject(config),
-    projectExists: projectExists(config),
     newProject: newProject(config),
     createOrUpdateProjectFile: createOrUpdateProjectFile(config),
     deleteProjectFile: deleteProjectFile(config),
