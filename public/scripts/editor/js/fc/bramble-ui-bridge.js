@@ -1,4 +1,7 @@
-define(["jquery", "fc/publisher", "fc/bramble-keyhandler"], function($, Publisher, KeyHandler) {
+define(function(require) {
+  var $ = require("jquery");
+  var Publisher = require("fc/publisher");
+  var KeyHandler = require("fc/bramble-keyhandler");
 
   var _escKeyHandler;
 

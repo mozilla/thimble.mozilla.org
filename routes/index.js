@@ -12,6 +12,7 @@ var setProject = require("./set-current-project");
 var getProject = require("./get-current-project");
 var newProject = require("./new-project");
 var deleteProject = require("./delete-project");
+var renameProject = require("./rename-project");
 var createOrUpdateProjectFile = require("./create-or-update-file");
 var deleteProjectFile = require("./delete-file");
 var publish = require("./publish");
@@ -59,6 +60,7 @@ module.exports = function(utils, nunjucksEnv, appName) {
     deleteProjectFile: deleteProjectFile(config),
     getProject: getProject(config),
     deleteProject: deleteProject(config),
+    renameProject: renameProject(config),
     publish: publish(config),
     unpublish: unpublish(config),
 

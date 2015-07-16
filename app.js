@@ -189,6 +189,13 @@ app.get('/newProject',
         middleware.setUserIfTokenExists,
         routes.newProject);
 
+app.put('/renameProject',
+        middleware.checkForAuth,
+        middleware.setUserIfTokenExists,
+        middleware.isProjectLoaded,
+        middleware.validateRequest(["title"]),
+        routes.renameProject);
+
 app['delete']('/deleteProject/:projectId',
               middleware.checkForAuth,
               middleware.setUserIfTokenExists,

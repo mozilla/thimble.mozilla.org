@@ -1,6 +1,11 @@
-define(["jquery", "constants", "text!fc/stay-calm/index.html", "text!fc/stay-calm/style.css",
-  "text!fc/stay-calm/crown.svg", "text!fc/stay-calm/thimble.svg"],
- function($, Constants, defaultHTML, defaultCSS, crownSVG, thimbleSVG) {
+define(function(require) {
+  var $ = require("jquery");
+  var Constants = require("constants");
+  var defaultHTML = require("text!fc/stay-calm/index.html");
+  var defaultCSS = require("text!fc/stay-calm/style.css");
+  var crownSVG = require("text!fc/stay-calm/crown.svg");
+  var thimbleSVG = require("text!fc/stay-calm/thimble.svg");
+
   var Path = Bramble.Filer.Path;
   var FilerBuffer = Bramble.Filer.Buffer;
 
@@ -16,136 +21,149 @@ define(["jquery", "constants", "text!fc/stay-calm/index.html", "text!fc/stay-cal
     return buf;
   }
 
-  function load(project, options, callback) {
-    var fs = Bramble.getFileSystem();
-    var shell = new fs.Shell();
-    var projectFilesUrl = "//" + window.location.host + "/initializeProject";
-    var request;
-    var root = project.root;
-    var defaultProject = false;
-    var files;
-
-    if(typeof options !== "function") {
-      defaultProject = true;
-      project.dateCreated = project.dateCreated || (new Date()).toISOString();
-      project.dateUpdated = project.dateCreated;
-      files = generateDefaultFiles(root);
-      updateFs(project);
-      return;
-    }
-
-    callback = options;
-
-    function updateFs(project) {
-      if(!defaultProject && request.status !== 200) {
-        callback(new Error("[Bramble] Failed to get files for this project"));
+  function persist(config, path, data, callback) {
+    var request = $.ajax({
+      contentType: "application/json",
+      headers: {
+        "X-Csrf-Token": config.csrfToken
+      },
+      type: "PUT",
+      url: config.persistenceURL,
+      data: JSON.stringify({
+        path: path,
+        buffer: data,
+        dateUpdated: config.dateUpdated
+      })
+    });
+    request.done(function() {
+      if(request.status !== 201 && request.status !== 200) {
+        console.error("[Bramble] Server did not persist file");
+        callback(new Error("[Bramble] Could not persist file"));
         return;
       }
 
-      if(!files) {
-        files = project.files;
-      }
+      callback();
+    });
+    request.fail(function(jqXHR, status, err) {
+      console.error("[Bramble] Failed to send request to persist the file to the server with: ", err);
+      callback(err);
+    });
+  }
 
-      var length = files.length;
-      var completed = 0;
-      var filePathToOpen;
+  function writeFile(config, path, data, callback) {
+    var parent = Path.dirname(path);
 
-      function persistFile(path, data, next) {
-        var request = $.ajax({
-          contentType: "application/json",
-          headers: {
-            "X-Csrf-Token": options.csrfToken
-          },
-          type: "PUT",
-          url: options.persistenceURL,
-          data: JSON.stringify({
-            path: path,
-            buffer: data,
-            dateUpdated: project.dateUpdated
-          })
-        });
-        request.done(function() {
-          if(request.status !== 201 && request.status !== 200) {
-            console.error("[Bramble] Server did not persist file");
-            return callback(new Error("[Bramble] Could not persist file"));
-          }
-
-          next();
-        });
-        request.fail(function(jqXHR, status, err) {
-          console.error("[Bramble] Failed to send request to persist the file to the server with: ", err);
+    function write() {
+      config.fs.writeFile(path, data, function(err) {
+        if(err) {
+          console.error("[Bramble] Failed to write: ", path);
           callback(err);
-        });
-      }
-
-      function checkProjectLoaded() {
-        if(completed === length) {
-          callback(null, {
-            root: root,
-            open: filePathToOpen
-          });
-        }
-      }
-
-      function writeFile(path, data) {
-        var parent = Path.dirname(path);
-
-        function write() {
-          fs.writeFile(path, data, function(err) {
-            if(err) {
-              console.error("[Bramble] Failed to write: ", path);
-              callback(err);
-              return;
-            }
-
-            if(!options.isNew) {
-              completed++;
-              checkProjectLoaded();
-              return;
-            }
-
-            persistFile(path, data, function() {
-              completed++;
-              checkProjectLoaded();
-            });
-          });
+          return;
         }
 
-        shell.mkdirp(parent, function(err) {
-          if(err && err.code !== "EEXIST") {
-            console.error("[Bramble] Failed to create project directory: ", parent);
-            callback(err);
-            return;
-          }
-
-          write();
-        });
-      }
-
-      if(!length) {
-        // TODO: https://github.com/mozilla/thimble.webmaker.org/issues/602
-        callback(new Error("[Bramble] No files to load"));
-        return;
-      }
-
-      files.forEach(function(file) {
-        // TODO: https://github.com/mozilla/thimble.webmaker.org/issues/603
-        if(!filePathToOpen || Path.extname(filePathToOpen) !== ".html") {
-          filePathToOpen = Path.relative(root, file.path);
+        // If this was a file created for a new project for an
+        // authenticated user, we should persist it to the server
+        if(config.persist) {
+          persist(config, path, data, callback);
+        } else {
+          callback();
         }
-
-        writeFile(file.path, new FilerBuffer(file.buffer));
       });
     }
 
-    request = $.ajax({
+    config.shell.mkdirp(parent, function(err) {
+      if(err && err.code !== "EEXIST") {
+        console.error("[Bramble] Failed to create project directory: ", parent);
+        callback(err);
+        return;
+      }
+
+      write();
+    });
+  }
+
+  function updateFs(config, files, callback) {
+    var length;
+    var completed = 0;
+    var filePathToOpen;
+
+    function endWriteFile(err) {
+      if(err) {
+        callback(err);
+        return;
+      }
+
+      if(++completed === length) {
+        callback(null, {
+          root: config.root,
+          open: filePathToOpen
+        });
+      }
+    }
+
+    length = files.length;
+    if(!length) {
+      // TODO: https://github.com/mozilla/thimble.webmaker.org/issues/602
+      callback(new Error("[Bramble] No files to load"));
+      return;
+    }
+
+    files.forEach(function(file) {
+      // TODO: https://github.com/mozilla/thimble.webmaker.org/issues/603
+      if(!filePathToOpen || Path.extname(filePathToOpen) !== ".html") {
+        filePathToOpen = Path.relative(config.root, file.path);
+      }
+
+      writeFile(config, file.path, new FilerBuffer(file.buffer), endWriteFile);
+    });
+  }
+
+  function load(project, options, callback) {
+    var root = project.root;
+    var authenticated = options.authenticated;
+    var config = JSON.parse(JSON.stringify(options));
+    config.root = root;
+    config.fs = Bramble.getFileSystem();
+    config.shell = new config.fs.Shell();
+
+    // For any scenario that creates a new project (the first
+    // being in the case of an unauthenticated user and the second
+    // being the case when an authenticated user creates a new
+    // project), initialize the date created and updated and
+    // generate default files for the project. Once that is done,
+    // we can directly update the Bramble filesystem
+    if(!authenticated || options.isNew) {
+      project.dateCreated = (new Date()).toISOString();
+      project.dateUpdated = project.dateCreated;
+
+      // Persist the new project's files to the server for an
+      // authenticated user
+      if(options.isNew) {
+        config.persist = true;
+        config.dateUpdated = project.dateUpdated;
+      }
+
+      updateFs(config, generateDefaultFiles(root), callback);
+      return;
+    }
+
+    // For loading an existing project, first we need to get the
+    // files from the server and only then update the Bramble filesystem
+    var request = $.ajax({
       type: "GET",
       headers: {
         "Accept": "application/json"
       },
-      url: projectFilesUrl + '?cacheBust=' + (new Date()).toISOString()
+      url: config.getFilesURL + '?cacheBust=' + (new Date()).toISOString()
     });
-    request.done(updateFs);
+    request.done(function(project) {
+      if(request.status !== 200) {
+        callback(new Error("[Bramble] Failed to get files for this project"));
+        return;
+      }
+
+      updateFs(config, project.files, callback);
+    });
     request.fail(function(jqXHR, status, err) {
       callback(err);
     });

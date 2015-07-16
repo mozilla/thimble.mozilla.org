@@ -11,7 +11,7 @@ module.exports = function(config) {
     var path = utils.stripProjectRoot(req.session.project.root, req.body.path);
     var token = req.user.token;
     var project = req.session.project.meta;
-    var existingFile = req.session.project.files[req.body.path];
+    var existingFile = req.session.project.files[path];
 
     if(!existingFile) {
       res.status(400).send({error: "No file representation found for " + path});

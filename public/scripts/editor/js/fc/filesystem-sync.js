@@ -108,10 +108,10 @@ define(["jquery"], function($) {
     };
   }
 
-  FileSystemSync.init = function(projectName, persistanceUrls, csrfToken) {
-    // If no project name was provided, then an anonymous user is using thimble
-    // and will not have any persistence of files
-    if(!projectName) {
+  FileSystemSync.init = function(authenticated, persistanceUrls, csrfToken) {
+    // If an anonymous user is using thimble, they
+    // will not have any persistence of files
+    if(!authenticated) {
       return null;
     }
 

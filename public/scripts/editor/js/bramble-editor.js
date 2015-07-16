@@ -1,20 +1,27 @@
 define(function(require) {
   var $ = require("jquery"),
       BrambleUIBridge = require("fc/bramble-ui-bridge"),
-      ProjectUI = require("fc/bramble-project"),
+      ProjectRenameUtility = require("fc/project-rename"),
       ProjectFiles = require("fc/load-project-files"),
       FileSystemSync = require("fc/filesystem-sync");
 
   return function BrambleEditor(options) {
-    var makeDetails = options.makeDetails,
-        username = $("#ssooverride").attr("data-oauth-username");
+    var makeDetails = options.makeDetails;
+    var host = options.appUrl;
+    var authenticated = !!($("#ssooverride").attr("data-oauth-username"));
+    var csrfToken = $("meta[name='csrf-token']").attr("content");
+    var projectNameComponent;
 
-    ProjectUI.updateMeta(makeDetails);
-
-    var fsync = FileSystemSync.init(makeDetails && makeDetails.title, {
-      createOrUpdate: options.appUrl + "/updateProjectFile",
-      del: options.appUrl + "/deleteProjectFile"
-    }, $("meta[name='csrf-token']").attr("content"));
+    var fileLoadingOptions = {
+      authenticated: authenticated,
+      csrfToken: csrfToken,
+      persistenceURL: host + "/updateProjectFile",
+      getFilesURL: host + "/initializeProject"
+    };
+    var fsync = FileSystemSync.init(authenticated, {
+      createOrUpdate: host + "/updateProjectFile",
+      del: host + "/deleteProjectFile"
+    }, csrfToken);
 
     // Start loading Bramble
     Bramble.load("#webmaker-bramble",{
@@ -28,8 +35,8 @@ define(function(require) {
       BrambleUIBridge.init(bramble, {
         sync: fsync,
         project: makeDetails,
-        appUrl: options.appUrl,
-        authenticated: !!username
+        appUrl: host,
+        authenticated: authenticated
       });
     });
 
@@ -37,28 +44,7 @@ define(function(require) {
       console.error("[Bramble Error]", err);
     });
 
-    // Bramble: Load the project Files into the fs
-    function initFs(callback) {
-      if(!makeDetails || !makeDetails.title) {
-        makeDetails = ProjectFiles.generateDefaultProject();
-        ProjectFiles.load(makeDetails, {}, callback);
-        return;
-      }
-
-      if(makeDetails.isNew) {
-        makeDetails = ProjectFiles.generateDefaultProject(makeDetails.title, makeDetails.root);
-        ProjectFiles.load(makeDetails, {
-          isNew: true,
-          csrfToken: $("meta[name='csrf-token']").attr("content"),
-          persistenceURL: options.appUrl + "/updateProjectFile"
-        }, callback);
-        return;
-      }
-
-      ProjectFiles.load(makeDetails, callback);
-    }
-
-    initFs(function(err, config) {
+    function mount(err, config) {
       if(err) {
         console.error("[Bramble Error]", err);
         return;
@@ -67,6 +53,21 @@ define(function(require) {
       // Now that fs is setup, tell Bramble which root dir to mount
       // and which file within that root to open on startup.
       Bramble.mount(config.root, config.open);
-    });
+    }
+
+    if(!authenticated) {
+      // Anonymous (not signed in) user
+      makeDetails = ProjectFiles.generateDefaultProject();
+    } else if(makeDetails.isNew) {
+      // Authenticated user creating a new project
+      makeDetails = ProjectFiles.generateDefaultProject(makeDetails.title, makeDetails.root);
+      fileLoadingOptions.isNew = true;
+    }
+
+    // Update the Project Title in the UI and allow it to be renamed
+    projectNameComponent = new ProjectRenameUtility(host, authenticated, csrfToken, makeDetails.title);
+
+    // Bramble: Load the project Files into the fs
+    ProjectFiles.load(makeDetails, fileLoadingOptions, mount);
   };
 });
