@@ -40,7 +40,7 @@ module.exports = function(config) {
           return;
         }
 
-        if(response.statusCode !== 200) {
+        if(response.statusCode !== 200 && response.statusCode !== 404) {
           res.status(response.statusCode).send({error: response.body});
           return;
         }
@@ -48,7 +48,7 @@ module.exports = function(config) {
         var options = {
           csrf: req.csrfToken ? req.csrfToken() : null,
           HTTP_STATIC_URL: "/",
-          projects: JSON.parse(body),
+          projects: response.statusCode === 200 ? JSON.parse(body) : [],
           PROJECT_URL: "project",
           editorHOST: config.editorHOST
         };

@@ -18,12 +18,15 @@ module.exports = function(config) {
         return;
       }
 
-      if(response.statusCode !== 200) {
-        res.status(404).send({error: response.body});
+      if(response.statusCode !== 200 && response.statusCode !== 404) {
+        res.status(response.statusCode).send({error: response.body});
         return;
       }
 
-      var files = JSON.parse(body);
+      var files = [];
+      if(response.statusCode === 200) {
+        files = JSON.parse(body);
+      }
       req.session.project.files = {};
       files.forEach(function(file) {
         var fileMeta = JSON.parse(JSON.stringify(file));
