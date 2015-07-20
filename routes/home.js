@@ -1,5 +1,7 @@
 var url = require("url");
 var querystring = require("querystring");
+var utils = require("./utils");
+var Constants = require("../constants");
 
 module.exports = function(config) {
   return function(req, res) {
@@ -19,9 +21,15 @@ module.exports = function(config) {
         tags: project.tags,
         description: project.description,
         publishUrl: project.publish_url,
-        isNew: req.session.project.isNew
+        createTemplate: req.session.project.createTemplate
       }));
-      req.session.project.isNew = false;
+      req.session.project.createTemplate = false;
+    } else {
+      makedetails = encodeURIComponent(JSON.stringify({
+        root: utils.getProjectRoot(),
+        title: Constants.DEFAULT_PROJECT_NAME,
+        createTemplate: true
+      }));
     }
 
     var options = {

@@ -15,6 +15,7 @@ define(function(require) {
     var fileLoadingOptions = {
       authenticated: authenticated,
       csrfToken: csrfToken,
+      createTemplate: makeDetails.createTemplate,
       persistenceURL: host + "/updateProjectFile",
       getFilesURL: host + "/initializeProject"
     };
@@ -53,15 +54,6 @@ define(function(require) {
       // Now that fs is setup, tell Bramble which root dir to mount
       // and which file within that root to open on startup.
       Bramble.mount(config.root, config.open);
-    }
-
-    if(!authenticated) {
-      // Anonymous (not signed in) user
-      makeDetails = ProjectFiles.generateDefaultProject();
-    } else if(makeDetails.isNew) {
-      // Authenticated user creating a new project
-      makeDetails = ProjectFiles.generateDefaultProject(makeDetails.title, makeDetails.root);
-      fileLoadingOptions.isNew = true;
     }
 
     // Update the Project Title in the UI and allow it to be renamed

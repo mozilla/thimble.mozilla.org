@@ -1,5 +1,6 @@
 var request = require("request");
 var Path = require("path");
+var Constants = require("../constants");
 
 function updateProject(config, token, data, callback) {
   var project = JSON.parse(JSON.stringify(data));
@@ -65,7 +66,9 @@ function updateCurrentProjectFiles(config, token, session, project, callback) {
 }
 
 function getProjectRoot(project) {
-  return Path.join("/", project.user_id.toString(), "projects", project.id.toString());
+  return project ?
+         Path.join("/", project.user_id.toString(), "projects", project.id.toString()) :
+         Path.join("/", Constants.DEFAULT_PROJECT_NAME);
 }
 
 function stripProjectRoot(root, path) {

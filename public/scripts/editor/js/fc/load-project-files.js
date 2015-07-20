@@ -1,6 +1,5 @@
 define(function(require) {
   var $ = require("jquery");
-  var Constants = require("constants");
   var defaultHTML = require("text!fc/stay-calm/index.html");
   var defaultCSS = require("text!fc/stay-calm/style.css");
   var crownSVG = require("text!fc/stay-calm/crown.svg");
@@ -132,13 +131,13 @@ define(function(require) {
     // project), initialize the date created and updated and
     // generate default files for the project. Once that is done,
     // we can directly update the Bramble filesystem
-    if(!authenticated || options.isNew) {
+    if(options.createTemplate) {
       project.dateCreated = (new Date()).toISOString();
       project.dateUpdated = project.dateCreated;
 
       // Persist the new project's files to the server for an
       // authenticated user
-      if(options.isNew) {
+      if(authenticated) {
         config.persist = true;
         config.dateUpdated = project.dateUpdated;
       }
@@ -169,16 +168,6 @@ define(function(require) {
     });
   }
 
-  function generateDefaultProject(title, root) {
-    title = title || Constants.ANON_PROJECT_NAME;
-    return {
-      root: root || Path.join("/", title),
-      title: title,
-      tags: "",
-      description: ""
-    };
-  }
-
   // XXX: For user testing, we're going to start with the "Stay Calm" poster project
   function generateDefaultFiles(projectPath) {
     return [{
@@ -200,8 +189,6 @@ define(function(require) {
   }
 
   return {
-    load: load,
-    generateDefaultProject: generateDefaultProject,
-    generateDefaultFiles: generateDefaultFiles
+    load: load
   };
 });

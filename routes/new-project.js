@@ -1,16 +1,17 @@
 var request = require("request");
 var querystring = require("querystring");
 var utils = require("./utils");
+var Constants = require("../constants");
 
 module.exports = function(config) {
   return function(req, res) {
     var qs;
-    var cur = req.query.now || (new Date()).toISOString();
+    var now = req.query.now || (new Date()).toISOString();
     var project = {
-      title: config.constants.NEW_PROJECT,
+      title: Constants.DEFAULT_PROJECT_NAME,
       user_id: req.session.publishUser.id,
-      date_created: cur,
-      date_updated: cur
+      date_created: now,
+      date_updated: now
     };
 
     delete req.query.now;
@@ -43,7 +44,7 @@ module.exports = function(config) {
       req.session.project.meta = body;
       req.session.project.root = utils.getProjectRoot(body);
       req.session.project.files = {};
-      req.session.project.isNew = true;
+      req.session.project.createTemplate = true;
       req.session.redirectFromProjectSelection = true;
 
       res.redirect(301, "/" + qs);
