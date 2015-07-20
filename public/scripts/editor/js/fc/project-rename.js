@@ -1,13 +1,53 @@
 define(function(require) {
   var $ = require("jquery");
   var InputField = require("fc/bramble-input-field");
+  var KeyHandler = require("fc/bramble-keyhandler");
 
   function toggleComponents(context, isSave) {
-    context.saveButton[isSave ? "hide" : "show"]();
+    var container = context.container;
+    var titleBar = context.titleBar;
+    var saveButton = context.saveButton;
+
+    function saveClicked(e) {
+        context.saveButton.off("click", saveClicked);
+
+        e.stopPropagation();
+        e.preventDefault();
+        save(context);
+    }
+
+    function textClicked(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        rename(context);
+    }
+
+    saveButton[isSave ? "hide" : "show"]();
     context.renameButton[isSave ? "show" : "hide"]();
-    context.titleBar[isSave ? "save" : "edit"]();
-    context.titleBar[isSave ? "removeClass" : "addClass"]("text-input");
-    context.container[isSave ? "addClass" : "removeClass"]("shadow");
+    titleBar[isSave ? "save" : "edit"]();
+    titleBar[isSave ? "removeClass" : "addClass"]("text-input");
+    container[isSave ? "addClass" : "removeClass"]("shadow");
+
+    if(isSave) {
+      context.keyHandlers.enter.stop();
+      context.keyHandlers.esc.stop();
+      delete context.keyHandlers;
+
+      context.container.one("click", textClicked);
+    } else {
+      context.keyHandlers = {
+        enter: new KeyHandler.Enter(container, function() {
+          context.saveButton.off("click", saveClicked);
+          save(context);
+        }),
+        esc: new KeyHandler.ESC(container, function() {
+          context.saveButton.off("click", saveClicked);
+          editingComplete(context);
+        })
+      };
+
+      saveButton.on("click", saveClicked);
+    }
   }
 
   function persist(title, callback) {
@@ -43,28 +83,28 @@ define(function(require) {
     });
   }
 
-  function save(event) {
-    event.stopPropagation();
+  function rename(context) {
+    toggleComponents(context, false);
+  }
 
-    var context = this;
+  function editingComplete(context) {
+    toggleComponents(context, true);
+  }
 
+  function save(context) {
     persist.call(context, context.titleBar.val(), function(err) {
       if(err) {
         console.error("[Bramble] Failed to rename the project with ", err);
         return;
       }
 
-      toggleComponents(context, true);
-      context.container.one("click", rename.bind(context));
+      editingComplete(context);
     });
   }
 
-  function rename() {
-    toggleComponents(this, false);
-    this.saveButton.one("click", save.bind(this));
-  }
-
   function ProjectRenameUtility(appUrl, authenticated, csrfToken, projectTitle) {
+    var context = this;
+
     this.appUrl = appUrl;
     this.authenticated = authenticated;
     this.csrfToken = csrfToken;
@@ -76,7 +116,11 @@ define(function(require) {
     this.titleBar.val(projectTitle);
     this.fs = Bramble.getFileSystem();
 
-    this.container.one("click", rename.bind(this));
+    this.container.one("click", function(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      rename(context);
+    });
   }
 
   return ProjectRenameUtility;
