@@ -8,7 +8,7 @@ define(function(require) {
   return function BrambleEditor(options) {
     var makeDetails = options.makeDetails;
     var host = options.appUrl;
-    var authenticated = !!($("#ssooverride").attr("data-oauth-username"));
+    var authenticated = !!($("#publish-ssooverride").attr("data-oauth-username"));
     var csrfToken = $("meta[name='csrf-token']").attr("content");
     var projectNameComponent;
 
