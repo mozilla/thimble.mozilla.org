@@ -3,14 +3,4 @@
     {% include 'userbar.html' %}
     {% include 'bramble.html' %}
     {% include 'publish.html' %}
-    {% block ssooverride %}
-      <script id="ssooverride" src="/scripts/ssooverride.js"
-              data-login-authHostname="{{ OAUTH_AUTHORIZATION_URL }}"
-              data-login-thimbleHostname="{{ appURL }}"
-              data-oauth-clientid="{{ OAUTH_CLIENT_ID }}"
-              data-oauth-username="{{ username }}"
-              data-oauth-avatar="{{ avatar }}"
-              async>
-      </script>
-    {% endblock %}
 {% endblock %}
