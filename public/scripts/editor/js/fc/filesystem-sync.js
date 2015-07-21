@@ -16,12 +16,14 @@ define(["jquery"], function($) {
   function pushFileChange(url, csrfToken, fs, path) {
     var context = this;
     var options = {
-      contentType: "application/json",
       headers: {
         "X-Csrf-Token": csrfToken
       },
       type: "PUT",
-      url: url
+      url: url,
+      cache: false,
+      contentType: false,
+      processData: false
     };
 
     function send() {
@@ -52,12 +54,7 @@ define(["jquery"], function($) {
         return;
       }
 
-      options.data = JSON.stringify({
-        path: path,
-        buffer: data,
-        dateUpdated: (new Date()).toISOString()
-      });
-
+      options.data = FileSystemSync.toFormData(path, data);
       send();
     });
   }
@@ -140,6 +137,22 @@ define(["jquery"], function($) {
     });
 
     return fsync;
+  };
+
+  /**
+   * Static helper for construcitng a FormData object from file info.
+   */
+  FileSystemSync.toFormData = function(path, buffer, dateUpdated) {
+    dateUpdated = dateUpdated || (new Date()).toISOString();
+
+    var formData = new FormData();
+    formData.append("dateUpdated", dateUpdated);
+    formData.append("bramblePath", path);
+    // Don't worry about actual mime type, just treat as binary
+    var blob = new Blob([buffer], {type: "application/octet-stream"});
+    formData.append("brambleFile", blob);
+
+    return formData;
   };
 
   FSync.prototype.saveAndSyncAll = function(callback) {
