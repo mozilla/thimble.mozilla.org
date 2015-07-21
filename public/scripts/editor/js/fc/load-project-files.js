@@ -1,5 +1,6 @@
 define(function(require) {
   var $ = require("jquery");
+  var FSSync = require("fc/filesystem-sync");
   var defaultHTML = require("text!fc/stay-calm/index.html");
   var defaultCSS = require("text!fc/stay-calm/style.css");
   var crownSVG = require("text!fc/stay-calm/crown.svg");
@@ -21,18 +22,17 @@ define(function(require) {
   }
 
   function persist(config, path, data, callback) {
+    var formData = FSSync.toFormData(path, data, config.dateUpdated);
     var request = $.ajax({
-      contentType: "application/json",
       headers: {
         "X-Csrf-Token": config.csrfToken
       },
       type: "PUT",
       url: config.persistenceURL,
-      data: JSON.stringify({
-        path: path,
-        buffer: data,
-        dateUpdated: config.dateUpdated
-      })
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false
     });
     request.done(function() {
       if(request.status !== 201 && request.status !== 200) {

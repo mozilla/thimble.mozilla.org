@@ -204,6 +204,7 @@ app['delete']('/deleteProject/:projectId',
 app.put('/updateProjectFile',
         middleware.setUserIfTokenExists,
         middleware.isProjectLoaded,
+        middleware.fileUpload,
         routes.createOrUpdateProjectFile);
 
 app.put('/deleteProjectFile',
