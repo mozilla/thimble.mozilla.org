@@ -25,6 +25,7 @@
     "messina": "0.1.1",
     "morgan": "^1.6.0",
     "mox-server": "git://github.com/Pomax/mox-server",
+    "multer": "^1.0.1",
     "newrelic": "1.5.5",
     "node-statsd": "0.0.7",
     "noxmox": "0.2.4",
