@@ -1,6 +1,7 @@
-var request = require("request");
 var utils = require("./utils");
 var fs = require("fs");
+var url = require("url");
+var NodeFormData = require("form-data");
 
 module.exports = function(config) {
   return function(req, res) {
@@ -18,18 +19,13 @@ module.exports = function(config) {
     var project = req.session.project.meta;
     var dateUpdated = req.body.dateUpdated;
     var file = req.file;
-    var filePath = req.body.bramblePath;
-
-    var fileReceived = {
-      path: utils.stripProjectRoot(req.session.project.root, filePath),
-      project_id: project.id
-    };
-    var existingFile = req.session.project.files[fileReceived.path];
-    var httpMethod = "POST";
+    var filePath = utils.stripProjectRoot(req.session.project.root, req.body.bramblePath);
+    var existingFile = req.session.project.files[filePath];
+    var httpMethod = "post";
     var resource = "/files";
 
     if(existingFile) {
-      httpMethod = "PUT";
+      httpMethod = "put";
       resource += "/" + existingFile.id;
     }
 
@@ -49,16 +45,19 @@ module.exports = function(config) {
       });
     }
 
-    function storeFile() {
-      request({
-        method: httpMethod,
-        uri: config.publishURL + resource,
-        headers: {
-          "Authorization": "token " + token
-        },
-        body: fileReceived,
-        json: true
-      }, function(err, response, body) {
+    function storeFile(buffer) {
+      var options = url.parse(config.publishURL + resource);
+      options.method = httpMethod;
+      options.headers = {
+        "Authorization": "token " + token
+      };
+
+      var formData = new NodeFormData();
+      formData.append("path", filePath);
+      formData.append("project_id", project.id);
+      formData.append("buffer", buffer);
+
+      formData.submit(options, function(err, response) {
         if(err) {
           console.error("Failed to send request to " + config.publishURL + resource + " with: ", err);
           res.sendStatus(500);
@@ -85,11 +84,11 @@ module.exports = function(config) {
 
           req.session.project.meta = project;
 
-          if(httpMethod === "POST") {
-            req.session.project.files[fileReceived.path] = {
-              id: body.id,
-              path: fileReceived.path,
-              project_id: fileReceived.project_id
+          if(httpMethod === "post") {
+            req.session.project.files[filePath] = {
+              id: response.body.id,
+              path: filePath,
+              project_id: project.id
             };
             res.sendStatus(201);
             return;
@@ -107,8 +106,7 @@ module.exports = function(config) {
         return;
       }
 
-      fileReceived.buffer = buffer;
-      storeFile();
+      storeFile(buffer);
     });
   };
 };

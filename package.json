@@ -15,6 +15,7 @@
     "cryptr": "^1.0.0",
     "csurf": "^1.8.3",
     "express": "^4.13.0",
+    "form-data": "^0.2.0",
     "habitat": "3.1.2",
     "helmet": "0.9.1",
     "hood": "0.2.1",
