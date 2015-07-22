@@ -8,29 +8,6 @@ define(function(require) {
   var TEXT_UNPUBLISHING = "Unpublishing...";
   var TEXT_UPDATE_PUBLISH = "Update published version";
 
-  function togglePublicVisibility() {
-    var toggle = this.dialog.projectVisibility;
-    var ellipse = $({ cx: toggle.attr("cx") });
-    var cx = 31;
-    var fill = "#06a050";
-    var animationOptions = {
-      duration: 250,
-      step: function(now) {
-        toggle.attr("cx", now);
-      }
-    };
-
-    this.isProjectPublic = !this.isProjectPublic;
-
-    if(!this.isProjectPublic) {
-      cx = 11;
-      fill = "#7C7C7C";
-    }
-
-    ellipse.animate({ cx: cx }, animationOptions);
-    toggle.css("fill", fill);
-  }
-
   function unpublishedChangesPrompt() {
     var dialog = this.dialog;
     var publish = this.handlers.publish;
@@ -51,7 +28,6 @@ define(function(require) {
         unpublish: $("#publish-button-unpublish")
       },
       description: $("#publish-details > textarea.publish-description"),
-      projectVisibility: $("#publish-public-gallery-toggle > ellipse"),
       published: {
         link: $("#publish-link > a"),
         changed: $("#publish-changes"),
@@ -68,11 +44,8 @@ define(function(require) {
     publisher.handlers = {
       publish: publisher.publish.bind(publisher),
       unpublish: publisher.unpublish.bind(publisher),
-      togglePublicVisibility: togglePublicVisibility.bind(publisher),
       unpublishedChangesPrompt: unpublishedChangesPrompt.bind(publisher)
     };
-
-    $("#publish-public-gallery-toggle").on("click", publisher.handlers.togglePublicVisibility);
 
     if(project.description) {
       dialog.description.val(project.description);
