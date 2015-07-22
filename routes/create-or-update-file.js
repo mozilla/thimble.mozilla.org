@@ -64,6 +64,8 @@ module.exports = function(config) {
       formData.append("buffer", stream, {knownLength: size});
 
       formData.submit(options, function(err, response) {
+        var body = "";
+
         if(err) {
           console.error("Failed to send request to " + config.publishURL + resource + " with: ", err);
           res.sendStatus(500);
@@ -71,42 +73,56 @@ module.exports = function(config) {
           return;
         }
 
-        if(response.statusCode !== 201 && response.statusCode !== 200) {
-          res.status(response.statusCode).send({error: response.body});
+        response.on('error', function(err) {
+          console.error("Failed to receive response from " + config.publishURL + resource + " with: ", err);
+          res.sendStatus(500);
           cleanup();
-          return;
-        }
+        });
 
-        project.date_updated = dateUpdated;
+        response.on('data', function(data) {
+          body += data;
+        });
 
-        utils.updateProject(config, token, project, function(err, status, project) {
-          if(err) {
-            res.status(status).send({error: err});
+        response.on('end', function() {
+          body = JSON.parse(body);
+
+          if(response.statusCode !== 201 && response.statusCode !== 200) {
+            res.status(response.statusCode).send({error: body});
             cleanup();
             return;
           }
 
-          if(status === 500) {
-            res.sendStatus(500);
+          project.date_updated = dateUpdated;
+
+          utils.updateProject(config, token, project, function(err, status, project) {
+            if(err) {
+              res.status(status).send({error: err});
+              cleanup();
+              return;
+            }
+
+            if(status === 500) {
+              res.sendStatus(500);
+              cleanup();
+              return;
+            }
+
+            req.session.project.meta = project;
+
+            if(httpMethod === "post") {
+              req.session.project.files[filePath] = {
+                id: body.id,
+                path: filePath,
+                project_id: project.id
+              };
+              res.sendStatus(201);
+              cleanup();
+              return;
+            }
+
+            res.sendStatus(200);
             cleanup();
-            return;
-          }
-
-          req.session.project.meta = project;
-
-          if(httpMethod === "post") {
-            req.session.project.files[filePath] = {
-              id: response.body.id,
-              path: filePath,
-              project_id: project.id
-            };
-            res.sendStatus(201);
-            cleanup();
-            return;
-          }
-
-          res.sendStatus(200);
-          cleanup();
+          });
         });
       });
     }
