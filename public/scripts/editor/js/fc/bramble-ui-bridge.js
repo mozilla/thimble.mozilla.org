@@ -165,6 +165,56 @@ define(function(require) {
       bramble.refreshPreview();
     });
 
+
+    // Preview vs. Tutorial preview mode. First check to see if there
+    // is a tutorial.html file, and only show the TUTORIAL link if there is.
+    if(bramble.getTutorialExists()) {
+      $("#tutorial-title").removeClass("hide");
+    }
+    // And listen for changes to the project, in terms of one being added/removed
+    bramble.on("tutorialAdded", function() {
+      $("#tutorial-title").removeClass("hide");
+    });
+    bramble.on("tutorialRemoved", function() {
+      $("#tutorial-title").addClass("hide");
+    });
+
+    function setNormalPreview() {
+      $("#tutorial-title").removeClass("preview-title-highlighted");
+      $("#preview-title").addClass("preview-title-highlighted");
+    }
+
+    function setTutorialPreview() {
+      $("#preview-title").removeClass("preview-title-highlighted");
+      $("#tutorial-title").addClass("preview-title-highlighted");
+    }
+
+    // User change to tutorial vs. regular preview mode
+    $("#preview-title").click(function() {
+      if(!bramble.getTutorialVisible()) {
+        return;
+      }
+
+      bramble.hideTutorial(setNormalPreview);
+    });
+    $("#tutorial-title").click(function() {
+      if(bramble.getTutorialVisible()) {
+        return;
+      }
+
+      bramble.showTutorial(setTutorialPreview);
+    });
+
+    // Programmatic change to tutorial vs. regular preview mode from Bramble
+    bramble.on("tutorialVisibilityChange", function(data) {
+      if(data.visibility) {
+        setTutorialPreview();
+      } else {
+        setNormalPreview();
+      }
+    });
+
+
     // Preview Mode Toggle
     $("#preview-pane-nav-desktop").click(function() {
       activatePreviewMode("desktop");
