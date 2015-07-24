@@ -17,6 +17,7 @@ var createOrUpdateProjectFile = require("./create-or-update-file");
 var deleteProjectFile = require("./delete-file");
 var publish = require("./publish");
 var unpublish = require("./unpublish");
+var remix = require("./remix");
 var tutorial = require("./tutorial");
 
 // Content-fetching function used for generating the output
@@ -64,6 +65,7 @@ module.exports = function(utils, nunjucksEnv, appName) {
     renameProject: renameProject(config),
     publish: publish(config),
     unpublish: unpublish(config),
+    remix: remix(config),
     tutorialTemplate: tutorial.template(config),
     tutorialStyleGuide: tutorial.styleGuide(config),
 

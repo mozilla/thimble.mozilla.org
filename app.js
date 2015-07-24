@@ -178,6 +178,7 @@ app.get('/initializeProject',
 app.get('/projects',
         middleware.checkForAuth,
         middleware.setUserIfTokenExists,
+        middleware.publishLogin(),
         routes.projects);
 
 app.get('/project/:projectId',
@@ -224,6 +225,11 @@ app.put('/unpublish',
         middleware.isProjectLoaded,
         middleware.validateRequest(["description", "dateUpdated", "public"]),
         routes.unpublish);
+
+app.get('/remix/:projectId',
+        middleware.setUserIfTokenExists,
+        middleware.publishLogin(true),
+        routes.remix);
 
 // Tutorial templates
 app.get('/tutorial/tutorial.html', routes.tutorialTemplate);
