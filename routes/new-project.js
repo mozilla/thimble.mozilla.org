@@ -1,17 +1,19 @@
-var request = require("request");
 var querystring = require("querystring");
+
 var utils = require("./utils");
 var Constants = require("../constants");
+var DefaultProject = require("../default")(true)["stay-calm"];
 
 module.exports = function(config) {
   return function(req, res) {
     var qs;
+    var user = req.user;
     var now = req.query.now || (new Date()).toISOString();
     var project = {
       title: Constants.DEFAULT_PROJECT_NAME,
-      user_id: req.session.publishUser.id,
       date_created: now,
-      date_updated: now
+      date_updated: now,
+      user_id: user ? req.session.publishUser.id : null
     };
 
     delete req.query.now;
@@ -21,33 +23,34 @@ module.exports = function(config) {
       qs = "?" + qs;
     }
 
-    request({
-      method: "POST",
-      uri: config.publishURL + "/projects",
-      headers: {
-        "Authorization": "token " + req.user.token
-      },
-      body: project,
-      json: true
-    }, function(err, response, body) {
+    utils.createProject(config, user, project, function(err, status, project) {
       if(err) {
-        res.status(500).send({error: err});
-        return;
-      }
-
-      if(response.statusCode !== 200 && response.statusCode !== 201) {
-        res.status(500).send({error: response.body});
+        if(status === 500) {
+          res.sendStatus(500);
+        } else {
+          res.status(status).send({error: err});
+        }
         return;
       }
 
       req.session.project = {};
-      req.session.project.meta = body;
-      req.session.project.root = utils.getProjectRoot(body);
-      req.session.project.files = {};
-      req.session.project.createTemplate = true;
-      req.session.redirectFromProjectSelection = true;
+      req.session.project.meta = project;
+      req.session.project.root = utils.getProjectRoot(project);
 
-      res.redirect(301, "/" + qs);
+      utils.persistProjectFiles(config, user, project, DefaultProject, function(err, status, files) {
+        if(err) {
+          if(status === 500) {
+            res.sendStatus(500);
+          } else {
+            res.status(status).send({error: err});
+          }
+          return;
+        }
+
+        req.session.project.files = files;
+
+        res.redirect(301, "/" + qs);
+      });
     });
   };
 };

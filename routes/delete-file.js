@@ -9,7 +9,7 @@ module.exports = function(config) {
     }
 
     var path = utils.stripProjectRoot(req.session.project.root, req.body.path);
-    var token = req.user.token;
+    var user = req.user;
     var project = req.session.project.meta;
     var existingFile = req.session.project.files[path];
 
@@ -21,7 +21,7 @@ module.exports = function(config) {
       method: "DELETE",
       uri: config.publishURL + "/files/" + existingFile.id,
       headers: {
-        "Authorization": "token " + req.user.token
+        "Authorization": "token " + user.token
       }
     }, function(err, response) {
       if(err) {
@@ -38,14 +38,13 @@ module.exports = function(config) {
       delete req.session.project.files[path];
       project.date_updated = req.body.dateUpdated;
 
-      utils.updateProject(config, token, project, function(err, status, project) {
+      utils.updateProject(config, user, project, function(err, status, project) {
         if(err) {
-          res.status(status).send({error: err});
-          return;
-        }
-
-        if(status === 500) {
-          res.sendStatus(500);
+          if(status === 500) {
+            res.sendStatus(500);
+          } else {
+            res.status(status).send({error: err});
+          }
           return;
         }
 

@@ -9,14 +9,13 @@ module.exports = function(config) {
     // project.public = req.body.public;
     project.date_updated = req.body.dateUpdated;
 
-    utils.updateProject(config, req.user.token, project, function(err, status, project) {
+    utils.updateProject(config, req.user, project, function(err, status, project) {
       if(err) {
-        res.status(status).send({error: err});
-        return;
-      }
-
-      if(status === 500) {
-        res.sendStatus(500);
+        if(status === 500) {
+          res.sendStatus(500);
+        } else {
+          res.status(status).send({error: err});
+        }
         return;
       }
 

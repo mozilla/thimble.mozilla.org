@@ -15,7 +15,6 @@ define(function(require) {
     var fileLoadingOptions = {
       authenticated: authenticated,
       csrfToken: csrfToken,
-      createTemplate: makeDetails.createTemplate,
       persistenceURL: host + "/updateProjectFile",
       getFilesURL: host + "/initializeProject"
     };

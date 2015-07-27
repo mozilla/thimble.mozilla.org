@@ -5,14 +5,13 @@ module.exports = function(config) {
     var project = JSON.parse(JSON.stringify(req.session.project.meta));
     project.title = req.body.title;
 
-    utils.updateProject(config, req.user.token, project, function(err, status, project) {
+    utils.updateProject(config, req.user, project, function(err, status, project) {
       if(err) {
-        res.status(status).send({error: err});
-        return;
-      }
-
-      if(status === 500) {
-        res.sendStatus(500);
+        if(status === 500) {
+          res.sendStatus(500);
+        } else {
+          res.status(status).send({error: err});
+        }
         return;
       }
 

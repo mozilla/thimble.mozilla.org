@@ -27,7 +27,7 @@ function createProject(config, user, data, callback) {
   }, function(err, response, body) {
     if(err) {
       console.error("Failed to send request to " + createURL + " with: ", err);
-      callback(null, 500);
+      callback(err, 500);
       return;
     }
 
@@ -48,13 +48,14 @@ function persistProjectFiles(config, user, project, data, callback) {
     var options = url.parse(publishURL);
     options.method = "POST";
     options.headers = { "Authorization": "token " + user.token };
+
     var formData = new NodeFormData();
     formData.append("path", file.path);
     formData.append("project_id", project.id);
     if(file.stream) {
       formData.append("buffer", file.stream, { knownLength: file.size });
     } else {
-      formData.append("buffer", file.buffer);
+      formData.append("buffer", file.buffer, { filename: file.path });
     }
 
     formData.submit(options, function(err, response) {
@@ -62,13 +63,13 @@ function persistProjectFiles(config, user, project, data, callback) {
 
       if(err) {
         console.error("Failed to send request to " + publishURL + " with: ", err);
-        callback({ status: 500 });
+        callback({ message: err, status: 500 });
         return;
       }
 
       response.on('error', function(err) {
         console.error("Failed to receive response from " + publishURL + " with: ", err);
-        callback({ status: 500 });
+        callback({ message: err, status: 500 });
       });
 
       response.on('data', function(data) {
@@ -108,7 +109,12 @@ function persistProjectFiles(config, user, project, data, callback) {
   });
 }
 
-function updateProject(config, token, data, callback) {
+function updateProject(config, user, data, callback) {
+  if(!user) {
+    callback(null, 200, data);
+    return;
+  }
+
   var project = JSON.parse(JSON.stringify(data));
   var updateURL = config.publishURL + "/projects/" + project.id;
   delete project.id;
@@ -118,14 +124,14 @@ function updateProject(config, token, data, callback) {
     method: "PUT",
     uri: updateURL,
     headers: {
-      "Authorization": "token " + token
+      "Authorization": "token " + user.token
     },
     body: project,
     json: true
   }, function(err, response, body) {
     if(err) {
       console.error("Failed to send request to " + updateURL + " with: ", err);
-      callback(null, 500);
+      callback(err, 500);
       return;
     }
 
@@ -138,18 +144,23 @@ function updateProject(config, token, data, callback) {
   });
 }
 
-function updateCurrentProjectFiles(config, token, session, project, callback) {
+function updateCurrentProjectFiles(config, user, session, project, callback) {
   var url = config.publishURL + "/projects/" + project.id + "/files";
+
+  if(!user) {
+    callback(null, 200);
+    return;
+  }
 
   request.get({
     url: url,
     headers: {
-      "Authorization": "token " + token
+      "Authorization": "token " + user.token
     }
   }, function(err, response, body) {
     if(err) {
       console.error("Failed to send request to " + url + " with: ", err);
-      callback(null, 500);
+      callback(err, 500);
       return;
     }
 
@@ -171,10 +182,29 @@ function updateCurrentProjectFiles(config, token, session, project, callback) {
   });
 }
 
+function getRemixedProjectFiles(config, projectId, callback) {
+  var publishURL = config.publishURL + "/publishedProjects/" + projectId + "/publishedFiles";
+
+  request.get({ uri: publishURL }, function(err, response, body) {
+    if(err) {
+      console.error("Failed to send request to " + publishURL + " with: ", err);
+      callback(err, 500);
+      return;
+    }
+
+    if(response.statusCode !== 200) {
+      callback(response.body, response.statusCode);
+      return;
+    }
+
+    callback(null, 200, JSON.parse(body));
+  });
+}
+
 function getProjectRoot(project) {
-  return project ?
+  return project && project.user_id ?
          Path.join("/", project.user_id.toString(), "projects", project.id.toString()) :
-         Path.join("/", Constants.DEFAULT_PROJECT_NAME);
+         Path.join("/", project.title && project.title.length ? project.title : Constants.DEFAULT_PROJECT_NAME);
 }
 
 function stripProjectRoot(root, path) {
@@ -186,6 +216,7 @@ module.exports = {
   persistProjectFiles: persistProjectFiles,
   updateProject: updateProject,
   updateCurrentProjectFiles: updateCurrentProjectFiles,
+  getRemixedProjectFiles: getRemixedProjectFiles,
   getProjectRoot: getProjectRoot,
   stripProjectRoot: stripProjectRoot
 };

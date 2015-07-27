@@ -1,7 +1,5 @@
 var url = require("url");
 var querystring = require("querystring");
-var utils = require("./utils");
-var Constants = require("../constants");
 
 module.exports = function(config) {
   return function(req, res) {
@@ -9,28 +7,16 @@ module.exports = function(config) {
     if(qs !== "") {
       qs = "?" + qs;
     }
-    var makedetails = "{}";
     var project = req.session.project && req.session.project.meta;
-
-    if(project) {
-      makedetails = encodeURIComponent(JSON.stringify({
-        root: req.session.project.root,
-        title: project.title,
-        dateCreated: project.date_created,
-        dateUpdated: project.date_updated,
-        tags: project.tags,
-        description: project.description,
-        publishUrl: project.publish_url,
-        createTemplate: req.session.project.createTemplate
-      }));
-      req.session.project.createTemplate = false;
-    } else {
-      makedetails = encodeURIComponent(JSON.stringify({
-        root: utils.getProjectRoot(),
-        title: Constants.DEFAULT_PROJECT_NAME,
-        createTemplate: true
-      }));
-    }
+    var makedetails = encodeURIComponent(JSON.stringify({
+      root: req.session.project.root,
+      title: project.title,
+      dateCreated: project.date_created,
+      dateUpdated: project.date_updated,
+      tags: project.tags,
+      description: project.description,
+      publishUrl: project.publish_url
+    }));
 
     var options = {
       appURL: config.appURL,

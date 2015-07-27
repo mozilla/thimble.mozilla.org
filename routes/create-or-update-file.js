@@ -15,7 +15,8 @@ module.exports = function(config) {
       return;
     }
 
-    var token = req.user.token;
+    var user = req.user;
+    var token = user.token;
     var project = req.session.project.meta;
     var dateUpdated = req.body.dateUpdated;
     var file = req.file;
@@ -94,15 +95,13 @@ module.exports = function(config) {
 
           project.date_updated = dateUpdated;
 
-          utils.updateProject(config, token, project, function(err, status, project) {
+          utils.updateProject(config, user, project, function(err, status, project) {
             if(err) {
-              res.status(status).send({error: err});
-              cleanup();
-              return;
-            }
-
-            if(status === 500) {
-              res.sendStatus(500);
+              if(status === 500) {
+                res.sendStatus(500);
+              } else {
+                res.status(status).send({error: err});
+              }
               cleanup();
               return;
             }

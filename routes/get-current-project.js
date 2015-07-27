@@ -1,25 +1,59 @@
+var Path = require("path");
+
 var utils = require("./utils");
+var DefaultProject = require("../default")()["stay-calm"];
+
+function sendResponse(res, project, files) {
+  res.type("application/json");
+  res.send({
+    project: project,
+    files: files
+  });
+}
 
 module.exports = function(config) {
   return function(req, res) {
-    var project = req.session.project.meta;
+    var project = JSON.parse(JSON.stringify(req.session.project.meta));
+    var getFiles = utils.updateCurrentProjectFiles;
+    var params = [config];
+    var user = req.user;
 
-    utils.updateCurrentProjectFiles(config, req.user.token, req.session, project, function(err, status, files) {
+    if(!user) {
+      if(!req.session.project.remixId) {
+        sendResponse(res, project, DefaultProject.map(function(f) {
+          var file = JSON.parse(JSON.stringify(f));
+          file.path = Path.join(utils.getProjectRoot(project), file.path);
+          return file;
+        }));
+        return;
+      }
+
+      getFiles = utils.getRemixedProjectFiles;
+      params.push(req.session.project.remixId);
+      delete req.session.project.remixId;
+    } else {
+      params.push(user, req.session, project);
+    }
+
+    params.push(function(err, status, files) {
       if(err) {
-        res.status(status).send({error: err});
+        if(status === 500) {
+          res.sendStatus(500);
+        } else {
+          res.status(status).send({error: err});
+        }
         return;
       }
 
-      if(status === 500) {
-        res.sendStatus(500);
-        return;
+      if(!user) {
+        files.forEach(function(file) {
+          file.path = Path.join(utils.getProjectRoot(project), file.path);
+        });
       }
 
-      res.type("application/json");
-      res.send({
-        project: project,
-        files: files
-      });
+      sendResponse(res, project, files);
     });
+
+    getFiles.apply(null, params);
   };
 };

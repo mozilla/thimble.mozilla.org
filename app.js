@@ -171,14 +171,14 @@ app.get('/',
         routes.index );
 
 app.get('/initializeProject',
-        middleware.checkForAuth,
         middleware.setUserIfTokenExists,
+        middleware.isProjectLoaded,
         routes.getProject);
 
 app.get('/projects',
         middleware.checkForAuth,
         middleware.setUserIfTokenExists,
-        middleware.publishLogin(),
+        middleware.setPublishUser,
         routes.projects);
 
 app.get('/project/:projectId',
@@ -187,7 +187,6 @@ app.get('/project/:projectId',
         routes.openProject);
 
 app.get('/newProject',
-        middleware.checkForAuth,
         middleware.setUserIfTokenExists,
         routes.newProject);
 
@@ -204,23 +203,27 @@ app['delete']('/deleteProject/:projectId',
               routes.deleteProject);
 
 app.put('/updateProjectFile',
+        middleware.checkForAuth,
         middleware.setUserIfTokenExists,
         middleware.isProjectLoaded,
         middleware.fileUpload,
         routes.createOrUpdateProjectFile);
 
 app.put('/deleteProjectFile',
+        middleware.checkForAuth,
         middleware.setUserIfTokenExists,
         middleware.isProjectLoaded,
         routes.deleteProjectFile);
 
 app.put('/publish',
+        middleware.checkForAuth,
         middleware.setUserIfTokenExists,
         middleware.isProjectLoaded,
         middleware.validateRequest(["description", "dateUpdated", "public"]),
         routes.publish);
 
 app.put('/unpublish',
+        middleware.checkForAuth,
         middleware.setUserIfTokenExists,
         middleware.isProjectLoaded,
         middleware.validateRequest(["description", "dateUpdated", "public"]),
@@ -228,7 +231,7 @@ app.put('/unpublish',
 
 app.get('/remix/:projectId',
         middleware.setUserIfTokenExists,
-        middleware.publishLogin(true),
+        middleware.setPublishUser,
         routes.remix);
 
 // Tutorial templates

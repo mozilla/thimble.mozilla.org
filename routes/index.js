@@ -47,12 +47,22 @@ module.exports = function(utils, nunjucksEnv, appName) {
         qs = "?" + qs;
       }
 
-      if(req.user && !req.session.project) {
-        res.redirect(301, "/projects/" + qs);
+      // Only show Thimble if a project has been set for
+      // the current context
+      if(req.session.project) {
+        renderHomepage(req, res);
         return;
       }
 
-      renderHomepage(req, res);
+      // Create a new project for an unauthenticated user
+      // before loading it into Thimble
+      if(!req.user) {
+        res.redirect(301, "/newProject/" + qs);
+      } else {
+        // Ask an authenticated user to select a project
+        // to load into thimble
+        res.redirect(301, "/projects/" + qs);
+      }
     },
     projects: renderUsersProjects,
     homepage: renderHomepage,
@@ -146,6 +156,9 @@ module.exports = function(utils, nunjucksEnv, appName) {
           } catch(e) {
             return next({status: 500, err: e});
           }
+          // TODO: Save what the user had before logging in
+          // instead of resetting the project loaded
+          req.session.project = null;
           res.redirect(301, '/');
         });
       });
