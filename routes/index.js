@@ -17,6 +17,7 @@ var createOrUpdateProjectFile = require("./create-or-update-file");
 var deleteProjectFile = require("./delete-file");
 var publish = require("./publish");
 var unpublish = require("./unpublish");
+var tutorial = require("./tutorial");
 
 // Content-fetching function used for generating the output
 // on http://[...]/data routes via the index.rawData function.
@@ -63,6 +64,8 @@ module.exports = function(utils, nunjucksEnv, appName) {
     renameProject: renameProject(config),
     publish: publish(config),
     unpublish: unpublish(config),
+    tutorialTemplate: tutorial.template(config),
+    tutorialStyleGuide: tutorial.styleGuide(config),
 
     rawData: function(req, res) {
       res.type('text/plain; charset=utf-8');

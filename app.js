@@ -148,6 +148,7 @@ app.use(lessMiddleWare('public', {
 
 app.use(express.static(tmpDir));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public/resources')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
 app.use(express.static(path.join(__dirname, 'templates')));
 
@@ -223,6 +224,10 @@ app.put('/unpublish',
         middleware.isProjectLoaded,
         middleware.validateRequest(["description", "dateUpdated", "public"]),
         routes.unpublish);
+
+// Tutorial templates
+app.get('/tutorial/tutorial.html', routes.tutorialTemplate);
+app.get('/tutorial/tutorial-style-guide.html', routes.tutorialStyleGuide);
 
 // Localized Strings
 app.get( '/strings/:lang?', i18n.stringsRoute( 'en-US' ) );
