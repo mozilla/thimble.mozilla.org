@@ -25,7 +25,8 @@ define(function(require) {
       buttons: {
         publish: $("#publish-button-publish"),
         update: $("#publish-button-update"),
-        unpublish: $("#publish-button-unpublish")
+        unpublish: $("#publish-button-unpublish"),
+        parent: $("#publish-buttons")
       },
       description: $("#publish-details > textarea.publish-description"),
       published: {
@@ -141,6 +142,8 @@ define(function(require) {
         return;
       }
 
+      buttons.parent.removeClass("hide");
+
       publisher.updateDialog("");
     });
     request.fail(function(jqXHR, status, err) {
@@ -182,8 +185,10 @@ define(function(require) {
       .text(publishUrl);
     published.changed.addClass("hide");
 
-    // Re-attach the unpublish handler
+    // Re-attach the unpublish handler and remove
+    // "publish"/"cancel" buttons
     if(allowUnpublish) {
+      this.dialog.buttons.parent.addClass("hide");
       unpublishBtn
         .off("click", unpublish)
         .on("click", unpublish);
