@@ -256,6 +256,13 @@ define(function(require) {
 
       // Listen for ESC to close
       _escKeyHandler = new KeyHandler.ESC(hidePublishDialog);
+
+      publisher.fsync.saveAndSyncAll(function(err) {
+        if (err) {
+          console.log('[Bramble] Error saving and persisting dirty files:', err);
+          return;
+        }
+      });
     }
 
     if(options.authenticated) {
