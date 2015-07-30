@@ -1,4 +1,6 @@
-define(["jquery"], function($) {
+define(function(require) {
+
+  var $ = require("jquery");
 
   // Run the given function `fn` when the key with `keyCode` is pressed down
   function KeyHandler(keyCode, elem, fn) {

@@ -39,6 +39,17 @@
   height: 0;
 }
 
+// For capturing mouse events over the iframe when menus appear overtop.
+.click-underlay {
+  width: 100%;
+  min-height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 150;
+  overflow: hidden;
+}
+
 
 /* ------ FILETREE PANE ------ */
 .filetree-pane-nav {
@@ -60,8 +71,24 @@
   .vertical-align;
 }
 
+.filetree-pane-nav-btn {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 10px 10px;
+}
+
 #filetree-pane-nav-add {
-  /* Add new file button */
+  width: 25px;
+  height: 25px;
+  background-color: #55986C;
+  margin-right: 5px;
+  .icon;
+
+  div {
+    background-image:url("/img/icon/plus-white.svg");
+  }
 }
 
 #filetree-pane-nav-hide {
@@ -69,18 +96,51 @@
   height: 25px;
   background-color: #3F3F3F;
   .icon;
+
   div {
-    width: 100%;
-    height: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 10px 10px;
     background-image:url("/img/icon/file-tray-arrow-left.svg");
     opacity: 0.4;
   }
 }
 
+#filetree-pane-nav-add-menu {
+  position: absolute;
+  z-index: 151;
+  background-color: white;
+  -webkit-box-shadow: 0 3px 9px rgba(0,0,0,0.24);
+  -moz-box-shadow: 0 3px 9px rgba(0,0,0,0.24);
+  box-shadow: 0 3px 9px rgba(0,0,0,0.24);
+  min-width: 200px;
+  top: 65px;
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    li {
+      padding: 12px;
+      display: flex;
 
+      .icon;
+    }
+
+    .top-border {
+      margin-top: 5px;
+      border-top: 1px solid #E5E5E5;
+    }
+  }
+}
+#filetree-pane-nav-add-menu:after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 0 15px 15px;
+  border-color: #FFFFFF transparent;
+  display: block;
+  width: 0;
+  z-index: 1;
+  top: -15px;
+  left: 83px;
+}
 
 
 /* ------ LEFT PANE ------ */
@@ -120,6 +180,8 @@
     background-position: center;
     background-size: 10px 10px;
   }
+
+
 }
 
 #editor-pane-nav-undo {
@@ -223,16 +285,6 @@
   z-index: 1;
   top: -15px;
   left: 83px;
-}
-#editor-pane-nav-options-underlay {
-  width: 100%;
-  min-height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  z-index: 150;
-  overflow: hidden;
 }
 
 /* Font increase/decrease */

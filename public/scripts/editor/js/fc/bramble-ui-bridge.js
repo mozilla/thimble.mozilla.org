@@ -2,6 +2,8 @@ define(function(require) {
   var $ = require("jquery");
   var Publisher = require("fc/publisher");
   var KeyHandler = require("fc/bramble-keyhandler");
+  var BrambleMenus = require("fc/bramble-menus");
+  var Underlay = require("fc/bramble-underlay");
 
   var _escKeyHandler;
 
@@ -23,7 +25,6 @@ define(function(require) {
     checkIfMultiFile();
     if(bramble.getLayout())       {updateLayout(bramble.getLayout());}
     if(bramble.getFilename())     {setNavFilename(bramble.getFilename());}
-    if(bramble.getTheme())        {setTheme(bramble.getTheme());}
     if(bramble.getPreviewMode())  {activatePreviewMode(bramble.getPreviewMode());}
 
     //Show sidebar nav if it is present on load
@@ -54,15 +55,11 @@ define(function(require) {
     }
 
     // *******EVENTS
-    // Smooths resize
-    $(window).resize(function() {
-      $("#editor-pane-nav-options-menu").hide();
-    });
-
     // User bar menu help
     $("#navbar-help").click(function() {
       window.open("https://support.mozilla.org/en-US/products/webmaker/thimble");
     });
+
 
     // Sidebar Fileview
     $("#editor-pane-nav-fileview").click(function() {
@@ -79,6 +76,8 @@ define(function(require) {
       $(".filetree-pane-nav").css("display", "none");
     });
 
+    // Setup Add File and Gear Options menus
+    BrambleMenus.init(bramble);
 
     // Undo
     $("#editor-pane-nav-undo").click(function() {
@@ -89,76 +88,6 @@ define(function(require) {
     $("#editor-pane-nav-redo").click(function() {
       bramble.redo();
     });
-
-    // Options menu
-    function closeOptions() {
-      $("#editor-pane-nav-options-menu").fadeOut();
-      $("#editor-pane-nav-options-underlay").hide();
-      _escKeyHandler.stop();
-      _escKeyHandler = null;
-    }
-
-    $("#editor-pane-nav-options").click(function() {
-      //Determines where to horizontally place menu based on cog icon location
-      var leftOffset = $("#editor-pane-nav-options").offset().left - 86;
-      $("#editor-pane-nav-options-menu").css("left", leftOffset);
-      $("#editor-pane-nav-options-menu").fadeToggle();
-      $("#editor-pane-nav-options-underlay").toggle();
-
-      // Listen for ESC to close
-      _escKeyHandler = new KeyHandler.ESC(closeOptions);
-    });
-
-    $("#editor-pane-nav-options-underlay").click(closeOptions);
-
-    // Font size
-    $("#editor-pane-nav-decrease-font").click(function() {
-      bramble.decreaseFontSize();
-    });
-
-    $("#editor-pane-nav-increase-font").click(function() {
-      bramble.increaseFontSize();
-    });
-
-    // Theme Toggle
-    function setTheme(theme) {
-      if(theme === "light-theme") {
-        bramble.useLightTheme();
-
-        // Icons
-        $("#sun-green").fadeIn(500);
-        $("#moon-white").fadeIn(500);
-        $("#sun-white").fadeOut(500);
-        $("#moon-green").fadeOut(500);
-
-        // Active Indicator
-        $("#theme-active").css("position", "absolute").animate({
-          left: 187
-        });
-      } else if(theme === "dark-theme") {
-        bramble.useDarkTheme();
-
-        // Icons
-        $("#moon-green").fadeIn(1000);
-        $("#sun-white").fadeIn(1000);
-        $("#moon-white").fadeOut(1000);
-        $("#sun-green").fadeOut(1000);
-
-        // Active indicator
-        $("#theme-active").css("position", "absolute").animate({
-          left: 157
-        });
-      }
-    }
-    function toggleTheme() {
-      if(bramble.getTheme() === "dark-theme") {
-        setTheme("light-theme");
-      } else {
-        setTheme("dark-theme");
-      }
-    }
-    $("#theme-light").click(toggleTheme);
-    $("#theme-dark").click(toggleTheme);
 
     // Refresh Preview
     $("#preview-pane-nav-refresh").click(function() {
@@ -244,14 +173,17 @@ define(function(require) {
       }
     }
 
+    var publishDialogUnderlay;
     function hidePublishDialog() {
-      $("#publish-underlay").fadeOut();
+      publishDialogUnderlay.remove();
+      publishDialogUnderlay = null;
+
       $("#publish-dialog").fadeOut();
       _escKeyHandler.stop();
       _escKeyHandler = null;
     }
     function showPublishDialog() {
-      $("#publish-underlay").fadeIn();
+      publishDialogUnderlay = new Underlay("#publish-dialog", hidePublishDialog);
       $("#publish-dialog").fadeIn();
 
       // Listen for ESC to close
@@ -269,7 +201,6 @@ define(function(require) {
       //Publish button
       $("#navbar-publish-button").click(showPublishDialog);
       $("#publish-button-cancel").click(hidePublishDialog);
-      $("#publish-underlay").click(hidePublishDialog);
 
       publisher = new Publisher(options);
       publisher.init(options.project);

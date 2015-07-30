@@ -1,4 +1,6 @@
-define(["jquery"], function($) {
+define(function(require) {
+  var $ = require("jquery");
+
   var FileSystemSync = {};
 
   function hideFileState(remainingFiles) {
