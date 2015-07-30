@@ -1,7 +1,7 @@
 var Path = require("path");
 
 var utils = require("./utils");
-var DefaultProject = require("../default")()["stay-calm"];
+var defaultProject = require("../default");
 
 function sendResponse(res, project, files) {
   res.type("application/json");
@@ -20,7 +20,7 @@ module.exports = function(config) {
 
     if(!user) {
       if(!req.session.project.remixId) {
-        sendResponse(res, project, DefaultProject.map(function(f) {
+        sendResponse(res, project, defaultProject.getAsBuffers(config.DEFAULT_PROJECT_TITLE).map(function(f) {
           var file = JSON.parse(JSON.stringify(f));
           file.path = Path.join(utils.getProjectRoot(project), file.path);
           return file;

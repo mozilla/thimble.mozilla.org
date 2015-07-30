@@ -23,6 +23,7 @@
     "knox": "0.8.9",
     "less-middleware": "2.0.1",
     "makeapi-client": "0.5.30",
+    "memorystream": "^0.3.1",
     "messina": "0.1.1",
     "morgan": "^1.6.0",
     "mox-server": "git://github.com/Pomax/mox-server",

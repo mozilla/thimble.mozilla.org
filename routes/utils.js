@@ -53,7 +53,7 @@ function persistProjectFiles(config, user, project, data, callback) {
     formData.append("path", file.path);
     formData.append("project_id", project.id);
     if(file.stream) {
-      formData.append("buffer", file.stream, { knownLength: file.size });
+      formData.append("buffer", file.stream, { filename: file.path, knownLength: file.size });
     } else {
       formData.append("buffer", file.buffer, { filename: file.path });
     }
@@ -67,7 +67,7 @@ function persistProjectFiles(config, user, project, data, callback) {
         return;
       }
 
-      response.on('error', function(err) {
+      response.once('error', function(err) {
         console.error("Failed to receive response from " + publishURL + " with: ", err);
         callback({ message: err, status: 500 });
       });
@@ -76,7 +76,7 @@ function persistProjectFiles(config, user, project, data, callback) {
         body += data;
       });
 
-      response.on('end', function() {
+      response.once('end', function() {
         body = JSON.parse(body);
 
         if(response.statusCode !== 201) {

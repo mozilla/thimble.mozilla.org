@@ -2,7 +2,7 @@ var querystring = require("querystring");
 
 var utils = require("./utils");
 var Constants = require("../constants");
-var DefaultProject = require("../default")(true)["stay-calm"];
+var defaultProject = require("../default");
 
 module.exports = function(config) {
   return function(req, res) {
@@ -37,7 +37,8 @@ module.exports = function(config) {
       req.session.project.meta = project;
       req.session.project.root = utils.getProjectRoot(project);
 
-      utils.persistProjectFiles(config, user, project, DefaultProject, function(err, status, files) {
+      var defaultFiles = defaultProject.getAsStreams(config.DEFAULT_PROJECT_TITLE);
+      utils.persistProjectFiles(config, user, project, defaultFiles, function(err, status, files) {
         if(err) {
           if(status === 500) {
             res.sendStatus(500);
