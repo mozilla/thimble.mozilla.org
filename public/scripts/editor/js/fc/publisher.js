@@ -77,6 +77,11 @@ define(function(require) {
     var publisher = this;
     var dialog = publisher.dialog;
 
+    if (publisher.publishing) {
+      return;
+    }
+    publisher.publishing = true;
+
     function setState(done) {
       var buttons = dialog.buttons;
       var toggle = done ? "on" : "off";
@@ -100,6 +105,7 @@ define(function(require) {
         console.error("[Bramble] Failed to send request to publish project to the server with: ", err);
       });
       request.always(function() {
+        publisher.publishing = false;
         setState(true);
       });
     }
@@ -124,6 +130,11 @@ define(function(require) {
     var handlers = publisher.handlers;
     var dialog = publisher.dialog;
     var buttons = dialog.buttons;
+
+    if (publisher.unpublishing) {
+      return;
+    }
+    publisher.unpublishing = true;
 
     function setState(done) {
       buttons.publish[done ? "on" : "off"]("click", handlers.publish);
@@ -151,6 +162,7 @@ define(function(require) {
       buttons.unpublish.on("click", handlers.unpublish);
     });
     request.always(function() {
+      publisher.unpublishing = false;
       setState(true);
     });
   };
