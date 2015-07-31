@@ -76,7 +76,7 @@ function getMetadata($) {
   var metadata = {};
   var metaTags = $("meta");
 
-  metaTags.filter(function(index) {
+  $.grep(metaTags, function(elem, index) {
     return /^data-remix-.+/.test($(metaTags[index]).attr("name"));
   })
   .forEach(function(metaTag) {
