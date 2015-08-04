@@ -42,7 +42,7 @@ function createProject(config, user, data, callback) {
 
 function persistProjectFiles(config, user, project, data, callback) {
   var publishURL = config.publishURL + "/files";
-  var files = {};
+  var files = [];
 
   function persist(file, callback) {
     var options = url.parse(publishURL);
@@ -84,11 +84,11 @@ function persistProjectFiles(config, user, project, data, callback) {
           return;
         }
 
-        files[body.path] = {
+        files.push({
           id: body.id,
           project_id: body.project_id,
           path: body.path
-        };
+        });
 
         callback();
       });
@@ -170,11 +170,9 @@ function updateCurrentProjectFiles(config, user, session, project, callback) {
     }
 
     var files = JSON.parse(body);
-    session.project.files = {};
+    session.project.files = [];
     files.forEach(function(file) {
-      var fileMeta = JSON.parse(JSON.stringify(file));
-      delete fileMeta.buffer;
-      session.project.files[fileMeta.path] = fileMeta;
+      session.project.files.push(file.id, file.path);
       file.path = Path.join(getProjectRoot(project), file.path);
     });
 
@@ -201,6 +199,19 @@ function getRemixedProjectFiles(config, projectId, callback) {
   });
 }
 
+function getFileFromArray(fileArr, path) {
+  var pos = fileArr.indexOf(path);
+
+  return pos === -1 ? null : {
+    id: fileArr[pos - 1],
+    path: path
+  };
+}
+
+function removeFileFromArray(fileArr, id) {
+  fileArr.splice(fileArr.indexOf(id), 2);
+}
+
 function getProjectRoot(project) {
   return project && project.user_id ?
          Path.join("/", project.user_id.toString(), "projects", project.id.toString()) :
@@ -217,6 +228,8 @@ module.exports = {
   updateProject: updateProject,
   updateCurrentProjectFiles: updateCurrentProjectFiles,
   getRemixedProjectFiles: getRemixedProjectFiles,
+  getFileFromArray: getFileFromArray,
+  removeFileFromArray: removeFileFromArray,
   getProjectRoot: getProjectRoot,
   stripProjectRoot: stripProjectRoot
 };

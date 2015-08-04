@@ -21,7 +21,7 @@ module.exports = function(config) {
     var dateUpdated = req.body.dateUpdated;
     var file = req.file;
     var filePath = utils.stripProjectRoot(req.session.project.root, req.body.bramblePath);
-    var existingFile = req.session.project.files[filePath];
+    var existingFile = utils.getFileFromArray(req.session.project.files, filePath);
     var httpMethod = "post";
     var resource = "/files";
 
@@ -109,11 +109,7 @@ module.exports = function(config) {
             req.session.project.meta = project;
 
             if(httpMethod === "post") {
-              req.session.project.files[filePath] = {
-                id: body.id,
-                path: filePath,
-                project_id: project.id
-              };
+              req.session.project.files.push(body.id, filePath);
               res.sendStatus(201);
               cleanup();
               return;

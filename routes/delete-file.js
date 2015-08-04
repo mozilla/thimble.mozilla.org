@@ -11,7 +11,7 @@ module.exports = function(config) {
     var path = utils.stripProjectRoot(req.session.project.root, req.body.path);
     var user = req.user;
     var project = req.session.project.meta;
-    var existingFile = req.session.project.files[path];
+    var existingFile = utils.getFileFromArray(req.session.project.files, path);
 
     if(!existingFile) {
       res.status(400).send({error: "No file representation found for " + path});
@@ -35,7 +35,8 @@ module.exports = function(config) {
         return;
       }
 
-      delete req.session.project.files[path];
+      utils.removeFileFromArray(req.session.project.files, existingFile.id);
+
       project.date_updated = req.body.dateUpdated;
 
       utils.updateProject(config, user, project, function(err, status, project) {
