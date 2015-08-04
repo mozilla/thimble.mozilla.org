@@ -30,7 +30,6 @@ module.exports = function(config) {
 
       getFiles = utils.getRemixedProjectFiles;
       params.push(req.session.project.remixId);
-      delete req.session.project.remixId;
     } else {
       params.push(user, req.session, project);
     }
