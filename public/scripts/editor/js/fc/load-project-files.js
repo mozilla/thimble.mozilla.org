@@ -33,7 +33,6 @@ define(function(require) {
   function updateFs(config, files, callback) {
     var length;
     var completed = 0;
-    var filePathToOpen;
 
     function endWriteFile(err) {
       if(err) {
@@ -42,10 +41,7 @@ define(function(require) {
       }
 
       if(++completed === length) {
-        callback(null, {
-          root: config.root,
-          open: filePathToOpen
-        });
+        callback(null, config);
       }
     }
 
@@ -58,8 +54,8 @@ define(function(require) {
 
     files.forEach(function(file) {
       // TODO: https://github.com/mozilla/thimble.webmaker.org/issues/603
-      if(!filePathToOpen || Path.extname(filePathToOpen) !== ".html") {
-        filePathToOpen = Path.relative(config.root, file.path);
+      if(!config.filePathToOpen || Path.extname(config.filePathToOpen) !== ".html") {
+        config.filePathToOpen = Path.relative(config.root, file.path);
       }
 
       writeFile(config, file.path, new FilerBuffer(file.buffer), endWriteFile);
