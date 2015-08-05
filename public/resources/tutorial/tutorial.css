@@ -14,16 +14,16 @@ body {
 }
 
 h1 {
-    font-size: 2.2em;
-    font-weight: normal;
-    margin: 0 0 15px 0;
-    padding: 0 0 5px 0;
-    border-bottom: solid 2px #C9B45B;
+  font-size: 2.2em;
+  font-weight: normal;
+  margin: 0 0 15px 0;
+  padding: 0 0 5px 0;
+  border-bottom: solid 2px #C9B45B;
 }
 
 h1,h2,h3,h4,h5,h6 {
-    font-weight: normal;
-    color: rgba(0,0,0,.8);
+  font-weight: normal;
+  color: rgba(0,0,0,.8);
 }
 
 h2 {
@@ -55,48 +55,48 @@ h6 {
 
 
 code {
-    background: rgba(0,0,0,.1);
-    font-family: monospace;
-    padding: 1px 3px;
-    margin: 0 1px;
+  background: rgba(0,0,0,.1);
+  font-family: monospace;
+  padding: 1px 3px;
+  margin: 0 1px;
 }
 
 /* Steps list */
 
 ol.steps {
-    list-style-type: none;
-    counter-reset: step-counter;
-    padding-left: 60px;
-    margin: 30px 0 30px 0;
+  list-style-type: none;
+  counter-reset: step-counter;
+  padding-left: 60px;
+  margin: 30px 0 30px 0;
 }
 
 ol.steps > li {
-    position: relative;
-    margin: 0 0 35px 0;
-    min-height: 50px;
+  position: relative;
+  margin: 0 0 35px 0;
+  min-height: 50px;
 }
 
 ol.steps > li h6 {
-    font-size: 1.5em;
-    font-weight: normal;
-    color: rgba(0,0,0,.6);
+  font-size: 1.5em;
+  font-weight: normal;
+  color: rgba(0,0,0,.6);
 }
 
 ol.steps > li p {
-    line-height: 140%;
+  line-height: 140%;
 }
 
 ol.steps > li:before {
-    content: counter(step-counter);
-    counter-increment: step-counter;
-    position: absolute;
-    left: -60px;
-    font-size: 16px;
-    border: solid 2px rgba(0,0,0,.4);
-    border-radius: 50%;
-    padding: 10px 15px;
-    opacity: .5;
-    top: 2px;
+  content: counter(step-counter);
+  counter-increment: step-counter;
+  position: absolute;
+  left: -60px;
+  font-size: 16px;
+  border: solid 2px rgba(0,0,0,.4);
+  border-radius: 50%;
+  padding: 10px 15px;
+  opacity: .5;
+  top: 2px;
 }
 
 
@@ -113,13 +113,13 @@ p, li {
 }
 
 p {
-    line-height: 125%;
+  line-height: 125%;
 }
 
 .tip {
-    background: rgba(0,0,0,.1);
-    padding: 10px 14px;
-    border-radius: 2px;
+  background: rgba(0,0,0,.1);
+  padding: 10px 14px;
+  border-radius: 2px;
 }
 
 hr {
@@ -129,25 +129,25 @@ hr {
 }
 
 p, ol, ul {
-    margin: 10px 0 20px 0;
+  margin: 10px 0 20px 0;
 }
 
 li {
-    margin: 0 0 10px 0;
+  margin: 0 0 10px 0;
 }
 
 img {
-    display: block;
-    margin: 5 0 10px;
-    border: solid 5px white;
-    box-shadow: 0px 2px 3px rgba(0,0,0,.2);
+  display: block;
+  margin: 5px 0 10px;
+  border: solid 5px white;
+  box-shadow: 0px 2px 3px rgba(0,0,0,.2);
 }
 
 .code {
-    background: #222;
-    padding: 10px 12px;
-    display: block;
-    font-size: 14px;
-    color: rgba(255,255,255,.8);
-    border-radius: 2px;
+  background: #222;
+  padding: 10px 12px;
+  display: block;
+  font-size: 14px;
+  color: rgba(255,255,255,.8);
+  border-radius: 2px;
 }
