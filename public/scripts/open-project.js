@@ -62,6 +62,11 @@ require(["jquery"], function($) {
   });
 
   $("td.project-delete").click(function() {
+    // TODO: we can do better than this, but let's at least make it harder to lose data.
+    if(!confirm("OK to Delete this project?")) {
+      return;
+    }
+
     var project = $(this).parent();
     $(this).text("Deleting...");
 
