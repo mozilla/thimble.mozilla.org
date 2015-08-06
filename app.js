@@ -160,6 +160,7 @@ app.param('name', parameters.name);
 
 // oauth2
 app.get("/callback", routes.oauth2Callback);
+app.get("/login", routes.login);
 
 // resource proxying for http-on-https
 webmakerProxy(app, middleware.checkForAuth);

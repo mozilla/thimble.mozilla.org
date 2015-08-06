@@ -23,8 +23,8 @@ module.exports = function(config) {
       csrf: req.csrfToken(),
       makedetails: makedetails,
       editorHOST: config.editorHOST,
-      OAUTH_CLIENT_ID: config.oauth.client_id,
-      OAUTH_AUTHORIZATION_URL: config.oauth.authorization_url,
+      loginURL: config.appURL + "/login",
+      logoutURL: config.logoutURL,
       queryString: qs
     };
 

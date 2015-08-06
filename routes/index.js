@@ -6,6 +6,7 @@ var request = require("request");
 var config = require("./config");
 
 // Bramble routes
+var login = require("./login");
 var home = require("./home");
 var usersProjects = require("./view-user-projects");
 var setProject = require("./set-current-project");
@@ -41,6 +42,7 @@ module.exports = function(utils, nunjucksEnv, appName) {
   var renderUsersProjects = usersProjects(config);
 
   return {
+    login: login(config),
     index: function(req, res) {
       var qs = querystring.stringify(req.query);
       if(qs !== "") {
