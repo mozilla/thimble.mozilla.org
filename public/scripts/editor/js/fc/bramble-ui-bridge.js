@@ -4,6 +4,7 @@ define(function(require) {
   var KeyHandler = require("fc/bramble-keyhandler");
   var BrambleMenus = require("fc/bramble-menus");
   var Underlay = require("fc/bramble-underlay");
+  var PathUtils = require("fc/path-utils");
 
   var _escKeyHandler;
 
@@ -243,25 +244,57 @@ define(function(require) {
     });
 
     bramble.on("activeEditorChange", function(data) {
-      console.log("thimble side", "activeEditorChange", data);
-      setNavFilename(data.filename);
+      PathUtils.transformPath(bramble, data.fullPath, function(err, fullPath) {
+        if(err) {
+          console.error("[Thimble Error] unable to transform path", err);
+          return;
+        }
+
+        console.log("activeEditorChange", fullPath);
+        setNavFilename(data.filename);
+      });
     });
 
     // File Change Events
     bramble.on("fileChange", function(filename) {
-      console.log("thimble side", "fileChange", filename);
-      showFileState();
+      PathUtils.transformPath(bramble, filename, function(err, fullPath) {
+        if(err) {
+          console.error("[Thimble Error] unable to transform path", err);
+          return;
+        }
+
+        console.log("fileChange", fullPath);
+        showFileState();
+      });
     });
 
     bramble.on("fileDelete", function(filename) {
-      console.log("thimble side", "fileDelete", filename);
-      showFileState();
+      PathUtils.transformPath(bramble, filename, function(err, fullPath) {
+        if(err) {
+          console.error("[Thimble Error] unable to transform path", err);
+          return;
+        }
+
+        console.log("fileDelete", fullPath);
+        showFileState();
+      });
     });
 
     bramble.on("fileRename", function(oldFilename, newFilename) {
-      console.log("thimble side", "fileRename", oldFilename, newFilename);
-      setNavFilename(newFilename);
-      showFileState();
+      PathUtils.transformPaths(bramble, [oldFilename, newFilename], {projectRelative: true},
+        function(err, fullPaths) {
+          if(err) {
+            console.error("[Thimble Error] unable to transform paths", err);
+            return;
+          }
+
+          var oldFilename = fullPaths[0];
+          var newFilename = fullPaths[1];
+
+          console.log("fileRename", oldFilename, newFilename);
+          setNavFilename(newFilename);
+          showFileState();
+        });
     });
   }
 

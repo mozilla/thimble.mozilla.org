@@ -4,33 +4,7 @@ define(function(require) {
       ProjectRenameUtility = require("fc/project-rename"),
       ProjectFiles = require("fc/load-project-files"),
       FileSystemSync = require("fc/filesystem-sync"),
-      uuid = require("uuid"),
-      Path = Bramble.Filer.Path;
-
-  // Bramble loads all projects via symlinks stored in entries named /.mnt/<uuid>
-  var MOUNT_DIR = "/.mnt";
-
-  function createMountPoint(config, callback) {
-    var mountPoint = Path.join(MOUNT_DIR, uuid.v4());
-
-    config.shell.mkdirp(MOUNT_DIR, function(err) {
-      if(err && err.code !== "EEXIST") {
-        console.error("[Bramble Error] Failed to create mount directory:", err);
-        callback(err);
-        return;
-      }
-
-      config.fs.symlink(config.root, mountPoint, function(err) {
-        if(err) {
-          console.error("[Bramble Error] Failed to create project symlink:", err);
-          callback(err);
-          return;
-        }
-
-        callback(null, mountPoint);
-      });
-    });
-  }
+      PathUtils = require("fc/path-utils");
 
   return function BrambleEditor(options) {
     var makeDetails = options.makeDetails;
@@ -80,7 +54,7 @@ define(function(require) {
       // Put a level of indirection between the project root and Bramble
       // so that moving or renaming the project files is painless (i.e.,
       // Bramble will only ever know about this symlink).
-      createMountPoint(config, function(err, mountPoint) {
+      PathUtils.createMountPoint(config.root, function(err, mountPoint) {
         if(err) {
           console.error("[Bramble Error] Unable to mount project directory");
           return;

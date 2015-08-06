@@ -1,6 +1,6 @@
 define(function(require) {
   var $ = require("jquery");
-
+  var PathUtils = require("fc/path-utils");
   var FileSystemSync = {};
 
   function hideFileState(remainingFiles) {
@@ -117,15 +117,25 @@ define(function(require) {
     var fsync = new FSync();
     var fs = Bramble.getFileSystem();
 
-    function configHandler(handler, url) {
-      return function() {
-        triggerCallbacks(fsync._callbacks.beforeEach, arguments);
-
-        Array.prototype.unshift.call(arguments, url, csrfToken, fs);
-        handler.apply(fsync, arguments);
-      };
-    }
     Bramble.once("ready", function(bramble) {
+      function configHandler(handler, url) {
+        return function() {
+          triggerCallbacks(fsync._callbacks.beforeEach, arguments);
+
+          // Transform path argument(s) from symlinked (/.mnt/...) to real path
+          var args = Array.prototype.slice.call(arguments);
+          PathUtils.transformPaths(bramble, args, function(err, paths) {
+            if(err) {
+              console.error("[Thimble error] unable to transform paths", err);
+              return;
+            }
+
+            Array.prototype.unshift.call(paths, url, csrfToken, fs);
+            handler.apply(fsync, paths);
+          });
+        };
+      }
+
       fsync.bramble = bramble;
       fsync.handlers = {
         change: configHandler(pushFileChange, persistanceUrls.createOrUpdate),
@@ -204,7 +214,13 @@ define(function(require) {
     }
 
     function cacheFilePaths(path) {
-      filesSaved.push(path);
+      PathUtils.transformPath(bramble, path, function(err, realpath) {
+        if(err) {
+          console.error("[Thimble error] unable to transform paths", err);
+          return;
+        }
+        filesSaved.push(realpath);
+      });
     }
 
     function maybeContinue(err) {
