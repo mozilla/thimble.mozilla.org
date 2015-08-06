@@ -10,6 +10,7 @@ module.exports = function(config) {
     var project = req.session.project && req.session.project.meta;
     var makedetails = encodeURIComponent(JSON.stringify({
       root: req.session.project.root,
+      anonymousId: req.session.project.anonymousId,
       title: project.title,
       dateCreated: project.date_created,
       dateUpdated: project.date_updated,
@@ -17,6 +18,8 @@ module.exports = function(config) {
       description: project.description,
       publishUrl: project.publish_url
     }));
+
+    delete req.session.project.anonymousId;
 
     var options = {
       appURL: config.appURL,

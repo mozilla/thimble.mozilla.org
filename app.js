@@ -169,7 +169,8 @@ webmakerProxy(app, middleware.checkForAuth);
 app.get('/',
         middleware.setNewPageOperation,
         middleware.setUserIfTokenExists,
-        routes.index );
+        middleware.setPublishUser,
+        routes.root);
 
 app.get('/initializeProject',
         middleware.setUserIfTokenExists,
