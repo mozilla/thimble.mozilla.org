@@ -3,34 +3,7 @@ define(function(require) {
       BrambleUIBridge = require("fc/bramble-ui-bridge"),
       ProjectRenameUtility = require("fc/project-rename"),
       ProjectFiles = require("fc/load-project-files"),
-      FileSystemSync = require("fc/filesystem-sync"),
-      uuid = require("uuid"),
-      Path = Bramble.Filer.Path;
-
-  // Bramble loads all projects via symlinks stored in entries named /.mnt/<uuid>
-  var MOUNT_DIR = "/.mnt";
-
-  function createMountPoint(config, callback) {
-    var mountPoint = Path.join(MOUNT_DIR, uuid.v4());
-
-    config.shell.mkdirp(MOUNT_DIR, function(err) {
-      if(err && err.code !== "EEXIST") {
-        console.error("[Bramble Error] Failed to create mount directory:", err);
-        callback(err);
-        return;
-      }
-
-      config.fs.symlink(config.root, mountPoint, function(err) {
-        if(err) {
-          console.error("[Bramble Error] Failed to create project symlink:", err);
-          callback(err);
-          return;
-        }
-
-        callback(null, mountPoint);
-      });
-    });
-  }
+      FileSystemSync = require("fc/filesystem-sync");
 
   return function BrambleEditor(options) {
     var makeDetails = options.makeDetails;
@@ -77,22 +50,9 @@ define(function(require) {
         return;
       }
 
-      // Put a level of indirection between the project root and Bramble
-      // so that moving or renaming the project files is painless (i.e.,
-      // Bramble will only ever know about this symlink).
-      createMountPoint(config, function(err, mountPoint) {
-        if(err) {
-          console.error("[Bramble Error] Unable to mount project directory");
-          return;
-        }
-
-        // Stash the mountPoint on config in case we need to update it later.
-        config.mountPoint = mountPoint;
-
-        // Now that fs is setup, tell Bramble which root dir to mount
-        // and which file within that root to open on startup.
-        Bramble.mount(mountPoint, config.filePathToOpen);
-      });
+      // Now that fs is setup, tell Bramble which root dir to mount
+      // and which file within that root to open on startup.
+      Bramble.mount(config.root, config.open);
     }
 
     // Update the Project Title in the UI and allow it to be renamed
