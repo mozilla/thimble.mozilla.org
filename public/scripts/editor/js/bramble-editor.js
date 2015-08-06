@@ -3,7 +3,8 @@ define(function(require) {
       BrambleUIBridge = require("fc/bramble-ui-bridge"),
       ProjectRenameUtility = require("fc/project-rename"),
       ProjectFiles = require("fc/load-project-files"),
-      FileSystemSync = require("fc/filesystem-sync");
+      FileSystemSync = require("fc/filesystem-sync"),
+      CloseWarning = require("fc/close-warning");
 
   return function BrambleEditor(options) {
     var makeDetails = options.makeDetails;
@@ -22,6 +23,19 @@ define(function(require) {
       createOrUpdate: host + "/updateProjectFile",
       del: host + "/deleteProjectFile"
     }, csrfToken);
+
+    // If the user is logged in, make it a bit harder to close while we're syncing
+    if(authenticated) {
+      fsync.addBeforeEachCallback(function() {
+        CloseWarning.enable();
+      });
+
+      fsync.addAfterEachCallback(function() {
+        if(fsync.queueLength === 0) {
+          CloseWarning.disable();
+        }
+      });
+    }
 
     // Start loading Bramble
     Bramble.load("#webmaker-bramble",{

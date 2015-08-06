@@ -1,5 +1,6 @@
 define(function(require) {
   var $ = require("jquery");
+  var CloseWarning = require("fc/close-warning");
   var host;
 
   var TEXT_PUBLISH = "Publish";
@@ -92,6 +93,8 @@ define(function(require) {
     }
 
     function run() {
+      CloseWarning.enable();
+
       var request = publisher.generateRequest("/publish");
       request.done(function(project) {
         if(request.status !== 200) {
@@ -105,6 +108,7 @@ define(function(require) {
         console.error("[Bramble] Failed to send request to publish project to the server with: ", err);
       });
       request.always(function() {
+        CloseWarning.disable();
         publisher.publishing = false;
         setState(true);
       });
@@ -144,6 +148,7 @@ define(function(require) {
     // Disable all actions during the unpublish
     buttons.unpublish.off("click", handlers.unpublish);
     setState(false);
+    CloseWarning.enable();
 
     var request = publisher.generateRequest("/unpublish");
     request.done(function() {
@@ -162,6 +167,7 @@ define(function(require) {
       buttons.unpublish.on("click", handlers.unpublish);
     });
     request.always(function() {
+      CloseWarning.disable();
       publisher.unpublishing = false;
       setState(true);
     });
