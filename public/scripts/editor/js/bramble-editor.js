@@ -4,7 +4,7 @@ define(function(require) {
       ProjectRenameUtility = require("fc/project-rename"),
       ProjectFiles = require("fc/load-project-files"),
       FileSystemSync = require("fc/filesystem-sync"),
-      CloseWarning = require("fc/close-warning");
+      SyncState = require("fc/sync-state");
 
   return function BrambleEditor(options) {
     var makeDetails = options.makeDetails;
@@ -27,12 +27,12 @@ define(function(require) {
     // If the user is logged in, make it a bit harder to close while we're syncing
     if(authenticated) {
       fsync.addBeforeEachCallback(function() {
-        CloseWarning.enable();
+        SyncState.syncing();
       });
 
       fsync.addAfterEachCallback(function() {
         if(fsync.queueLength === 0) {
-          CloseWarning.disable();
+          SyncState.completed();
         }
       });
     }

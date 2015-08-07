@@ -1,6 +1,6 @@
 define(function(require) {
   var $ = require("jquery");
-  var CloseWarning = require("fc/close-warning");
+  var SyncState = require("fc/sync-state");
   var host;
 
   var TEXT_PUBLISH = "Publish";
@@ -69,6 +69,14 @@ define(function(require) {
           publisher.handlers.unpublishedChangesPrompt();
         }
       });
+
+      // Don't allow publishing when we're syncing
+      SyncState.onSyncing(function() {
+        publisher.disable();
+      });
+      SyncState.onCompleted(function() {
+        publisher.enable();
+      });
     }
 
     dialog.buttons.publish.on("click", publisher.handlers.publish);
@@ -93,7 +101,7 @@ define(function(require) {
     }
 
     function run() {
-      CloseWarning.enable();
+      SyncState.syncing();
 
       var request = publisher.generateRequest("/publish");
       request.done(function(project) {
@@ -108,7 +116,7 @@ define(function(require) {
         console.error("[Bramble] Failed to send request to publish project to the server with: ", err);
       });
       request.always(function() {
-        CloseWarning.disable();
+        SyncState.completed();
         publisher.publishing = false;
         setState(true);
       });
@@ -148,7 +156,7 @@ define(function(require) {
     // Disable all actions during the unpublish
     buttons.unpublish.off("click", handlers.unpublish);
     setState(false);
-    CloseWarning.enable();
+    SyncState.syncing();
 
     var request = publisher.generateRequest("/unpublish");
     request.done(function() {
@@ -167,7 +175,7 @@ define(function(require) {
       buttons.unpublish.on("click", handlers.unpublish);
     });
     request.always(function() {
-      CloseWarning.disable();
+      SyncState.completed();
       publisher.unpublishing = false;
       setState(true);
     });
