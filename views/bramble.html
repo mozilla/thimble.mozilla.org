@@ -3,4 +3,13 @@
         {% include 'nav-options.html' %}
     </div>
     <div id="webmaker-bramble"></div>
+    <script src="{{ editorHOST }}/dist/bramble.js"></script>
+    <script id="thimble-script"
+            src="/scripts/editor/vendor/require.min.js"
+            data-main="/scripts/main.js"
+            data-make-details="{{ makedetails }}"
+            data-editor-host="{{ editorHOST }}"
+            data-editor-url="{{ editorURL }}"
+            data-app-url="{{ appURL }}">
+    </script>
 {% endblock %}

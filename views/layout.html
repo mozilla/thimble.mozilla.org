@@ -17,15 +17,6 @@
     <link rel="stylesheet" href="/stylesheets/projects-style.css">
     <link rel="stylesheet" href="/stylesheets/publish.css">
 
-    <script src="{{ editorHOST }}/dist/bramble.js"></script>
-    <script id="thimble-script"
-            src="/scripts/editor/vendor/require.min.js"
-            data-main="/scripts/main.js"
-            data-make-details="{{ makedetails }}"
-            data-editor-host="{{ editorHOST }}"
-            data-editor-url="{{ editorURL }}"
-            data-app-url="{{ appURL }}">
-    </script>
     {% if GA_ACCOUNT %}
     <script id="google-analytics-js" src="/scripts/google-analytics.js"
             data-ga-account="{{ GA_ACCOUNT }}"
