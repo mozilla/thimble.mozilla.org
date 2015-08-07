@@ -166,7 +166,7 @@ app.get("/login", routes.login);
 webmakerProxy(app, middleware.checkForAuth);
 
 // Main page
-app.get('/',
+app.get('/:anonymousId?/:remixId?',
         middleware.setNewPageOperation,
         middleware.setUserIfTokenExists,
         middleware.setPublishUser,
@@ -189,6 +189,7 @@ app.get('/project/:projectId',
         routes.openProject);
 
 app.get('/newProject',
+        middleware.checkForAuth,
         middleware.setUserIfTokenExists,
         routes.newProject);
 

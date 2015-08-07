@@ -48,12 +48,10 @@ module.exports = function(config) {
           return;
         }
 
-        if(user) {
-          req.session.project.files = [];
-          files.forEach(function(file) {
-            req.session.project.files.push(file.id, file.path);
-          });
-        }
+        req.session.project.files = [];
+        files.forEach(function(file) {
+          req.session.project.files.push(file.id, file.path);
+        });
 
         res.redirect(301, "/" + qs);
       });

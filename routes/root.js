@@ -1,4 +1,5 @@
 var querystring = require("querystring");
+var uuid = require("uuid");
 
 var home = require("./home");
 var utils = require("./utils");
@@ -33,9 +34,20 @@ module.exports = function(config) {
   var homepage = home(config);
 
   return function(req, res) {
+    var anonymousId = req.params.anonymousId;
+    var remixId = req.params.remixId;
     var qs = querystring.stringify(req.query);
     if(qs !== "") {
       qs = "?" + qs;
+    }
+
+    if(!req.user) {
+      if(!anonymousId) {
+        res.redirect("/" + uuid.v1() + qs);
+      } else if(!remixId) {
+
+      }
+      return;
     }
 
     // Only show Thimble if a project has been set for
