@@ -47,7 +47,18 @@ require(["jquery"], function($) {
     return "Last Edited " + elapsedTime + unit + " ago";
   }
 
-  Array.prototype.forEach.call(projects, function(project) {
+  function createNewProject() {
+    window.location.href = "/newProject" + queryString + "&now=" + (new Date()).toISOString();
+  }
+
+  projects = Array.prototype.slice.call(projects);
+
+  // If there are no projects, just make a new one.
+  if(projects.length === 0) {
+    return createNewProject();
+  }
+
+  projects.forEach(function(project) {
     var projectSelector = "#" + project.getAttribute("id");
     var lastEdited = project.getAttribute("data-project-date_updated");
 
@@ -57,9 +68,7 @@ require(["jquery"], function($) {
     $(projectSelector + " .project-information").text(getElapsedTime(lastEdited));
   });
 
-  $("#project-0").on("click", function() {
-    window.location.href = "/newProject" + queryString + "&now=" + (new Date()).toISOString();
-  });
+  $("#project-0").on("click", createNewProject);
 
   $("td.project-delete").click(function() {
     // TODO: we can do better than this, but let's at least make it harder to lose data.
