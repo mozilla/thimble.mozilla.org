@@ -5,7 +5,9 @@ var home = require("./home");
 var utils = require("./utils");
 
 function showThimble(config, req, res, homepage) {
-  if(!req.user || !req.session.project.anonymousId) {
+  // If we aren't migrating a project from an anonymous
+  // user to an authenticated user, show Thimble immediately
+  if(!req.session.project.anonymousId) {
     homepage(req, res);
     return;
   }
@@ -34,33 +36,30 @@ module.exports = function(config) {
   var homepage = home(config);
 
   return function(req, res) {
-    var anonymousId = req.params.anonymousId;
-    var remixId = req.params.remixId;
     var qs = querystring.stringify(req.query);
     if(qs !== "") {
       qs = "?" + qs;
     }
 
     if(!req.user) {
-      if(!anonymousId) {
-        res.redirect("/" + uuid.v1() + qs);
-      } else if(!remixId) {
-
+      if(!req.params.anonymousId) {
+        res.redirect(301, "/" + uuid.v1() + qs);
+      } else {
+        homepage(req, res);
       }
       return;
     }
+
+    // TODO: Handle `/:anonId` & `/:anonId/:remixId routes
+    //       for authenticated users. This will be needed for
+    //       our multiple tab case where a user authenticates in one
+    //       tab and refreshes another tab containing thimble.
+    //       TBD: What is the "current project context" in this case?
 
     // Only show Thimble if a project has been set for
     // the current context
     if(req.session.project) {
       showThimble(config, homepage, req, res);
-      return;
-    }
-
-    // Create a new project for an unauthenticated user
-    // before loading it into Thimble
-    if(!req.user) {
-      res.redirect(301, "/newProject/" + qs);
     } else {
       // Ask an authenticated user to select a project
       // to load into thimble

@@ -172,9 +172,8 @@ app.get('/:anonymousId?/:remixId?',
         middleware.setPublishUser,
         routes.root);
 
-app.get('/initializeProject',
+app.get('/initializeProject/:anonymousId?/:remixId?',
         middleware.setUserIfTokenExists,
-        middleware.isProjectLoaded,
         routes.getProject);
 
 app.get('/projects',
