@@ -36,6 +36,7 @@ define(function(require) {
         container: $("#publish-live")
       }
     };
+    this.button = $("#navbar-publish-button");
   }
 
   Publisher.prototype.init = function(project) {
@@ -228,6 +229,7 @@ define(function(require) {
     var buttons = this.dialog.buttons;
     buttons.publish.removeClass("disabled");
     buttons.update.removeClass("disabled");
+    this.button.removeClass("disabled");
     this.togglePublishState("on");
   };
 
@@ -235,6 +237,7 @@ define(function(require) {
     var buttons = this.dialog.buttons;
     buttons.publish.addClass("disabled");
     buttons.update.addClass("disabled");
+    this.button.addClass("disabled");
     this.togglePublishState("off");
   };
 
