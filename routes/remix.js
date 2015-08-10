@@ -4,11 +4,22 @@ var utils = require("./utils");
 module.exports = function(config) {
   return function(req, res) {
     var user = req.user;
-    var publishURL = config.publishURL + "/publishedProjects/" + req.params.projectId;
+    var now = req.query.now || (new Date()).toISOString();
+    var options = {
+      method: user ? "PUT" : "GET",
+      uri: config.publishURL + "/publishedProjects/" + req.params.projectId
+    };
 
-    request.get({ uri: publishURL }, function(err, response, body) {
+    if(user) {
+      options.uri += "/remix?now=" + now;
+      options.headers = {
+        "Authorization": "token " + user.token
+      };
+    }
+
+    request(options, function(err, response, body) {
       if(err) {
-        console.error("Failed to send request to " + publishURL + " with: ", err);
+        console.error("Failed to send request to " + options.uri + " with: ", err);
         res.sendStatus(500);
         return;
       }
@@ -18,69 +29,20 @@ module.exports = function(config) {
         return;
       }
 
-      var publishedProject = JSON.parse(body);
-      publishedProject.title = publishedProject.title + " (remix)";
-      publishedProject.date_created = req.query.now || (new Date()).toISOString();
-      publishedProject.date_updated = publishedProject.date_created;
-      publishedProject.user_id = req.session.publishUser && req.session.publishUser.id;
+      var project = JSON.parse(body);
+      req.session.project = {};
 
-      utils.createProject(config, user, publishedProject, function(err, status, project) {
-        if(err) {
-          if(status === 500) {
-            res.sendStatus(500);
-          } else {
-            res.status(status).send({error: err});
-          }
-          return;
-        }
+      if(!user) {
+        project.title = project.title + " (remix)";
+        project.date_created = now;
+        project.date_updated = project.date_created;
+        req.session.project.remixId = req.params.projectId;
+      }
 
-        publishURL += "/publishedFiles";
+      req.session.project.meta = project;
+      req.session.project.root = utils.getProjectRoot(project);
 
-        req.session.project = {};
-        req.session.project.root = utils.getProjectRoot(project);
-        req.session.project.meta = project;
-
-        if(!user) {
-          req.session.project.remixId = req.params.projectId;
-          res.redirect(301, "/");
-          return;
-        }
-
-        utils.getRemixedProjectFiles(config, publishedProject.id, function(err, response, publishedFiles) {
-          if(err) {
-            if(status === 500) {
-              res.sendStatus(500);
-            } else {
-              res.status(status).send({error: err});
-            }
-            return;
-          }
-
-          publishedFiles.forEach(function(file) {
-            file.buffer = new Buffer(file.buffer);
-          });
-
-          utils.persistProjectFiles(config, user, project, publishedFiles, function(err, status, files) {
-            if(err) {
-              if(status === 500) {
-                res.sendStatus(500);
-              } else {
-                res.status(status).send({error: err});
-              }
-              return;
-            }
-
-            if(user) {
-              req.session.project.files = [];
-              files.forEach(function(file) {
-                req.session.project.files.push(file.id, file.path);
-              });
-            }
-
-            res.redirect(301, "/");
-          });
-        });
-      });
+      res.redirect(301, "/");
     });
   };
 };
