@@ -171,10 +171,15 @@ app.get('/',
         middleware.setUserIfTokenExists,
         routes.index );
 
-app.get('/initializeProject',
+app.get('/getFileContents',
         middleware.setUserIfTokenExists,
         middleware.isProjectLoaded,
-        routes.getProject);
+        routes.getFileContents);
+
+app.get('/getFileMeta',
+        middleware.setUserIfTokenExists,
+        middleware.isProjectLoaded,
+        routes.getFileMetadata);
 
 app.get('/projects',
         middleware.checkForAuth,
@@ -203,17 +208,19 @@ app['delete']('/deleteProject/:projectId',
               middleware.setUserIfTokenExists,
               routes.deleteProject);
 
-app.put('/updateProjectFile',
+app.put('/updateProjectFile/:fileId?',
         middleware.checkForAuth,
         middleware.setUserIfTokenExists,
         middleware.isProjectLoaded,
         middleware.fileUpload,
+        middleware.validateRequest(["dateUpdated", "bramblePath"]),
         routes.createOrUpdateProjectFile);
 
-app.put('/deleteProjectFile',
+app.put('/deleteProjectFile/:fileId',
         middleware.checkForAuth,
         middleware.setUserIfTokenExists,
         middleware.isProjectLoaded,
+        middleware.validateRequest(["dateUpdated"]),
         routes.deleteProjectFile);
 
 app.put('/publish',

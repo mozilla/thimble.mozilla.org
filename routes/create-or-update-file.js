@@ -5,11 +5,6 @@ var NodeFormData = require("form-data");
 
 module.exports = function(config) {
   return function(req, res) {
-    if(!req.body || !req.body.dateUpdated || !req.body.bramblePath) {
-      res.status(400).send({error: "Request body missing data"});
-      return;
-    }
-
     if(!req.file) {
       res.status(400).send({error: "Request missing file data"});
       return;
@@ -20,15 +15,10 @@ module.exports = function(config) {
     var project = req.session.project.meta;
     var dateUpdated = req.body.dateUpdated;
     var file = req.file;
-    var filePath = utils.stripProjectRoot(req.session.project.root, req.body.bramblePath);
-    var existingFile = utils.getFileFromArray(req.session.project.files, filePath);
-    var httpMethod = "post";
-    var resource = "/files";
-
-    if(existingFile) {
-      httpMethod = "put";
-      resource += "/" + existingFile.id;
-    }
+    var fileId = req.params.fileId;
+    var filePath = req.body.bramblePath;
+    var httpMethod = fileId ? "put" : "post";
+    var resource = "/files" + (fileId ? "/" + fileId : "");
 
     function getUploadStream(callback) {
       var tmpFile = file.path;
@@ -86,6 +76,7 @@ module.exports = function(config) {
 
         response.on('end', function() {
           body = JSON.parse(body);
+          delete body.buffer;
 
           if(response.statusCode !== 201 && response.statusCode !== 200) {
             res.status(response.statusCode).send({error: body});
@@ -108,14 +99,7 @@ module.exports = function(config) {
 
             req.session.project.meta = project;
 
-            if(httpMethod === "post") {
-              req.session.project.files.push(body.id, filePath);
-              res.sendStatus(201);
-              cleanup();
-              return;
-            }
-
-            res.sendStatus(200);
+            res.status(httpMethod === "post" ? 201 : 200).send(body);
             cleanup();
           });
         });

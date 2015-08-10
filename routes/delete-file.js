@@ -3,29 +3,24 @@ var utils = require("./utils");
 
 module.exports = function(config) {
   return function(req, res) {
-    if(!req.body || !req.body.path || !req.body.dateUpdated) {
-      res.status(400).send({error: "Request body missing data"});
-      return;
-    }
-
-    var path = utils.stripProjectRoot(req.session.project.root, req.body.path);
     var user = req.user;
     var project = req.session.project.meta;
-    var existingFile = utils.getFileFromArray(req.session.project.files, path);
+    var fileId = req.params.fileId;
 
-    if(!existingFile) {
-      res.status(400).send({error: "No file representation found for " + path});
+    if(!fileId) {
+      res.status(400).send({error: "Missing file id "});
       return;
     }
+
     request({
       method: "DELETE",
-      uri: config.publishURL + "/files/" + existingFile.id,
+      uri: config.publishURL + "/files/" + fileId,
       headers: {
         "Authorization": "token " + user.token
       }
     }, function(err, response) {
       if(err) {
-        console.error("Failed to send request to " + config.publishURL + "/files/" + existingFile.id + " with: ", err);
+        console.error("Failed to send request to " + config.publishURL + "/files/" + fileId + " with: ", err);
         res.sendStatus(500);
         return;
       }
@@ -34,8 +29,6 @@ module.exports = function(config) {
         res.status(response.statusCode).send({error: response.body});
         return;
       }
-
-      utils.removeFileFromArray(req.session.project.files, existingFile.id);
 
       project.date_updated = req.body.dateUpdated;
 
