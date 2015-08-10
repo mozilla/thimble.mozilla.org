@@ -101,6 +101,6 @@ function run() {
   script.type = "text/javascript";
   script.async = true;
   script.onload = run;
-  script.src = "http://zeptojs.com/zepto.min.js";
+  script.src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js";
   doc.getElementsByTagName("head")[0].appendChild(script);
 }(document));
