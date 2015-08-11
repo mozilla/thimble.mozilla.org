@@ -1,5 +1,6 @@
 define(function(require) {
   var $ = require("jquery");
+  var Project = require("project");
   var SyncState = require("fc/sync-state");
   var host;
 
@@ -20,7 +21,7 @@ define(function(require) {
 
   function Publisher(options) {
     this.fsync = options.sync;
-    host = options.appUrl;
+    host = Project.getHost();
     this.csrfToken = $("meta[name='csrf-token']").attr("content");
     this.dialog = {
       buttons: {
@@ -54,8 +55,8 @@ define(function(require) {
       dialog.description.val(project.description);
     }
 
-    if(project.publishUrl) {
-      this.updateDialog(project.publishUrl, true);
+    if(Project.getPublishUrl()) {
+      this.updateDialog(Project.getPublishUrl(), true);
     }
 
     if(publisher.fsync) {

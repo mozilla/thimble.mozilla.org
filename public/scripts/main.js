@@ -31,7 +31,6 @@ define(["bramble-editor", "project", "sso-override"], function(BrambleEditor, Pr
 
   // unpack makedetails
   makeDetails = JSON.parse(decodeURIComponent(makeDetails));
-  Project.init(makeDetails);
 
   var editor = BrambleEditor({
     makeDetails: makeDetails,
