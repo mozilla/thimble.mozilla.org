@@ -7,7 +7,8 @@ require.config({
     "jquery": "/bower/jquery/index",
     "localized": "/bower/webmaker-i18n/localized",
     "uuid": "/bower/node-uuid/uuid",
-    "cookies": "/bower/cookies-js/dist/cookies"
+    "cookies": "/bower/cookies-js/dist/cookies",
+    "project": "../../project/project"
   },
   shim: {
     "jquery": {
@@ -32,7 +33,7 @@ define(["bramble-editor", "sso-override"], function(BrambleEditor) {
   // unpack makedetails
   makeDetails = JSON.parse(decodeURIComponent(makeDetails));
 
-  var editor = BrambleEditor({
+  BrambleEditor.create({
     makeDetails: makeDetails,
     editorUrl: editorUrl,
     editorHost: editorHost,
