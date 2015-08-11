@@ -17,7 +17,8 @@ define(function(require) {
       authenticated: authenticated,
       csrfToken: csrfToken,
       persistenceURL: host + "/updateProjectFile",
-      getFilesURL: host + "/initializeProject"
+      getFileMeta: host + "/getFileMeta",
+      getFileContentsURL: host + "/testing-tarball.tar" //"/getFileContents"
     };
     var fsync = FileSystemSync.init(authenticated, {
       createOrUpdate: host + "/updateProjectFile",

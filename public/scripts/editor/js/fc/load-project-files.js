@@ -4,100 +4,142 @@ define(function(require) {
   var Path = Bramble.Filer.Path;
   var FilerBuffer = Bramble.Filer.Buffer;
 
-  function writeFile(config, path, data, callback) {
-    var parent = Path.dirname(path);
+  function getTarballBuffer(url, callback) {
+    // jQuery doesn't seem to support getting the arraybuffer type
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true);
+    xhr.responseType = "arraybuffer";
+    xhr.onload = function() {
+      if(this.status !== 200) {
+        return callback(new Error("[Thimble error] unable to get tarball, status was:", this.status));
+      }
 
-    function write() {
-      config.fs.writeFile(path, data, function(err) {
-        if(err) {
-          console.error("[Bramble] Failed to write: ", path);
-          callback(err);
-          return;
+      callback(null, this.response);
+    };
+    xhr.send();
+  }
+
+  function installTarball(root, url, callback) {
+    var untarWorker;
+    var pending = null;
+    var fs = Bramble.getFileSystem();
+    var sh = new fs.Shell();
+
+    function extract(path, data, callback) {
+      path = Path.resolve(root, path);
+      var basedir = Path.dirname(path);
+
+      sh.mkdirp(basedir, function(err) {
+        if(err && err.code !== "EEXIST") {
+          return callback(err);
         }
 
-        callback();
+        fs.writeFile(path, new FilerBuffer(data), {encoding: null}, callback);
       });
     }
 
-    config.shell.mkdirp(parent, function(err) {
-      if(err && err.code !== "EEXIST") {
-        console.error("[Bramble] Failed to create project directory: ", parent);
-        callback(err);
-        return;
-      }
+    function finish(err) {
+      untarWorker.terminate();
+      untarWorker = null;
 
-      write();
-    });
-  }
+      callback(err);
+    }
 
-  function updateFs(config, files, callback) {
-    var length;
-    var completed = 0;
-    var filePathToOpen;
-
-    function endWriteFile(err) {
+    function writeCallback(err) {
       if(err) {
-        callback(err);
-        return;
+        console.error("[Thimble error] couldn't extract file for tar", err);
       }
 
-      if(++completed === length) {
-        callback(null, {
-          root: config.root,
-          open: filePathToOpen
-        });
+      pending--;
+      if(pending === 0) {
+        finish(err);
       }
     }
 
-    length = files.length;
-    if(!length) {
-      // TODO: https://github.com/mozilla/thimble.webmaker.org/issues/602
-      callback(new Error("[Bramble] No files to load"));
-      return;
-    }
-
-    files.forEach(function(file) {
-      // TODO: https://github.com/mozilla/thimble.webmaker.org/issues/603
-      if(!filePathToOpen || Path.extname(filePathToOpen) !== ".html") {
-        filePathToOpen = Path.relative(config.root, file.path);
+    getTarballBuffer(url, function(err, buffer) {
+      if(err) {
+        return callback(err);
       }
 
-      writeFile(config, file.path, new FilerBuffer(file.buffer), endWriteFile);
+      untarWorker = new Worker("/scripts/editor/vendor/bitjs-untar-worker.min.js");
+      untarWorker.addEventListener("message", function(e) {
+        var data = e.data;
+
+        if(data.type === "progress" && pending === null) {
+          // Set the total number of files we need to deal with so we know when we're done
+          pending = data.totalFilesInArchive;
+        } else if(data.type === "extract") {
+          extract(data.unarchivedFile.filename, data.unarchivedFile.fileData, writeCallback);
+        } else if(data.type === "error") {
+          finish(new Error("[Thimble error]: " + data.msg));
+        }
+      });
+
+      untarWorker.postMessage({file: buffer});
     });
   }
 
-  function load(project, options, callback) {
-    var root = project.root;
-    var authenticated = options.authenticated;
-    var config = JSON.parse(JSON.stringify(options));
-    config.root = root;
-    config.fs = Bramble.getFileSystem();
-    config.shell = new config.fs.Shell();
-
-    if(!authenticated) {
-      project.dateCreated = (new Date()).toISOString();
-      project.dateUpdated = project.dateCreated;
-    }
-
-    // For loading an existing project, first we need to get the
-    // files from the server and only then update the Bramble filesystem
+  function getFileMetadata(root, url, callback) {
     var request = $.ajax({
       type: "GET",
       headers: {
         "Accept": "application/json"
       },
-      url: config.getFilesURL + '?cacheBust=' + (new Date()).toISOString()
+      url: url + '?cacheBust=' + (new Date()).toISOString()
     });
-    request.done(function(project) {
-      if(request.status !== 200) {
-        callback(new Error("[Bramble] Failed to get files for this project"));
-        return;
-      }
+    request.done(function(data) {
+      // Data is in the following form, simplify it and make it easier
+      // to get file id using a path:
+      // [{ id: 1, path: "/index.html", project_id: 3 }, ... ]
+      var project = { id: data[0].project_id };
+      project.paths = data.map(function(info) {
+        project.paths[info.path] = info.id;
+      });
 
-      updateFs(config, project.files, callback);
+      var fs = Bramble.getFileSystem();
+      fs.setxattr(root, "project-meta", project, callback);
     });
     request.fail(function(jqXHR, status, err) {
       callback(err);
+    });
+  }
+
+  /**
+   * Loading a project is a two step process. First we have to get a tarball
+   * with the filesystem contents, and install that into the project root.
+   * Second, we need to get project metadata, and write that into the project root's
+   * extended attributes
+   */
+  function load(project, options, callback) {
+    options.root = project.root;
+
+    if(!options.authenticated) {
+      project.dateCreated = (new Date()).toISOString();
+      project.dateUpdated = project.dateCreated;
+    }
+
+    installTarball(options.root, options.getFileContentsURL, function(err) {
+      if(err) {
+        return callback(err);
+      }
+
+/**
+    files.forEach(function(file) {
+      // TODO: https://github.com/mozilla/thimble.webmaker.org/issues/603
+      if(!filePathToOpen || Path.extname(filePathToOpen) !== ".html") {
+        filePathToOpen = Path.relative(config.root, file.path);
+      }
+***/
+      getFileMetadata(options.root, options.getFileMetaURL, function(err) {
+        if(err) {
+          return callback(err);
+        }
+
+        callback(null, {
+          root: options.root,
+          open: "index.html" // TODO: need to deal with logic around filePathToOpen
+        });
+      });
     });
   }
 
