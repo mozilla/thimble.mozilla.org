@@ -51,10 +51,11 @@ define(function(require) {
           console.error("[Bramble] Server did not persist ", path, ". Server responded with status ", request.status);
         }
 
+        var data;
         try {
-          var data = JSON.parse(body);
+          data = JSON.parse(request.body);
         } catch(e) {
-          console.error("[Bramble]")
+          console.error("[Bramble] unable to parse server response", e);
           finish();
         }
 
@@ -79,7 +80,7 @@ define(function(require) {
       }
 
       options.data = FileSystemSync.toFormData(path, data);
-      Project.getFileID(path, function(err) {
+      Project.getFileID(path, function(err, id) {
         if(err) {
           return onerror(err);
         }
@@ -94,7 +95,7 @@ define(function(require) {
 
     path = Project.stripRoot(path);
 
-    funciton finish() {
+    function finish() {
       context.queueLength--;
       hideFileState(context.queueLength);
       triggerCallbacks(context._callbacks.afterEach, [error, path]);
@@ -107,8 +108,7 @@ define(function(require) {
           "X-Csrf-Token": csrfToken
         },
         type: "PUT",
-        // TODO: need to add /<file id> here from xattrib      
-        url: url,
+        url: url + "/" + id,
         data: JSON.stringify({
           path: path,
           dateUpdated: (new Date()).toISOString()
