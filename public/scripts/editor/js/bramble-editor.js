@@ -4,7 +4,8 @@ define(function(require) {
       ProjectRenameUtility = require("fc/project-rename"),
       ProjectFiles = require("fc/load-project-files"),
       FileSystemSync = require("fc/filesystem-sync"),
-      SyncState = require("fc/sync-state");
+      SyncState = require("fc/sync-state"),
+      Project = require("project");
 
   return function BrambleEditor(options) {
     var makeDetails = options.makeDetails;
@@ -67,13 +68,13 @@ define(function(require) {
 
       // Now that fs is setup, tell Bramble which root dir to mount
       // and which file within that root to open on startup.
-      Bramble.mount(config.root, config.open);
+      Bramble.mount(Project.getRoot(), config.open);
     }
 
     // Update the Project Title in the UI and allow it to be renamed
     projectNameComponent = new ProjectRenameUtility(host, authenticated, csrfToken, makeDetails.title);
 
     // Bramble: Load the project Files into the fs
-    ProjectFiles.load(makeDetails, fileLoadingOptions, mount);
+    ProjectFiles.load(Project.getRoot(), fileLoadingOptions, mount);
   };
 });

@@ -1,6 +1,6 @@
 define(function(require) {
   var $ = require("jquery");
-
+  var Project = require("project");
   var FileSystemSync = {};
 
   function hideFileState(remainingFiles) {
@@ -28,72 +28,120 @@ define(function(require) {
       processData: false
     };
 
-    function send() {
+    path = Project.stripRoot(path);
+
+    function send(id) {
       var error;
-      var request = $.ajax(options);
+      var request;
+
+      if(id) {
+        options.url = options.url + "/" + id;
+      }
+
+      function finish() {
+        context.queueLength--;
+        hideFileState(context.queueLength);
+        triggerCallbacks(context._callbacks.afterEach, [error, path]);
+      }
+
+      request = $.ajax(options);
       request.done(function() {
         if(request.status !== 201 && request.status !== 200) {
           error = request.body;
           console.error("[Bramble] Server did not persist ", path, ". Server responded with status ", request.status);
         }
+
+        try {
+          var data = JSON.parse(body);
+        } catch(e) {
+          console.error("[Bramble]")
+          finish();
+        }
+
+        Project.setFileID(path, data.id, finish);
       });
       request.fail(function(jqXHR, status, err) {
         error = err;
         console.error("[Bramble] Failed to send request to persist the file to the server with: ", err);
-      });
-      request.always(function() {
-        context.queueLength--;
-        hideFileState(context.queueLength);
-        triggerCallbacks(context._callbacks.afterEach, [error, path]);
+        finish();
       });
     }
 
     fs.readFile(path, function(err, data) {
-      if(err) {
+      function onerror(err) {
         context.queueLength--;
         console.error("[Bramble] Failed to read ", path, " with ", err);
-        triggerCallbacks(context._callbacks.afterEach, [err, path]);
-        return;
+        triggerCallbacks(context._callbacks.afterEach, [err, path]);        
+      }
+
+      if(err) {
+        return onerror(err);
       }
 
       options.data = FileSystemSync.toFormData(path, data);
-      send();
+      Project.getFileID(path, function(err) {
+        if(err) {
+          return onerror(err);
+        }
+        send(id);
+      });
     });
   }
 
   function pushFileDelete(url, csrfToken, fs, path) {
     var context = this;
     var error;
-    var request = $.ajax({
-      contentType: "application/json",
-      headers: {
-        "X-Csrf-Token": csrfToken
-      },
-      type: "PUT",
-      url: url,
-      data: JSON.stringify({
-        path: path,
-        dateUpdated: (new Date()).toISOString()
-      })
-    });
-    request.done(function() {
-      if(request.status !== 200) {
-        error = request.body;
-        console.error("[Bramble] Server did not persist ", path, ". Server responded with status ", request.status);
-      }
-    });
-    request.fail(function(jqXHR, status, err) {
-      error = err;
-      console.error("[Bramble] Failed to send request to delete the file to the server with: ", err);
-    });
-    request.always(function() {
+
+    path = Project.stripRoot(path);
+
+    funciton finish() {
       context.queueLength--;
       hideFileState(context.queueLength);
       triggerCallbacks(context._callbacks.afterEach, [error, path]);
+    }
+
+    function doDelete(id) {
+      var request = $.ajax({
+        contentType: "application/json",
+        headers: {
+          "X-Csrf-Token": csrfToken
+        },
+        type: "PUT",
+        // TODO: need to add /<file id> here from xattrib      
+        url: url,
+        data: JSON.stringify({
+          path: path,
+          dateUpdated: (new Date()).toISOString()
+        })
+      });
+      request.done(function() {
+        if(request.status !== 200) {
+          error = request.body;
+          console.error("[Bramble] Server did not persist ", path, ". Server responded with status ", request.status);
+        }
+        // TODO: remove this file entry from the xattrib
+      });
+      request.fail(function(jqXHR, status, err) {
+        error = err;
+        console.error("[Bramble] Failed to send request to delete the file to the server with: ", err);
+      });
+      request.always(finish);
+    }
+
+    Project.getFileID(path, function(err, id) {
+      if(err) {
+        error = err;
+        return finish();
+      }
+
+      doDelete(id);
     });
   }
 
-  function pushFileRename() {}
+  function pushFileRename() {
+    // Needs to be implemented
+    // TODO: update xattrib meta to correct pathname
+  }
 
   function FSync() {
     this.queueLength = 0;

@@ -22,7 +22,7 @@ require.config({
   }
 });
 
-define(["bramble-editor", "sso-override"], function(BrambleEditor) {
+define(["bramble-editor", "project", "sso-override"], function(BrambleEditor, Project) {
   var thimbleScript = document.getElementById("thimble-script");
   var appUrl = thimbleScript.getAttribute("data-app-url");
   var makeDetails = thimbleScript.getAttribute("data-make-details");
@@ -31,6 +31,7 @@ define(["bramble-editor", "sso-override"], function(BrambleEditor) {
 
   // unpack makedetails
   makeDetails = JSON.parse(decodeURIComponent(makeDetails));
+  Project.init(makeDetails);
 
   var editor = BrambleEditor({
     makeDetails: makeDetails,

@@ -88,16 +88,7 @@ define(function(require) {
       url: url + '?cacheBust=' + (new Date()).toISOString()
     });
     request.done(function(data) {
-      // Data is in the following form, simplify it and make it easier
-      // to get file id using a path:
-      // [{ id: 1, path: "/index.html", project_id: 3 }, ... ]
-      var project = { id: data[0].project_id };
-      project.paths = data.map(function(info) {
-        project.paths[info.path] = info.id;
-      });
-
-      var fs = Bramble.getFileSystem();
-      fs.setxattr(root, "project-meta", project, callback);
+      Project.setMetadata(data, callback);
     });
     request.fail(function(jqXHR, status, err) {
       callback(err);
@@ -110,15 +101,13 @@ define(function(require) {
    * Second, we need to get project metadata, and write that into the project root's
    * extended attributes
    */
-  function load(project, options, callback) {
-    options.root = project.root;
-
+  function load(root, options, callback) {
     if(!options.authenticated) {
       project.dateCreated = (new Date()).toISOString();
       project.dateUpdated = project.dateCreated;
     }
 
-    installTarball(options.root, options.getFileContentsURL, function(err) {
+    installTarball(root, options.getFileContentsURL, function(err) {
       if(err) {
         return callback(err);
       }
@@ -130,13 +119,13 @@ define(function(require) {
         filePathToOpen = Path.relative(config.root, file.path);
       }
 ***/
-      getFileMetadata(options.root, options.getFileMetaURL, function(err) {
+      getFileMetadata(root, options.getFileMetaURL, function(err) {
         if(err) {
           return callback(err);
         }
 
         callback(null, {
-          root: options.root,
+          root: root,
           open: "index.html" // TODO: need to deal with logic around filePathToOpen
         });
       });
