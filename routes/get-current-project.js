@@ -3,34 +3,36 @@ var Path = require("path");
 var utils = require("./utils");
 var defaultProject = require("../default");
 
-function sendResponse(res, project, files) {
+function sendResponse(res, files) {
   res.type("application/json");
   res.send({
-    project: project,
     files: files
   });
 }
 
 module.exports = function(config) {
   return function(req, res) {
-    var project = JSON.parse(JSON.stringify(req.session.project.meta));
+    var remixId = req.params.remixId;
+    var anonymousId = req.params.anonymousId;
     var getFiles = utils.updateCurrentProjectFiles;
     var params = [config];
     var user = req.user;
+    var project;
 
     if(!user) {
-      if(!req.session.project.remixId) {
-        sendResponse(res, project, defaultProject.getAsBuffers(config.DEFAULT_PROJECT_TITLE).map(function(f) {
+      if(!remixId) {
+        sendResponse(res, defaultProject.getAsBuffers(config.DEFAULT_PROJECT_TITLE).map(function(f) {
           var file = JSON.parse(JSON.stringify(f));
-          file.path = Path.join(utils.getProjectRoot(project), file.path);
+          file.path = Path.join("/", anonymousId, file.path);
           return file;
         }));
         return;
       }
 
       getFiles = utils.getRemixedProjectFiles;
-      params.push(req.session.project.remixId);
+      params.push(remixId);
     } else {
+      project = JSON.parse(JSON.stringify(req.session.project.meta));
       params.push(user, req.session, project);
     }
 
@@ -46,11 +48,11 @@ module.exports = function(config) {
 
       if(!user) {
         files.forEach(function(file) {
-          file.path = Path.join(utils.getProjectRoot(project), file.path);
+          file.path = Path.join("/", anonymousId, file.path);
         });
       }
 
-      sendResponse(res, project, files);
+      sendResponse(res, files);
     });
 
     getFiles.apply(null, params);

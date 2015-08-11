@@ -180,6 +180,28 @@ function updateCurrentProjectFiles(config, user, session, project, callback) {
   });
 }
 
+function getRemixedProject(config, projectId, callback) {
+  var publishURL = config.publishURL + "/publishedProjects/" + projectId;
+
+  request.get({ uri: publishURL }, function(err, response, body) {
+    if(err) {
+      console.error("Failed to send request to " + publishURL + " with: ", err);
+      callback(err, 500);
+      return;
+    }
+
+    if(response.statusCode !== 200) {
+      callback(response.body, response.statusCode);
+      return;
+    }
+
+    var publishedProject = JSON.parse(body);
+    publishedProject.title = publishedProject.title + " (remix)";
+
+    callback(null, 200, publishedProject);
+  });
+}
+
 function getRemixedProjectFiles(config, projectId, callback) {
   var publishURL = config.publishURL + "/publishedProjects/" + projectId + "/publishedFiles";
 
@@ -227,6 +249,7 @@ module.exports = {
   persistProjectFiles: persistProjectFiles,
   updateProject: updateProject,
   updateCurrentProjectFiles: updateCurrentProjectFiles,
+  getRemixedProject: getRemixedProject,
   getRemixedProjectFiles: getRemixedProjectFiles,
   getFileFromArray: getFileFromArray,
   removeFileFromArray: removeFileFromArray,

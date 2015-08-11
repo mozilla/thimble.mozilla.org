@@ -1,25 +1,28 @@
-var request = require("request");
+var uuid = require("uuid");
+
 var utils = require("./utils");
 
 module.exports = function(config) {
   return function(req, res) {
+    var projectId = req.params.projectId;
     var user = req.user;
-    var publishURL = config.publishURL + "/publishedProjects/" + req.params.projectId;
+    if(!user) {
+      res.redirect("/" + uuid.v1() + "/" + projectId);
+      return;
+    }
 
-    request.get({ uri: publishURL }, function(err, response, body) {
+    var publishURL = config.publishURL + "/publishedProjects/" + projectId;
+
+    utils.getRemixedProject(config, req.params.projectId, function(err, status, publishedProject) {
       if(err) {
-        console.error("Failed to send request to " + publishURL + " with: ", err);
-        res.sendStatus(500);
+        if(status === 500) {
+          res.sendStatus(500);
+        } else {
+          res.status(status).send({error: err});
+        }
         return;
       }
 
-      if(response.statusCode !== 200) {
-        res.status(response.statusCode).send({error: response.body});
-        return;
-      }
-
-      var publishedProject = JSON.parse(body);
-      publishedProject.title = publishedProject.title + " (remix)";
       publishedProject.date_created = req.query.now || (new Date()).toISOString();
       publishedProject.date_updated = publishedProject.date_created;
       publishedProject.user_id = req.session.publishUser && req.session.publishUser.id;
