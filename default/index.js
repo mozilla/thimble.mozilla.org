@@ -1,8 +1,8 @@
 /*
  * Provides access to an array of files belonging to a default project.
  * Each default must have its own directory in this folder, and can
- * be accessed using the exposed `.getAsStreams(title)` and `.getAsBuffers(title)`
- * methods.
+ * be accessed using the exposed `.getAsStreams(title)`, `.getAsBuffers(title)`
+ * , `getPaths(title)`, and `.getAsTar(title)` methods.
  *
  * For example, for a singular project named "my-project" with the
  * following directory structure:
@@ -12,7 +12,7 @@
  *         ---dir2
  *             ---file2
  *
- * Calling defaultProjects.getAsStreams('my-project') will return:
+ * Calling `defaultProjects.getAsStreams('my-project')` will return:
  *  [{
  *     path: /file1,
  *     size: 12345
@@ -23,7 +23,7 @@
  *     stream: <file2 stream>
  *  }]
  *
- * Calling defaultProjects.getAsBuffers('my-project') will return:
+ * Calling `defaultProjects.getAsBuffers('my-project')` will return:
  *  [{
  *     path: /file1,
  *     buffer: <file1 buffer>
@@ -32,13 +32,29 @@
  *     buffer: <file2 buffer>
  *  }]
  *
+ * Calling `defaultProjects.getAsTar('my-project')` will return a single
+ * tar stream containing all the files with each entry name corresponding to
+ * each path as can be seen above
+ *
+ * Calling `defaultProjects.getPaths('my-project')` will return:
+ *  [{
+ *     path: "/file1"
+ *  }, {
+ *     path: "/dir1/dir2/file2"
+ *  }]
  */
 
 var fs = require("fs");
 var Path = require("path");
 var MemoryStream = require("memorystream");
+var Tar = require("tar-stream");
 
-var defaultProjects = {};
+var BUFFER = "BUFFER";
+var FILE_STREAM = "FILE STREAM";
+var TAR_STREAM = "TAR STREAM";
+
+var _defaultProjects = {};
+var _defaultProjectPaths = {};
 
 function doSyncOp(op) {
   var ret;
@@ -52,26 +68,39 @@ function doSyncOp(op) {
   return ret;
 }
 
-function getDefaultProject(title, stream) {
-  return defaultProjects[title].map(function(file) {
-    var processed = {
-      path: file.path
-    };
+function getDefaultProject(title, dataType) {
+  var result = dataType === TAR_STREAM ? Tar.pack() : [];
 
-    if (stream) {
-      processed.stream = MemoryStream.createReadStream(file.buffer);
-      processed.size = file.buffer.length;
-    } else {
-      processed.buffer = file.buffer;
+  _defaultProjects[title].forEach(function(file) {
+    switch(dataType) {
+    case TAR_STREAM:
+      result.entry({ name: file.path }, file.buffer);
+      break;
+    case FILE_STREAM:
+      result.push({
+        path: file.path,
+        stream: MemoryStream.createReadStream(file.buffer),
+        size: file.buffer.length
+      });
+      break;
+    case BUFFER:
+    default:
+      result.push(file);
+      break;
     }
-
-    return processed;
   });
+
+  if(TAR_STREAM === dataType) {
+    result.finalize();
+  }
+
+  return result;
 }
 
 function readDirectory(dirName) {
   var contents = doSyncOp(fs.readdirSync.bind(fs, dirName));
   var files = [];
+  var filePaths = [];
 
   contents.forEach(function(nodeName) {
     var nodePath = Path.join(dirName, nodeName);
@@ -80,7 +109,7 @@ function readDirectory(dirName) {
 
     if(stats.isFile()) {
       file.buffer = doSyncOp(fs.readFileSync.bind(fs, nodePath));
-
+      filePaths.push(file.path);
       files.push(file);
       return;
     }
@@ -88,11 +117,15 @@ function readDirectory(dirName) {
     var nodeContents = readDirectory(nodePath);
     nodeContents.forEach(function(file) {
       file.path = Path.join("/", nodeName, file.path);
+      filePaths.push(file.path);
       files.push(file);
     });
   });
 
-  return files;
+  return {
+    contents: files,
+    paths: filePaths
+  };
 }
 
 function cacheProjectFiles() {
@@ -104,7 +137,9 @@ function cacheProjectFiles() {
   projects.splice(projects.indexOf("index.js"), 1);
 
   projects.forEach(function(projectName) {
-    defaultProjects[projectName] = readDirectory(Path.join(__dirname, projectName));
+    var project = readDirectory(Path.join(__dirname, projectName));
+    _defaultProjectPaths[projectName] = project.paths;
+    _defaultProjects[projectName] = project.contents;
   });
 }
 
@@ -112,9 +147,15 @@ cacheProjectFiles();
 
 module.exports = {
   getAsStreams: function getAsStreams(title) {
-    return getDefaultProject(title, true);
+    return getDefaultProject(title, FILE_STREAM);
   },
   getAsBuffers: function getAsBuffers(title) {
-    return getDefaultProject(title);
+    return getDefaultProject(title, BUFFER);
+  },
+  getAsTar: function getAsTar(title) {
+    return getDefaultProject(title, TAR_STREAM);
+  },
+  getPaths: function(title) {
+    return _defaultProjectPaths[title];
   }
 };

@@ -9,7 +9,8 @@ module.exports = function(config) {
     }
     var project = req.session.project && req.session.project.meta;
     var makedetails = encodeURIComponent(JSON.stringify({
-      root: req.session.project.root,
+      id: project.id,
+      userID: req.session.publishUser && req.session.publishUser.id,
       title: project.title,
       dateCreated: project.date_created,
       dateUpdated: project.date_updated,

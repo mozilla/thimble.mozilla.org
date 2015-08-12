@@ -10,7 +10,8 @@ var login = require("./login");
 var home = require("./home");
 var usersProjects = require("./view-user-projects");
 var setProject = require("./set-current-project");
-var getProject = require("./get-current-project");
+var getFileContents = require("./get-file-contents");
+var getFileMetadata = require("./get-file-metadata");
 var newProject = require("./new-project");
 var deleteProject = require("./delete-project");
 var renameProject = require("./rename-project");
@@ -72,7 +73,8 @@ module.exports = function(utils, nunjucksEnv, appName) {
     newProject: newProject(config),
     createOrUpdateProjectFile: createOrUpdateProjectFile(config),
     deleteProjectFile: deleteProjectFile(config),
-    getProject: getProject(config),
+    getFileContents: getFileContents(config),
+    getFileMetadata: getFileMetadata(config),
     deleteProject: deleteProject(config),
     renameProject: renameProject(config),
     publish: publish(config),
