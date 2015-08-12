@@ -84,8 +84,12 @@ define(function(require) {
     // Data is in the following form, simplify it and make it easier
     // to get file id using a path:
     // [{ id: 1, path: "/index.html", project_id: 3 }, ... ]
-    var project = { id: data[0].project_id };
-    project.paths = data.map(function(info) {
+    var project = {
+      id: data[0].project_id,
+      paths: {}
+    };
+
+    data.forEach(function(info) {
       project.paths[info.path] = info.id;
     });
 
