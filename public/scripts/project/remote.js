@@ -4,6 +4,10 @@ define(function(require) {
   var Path = Bramble.Filer.Path;
   var Buffer = Bramble.Filer.Buffer;
 
+  function addCacheBusting(url) {
+    return url + "?cacheBust=" + (new Date()).toISOString();
+  }
+
   // Installs a tarball (arraybuffer) containing the project's files/folders.
   function installTarball(fs, root, tarball, callback) {
     var untarWorker;
@@ -11,7 +15,7 @@ define(function(require) {
     var sh = new fs.Shell();
 
     function extract(path, data, callback) {
-      path = Path.resolve(root, path);
+      path = Path.join(root, path);
       var basedir = Path.dirname(path);
 
       sh.mkdirp(basedir, function(err) {
@@ -62,7 +66,7 @@ define(function(require) {
     // jQuery doesn't seem to support getting the arraybuffer type
     var url = host + "/getFileContents";
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", url, true);
+    xhr.open("GET", addCacheBusting(url), true);
     xhr.responseType = "arraybuffer";
     xhr.onload = function() {
       if(this.status !== 200) {
@@ -95,7 +99,7 @@ define(function(require) {
       headers: {
         "Accept": "application/json"
       },
-      url: url + '?cacheBust=' + (new Date()).toISOString()
+      url: addCacheBusting(url);
     });
     request.done(function(data) {
       setMetadata(fs, root, key, data, callback);
