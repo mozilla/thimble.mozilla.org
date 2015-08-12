@@ -28,8 +28,6 @@ define(function(require) {
       processData: false
     };
 
-    path = Project.stripRoot(path);
-
     function send(id) {
       var error;
       var request;
@@ -71,7 +69,7 @@ define(function(require) {
     fs.readFile(path, function(err, data) {
       function onerror(err) {
         context.queueLength--;
-        console.error("[Bramble] Failed to read ", path, " with ", err);
+        console.error("[Thimble] Failed to read ", path, " with ", err);
         triggerCallbacks(context._callbacks.afterEach, [err, path]);        
       }
 
@@ -91,14 +89,13 @@ define(function(require) {
 
   function pushFileDelete(url, csrfToken, fs, path) {
     var context = this;
-    var error;
 
     path = Project.stripRoot(path);
 
-    function finish() {
+    function finish(err) {
       context.queueLength--;
       hideFileState(context.queueLength);
-      triggerCallbacks(context._callbacks.afterEach, [error, path]);
+      triggerCallbacks(context._callbacks.afterEach, [err, path]);
     }
 
     function doDelete(id) {
@@ -116,22 +113,20 @@ define(function(require) {
       });
       request.done(function() {
         if(request.status !== 200) {
-          error = request.body;
-          console.error("[Bramble] Server did not persist ", path, ". Server responded with status ", request.status);
+          return finish("[Thimble] Server did not persist ", path, ". Server responded with status ", request.status);
         }
-        // TODO: remove this file entry from the xattrib
+
+        Project.removeFile(path, finish);
       });
       request.fail(function(jqXHR, status, err) {
-        error = err;
-        console.error("[Bramble] Failed to send request to delete the file to the server with: ", err);
+        console.error("[Thimble] Failed to send request to delete the file to the server with: ", err);
+        finish(err);
       });
-      request.always(finish);
     }
 
     Project.getFileID(path, function(err, id) {
       if(err) {
-        error = err;
-        return finish();
+        return finish(err);
       }
 
       doDelete(id);
@@ -197,7 +192,7 @@ define(function(require) {
 
     var formData = new FormData();
     formData.append("dateUpdated", dateUpdated);
-    formData.append("bramblePath", path);
+    formData.append("bramblePath", Project.stripRoot(path));
     // Don't worry about actual mime type, just treat as binary
     var blob = new Blob([buffer], {type: "application/octet-stream"});
     formData.append("brambleFile", blob);

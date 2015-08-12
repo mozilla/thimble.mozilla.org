@@ -33,7 +33,7 @@ define(["bramble-editor", "sso-override"], function(BrambleEditor) {
   // unpack makedetails
   makeDetails = JSON.parse(decodeURIComponent(makeDetails));
 
-  var editor = BrambleEditor({
+  BrambleEditor.create({
     makeDetails: makeDetails,
     editorUrl: editorUrl,
     editorHost: editorHost,

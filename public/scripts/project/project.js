@@ -86,6 +86,20 @@ define(function(require) {
     });
   }
 
+  // Update the files metadata for the project to use the given id for this path
+  function removeFile(path, callback) {
+    getMetadata(function(err, value) {
+      if(err) {
+        return callback(err);
+      }
+
+      path = stripRoot(path);
+      delete value.paths[path];
+
+      _fs.setxattr(getRoot(), PROJECT_META_KEY, value, callback);
+    });
+  }
+
   // Set all necesary data for this project, based on makeDetails rendered into page.
   function load(projectDetails, host, authenticated, callback) {
     _user = projectDetails.userID;
@@ -115,6 +129,7 @@ define(function(require) {
     stripRoot: stripRoot,
     addRoot: addRoot,
     getFileID: getFileID,
-    setFileID: setFileID
+    setFileID: setFileID,
+    removeFile: removeFile
   };
 });
