@@ -11,8 +11,6 @@ define(function(require) {
   var _title;
   var _fs;
 
-  // _dateCreated ?
-  // _dateUpdated? 
   // _description?
 
   function getUser() {
@@ -41,7 +39,7 @@ define(function(require) {
 
   // From /7/projects/5/index.html to /index.html
   function stripRoot(path) {
-    return path.replace(this.getRoot(), "");
+    return path.replace(getRoot(), "");
   }
   
   // From /index.html to /7/projects/5/index.html to
@@ -108,12 +106,6 @@ define(function(require) {
     _host = host;
     _publishUrl = projectDetails.publishUrl;
     _fs = Bramble.getFileSystem();
-
-    // TODO - what to do about these?
-//    if(!options.authenticated) {
-//      project.dateCreated = (new Date()).toISOString();
-//      project.dateUpdated = project.dateCreated;
-//    }
 
     // Now download the project's content (files + metadata) and install into the root
     Remote.loadProject(_fs, getRoot(), _host, PROJECT_META_KEY, callback);

@@ -49,14 +49,7 @@ define(function(require) {
           console.error("[Bramble] Server did not persist ", path, ". Server responded with status ", request.status);
         }
 
-        var data;
-        try {
-          data = JSON.parse(request.body);
-        } catch(e) {
-          console.error("[Bramble] unable to parse server response", e);
-          finish();
-        }
-
+        var data = request.responseJSON;
         Project.setFileID(path, data.id, finish);
       });
       request.fail(function(jqXHR, status, err) {
@@ -70,7 +63,7 @@ define(function(require) {
       function onerror(err) {
         context.queueLength--;
         console.error("[Thimble] Failed to read ", path, " with ", err);
-        triggerCallbacks(context._callbacks.afterEach, [err, path]);        
+        triggerCallbacks(context._callbacks.afterEach, [err, path]);
       }
 
       if(err) {
