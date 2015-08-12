@@ -99,7 +99,7 @@ define(function(require) {
       headers: {
         "Accept": "application/json"
       },
-      url: addCacheBusting(url);
+      url: addCacheBusting(url)
     });
     request.done(function(data) {
       setMetadata(fs, root, key, data, callback);
