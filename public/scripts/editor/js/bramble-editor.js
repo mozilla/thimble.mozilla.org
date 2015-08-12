@@ -38,15 +38,15 @@ define(function(require) {
       });
 
       // Start loading the project files
-      Project.load(makeDetails, host, authenticated, function(err, config) {
+      Project.load(makeDetails, host, authenticated, function(err, fileToOpen) {
         if(err) {
-          console.error("[Bramble Error]", err);
+          console.error("[Thimble Error]", err);
           return;
         }
 
         // Now that fs is setup, tell Bramble which root dir to mount
         // and which file within that root to open on startup.
-        Bramble.mount(Project.getRoot(), config.open);
+        Bramble.mount(Project.getRoot(), fileToOpen);
       });
 
       Bramble.once("ready", function(bramble) {

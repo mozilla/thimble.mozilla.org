@@ -137,11 +137,7 @@ define(function(require) {
 
           // Look for an HTML file to open, ideally index.html
           var indexPos = found.indexOf("index.html");
-
-          callback(null, {
-            root: root,
-            open: indexPos ? found[indexPos] : found[0]
-          });
+          callback(null, indexPos ? found[indexPos] : found[0]);
         });
       });
     });
