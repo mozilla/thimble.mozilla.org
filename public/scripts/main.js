@@ -7,7 +7,8 @@ require.config({
     "jquery": "/bower/jquery/index",
     "localized": "/bower/webmaker-i18n/localized",
     "uuid": "/bower/node-uuid/uuid",
-    "cookies": "/bower/cookies-js/dist/cookies"
+    "cookies": "/bower/cookies-js/dist/cookies",
+    "project": "../../project/project"
   },
   shim: {
     "jquery": {
@@ -22,7 +23,7 @@ require.config({
   }
 });
 
-define(["bramble-editor", "project", "sso-override"], function(BrambleEditor, Project) {
+define(["bramble-editor", "sso-override"], function(BrambleEditor) {
   var thimbleScript = document.getElementById("thimble-script");
   var appUrl = thimbleScript.getAttribute("data-app-url");
   var makeDetails = thimbleScript.getAttribute("data-make-details");
