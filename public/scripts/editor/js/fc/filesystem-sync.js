@@ -90,8 +90,6 @@ define(function(require) {
   function pushFileDelete(url, csrfToken, fs, path) {
     var context = this;
 
-    path = Project.stripRoot(path);
-
     function finish(err) {
       context.queueLength--;
       hideFileState(context.queueLength);
@@ -107,7 +105,7 @@ define(function(require) {
         type: "PUT",
         url: url + "/" + id,
         data: JSON.stringify({
-          path: path,
+          path: Project.stripRoot(path),
           dateUpdated: (new Date()).toISOString()
         })
       });
