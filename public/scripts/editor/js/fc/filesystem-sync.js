@@ -104,10 +104,7 @@ define(function(require) {
         },
         type: "PUT",
         url: url + "/" + id,
-        data: JSON.stringify({
-          path: Project.stripRoot(path),
-          dateUpdated: (new Date()).toISOString()
-        })
+        data: JSON.stringify({dateUpdated: (new Date()).toISOString()})
       });
       request.done(function() {
         if(request.status !== 200) {
