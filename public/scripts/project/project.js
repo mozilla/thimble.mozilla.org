@@ -102,8 +102,8 @@ define(function(require) {
 
   // Set all necesary data for this project, based on makeDetails rendered into page.
   function load(projectDetails, host, authenticated, callback) {
-    _user = projectDetails.userID;
-    _id = projectDetails.id;
+    _user = "" + projectDetails.userID;
+    _id = "" + projectDetails.id;
     _title = projectDetails.title;
     _host = host;
     _publishUrl = projectDetails.publishUrl;
