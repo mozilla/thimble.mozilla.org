@@ -128,17 +128,20 @@ define(function(require) {
           return callback(err);
         }
 
-        /** What to do about picking the file to open???
-            files.forEach(function(file) {
-              // TODO: https://github.com/mozilla/thimble.webmaker.org/issues/603
-              if(!filePathToOpen || Path.extname(filePathToOpen) !== ".html") {
-                filePathToOpen = Path.relative(config.root, file.path);
-              }
-        ***/
+        // Find an HTML file to open in the project, hopefully /index.html
+        var sh = new fs.Shell();
+        sh.find(root, {name: "*.html"}, function(err, found) {
+          if(err) {
+            return callback(err);
+          }
 
-        callback(null, {
-          root: root,
-          open: "index.html" // TODO: need to deal with logic around filePathToOpen
+          // Look for an HTML file to open, ideally index.html
+          var indexPos = found.indexOf("index.html");
+
+          callback(null, {
+            root: root,
+            open: indexPos ? found[indexPos] : found[0]
+          });
         });
       });
     });
