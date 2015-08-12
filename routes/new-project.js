@@ -35,10 +35,9 @@ module.exports = function(config) {
 
       req.session.project = {};
       req.session.project.meta = project;
-      req.session.project.root = utils.getProjectRoot(project);
 
       var defaultFiles = defaultProject.getAsStreams(config.DEFAULT_PROJECT_TITLE);
-      utils.persistProjectFiles(config, user, project, defaultFiles, function(err, status, files) {
+      utils.persistProjectFiles(config, user, project, defaultFiles, function(err, status) {
         if(err) {
           if(status === 500) {
             res.sendStatus(500);
@@ -46,13 +45,6 @@ module.exports = function(config) {
             res.status(status).send({error: err});
           }
           return;
-        }
-
-        if(user) {
-          req.session.project.files = [];
-          files.forEach(function(file) {
-            req.session.project.files.push(file.id, file.path);
-          });
         }
 
         res.redirect(301, "/" + qs);

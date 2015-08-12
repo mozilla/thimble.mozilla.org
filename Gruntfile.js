@@ -81,9 +81,8 @@ module.exports = function( grunt ) {
         files: {
           src: [
             // Temporary, until we shift entirely to browserify
-            "public/scripts/editor/*.js",
-            "public/scripts/editor/js/**/*.js",
-            "!public/scripts/editor/js/require-config.js",
+            "public/scripts/**/*.js",
+            "!public/scripts/editor/vendor/*.js",
             "frontend/src/scripts/**/*.js",
             "frontend/src/scripts/*.js"
           ]

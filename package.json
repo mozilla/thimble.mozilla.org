@@ -35,6 +35,7 @@
     "request": "2.21.0",
     "serve-favicon": "^2.3.0",
     "slowparse": "1.1.3",
+    "tar-stream": "^1.2.1",
     "uslug": "1.0.3",
     "webmaker-auth": "1.0.3",
     "webmaker-download-locales": "0.2.5",

@@ -1,6 +1,6 @@
 define(function(require) {
   var $ = require("jquery");
-
+  var Project = require("project");
   var FileSystemSync = {};
 
   function hideFileState(remainingFiles) {
@@ -28,72 +28,103 @@ define(function(require) {
       processData: false
     };
 
-    function send() {
+    function send(id) {
       var error;
-      var request = $.ajax(options);
+      var request;
+
+      if(id) {
+        options.url = options.url + "/" + id;
+      }
+
+      function finish() {
+        context.queueLength--;
+        hideFileState(context.queueLength);
+        triggerCallbacks(context._callbacks.afterEach, [error, path]);
+      }
+
+      request = $.ajax(options);
       request.done(function() {
         if(request.status !== 201 && request.status !== 200) {
           error = request.body;
           console.error("[Bramble] Server did not persist ", path, ". Server responded with status ", request.status);
         }
+
+        var data = request.responseJSON;
+        Project.setFileID(path, data.id, finish);
       });
       request.fail(function(jqXHR, status, err) {
         error = err;
         console.error("[Bramble] Failed to send request to persist the file to the server with: ", err);
-      });
-      request.always(function() {
-        context.queueLength--;
-        hideFileState(context.queueLength);
-        triggerCallbacks(context._callbacks.afterEach, [error, path]);
+        finish();
       });
     }
 
     fs.readFile(path, function(err, data) {
-      if(err) {
+      function onerror(err) {
         context.queueLength--;
-        console.error("[Bramble] Failed to read ", path, " with ", err);
+        console.error("[Thimble] Failed to read ", path, " with ", err);
         triggerCallbacks(context._callbacks.afterEach, [err, path]);
-        return;
+      }
+
+      if(err) {
+        return onerror(err);
       }
 
       options.data = FileSystemSync.toFormData(path, data);
-      send();
+      Project.getFileID(path, function(err, id) {
+        if(err) {
+          return onerror(err);
+        }
+        send(id);
+      });
     });
   }
 
   function pushFileDelete(url, csrfToken, fs, path) {
     var context = this;
-    var error;
-    var request = $.ajax({
-      contentType: "application/json",
-      headers: {
-        "X-Csrf-Token": csrfToken
-      },
-      type: "PUT",
-      url: url,
-      data: JSON.stringify({
-        path: path,
-        dateUpdated: (new Date()).toISOString()
-      })
-    });
-    request.done(function() {
-      if(request.status !== 200) {
-        error = request.body;
-        console.error("[Bramble] Server did not persist ", path, ". Server responded with status ", request.status);
-      }
-    });
-    request.fail(function(jqXHR, status, err) {
-      error = err;
-      console.error("[Bramble] Failed to send request to delete the file to the server with: ", err);
-    });
-    request.always(function() {
+
+    function finish(err) {
       context.queueLength--;
       hideFileState(context.queueLength);
-      triggerCallbacks(context._callbacks.afterEach, [error, path]);
+      triggerCallbacks(context._callbacks.afterEach, [err, path]);
+    }
+
+    function doDelete(id) {
+      var request = $.ajax({
+        contentType: "application/json",
+        headers: {
+          "X-Csrf-Token": csrfToken
+        },
+        type: "PUT",
+        url: url + "/" + id,
+        data: JSON.stringify({dateUpdated: (new Date()).toISOString()})
+      });
+      request.done(function() {
+        if(request.status !== 200) {
+          return finish("[Thimble] Server did not persist ", path, ". Server responded with status ", request.status);
+        }
+
+        Project.removeFile(path, finish);
+      });
+      request.fail(function(jqXHR, status, err) {
+        console.error("[Thimble] Failed to send request to delete the file to the server with: ", err);
+        finish(err);
+      });
+    }
+
+    Project.getFileID(path, function(err, id) {
+      if(err) {
+        return finish(err);
+      }
+
+      doDelete(id);
     });
   }
 
-  function pushFileRename() {}
+  function pushFileRename() {
+    // Needs to be implemented
+    // TODO: update xattrib meta to correct pathname
+  }
 
   function FSync() {
     this.queueLength = 0;
@@ -149,7 +180,7 @@ define(function(require) {
 
     var formData = new FormData();
     formData.append("dateUpdated", dateUpdated);
-    formData.append("bramblePath", path);
+    formData.append("bramblePath", Project.stripRoot(path));
     // Don't worry about actual mime type, just treat as binary
     var blob = new Blob([buffer], {type: "application/octet-stream"});
     formData.append("brambleFile", blob);

@@ -1,5 +1,4 @@
 var request = require("request");
-var utils = require("./utils");
 
 module.exports = function(config) {
   return function(req, res) {
@@ -40,7 +39,6 @@ module.exports = function(config) {
       }
 
       req.session.project.meta = project;
-      req.session.project.root = utils.getProjectRoot(project);
 
       res.redirect(301, "/");
     });

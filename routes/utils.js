@@ -1,10 +1,9 @@
 var request = require("request");
-var async = require("async");
 var url = require("url");
 var NodeFormData = require("form-data");
-var Path = require("path");
+var async = require("async");
 
-var Constants = require("../constants");
+var defaultProject = require("../default");
 
 function createProject(config, user, data, callback) {
   var project = JSON.parse(JSON.stringify(data));
@@ -42,7 +41,6 @@ function createProject(config, user, data, callback) {
 
 function persistProjectFiles(config, user, project, data, callback) {
   var publishURL = config.publishURL + "/files";
-  var files = [];
 
   function persist(file, callback) {
     var options = url.parse(publishURL);
@@ -84,12 +82,6 @@ function persistProjectFiles(config, user, project, data, callback) {
           return;
         }
 
-        files.push({
-          id: body.id,
-          project_id: body.project_id,
-          path: body.path
-        });
-
         callback();
       });
     });
@@ -105,7 +97,7 @@ function persistProjectFiles(config, user, project, data, callback) {
       callback(err.message, err.status);
     }
 
-    callback(null, 200, files);
+    callback(null, 200);
   });
 }
 
@@ -144,11 +136,11 @@ function updateProject(config, user, data, callback) {
   });
 }
 
-function updateCurrentProjectFiles(config, user, session, project, callback) {
-  var url = config.publishURL + "/projects/" + project.id + "/files";
+function getProjectFileMetadata(config, user, project, callback) {
+  var url = config.publishURL + "/projects/" + project.id + "/files/meta";
 
   if(!user) {
-    callback(null, 200);
+    callback(null, 200, defaultProject.getPaths(config.DEFAULT_PROJECT_TITLE));
     return;
   }
 
@@ -169,19 +161,27 @@ function updateCurrentProjectFiles(config, user, session, project, callback) {
       return;
     }
 
-    var files = JSON.parse(body);
-    session.project.files = [];
-    files.forEach(function(file) {
-      session.project.files.push(file.id, file.path);
-      file.path = Path.join(getProjectRoot(project), file.path);
-    });
-
-    callback(null, 200, files);
+    callback(null, 200, JSON.parse(body));
   });
 }
 
-function getRemixedProjectFiles(config, projectId, callback) {
-  var publishURL = config.publishURL + "/publishedProjects/" + projectId + "/publishedFiles";
+function getProjectFileTar(config, user, project) {
+  if(!user) {
+    return defaultProject.getAsTar(config.DEFAULT_PROJECT_TITLE);
+  }
+
+  var url = config.publishURL + "/projects/" + project.id + "/files/tar";
+
+  return request.get({
+    url: url,
+    headers: {
+      "Authorization": "token " + user.token
+    }
+  });
+}
+
+function getRemixedProjectFileMetadata(config, projectId, callback) {
+  var publishURL = config.publishURL + "/publishedProjects/" + projectId + "/publishedFiles/meta";
 
   request.get({ uri: publishURL }, function(err, response, body) {
     if(err) {
@@ -199,37 +199,18 @@ function getRemixedProjectFiles(config, projectId, callback) {
   });
 }
 
-function getFileFromArray(fileArr, path) {
-  var pos = fileArr.indexOf(path);
+function getRemixedProjectFileTar(config, projectId) {
+  var publishURL = config.publishURL + "/publishedProjects/" + projectId + "/publishedFiles/tar";
 
-  return pos === -1 ? null : {
-    id: fileArr[pos - 1],
-    path: path
-  };
-}
-
-function removeFileFromArray(fileArr, id) {
-  fileArr.splice(fileArr.indexOf(id), 2);
-}
-
-function getProjectRoot(project) {
-  return project && project.user_id ?
-         Path.join("/", project.user_id.toString(), "projects", project.id.toString()) :
-         Path.join("/", project.title && project.title.length ? project.title : Constants.DEFAULT_PROJECT_NAME);
-}
-
-function stripProjectRoot(root, path) {
-  return Path.join("/", Path.relative(root, path));
+  return request.get({ uri: publishURL });
 }
 
 module.exports = {
   createProject: createProject,
   persistProjectFiles: persistProjectFiles,
   updateProject: updateProject,
-  updateCurrentProjectFiles: updateCurrentProjectFiles,
-  getRemixedProjectFiles: getRemixedProjectFiles,
-  getFileFromArray: getFileFromArray,
-  removeFileFromArray: removeFileFromArray,
-  getProjectRoot: getProjectRoot,
-  stripProjectRoot: stripProjectRoot
+  getProjectFileMetadata: getProjectFileMetadata,
+  getProjectFileTar: getProjectFileTar,
+  getRemixedProjectFileMetadata: getRemixedProjectFileMetadata,
+  getRemixedProjectFileTar: getRemixedProjectFileTar
 };
