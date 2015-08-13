@@ -60,6 +60,10 @@ define(function(require) {
       window.open("https://support.mozilla.org/en-US/products/webmaker/thimble");
     });
 
+    $("#export-project-zip").click(function() {
+      bramble.export();
+      return false;
+    });
 
     // Sidebar Fileview
     $("#editor-pane-nav-fileview").click(function() {
