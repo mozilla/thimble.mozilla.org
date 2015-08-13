@@ -59,12 +59,10 @@ require(["jquery"], function($) {
   $(".project-delete").click(function() {
     // TODO: we can do better than this, but let's at least make it harder to lose data.
     if(!window.confirm("OK to Delete this project?")) {
-      return;
+      return false;
     }
 
     var project = $(this).closest(".project");
-    $(this).text("Deleting...");
-
     var projectId = project.attr("data-project-id");
     var projectElementId = project.attr("id");
     $("#" + projectElementId + " > .project-title").off("click");
@@ -78,20 +76,19 @@ require(["jquery"], function($) {
     });
     request.done(function() {
       if(request.status !== 204) {
-        console.error("Error sending delete request");
-        return;
+        console.error("[Thimble error] sending delete request for project ", projectId, request.status);
       }
-
-      project.hide({
-        duration: 1000,
-        easing: "linear",
-        done: function() {
-          project.remove();
-        }
-      });
     });
     request.fail(function(jqXHR, status, err) {
       console.error(err);
+    });
+
+    project.hide({
+      duration: 250,
+      easing: "linear",
+      done: function() {
+        project.remove();
+      }
     });
   });
 });
