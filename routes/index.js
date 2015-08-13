@@ -1,12 +1,12 @@
 /**
  * GET for the index.html template
  */
-var querystring = require("querystring");
 var request = require("request");
 var config = require("./config");
 
 // Bramble routes
 var login = require("./login");
+var root = require("./root");
 var home = require("./home");
 var usersProjects = require("./view-user-projects");
 var setProject = require("./set-current-project");
@@ -39,36 +39,12 @@ module.exports = function(utils, nunjucksEnv, appName) {
   config.appName = appName;
   var cryptr = config.cryptr;
   var oauth = config.oauth;
-  var renderHomepage = home(config);
-  var renderUsersProjects = usersProjects(config);
 
   return {
     login: login(config),
-    index: function(req, res) {
-      var qs = querystring.stringify(req.query);
-      if(qs !== "") {
-        qs = "?" + qs;
-      }
-
-      // Only show Thimble if a project has been set for
-      // the current context
-      if(req.session.project) {
-        renderHomepage(req, res);
-        return;
-      }
-
-      // Create a new project for an unauthenticated user
-      // before loading it into Thimble
-      if(!req.user) {
-        res.redirect(301, "/newProject/" + qs);
-      } else {
-        // Ask an authenticated user to select a project
-        // to load into thimble
-        res.redirect(301, "/projects/" + qs);
-      }
-    },
-    projects: renderUsersProjects,
-    homepage: renderHomepage,
+    root: root(config),
+    projects: usersProjects(config),
+    homepage: home(config),
     openProject: setProject(config),
     newProject: newProject(config),
     createOrUpdateProjectFile: createOrUpdateProjectFile(config),
@@ -160,9 +136,7 @@ module.exports = function(utils, nunjucksEnv, appName) {
           } catch(e) {
             return next({status: 500, err: e});
           }
-          // TODO: Save what the user had before logging in
-          // instead of resetting the project loaded
-          req.session.project = null;
+
           res.redirect(301, '/');
         });
       });

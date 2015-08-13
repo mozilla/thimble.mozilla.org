@@ -11,11 +11,12 @@ function sendResponse(res, tarStream) {
 
 module.exports = function(config) {
   return function(req, res) {
-    var project = JSON.parse(JSON.stringify(req.session.project.meta));
+    var remixId = req.params.remixId;
     var user = req.user;
+    var project = user ? req.session.project.meta : null;
 
-    if(!user && req.session.project.remixId) {
-      sendResponse(res, utils.getRemixedProjectFileTar(config, req.session.project.remixId));
+    if(!user && remixId) {
+      sendResponse(res, utils.getRemixedProjectFileTar(config, remixId));
       return;
     }
 

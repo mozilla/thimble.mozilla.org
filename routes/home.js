@@ -1,28 +1,70 @@
 var url = require("url");
 var querystring = require("querystring");
 
-module.exports = function(config) {
-  return function(req, res) {
-    var qs = querystring.stringify(req.query);
-    if(qs !== "") {
-      qs = "?" + qs;
-    }
-    var project = req.session.project && req.session.project.meta;
-    var makedetails = encodeURIComponent(JSON.stringify({
+var Constants = require("../constants");
+var utils = require("./utils");
+
+function getProjectMetadata(config, req, callback) {
+  var project = req.session.project && req.session.project.meta;
+  var anonymousId = req.params.anonymousId;
+  var remixId = req.params.remixId;
+  var projectMetadata;
+
+  if(project) {
+    projectMetadata = {
       id: project.id,
-      userID: req.session.publishUser && req.session.publishUser.id,
+      userID: req.session.publishUser.id,
+      anonymousId: req.session.project.anonymousId,
       title: project.title,
       dateCreated: project.date_created,
       dateUpdated: project.date_updated,
       tags: project.tags,
       description: project.description,
       publishUrl: project.publish_url
-    }));
+    };
+    delete req.session.project.anonymousId;
+
+    callback(null, projectMetadata);
+    return;
+  }
+
+  if(!remixId) {
+    projectMetadata = {
+      anonymousId: anonymousId,
+      title: Constants.DEFAULT_PROJECT_NAME,
+    };
+
+    callback(null, projectMetadata);
+    return;
+  }
+
+  utils.getRemixedProject(config, remixId, function(err, status, project) {
+    if(err) {
+      callback(err);
+      return;
+    }
+
+    projectMetadata = {
+      anonymousId: anonymousId,
+      remixId: remixId,
+      title: project.title,
+      description: project.description
+    };
+
+    callback(null, projectMetadata);
+  });
+}
+
+module.exports = function(config) {
+  return function(req, res) {
+    var qs = querystring.stringify(req.query);
+    if(qs !== "") {
+      qs = "?" + qs;
+    }
 
     var options = {
       appURL: config.appURL,
       csrf: req.csrfToken(),
-      makedetails: makedetails,
       editorHOST: config.editorHOST,
       loginURL: config.appURL + "/login",
       logoutURL: config.logoutURL,
@@ -45,6 +87,15 @@ module.exports = function(config) {
       options.avatar = req.user.avatar;
     }
 
-    res.render("index.html", options);
+    getProjectMetadata(config, req, function(err, projectMetadata) {
+      if(err) {
+        res.sendStatus(500);
+        return;
+      }
+
+      options.projectMetadata = encodeURIComponent(JSON.stringify(projectMetadata));
+
+      res.render("index.html", options);
+    });
   };
 };
