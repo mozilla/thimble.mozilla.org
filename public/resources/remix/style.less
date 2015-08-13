@@ -2,6 +2,8 @@
  * Taken from https://github.com/flukeout/thimble-home
 */
 
+@BASE_Z_INDEX: 100000000;
+
 body {
   padding-top: 64px;
 }
@@ -22,7 +24,7 @@ body {
   background: white;
   padding: 11px 0 11px 76px;
   font-family: "Fira Medium", "Helvetica Neue", sans-serif;
-  z-index: 100000000;
+  z-index: @BASE_Z_INDEX;
 
   .thimble-logo {
     position: absolute;
@@ -110,6 +112,7 @@ body {
   background: transparent;
   padding: 4px 4px 6px 4px;
   border-radius: 2px;
+  z-index: @BASE_Z_INDEX + 1;
 }
 
 .details-bar-remix-button {
