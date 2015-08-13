@@ -88,18 +88,19 @@ function getMetadata($) {
 }
 
 function run() {
-  var $ = window.$;
-  var metadata = getMetadata($);
+  var $$ = $.noConflict(true);
+  $$(document).ready(function($) {
+    var metadata = getMetadata($);
 
-  injectStyleSheet($, metadata);
-  injectDetailsBar($, metadata);
-  customizeScroll($);
+    injectStyleSheet($, metadata);
+    injectDetailsBar($, metadata);
+    customizeScroll($);
+  });
 }
 
 (function(doc, script) {
   script = doc.createElement("script");
   script.type = "text/javascript";
-  script.async = true;
   script.onload = run;
   script.src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js";
   doc.getElementsByTagName("head")[0].appendChild(script);
