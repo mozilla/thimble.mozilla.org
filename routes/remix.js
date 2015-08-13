@@ -1,20 +1,23 @@
 var request = require("request");
+var uuid = require("uuid");
 
 module.exports = function(config) {
   return function(req, res) {
+    var projectId = req.params.projectId;
     var user = req.user;
+    if(!user) {
+      res.redirect("/" + uuid.v1() + "/" + projectId);
+      return;
+    }
+
     var now = req.query.now || (new Date()).toISOString();
     var options = {
-      method: user ? "PUT" : "GET",
-      uri: config.publishURL + "/publishedProjects/" + req.params.projectId
-    };
-
-    if(user) {
-      options.uri += "/remix?now=" + now;
-      options.headers = {
+      method: "PUT",
+      uri: config.publishURL + "/publishedProjects/" + projectId + "/remix?now=" + now,
+      headers: {
         "Authorization": "token " + user.token
-      };
-    }
+      }
+    };
 
     request(options, function(err, response, body) {
       if(err) {
@@ -28,17 +31,9 @@ module.exports = function(config) {
         return;
       }
 
-      var project = JSON.parse(body);
-      req.session.project = {};
-
-      if(!user) {
-        project.title = project.title + " (remix)";
-        project.date_created = now;
-        project.date_updated = project.date_created;
-        req.session.project.remixId = req.params.projectId;
-      }
-
-      req.session.project.meta = project;
+      req.session.project = {
+        meta: JSON.parse(body)
+      };
 
       res.redirect(301, "/");
     });

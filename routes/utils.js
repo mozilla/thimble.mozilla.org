@@ -136,13 +136,35 @@ function updateProject(config, user, data, callback) {
   });
 }
 
-function getProjectFileMetadata(config, user, project, callback) {
-  var url = config.publishURL + "/projects/" + project.id + "/files/meta";
+function getRemixedProject(config, projectId, callback) {
+  var publishURL = config.publishURL + "/publishedProjects/" + projectId;
 
+  request.get({ uri: publishURL }, function(err, response, body) {
+    if(err) {
+      console.error("Failed to send request to " + publishURL + " with: ", err);
+      callback(err, 500);
+      return;
+    }
+
+    if(response.statusCode !== 200) {
+      callback(response.body, response.statusCode);
+      return;
+    }
+
+    var publishedProject = JSON.parse(body);
+    publishedProject.title = publishedProject.title + " (remix)";
+
+    callback(null, 200, publishedProject);
+  });
+}
+
+function getProjectFileMetadata(config, user, project, callback) {
   if(!user) {
     callback(null, 200, defaultProject.getPaths(config.DEFAULT_PROJECT_TITLE));
     return;
   }
+
+  var url = config.publishURL + "/projects/" + project.id + "/files/meta";
 
   request.get({
     url: url,
@@ -209,6 +231,7 @@ module.exports = {
   createProject: createProject,
   persistProjectFiles: persistProjectFiles,
   updateProject: updateProject,
+  getRemixedProject: getRemixedProject,
   getProjectFileMetadata: getProjectFileMetadata,
   getProjectFileTar: getProjectFileTar,
   getRemixedProjectFileMetadata: getRemixedProjectFileMetadata,
