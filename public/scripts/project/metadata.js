@@ -28,6 +28,13 @@ define(function(require) {
     }
   }
 
+  function lockSafeCallback(callback) {
+    return function() {
+      unlock();
+      callback.apply(null, arguments);
+    };
+  }
+
   // Read the entire metadata record from the project root's extended attribute.
   // Callers should acquire the lock before calling getMetadata().
   function getMetadata(root, callback) {
@@ -42,6 +49,8 @@ define(function(require) {
 
   // Look up the publish.webmaker.org file id for this path
   function getFileID(root, path, callback) {
+    callback = lockSafeCallback(callback);
+
     lock(function() {
       getMetadata(root, function(err, value) {
         if(err) {
@@ -49,13 +58,14 @@ define(function(require) {
         }
 
         callback(null, value.paths[path]);
-        unlock();
       });
     });
   }
 
   // Update the files metadata for the project to use the given id for this path
   function setFileID(root, path, id, callback) {
+    callback = lockSafeCallback(callback);
+
     lock(function() {
       getMetadata(root, function(err, value) {
         if(err) {
@@ -65,7 +75,6 @@ define(function(require) {
         value.paths[path] = id;
         fs.setxattr(root, PROJECT_META_KEY, value, function(err) {
           callback(err);
-          unlock();
         });
       });
     });
@@ -73,6 +82,8 @@ define(function(require) {
 
   // Update the files metadata for the project to use the given id for this path
   function removeFile(root, path, callback) {
+    callback = lockSafeCallback(callback);
+
     lock(function() {
       getMetadata(root, function(err, value) {
         if(err) {
@@ -82,7 +93,6 @@ define(function(require) {
         delete value.paths[path];
         fs.setxattr(root, PROJECT_META_KEY, value, function(err) {
           callback(err);
-          unlock();
         });
       });
     });

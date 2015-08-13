@@ -4,6 +4,7 @@ define(function(require) {
   var KeyHandler = require("fc/bramble-keyhandler");
   var BrambleMenus = require("fc/bramble-menus");
   var Underlay = require("fc/bramble-underlay");
+  var Path = Bramble.Filer.Path;
 
   var _escKeyHandler;
 
@@ -49,7 +50,6 @@ define(function(require) {
 
     function showFileState() {
       if(sync) {
-        sync.queueLength++;
         $("#navbar-save-indicator").removeClass("hide");
       }
     }
@@ -260,7 +260,7 @@ define(function(require) {
 
     bramble.on("fileRename", function(oldFilename, newFilename) {
       console.log("thimble side", "fileRename", oldFilename, newFilename);
-      setNavFilename(newFilename);
+      setNavFilename(Path.basename(newFilename));
       showFileState();
     });
   }

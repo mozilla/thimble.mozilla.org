@@ -15,80 +15,67 @@ define(function(require) {
     });
   }
 
-  function pushFileChange(url, csrfToken, fs, path) {
-    var context = this;
+  function fileChange(host, csrfToken, fs, path, callback) {
     var options = {
       headers: {
         "X-Csrf-Token": csrfToken
       },
       type: "PUT",
-      url: url,
+      url: host + "/updateProjectFile",
       cache: false,
       contentType: false,
       processData: false
     };
 
     function send(id) {
-      var error;
       var request;
 
       if(id) {
         options.url = options.url + "/" + id;
       }
 
-      function finish() {
-        context.queueLength--;
-        hideFileState(context.queueLength);
-        triggerCallbacks(context._callbacks.afterEach, [error, path]);
-      }
-
       request = $.ajax(options);
       request.done(function() {
         if(request.status !== 201 && request.status !== 200) {
-          error = request.body;
-          console.error("[Bramble] Server did not persist ", path, ". Server responded with status ", request.status);
+          return callback(new Error("[Bramble] Server did not persist " + path + ". Server responded with status " + request.status));
         }
 
         var data = request.responseJSON;
-        Project.setFileID(path, data.id, finish);
+        Project.setFileID(path, data.id, callback);
       });
       request.fail(function(jqXHR, status, err) {
-        error = err;
         console.error("[Bramble] Failed to send request to persist the file to the server with: ", err);
-        finish();
+        callback(err);
       });
     }
 
     fs.readFile(path, function(err, data) {
-      function onerror(err) {
-        context.queueLength--;
-        console.error("[Thimble] Failed to read ", path, " with ", err);
-        triggerCallbacks(context._callbacks.afterEach, [err, path]);
-      }
-
       if(err) {
-        return onerror(err);
+        return callback(err);
       }
 
       options.data = FileSystemSync.toFormData(path, data);
       Project.getFileID(path, function(err, id) {
         if(err) {
-          return onerror(err);
+          return callback(err);
         }
         send(id);
       });
     });
   }
 
-  function pushFileDelete(url, csrfToken, fs, path) {
+  function handleFileChange(host, csrfToken, fs, path) {
     var context = this;
+    context.queueLength++;
 
-    function finish(err) {
+    fileChange(host, csrfToken, fs, path, function(err) {
       context.queueLength--;
       hideFileState(context.queueLength);
       triggerCallbacks(context._callbacks.afterEach, [err, path]);
-    }
+    });
+  }
 
+  function fileDelete(host, csrfToken, fs, path, callback) {
     function doDelete(id) {
       var request = $.ajax({
         contentType: "application/json",
@@ -96,34 +83,61 @@ define(function(require) {
           "X-Csrf-Token": csrfToken
         },
         type: "PUT",
-        url: url + "/" + id,
+        url: host + "/deleteProjectFile/" + id,
         data: JSON.stringify({dateUpdated: (new Date()).toISOString()})
       });
       request.done(function() {
         if(request.status !== 200) {
-          return finish("[Thimble] Server did not persist ", path, ". Server responded with status ", request.status);
+          return callback(new Error("[Thimble] Server did not persist " + path + ". Server responded with status " + request.status));
         }
 
-        Project.removeFile(path, finish);
+        Project.removeFile(path, callback);
       });
       request.fail(function(jqXHR, status, err) {
         console.error("[Thimble] Failed to send request to delete the file to the server with: ", err);
-        finish(err);
+        callback(err);
       });
     }
 
     Project.getFileID(path, function(err, id) {
       if(err) {
-        return finish(err);
+        return callback(err);
       }
 
       doDelete(id);
     });
   }
 
-  function pushFileRename() {
-    // Needs to be implemented
-    // TODO: update xattrib meta to correct pathname
+  function handleFileDelete(host, csrfToken, fs, path) {
+    var context = this;
+    context.queueLength++;
+
+    fileDelete(host, csrfToken, fs, path, function(err) {
+      context.queueLength--;
+      hideFileState(context.queueLength);
+      triggerCallbacks(context._callbacks.afterEach, [err, path]);
+    });
+  }
+
+  // Two part process (create + delete), which can be done in parallel
+  function handleFileRename(host, csrfToken, fs, oldFilename, newFilename) {
+    var context = this;
+
+    // Step 1: Create the new file
+    context.queueLength++;
+    fileChange(host, csrfToken, fs, newFilename, function(err) {
+      context.queueLength--;
+      hideFileState(context.queueLength);
+      triggerCallbacks(context._callbacks.afterEach, [err, newFilename]);
+    });
+
+    // Step 2: Delete the old file
+    context.queueLength++;
+    fileDelete(host, csrfToken, fs, oldFilename, function(err) {
+      context.queueLength--;
+      hideFileState(context.queueLength);
+      triggerCallbacks(context._callbacks.afterEach, [err, oldFilename]);
+    });
   }
 
   function FSync() {
@@ -138,7 +152,7 @@ define(function(require) {
     };
   }
 
-  FileSystemSync.init = function(authenticated, persistanceUrls, csrfToken) {
+  FileSystemSync.init = function(authenticated, host, csrfToken) {
     // If an anonymous user is using thimble, they
     // will not have any persistence of files
     if(!authenticated) {
@@ -148,20 +162,20 @@ define(function(require) {
     var fsync = new FSync();
     var fs = Bramble.getFileSystem();
 
-    function configHandler(handler, url) {
+    function configHandler(handler) {
       return function() {
         triggerCallbacks(fsync._callbacks.beforeEach, arguments);
 
-        Array.prototype.unshift.call(arguments, url, csrfToken, fs);
+        Array.prototype.unshift.call(arguments, host, csrfToken, fs);
         handler.apply(fsync, arguments);
       };
     }
     Bramble.once("ready", function(bramble) {
       fsync.bramble = bramble;
       fsync.handlers = {
-        change: configHandler(pushFileChange, persistanceUrls.createOrUpdate),
-        del: configHandler(pushFileDelete, persistanceUrls.del),
-        rename: configHandler(pushFileRename, persistanceUrls.rename)
+        change: configHandler(handleFileChange),
+        del: configHandler(handleFileDelete),
+        rename: configHandler(handleFileRename)
       };
 
       bramble.on("fileChange", fsync.handlers.change);

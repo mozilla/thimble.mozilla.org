@@ -14,10 +14,7 @@ define(function(require) {
       var csrfToken = $("meta[name='csrf-token']").attr("content");
       var projectNameComponent;
 
-      var fsync = FileSystemSync.init(authenticated, {
-        createOrUpdate: host + "/updateProjectFile",
-        del: host + "/deleteProjectFile"
-      }, csrfToken);
+      var fsync = FileSystemSync.init(authenticated, host, csrfToken);
 
       // If the user is logged in, make it a bit harder to close while we're syncing
       if(authenticated) {
