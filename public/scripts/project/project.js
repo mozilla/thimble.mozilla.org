@@ -1,7 +1,7 @@
 define(function(require) {
   var Remote = require("../../project/remote");
+  var Metadata = require("../../project/metadata");
   var Path = Bramble.Filer.Path;
-  var PROJECT_META_KEY = "thimble-project-meta";
 
   var _host;
   var _publishUrl;
@@ -47,55 +47,19 @@ define(function(require) {
     Path.join(getRoot(), path);
   }
 
-  // Read the entire metadata record from the project root's extended attribute.
-  function getMetadata(callback) {
-    _fs.getxattr(getRoot(), PROJECT_META_KEY, function(err, value) {
-      if(err && err.code !== 'ENOATTR') {
-        return callback(err);
-      }
-
-      callback(null, value);
-    });
-  }
-
   // Look up the publish.webmaker.org file id for this path
   function getFileID(path, callback) {
-    getMetadata(function(err, value) {
-      if(err) {
-        return callback(err);
-      }
-
-      path = stripRoot(path);
-      callback(null, value.paths[path]);
-    });
+    Metadata.getFileID(getRoot(), stripRoot(path), callback);
   }
 
   // Update the files metadata for the project to use the given id for this path
   function setFileID(path, id, callback) {
-    getMetadata(function(err, value) {
-      if(err) {
-        return callback(err);
-      }
-
-      path = stripRoot(path);
-      value.paths[path] = id;
-
-      _fs.setxattr(getRoot(), PROJECT_META_KEY, value, callback);
-    });
+    Metadata.setFileID(getRoot(), stripRoot(path), id, callback);
   }
 
   // Update the files metadata for the project to use the given id for this path
   function removeFile(path, callback) {
-    getMetadata(function(err, value) {
-      if(err) {
-        return callback(err);
-      }
-
-      path = stripRoot(path);
-      delete value.paths[path];
-
-      _fs.setxattr(getRoot(), PROJECT_META_KEY, value, callback);
-    });
+    Metadata.removeFile(getRoot(), stripRoot(path), callback);
   }
 
   // Set all necesary data for this project, based on makeDetails rendered into page.
@@ -107,8 +71,38 @@ define(function(require) {
     _publishUrl = projectDetails.publishUrl;
     _fs = Bramble.getFileSystem();
 
-    // Now download the project's content (files + metadata) and install into the root
-    Remote.loadProject(_fs, getRoot(), _host, PROJECT_META_KEY, callback);
+    // Step 1: download the project's content (files + metadata) and install into the root
+    Remote.loadProject(getRoot(), _host, function(err) {
+      if(err) {
+        return callback(err);
+      }
+
+      // Step 2: download the project's metadata (project + file IDs on publsih) and
+      // install into an xattrib on the project root.
+      Metadata.loadMetadata(getRoot(), host, function(err) {
+        if(err) {
+          return callback(err);
+        }
+
+        // Find an HTML file to open in the project, hopefully /index.html
+        var sh = new _fs.Shell();
+        sh.find(getRoot(), {name: "*.html"}, function(err, found) {
+          if(err) {
+            return callback(err);
+          }
+
+          // Look for an HTML file to open, ideally index.html
+          var indexPos = 0;
+          found.forEach(function(path, idx) {
+            if(Path.basename(path) === "index.html") {
+              indexPos = idx;
+            }
+          });
+
+          callback(null, found[indexPos]);
+        });
+      });
+    });
   }
 
   return {

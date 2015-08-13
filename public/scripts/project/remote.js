@@ -1,15 +1,10 @@
-define(function(require) {
-  var $ = require("jquery");
-
+define(function() {
   var Path = Bramble.Filer.Path;
   var Buffer = Bramble.Filer.Buffer;
-
-  function addCacheBusting(url) {
-    return url + "?cacheBust=" + (new Date()).toISOString();
-  }
+  var fs = Bramble.getFileSystem();
 
   // Installs a tarball (arraybuffer) containing the project's files/folders.
-  function installTarball(fs, root, tarball, callback) {
+  function installTarball(root, tarball, callback) {
     var untarWorker;
     var pending = null;
     var sh = new fs.Shell();
@@ -62,91 +57,24 @@ define(function(require) {
     untarWorker.postMessage({file: tarball});
   }
 
-  function loadTarball(fs, root, host, callback) {
+  function loadTarball(root, host, callback) {
     // jQuery doesn't seem to support getting the arraybuffer type
-    var url = host + "/getFileContents";
+    var url = host + "/getFileContents?cacheBust=" + (new Date()).toISOString();
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", addCacheBusting(url), true);
+    xhr.open("GET", url, true);
     xhr.responseType = "arraybuffer";
     xhr.onload = function() {
       if(this.status !== 200) {
         return callback(new Error("[Thimble error] unable to get tarball, status was:", this.status));
       }
 
-      installTarball(fs, root, this.response, callback);
+      installTarball(root, this.response, callback);
     };
     xhr.send();
   }
 
-  // Places project metadata (project id, file paths + publish ids) as an
-  // extended attribute on on the project root folder.
-  function setMetadata(fs, root, key, data, callback) {
-    // Data is in the following form, simplify it and make it easier
-    // to get file id using a path:
-    // [{ id: 1, path: "/index.html", project_id: 3 }, ... ]
-    var project = {
-      id: data[0].project_id,
-      paths: {}
-    };
-
-    data.forEach(function(info) {
-      project.paths[info.path] = info.id;
-    });
-
-    fs.setxattr(root, key, project, callback);    
-  }
-
-  function loadMetadata(fs, root, host, key, callback) {
-    var url = host + "/getFileMeta";
-    var request = $.ajax({
-      type: "GET",
-      headers: {
-        "Accept": "application/json"
-      },
-      url: addCacheBusting(url)
-    });
-    request.done(function(data) {
-      setMetadata(fs, root, key, data, callback);
-    });
-    request.fail(function(jqXHR, status, err) {
-      callback(err);
-    });
-  }
-
-  function loadProject(fs, root, host, key, callback) {
-    // Step 1: download the project's content (tarball of files+folders) and
-    // install into the project root dir.
-    loadTarball(fs, root, host, function(err) {
-      if(err) {
-        return callback(err);
-      }
-
-      // Step 2: download the project's metadata (project + file IDs on publsih) and 
-      // install into an xattrib on the project root.
-      loadMetadata(fs, root, host, key, function(err) {
-        if(err) {
-          return callback(err);
-        }
-
-        // Find an HTML file to open in the project, hopefully /index.html
-        var sh = new fs.Shell();
-        sh.find(root, {name: "*.html"}, function(err, found) {
-          if(err) {
-            return callback(err);
-          }
-
-          // Look for an HTML file to open, ideally index.html
-          var indexPos = 0;
-          found.forEach(function(path, idx) {
-            if(Path.basename(path) === "index.html") {
-              indexPos = idx;
-            }
-          });
-
-          callback(null, found[indexPos]);
-        });
-      });
-    });
+  function loadProject(root, host, callback) {
+    loadTarball(root, host, callback);
   }    
   
   return {
