@@ -81,8 +81,10 @@ function configuredCookieSession() {
 }
 
 require("./lib/extendnunjucks").extend(nunjucksEnv, nunjucks);
-
 nunjucksEnv.express(app);
+
+app.disable('x-powered-by');
+app.use(compress());
 
 // adding Content Security Policy (CSP)
 app.use(middleware.addCSP({
@@ -90,8 +92,6 @@ app.use(middleware.addCSP({
   brambleHost: env.get('BRAMBLE_URI')
 }));
 
-// Express settings
-app.disable('x-powered-by');
 app.use(favicon(__dirname + '/public/img/favicon.ico'));
 
 if ( env.get( "ENABLE_GELF_LOGS" ) ) {
@@ -110,7 +110,6 @@ if (!!env.get("FORCE_SSL") ) {
   app.use(helmet.hsts());
   app.enable("trust proxy");
 }
-app.use(compress());
 app.use(bodyParser.json({limit: '5MB'}));
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -146,14 +145,12 @@ app.use(lessMiddleWare('public', {
   optimization: optimize ? 0 : 2
 }));
 
-app.use(express.static(tmpDir));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'public/resources')));
-app.use(express.static(path.join(__dirname, 'learning_projects')));
-app.use(express.static(path.join(__dirname, 'templates')));
-
-// Setting up bower_components
-app.use( "/bower", express.static( path.join(__dirname, "bower_components" )));
+app.use(express.static(tmpDir, {maxAge: "1d"}));
+app.use(express.static(path.join(__dirname, 'public'), {maxAge: "1d"}));
+app.use(express.static(path.join(__dirname, 'public/resources'), {maxAge: "1d"}));
+app.use(express.static(path.join(__dirname, 'learning_projects'), {maxAge: "1d"}));
+app.use(express.static(path.join(__dirname, 'templates'), {maxAge: "1d"}));
+app.use( "/bower", express.static( path.join(__dirname, "bower_components" ), {maxAge: "1d"}));
 
 // what do we do when a project request comes in by name (:name route)?
 app.param('name', parameters.name);
