@@ -170,13 +170,15 @@ define(function(require) {
         handler.apply(fsync, arguments);
       };
     }
+
+    fsync.handlers = {
+      change: configHandler(handleFileChange),
+      del: configHandler(handleFileDelete),
+      rename: configHandler(handleFileRename)
+    };
+
     Bramble.once("ready", function(bramble) {
       fsync.bramble = bramble;
-      fsync.handlers = {
-        change: configHandler(handleFileChange),
-        del: configHandler(handleFileDelete),
-        rename: configHandler(handleFileRename)
-      };
 
       bramble.on("fileChange", fsync.handlers.change);
       bramble.on("fileDelete", fsync.handlers.del);
@@ -287,13 +289,26 @@ define(function(require) {
     this._callbacks.beforeEach.push(callback);
   };
 
+  FSync.prototype.removeBeforeEachCallback = function(callback) {
+    var location = this._callbacks.beforeEach.indexOf(callback);
+
+    if (location !== -1) {
+      this._callbacks.beforeEach.splice(location, 1);
+    }
+  };
+
   // Add a callback to execute after every successful sync
   // Each callback receives `error` and `path` as arguments
   FSync.prototype.addAfterEachCallback = function(callback) {
-    if(typeof callback !== "function") {
-      throw new Error("afterEach must be a function");
-    }
     this._callbacks.afterEach.push(callback);
+  };
+
+  FSync.prototype.removeAfterEachCallback = function(callback) {
+    var location = this._callbacks.afterEach.indexOf(callback);
+
+    if (location !== -1) {
+      this._callbacks.afterEach.splice(location, 1);
+    }
   };
 
   return FileSystemSync;

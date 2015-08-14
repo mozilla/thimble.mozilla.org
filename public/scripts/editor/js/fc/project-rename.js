@@ -2,6 +2,7 @@ define(function(require) {
   var $ = require("jquery");
   var InputField = require("fc/bramble-input-field");
   var KeyHandler = require("fc/bramble-keyhandler");
+  var Project = require("project");
 
   function toggleComponents(context, isSave) {
     var container = context.container;
@@ -54,7 +55,7 @@ define(function(require) {
     var appUrl = this.appUrl;
     var csrfToken = this.csrfToken;
 
-    if(!this.authenticated) {
+    if(!Project.getUser()) {
       callback();
       return;
     }
@@ -98,22 +99,27 @@ define(function(require) {
         return;
       }
 
-      editingComplete(context);
+      Project.setTitle(context.titleBar.val(), function(err) {
+        if (err) {
+          console.error("[Bramble] Failed to update the project internally: ", err);
+          return;
+        }
+        editingComplete(context);
+      });
     });
   }
 
-  function ProjectRenameUtility(appUrl, authenticated, csrfToken, projectTitle) {
+  function ProjectRenameUtility(appUrl, csrfToken) {
     var context = this;
 
     this.appUrl = appUrl;
-    this.authenticated = authenticated;
     this.csrfToken = csrfToken;
     this.container = $("#navbar-project-title");
     this.saveButton = $("#project-rename-save");
     this.renameButton = $("#navbar-rename-project");
     this.titleBar = new InputField(this.container, true);
     this.titleBar.id = "project-title";
-    this.titleBar.val(projectTitle);
+    this.titleBar.val(Project.getTitle());
     this.fs = Bramble.getFileSystem();
 
     this.container.one("click", function(e) {
@@ -123,5 +129,11 @@ define(function(require) {
     });
   }
 
-  return ProjectRenameUtility;
+  function init(appUrl, csrfToken) {
+    return new ProjectRenameUtility(appUrl, csrfToken);
+  }
+
+  return {
+    init: init
+  };
 });

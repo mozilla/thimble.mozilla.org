@@ -3,26 +3,47 @@
  * visible when the user is logged in according
  * the persona SSO that we employ for webmaker.org
  */
-define(["jquery", "uuid", "cookies"], function($, uuid, cookies) {
-  var loginUrl = $("#publish-ssooverride").attr("data-loginUrl");
+define(function(require) {
+  var $ = require("jquery");
+  var uuid = require("uuid");
+  var cookies = require("cookies");
+  var Project = require("project");
 
-  var joinEl = $('#signup-link');
-  var loginEl = $('#login-link');
+  function init() {
+    var loginUrl = $("#publish-ssooverride").attr("data-loginUrl");
+    var joinEl = $('#signup-link');
+    var loginEl = $('#login-link');
 
-  function signIn(newUser) {
-    return function(e) {
-      e.preventDefault();
+    function signIn(newUser) {
+      return function(e) {
+        e.preventDefault();
 
-      cookies.expire("state");
-      cookies.set("state", uuid.v4());
+        cookies.expire("state");
+        cookies.set("state", uuid.v4());
 
-      window.location = loginUrl + (newUser ? "?signup=true" : "");
-    };
+        var location = loginUrl;
+        location += "?title=" + encodeURIComponent(Project.getTitle());
+
+        if (newUser) {
+          location += "&signup=true";
+        }
+
+        if (Project.getAnonymousId()) {
+          location += "&anonymousId=" + Project.getAnonymousId();
+        }
+
+        window.location = location + "&now=" + (new Date()).toISOString();
+      };
+    }
+
+    // Signup login flow
+    joinEl.on('click', signIn(true));
+
+    // Login flow
+    loginEl.on('click', signIn());
   }
 
-  // Signup login flow
-  joinEl.on('click', signIn(true));
-
-  // Login flow
-  loginEl.on('click', signIn());
+  return {
+    init: init
+  };
 });

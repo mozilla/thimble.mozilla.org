@@ -1,4 +1,5 @@
 define(function(require) {
+  var Constants = require("constants");
   var Remote = require("../../project/remote");
   var Metadata = require("../../project/metadata");
   var Path = Bramble.Filer.Path;
@@ -10,8 +11,36 @@ define(function(require) {
   var _id;
   var _title;
   var _fs;
+  var _anonymousId;
+  var _remixId;
+  var _description;
 
-  // _description?
+  function getAnonymousId() {
+    return _anonymousId;
+  }
+
+  function getDescription() {
+    return _description;
+  }
+
+  function setDescription(newDescription) {
+    _description = newDescription;
+  }
+
+  function getTitle() {
+    return _title;
+  }
+
+  function setTitle(title, callback) {
+    Metadata.setTitle(getRoot(), title, function(err) {
+      if (err) {
+        return callback(err);
+      }
+
+      _title = title;
+      callback();
+    });
+  }
 
   function getUser() {
     return _user;
@@ -31,7 +60,7 @@ define(function(require) {
 
   function getRoot() {
     if(!_user) {
-      return Path.join("/", _title);
+      return Path.join(Constants.ANONYMOUS_USER_FOLDER, _anonymousId.toString());
     }
 
     return Path.join("/", _user.toString(), "projects", _id.toString());
@@ -62,24 +91,70 @@ define(function(require) {
     Metadata.removeFile(getRoot(), stripRoot(path), callback);
   }
 
-  // Set all necesary data for this project, based on makeDetails rendered into page.
-  function load(projectDetails, host, authenticated, callback) {
+  function init(projectDetails, host, callback) {
     _user = projectDetails.userID;
     _id = projectDetails.id;
-    _title = projectDetails.title;
+    _anonymousId = projectDetails.anonymousId;
+    _remixId = projectDetails.remixId;
     _host = host;
     _publishUrl = projectDetails.publishUrl;
     _fs = Bramble.getFileSystem();
+    _description = projectDetails.description;
 
+    // We have to check if we can access the 'title' stored
+    // on an xattr first to know which value
+    Metadata.getTitle(getRoot(), function(err, title) {
+      if (err) {
+        if (err.code !== "ENOENT") {
+          return callback(err);
+        } else if (!_user && err.code === "ENOENT") {
+          _title = projectDetails.title;
+          return callback();
+        }
+      }
+
+      if (_user) {
+        // Always trust the server instead of what was
+        // stored on the xattr since a user might have changed it
+        // in another browser
+        _title = projectDetails.title;
+      } else if (title) {
+        // Prefer the stored title in the anonymous case in case the
+        // anonymous user changed it
+        _title = title;
+      } else {
+        _title = projectDetails.title;
+      }
+
+      callback();
+    });
+  }
+
+  // Set all necesary data for this project, based on makeDetails rendered into page.
+  function load(fsync, callback) {
     // Step 1: download the project's content (files + metadata) and install into the root
-    Remote.loadProject(getRoot(), _host, function(err) {
+    Remote.loadProject({
+      root: getRoot(),
+      host: _host,
+      user: _user,
+      remixId: _remixId,
+      anonymousId: _anonymousId,
+      fsync: fsync
+    }, function(err) {
       if(err) {
         return callback(err);
       }
 
-      // Step 2: download the project's metadata (project + file IDs on publsih) and
+      // Step 2: download the project's metadata (project + file IDs on publish) and
       // install into an xattrib on the project root.
-      Metadata.loadMetadata(getRoot(), host, function(err) {
+      Metadata.load({
+        root: getRoot(),
+        host: _host,
+        user: _user,
+        remixId: _remixId,
+        id: _id,
+        title: _title
+      }, function(err) {
         if(err) {
           return callback(err);
         }
@@ -106,16 +181,24 @@ define(function(require) {
   }
 
   return {
+    init: init,
     load: load,
+
     getRoot: getRoot,
     getUser: getUser,
     getID: getID,
     getHost: getHost,
     getPublishUrl: getPublishUrl,
-    stripRoot: stripRoot,
-    addRoot: addRoot,
     getFileID: getFileID,
     setFileID: setFileID,
+    getTitle: getTitle,
+    setTitle: setTitle,
+    getDescription: getDescription,
+    setDescription: setDescription,
+    getAnonymousId: getAnonymousId,
+
+    stripRoot: stripRoot,
+    addRoot: addRoot,
     removeFile: removeFile
   };
 });
