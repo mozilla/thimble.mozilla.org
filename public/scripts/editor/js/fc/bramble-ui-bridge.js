@@ -5,6 +5,7 @@ define(function(require) {
   var BrambleMenus = require("fc/bramble-menus");
   var Underlay = require("fc/bramble-underlay");
   var Path = Bramble.Filer.Path;
+  var Project = require("project");
 
   var _escKeyHandler;
 
@@ -201,13 +202,13 @@ define(function(require) {
       });
     }
 
-    if(options.authenticated) {
+    if (Project.getUser()) {
       //Publish button
       $("#navbar-publish-button").click(showPublishDialog);
       $("#publish-button-cancel").click(hidePublishDialog);
 
       publisher = new Publisher(options);
-      publisher.init(options.project);
+      publisher.init();
     }
 
     //Change file name in editor nav
