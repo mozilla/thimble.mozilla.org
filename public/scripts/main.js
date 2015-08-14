@@ -8,7 +8,8 @@ require.config({
     "localized": "/bower/webmaker-i18n/localized",
     "uuid": "/bower/node-uuid/uuid",
     "cookies": "/bower/cookies-js/dist/cookies",
-    "project": "../../project/project"
+    "project": "../../project/project",
+    "constants": "../../constants"
   },
   shim: {
     "jquery": {
@@ -23,20 +24,35 @@ require.config({
   }
 });
 
-define(["bramble-editor", "sso-override"], function(BrambleEditor) {
+define(function(require) {
+  var BrambleEditor = require("bramble-editor");
+  var Project = require("project");
+  var SSOOverride = require("sso-override");
+  var ProjectRenameUtility = require("fc/project-rename");
+
   var thimbleScript = document.getElementById("thimble-script");
   var appUrl = thimbleScript.getAttribute("data-app-url");
-  var makeDetails = thimbleScript.getAttribute("data-make-details");
+  var projectDetails = thimbleScript.getAttribute("data-project-details");
   var editorUrl = thimbleScript.getAttribute("data-editor-url");
   var editorHost = thimbleScript.getAttribute("data-editor-host");
 
-  // unpack makedetails
-  makeDetails = JSON.parse(decodeURIComponent(makeDetails));
+  // Unpack projectDetails details
+  projectDetails = JSON.parse(decodeURIComponent(projectDetails));
 
-  BrambleEditor.create({
-    makeDetails: makeDetails,
-    editorUrl: editorUrl,
-    editorHost: editorHost,
-    appUrl: appUrl
+  Project.init(projectDetails, editorHost, function(err) {
+    if (err) {
+      console.error("[Bramble] Failed to load Project state, with", err);
+    }
+
+    // Initialize the project name UI
+    ProjectRenameUtility.init(editorHost, BrambleEditor.csrfToken);
+
+    // Initialize the login links
+    SSOOverride.init();
+
+    BrambleEditor.create({
+      editorUrl: editorUrl,
+      appUrl: appUrl
+    });
   });
 });

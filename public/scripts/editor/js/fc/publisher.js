@@ -40,7 +40,7 @@ define(function(require) {
     this.button = $("#navbar-publish-button");
   }
 
-  Publisher.prototype.init = function(project) {
+  Publisher.prototype.init = function() {
     var publisher = this;
     var dialog = publisher.dialog;
     publisher.dialog.trackSyncChanges = true;
@@ -51,8 +51,8 @@ define(function(require) {
       unpublishedChangesPrompt: unpublishedChangesPrompt.bind(publisher)
     };
 
-    if(project.description) {
-      dialog.description.val(project.description);
+    if(Project.getDescription()) {
+      dialog.description.val(Project.getDescription());
     }
 
     if(Project.getPublishUrl()) {
@@ -96,6 +96,8 @@ define(function(require) {
     function setState(done) {
       var buttons = dialog.buttons;
       var toggle = done ? "on" : "off";
+
+      Project.setDescription(publisher.dialog.description.val());
 
       publisher.togglePublishState(toggle);
       buttons.publish.text(done ? TEXT_PUBLISH : TEXT_PUBLISHING);
