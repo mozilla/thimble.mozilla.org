@@ -34,18 +34,17 @@ define(function(require) {
   var appUrl = thimbleScript.getAttribute("data-app-url");
   var projectDetails = thimbleScript.getAttribute("data-project-details");
   var editorUrl = thimbleScript.getAttribute("data-editor-url");
-  var editorHost = thimbleScript.getAttribute("data-editor-host");
 
   // Unpack projectDetails details
   projectDetails = JSON.parse(decodeURIComponent(projectDetails));
 
-  Project.init(projectDetails, editorHost, function(err) {
+  Project.init(projectDetails, appUrl, function(err) {
     if (err) {
       console.error("[Bramble] Failed to load Project state, with", err);
     }
 
     // Initialize the project name UI
-    ProjectRenameUtility.init(editorHost, BrambleEditor.csrfToken);
+    ProjectRenameUtility.init(appUrl, BrambleEditor.csrfToken);
 
     // Initialize the login links
     SSOOverride.init();

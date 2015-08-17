@@ -99,7 +99,7 @@ define(function(require) {
         return;
       }
 
-      Project.setTitle(Project.getRoot(), context.titleBar.val(), function(err) {
+      Project.setTitle(context.titleBar.val(), function(err) {
         if (err) {
           console.error("[Bramble] Failed to update the project internally: ", err);
           return;

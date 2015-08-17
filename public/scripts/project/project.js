@@ -32,7 +32,14 @@ define(function(require) {
   }
 
   function setTitle(title, callback) {
-    Metadata.setTitle(title, callback);
+    Metadata.setTitle(getRoot(), title, function(err) {
+      if (err) {
+        return callback(err);
+      }
+
+      _title = title;
+      callback();
+    });
   }
 
   function getUser() {
@@ -98,11 +105,12 @@ define(function(require) {
     // on an xattr first to know which value
     Metadata.getTitle(getRoot(), function(err, title) {
       if (err) {
-        if (!_user && err.code === 'ENOENT') {
+        if (err.code !== "ENOENT") {
+          return callback(err);
+        } else if (!_user && err.code === "ENOENT") {
           _title = projectDetails.title;
-          return callback();
+          return Metadata.setTitle(getRoot(), _title, callback);
         }
-        return callback(err);
       }
 
       if (_user) {
@@ -118,7 +126,7 @@ define(function(require) {
         _title = projectDetails.title;
       }
 
-      callback();
+      Metadata.setTitle(getRoot(), _title, callback);
     });
   }
 
@@ -139,7 +147,7 @@ define(function(require) {
 
       // Step 2: download the project's metadata (project + file IDs on publish) and
       // install into an xattrib on the project root.
-      Metadata.loadMetadata({
+      Metadata.load({
         root: getRoot(),
         host: _host,
         user: _user,

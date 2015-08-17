@@ -170,13 +170,15 @@ define(function(require) {
         handler.apply(fsync, arguments);
       };
     }
+
+    fsync.handlers = {
+      change: configHandler(handleFileChange),
+      del: configHandler(handleFileDelete),
+      rename: configHandler(handleFileRename)
+    };
+
     Bramble.once("ready", function(bramble) {
       fsync.bramble = bramble;
-      fsync.handlers = {
-        change: configHandler(handleFileChange),
-        del: configHandler(handleFileDelete),
-        rename: configHandler(handleFileRename)
-      };
 
       bramble.on("fileChange", fsync.handlers.change);
       bramble.on("fileDelete", fsync.handlers.del);

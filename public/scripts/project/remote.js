@@ -165,15 +165,23 @@ define(function(require) {
 
     // First, check if this anonymous project already exists by checking the
     // root. If it exists, we've done this before and no loading is required
-    fs.mkdirp(config.root, function(err) {
+    fs.stat(config.root, function(err) {
       if (err) {
-        if (err !== 'EEXIST') {
+        if (err.code !== "ENOENT") {
           return callback(err);
         }
-        return callback();
-      }
 
-      loadTarball(config, callback);
+        // Anonymous project does not exist
+        (new fs.Shell()).mkdirp(config.root, function(err) {
+          if (err) {
+            return callback(err);
+          }
+
+          loadTarball(config, callback);
+        });
+      } else {
+        callback();
+      }
     });
   }
 
