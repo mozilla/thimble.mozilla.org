@@ -1,10 +1,13 @@
 module.exports = function(config) {
   return function(req, res) {
     req.session.project = {
-      anonymousId: req.query.anonymousId,
-      meta: {
-        date_created: req.query.now,
-        date_updated: req.query.now
+      migrate: {
+        anonymousId: req.query.anonymousId,
+        meta: {
+          title: req.query.title,
+          date_created: req.query.now,
+          date_updated: req.query.now
+        }
       }
     };
 

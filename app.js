@@ -165,21 +165,25 @@ app.get("/login", routes.login);
 // resource proxying for http-on-https
 webmakerProxy(app, middleware.checkForAuth);
 
-// Main page
-app.get('/:anonymousId?/:remixId?',
+// Entry point for authenticated users
+app.get('/',
+        middleware.redirectAnonymousUsers,
         middleware.setNewPageOperation,
         middleware.setUserIfTokenExists,
         middleware.setPublishUser,
         routes.root);
 
+// Entry point for anonymous users
+app.get('/anonymous/:anonymousId/:remixId?',
+        middleware.redirectAuthenticatedUsers,
+        routes.main);
+
 app.get('/getFileContents/:remixId?',
         middleware.setUserIfTokenExists,
-        middleware.isProjectLoaded,
         routes.getFileContents);
 
 app.get('/getFileMeta/:remixId?',
         middleware.setUserIfTokenExists,
-        middleware.isProjectLoaded,
         routes.getFileMetadata);
 
 app.get('/projects',

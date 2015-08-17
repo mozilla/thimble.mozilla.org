@@ -6,9 +6,13 @@ var utils = require("./utils");
 
 function getProjectMetadata(config, req, callback) {
   var project = req.session.project && req.session.project.meta;
-  var anonymousId = req.params.anonymousId;
   var remixId = req.params.remixId;
   var projectMetadata;
+  var anonymousId = req.params.anonymousId;
+  console.log("Project: ", req.session.project);
+  if(anonymousId) {
+    anonymousId = anonymousId.replace("^id-", "");
+  }
 
   if(project) {
     projectMetadata = {
