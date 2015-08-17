@@ -57,7 +57,40 @@ define(function(require) {
           return callback(err);
         }
 
-        callback(null, value.paths[path]);
+        callback(null, value && value.paths[path]);
+      });
+    });
+  }
+
+  // Look up the title for this project
+  function getTitle(root, callback) {
+    callback = lockSafeCallback(callback);
+
+    lock(function() {
+      getMetadata(root, function(err, value) {
+        if(err) {
+          return callback(err);
+        }
+
+        callback(null, value && value.title);
+      });
+    });
+  }
+
+  // Update the files metadata for the project to use the title
+  function setTitle(root, title, callback) {
+    callback = lockSafeCallback(callback);
+
+    lock(function() {
+      getMetadata(root, function(err, value) {
+        if(err) {
+          return callback(err);
+        }
+
+        value = value || {};
+        value.title = title;
+
+        fs.setxattr(root, PROJECT_META_KEY, value, callback);
       });
     });
   }
@@ -72,6 +105,7 @@ define(function(require) {
           return callback(err);
         }
 
+        value = value || { paths: {} };
         value.paths[path] = id;
         fs.setxattr(root, PROJECT_META_KEY, value, function(err) {
           callback(err);
@@ -101,24 +135,33 @@ define(function(require) {
   // Places project metadata (project id, file paths + publish ids) as an
   // extended attribute on on the project root folder. We don't lock here
   // because installing the metadata only happens once on startup.
-  function setMetadata(root, data, callback) {
-    // Data is in the following form, simplify it and make it easier
-    // to get file id using a path:
-    // [{ id: 1, path: "/index.html", project_id: 3 }, ... ]
+  function setMetadata(config, callback) {
     var project = {
-      id: data[0].project_id,
-      paths: {}
+      title: config.title
     };
 
-    data.forEach(function(info) {
-      project.paths[info.path] = info.id;
-    });
+    // If it exists, data is in the following form, simplify it and make it easier
+    // to get file id using a path:
+    // [{ id: 1, path: "/index.html", project_id: 3 }, ... ]
+    if (config.data) {
+      project.id = config.id;
+      project.paths = {};
 
-    fs.setxattr(root, PROJECT_META_KEY, project, callback);
+      config.data.forEach(function(info) {
+        project.paths[info.path] = info.id;
+      });
+    }
+
+    fs.setxattr(config.root, PROJECT_META_KEY, project, callback);
   }
 
-  function loadMetadata(root, host, callback) {
-    var url = host + "/getFileMeta?cacheBust=" + (new Date()).toISOString();
+  function fetchMetadata(config, callback) {
+    var url = config.host + "/getFileMeta";
+    if (config.remixId) {
+      url += "/" + config.remixId;
+    }
+    url += "?cacheBust=" + (new Date()).toISOString();
+
     var request = $.ajax({
       type: "GET",
       headers: {
@@ -127,17 +170,53 @@ define(function(require) {
       url: url
     });
     request.done(function(data) {
-      setMetadata(root, data, callback);
+      callback(null, data);
     });
     request.fail(function(jqXHR, status, err) {
       callback(err);
     });
   }
 
+  function loadAnonymous(config, callback) {
+    callback = lockSafeCallback(callback);
+
+    lock(function() {
+      fs.getxattr(config.root, PROJECT_META_KEY, function(err) {
+        // We use this because `getMetadata()` swallows the 'ENOATTR'
+        // error, which we use to know whether to write
+        if(err) {
+          if(err.code !== 'ENOATTR') {
+            return callback(err);
+          }
+          return setMetadata(config, callback);
+        }
+
+        callback();
+      });
+    });
+  }
+
+  function load(config, callback) {
+    if (config.user) {
+      return fetchMetadata(config, function(err, data) {
+        setMetadata({
+          data: data,
+          root: config.root,
+          user: config.user,
+          title: config.title
+        }, callback);
+      });
+    }
+
+    loadAnonymous(config, callback);
+  }
+
   return {
-    loadMetadata: loadMetadata,
+    load: load,
     getFileID: getFileID,
     setFileID: setFileID,
+    getTitle: getTitle,
+    setTitle: setTitle,
     removeFile: removeFile
   };
 });

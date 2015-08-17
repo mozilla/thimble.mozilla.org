@@ -1,19 +1,17 @@
 define(function(require) {
   var $ = require("jquery"),
       BrambleUIBridge = require("fc/bramble-ui-bridge"),
-      ProjectRenameUtility = require("fc/project-rename"),
       FileSystemSync = require("fc/filesystem-sync"),
       SyncState = require("fc/sync-state"),
       Project = require("project");
 
+  var csrfToken = $("meta[name='csrf-token']").attr("content");
+
   return {
+    csrfToken: csrfToken,
     create: function(options) {
-      var makeDetails = options.makeDetails;
       var host = options.appUrl;
       var authenticated = !!($("#publish-ssooverride").attr("data-oauth-username"));
-      var csrfToken = $("meta[name='csrf-token']").attr("content");
-      var projectNameComponent;
-
       var fsync = FileSystemSync.init(authenticated, host, csrfToken);
 
       // If the user is logged in, make it a bit harder to close while we're syncing
@@ -35,7 +33,7 @@ define(function(require) {
       });
 
       // Start loading the project files
-      Project.load(makeDetails, host, authenticated, function(err, fileToOpen) {
+      Project.load(fsync, function(err, fileToOpen) {
         if(err) {
           console.error("[Thimble Error]", err);
           return;
@@ -52,19 +50,13 @@ define(function(require) {
 
         BrambleUIBridge.init(bramble, {
           sync: fsync,
-          project: makeDetails,
-          appUrl: host,
-          authenticated: authenticated
+          appUrl: host
         });
       });
 
       Bramble.on("error", function(err) {
         console.error("[Bramble Error]", err);
       });
-
-      // Update the Project Title in the UI and allow it to be renamed
-      // TODO: should this be in BrambleUIBradge or Project or a combo?  Seems wrong here.
-      projectNameComponent = new ProjectRenameUtility(host, authenticated, csrfToken, makeDetails.title);
     }
   };
 });
