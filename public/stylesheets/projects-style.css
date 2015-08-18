@@ -1,6 +1,7 @@
 body {
-	font-family: 'Open Sans', sans-serif;
-	font-size: 1em;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1em;
+  overflow: hidden;
 }
 
 #container {
