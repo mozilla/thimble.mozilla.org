@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
     <!-- Generator: Sketch 3.3.3 (12081) - http://www.bohemiancoding.com/sketch -->
-    <title>plus-white</title>
+    <title>minus-white</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="plus-white" sketch:type="MSArtboardGroup" fill="#FFFFFF">
-            <g id="plus" sketch:type="MSLayerGroup">
-                <path d="M7.99925,0.6895 L7.99925,5.9885 L13.32275,5.9885 L13.32275,8.00975 L7.99925,8.00975 L7.99925,13.30875 L5.9885,13.30875 L5.9885,8.0115 L0.67725,8.0115 L0.67725,5.9885 L5.9885,5.9885 L5.9885,0.6895 L7.99925,0.6895 L7.99925,0.6895 Z" id="Shape" sketch:type="MSShapeGroup"></path>
+        <g id="minus-white" sketch:type="MSArtboardGroup" fill="#FFFFFF">
+            <g id="plus" sketch:type="MSLayerGroup" transform="translate(1.000000, 5.000000)">
+                <path d="M11.161375,0.9885 L11.161375,3.00975 L0.838625,3.0115 L0.838625,0.9885 L11.161375,0.9885 Z" id="Shape" sketch:type="MSShapeGroup"></path>
             </g>
         </g>
     </g>

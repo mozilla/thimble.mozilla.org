@@ -376,8 +376,16 @@
 #editor-pane-nav-decrease-font {
   margin-left: auto;
   margin-right: 5px;
+  background-image: url("/img/icon/minus-white.svg");
 }
+#editor-pane-nav-increase-font {
+  background-image: url("/img/icon/plus-white.svg");
+}
+
 .font-size-button{
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
   background-color: #55986C;
   height: 10px;
   width: 10px;
@@ -387,16 +395,6 @@
   font-size: 1.2em;
   display: inline-block;
   .icon;
-
-  span.font-size-plus {
-    position:relative;
-    top: -8px;
-  }
-  span.font-size-minus {
-    position:relative;
-    top: -9px;
-    left: 2px;
-  }
 }
 
 /* Theme toggle*/
@@ -416,27 +414,27 @@
     img {
       position: absolute;
       top: 100px;
-      left: 165px;
+      left: 164px;
     }
   }
+
   div#theme-light {
     z-index: 11;
-
     img {
       position: absolute;
       top: 98px;
-      left: 193px;
+      left: 195px;
     }
   }
 
   div#theme-active {
     border-radius: 50%;
     background-color: white;
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     position: absolute;
     z-index: 10;
-    top: 92px;
+    top: 93px;
     left: 188px;
   }
 }

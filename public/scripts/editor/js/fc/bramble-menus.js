@@ -29,7 +29,7 @@ define(function(require) {
 
         // Active Indicator
         $("#theme-active").css("position", "absolute").animate({
-          left: 187
+          left: 190
         });
       } else if(theme === "dark-theme") {
         bramble.useDarkTheme();
