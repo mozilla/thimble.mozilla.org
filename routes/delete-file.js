@@ -4,13 +4,8 @@ var utils = require("./utils");
 module.exports = function(config) {
   return function(req, res) {
     var user = req.user;
-    var project = req.session.project.meta;
+    var project = req.project;
     var fileId = req.params.fileId;
-
-    if(!fileId) {
-      res.status(400).send({error: "Missing file id "});
-      return;
-    }
 
     request({
       method: "DELETE",
@@ -30,9 +25,9 @@ module.exports = function(config) {
         return;
       }
 
-      project.date_updated = req.body.dateUpdated;
+      project.date_updated = req.query.dateUpdated || (new Date()).toISOString();
 
-      utils.updateProject(config, user, project, function(err, status, project) {
+      utils.updateProject(config, user, project, function(err, status) {
         if(err) {
           if(status === 500) {
             res.sendStatus(500);
@@ -41,8 +36,6 @@ module.exports = function(config) {
           }
           return;
         }
-
-        req.session.project.meta = project;
 
         res.sendStatus(200);
       });

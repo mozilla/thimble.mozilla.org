@@ -3,16 +3,15 @@ var utils = require("./utils");
 module.exports = function(config) {
   return function(req, res) {
     var user = req.user;
-    var project = user ? req.session.project.meta : null;
-    var remixId = req.params.remixId;
+    var projectId = req.params.projectId;
     var getMetadata = utils.getProjectFileMetadata;
     var params = [config];
 
-    if(!user && remixId) {
+    if(!user && projectId) {
       getMetadata = utils.getRemixedProjectFileMetadata;
-      params.push(remixId);
+      params.push(projectId);
     } else {
-      params.push(user, project);
+      params.push(user, projectId);
     }
 
     params.push(function(err, status, metadata) {

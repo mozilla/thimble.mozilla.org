@@ -12,7 +12,7 @@ module.exports = function(config) {
 
     var user = req.user;
     var token = user.token;
-    var project = req.session.project.meta;
+    var project = req.project;
     var dateUpdated = req.body.dateUpdated;
     var file = req.file;
     var fileId = req.params.fileId;
@@ -86,7 +86,7 @@ module.exports = function(config) {
 
           project.date_updated = dateUpdated;
 
-          utils.updateProject(config, user, project, function(err, status, project) {
+          utils.updateProject(config, user, project, function(err, status) {
             if(err) {
               if(status === 500) {
                 res.sendStatus(500);
@@ -96,8 +96,6 @@ module.exports = function(config) {
               cleanup();
               return;
             }
-
-            req.session.project.meta = project;
 
             res.status(httpMethod === "post" ? 201 : 200).send(body);
             cleanup();

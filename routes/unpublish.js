@@ -3,7 +3,7 @@ var utils = require("./utils");
 
 module.exports = function(config) {
   return function(req, res) {
-    var project = JSON.parse(JSON.stringify(req.session.project.meta));
+    var project = req.project;
     project.description = req.body.description;
     // Uncomment the line below once https://github.com/mozilla/publish.webmaker.org/issues/98 is done
     // project.public = req.body.public;
@@ -19,7 +19,6 @@ module.exports = function(config) {
         return;
       }
 
-      req.session.project.meta = project;
       var unpublishURL = config.publishURL + "/projects/" + project.id + "/unpublish";
 
       request({
@@ -39,8 +38,6 @@ module.exports = function(config) {
           res.status(response.statusCode).send({error: response.body});
           return;
         }
-
-        delete req.session.project.meta.publish_url;
 
         res.sendStatus(200);
       });

@@ -13,7 +13,7 @@ module.exports = function(config) {
       title: Constants.DEFAULT_PROJECT_NAME,
       date_created: now,
       date_updated: now,
-      user_id: user ? req.session.publishUser.id : null
+      user_id: user && user.publishId
     };
 
     delete req.query.now;
@@ -33,9 +33,6 @@ module.exports = function(config) {
         return;
       }
 
-      req.session.project = {};
-      req.session.project.meta = project;
-
       var defaultFiles = defaultProject.getAsStreams(config.DEFAULT_PROJECT_TITLE);
       utils.persistProjectFiles(config, user, project, defaultFiles, function(err, status) {
         if(err) {
@@ -47,7 +44,8 @@ module.exports = function(config) {
           return;
         }
 
-        res.redirect(301, "/" + qs);
+        qs = qs === "" ? "?" : qs + "&";
+        res.redirect(301, "/" + qs + "newProjectId=" + project.id);
       });
     });
   };

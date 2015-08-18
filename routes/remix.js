@@ -31,11 +31,7 @@ module.exports = function(config) {
         return;
       }
 
-      req.session.project = {
-        meta: JSON.parse(body)
-      };
-
-      res.redirect(301, "/");
+      res.redirect(301, "/user/" + user.username + "/" + JSON.parse(body).id);
     });
   };
 };

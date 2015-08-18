@@ -7,10 +7,9 @@ var config = require("./config");
 // Bramble routes
 var login = require("./login");
 var root = require("./root");
-var main = require("./main");
-var home = require("./home");
+var mainAuthenticated = require("./main-authenticated");
+var mainAnonymous = require("./main-anonymous");
 var usersProjects = require("./view-user-projects");
-var setProject = require("./set-current-project");
 var getFileContents = require("./get-file-contents");
 var getFileMetadata = require("./get-file-metadata");
 var newProject = require("./new-project");
@@ -43,21 +42,28 @@ module.exports = function(utils, nunjucksEnv, appName) {
 
   return {
     login: login(config),
-    root: root(config),
-    main: main(config),
-    projects: usersProjects(config),
-    homepage: home(config),
-    openProject: setProject(config),
-    newProject: newProject(config),
-    createOrUpdateProjectFile: createOrUpdateProjectFile(config),
-    deleteProjectFile: deleteProjectFile(config),
-    getFileContents: getFileContents(config),
-    getFileMetadata: getFileMetadata(config),
-    deleteProject: deleteProject(config),
-    renameProject: renameProject(config),
-    publish: publish(config),
-    unpublish: unpublish(config),
-    remix: remix(config),
+    main: {
+      root: root(config),
+      authenticated: mainAuthenticated(config),
+      anonymous: mainAnonymous(config),
+    },
+    projects: {
+      read: usersProjects(config),
+      create: newProject(config),
+      del: deleteProject(config),
+      rename: renameProject(config),
+      publish: publish(config),
+      unpublish: unpublish(config),
+      remix: remix(config)
+    },
+    files: {
+      read: {
+        data: getFileContents(config),
+        metadata: getFileMetadata(config)
+      },
+      createUpdate: createOrUpdateProjectFile(config),
+      del: deleteProjectFile(config),
+    },
     tutorialTemplate: tutorial.template(config),
     tutorialStyleGuide: tutorial.styleGuide(config),
 

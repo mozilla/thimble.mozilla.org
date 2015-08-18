@@ -27,10 +27,6 @@ module.exports = function(config) {
         return;
       }
 
-      if(req.session.project && req.session.project.meta.id == projectId) {
-        delete req.session.project;
-      }
-
       res.sendStatus(204);
     });
   };

@@ -4,15 +4,16 @@ var querystring = require("querystring");
 module.exports = function(config) {
   return function(req, res) {
     var publishURL = config.publishURL;
+    var user = req.user;
     var qs = querystring.stringify(req.query);
     if(qs !== "") {
       qs = "?" + qs;
     }
 
     request.get({
-      url: publishURL + "/users/" + req.session.publishUser.id + "/projects",
+      url: publishURL + "/users/" + user.publishId + "/projects",
       headers: {
-        "Authorization": "token " + req.user.token
+        "Authorization": "token " + user.token
       }
     }, function(err, response, body) {
       if(err) {
@@ -22,7 +23,7 @@ module.exports = function(config) {
 
       if (response.statusCode === 404) {
         // If there aren't any projects for this user, create one with a redirect
-        res.redirect(301, "/newProject" + qs);
+        res.redirect(301, "/projects/new" + qs);
         return;
       }
 
@@ -34,8 +35,8 @@ module.exports = function(config) {
       var options = {
         csrf: req.csrfToken ? req.csrfToken() : null,
         HTTP_STATIC_URL: "/",
+        username: user.username,
         projects: response.statusCode === 200 ? JSON.parse(body) : [],
-        PROJECT_URL: "project",
         editorHOST: config.editorHOST
       };
 

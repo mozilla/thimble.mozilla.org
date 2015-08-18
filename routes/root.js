@@ -1,37 +1,46 @@
 var querystring = require("querystring");
+var uuid = require("uuid");
 
-var home = require("./home");
 var utils = require("./utils");
 
 module.exports = function(config) {
-  var homepage = home(config);
-
   return function(req, res) {
+    var user = req.user;
+    var migrateProject = req.session.project && req.session.project.migrate;
+    var newProjectId = req.query.newProjectId;
+    delete req.query.newProjectId;
+
     var qs = querystring.stringify(req.query);
     if(qs !== "") {
       qs = "?" + qs;
     }
 
-    // Only show Thimble if a project has been set for
-    // the current context
-    if(!req.session.project) {
-      // Otherwise, ask an authenticated user to select
-      // a project to load into thimble
+    // Anonymous user: redirect to the anonymous entry point
+    if(!user) {
+      res.redirect(301, "/anonymous/" + uuid.v1() + qs);
+      return;
+    }
+
+    // Authenticated user creating a new project: redirect to the authenticated
+    // entry point with the newly created project id
+    if(newProjectId) {
+      res.redirect(301, "/user/" + user.username + "/" + newProjectId + qs);
+      return;
+    }
+
+    // Authenticated user without a selected project: redirect to the project
+    // list page
+    if(!migrateProject) {
       res.redirect(301, "/projects/" + qs);
       return;
     }
 
-    // If we aren't migrating a project from an anonymous
-    // user to an authenticated user, show Thimble immediately
-    if(!req.session.project.migrate) {
-      homepage(req, res);
-      return;
-    }
+    // Authenticated user migrating an anonymous project: create the project
+    // being migrated for the user and redirect to the authenticated entry
+    // point with the migrated project id
+    migrateProject.meta.user_id = user.publishId;
 
-    var project = req.session.project.migrate.meta;
-    project.user_id = req.session.publishUser.id;
-
-    utils.createProject(config, req.user, project, function(err, status, project) {
+    utils.createProject(config, user, migrateProject.meta, function(err, status, project) {
       if(err) {
         if(status === 500) {
           res.sendStatus(500);
@@ -41,12 +50,9 @@ module.exports = function(config) {
         return;
       }
 
-      req.session.project = {
-        meta: project,
-        anonymousId: req.session.project.migrate.anonymousId
-      };
+      delete req.session.project.migrate;
 
-      homepage(req, res);
+      res.redirect(301, "/user/" + user.username + "/" + project.id);
     });
   };
 };

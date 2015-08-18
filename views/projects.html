@@ -2,7 +2,8 @@
 {% block body %}
   <div id="container">
     <h2>Your Projects</h2>
-    <table id="project-list">
+    <table id="project-list"
+           data-username="{{ username }}">
 
     {% for project in projects %}
       <tr class="project bramble-user-project"

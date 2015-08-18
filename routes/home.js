@@ -5,40 +5,34 @@ var Constants = require("../constants");
 var utils = require("./utils");
 
 function getProjectMetadata(config, req, callback) {
-  var project = req.session.project && req.session.project.meta;
+  var project = req.project;
   var remixId = req.params.remixId;
-  var projectMetadata;
   var anonymousId = req.params.anonymousId;
-  console.log("Project: ", req.session.project);
+
   if(anonymousId) {
     anonymousId = anonymousId.replace("^id-", "");
   }
 
   if(project) {
-    projectMetadata = {
+    callback(null, {
       id: project.id,
-      userID: req.session.publishUser.id,
-      anonymousId: req.session.project.anonymousId,
+      userID: req.user.publishId,
+      anonymousId: project.anonymousId,
       title: project.title,
       dateCreated: project.date_created,
       dateUpdated: project.date_updated,
       tags: project.tags,
       description: project.description,
       publishUrl: project.publish_url
-    };
-    delete req.session.project.anonymousId;
-
-    callback(null, projectMetadata);
+    });
     return;
   }
 
   if(!remixId) {
-    projectMetadata = {
+    callback(null, {
       anonymousId: anonymousId,
       title: Constants.DEFAULT_PROJECT_NAME,
-    };
-
-    callback(null, projectMetadata);
+    });
     return;
   }
 
@@ -48,14 +42,12 @@ function getProjectMetadata(config, req, callback) {
       return;
     }
 
-    projectMetadata = {
+    callback(null, {
       anonymousId: anonymousId,
       remixId: remixId,
       title: project.title,
       description: project.description
-    };
-
-    callback(null, projectMetadata);
+    });
   });
 }
 

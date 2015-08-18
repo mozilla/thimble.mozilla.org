@@ -165,88 +165,111 @@ app.get("/login", routes.login);
 // resource proxying for http-on-https
 webmakerProxy(app, middleware.checkForAuth);
 
-// Entry point for authenticated users
+/*
+ * Main routes for thimble.webmaker.org
+ */
+// Entry point for all users
 app.get('/',
-        middleware.redirectAnonymousUsers,
-        middleware.setNewPageOperation,
         middleware.setUserIfTokenExists,
         middleware.setPublishUser,
-        routes.root);
+        routes.main.root);
 
-// Entry point for anonymous users
+// Main route for authenticated users
+app.get('/user/:username/:projectId',
+        middleware.redirectAnonymousUsers,
+        middleware.setUserIfTokenExists,
+        middleware.setPublishUser,
+        middleware.setProject,
+        routes.main.authenticated);
+
+// Main route for anonymous users
 app.get('/anonymous/:anonymousId/:remixId?',
         middleware.redirectAuthenticatedUsers,
-        routes.main);
+        routes.main.anonymous);
 
-app.get('/getFileContents/:remixId?',
-        middleware.setUserIfTokenExists,
-        routes.getFileContents);
 
-app.get('/getFileMeta/:remixId?',
-        middleware.setUserIfTokenExists,
-        routes.getFileMetadata);
-
+/*
+ * Project operations
+ */
+// Get all projects for a user
 app.get('/projects',
         middleware.checkForAuth,
         middleware.setUserIfTokenExists,
         middleware.setPublishUser,
-        routes.projects);
+        routes.projects.read);
 
-app.get('/project/:projectId',
+// Create a new project for a user
+app.get('/projects/new',
         middleware.checkForAuth,
-        middleware.setUserIfTokenExists,
-        routes.openProject);
-
-app.get('/newProject',
-        middleware.checkForAuth,
-        middleware.setUserIfTokenExists,
-        routes.newProject);
-
-app.put('/renameProject',
-        middleware.checkForAuth,
-        middleware.setUserIfTokenExists,
-        middleware.isProjectLoaded,
-        middleware.validateRequest(["title"]),
-        routes.renameProject);
-
-app['delete']('/deleteProject/:projectId',
-              middleware.checkForAuth,
-              middleware.setUserIfTokenExists,
-              routes.deleteProject);
-
-app.put('/updateProjectFile/:fileId?',
-        middleware.checkForAuth,
-        middleware.setUserIfTokenExists,
-        middleware.isProjectLoaded,
-        middleware.fileUpload,
-        middleware.validateRequest(["dateUpdated", "bramblePath"]),
-        routes.createOrUpdateProjectFile);
-
-app.put('/deleteProjectFile/:fileId',
-        middleware.checkForAuth,
-        middleware.setUserIfTokenExists,
-        middleware.isProjectLoaded,
-        middleware.validateRequest(["dateUpdated"]),
-        routes.deleteProjectFile);
-
-app.put('/publish',
-        middleware.checkForAuth,
-        middleware.setUserIfTokenExists,
-        middleware.isProjectLoaded,
-        middleware.validateRequest(["description", "dateUpdated", "public"]),
-        routes.publish);
-
-app.put('/unpublish',
-        middleware.checkForAuth,
-        middleware.setUserIfTokenExists,
-        middleware.isProjectLoaded,
-        middleware.validateRequest(["description", "dateUpdated", "public"]),
-        routes.unpublish);
-
-app.get('/remix/:projectId',
         middleware.setUserIfTokenExists,
         middleware.setPublishUser,
-        routes.remix);
+        routes.projects.create);
+
+// Delete a project for a user
+app['delete']('/projects/:projectId',
+              middleware.checkForAuth,
+              middleware.setUserIfTokenExists,
+              routes.projects.del);
+
+// Rename a project for a user
+app.put('/projects/:projectId/rename',
+        middleware.checkForAuth,
+        middleware.setUserIfTokenExists,
+        middleware.setProject,
+        middleware.validateRequest(["title"]),
+        routes.projects.rename);
+
+// Publish an existing project for a user
+app.put('/projects/:projectId/publish',
+        middleware.checkForAuth,
+        middleware.setUserIfTokenExists,
+        middleware.setProject,
+        middleware.validateRequest(["description", "dateUpdated", "public"]),
+        routes.projects.publish);
+
+// Unpublish an existing project for a user
+app.put('/projects/:projectId/unpublish',
+        middleware.checkForAuth,
+        middleware.setUserIfTokenExists,
+        middleware.setProject,
+        middleware.validateRequest(["description", "dateUpdated", "public"]),
+        routes.projects.unpublish);
+
+// Remix an existing project
+app.get('/projects/:projectId/remix',
+        middleware.setUserIfTokenExists,
+        middleware.setPublishUser,
+        routes.projects.remix);
+
+
+/*
+ * Project file operations
+ */
+// Get all file data for a project
+app.get('/projects/:projectId?/files/data',
+        middleware.setUserIfTokenExists,
+        routes.files.read.data);
+
+// Get all file metadata for a project
+app.get('/projects/:projectId?/files/meta',
+        middleware.setUserIfTokenExists,
+        routes.files.read.metadata);
+
+// Create or update a file for a project for a user
+app.put('/projects/:projectId/files/:fileId?',
+        middleware.checkForAuth,
+        middleware.setUserIfTokenExists,
+        middleware.validateRequest(["dateUpdated", "bramblePath"]),
+        middleware.setProject,
+        middleware.fileUpload,
+        routes.files.createUpdate);
+
+// Delete a file for a project for a user
+app['delete']('/projects/:projectId/files/:fileId',
+        middleware.checkForAuth,
+        middleware.setUserIfTokenExists,
+        middleware.setProject,
+        routes.files.del);
 
 // Tutorial templates
 app.get('/tutorial/tutorial.html', routes.tutorialTemplate);

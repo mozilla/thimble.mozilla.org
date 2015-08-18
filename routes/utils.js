@@ -158,13 +158,13 @@ function getRemixedProject(config, projectId, callback) {
   });
 }
 
-function getProjectFileMetadata(config, user, project, callback) {
+function getProjectFileMetadata(config, user, projectId, callback) {
   if(!user) {
     callback(null, 200, defaultProject.getPaths(config.DEFAULT_PROJECT_TITLE));
     return;
   }
 
-  var url = config.publishURL + "/projects/" + project.id + "/files/meta";
+  var url = config.publishURL + "/projects/" + projectId + "/files/meta";
 
   request.get({
     url: url,
@@ -187,12 +187,12 @@ function getProjectFileMetadata(config, user, project, callback) {
   });
 }
 
-function getProjectFileTar(config, user, project) {
+function getProjectFileTar(config, user, projectId) {
   if(!user) {
     return defaultProject.getAsTar(config.DEFAULT_PROJECT_TITLE);
   }
 
-  var url = config.publishURL + "/projects/" + project.id + "/files/tar";
+  var url = config.publishURL + "/projects/" + projectId + "/files/tar";
 
   return request.get({
     url: url,
