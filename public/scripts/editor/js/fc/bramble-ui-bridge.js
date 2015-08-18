@@ -104,6 +104,7 @@ define(function(require) {
     // is a tutorial.html file, and only show the TUTORIAL link if there is.
     if(bramble.getTutorialExists()) {
       $("#tutorial-title").removeClass("hide");
+      $(".preview-tutorial-toggle").addClass("has-toggle");
     }
     // And listen for changes to the project, in terms of one being added/removed
     bramble.on("tutorialAdded", function() {
@@ -111,6 +112,7 @@ define(function(require) {
     });
     bramble.on("tutorialRemoved", function() {
       $("#tutorial-title").addClass("hide");
+      $(".preview-tutorial-toggle").removeClass("has-toggle");
     });
 
     function setNormalPreview() {
