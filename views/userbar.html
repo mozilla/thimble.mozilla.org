@@ -24,7 +24,7 @@
         <img src="/img/icon/question-mark.svg" class="icon-question-mark">
         Help
       </div>
-      <div id="navbar-login">
+      <div id="navbar-login" {% if username %}class="signed-in"{% endif %}>
         <div id="navbar-login-inner">
         {% if username %}
           <ul id="navbar-logged-in">
@@ -64,7 +64,7 @@
           </ul>
         {% else %}
           <div id="navbar-anonymous">
-            <a href="#" id="login-link" class="navbar-login">Log in</a> or <a href="#" id="signup-link" class="navbar-login">Sign Up</a> to Save
+            <a href="#" id="login-link" class="navbar-login">Log in</a> or <a href="#" id="signup-link" class="navbar-login">Sign Up</a> to Save and
           </div>
         {% endif %}
         </div>

@@ -204,6 +204,13 @@ define(function(require) {
       });
     }
 
+    function showPublishHelper() {
+      var el = $("#navbar-anonymous");
+      el.removeClass("strobe");
+      el.height(el.height());
+      el.addClass("strobe");
+    }
+
     if (Project.getUser()) {
       //Publish button
       $("#navbar-publish-button").click(showPublishDialog);
@@ -211,6 +218,8 @@ define(function(require) {
 
       publisher = new Publisher(options);
       publisher.init();
+    } else {
+      $("#navbar-publish-button").click(showPublishHelper);
     }
 
     //Change file name in editor nav
