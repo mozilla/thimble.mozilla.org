@@ -1,3 +1,5 @@
+@import "colors.less";
+
 .disabled {
   border-color: #A9A9A9 !important;
   background-color: #B0B0B0 !important;
@@ -5,6 +7,11 @@
 
 #publish-details {
   padding: 15px;
+
+  label {
+    margin-bottom: 5px;
+    display: block;
+  }
 }
 
 #publish-live {
@@ -22,7 +29,7 @@
   width: 0;
   z-index: 1;
   top: -15px;
-  right: 35px;
+  right: 30px;
 }
 
 #publish-dialog {
@@ -48,9 +55,7 @@
 
     #publish-title {
       font-size: 1.3em;
-      width: auto;
-      border-bottom: 2px solid #e9e9e9;
-      padding: 10px;
+      padding: 10px 15px;
     }
 
     #publish-inner {
@@ -58,25 +63,30 @@
     }
 
     #publish-buttons {
-      border-top: 2px solid #e9e9e9;
-      padding-top: 20px;
-      margin-bottom: 20px;
-      padding-right: 10px;
+      border-top: 1px solid #DDD;
+      padding: 15px;
       width: auto;
-      height: 30px;
+      height: 40px;
+      background: rgba(0,0,0,.05);
 
       #publish-button-publish {
-        border-color: #52996B;
-        background-color: #489061;
         float: right;
         margin-left: 10px;
         .publish-button;
+        .green-button;
       }
       #publish-button-cancel {
-        border-color: #A9A9A9;
         background-color: #B0B0B0;
         float: right;
         .publish-button;
+
+        &:hover {
+          background-color: #BCBCBC;
+        }
+        &:active {
+          background-color: #9B9B9B;
+        }
+
       }
     }
 
@@ -86,10 +96,11 @@
 }
 
 .publish-description {
-  width: 92%;
-  border: 2px solid #e9e9e9;
+  width: 100%;
+  border: 1px solid #CCC;
   height: 80px;
   resize: none;
+  box-sizing: border-box;
   margin-left: auto;
   margin-right: auto;
   color: black;
@@ -124,12 +135,32 @@
   }
 }
 
+.green-button {
+  background-color: @buttonGreen;
+
+  &:hover {
+    background-color: @buttonGreenHover;
+  }
+
+  &:active {
+    background-color: @buttonGreenActive;
+  }
+}
+
 .publish-button {
   display: inline-block;
-  padding: 5px 20px 5px 20px;
+  padding: 8px 15px;
   cursor: pointer;
   color: white;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  border-bottom: solid 2px rgba(0,0,0,.3);
+  border-radius: 2px;
+
+  &:active {
+    position: relative;
+    top: 2px;
+    border: none;
+  }
 }
