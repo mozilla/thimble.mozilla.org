@@ -1,26 +1,4 @@
-/**
- * GET for the index.html template
- */
-var request = require("request");
 var config = require("./config");
-
-// Bramble routes
-var login = require("./login");
-var root = require("./root");
-var mainAuthenticated = require("./main-authenticated");
-var mainAnonymous = require("./main-anonymous");
-var usersProjects = require("./view-user-projects");
-var getFileContents = require("./get-file-contents");
-var getFileMetadata = require("./get-file-metadata");
-var newProject = require("./new-project");
-var deleteProject = require("./delete-project");
-var renameProject = require("./rename-project");
-var createOrUpdateProjectFile = require("./create-or-update-file");
-var deleteProjectFile = require("./delete-file");
-var publish = require("./publish");
-var unpublish = require("./unpublish");
-var remix = require("./remix");
-var tutorial = require("./tutorial");
 
 // Content-fetching function used for generating the output
 // on http://[...]/data routes via the index.rawData function.
@@ -37,117 +15,23 @@ function getPageData(req) {
 
 module.exports = function(utils, nunjucksEnv, appName) {
   config.appName = appName;
-  var cryptr = config.cryptr;
-  var oauth = config.oauth;
 
   return {
-    login: login(config),
-    main: {
-      root: root(config),
-      authenticated: mainAuthenticated(config),
-      anonymous: mainAnonymous(config),
+    init: function(app, middleware) {
+      [
+        require("./auth"),
+        require("./main"),
+        require("./projects"),
+        require("./files"),
+        require("./tutorials")
+      ].forEach(function(module) {
+        module.init(app, middleware, config);
+      });
     },
-    projects: {
-      read: usersProjects(config),
-      create: newProject(config),
-      del: deleteProject(config),
-      rename: renameProject(config),
-      publish: publish(config),
-      unpublish: unpublish(config),
-      remix: remix(config)
-    },
-    files: {
-      read: {
-        data: getFileContents(config),
-        metadata: getFileMetadata(config)
-      },
-      createUpdate: createOrUpdateProjectFile(config),
-      del: deleteProjectFile(config),
-    },
-    tutorialTemplate: tutorial.template(config),
-    tutorialStyleGuide: tutorial.styleGuide(config),
 
     rawData: function(req, res) {
       res.type('text/plain; charset=utf-8');
       res.send(getPageData(req));
-    },
-
-    oauth2Callback: function(req, res, next) {
-      if (req.query.logout) {
-        req.session = null;
-        return res.redirect(301, '/');
-      }
-
-      if (!req.query.code) {
-        return next({ status: 401, message: "OAUTH: Code required" });
-      }
-
-      if (!req.cookies.state || !req.query.state) {
-        return next({ status: 401, message: "OAUTH: State required" });
-      }
-
-      if (req.cookies.state !== req.query.state) {
-        return next({ status: 401, message: "OAUTH: Invalid state" });
-      }
-
-      if (req.query.client_id !== oauth.client_id) {
-        return next({ status: 401, message: "OAUTH: Invalid client credentials" });
-      }
-
-      // First, fetch the token
-      request.post({
-        url: oauth.authorization_url + '/login/oauth/access_token',
-        form: {
-          client_id: oauth.client_id,
-          client_secret: oauth.client_secret,
-          grant_type: "authorization_code",
-          code: req.query.code
-        }
-      }, function(err, response, body) {
-        if (err) {
-          console.log("Request error: ", err, " Body: ", body);
-          return next({ status: 500, message: "Internal server error. See logs for details" });
-        }
-
-        if (response.statusCode !== 200) {
-          console.log("Code " + response.statusCode + ". Error getting access token: ", body);
-          return next({ status: response.statusCode, message: body });
-        }
-
-        try {
-          body = JSON.parse(body);
-        } catch(e) {
-          return next({status: 500, err: e});
-        }
-
-        req.session.token = cryptr.encrypt(body.access_token);
-
-        // Next, fetch user data
-        request.get({
-          url: oauth.authorization_url + "/user",
-          headers: {
-            "Authorization": "token " + body.access_token
-          }
-        }, function(err, response, body) {
-          if (err) {
-            console.log("Request error: ", err, " Body: ", body);
-            return next({ status: 500, message: "Internal server error. See logs for details" });
-          }
-
-          if (response.statusCode !== 200) {
-            console.log("Code " + response.statusCode + ". Error getting user data: ", body);
-            return next({ status: response.statusCode, message: body });
-          }
-
-          try {
-            req.session.user = JSON.parse(body);
-          } catch(e) {
-            return next({status: 500, err: e});
-          }
-
-          res.redirect(301, '/');
-        });
-      });
     }
   };
 };
