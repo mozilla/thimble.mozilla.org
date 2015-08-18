@@ -156,11 +156,11 @@ define(function(require) {
   }
 
   function fetchMetadata(config, callback) {
-    var url = config.host + "/getFileMeta";
-    if (config.remixId) {
-      url += "/" + config.remixId;
+    var url = config.host + "/projects";
+    if (config.id) {
+      url += "/" + config.id;
     }
-    url += "?cacheBust=" + (new Date()).toISOString();
+    url += "/files/meta?cacheBust=" + (new Date()).toISOString();
 
     var request = $.ajax({
       type: "GET",

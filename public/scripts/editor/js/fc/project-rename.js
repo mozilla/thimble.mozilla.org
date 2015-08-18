@@ -66,7 +66,7 @@ define(function(require) {
         "X-Csrf-Token": csrfToken
       },
       type: "PUT",
-      url: appUrl + "/renameProject",
+      url: appUrl + "/projects/" + Project.getID() + "/rename",
       data: JSON.stringify({
         title: title
       })

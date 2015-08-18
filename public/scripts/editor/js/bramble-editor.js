@@ -10,12 +10,10 @@ define(function(require) {
   return {
     csrfToken: csrfToken,
     create: function(options) {
-      var host = options.appUrl;
-      var authenticated = !!($("#publish-ssooverride").attr("data-oauth-username"));
-      var fsync = FileSystemSync.init(authenticated, host, csrfToken);
+      var fsync = FileSystemSync.init(csrfToken);
 
       // If the user is logged in, make it a bit harder to close while we're syncing
-      if(authenticated) {
+      if(Project.getUser()) {
         fsync.addBeforeEachCallback(function() {
           SyncState.syncing();
         });
@@ -48,10 +46,7 @@ define(function(require) {
         // For debugging, attach to window.
         window.bramble = bramble;
 
-        BrambleUIBridge.init(bramble, {
-          sync: fsync,
-          appUrl: host
-        });
+        BrambleUIBridge.init(bramble, { sync: fsync });
       });
 
       Bramble.on("error", function(err) {

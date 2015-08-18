@@ -137,6 +137,7 @@ define(function(require) {
       root: getRoot(),
       host: _host,
       user: _user,
+      id: _id,
       remixId: _remixId,
       anonymousId: _anonymousId,
       fsync: fsync

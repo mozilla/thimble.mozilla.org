@@ -11,6 +11,7 @@ require.config({
 
 require(["jquery"], function($) {
   var projects = document.querySelectorAll("tr.bramble-user-project");
+  var username = encodeURIComponent($("#project-list").attr("data-username"));
   var queryString = window.location.search;
   // We do this to deal with the weird Firefox caching issue
   // that does not allow a click on the project name to reach the
@@ -52,13 +53,13 @@ require(["jquery"], function($) {
     var lastEdited = project.getAttribute("data-project-date_updated");
 
     $(projectSelector + " > .project-title").on("click", function() {
-      window.location.href = "/project/" + project.getAttribute("data-project-id") + queryString;
+      window.location.href = "/user/" + username + "/" + project.getAttribute("data-project-id") + queryString;
     });
     $(projectSelector + " .project-information").text(getElapsedTime(lastEdited));
   });
 
   $("#project-0").on("click", function() {
-    window.location.href = "/newProject" + queryString + "&now=" + (new Date()).toISOString();
+    window.location.href = "/projects/new" + queryString + "&now=" + (new Date()).toISOString();
   });
 
   $("td.project-delete").click(function() {
@@ -79,7 +80,7 @@ require(["jquery"], function($) {
         "X-Csrf-Token": $("meta[name='csrf-token']").attr("content")
       },
       type: "DELETE",
-      url: "/deleteProject/" + projectId
+      url: "/projects/" + projectId
     });
     request.done(function() {
       if(request.status !== 204) {

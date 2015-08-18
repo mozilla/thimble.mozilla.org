@@ -107,7 +107,7 @@ define(function(require) {
     function run() {
       SyncState.syncing();
 
-      var request = publisher.generateRequest("/publish");
+      var request = publisher.generateRequest("publish");
       request.done(function(project) {
         if(request.status !== 200) {
           console.error("[Bramble] Server was unable to publish project, responded with status ", request.status);
@@ -162,7 +162,7 @@ define(function(require) {
     setState(false);
     SyncState.syncing();
 
-    var request = publisher.generateRequest("/unpublish");
+    var request = publisher.generateRequest("unpublish");
     request.done(function() {
       if(request.status !== 200) {
         console.error("[Bramble] Server was unable to unpublish project, responded with status ", request.status);
@@ -185,7 +185,7 @@ define(function(require) {
     });
   };
 
-  Publisher.prototype.generateRequest = function(route) {
+  Publisher.prototype.generateRequest = function(action) {
     var publisher = this;
 
     return $.ajax({
@@ -195,7 +195,7 @@ define(function(require) {
         "Accept": "application/json"
       },
       type: "PUT",
-      url: host + route,
+      url: host + "/projects/" + Project.getID() + "/" + action,
       data: JSON.stringify({
         description: publisher.dialog.description.val() || " ",
         public: publisher.isProjectPublic,

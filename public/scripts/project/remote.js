@@ -60,11 +60,11 @@ define(function(require) {
 
   function loadTarball(config, callback) {
     // jQuery doesn't seem to support getting the arraybuffer type
-    var url = config.host + "/getFileContents";
-    if (config.remixId) {
-      url += "/" + config.remixId;
+    var url = config.host + "/projects";
+    if (config.remixId || config.id) {
+      url += "/" + (config.remixId || config.id);
     }
-    url += "?cacheBust=" + (new Date()).toISOString();
+    url += "/files/data?cacheBust=" + (new Date()).toISOString();
 
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);

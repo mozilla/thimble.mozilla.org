@@ -15,13 +15,13 @@ define(function(require) {
     });
   }
 
-  function fileChange(host, csrfToken, fs, path, callback) {
+  function fileChange(csrfToken, fs, path, callback) {
     var options = {
       headers: {
         "X-Csrf-Token": csrfToken
       },
       type: "PUT",
-      url: host + "/updateProjectFile",
+      url: Project.getHost() + "/projects/" + Project.getID() + "/files",
       cache: false,
       contentType: false,
       processData: false
@@ -64,27 +64,26 @@ define(function(require) {
     });
   }
 
-  function handleFileChange(host, csrfToken, fs, path) {
+  function handleFileChange(csrfToken, fs, path) {
     var context = this;
     context.queueLength++;
 
-    fileChange(host, csrfToken, fs, path, function(err) {
+    fileChange(csrfToken, fs, path, function(err) {
       context.queueLength--;
       hideFileState(context.queueLength);
       triggerCallbacks(context._callbacks.afterEach, [err, path]);
     });
   }
 
-  function fileDelete(host, csrfToken, fs, path, callback) {
+  function fileDelete(csrfToken, fs, path, callback) {
     function doDelete(id) {
       var request = $.ajax({
         contentType: "application/json",
         headers: {
           "X-Csrf-Token": csrfToken
         },
-        type: "PUT",
-        url: host + "/deleteProjectFile/" + id,
-        data: JSON.stringify({dateUpdated: (new Date()).toISOString()})
+        type: "DELETE",
+        url: Project.getHost() + "/projects/" + Project.getID() + "/files/" + id + "?dateUpdated=" + (new Date()).toISOString(),
       });
       request.done(function() {
         if(request.status !== 200) {
@@ -108,11 +107,11 @@ define(function(require) {
     });
   }
 
-  function handleFileDelete(host, csrfToken, fs, path) {
+  function handleFileDelete(csrfToken, fs, path) {
     var context = this;
     context.queueLength++;
 
-    fileDelete(host, csrfToken, fs, path, function(err) {
+    fileDelete(csrfToken, fs, path, function(err) {
       context.queueLength--;
       hideFileState(context.queueLength);
       triggerCallbacks(context._callbacks.afterEach, [err, path]);
@@ -120,12 +119,12 @@ define(function(require) {
   }
 
   // Two part process (create + delete), which can be done in parallel
-  function handleFileRename(host, csrfToken, fs, oldFilename, newFilename) {
+  function handleFileRename(csrfToken, fs, oldFilename, newFilename) {
     var context = this;
 
     // Step 1: Create the new file
     context.queueLength++;
-    fileChange(host, csrfToken, fs, newFilename, function(err) {
+    fileChange(csrfToken, fs, newFilename, function(err) {
       context.queueLength--;
       hideFileState(context.queueLength);
       triggerCallbacks(context._callbacks.afterEach, [err, newFilename]);
@@ -133,7 +132,7 @@ define(function(require) {
 
     // Step 2: Delete the old file
     context.queueLength++;
-    fileDelete(host, csrfToken, fs, oldFilename, function(err) {
+    fileDelete(csrfToken, fs, oldFilename, function(err) {
       context.queueLength--;
       hideFileState(context.queueLength);
       triggerCallbacks(context._callbacks.afterEach, [err, oldFilename]);
@@ -152,10 +151,10 @@ define(function(require) {
     };
   }
 
-  FileSystemSync.init = function(authenticated, host, csrfToken) {
+  FileSystemSync.init = function(csrfToken) {
     // If an anonymous user is using thimble, they
     // will not have any persistence of files
-    if(!authenticated) {
+    if(!Project.getUser()) {
       return null;
     }
 
@@ -166,7 +165,7 @@ define(function(require) {
       return function() {
         triggerCallbacks(fsync._callbacks.beforeEach, arguments);
 
-        Array.prototype.unshift.call(arguments, host, csrfToken, fs);
+        Array.prototype.unshift.call(arguments, csrfToken, fs);
         handler.apply(fsync, arguments);
       };
     }
