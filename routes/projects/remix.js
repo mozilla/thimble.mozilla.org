@@ -5,7 +5,7 @@ module.exports = function(config, req, res) {
   var publishedId = req.params.publishedId;
   var user = req.user;
   if(!user) {
-    res.redirect("/" + uuid.v1() + "/" + publishedId);
+    res.redirect("/anonymous/" + uuid.v1() + "/" + publishedId);
     return;
   }
 

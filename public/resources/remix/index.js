@@ -63,7 +63,7 @@ function injectDetailsBar($, metadata) {
     e.preventDefault();
     e.stopPropagation();
 
-    window.location.href = metadata.host + "/remix/" + metadata.projectId + "?now=" + (new Date()).toISOString();
+    window.location.href = metadata.host + "/projects/" + metadata.projectId + "/remix?now=" + (new Date()).toISOString();
   });
 }
 
