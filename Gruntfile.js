@@ -30,6 +30,43 @@ module.exports = function( grunt ) {
       }
     },
 
+     requirejs: {
+      dist: {
+        // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
+        options: {
+          baseUrl: "./public/scripts/editor/js",
+          paths: {
+            "text": "../vendor/require.text",
+            "i18n": "../vendor/require.i18n",
+            "sso-override": "../../sso-override",
+            "jquery": "../../../../bower_components/jquery/index",
+            "localized": "../../../../bower_components/webmaker-i18n/localized",
+            "uuid": "../../../../bower_components/node-uuid/uuid",
+            "cookies": "../../../../bower_components/cookies-js/dist/cookies",
+            "project": "../../project/project",
+            "constants": "../../constants"
+          },
+          shim: {
+            "jquery": {
+              exports: "$"
+            }
+          },
+          optimizeCss: "none",
+          out: 'dist/main.js',
+          optimize: 'uglify2',
+          include: ["../../main"],
+          preserveLicenseComments: false,
+          useStrict: true,
+          wrap: {
+            start: "(require(['../../main'], function() {",
+            end:   "}));"
+          },
+          wrap: false,
+          uglify2: {} // https://github.com/mishoo/UglifyJS2
+        }
+      }
+    },
+
     // Linting
     lesslint: {
       src: [
