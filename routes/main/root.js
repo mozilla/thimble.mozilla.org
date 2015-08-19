@@ -6,8 +6,6 @@ var utils = require("../utils");
 module.exports = function(config, req, res) {
   var user = req.user;
   var migrateProject = req.session.project && req.session.project.migrate;
-  var newProjectId = req.query.newProjectId;
-  delete req.query.newProjectId;
 
   var qs = querystring.stringify(req.query);
   if(qs !== "") {
@@ -17,13 +15,6 @@ module.exports = function(config, req, res) {
   // Anonymous user: redirect to the anonymous entry point
   if(!user) {
     res.redirect(301, "/anonymous/" + uuid.v1() + qs);
-    return;
-  }
-
-  // Authenticated user creating a new project: redirect to the authenticated
-  // entry point with the newly created project id
-  if(newProjectId) {
-    res.redirect(301, "/user/" + user.username + "/" + newProjectId + qs);
     return;
   }
 

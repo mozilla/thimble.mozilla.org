@@ -13,12 +13,6 @@ require(["jquery"], function($) {
   var projects = document.querySelectorAll("tr.bramble-user-project");
   var username = encodeURIComponent($("#project-list").attr("data-username"));
   var queryString = window.location.search;
-  // We do this to deal with the weird Firefox caching issue
-  // that does not allow a click on the project name to reach the
-  // `/projects/:projectID` route and instead just loads a cached
-  // vaersion of `/`
-  var cacheBust = "cacheBust=" + Date.now();
-  queryString = queryString === "" ? "?" + cacheBust : queryString + "&" + cacheBust;
 
   function getElapsedTime(lastEdited) {
     var now = Date.now();
@@ -59,7 +53,7 @@ require(["jquery"], function($) {
   });
 
   $("#project-0").on("click", function() {
-    window.location.href = "/projects/new" + queryString + "&now=" + (new Date()).toISOString();
+    window.location.href = "/projects/new" + queryString + (queryString === "" ? "?" : "&") +  "cacheBust=" + Date.now();
   });
 
   $("td.project-delete").click(function() {

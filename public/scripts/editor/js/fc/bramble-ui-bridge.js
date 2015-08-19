@@ -61,6 +61,16 @@ define(function(require) {
       window.open("https://support.mozilla.org/en-US/products/webmaker/thimble");
     });
 
+    $("#new-project-link").click(function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      var queryString = window.location.search;
+      var cacheBust = "cacheBust=" + Date.now();
+      queryString = queryString === "" ? "?" + cacheBust : queryString + "&" + cacheBust;
+      window.location.href = "/projects/new"  + queryString;
+    });
+
     $("#export-project-zip").click(function() {
       bramble.export();
       return false;
