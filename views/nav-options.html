@@ -9,20 +9,20 @@
 
       <div class="flex-container pull-right">
         <div id="filetree-pane-nav-add">
-          <div class="filetree-pane-nav-btn"></div>
+          <div title="Add a file to your project" class="filetree-pane-nav-btn"></div>
         </div>
 
         <div id="filetree-pane-nav-add-menu" class="hide">
           <ul>
-            <li id="filetree-pane-nav-add-html"><span>HTML</span>
-            <li id="filetree-pane-nav-add-css"><span>CSS</span>
-            <li id="filetree-pane-nav-add-js"><span>JavaScript</span>
-            <li id="filetree-pane-nav-add-tutorial"><span>Tutorial</span>
-            <li id="filetree-pane-nav-add-upload" class="top-border"><span>Upload...</span>
+            <li title="Add an HTML file" id="filetree-pane-nav-add-html"><span>HTML</span>
+            <li title="Add a CSS file" id="filetree-pane-nav-add-css"><span>CSS</span>
+            <li title="Add a JavaScript file" id="filetree-pane-nav-add-js"><span>JavaScript</span>
+            <li title="Add a Tutorial" id="filetree-pane-nav-add-tutorial"><span>Tutorial</span>
+            <li title="Upload a file from your computer" id="filetree-pane-nav-add-upload" class="top-border"><span>Upload...</span>
           </ul>
         </div>
 
-        <div id="filetree-pane-nav-hide">
+        <div title="Collapse the file tray" id="filetree-pane-nav-hide">
           <div class="filetree-pane-nav-btn"></div>
         </div>
       </div>
@@ -32,7 +32,7 @@
   <!-- LEFT SIDE -->
   <div class="editor-pane-nav">
     <div class="nav-container">
-      <div id="editor-pane-nav-fileview">
+      <div title="Expand the file tray" id="editor-pane-nav-fileview">
         <div></div>
       </div>
 
@@ -42,32 +42,32 @@
 
       <div class="flex-container pull-right">
 
-        <div id="editor-pane-nav-undo">
+        <div title="Undo your last edit" id="editor-pane-nav-undo">
           <img src="/img/icon/undo.svg">
           <span>Undo</span>
         </div>
 
-        <div id="editor-pane-nav-redo">
+        <div title="Redo your last edit" id="editor-pane-nav-redo">
           <img src="/img/icon/redo.svg">
         </div>
 
-          <img id="editor-pane-nav-options" src="/img/icon/gear-white.svg">
+          <img title="Change editor options" id="editor-pane-nav-options" src="/img/icon/gear-white.svg">
           <div id="editor-pane-nav-options-menu" class="hide">
             <ul>
               <li>
                 <span>Text size</span>
-                <div id="editor-pane-nav-decrease-font" class="font-size-button"></div>
-                <div id="editor-pane-nav-increase-font" class="font-size-button"></div>
+                <div title="Decrease the editor font size" id="editor-pane-nav-decrease-font" class="font-size-button"></div>
+                <div title="Increase the editor font size" id="editor-pane-nav-increase-font" class="font-size-button"></div>
               </li>
               <li>
                 <span>Color theme</span>
                 <div id="editor-pane-nav-toggle-theme">
                   <div id="theme-active"></div>
-                  <div id="theme-dark">
+                  <div title="Switch to the dark theme" id="theme-dark">
                     <img id="moon-white" src="/img/icon/theme-moon-white.svg" width="15px" height="15px">
                     <img id="moon-green" class="hide" src="/img/icon/theme-moon-green.svg" width="15px" height="15px">
                   </div>
-                  <div id="theme-light">
+                  <div title="Switch to the light theme" id="theme-light">
                     <img id="sun-white" class="hide" src="/img/icon/theme-sun-white.svg" width="20px" class="hide" height="20px">
                     <img id="sun-green" src="/img/icon/theme-sun-green.svg" width="20px" height="20px">
                   </div>
@@ -84,17 +84,17 @@
   <div class="preview-pane-nav">
     <div class="nav-container">
       <div class="preview-tutorial-toggle">
-        <span id="preview-title" class="preview-pane-nav-title preview-title-highlighted">PREVIEW</span>
-        <span id="tutorial-title" class="preview-pane-nav-title hide">TUTORIAL</span>
+        <span title="View the Preview" id="preview-title" class="preview-pane-nav-title preview-title-highlighted">PREVIEW</span>
+        <span title="View the Project Tutorial" id="tutorial-title" class="preview-pane-nav-title hide">TUTORIAL</span>
       </div>
 
       <div class="flex-container pull-right">
-        <div id="preview-pane-nav-refresh">
+        <div title="Refresh the Preview" id="preview-pane-nav-refresh">
           <img src="/img/icon/refresh.svg">
         </div>
         <div class="preview-device-toggle">
-          <img id="preview-pane-nav-desktop" class="viewmode-active" src="/img/icon/desktop.svg">
-          <img id="preview-pane-nav-phone" class="viewmode-inactive" src="/img/icon/phone-portrait.svg">
+          <img title="Preview in desktop mode" id="preview-pane-nav-desktop" class="viewmode-active" src="/img/icon/desktop.svg">
+          <img title="Preview in mobile mode" id="preview-pane-nav-phone" class="viewmode-inactive" src="/img/icon/phone-portrait.svg">
         </div>
       </div>
     </div>
