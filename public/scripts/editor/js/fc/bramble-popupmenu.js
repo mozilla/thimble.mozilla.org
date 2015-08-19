@@ -23,8 +23,10 @@ define(function(require) {
   };
   PopupMenu.prototype.show = function() {
     // Determine where to horizontally place menu based on button's icon location
-    var leftOffset = this._button$.offset().left - 86;
-    this._menu$.css("left", leftOffset).fadeToggle();
+
+    var menuWidth = this._menu$.width();
+    var leftOffset = this._button$.offset().left - menuWidth/2 + 11;
+    this._menu$.css("left", leftOffset).show();
 
     this._underlay = new Underlay(this._menu$, this.close.bind(this));
     this._escKeyHandler = new KeyHandler.ESC(this.close.bind(this));
@@ -34,7 +36,7 @@ define(function(require) {
     this.showing = true;
   };
   PopupMenu.prototype.close = function() {
-    this._menu$.fadeOut();
+    this._menu$.hide();
 
     this._underlay.remove();
     this._underlay = null;
