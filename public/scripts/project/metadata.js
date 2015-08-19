@@ -211,8 +211,32 @@ define(function(require) {
     loadAnonymous(config, callback);
   }
 
+  function update(config, callback) {
+    if (!config.update) {
+      return callback();
+    }
+
+    var request = $.ajax({
+      type: "PUT",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "X-Csrf-Token": config.csrfToken
+      },
+      url: config.host + "/projects/" + config.id,
+      data: JSON.stringify(config.data)
+    });
+    request.done(function() {
+      callback();
+    });
+    request.fail(function(jqXHR, status, err) {
+      callback(err);
+    });
+  }
+
   return {
     load: load,
+    update: update,
     getFileID: getFileID,
     setFileID: setFileID,
     getTitle: getTitle,

@@ -22,7 +22,7 @@ define(function(require) {
         cookies.set("state", uuid.v4());
 
         var location = loginUrl;
-        location += "?title=" + encodeURIComponent(Project.getTitle());
+        location += "?now=" + (new Date()).toISOString();
 
         if (newUser) {
           location += "&signup=true";
@@ -32,7 +32,7 @@ define(function(require) {
           location += "&anonymousId=" + Project.getAnonymousId();
         }
 
-        window.location = location + "&now=" + (new Date()).toISOString();
+        window.location = location;
       };
     }
 

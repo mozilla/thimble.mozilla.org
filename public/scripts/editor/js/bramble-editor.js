@@ -31,7 +31,7 @@ define(function(require) {
       });
 
       // Start loading the project files
-      Project.load(fsync, function(err, fileToOpen) {
+      Project.load(fsync, csrfToken, function(err, fileToOpen) {
         if(err) {
           console.error("[Thimble Error]", err);
           return;

@@ -2,10 +2,11 @@ var querystring = require("querystring");
 var uuid = require("uuid");
 
 var utils = require("../utils");
+var Constants = require("../../constants");
 
 module.exports = function(config, req, res) {
   var user = req.user;
-  var migrateProject = req.session.project && req.session.project.migrate;
+  var migrate = req.session.project && req.session.project.migrate;
 
   var qs = querystring.stringify(req.query);
   if(qs !== "") {
@@ -20,17 +21,24 @@ module.exports = function(config, req, res) {
 
   // Authenticated user without a selected project: redirect to the project
   // list page
-  if(!migrateProject) {
+  if(!migrate) {
     res.redirect(301, "/projects/" + qs);
     return;
   }
 
-  // Authenticated user migrating an anonymous project: create the project
-  // being migrated for the user and redirect to the authenticated entry
-  // point with the migrated project id
-  migrateProject.meta.user_id = user.publishId;
+  // Authenticated user migrating an anonymous project: create a placeholder
+  // project (which will be updated by the client) for the project being
+  // migrated for the user and redirect to the authenticated entry point
+  // with the migrated project id
+  var now = (new Date()).toISOString();
+  var project = {
+    title: Constants.DEFAULT_PROJECT_NAME,
+    date_created: now,
+    date_updated: now,
+    user_id: user.publishId
+  };
 
-  utils.createProject(config, user, migrateProject.meta, function(err, status, project) {
+  utils.createProject(config, user, project, function(err, status, project) {
     if(err) {
       if(status === 500) {
         res.sendStatus(500);

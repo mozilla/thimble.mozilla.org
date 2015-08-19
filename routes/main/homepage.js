@@ -14,6 +14,7 @@ function getProjectMetadata(config, req, callback) {
       id: project.id,
       userID: req.user.publishId,
       anonymousId: project.anonymousId,
+      remixId: project.remixId,
       title: project.title,
       dateCreated: project.date_created,
       dateUpdated: project.date_updated,

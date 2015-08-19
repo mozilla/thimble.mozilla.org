@@ -101,9 +101,11 @@ define(function(require) {
     _fs = Bramble.getFileSystem();
     _description = projectDetails.description;
 
+    var metadataLocation = _user && _anonymousId ? Path.join(Constants.ANONYMOUS_USER_FOLDER, _anonymousId.toString()) : getRoot();
+
     // We have to check if we can access the 'title' stored
     // on an xattr first to know which value
-    Metadata.getTitle(getRoot(), function(err, title) {
+    Metadata.getTitle(metadataLocation, function(err, title) {
       if (err) {
         if (err.code !== "ENOENT") {
           return callback(err);
@@ -114,10 +116,11 @@ define(function(require) {
       }
 
       if (_user) {
-        // Always trust the server instead of what was
-        // stored on the xattr since a user might have changed it
-        // in another browser
-        _title = projectDetails.title;
+        if (_anonymousId && !_remixId) {
+          _title = title;
+        } else {
+          _title = projectDetails.title;
+        }
       } else if (title) {
         // Prefer the stored title in the anonymous case in case the
         // anonymous user changed it
@@ -131,8 +134,9 @@ define(function(require) {
   }
 
   // Set all necesary data for this project, based on makeDetails rendered into page.
-  function load(fsync, callback) {
-    // Step 1: download the project's content (files + metadata) and install into the root
+  function load(fsync, csrfToken, callback) {
+    // Step 1: download the project's contents (files + metadata) or upload an
+    // anonymous project's content if this is an upgrade, and install into the root
     Remote.loadProject({
       root: getRoot(),
       host: _host,
@@ -146,36 +150,57 @@ define(function(require) {
         return callback(err);
       }
 
-      // Step 2: download the project's metadata (project + file IDs on publish) and
-      // install into an xattrib on the project root.
-      Metadata.load({
-        root: getRoot(),
+      var now = (new Date()).toISOString();
+
+      // Step 2: If this was a project upgrade (from anonymous to authenticated),
+      // update the project metadata on the server
+      Metadata.update({
         host: _host,
-        user: _user,
-        remixId: _remixId,
+        update: !!_user && !!_anonymousId,
         id: _id,
-        title: _title
+        csrfToken: csrfToken,
+        data: {
+          title: _title,
+          description: _description,
+          dateCreated: now,
+          dateUpdated: now
+        }
       }, function(err) {
         if(err) {
           return callback(err);
         }
 
-        // Find an HTML file to open in the project, hopefully /index.html
-        var sh = new _fs.Shell();
-        sh.find(getRoot(), {name: "*.html"}, function(err, found) {
+        // Step 3: download the project's metadata (project + file IDs on publish) and
+        // install into an xattrib on the project root.
+        Metadata.load({
+          root: getRoot(),
+          host: _host,
+          user: _user,
+          remixId: _remixId,
+          id: _id,
+          title: _title
+        }, function(err) {
           if(err) {
             return callback(err);
           }
 
-          // Look for an HTML file to open, ideally index.html
-          var indexPos = 0;
-          found.forEach(function(path, idx) {
-            if(Path.basename(path) === "index.html") {
-              indexPos = idx;
+          // Find an HTML file to open in the project, hopefully /index.html
+          var sh = new _fs.Shell();
+          sh.find(getRoot(), {name: "*.html"}, function(err, found) {
+            if(err) {
+              return callback(err);
             }
-          });
 
-          callback(null, found[indexPos]);
+            // Look for an HTML file to open, ideally index.html
+            var indexPos = 0;
+            found.forEach(function(path, idx) {
+              if(Path.basename(path) === "index.html") {
+                indexPos = idx;
+              }
+            });
+
+            callback(null, found[indexPos]);
+          });
         });
       });
     });

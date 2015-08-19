@@ -9,6 +9,7 @@ module.exports = function(config, req, res) {
   }
 
   req.project.anonymousId = req.session.project.anonymousId;
+  req.project.remixId = req.session.project.remixId; // can be null
   delete req.session.project;
 
   homepage.call(this, config, req, res);
