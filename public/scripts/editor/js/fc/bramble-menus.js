@@ -18,32 +18,34 @@ define(function(require) {
 
     // Theme Toggle
     function setTheme(theme) {
+      var transitionSpeed = 200; //Speed at which the toggle changes
+
       if(theme === "light-theme") {
         bramble.useLightTheme();
 
         // Icons
-        $("#sun-green").fadeIn(500);
-        $("#moon-white").fadeIn(500);
-        $("#sun-white").fadeOut(500);
-        $("#moon-green").fadeOut(500);
+        $("#sun-green").fadeIn(transitionSpeed);
+        $("#moon-white").fadeIn(transitionSpeed);
+        $("#sun-white").fadeOut(transitionSpeed);
+        $("#moon-green").fadeOut(transitionSpeed);
 
         // Active Indicator
         $("#theme-active").css("position", "absolute").animate({
           left: 190
-        });
+        },transitionSpeed);
       } else if(theme === "dark-theme") {
         bramble.useDarkTheme();
 
         // Icons
-        $("#moon-green").fadeIn(1000);
-        $("#sun-white").fadeIn(1000);
-        $("#moon-white").fadeOut(1000);
-        $("#sun-green").fadeOut(1000);
+        $("#moon-green").fadeIn(transitionSpeed);
+        $("#sun-white").fadeIn(transitionSpeed);
+        $("#moon-white").fadeOut(transitionSpeed);
+        $("#sun-green").fadeOut(transitionSpeed);
 
         // Active indicator
         $("#theme-active").css("position", "absolute").animate({
           left: 157
-        });
+        },transitionSpeed);
       }
     }
     function toggleTheme() {
