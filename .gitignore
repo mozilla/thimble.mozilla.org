@@ -10,3 +10,4 @@ locale/
 !locale/en_US/*
 !locale/localeinfo.json
 public/stylesheets/userbar.css
+dist/

@@ -36,7 +36,6 @@ var favicon = require('serve-favicon'),
 var appName = "thimble",
     app = express(),
     env = require('./lib/environment'),
-    node_env = env.get('NODE_ENV'),
     emulate_s3 = env.get('S3_EMULATION') || !env.get('S3_KEY'),
     WWW_ROOT = path.resolve(__dirname, 'public'),
 
@@ -133,7 +132,7 @@ app.locals.bower_path = "bower_components";
 app.use(csrf());
 app.use(helmet.xframe());
 
-var optimize = (node_env !== "development"),
+var optimize = (env.get( "NODE_ENV" ) !== "development"),
     tmpDir = path.join( require("os").tmpDir(), "mozilla.webmaker.org");
 
 app.use(lessMiddleWare('public', {
@@ -147,6 +146,7 @@ app.use(lessMiddleWare('public', {
 }));
 
 app.use(express.static(tmpDir));
+app.use('/dist', express.static(path.join(__dirname, 'dist')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public/resources')));
 app.use(express.static(path.join(__dirname, 'learning_projects')));
