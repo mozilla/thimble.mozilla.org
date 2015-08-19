@@ -1,6 +1,7 @@
 var url = require("url");
 var querystring = require("querystring");
 
+var env = require("../../lib/environment");
 var Constants = require("../../constants");
 var utils = require("../utils");
 
@@ -60,7 +61,8 @@ module.exports = function(config, req, res) {
     editorHOST: config.editorHOST,
     loginURL: config.appURL + "/login",
     logoutURL: config.logoutURL,
-    queryString: qs
+    queryString: qs,
+    mainURL: env.get("NODE_ENV") === "development" ? "/scripts/main.js" : "/dist/main.js"
   };
 
   // We add the localization code to the query params through a URL object

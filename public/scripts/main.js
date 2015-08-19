@@ -24,12 +24,7 @@ require.config({
   }
 });
 
-define(function(require) {
-  var BrambleEditor = require("bramble-editor");
-  var Project = require("project");
-  var SSOOverride = require("sso-override");
-  var ProjectRenameUtility = require("fc/project-rename");
-
+function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility) {
   var thimbleScript = document.getElementById("thimble-script");
   var appUrl = thimbleScript.getAttribute("data-app-url");
   var projectDetails = thimbleScript.getAttribute("data-project-details");
@@ -54,4 +49,6 @@ define(function(require) {
       appUrl: appUrl
     });
   });
-});
+}
+
+require(["bramble-editor", "project", "sso-override", "fc/project-rename"], init);

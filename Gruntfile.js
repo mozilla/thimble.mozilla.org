@@ -30,6 +30,41 @@ module.exports = function( grunt ) {
       }
     },
 
+     requirejs: {
+      dist: {
+        options: {
+          appDir: "./public/scripts/",
+          baseUrl: "./editor/js",
+          dir: "./dist",
+          modules: [{
+            name: "../../main"
+          }],
+          optimizeCss: "none",
+          removeCombined: true,
+          paths: {
+            "text": "../vendor/require.text",
+            "i18n": "../vendor/require.i18n",
+            "sso-override": "../../sso-override",
+            "jquery": "../../../../bower_components/jquery/index",
+            "localized": "../../../../bower_components/webmaker-i18n/localized",
+            "uuid": "../../../../bower_components/node-uuid/uuid",
+            "cookies": "../../../../bower_components/cookies-js/dist/cookies",
+            "project": "../../project/project",
+            "constants": "../../constants"
+          },
+          shim: {
+            "jquery": {
+              exports: "$"
+            }
+          },
+          optimize: 'uglify2',
+          preserveLicenseComments: false,
+          useStrict: true,
+          uglify2: {}
+        }
+      }
+    },
+
     // Linting
     lesslint: {
       src: [
