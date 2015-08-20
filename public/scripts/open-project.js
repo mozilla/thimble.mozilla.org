@@ -39,7 +39,7 @@ require(["jquery"], function($) {
       unit = elapsedTime === 1 ? " second" : " seconds";
     }
 
-    return "Last Edited " + elapsedTime + unit + " ago";
+    return "Last edited " + elapsedTime + unit + " ago";
   }
 
   Array.prototype.forEach.call(projects, function(project) {
@@ -56,13 +56,13 @@ require(["jquery"], function($) {
     window.location.href = "/projects/new" + queryString + (queryString === "" ? "?" : "&") +  "cacheBust=" + Date.now();
   });
 
-  $("td.project-delete").click(function() {
+  $(".project-delete").click(function() {
     // TODO: we can do better than this, but let's at least make it harder to lose data.
     if(!window.confirm("OK to Delete this project?")) {
       return;
     }
 
-    var project = $(this).parent();
+    var project = $(this).closest(".project");
     $(this).text("Deleting...");
 
     var projectId = project.attr("data-project-id");
