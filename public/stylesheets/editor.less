@@ -58,14 +58,20 @@
   background-color: #212121;
   vertical-align: top;
   float: left;
+  overflow: hidden;
+  .flex-container;
+
+  .nav-container {
+    min-width: 150px;
+  }
 }
 
 .filetree-pane-nav-title {
   color: white;
   font-weight: bold;
   font-size: 1em;
-  opacity: 0.6;
-  filter: alpha(opacity=60);
+  opacity: 0.45;
+  filter: alpha(opacity=45);
   .vertical-align;
 }
 
@@ -186,15 +192,20 @@
   height: @toolbarHeight;
   background-color: #3F3F3F;
   color: #757575;
+
+  overflow: hidden;
   .flex-container;
+
+  .nav-container {
+    min-width: 350px;
+  }
 }
 
 .editor-pane-nav-title {
   color: white;
   font-weight: bold;
-  font-size: 1em;
-  opacity: 0.6;
-  filter: alpha(opacity=60);
+  opacity: 0.45;
+  filter: alpha(opacity=45);
   .vertical-align;
 }
 
@@ -247,7 +258,6 @@
   span {
     color: white;
     vertical-align: top;
-    font-weight: 600;
     position: relative;
     top: -1px;
     opacity: 0.5;
@@ -485,7 +495,13 @@
   z-index: 2;
   background-color: #EAEAEA;
   float: right;
+  overflow: hidden;
+
   .flex-container;
+
+  .nav-container {
+    min-width: 330px;
+  }
 }
 
 .preview-pane-nav-title {
@@ -525,19 +541,19 @@
 .preview-device-toggle {
   background: #f9f9f9;
   border-radius: 30px;
-  height: 30px;
+  height: 34px;
 
   img {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     position: relative;
-    top: 4px;
+    top: 7px;
   }
 }
 
 #preview-pane-nav-desktop {
   .icon;
-  margin-left: 10px;
+  margin-left: 13px;
 }
 
 #preview-pane-nav-desktop:hover {
@@ -546,7 +562,7 @@
 
 #preview-pane-nav-phone {
   .icon;
-  margin: 0 8px 0 2px;
+  margin: 0 10px 0 4px;
 }
 #preview-pane-nav-phone:hover {
   .viewmode-active;
