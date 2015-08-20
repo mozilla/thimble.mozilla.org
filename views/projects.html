@@ -2,8 +2,7 @@
 {% block body %}
   <div id="container">
     <h2>Your Projects</h2>
-    <table id="project-list"
-           data-username="{{ username }}">
+    <table id="project-list" data-username="{{ username }}">
 
     {% for project in projects %}
       <tr class="project bramble-user-project"
@@ -12,23 +11,24 @@
         {{ [ "data", "project", key ] | join("-") }}="{{ value }}"
       {% endfor %}
       >
-        <td class="side-fill"></td>
         <td class="project-title">
           {{ project.title }}
-          <span class="project-information">
-          </span>
+          <span class="project-information"></span>
         </td>
-        <td class="project-delete">
-          <img class="icon-garbage-can" src="/img/icon/garbage-can.svg">Delete
+        <td>
+          <div class="project-delete" title="Delete this Project">
+            <div class="icon-garbage-can">
+              <div class="icon-garbage-lid"></div>
+            </div>
+            Delete
+          </div>
         </td>
-        <td class="button-fill"></td>
-        <td class="side-fill"></td>
       </tr>
     {% endfor %}
 
     </table>
 
-    <div class="project-button" id="project-0">Create New</div>
+    <div title="Start a new Thimble Project from scratch" class="project-button" id="project-0">Create a new Project</div>
 
     <script src="/scripts/editor/vendor/require.min.js"
             data-main="/scripts/open-project.js">

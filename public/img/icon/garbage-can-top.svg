@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="10px" height="4px" viewBox="0 0 10 4" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12081) - http://www.bohemiancoding.com/sketch -->
+    <title>garbage-can-top</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="garbage-can-top" sketch:type="MSArtboardGroup" fill="#000000">
+            <path d="M9.238,2.007 C9.184,1.861 9.01,1.761 8.719,1.706 L7.27,1.542 C7.142,1.524 7.051,1.46 6.996,1.35 C6.96,1.278 6.919,1.182 6.873,1.064 C6.827,0.945 6.791,0.863 6.764,0.817 C6.736,0.772 6.704,0.717 6.668,0.653 C6.631,0.59 6.595,0.549 6.559,0.53 C6.522,0.512 6.477,0.503 6.422,0.503 L3.606,0.503 C3.551,0.503 3.505,0.512 3.469,0.53 C3.432,0.549 3.396,0.585 3.36,0.639 C3.323,0.694 3.296,0.749 3.277,0.803 C3.259,0.858 3.227,0.94 3.182,1.05 C3.136,1.159 3.095,1.26 3.059,1.35 C3.004,1.46 2.913,1.524 2.785,1.542 L1.336,1.733 C1.044,1.788 0.871,1.889 0.817,2.034 L0.707,2.39 C0.671,2.554 0.657,2.645 0.666,2.663 C0.675,2.682 0.753,2.69 0.899,2.69 L9.156,2.69 C9.211,2.69 9.274,2.59 9.348,2.39 C9.311,2.226 9.274,2.098 9.238,2.007" id="Fill-2" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

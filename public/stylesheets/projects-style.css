@@ -5,97 +5,134 @@ body {
 }
 
 #container {
-	width: 80%;
-	margin: 0 auto;
+  width: 80%;
+  margin: 35px auto;
 }
-
-h2 {
-	padding-left: 10px;
-}
-
 
 table#project-list {
-	width: 100%;
-	border: 0;
-	padding: 0;
-	border-collapse: collapse;
-	cursor: pointer;
-	-webkit-user-select: none; /* Chrome/Safari */
-	-moz-user-select: none; /* Firefox */
-	-ms-user-select: none; /* IE10+ */
-    user-select: none;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  border-collapse: collapse;
+  cursor: pointer;
+  margin-bottom: 25px;
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+  user-select: none;
+  position: relative;
 }
 
 tr.project:hover {
-	background-color: #EFEFEF;
+  background-color: rgba(0,0,0,.03);
 }
 tr.project:hover span.project-information {
-	color: #A1A1A1;
-}
-tr.project:hover > td.side-fill {
-	border-bottom: 2px solid #EFEFEF;
+  color: #A1A1A1;
 }
 
-tr.project > td:first-child {
-	padding-left: 0;
+tr.project:last-child td {
+  border: none !important;
 }
-tr.project td:last-child {
-	padding-right: 0;
+
+h2 {
+  margin-bottom: 10px;
 }
+
 td {
 	padding: 10px 0;
 	vertical-align: bottom;
-	border-bottom: 2px solid #EFEFEF;
+	border-bottom: 1px solid #DDD;
 }
 
 td.side-fill {
-	border-bottom: 0;
-	width: 10px;
+  border-bottom: 0;
+  width: 10px;
 }
 td.button-fill {
-	width: 40px;
+  width: 40px;
 }
 
 td.project-title {
-	padding-left: 0;
+  padding-left: 8px;
 }
 .project-information {
-	font-size: 0.8em;
-	color: #C6C6C6;
-	margin-left: 5px;
+  font-size: 0.8em;
+  color: #C6C6C6;
+  margin-left: 5px;
 }
-td.project-delete {
-	text-align: right;
-	color: #A1A1A1;
 
-	width: 1%;
-	white-space: nowrap;
+
+.project-delete {
+	float: right;
+  color: black;
+  white-space: nowrap;
+  padding-right: 8px;
+  opacity: .3;
 }
-img.icon-garbage-can, img.icon-remix {
-	width: 15px;
-	height: 15px;
-	position: relative;
-	top: 1px;
-	opacity: 0.3;
+
+.icon-garbage-can {
+  width: 15px;
+  height: 18px;
+  position: relative;
+  top: 3px;
+  display: inline-block;
+  background-image: url(/img/icon/garbage-can-bottom.svg);
+  background-repeat: no-repeat;
+  background-size: 15px;
+  background-position: bottom;
 }
+
+.icon-garbage-lid {
+  width: 15px;
+  height: 6px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url(/img/icon/garbage-can-top.svg);
+  background-repeat: no-repeat;
+  background-size: 17px;
+  background-position: top;
+  transition: transform .1s ease-out;
+}
+
+.project-delete:hover {
+  opacity: .6;
+}
+
+.project-delete:hover .icon-garbage-lid {
+  transform-origin: left;
+  transform: rotate(-4deg) translateY(-1px);
+}
+
 td.project-remix {
-	text-align: right;
-	color: #A1A1A1;
-
-	width: 1%;
-	white-space: nowrap;
+  text-align: right;
+  color: #A1A1A1;
+  width: 1%;
+  white-space: nowrap;
 }
 
 .project-button {
-	margin-top: 10px;
-	margin-left: 10px;
-	padding: 5px 10px 5px 10px;
-	color: white;
-	background-color: #65A17A;
-	display: inline-block;
-	cursor: pointer;
-	text-decoration: none;
-	font-weight: normal;
+  background-color: #2A9961;
+  display: inline-block;
+  padding: 8px 15px;
+  cursor: pointer;
+  color: white;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  border-bottom: solid 2px rgba(0,0,0,.3);
+  border-radius: 2px;
+}
+
+.project-button:hover {
+  background-color: #39AA6D;
+}
+
+.project-button:active {
+  background-color: #288952;
+  position: relative;
+  top: 2px;
+  border: none;
 }
 
 /* Modal CSS/HTML borrowed from http://www.the-art-of-web.com/javascript/feedback-modal-window/ */
