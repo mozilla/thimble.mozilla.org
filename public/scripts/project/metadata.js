@@ -1,6 +1,6 @@
 define(function(require) {
   var $ = require("jquery");
-  var PROJECT_META_KEY = "thimble-project-meta";
+  var PROJECT_META_KEY = require("constants").PROJECT_META_KEY;
   var fs = Bramble.getFileSystem();
 
   // We only want one operation at a time on the metadata xattrib.

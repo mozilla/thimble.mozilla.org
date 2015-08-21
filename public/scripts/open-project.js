@@ -1,6 +1,7 @@
 require.config({
   paths: {
-    "jquery": "/bower/jquery/index"
+    "jquery": "/bower/jquery/index",
+    "lock": "/scripts/project/lock"
   },
   shim: {
     "jquery": {
@@ -9,7 +10,10 @@ require.config({
   }
 });
 
-require(["jquery"], function($) {
+define(function(require) {
+  var $ = require("jquery");
+  var Lock = require("lock");
+
   var projects = document.querySelectorAll("tr.bramble-user-project");
   var username = encodeURIComponent($("#project-list").attr("data-username"));
   var queryString = window.location.search;
@@ -45,9 +49,18 @@ require(["jquery"], function($) {
   Array.prototype.forEach.call(projects, function(project) {
     var projectSelector = "#" + project.getAttribute("id");
     var lastEdited = project.getAttribute("data-project-date_updated");
+    var projectID = project.getAttribute("data-project-id");
+
+    if (Lock.readLock(projectID)) {
+      $(projectSelector).addClass("disabled");
+      $(projectSelector + "> td > .project-delete").addClass("hide");
+      $(projectSelector + " .project-information")
+        .text("A project can't be open in two places. Is it open in another tab?");
+      return;
+    }
 
     $(projectSelector + " > .project-title").on("click", function() {
-      window.location.href = "/user/" + username + "/" + project.getAttribute("data-project-id") + queryString;
+      window.location.href = "/user/" + username + "/" + projectID + queryString;
     });
     $(projectSelector + " .project-information").text(getElapsedTime(lastEdited));
   });

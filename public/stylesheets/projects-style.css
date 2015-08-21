@@ -30,6 +30,10 @@ tr.project:hover span.project-information {
   color: #A1A1A1;
 }
 
+tr.disabled.project:hover > td > .project-information {
+  color: #EEEEEE;
+}
+
 tr.project:last-child td {
   border: none !important;
 }
@@ -55,12 +59,18 @@ td.button-fill {
 td.project-title {
   padding-left: 8px;
 }
+
 .project-information {
   font-size: 0.8em;
   color: #C6C6C6;
   margin-left: 5px;
 }
 
+tr.disabled > td > .project-information {
+  font-size: 0.8em;
+  color: white;
+  margin-left: 5px;
+}
 
 .project-delete {
 	float: right;
@@ -68,6 +78,10 @@ td.project-title {
   white-space: nowrap;
   padding-right: 8px;
   opacity: .3;
+}
+
+.project-delete.hide {
+  display: none;
 }
 
 .icon-garbage-can {

@@ -9,6 +9,7 @@ require.config({
     "uuid": "/bower/node-uuid/uuid",
     "cookies": "/bower/cookies-js/dist/cookies",
     "project": "../../project/project",
+    "lock": "../../project/lock",
     "constants": "../../constants"
   },
   shim: {

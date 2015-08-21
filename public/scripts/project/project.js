@@ -2,6 +2,7 @@ define(function(require) {
   var Constants = require("constants");
   var Remote = require("../../project/remote");
   var Metadata = require("../../project/metadata");
+  var Lock = require("lock");
   var Path = Bramble.Filer.Path;
 
   var _host;
@@ -102,6 +103,18 @@ define(function(require) {
     _description = projectDetails.description;
 
     var metadataLocation = _user && _anonymousId ? Path.join(Constants.ANONYMOUS_USER_FOLDER, _anonymousId.toString()) : getRoot();
+
+    // First, lock the project or bail
+    var lock = Lock.requestLock(_id);
+    if (!lock) {
+      // Abort!
+      window.location = "/projects";
+      return;
+    }
+
+    // Remove the lock when the user navigates away from the page, or closes
+    // the tab.
+    window.addEventListener("beforeunload", Lock.removeLock.bind(null, _id));
 
     // We have to check if we can access the 'title' stored
     // on an xattr first to know which value
