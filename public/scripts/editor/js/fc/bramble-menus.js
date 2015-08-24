@@ -17,35 +17,41 @@ define(function(require) {
     });
 
     // Theme Toggle
-    function setTheme(theme) {
-      var transitionSpeed = 200; //Speed at which the toggle changes
+    function lightThemeUI() {
+      var transitionSpeed = 200;
 
+      $("#sun-green").fadeIn(transitionSpeed);
+      $("#moon-white").fadeIn(transitionSpeed);
+      $("#sun-white").fadeOut(transitionSpeed);
+      $("#moon-green").fadeOut(transitionSpeed);
+
+      // Active Indicator
+      $("#theme-active").css("position", "absolute").animate({
+        left: 190
+      }, transitionSpeed);
+    }
+
+    function darkThemeUI() {
+      var transitionSpeed = 200;
+
+      $("#moon-green").fadeIn(transitionSpeed);
+      $("#sun-white").fadeIn(transitionSpeed);
+      $("#moon-white").fadeOut(transitionSpeed);
+      $("#sun-green").fadeOut(transitionSpeed);
+
+      // Active indicator
+      $("#theme-active").css("position", "absolute").animate({
+        left: 157
+      },transitionSpeed);
+    }
+
+    function setTheme(theme) {
       if(theme === "light-theme") {
         bramble.useLightTheme();
-
-        // Icons
-        $("#sun-green").fadeIn(transitionSpeed);
-        $("#moon-white").fadeIn(transitionSpeed);
-        $("#sun-white").fadeOut(transitionSpeed);
-        $("#moon-green").fadeOut(transitionSpeed);
-
-        // Active Indicator
-        $("#theme-active").css("position", "absolute").animate({
-          left: 190
-        },transitionSpeed);
+        lightThemeUI();
       } else if(theme === "dark-theme") {
         bramble.useDarkTheme();
-
-        // Icons
-        $("#moon-green").fadeIn(transitionSpeed);
-        $("#sun-white").fadeIn(transitionSpeed);
-        $("#moon-white").fadeOut(transitionSpeed);
-        $("#sun-green").fadeOut(transitionSpeed);
-
-        // Active indicator
-        $("#theme-active").css("position", "absolute").animate({
-          left: 157
-        },transitionSpeed);
+        darkThemeUI();
       }
     }
     function toggleTheme() {
@@ -60,7 +66,11 @@ define(function(require) {
 
     var previousTheme = bramble.getTheme();
     if(previousTheme) {
-      setTheme(previousTheme);
+      if(previousTheme === "light-theme") {
+        lightThemeUI();
+      } else if(previousTheme === "dark-theme") {
+        darkThemeUI();
+      }
     }
   }
 
