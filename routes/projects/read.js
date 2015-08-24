@@ -20,6 +20,10 @@ module.exports = function(config, req, res) {
       return;
     }
 
+    res.set({
+      "Cache-Control": "no-cache"
+    });
+
     if(response.statusCode === 404) {
       // If there aren't any projects for this user, create one with a redirect
       res.redirect(301, "/projects/new" + qs);

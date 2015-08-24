@@ -13,6 +13,10 @@ module.exports = function(config, req, res) {
     qs = "?" + qs;
   }
 
+  res.set({
+    "Cache-Control": "no-cache"
+  });
+
   // Anonymous user: redirect to the anonymous entry point
   if(!user) {
     res.redirect(301, "/anonymous/" + uuid.v1() + qs);
