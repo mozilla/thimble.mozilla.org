@@ -43,7 +43,7 @@ module.exports = function(config, req, res) {
         return;
       }
 
-      res.redirect(301, "/user/" + user.username + "/" + project.id);
+      res.redirect(307, "/user/" + user.username + "/" + project.id);
     });
   });
 };

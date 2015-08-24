@@ -58,7 +58,7 @@ module.exports = function(config, req, res) {
       };
 
       // And finally redirect to the authenticated user's main entry point
-      res.redirect(301, "/user/" + user.username + "/" + project.id);
+      res.redirect(307, "/user/" + user.username + "/" + project.id);
     });
   });
 };

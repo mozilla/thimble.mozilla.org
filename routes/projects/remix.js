@@ -5,7 +5,7 @@ module.exports = function(config, req, res) {
   var publishedId = req.params.publishedId;
   var user = req.user;
   if(!user) {
-    res.redirect("/anonymous/" + uuid.v1() + "/" + publishedId);
+    res.redirect(307, "/anonymous/" + uuid.v4() + "/" + publishedId);
     return;
   }
 
@@ -30,6 +30,6 @@ module.exports = function(config, req, res) {
       return;
     }
 
-    res.redirect(301, "/user/" + user.username + "/" + JSON.parse(body).id);
+    res.redirect(307, "/user/" + user.username + "/" + JSON.parse(body).id);
   });
 };
