@@ -59,12 +59,7 @@ function injectDetailsBar($, metadata) {
   $(".remix-project-author").text(metadata.projectAuthor);
   $(".remix-project-meta").append(document.createTextNode(" - " + getElapsedTime(metadata.dateUpdated)));
 
-  $(".details-bar-remix-button").on("click", function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    window.location.href = metadata.host + "/projects/" + metadata.projectId + "/remix?now=" + (new Date()).toISOString();
-  });
+  $(".details-bar-remix-button").attr("href", metadata.host + "/projects/" + metadata.projectId + "/remix");
 }
 
 function injectStyleSheet($, metadata) {
