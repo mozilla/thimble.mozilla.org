@@ -198,6 +198,7 @@
 
   .nav-container {
     min-width: 350px;
+    padding-right: 16px;
   }
 }
 
@@ -245,8 +246,8 @@
   padding: 5px 10px 5px 10px;
   display: inline-block;
   position: relative;
-
   .icon;
+
   img {
     opacity: 0.5;
     filter: alpha(opacity=50);
@@ -255,6 +256,7 @@
     position: relative;
     top: 0px;
   }
+
   span {
     color: white;
     vertical-align: top;
@@ -263,7 +265,6 @@
     opacity: 0.5;
     filter: alpha(opacity=50);
   }
-
 
   &:hover {
     img {
@@ -291,7 +292,6 @@
 
 }
 
-
 #editor-pane-nav-redo {
   background-color: #2B2B2B;
   height: 20px;
@@ -299,7 +299,7 @@
   padding: 5px;
   border-radius: 50%;
   margin-left: 6px;
-  margin-right: 10px;
+  margin-right: 6px;
   position: relative;
   .icon;
 
@@ -334,8 +334,14 @@
   .icon;
   opacity: 0.5;
   filter: alpha(opacity=50);
-  width: 22px;
-  heigh: 22px;
+  padding: 4px;
+
+  img {
+      width: 22px;
+      heigh: 22px;
+      display: block;
+    }
+
 }
 #editor-pane-nav-options:hover {
     opacity: 0.7;
@@ -376,7 +382,7 @@
   width: 0;
   z-index: 1;
   top: -15px;
-  left: 105px;
+  left: 109px;
 }
 
 /* Font increase/decrease */
