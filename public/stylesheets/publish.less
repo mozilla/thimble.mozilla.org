@@ -44,7 +44,7 @@
   font-size: 1em;
   font-weight: lighter;
   font-weight: 300;
-  width: 400px;
+  width: 500px;
   right: 20px;
   top: 65px;
 
@@ -56,6 +56,23 @@
     #publish-title {
       font-size: 1.3em;
       padding: 10px 15px;
+    }
+
+    #publish-link {
+        padding: 4px 0;
+        overflow: hidden;
+
+        a {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #3186c1;
+            text-decoration: none;
+            display: inline-block;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
 
     #publish-inner {
@@ -75,10 +92,12 @@
         .publish-button;
         .green-button;
       }
+
       #publish-button-cancel {
         background-color: #B0B0B0;
         float: right;
         .publish-button;
+        .grey-button;
 
         &:hover {
           background-color: #BCBCBC;
@@ -109,17 +128,23 @@
 
 #publish-changes {
   background-color: #DFF6E6;
-  border: 2px solid #C5E0CF;
+  color: #1a9640;
+  border: 1px solid #C5E0CF;
   padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 10px 0 14px 0;
+  border-radius: 2px;
 
   #publish-button-update {
-    background-color: #489061;
-    border-bottom: 2px solid #52996B;
-    border-right: 2px solid #52996B;
-    margin-top: 10px;
+    margin-top: 8px;
+    margin-bottom: 3px;
+
+    .green-button;
     .publish-button;
+
+    &:active {
+        margin-bottom: 5px;
+    }
+
   }
 }
 
@@ -127,11 +152,16 @@
   border-color: #A9A9A9;
   background-color: #B0B0B0;
   .publish-button;
+  .grey-button;
 
   svg {
     position: relative;
     top: 2px;
     left: -2px;
+  }
+
+  &:active {
+      margin-bottom: 2px;
   }
 }
 
@@ -163,4 +193,16 @@
     top: 2px;
     border: none;
   }
+}
+
+.grey-button {
+    background-color: #B0B0B0;
+
+    &:hover {
+      background-color: #BCBCBC;
+    }
+
+    &:active {
+      background-color: #9B9B9B;
+    }
 }
