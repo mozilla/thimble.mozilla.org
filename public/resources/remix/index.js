@@ -76,7 +76,13 @@ function getMetadata($) {
   })
   .forEach(function(metaTag) {
     metaTag = $(metaTag);
-    metadata[metaTag.attr("name").replace(/^data-remix-/, "")] = metaTag.attr("content");
+    var key = metaTag.attr("name").replace(/^data-remix-/, "");
+    // We see if a value for the current attribute already exists.
+    // If it does, that means that we already encountered a meta tag
+    // with that name which will refer to a more recent value than the
+    // current one (we add the most recent values above all other values in
+    // the <head> tag's contents).
+    metadata[key] = metadata[key] || metaTag.attr("content");
   });
 
   return metadata;
