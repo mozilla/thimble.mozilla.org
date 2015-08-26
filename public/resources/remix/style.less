@@ -4,10 +4,6 @@
 
 @BASE_Z_INDEX: 100000000;
 
-body {
-  padding-top: 64px;
-}
-
 @font-face {
   font-family: "Fira Medium";
   src: ~"url(FiraSansOT-Regular.otf)";
@@ -16,126 +12,138 @@ body {
 }
 
 .remix-details-bar {
-  position: fixed;
-  width: 100%;
-  top: 0;
-  left: 0;
-  transition: opacity .2s;
-  background: white;
-  padding: 11px 0 11px 76px;
-  font-family: "Fira Medium", "Helvetica Neue", sans-serif;
+  position: absolute !important;
+  width: 100% !important;
+  top: 0 !important;
+  left: 0 !important;
+  height: 64px;
+  transition: opacity .2s !important;
+  background: white !important;
+  padding: 11px 0 11px 76px !important;
+  box-sizing: border-box !important;
+  font-family: "Fira Medium", "Helvetica Neue", sans-serif !important;
   z-index: @BASE_Z_INDEX;
 
   .thimble-logo {
-    position: absolute;
-    width: 60px;
-    background: #2E9961;
-    height: 100%;
-    top: 0px;
-    left: 0px;
-    display: block;
+    position: absolute !important;
+    width: 60px !important;
+    background: #2E9961 !important;
+    height: 100% !important;
+    top: 0px !important;
+    left: 0px !important;
+    display: block !important;
 
     .remix-icon {
-      position: absolute;
-      left: 0px;
-      top: 0px;
-      bottom: 0px;
-      right: 0px;
-      background-image: ~"url(thimble-logo.svg)";
-      background-position: 16px center;
-      background-size: 24px;
-      background-repeat: no-repeat;
-      transition: transform .05s linear;
+      position: absolute !important;
+      left: 0px !important;
+      top: 0px !important;
+      bottom: 0px !important;
+      right: 0px !important;
+      background-image: ~"url(thimble-logo.svg)" !important;
+      background-position: 16px center !important;
+      background-size: 24px !important;
+      background-repeat: no-repeat !important;
+      transition: transform .05s linear !important;
     }
 
 
     &:hover .icon {
-      transform: scale(1.1);
+      transform: scale(1.1) !important;
     }
 
     &:active {
-      background: #28915a;
+      background: #28915a !important;
       .icon {
-        transform: scale(1);
+        transform: scale(1) !important;
       }
     }
-
   }
 
   .remix-project-title, .remix-project-meta {
-    font-size: 16px;
-    padding: 0;
-    margin: 0;
-    color: black;
-    text-align: left;
-    font-weight: normal;
-    letter-spacing: 0;
-    text-transform: none;
-    color: #2E9961;
+    font-size: 16px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    color: black !important;
+    text-align: left !important;
+    font-weight: normal !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    color: #2E9961 !important;
   }
 
   .remix-project-title {
-    margin: 3px 0 2px 0;
-    font-size: 20px;
-    line-height: 22px;
+    margin: 3px 0 2px 0 !important;
+    font-size: 20px !important;
+    line-height: 22px !important;
   }
 
   .remix-project-meta {
-    font-size: 13px;
-    line-height: 15px;
-    opacity: .6;
+    font-size: 13px !important;
+    line-height: 15px !important;
+    opacity: .6 !important;
 
     .remix-project-author {
-      color: inherit;
-      text-decoration: none;
+      color: inherit !important;
+      text-decoration: none !important;
 
       &:hover {
-        text-decoration: underline;
+        text-decoration: underline !important;
+      }
+    }
+  }
+
+  .details-bar-remix-button-wrapper {
+    position: absolute !important;
+    right: 8px !important;
+    top: 8px !important;
+    background: transparent !important;
+    padding: 4px 4px 6px 4px !important;
+    border-radius: 2px !important;
+    z-index: @BASE_Z_INDEX + 1;
+
+    .details-bar-remix-button {
+      border-radius: 2px !important;
+      font-size: 18px !important;
+      display: block !important;
+      cursor: pointer !important;
+      background: #47AD66 !important;
+      position: relative !important;
+      padding: 11px 15px 9px 15px !important;
+      border-radius: 2px !important;
+      box-shadow: 0px 2px 0px #417C53 !important;
+      color: white !important;
+      text-align: center !important;
+      text-decoration: none !important;
+
+      &:hover {
+        background: #4db76d !important;
+      }
+
+      &:active {
+        background: #369352 !important;
+        box-shadow: none !important;
+        top: 2px !important;
+      }
+    }
+  }
+
+  &.scrolled {
+    .details-bar-remix-button-wrapper {
+      position: fixed !important;
+      animation: showbutton .2s cubic-bezier(0.780, -0.480, 0.365, 1.530) !important;
+
+      .details-bar-remix-button {
+        box-shadow: 0px 2px 0px rgba(0,0,0,.4) !important;
       }
     }
   }
 }
 
-.scrolled {
-  .remix-details-bar {
-    opacity: 0;
+@keyframes showbutton {
+  0% {
+    transform: translateY(-100px);
   }
-  .details-bar-remix-button {
-    box-shadow: 0px 2px 0px rgba(0,0,0,.4);
-  }
-}
-
-.details-bar-remix-button-wrapper {
-  position: fixed;
-  right: 8px;
-  top: 8px;
-  background: transparent;
-  padding: 4px 4px 6px 4px;
-  border-radius: 2px;
-  z-index: @BASE_Z_INDEX + 1;
-}
-
-.details-bar-remix-button {
-  border-radius: 2px;
-  padding: 5px 10px;
-  font-size: 18px;
-  display: block;
-  cursor: pointer;
-  background: #47AD66;
-  position: relative;
-  border-radius: 2px;
-  padding: 8px 15px 9px 15px;
-  box-shadow: 0px 2px 0px #417C53;
-  color: white;
-  text-align: center;
-
-  &:hover {
-    background: #4db76d;
-  }
-
-  &:active {
-    background: #369352;
-    box-shadow: none;
-    top: 2px;
+  100% {
+    transform: translateY(0px);
   }
 }
