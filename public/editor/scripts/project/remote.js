@@ -41,7 +41,7 @@ define(function(require) {
       }
     }
 
-    untarWorker = new Worker("/scripts/editor/vendor/bitjs-untar-worker.min.js");
+    untarWorker = new Worker("/editor/scripts/editor/vendor/bitjs-untar-worker.min.js");
     untarWorker.addEventListener("message", function(e) {
       var data = e.data;
 

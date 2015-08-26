@@ -1,53 +1,6 @@
-var url = require("url");
 var querystring = require("querystring");
 
 var env = require("../../lib/environment");
-var Constants = require("../../constants");
-var utils = require("../utils");
-
-function getProjectMetadata(config, req, callback) {
-  var project = req.project;
-  var remixId = req.params.remixId;
-  var anonymousId = req.params.anonymousId;
-
-  if(project) {
-    callback(null, {
-      id: project.id,
-      userID: req.user.publishId,
-      anonymousId: project.anonymousId,
-      remixId: project.remixId,
-      title: project.title,
-      dateCreated: project.date_created,
-      dateUpdated: project.date_updated,
-      tags: project.tags,
-      description: project.description,
-      publishUrl: project.publish_url
-    });
-    return;
-  }
-
-  if(!remixId) {
-    callback(null, {
-      anonymousId: anonymousId,
-      title: Constants.DEFAULT_PROJECT_NAME,
-    });
-    return;
-  }
-
-  utils.getRemixedProject(config, remixId, function(err, status, project) {
-    if(err) {
-      callback(err);
-      return;
-    }
-
-    callback(null, {
-      anonymousId: anonymousId,
-      remixId: remixId,
-      title: project.title,
-      description: project.description
-    });
-  });
-}
 
 module.exports = function(config, req, res) {
   var qs = querystring.stringify(req.query);
@@ -56,39 +9,22 @@ module.exports = function(config, req, res) {
   }
 
   var options = {
-    appURL: config.appURL,
-    csrf: req.csrfToken(),
-    editorHOST: config.editorHOST,
+    keepCalmRemixUrl: env.get("KEEP_CALM_REMIX_URL"),
+    keepCalmPublishedUrl: env.get("KEEP_CALM_PUBLISHED_URL"),
+    backToSchoolRemixUrl: env.get("BACK_TO_SCHOOL_REMIX_URL"),
+    backToSchoolPublishedUrl: env.get("BACK_TO_SCHOOL_PUBLISHED_URL"),
+    comicStripRemixUrl: env.get("COMIC_STRIP_REMIX_URL"),
+    comicStripPublishedUrl: env.get("COMIC_STRIP_PUBLISHED_URL"),
     loginURL: config.appURL + "/login",
-    logoutURL: config.logoutURL,
-    queryString: qs,
-    mainURL: env.get("NODE_ENV") === "development" ? "/scripts/main.js" : "/dist/main.js"
+    editorHOST: config.editorHOST,
+    editorURL: config.editorURL
   };
-
-  // We add the localization code to the query params through a URL object
-  // and set search prop to nothing forcing query to be used during url.format()
-  var urlObj = url.parse(req.url, true);
-  urlObj.search = "";
-  urlObj.query.locale = req.localeInfo.lang;
-  var thimbleUrl = url.format(urlObj);
-
-  // We forward query string params down to the editor iframe so that
-  // it's easy to do things like enableExtensions/disableExtensions
-  options.editorURL = config.editorURL + "/index.html" + (url.parse(thimbleUrl).search || "");
 
   if (req.user) {
     options.username = req.user.username;
     options.avatar = req.user.avatar;
+    options.logoutURL = config.logoutURL;
   }
 
-  getProjectMetadata(config, req, function(err, projectMetadata) {
-    if(err) {
-      res.sendStatus(500);
-      return;
-    }
-
-    options.projectMetadata = encodeURIComponent(JSON.stringify(projectMetadata));
-
-    res.render("index.html", options);
-  });
+  res.render("homepage/index.html", options);
 };

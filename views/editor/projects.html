@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "./layout.html" %}
 {% block body %}
   <div class="project-list-wrapper">
     <div id="container">
@@ -31,9 +31,9 @@
 
       <div title="Start a new Thimble Project from scratch" class="project-button" id="project-0">Create a new Project</div>
 
-      <script src="/scripts/editor/vendor/require.min.js"
-              data-main="/scripts/open-project.js">
-      </script>
-    <div class="project-list-scroll">
+    <script src="/scripts/vendor/require.min.js"
+            data-main="/editor/scripts/open-project.js">
+    </script>
+    <div class="project-list-scroll"></div>
   </div>
 {% endblock %}

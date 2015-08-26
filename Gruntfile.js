@@ -33,7 +33,7 @@ module.exports = function( grunt ) {
      requirejs: {
       dist: {
         options: {
-          appDir: "./public/scripts/",
+          appDir: "./public/editor/scripts/",
           baseUrl: "./editor/js",
           dir: "./dist",
           modules: [{
@@ -45,10 +45,10 @@ module.exports = function( grunt ) {
             "text": "../vendor/require.text",
             "i18n": "../vendor/require.i18n",
             "sso-override": "../../sso-override",
-            "jquery": "../../../../bower_components/jquery/index",
-            "localized": "../../../../bower_components/webmaker-i18n/localized",
-            "uuid": "../../../../bower_components/node-uuid/uuid",
-            "cookies": "../../../../bower_components/cookies-js/dist/cookies",
+            "jquery": "../../../../../bower_components/jquery/index",
+            "localized": "../../../../../bower_components/webmaker-i18n/localized",
+            "uuid": "../../../../../bower_components/node-uuid/uuid",
+            "cookies": "../../../../../bower_components/cookies-js/dist/cookies",
             "project": "../../project/project",
             "constants": "../../constants"
           },
@@ -68,10 +68,21 @@ module.exports = function( grunt ) {
     // Linting
     lesslint: {
       src: [
-        "./frontend/src/styles/*.less"
+        "./public/editor/stylesheets/*.less",
+        "./public/editor/stylesheets/*.css",
+        "./public/homepage/stylesheets/*.less",
+        "./public/homepage/stylesheets/*.css",
+        "./public/resources/remix/*.less",
+        "./public/resources/remix/*.css",
+        "./public/resources/tutorial/*.less",
+        "./public/resources/tutorial/*.css"
       ],
       options: {
         csslint: {
+          "duplicate-properties": false,
+          "duplicate-background-images": false,
+          "display-property-grouping": false,
+          "fallback-colors": false,
           "adjoining-classes": false,
           "box-model": false,
           "box-sizing": false,

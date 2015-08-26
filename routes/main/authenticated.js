@@ -1,10 +1,10 @@
-var homepage = require("./homepage");
+var editor = require("./editor");
 
 module.exports = function(config, req, res) {
   // If we aren't migrating a project from an anonymous
   // user to an authenticated user, show Thimble immediately
   if(!req.session.project || !req.session.project.anonymousId) {
-    homepage.call(this, config, req, res);
+    editor.call(this, config, req, res);
     return;
   }
 
@@ -12,5 +12,5 @@ module.exports = function(config, req, res) {
   req.project.remixId = req.session.project.remixId; // can be null
   delete req.session.project;
 
-  homepage.call(this, config, req, res);
+  editor.call(this, config, req, res);
 };

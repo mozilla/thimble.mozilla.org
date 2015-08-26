@@ -1,0 +1,537 @@
+@import "variables.less";
+
+@font-face {
+  font-family: "Fira Medium";
+  src: ~"url(/fonts/FiraSansOT-Regular.otf)";
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Regular";
+  src: ~"url(/fonts/FiraSansOT-Light.otf)";
+  font-weight: normal;
+  font-style: normal;
+}
+
+body, html {
+  font-family: "Fira Regular";
+  padding: 0;
+  margin: 0;
+}
+
+/* User bar overrides for homepage */
+.navbar-thimble {
+  #navbar-login {
+    border-left: none;
+
+    &.signed-in {
+      border-right: none;
+    }
+  }
+
+  .navbar-logo-container {
+    &:hover {
+      transform: none;
+    }
+
+    &:active {
+      transform: none;
+    }
+  }
+  .thimble-logo {
+    height: auto;
+    width: auto;
+  }
+}
+
+footer {
+  background: @lightgreen;
+  margin-top: 75px;
+
+  .content-wrapper {
+    padding: 40px 0 40px 0;
+    width: 964px;
+    margin: 0 auto;
+    position: relative;
+    color: white;
+    overflow: auto;
+    font-size: 15px;
+  }
+
+  .social-links {
+    float: left;
+    list-style-type: none;
+    margin: 0;
+
+    li {
+     margin-bottom: 4px;
+    }
+
+    li a {
+      position: relative;
+      padding-left: 25px;
+    }
+
+    .icon {
+      position: absolute;
+      display: block;
+      width: 20px;
+      height: 20px;
+      top: 1px;
+      opacity: .5;
+      transition: opacity .1s linear;
+      -webkit-transition: opacity .1s linear;
+      -moz-transition: opacity .1s linear;
+    }
+
+    a:hover .icon {
+      opacity: 1;
+    }
+
+    .help .icon {
+      background-image: ~"url(/img/footer-icon-help.svg)";
+    }
+
+    .twitter .icon {
+      background-image: ~"url(/img/footer-icon-twitter.svg)";
+    }
+
+    .github .icon {
+      background-image: ~"url(/img/footer-icon-twitter.svg)";
+    }
+  }
+
+  .social-links a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .project-info {
+    background: @darkgreen;
+    padding: 18px 20px;
+    width: 610px;
+    float: left;
+    margin: 0;
+    position: relative;
+    border-radius: 4px;
+
+    .mozilla-logo {
+      position: absolute;
+      bottom: 25px;
+      left: 20px;
+    }
+
+    .thimble-context {
+      margin: 0 0 0 122px;
+      padding: 0 0 0 20px;
+      color: rgba(255,255,255,.5);
+      border-left: solid 2px @lightgreen;
+
+      a {
+        color: white;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.main-cta {
+  background-color: #47AD66;
+  background-image: ~"url(/img/teach-pattern-2.png)";
+  background-size: 200px;
+  padding: 30px 0;
+
+
+  .content-wrapper {
+    width: 964px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .left-side {
+    width: 45%;
+    padding: 40px 0 80px 0;
+  }
+
+  h1 {
+    color: white;
+    padding: 0;
+    font-weight: normal;
+    font-size: 37px;
+    line-height: 37px;
+    margin: 0 0 15px 0;
+  }
+
+  p {
+    color: rgba(255,255,255,.9);
+    margin: 0 0 45px 0;
+
+    a {
+      color: white;
+
+      &:hover {
+        color: rgba(255,255,255,1);
+      }
+    }
+  }
+
+  .button {
+    background-color: white;
+    padding: 11px 21px 10px 45px;
+    color: @lightgreen;
+    border-radius: 3px;
+    box-shadow: 0 2px 0 rgba(0,0,0,.15);
+    position: relative;
+    text-decoration: none;
+    font-size: 18px;
+    background-position:  13px center;
+    background-repeat: no-repeat;
+
+    &:active {
+      position: relative;
+      top: 2px;
+      opacity: 1;
+      box-shadow: none;
+    }
+  }
+
+  .video {
+    position: absolute;
+    top: 20px;
+    right: 0;
+    background: black;
+
+    iframe {
+      position: relative;
+      z-index: 2;
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 10px;
+      width: ~"calc(100% - 20px)";
+      height: 35px;
+      box-shadow: 0 5px 15px rgba(0,0,0,.3);
+      border-radius: 40%;
+      z-index: 1;
+    }
+  }
+
+  // 404
+  .not-found-message {
+    text-align: center;
+    padding: 25px 0 35px 0;
+
+    h1 {
+      font-family: "Fira Medium";
+      font-size: 40px;
+      margin-bottom: 5px;
+    }
+
+    p {
+      font-size: 30px;
+      line-height: 120%;
+    }
+  }
+}
+
+.remix-projects {
+  .content-wrapper {
+    width: 964px;
+    margin: 0 auto;
+  }
+
+  .projects-heading {
+    text-align: center;
+    color: #545454;
+    font-size: 30px;
+    margin: 37px 0 27px 0;
+    padding: 0;
+  }
+
+  .remixable-projects {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+
+    -webkit-align-content: flex-start;
+    -ms-flex-line-pack: start;
+    align-content: flex-start;
+
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+
+    .project {
+      -webkit-flex: 1 1 auto;
+      -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+      -webkit-align-self: stretch;
+      -ms-flex-item-align: stretch;
+      align-self: stretch;
+      margin-right: 75px;
+
+      .title {
+        margin: 0 0 12px 0;
+        font-size: 22px;
+        color: #545454;
+        text-align: center;
+      }
+
+      &:last-child {
+        margin: 0;
+      }
+
+      .thumbnail {
+        width: 271px;
+        height: 278px;
+        position: relative;
+        margin: 0 0 20px 0 ;
+        background: #EFEFEF;
+
+        .image {
+          width: 271px;
+          display: block;
+          height: 278px;
+          z-index: 2;
+          position: relative;
+          background: #EFEFEF;
+        }
+
+        &:before {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 10px;
+          width: ~"calc(100% - 20px)";
+          height: 40px;
+          box-shadow: 0 2px 15px rgba(0,0,0,.2);
+          border-radius: 40%;
+          z-index: 1;
+        }
+      }
+
+      .description {
+        color: #999;
+        font-size: 15px;
+        line-height: 19px;
+        margin: 0 0 15px 0;
+      }
+
+      .or-wrapper {
+        position: relative;
+        height: 30px;
+        margin-top: 14px;
+
+        hr {
+          border: none;
+          height: 0;
+          border-bottom: solid 2px #E9E9E9;
+          position: absolute;
+          top: 10px;
+          width: 100%;
+        }
+
+        .or {
+          position: absolute;
+          left: ~"calc(50% - 18px)";
+          width: 36px;
+          background: white;
+          color: #C9C9C9;
+          text-transform: uppercase;
+          top: 8px;
+          font-size: 15px;
+          font-weight: bold;
+          text-align: center;
+          font-family: "Fira Medium";
+        }
+      }
+
+      &.keep-calm .image {
+        background: ~"url(/img/thumbnail-keep-calm.png)";
+      }
+
+      &.postcard .image {
+        background: ~"url(/img/thumbnail-postcard.png)";
+      }
+
+      &.comic-strip .image {
+        background: ~"url(/img/thumbnail-comic-strip.png)";
+      }
+
+      .remix-button {
+        display: block;
+        cursor: pointer;
+        background: @lightgreen;
+        padding: 10px 0 8px 0;
+        border-radius: 3px;
+        box-shadow: 0 2px 0 #417C53;
+        font-size: 18px;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+
+        &:hover {
+          background: #51B56B;
+        }
+
+        &:active {
+          position: relative;
+          top: 2px;
+          box-shadow: none;
+          background: #3F9956;
+        }
+      }
+    }
+  }
+
+  .teach {
+    h3 {
+      font-family: "Fira Medium";
+      padding: 0;
+      margin: 15px 0 12px 0;
+      font-size: 15px;
+      color: #777;
+    }
+
+    ul {
+      margin: 0 0 12px 0;
+      padding: 0 0 0 18px;
+
+      li {
+        font-size: 15px;
+        color: #999;
+        line-height: 19px;
+      }
+    }
+
+    a {
+      font-size: 15px;
+      font-family: "Fira Medium";
+      color: @lightgreen;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.button:hover {
+  .line {
+    .animation(line, 3s, linear, infinite, 0s);
+  }
+  .line-two {
+    .animation(line, 3s, linear, infinite, 1s);
+  }
+  .line-three {
+    .animation(line, 3s, linear, infinite, 2s);
+  }
+  .pencil {
+    .animation(pencil, 1s, linear, infinite, 0s);
+  }
+}
+
+.pencil-animation {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 14px;
+  top: 14px;
+
+  .pencil {
+    width: 90%;
+    height: 90%;
+    position: absolute;
+    bottom: 6%;
+    left: 0;
+    background: ~"url(/img/pencil-icon.svg)";
+    background-size: 100%;
+  }
+
+  .line-wrapper {
+    width: 90%;
+    height: 90%;
+    position: absolute;
+    overflow: hidden;
+  }
+
+  .line {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    transform-origin: left;
+    transform: scaleX(0);
+
+    &:after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 13%;
+      background: #47ad66;
+      bottom: 0;
+    }
+  }
+}
+
+@keyframes pencil {
+  0% {
+    transform: translateX(0);
+  }
+  30%{
+    transform: translateX(90%);
+  }
+  40% {
+    transform: translateX(90%)
+  }
+  60% {
+    transform: translateX(50%) translateY(-30%);
+  }
+  80% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes line {
+  10% {
+    transform: scaleX(1);
+  }
+  20% {
+    transform: scaleX(1);
+  }
+  33% {
+    transform: scaleX(1) translateY(-43.5%);
+  }
+  53% {
+    transform: scaleX(1) translateY(-43.5%);
+  }
+  66% {
+    transform: scaleX(1) translateY(-87%);
+  }
+  87% {
+    transform: scaleX(1) translateY(-87%);
+  }
+  100% {
+    transform: scaleX(1) translateY(-150%);
+  }
+}

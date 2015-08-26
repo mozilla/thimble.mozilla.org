@@ -1,0 +1,53 @@
+{% block userbar %}
+  <!-- webmaker user bar -->
+  <nav class="navbar-thimble container-flex">
+    <div id="navbar-left" class="container-flex">
+      <div class="navbar-logo-container">
+        <a href="/{{localeInfo.lang}}" class="logo">
+          <img src="/img/thimble-logo.svg" class="thimble-logo">
+        </a>
+      </div>
+    </div>
+
+    <div id="navbar-right" class="container-flex">
+      <div id="navbar-login" {% if username %}class="signed-in"{% endif %}>
+        <div id="navbar-login-inner">
+        {% if username %}
+          <ul id="navbar-logged-in">
+            <li>
+              <img class="avatar" src="{{avatar}}">
+              <span>Hi, {{username}}</span>
+              <img class="icon-arrow-down" src="/img/icon/dropdown-arrow.svg">
+
+              <ul class="dropdown">
+                <li>
+                  <a id="new-project-link" class="dropdown-link">
+                    <img src="/img/icon/new-project.svg" class="dropdown-icon">
+                    New Project
+                  </a>
+                </li>
+                <li>
+                  <a href="/projects/{{ queryString }}" class="dropdown-link" target="_self">
+                    <img src="/img/icon/your-projects.svg" class="dropdown-icon">
+                    Your Projects
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ logoutURL }}" id="logout-link" class="dropdown-link" target="_self">
+                    <img src="/img/icon/sign-out.svg" class="dropdown-icon">
+                    Sign Out
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        {% else %}
+          <div id="navbar-anonymous">
+            <a href="#" title="Log in to Thimble" id="login-link" data-loginUrl="{{ loginURL }}" class="navbar-login">Log in</a> or <a href="#" title="Create an account" id="signup-link" class="navbar-login">Sign Up</a>
+          </div>
+        {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+{% endblock %}

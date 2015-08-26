@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="{{localeInfo.lang}}" dir="{{localeInfo.direction}}">
+  <head>
+    <meta charset="utf-8">
+    {{ newrelic.getBrowserTimingHeader() | safe }}
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+    <link rel="stylesheet" href="/stylesheets/userbar.css">
+    <link rel="stylesheet" href="/homepage/stylesheets/style.css">
+    <title>Thimble by Mozilla - An online code editor for learners &amp; educators.</title>
+  </head>
+
+  <body>
+    {% include './userbar.html' %}
+
+    <script id="homepage-script"
+        src="/scripts/vendor/require.min.js"
+        data-main="/homepage/scripts/main.js">
+    </script>
+
+    <section class="main-cta">
+      <div class="content-wrapper">
+        <div class="left-side">
+          <h1>Write the Web <br/> On the Web</h1>
+          <p>
+            Thimble is an online code editor that makes it easy to create and publish
+            your own web pages while learning <a title="Learn about HTML" href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a>,
+            <a title="Learn about CSS" href="https://developer.mozilla.org/en-US/docs/Web/CSS">CSS</a> &amp; <a title="Learn about JavaScript" href="https://developer.mozilla.org/en-US/Learn/JavaScript">JavaScript</a>.
+          </p>
+          <a title="Start a new Thimble project from scratch." href="editor" class="button">
+
+          <div class="pencil-animation">
+            <div class="line-wrapper">
+              <div class="line line-one"></div>
+              <div class="line line-two"></div>
+              <div class="line line-three"></div>
+            </div>
+            <div class="pencil"></div>
+          </div>
+            Start a project from scratch
+          </a>
+        </div>
+
+        <div class="video">
+          <iframe width="504" height="284" src="https://www.youtube.com/embed/HWqkEjnLh-U" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="remix-projects">
+      <div class="content-wrapper">
+          <h2 class="projects-heading">Make your own version of these popular projects...</h2>
+
+          <div class="remixable-projects">
+
+            <!-- Keep Calm› Project -->
+            <div class="project keep-calm">
+              <h2 class="title">Keep Calm Poster</h2>
+              <div class="thumbnail">
+                <a href="{{ keepCalmRemixUrl }}" title="Remix the Keep Calm Poster project" class="image"></a> </div>
+              <p class="description">
+                Change the design of this poster to make it your own.
+              </p>
+              <a title="Remix the Keep Calm Poster project" href="{{ keepCalmRemixUrl }}" class="remix-button">Remix this Project</a>
+              <div class="or-wrapper">
+                <hr />
+                <div class="or">or</div>
+              </div>
+              <div class="teach">
+                <h3>Use it to teach</h3>
+                <ul>
+                  <li>How to design a poster</li>
+                  <li>Editing HTML content</li>
+                  <li>Editing CSS styles</li>
+                </ul>
+                <a href="{{ keepCalmPublishedUrl }}" title="Read the Keep Calm teaching kit" class="teaching-kit">Keep Calm Teaching Kit</a>
+              </div>
+            </div>
+
+            <!-- Movie Poster Project -->
+            <div class="project postcard">
+              <h2 class="title">Back-to-School Postcard</h2>
+              <div class="thumbnail">
+                <a href="{{ backToSchoolRemixUrl }}" title="Remix the Back-to-School Postcard project" class="image"></a>
+              </div>
+              <p class="description">
+                Add your own content to this interactive postcard.
+              </p>
+              <a href="{{ backToSchoolRemixUrl }}" title="Remix the Back-to-School Poster project" class="remix-button">Remix this Project</a>
+              <div class="or-wrapper">
+                <hr />
+                <div class="or">or</div>
+              </div>
+              <div class="teach">
+                <h3>Use it to teach</h3>
+                <ul>
+                  <li>Editing HTML content</li>
+                  <li>CSS colors</li>
+                  <li>Creating an interactive element<br/> with JavaScript</li>
+                </ul>
+                <a href="{{ backToSchoolPublishedUrl }}" title="Read the Back-to-School Postcard teaching kit" class="teaching-kit">Postcard Teaching Kit</a>
+              </div>
+            </div>
+
+            <!-- Comic Strip Project -->
+            <div class="project comic-strip">
+              <h2 class="title">Current Events Comic Strip</h2>
+              <div class="thumbnail">
+                <a href="{{ comicStripRemixUrl }}" title="Remix the Current Events Comic Strip project" class="image"></a>
+              </div>
+              <p class="description">
+                Create your very own version of this comic strip.
+              </p>
+              <a href="{{ comicStripRemixUrl }}" title="Remix the Comic Strip project"  class="remix-button">Remix this Project</a>
+              <div class="or-wrapper">
+                <hr />
+                <div class="or">or</div>
+              </div>
+              <div class="teach">
+                <h3>Use it to teach</h3>
+                <ul>
+                  <li>Editing HTML content</li>
+                  <li>Finding Creative Commons-licensed images</li>
+                  <li>CSS colors</li>
+                </ul>
+                <a href="{{ comicStripPublishedUrl }}" title="Read the Comic Strip project teaching kit" class="teaching-kit">Comic Strip Teaching Kit</a>
+              </div>
+            </div>
+
+          </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="content-wrapper">
+        <div class="project-info">
+          <a class="mozilla-logo" title="Mozilla" href="https://www.mozilla.org/en-US/"><img alt="Mozilla" src="img/mozilla-logo.svg" /></a>
+          <p class="thimble-context">
+            Thimble is part of the Mozilla Learning Network. <br/>
+            Learn to teach like mozilla at <a href="http://teach.mozilla.org">teach.mozilla.org</a>.
+          </p>
+        </div>
+
+        <ul class="social-links">
+          <li><a title="Stuck? Get help!" class="help" href="https://support.mozilla.org/en-US/products/webmaker/thimble"><span class="icon"></span>Stuck? Get help!</a></li>
+          <li><a title="Talk to us on Twitter" class="twitter" href="https://twitter.com/mozteach"><span class="icon"></span>Talk to us on Twitter</a></li>
+          <li><a title="Contribute on Github" class="github" href="https://github.com/mozilla/thimble.webmaker.org"><span class="icon"></span>Contribute on Github</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- Pre-fetch the main editor file while a user is on this page -->
+    <script async src="{{ editorURL }}/main.js" type="application/x-fetch-only"></script>
+    <script async src="{{ editorHOST }}dist/bramble.js" type="application/x-fetch-only"></script>
+  </body>
+</html>

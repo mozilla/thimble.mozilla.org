@@ -43,6 +43,6 @@ module.exports = function(config, req, res) {
       editorHOST: config.editorHOST
     };
 
-    res.render("projects.html", options);
+    res.render("editor/projects.html", options);
   });
 };

@@ -1,5 +1,5 @@
 require.config({
-  baseUrl: "/scripts/editor/js",
+  baseUrl: "/editor/scripts/editor/js",
   paths: {
     "text": "../vendor/require.text",
     "i18n": "../vendor/require.i18n",

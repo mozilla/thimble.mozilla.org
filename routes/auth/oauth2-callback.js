@@ -76,7 +76,13 @@ module.exports = function(config, req, res, next) {
         return next({status: 500, err: e});
       }
 
-      res.redirect(301, '/');
+      // Was this sign-in triggered from the home page?
+      if (req.session.home) {
+        delete req.session.home;
+        return res.redirect(301, '/');
+      }
+
+      res.redirect(301, '/editor');
     });
   });
 };

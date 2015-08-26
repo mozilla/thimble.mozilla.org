@@ -1,4 +1,4 @@
-var homepage = require("./homepage");
+var editor = require("./editor");
 var utils = require("../utils");
 var Constants = require("../../constants");
 
@@ -22,7 +22,7 @@ module.exports = function(config, req, res) {
   // If an anonymous user enters through this anonymous entry point, show them
   // thimble immediately
   if(!user) {
-    homepage.call(this, config, req, res);
+    editor.call(this, config, req, res);
     return;
   }
 

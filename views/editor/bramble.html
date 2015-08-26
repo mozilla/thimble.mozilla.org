@@ -1,11 +1,11 @@
 {% block bramble %}
     <div class="bramble-toolbar">
-        {% include 'nav-options.html' %}
+        {% include './nav-options.html' %}
     </div>
     <div id="webmaker-bramble"></div>
     <script src="{{ editorHOST }}/dist/bramble.js"></script>
     <script id="thimble-script"
-            src="/scripts/editor/vendor/require.min.js"
+            src="/scripts/vendor/require.min.js"
             data-main="{{ mainURL }}"
             data-project-details="{{ projectMetadata }}"
             data-editor-host="{{ editorHOST }}"

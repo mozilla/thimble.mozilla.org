@@ -91,7 +91,7 @@ app.use(middleware.addCSP({
   brambleHost: env.get('BRAMBLE_URI')
 }));
 
-app.use(favicon(__dirname + '/public/img/favicon.png'));
+app.use(favicon(__dirname + '/public/resources/img/favicon.png'));
 
 if ( env.get( "ENABLE_GELF_LOGS" ) ) {
   messina = require( "messina" );
