@@ -84,19 +84,17 @@ define(function(require) {
     // Add File button and popup menu
     var menu = PopupMenu.create("#filetree-pane-nav-add", "#filetree-pane-nav-add-menu");
 
-    function addFileType(type) {
-      menu.close();
-      bramble.addNewFile(type);
-    }
-
-    function downloadFileToFilesystem(location, localPath, callback) {
+    function downloadFileToFilesystem(location, fileOptions, callback) {
       callback = callback || function noop() {};
 
-      return $.get(location)
-      .then(function(data) {
-        bramble.addNewFileWithContents(localPath, data, function(err) {
+      menu.close();
+
+      $.get(location).then(function(data) {
+        fileOptions.contents = data;
+
+        bramble.addNewFile(fileOptions, function(err) {
           if (err) {
-            console.error("[Bramble] Failed to write " + localPath, err);
+            console.error("[Bramble] Failed to write new file", err);
             callback(err);
             return;
           }
@@ -113,19 +111,40 @@ define(function(require) {
     }
 
     $addHtml.click(function() {
-      addFileType("html");
+      var options = {
+        basenamePrefix: "index",
+        ext: ".html"
+      };
+      downloadFileToFilesystem("/resources/default-files/html.txt", options, function(err) {
+        if (err) {
+          console.log("[Brackets] Failed to insert default HTML file", err);
+        }
+      });
     });
     $addCss.click(function() {
-      addFileType("css");
+      var options = {
+        basenamePrefix: "style",
+        ext: ".css"
+      };
+      downloadFileToFilesystem("/resources/default-files/css.txt", options, function(err) {
+        if (err) {
+          console.log("[Brackets] Failed to insert default CSS file", err);
+        }
+      });
     });
     $addJs.click(function() {
-      addFileType("js");
+      var options = {
+        basenamePrefix: "script",
+        ext: ".js"
+      };
+      downloadFileToFilesystem("/resources/default-files/js.txt", options, function(err) {
+        if (err) {
+          console.log("[Brackets] Failed to insert default JS file", err);
+        }
+      });
     });
     $addTutorial.click(function() {
-      // TODO: We should probably add a loading indicator here
-      menu.close();
-      downloadFileToFilesystem('/tutorial/tutorial.html', '/tutorial.html', function(err) {
-        // TODO: The load is finished here
+      downloadFileToFilesystem("/tutorial/tutorial.html", {filename: "tutorial.html"}, function(err) {
         if (err) {
           console.log("[Brackets] Failed to insert tutorial.html", err);
         }
