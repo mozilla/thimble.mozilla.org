@@ -106,26 +106,37 @@ define(function(require) {
     // We have to check if we can access the 'title' stored
     // on an xattr first to know which value
     Metadata.getTitle(metadataLocation, function(err, title) {
+      console.log("Title from getTitle: ", title);
       if (err) {
+        console.log("There is an error: ", err);
         if (err.code !== "ENOENT") {
+          console.log("error is NOT ENOENT");
           return callback(err);
         } else if (!_user && err.code === "ENOENT") {
+          console.log("error is ENOENT and there is no user");
           _title = projectDetails.title;
           return callback();
         }
       }
-
+console.log("There is no error");
       if (_user) {
+        console.log("There is a user");
         if (_anonymousId && !_remixId) {
+          console.log("Anon id exists and there is no remix ID");
+          console.log("Setting title to `title`: ", title);
           _title = title;
         } else {
+          console.log("Other condition for a user");
+          console.log("Setting title to `projectDetails.title`: ", projectDetails.title);
           _title = projectDetails.title;
         }
       } else if (title) {
         // Prefer the stored title in the anonymous case in case the
         // anonymous user changed it
+        console.log("No user and there is a title in metadata: ", title);
         _title = title;
       } else {
+        console.log("No user and there is no title in metadata, using rendered title: ", projectDetails.title);
         _title = projectDetails.title;
       }
 
