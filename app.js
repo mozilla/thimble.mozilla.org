@@ -144,6 +144,13 @@ app.use(lessMiddleWare('public', {
   optimization: optimize ? 0 : 2
 }));
 
+routes.init(app, middleware);
+
+// We only want to allow CORS on our public resources
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
 app.use(express.static(tmpDir, {maxAge: "1d"}));
 app.use('/dist', express.static(path.join(__dirname, 'dist'), {maxAge: "1d"}));
 app.use(express.static(path.join(__dirname, 'public'), {maxAge: "1d"}));
@@ -157,8 +164,6 @@ app.param('name', parameters.name);
 
 // resource proxying for http-on-https
 webmakerProxy(app, middleware.checkForAuth);
-
-routes.init(app, middleware);
 
 // Localized Strings
 app.get( '/strings/:lang?', i18n.stringsRoute( 'en-US' ) );
