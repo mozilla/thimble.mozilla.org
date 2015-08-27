@@ -134,27 +134,7 @@ app.use(helmet.xframe());
 var optimize = (env.get( "NODE_ENV" ) !== "development"),
     tmpDir = path.join( require("os").tmpDir(), "mozilla.webmaker.org");
 
-app.use(lessMiddleWare('public/editor/stylesheets', {
-  once: optimize,
-  debug: !optimize,
-  dest: tmpDir,
-  src: WWW_ROOT,
-  compress: true,
-  yuicompress: optimize,
-  optimization: optimize ? 0 : 2
-}));
-
-app.use(lessMiddleWare('public/homepage/stylesheets', {
-  once: optimize,
-  debug: !optimize,
-  dest: tmpDir,
-  src: WWW_ROOT,
-  compress: true,
-  yuicompress: optimize,
-  optimization: optimize ? 0 : 2
-}));
-
-app.use(lessMiddleWare('public/resources/stylesheets', {
+app.use(lessMiddleWare('public', {
   once: optimize,
   debug: !optimize,
   dest: tmpDir,
