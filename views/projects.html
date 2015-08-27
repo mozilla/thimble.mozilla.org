@@ -1,37 +1,39 @@
 {% extends "layout.html" %}
 {% block body %}
-  <div id="container">
-    <h2>Your Projects</h2>
-    <table id="project-list" data-username="{{ username }}">
+  <div class="project-list-wrapper">
+    <div id="container">
+      <h2>Your Projects</h2>
+      <table id="project-list" data-username="{{ username }}">
 
-    {% for project in projects %}
-      <tr class="project bramble-user-project"
-          id="{{ [ 'project', project.id ] | join('-') }}"
-      {% for key, value in project %}
-        {{ [ "data", "project", key ] | join("-") }}="{{ value }}"
-      {% endfor %}
-      >
-        <td class="project-title">
-          {{ project.title }}
-          <span class="project-information"></span>
-        </td>
-        <td>
-          <div class="project-delete" title="Delete this Project">
-            <div class="icon-garbage-can">
-              <div class="icon-garbage-lid"></div>
+      {% for project in projects %}
+        <tr class="project bramble-user-project"
+            id="{{ [ 'project', project.id ] | join('-') }}"
+        {% for key, value in project %}
+          {{ [ "data", "project", key ] | join("-") }}="{{ value }}"
+        {% endfor %}
+        >
+          <td class="project-title">
+            {{ project.title }}
+            <span class="project-information"></span>
+          </td>
+          <td>
+            <div class="project-delete" title="Delete this Project">
+              <div class="icon-garbage-can">
+                <div class="icon-garbage-lid"></div>
+              </div>
+              Delete
             </div>
-            Delete
-          </div>
-        </td>
-      </tr>
-    {% endfor %}
+          </td>
+        </tr>
+      {% endfor %}
 
-    </table>
+      </table>
 
-    <div title="Start a new Thimble Project from scratch" class="project-button" id="project-0">Create a new Project</div>
+      <div title="Start a new Thimble Project from scratch" class="project-button" id="project-0">Create a new Project</div>
 
-    <script src="/scripts/editor/vendor/require.min.js"
-            data-main="/scripts/open-project.js">
-    </script>
+      <script src="/scripts/editor/vendor/require.min.js"
+              data-main="/scripts/open-project.js">
+      </script>
+    <div class="project-list-scroll">
   </div>
 {% endblock %}
