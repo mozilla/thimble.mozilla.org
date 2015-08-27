@@ -70,7 +70,7 @@ function injectDetailsBar($, metadata) {
 
 function injectStyleSheets($, metadata) {
   var stylesheets =
-    "<link href=\"" + metadata.host + "/resources/remix/clean-slate.css\" rel=\"stylesheet\">\n" +
+    "<link href=\"" + metadata.host + "/resources/remix/clean-slate.min.css\" rel=\"stylesheet\">\n" +
     "<link href=\"" + metadata.host + "/resources/remix/style.css\" rel=\"stylesheet\">\n";
   $("head").append(stylesheets);
 }
