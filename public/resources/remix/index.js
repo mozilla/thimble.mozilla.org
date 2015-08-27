@@ -2,25 +2,31 @@
 
 var detailsBarHtml =
 '\n<!-- Remix bar -->\n' +
-'<div class="remix-details-bar">\n' +
+'<div class="remix-details-bar cleanslate">\n' +
 '    <a class="thimble-logo" href="https://bramble.mofostaging.net">\n' +
 '        <span class="remix-icon"></span>\n' +
 '    </a>\n' +
 '    <h1 class="remix-project-title"></h1>\n' +
 '    <div class="remix-project-meta"><a class="remix-project-author" href="#"></a></div>\n' +
-'    </div>\n\n' +
 '    <div class="details-bar-remix-button-wrapper">\n' +
 '        <a class="details-bar-remix-button">Remix</a>\n' +
 '    </div>\n' +
+'</div>\n' +
 '<!-- End of Remix bar -->\n';
 
 function customizeScroll($) {
+  var bodyEl = $("body");
+  var detailsBar = $(".remix-details-bar");
+  var detailsBarHeight = 64;
+  var currentPadding = parseInt(bodyEl.css("padding-top"));
+  bodyEl.css("padding-top", currentPadding + detailsBarHeight);
+
   $(window).on("scroll", function() {
     var scrollDistance = $(this).scrollTop();
-    if(scrollDistance >= 64) {
-      $("body").addClass("scrolled");
+    if(scrollDistance >= detailsBarHeight) {
+      detailsBar.addClass("scrolled");
     } else {
-      $("body").removeClass("scrolled");
+      detailsBar.removeClass("scrolled");
     }
   });
 }
@@ -62,9 +68,11 @@ function injectDetailsBar($, metadata) {
   $(".details-bar-remix-button").attr("href", metadata.host + "/projects/" + metadata.projectId + "/remix");
 }
 
-function injectStyleSheet($, metadata) {
-  var stylesheet = "<link href=\"" + metadata.host + "/resources/remix/style.css\" rel=\"stylesheet\">";
-  $("head").append(stylesheet);
+function injectStyleSheets($, metadata) {
+  var stylesheets =
+    "<link href=\"" + metadata.host + "/resources/remix/clean-slate.css\" rel=\"stylesheet\">\n" +
+    "<link href=\"" + metadata.host + "/resources/remix/style.css\" rel=\"stylesheet\">\n";
+  $("head").append(stylesheets);
 }
 
 function getMetadata($) {
@@ -93,7 +101,7 @@ function run() {
   $$(document).ready(function($) {
     var metadata = getMetadata($);
 
-    injectStyleSheet($, metadata);
+    injectStyleSheets($, metadata);
     injectDetailsBar($, metadata);
     customizeScroll($);
   });
