@@ -89,6 +89,10 @@ module.exports = function(config, req, res) {
 
     options.projectMetadata = encodeURIComponent(JSON.stringify(projectMetadata));
 
+    res.set({
+      "Cache-Control": "no-cache"
+    });
+
     res.render("editor/index.html", options);
   });
 };
