@@ -1,3 +1,11 @@
+// Because we pre-load require scripts needed by the editor, we need to
+// eat error messages related to fetching but not using those modules.
+requirejs.onError = function(err) {
+  if(err.requireType !== "mismatch") {
+    throw err;
+  }
+};
+
 require.config({
   baseUrl: "/homepage/scripts",
   paths: {
