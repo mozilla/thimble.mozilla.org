@@ -73,7 +73,6 @@ module.exports = function( grunt ) {
         "./public/homepage/stylesheets/*.less",
         "./public/homepage/stylesheets/*.css",
         "./public/resources/remix/*.less",
-        "./public/resources/remix/*.css",
         "./public/resources/tutorial/*.less",
         "./public/resources/tutorial/*.css"
       ],
