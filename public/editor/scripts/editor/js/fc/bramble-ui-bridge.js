@@ -119,6 +119,7 @@ define(function(require) {
     // And listen for changes to the project, in terms of one being added/removed
     bramble.on("tutorialAdded", function() {
       $("#tutorial-title").removeClass("hide");
+      $(".preview-tutorial-toggle").addClass("has-toggle");
     });
     bramble.on("tutorialRemoved", function() {
       $("#tutorial-title").addClass("hide");
