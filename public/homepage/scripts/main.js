@@ -21,6 +21,20 @@ require.config({
   }
 });
 
+// While the user is reading this page, start to cache Bramble's biggest files
+function preloadBramble($) {
+  var brambleHost = $("meta[name='bramble-host']").attr("content");
+  [
+    brambleHost + "/dist/styles/brackets.min.css",
+    brambleHost + "/dist/bramble.js",
+    brambleHost + "/dist/main.js",
+    brambleHost + "/dist/thirdparty/thirdparty.min.js"
+  ].forEach(function(url) {
+    // Load and cache files as plain text (don't parse) and ignore results.
+    $.ajax({url: url, dataType: "text"});
+  });
+}
+
 // At this point, all the homepage needs is handlers for the login/logout
 // flow. If more needs to be added, the logic should be factored out into
 // separate modules, each of which would be initialized here.
@@ -66,6 +80,8 @@ function init($, uuid, cookies) {
     queryString = queryString === "" ? "?" + cacheBust : queryString + "&" + cacheBust;
     window.location.href = "/projects/new"  + queryString;
   });
+
+  preloadBramble($);
 }
 
 require(['jquery', 'uuid', 'cookies'], init);
