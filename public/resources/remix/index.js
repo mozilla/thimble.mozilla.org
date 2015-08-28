@@ -3,7 +3,7 @@
 var detailsBarHtml =
 '\n<!-- Remix bar -->\n' +
 '<div class="remix-details-bar cleanslate">\n' +
-'    <a class="thimble-logo" href="https://bramble.mofostaging.net">\n' +
+'    <a class="thimble-logo" href="https://thimble.mozilla.org">\n' +
 '        <span class="remix-icon"></span>\n' +
 '    </a>\n' +
 '    <h1 class="remix-project-title"></h1>\n' +
