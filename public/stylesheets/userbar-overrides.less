@@ -83,3 +83,49 @@ a#current-language {
   color: #000;
   text-decoration: none;
 }
+
+// XXXNew Thimble - I stuffed this in here to ensure it would be the
+// last styling loaded
+
+.has-notice {
+    .tutorial-view, #bare-fc-holder {
+        top: 129px;
+    }
+}
+
+.new-thimble-notice {
+    background: #22995F;
+    color: rgba(255,255,255,.8);
+    padding: 10px 15px 10px 40px;
+    position: relative;
+    font-family: "Open Sans";
+    font-size: 13px;
+
+    strong {
+        color: rgba(255,255,255,1);
+        margin-right: 4px;
+    }
+
+    .dismiss-notice {
+        display: block;
+        position: absolute;
+        left: 7px;
+        top: 4px;
+        background: ~"url(/img/white-x.svg)";
+        width: 30px;
+        height: 30px;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: .7;
+        border: none;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .try-thimble {
+        color: white;
+        margin-left: 12px;
+    }
+}

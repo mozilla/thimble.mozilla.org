@@ -7,6 +7,22 @@
   var hostname = document.getElementById("ssooverride").getAttribute("data-login-hostname");
   var loginToSave = document.getElementById("ssooverride").getAttribute("data-login-to-save");
 
+  // XXXNew Thimble
+  // As soon as the page has loaded it, we attach listeners to hide the
+  // "new thimble" bar:
+  var closeBannerButton = document.getElementById("new-thimble-banner");
+  function hideBanner(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var body = document.querySelector("body");
+    body.classList.remove("has-notice");
+
+    closeBannerButton.classList.add("hide");
+    closeBannerButton.removeEventListener("click", hideBanner, false);
+  }
+  closeBannerButton.addEventListener("click", hideBanner, false);
+
   require(["jquery", "thimblePage", "url-template"], function($, editor, urlTemplate) {
 
     // we chronicle login status with a "loggedin" class on the <html> tag

@@ -86,6 +86,6 @@ module.exports = function( grunt ) {
   grunt.loadNpmTasks( "grunt-contrib-jshint" );
   grunt.loadNpmTasks( "grunt-execute" );
 
-  grunt.registerTask( "default", [ "csslint", "jshint", "execute", "lesslint" ]);
+  grunt.registerTask( "default", [ "csslint", "jshint", "execute" ]);
 };
 
