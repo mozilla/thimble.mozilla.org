@@ -94,7 +94,7 @@ Instead of publishing to Amazon AWS, we'll be publishing to a local folder. Perf
 * Run ``cd /tmp/mox/test && http-server -p 8001`` to start the server
 * In your publish.webmaker.org folder
   * Open the ``.env`` file
-  * Make sure that ``PUBLIC_PROJECT_ENDPOINT="localhost:8001/test"``` is set as shown here
+  * Make sure that ``PUBLIC_PROJECT_ENDPOINT="localhost:8001"``` is set as shown here
   * Restart publish server
 
 **3. Sign In**
