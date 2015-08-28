@@ -1,53 +1,121 @@
-Thimble on Node.js
+Thimble
 ==================
 
-This is a port of Thimble, the mozilla webmaker tool for writing and editing
-HTML and CSS right in your browser (https://thimble.webmaker.org) from its
-Playdoh-embedded python implementation to a dedicated ust-Thimble Node.js
-implementation.
+Thimble is Mozilla's online code editor that makes it easy to create and publish
+your own web pages while learning HTML, CSS & JavaScript.  You can try it online
+by visiting https://thimble.mozilla.org (or https://bramble.mofostaging.net for our
+staging server).
 
-**NOTE: This README assumes that you have all the required external dependencies installed and have a working dev environment. New to Webmaker? Make sure to read our [developer guide](https://wiki.mozilla.org/Webmaker/Code) for everything you need in order to get started!**
+![Thimble](/screenshots/thimble.png?raw=true "Thimble")
+
+Thimble uses a modified version of the amazing [Brackets](http://brackets.io) code editor
+[updated to run within web browsers](https://github.com/humphd/brackets).
+
+Thimble requires a modern web browser, and we recommend using Mozilla Firefox or Google Chrome.
 
 Setup
 -----
 
-In order to run Thimble, the following things are required:
+Thimble is non-trivial to run locally, due to its dependence on a number of other
+services.  In order to run Thimble, the following things are required. The following
+is an abbreviated guide to getting it all set up.  Please see each server's README for more details.
 
-1) you will need to have node installed
+**You'll need**
+* Bramble
+* Thimble
+* Webmaker ID server
+* Webmaker Login Server
+* PostgreSQL Database
+* Webmaker Publishing Server
 
-You can find node on http://nodejs.org or your package manager.
+## Installing the Parts
 
-2) you'll need to fork and then clone the repo:
+**Bramble**
+* Fork and clone https://github.com/humphd/brackets
+* Make sure you're on the ``bramble`` branch
+* Run ``git submodule update --init`` to install submodules
+* Run ``npm install`` to install dependencies
+* Run ``npm start`` to get a static server running on [http://localhost:8000/src](http://localhost:8000/src). You can try the demo version at [http://localhost:8000/src/hosted.html](http://localhost:8000/src/hosted.html) 
 
-```
-git clone git@github.com:[yourname]/thimble.webmaker.org.git
-```
+**Thimble**
+* Fork and clone https://github.com/mozilla/thimble.webmaker.org
+* Make sure you're on the ``bramble`` branch
+* Run ``npm install`` to install dependencies
+* Run ``cp env.dist .env`` to create an environment file
+* Run ``npm start`` to start the server
+* Once everything is ready and running, Thimble will be available at [http://localhost:3500/](http://localhost:3500/)
 
-3a) you may need the XCode console tools (on OSX) or the VC++ express + windows SKD 7.1 stack (on Windows) in order for node-gyp to compile some npm dependencies
-3b) go into the thimble.webmaker.org dir and run ```npm install```
+**id.webmaker.org**
+* Clone https://github.com/mozilla/id.webmaker.org
+* Run ``cp sample.env .env`` to create an environment file
+* Run ``npm install`` to install dependencies
+* Run ``npm start`` to start the server
 
-4) set up the environment variables (see next section).
+**login.webmaker.org**
+* Clone https://github.com/mozilla/login.webmaker.org
+* Run ``npm install`` to install dependencies
+* Run ``cp env.sample .env`` to create an environment file
+* Run ``npm start`` the server
 
-6) A way to statically serve our [bramble code editor](http://github.com/humphd/brackets) ([see below](#bramble-code-editor))
+**PostgreSQL**
+* Install Postgres via Homebrew
+  * Get Homebrew - http://brew.sh/
+  * Run ``brew install postgresql`` to install PostgreSQL once Homebrew is installed
+* Run ``initdb -D /usr/local/var/postgres`` to initialize PostreSQL
+  * If this already exists, run ``rm -rf /usr/local/var/postgres`` to remove it
+* Run ``postgres -D /usr/local/var/postgres`` to start the PostgreSQL server
+* Run ``createdb publish`` to create the Publish database
 
-You can now run Thimble from the thimble.webmaker.org directory using
+**publish.webmaker.org**
+* These steps assume you've followed the PostgreSQL steps above, including creating the publish database.
+* Clone https://github.com/mozilla/publish.webmaker.org
+* Run ``npm install`` to install dependencies
+* Run ``npm run env``
+* Run ``npm install knex -g`` to install knex
+* Run ``npm run knex`` to seed the publish database created earlier
+* Run ``npm start`` to run the server
 
-```node app```
+## Getting Ready to Publish
+To publish locally, you'll need to do the following...
 
-Environment variables
----------------------
+**1. Teach the ID server about the Publish server**
 
-There is a special file that is used for environment variables in lieu of
-actually setting these for development purposes. The base file is
-```env.dist``` and is self documented. Simply run through it and set your
-values accordingly. To use these values during development, copy this
-file:
+* Run ``createdb webmaker_oauth_test`` to create a test database
+* In your id.webmaker.org folder
+  * Run ``node scripts/create-tables.js``
+  * Edit ``scripts/test-data.sql`` and replace it's contents with http://pastebin.com/DUXMjjwF
+  * Run ``node scripts/test-data.js``
+    * You'll see a ``INSERT 0 1`` message if successful
 
-```
-cp env.dist .env
-```
+**2. Set up the local data folder**
 
-and the Thimble code will pick up on it when run through node.
+Instead of publishing to Amazon AWS, we'll be publishing to a local folder. Perform the following steps to set this up.
+* Run ``npm install -g http-server && mkdir -p /tmp/mox/test && cd /tmp/mox/test && http-server -p 8001``
+* Run ``cd /tmp/mox/test && http-server -p 8001`` to start the server
+* In your publish.webmaker.org folder
+  * Open the ``.env`` file
+  * Make sure that ``PUBLIC_PROJECT_ENDPOINT="localhost:8001/test"``` is set as shown here
+  * Restart publish server
+
+**3. Sign In**
+
+To publish locally, you'll need an account.
+* Go to [http://localhost:3000/account](http://localhost:3000/account)
+* Click ``Join Webmaker`` and complete the process, you can use a fake email
+* When you've created your account, click ``Set permanent password instead``
+  * This lets you authenticate your account without needing email
+* Go back to Thimble and Log In with your new account
+
+## Running the parts
+This is the list of commands to get each part up and running.
+
+* Thimble ``npm start``
+* Bramble ``npm start``
+* PostgreSQL Database ``postgres -D /usr/local/var/postgres``
+* Webmaker ID server ``npm start``
+* Webmaker Login Server ``npm start``
+* Webmaker Publishing Server ``npm start``
+* Local publish folder ``cd /tmp/mox/test && http-server -p 8001``
 
 Development additionals
 -----------------------
@@ -63,42 +131,9 @@ be good to go.
 Building the front-end
 ----------------------
 
-Run `grunt build` to regenerate the front-end logic and css files. For production,
-run with `grunt build:prod` to get minified versions, and run `grunt build:prod:true` to enable
-auto building whenever a front-end file changes. See `Gruntfile.js` for details.
+Run `grunt requirejs:dist` to regenerate the front-end `dist/` folder if you so desire (it's
+only necessary in production). See `Gruntfile.js` for details.
 
 **NOTE:** Our front-end is in transition from an older architecture using Requirejs to
 a new one using our build system. Check in our IRC channel (irc.mozilla.org#thimble) for
 the latest state of development.
-
-Bramble code editor
--------------------
-
-In order to load Thimble, the bramble code editor must be statically served separately.
-The simplest way to do this is to:
-
-1) Clone the editor (outside your cloned Thimble source)
-
-```
-git clone https://github.com/humphd/brackets.git --recursive
-```
-
-2) Install all dependencies (you will need to be in the brackets directory)
-
-```
-npm install && git submodule update --init
-```
-
-3) Serve the root folder of this repo statically. Thimble will look for it on localhost:8000 by default. Here are some examples:
-
-```
-python -m SimpleHTTPServer
-```
-
-   or
-
-```
-npm install -g live-server && live-server --port=8000
-```
-
-**NOTE:** Pay special attention to Thimble's BRACKETS_URI ENV variable, since it must point at the URL of the local server you created in step 3. By default, this would be [http://localhost:8000](http://localhost:8000)
