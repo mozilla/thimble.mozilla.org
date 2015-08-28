@@ -31,7 +31,8 @@ var favicon = require('serve-favicon'),
     logger = require('morgan'),
     compress = require('compression'),
     bodyParser = require('body-parser'),
-    csrf = require('csurf');
+    csrf = require('csurf'),
+    useragent = require('express-useragent');
 
 var appName = "thimble",
     app = express(),
@@ -143,6 +144,9 @@ app.use(lessMiddleWare('public', {
   yuicompress: optimize,
   optimization: optimize ? 0 : 2
 }));
+
+// Temporary fix to warn users in some browsers of UI issues
+app.use(useragent.express());
 
 routes.init(app, middleware);
 

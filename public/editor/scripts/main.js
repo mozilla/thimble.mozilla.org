@@ -51,4 +51,26 @@ function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility) {
   });
 }
 
-require(["bramble-editor", "project", "sso-override", "fc/project-rename"], init);
+require(["jquery"], function($) {
+  // Deal with browsers that can't load some parts of Bramble
+  $(".let-me-in").on("click", function(e) {
+    $("#browser-support-warning").fadeOut();
+    return false;
+  });
+
+  function onError(err) {
+    console.error("[Bramble Error]", err);
+    $("#spinner-container").addClass("loading-error");
+  }
+
+  // If Bramble fails to load (some browser loading issues cause it to fail),
+  // error out now, since we won't get to Bramble.on('error', ...)
+  if(!window.Bramble) {
+    onError(new Error("Unable to load Bramble editor in this browser"));
+    return;
+  }
+
+  Bramble.once("error", onError);
+
+  require(["bramble-editor", "project", "sso-override", "fc/project-rename"], init);
+});

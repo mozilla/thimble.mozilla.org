@@ -49,11 +49,6 @@ define(function(require) {
         window.bramble = bramble;
         BrambleUIBridge.init(bramble, { sync: fsync });
       });
-
-      Bramble.once("error", function(err) {
-        console.error("[Bramble Error]", err);
-        $("#spinner-container").addClass("loading-error");
-      });
     }
   };
 });

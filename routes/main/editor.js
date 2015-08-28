@@ -55,6 +55,10 @@ module.exports = function(config, req, res) {
     qs = "?" + qs;
   }
 
+  // We currently run properly in Firefox, Chrome and Opera, with UI issues in the rest.
+  // Until we sort those out, warn users of these browsers
+  var ua = req.useragent;
+
   var options = {
     appURL: config.appURL,
     csrf: req.csrfToken(),
@@ -62,7 +66,8 @@ module.exports = function(config, req, res) {
     loginURL: config.appURL + "/login",
     logoutURL: config.logoutURL,
     queryString: qs,
-    mainURL: env.get("NODE_ENV") === "development" ? "/editor/scripts/main.js" : "/dist/main.js"
+    mainURL: env.get("NODE_ENV") === "development" ? "/editor/scripts/main.js" : "/dist/main.js",
+    browserNotSupported: !(ua.isFirefox || ua.isChrome || ua.isOpera)
   };
 
   // We add the localization code to the query params through a URL object

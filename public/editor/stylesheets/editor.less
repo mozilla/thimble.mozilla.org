@@ -634,3 +634,67 @@
 .hide {
   display: none;
 }
+
+#browser-support-warning {
+    position: fixed;
+    background: rgba(11,67,38,.9);
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+
+    .message-box {
+        border-radius: 2px;
+        position: absolute;
+        width: 500px;
+        background: white;
+        color: black;
+        padding: 20px;
+        box-sizing: border-box;
+        left: ~"calc(50% - 250px)";
+        top: ~"calc(50% - 150px)";
+
+        h1 {
+            margin: 0 0 15px 0;
+            padding: 0;
+            font-size: 22px;
+        }
+
+        p {
+            margin: 0 0 10px 0;
+        }
+
+        a {
+            color: #28975a;
+            text-decoration: none;
+            font-weight: bold;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .let-me-in {
+            display: inline-block;
+            padding: 12px 15px 11px 15px;
+            background: @buttonGreen;
+            color: white;
+            font-weight: normal;
+            border-radius: 2px;
+            margin-top: 15px;
+            text-decoration: none;
+            border-bottom: solid 2px rgba(0,0,0,.1);
+            cursor: pointer;
+
+            &:hover {
+                background: @buttonGreenHover;
+                text-decoration: none;
+            }
+
+            &:active {
+                background: @buttonGreenActive;
+            }
+        }
+    }
+}
