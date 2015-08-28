@@ -1,4 +1,112 @@
 {% block bramble %}
+
+
+<style>
+  /*
+  * Initial loading spinner css, inlined so we don't block loading.
+  * Spinner is based on https://github.com/tobiasahlin/SpinKit (MIT)
+  */
+
+    #spinner-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 999999;
+        background: #0b4326;
+        opacity: .9;
+    }
+
+    #spinner-container .message {
+        top: calc(50% + 40px);
+        width: 100%;
+        position: fixed;
+        text-align: center;
+        color: white;
+        opacity: .6;
+    }
+
+    #spinner-container .error-message {
+      display: none;
+    }
+
+    #spinner-container.loading-error .error-message {
+      display: block;
+    }
+
+    #spinner-container .loading-message {
+        animation: loadingpulse 1s infinite linear;
+    }
+
+    #spinner-container .thimble-spinner {
+        bottom: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        position: fixed;
+        max-width: 50%;
+        width: 50px;
+        height: 50px;
+        background: url(/img/thimble-icon.svg);
+        background-position: center;
+        background-size: 100%;
+        animation: spinner 2s infinite ease-in-out;
+        outline: 1px solid transparent;
+    }
+
+    #spinner-container.loading-error {
+      background: black;
+    }
+
+    #spinner-container.loading-error .loading-message {
+      display: none;
+    }
+
+    #spinner-container.loading-error .thimble-spinner {
+      animation: none;
+    }
+
+    @keyframes loadingpulse {
+        0% {
+            transform: scale(1);
+            opacity: .4;
+        }
+        50% {
+            transform: scale(1.02);
+            opacity: .6;
+        }
+        100% {
+            transform: scale(1);
+            opacity: .4;
+        }
+    }
+
+    @keyframes spinner {
+        0% {
+            transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+        }
+        25% {
+            transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+        }
+        50% {
+            transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+        }
+        75% {
+            transform: perspective(120px) rotateX(-360deg) rotateY(-179.9deg);
+        }
+        100% {
+            transform: perspective(120px) rotateX(-360deg) rotateY(-360deg);
+        }
+    }
+</style>
+
+    <div id="spinner-container">
+        <div class="thimble-spinner"></div>
+        <div class="loading-message message">Loading Project</div>
+        <div class="error-message message">There was an error loading your Project. <br>Please refresh your browser.</div>
+    </div>
     <div class="bramble-toolbar">
         {% include './nav-options.html' %}
     </div>

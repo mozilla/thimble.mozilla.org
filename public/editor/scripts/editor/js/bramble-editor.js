@@ -28,7 +28,8 @@ define(function(require) {
       // Start loading the Bramble editor resources
       Bramble.load("#webmaker-bramble",{
         url: options.editorUrl,
-        autoRecoverFileSystem: true
+        autoRecoverFileSystem: true,
+        hideUntilReady: true
       });
 
       // Start loading the project files
@@ -46,12 +47,12 @@ define(function(require) {
       Bramble.once("ready", function(bramble) {
         // For debugging, attach to window.
         window.bramble = bramble;
-
         BrambleUIBridge.init(bramble, { sync: fsync });
       });
 
-      Bramble.on("error", function(err) {
+      Bramble.once("error", function(err) {
         console.error("[Bramble Error]", err);
+        $("#spinner-container").addClass("loading-error");
       });
     }
   };
