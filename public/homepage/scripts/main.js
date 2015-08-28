@@ -35,11 +35,39 @@ function preloadBramble($) {
   });
 }
 
-// At this point, all the homepage needs is handlers for the login/logout
-// flow. If more needs to be added, the logic should be factored out into
-// separate modules, each of which would be initialized here.
-// See: public/editor/scripts/main.js
-function init($, uuid, cookies) {
+function setupNewProjectLinks($) {
+  var authenticated = $("#navbar-login").hasClass("signed-in");
+  var newProjectButton = $("#new-project-button");
+  var queryString = window.location.search;
+
+  // This is necessary (versus a simple <a> tag) because
+  // we attach a query parameter called "cacheBust" with
+  // a unique value to prevent caching
+  function newProjectClickHandler(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var cacheBust = "cacheBust=" + Date.now();
+    var qs = queryString === "" ? "?" + cacheBust : queryString + "&" + cacheBust;
+
+    window.location.href = "/projects/new"  + qs;
+  }
+
+  if(authenticated) {
+    newProjectButton.click(newProjectClickHandler);
+    $("#new-project-link").click(newProjectClickHandler);
+    return;
+  }
+
+  newProjectButton.click(function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    window.location.href = "/editor" + queryString;
+  });
+}
+
+function setupAuthentication($, uuid, cookies) {
   var joinEl = $('#signup-link');
   var loginEl = $('#login-link');
   var loginUrl = loginEl.attr("data-loginUrl");
@@ -67,20 +95,15 @@ function init($, uuid, cookies) {
 
   // Login flow
   loginEl.on('click', signIn());
+}
 
-  // This is necessary (versus a simple <a> tag) because
-  // we attach a query parameter called "cacheBust" with
-  // a unique value to prevent caching
-  $("#new-project-link").click(function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    var queryString = window.location.search;
-    var cacheBust = "cacheBust=" + Date.now();
-    queryString = queryString === "" ? "?" + cacheBust : queryString + "&" + cacheBust;
-    window.location.href = "/projects/new"  + queryString;
-  });
-
+// At this point, all the homepage needs is handlers for the login/logout
+// flow. If more needs to be added, the logic should be factored out into
+// separate modules, each of which would be initialized here.
+// See: public/editor/scripts/main.js
+function init($, uuid, cookies) {
+  setupAuthentication($, uuid, cookies);
+  setupNewProjectLinks($);
   preloadBramble($);
 }
 
