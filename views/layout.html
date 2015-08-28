@@ -28,7 +28,14 @@
     </script>
     {% endif %}
   </head>
-  <body style="margin: 0" data-make-url="{{ makeUrl }}" data-make-endpoint="{{ MAKE_ENDPOINT }}">
+  <body class="has-notice" style="margin: 0" data-make-url="{{ makeUrl }}" data-make-endpoint="{{ MAKE_ENDPOINT }}">
+    <div class="new-thimble-notice" id="new-thimble-banner">
+      <button title="Dismiss this notice" class="dismiss-notice"></Button>
+      <strong>There's a new Thimble!</strong>
+      Soon we'll be shutting down this version and migrating over existing projects.
+      <a class="try-thimble" title="Try out the new Thimble" href="{{ newThimbleURL }}">Try the new Thimble</a>
+    </div>
+
     {% block body %}{% endblock %}
   </body>
 </html>

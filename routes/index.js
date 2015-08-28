@@ -65,7 +65,8 @@ module.exports = function(utils, env, nunjucksEnv, appName) {
         together: together,
         userbar: userbarEndpoint,
         webmaker: webmaker,
-        makedetails: makedetails
+        makedetails: makedetails,
+        newThimbleURL: env.get("NEW_THIMBLE_URL")
       });
     },
 
