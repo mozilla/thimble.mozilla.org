@@ -20,6 +20,37 @@ body, html {
   margin: 0;
 }
 
+header {
+    padding: 20px;
+    overflow: auto;
+    background: @darkgreen;
+
+    .branding {
+        float: left;
+        color: white;
+
+        img {
+            position: relative;
+            top: 2px;
+        }
+    }
+
+    .account-actions {
+        float: right;
+        color: rgba(255,255,255,.7);
+        font-size: 15px;
+
+        a {
+            color: white;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
 /* User bar overrides for homepage */
 .navbar-thimble {
   #navbar-login {
