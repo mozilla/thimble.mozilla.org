@@ -106,8 +106,7 @@
         <div class="error-message message">There was an error loading your Project. <br>Please refresh your browser.</div>
     </div>
 
-    {% if browserNotSupported %}
-    <div id="browser-support-warning">
+    <div id="browser-support-warning" class="hide">
       <div class="message-box">
         <h1>Oh no!</h1>
         <p>
@@ -118,7 +117,6 @@
         <div title="Continue using Thimble" class="let-me-in">I don't care, let me in!</div>
       </div>
     </div>
-    {% endif %}
 
     <div class="bramble-toolbar">
         {% include './nav-options.html' %}

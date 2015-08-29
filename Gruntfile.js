@@ -44,6 +44,7 @@ module.exports = function( grunt ) {
           paths: {
             "text": "../vendor/require.text",
             "i18n": "../vendor/require.i18n",
+            "bowser": "../vendor/bowser",
             "sso-override": "../../sso-override",
             "jquery": "../../../../../bower_components/jquery/index",
             "localized": "../../../../../bower_components/webmaker-i18n/localized",

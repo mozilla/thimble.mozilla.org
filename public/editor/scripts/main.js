@@ -1,8 +1,10 @@
+// NOTE: if you change this, update Gruntfile's requirejs:dist task too
 require.config({
   baseUrl: "/editor/scripts/editor/js",
   paths: {
     "text": "../vendor/require.text",
     "i18n": "../vendor/require.i18n",
+    "bowser": "../vendor/bowser",
     "sso-override": "../../sso-override",
     "jquery": "/bower/jquery/index",
     "localized": "/bower/webmaker-i18n/localized",
@@ -51,12 +53,17 @@ function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility) {
   });
 }
 
-require(["jquery"], function($) {
-  // Deal with browsers that can't load some parts of Bramble
-  $(".let-me-in").on("click", function(e) {
-    $("#browser-support-warning").fadeOut();
-    return false;
-  });
+require(["jquery", "bowser"], function($, bowser) {
+  // Temporary check while we finish cross-browser work. We are known
+  // to run well in Firefox, Chrome, Opera, but not Safari, IE.
+  if(!(bowser.firefox || bowser.chrome || bowser.opera)) {
+    $("#browser-support-warning").removeClass("hide");
+
+    $(".let-me-in").on("click", function(e) {
+      $("#browser-support-warning").fadeOut();
+      return false;
+    });
+  }
 
   function onError(err) {
     console.error("[Bramble Error]", err);
