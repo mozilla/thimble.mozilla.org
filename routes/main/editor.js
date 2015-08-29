@@ -1,6 +1,6 @@
 var url = require("url");
 var querystring = require("querystring");
-
+var useragent = require("useragent");
 var env = require("../../lib/environment");
 var Constants = require("../../constants");
 var utils = require("../utils");
@@ -57,7 +57,7 @@ module.exports = function(config, req, res) {
 
   // We currently run properly in Firefox, Chrome and Opera, with UI issues in the rest.
   // Until we sort those out, warn users of these browsers
-  var ua = req.useragent;
+  var agent = useragent.is(req.headers['user-agent']);
 
   var options = {
     appURL: config.appURL,
@@ -67,7 +67,12 @@ module.exports = function(config, req, res) {
     logoutURL: config.logoutURL,
     queryString: qs,
     mainURL: env.get("NODE_ENV") === "development" ? "/editor/scripts/main.js" : "/dist/main.js",
-    browserNotSupported: !(ua.isFirefox || ua.isChrome || ua.isOpera)
+    browserNotSupported: !(
+      agent.firefox ||
+      agent.mozilla ||
+      agent.chrome  ||
+      agent.opera
+    )
   };
 
   // We add the localization code to the query params through a URL object
