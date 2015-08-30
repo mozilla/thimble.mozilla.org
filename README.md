@@ -8,6 +8,8 @@ staging server).
 
 ![Thimble](/screenshots/thimble.png?raw=true "Thimble")
 
+You can read more about some of Thimble's main features [in the wiki](https://github.com/mozilla/thimble.webmaker.org/wiki/Using-Thimble)
+
 Thimble uses a modified version of the amazing [Brackets](http://brackets.io) code editor
 [updated to run within web browsers](https://github.com/humphd/brackets).
 
