@@ -54,12 +54,12 @@ function setupNewProjectLinks($) {
   }
 
   if(authenticated) {
-    newProjectButton.click(newProjectClickHandler);
-    $("#new-project-link").click(newProjectClickHandler);
+    newProjectButton.one("click", newProjectClickHandler);
+    $("#new-project-link").one("click", newProjectClickHandler);
     return;
   }
 
-  newProjectButton.click(function(e) {
+  newProjectButton.one("click", function(e) {
     e.preventDefault();
     e.stopPropagation();
 
