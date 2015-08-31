@@ -116,11 +116,7 @@ define(function(require) {
       }
 
       if (_user) {
-        if (_anonymousId && !_remixId) {
-          _title = title;
-        } else {
-          _title = projectDetails.title;
-        }
+        _title = title;
       } else if (title) {
         // Prefer the stored title in the anonymous case in case the
         // anonymous user changed it
