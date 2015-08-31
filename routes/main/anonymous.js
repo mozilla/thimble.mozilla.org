@@ -3,13 +3,9 @@ var utils = require("../utils");
 var Constants = require("../../constants");
 
 function getProject(config, remixId, callback) {
-  var now = (new Date()).toISOString();
-
   if(!remixId) {
     callback(null, 200, {
-      title: Constants.DEFAULT_PROJECT_NAME,
-      date_created: now,
-      date_updated: now
+      title: Constants.DEFAULT_PROJECT_NAME
     });
     return;
   }
@@ -39,6 +35,10 @@ module.exports = function(config, req, res) {
       return;
     }
 
+    var now = (new Date()).toISOString();
+
+    project.date_created = now;
+    project.date_updated = now;
     project.user_id = user.publishId;
 
     utils.createProject(config, user, project, function(err, status, project) {
