@@ -40,13 +40,13 @@ function processThimbleMake( make, asyncCallback ) {
     makeid: null
   }})
   .error( asyncCallback )
-  .success(function( project ) {
+  .then(function( project ) {
     if ( project && !project.makeid ) {
       project.updateAttributes({
         makeid: make.id
       })
       .error( asyncCallback )
-      .success(function( updatedProject ) {
+      .then(function( updatedProject ) {
         asyncCallback( null, updatedProject );
       });
     } else {
