@@ -1,20 +1,9 @@
-var _gaq = _gaq || [];
+var ga_account = document.getElementById("google-analytics-js").getAttribute("data-ga-account");
 
-(function() {
-  var ga_account = document.getElementById("google-analytics-js").getAttribute("data-ga-account");
-  var ga_domain = document.getElementById("google-analytics-js").getAttribute("data-ga-domain"); 
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  _gaq.push(['_setAccount', ga_account]);
-
-  if(ga_domain) {
-    _gaq.push(['_setDomainName', ga_domain]);
-  }
-
-  _gaq.push(['_trackPageview']);
-
-  var ga = document.createElement('script'); ga.type = 'text/javascript';
-  ga.async = true;
-  ga.src = 'https://ssl.google-analytics.com/ga.js';
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(ga, s);
-})();
+ga('create', ga_account, 'auto');
+ga('send', 'pageview');
