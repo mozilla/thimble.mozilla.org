@@ -10,13 +10,9 @@ define(function(require) {
   var _escKeyHandler;
 
   function updateLayout(data) {
-    // Calculate total width of brackets
-    var total = data.sidebarWidth + data.firstPaneWidth + data.secondPaneWidth;
-
-    // Set width in percent, easier for window resize
-    $(".filetree-pane-nav").width(((data.sidebarWidth / total) * 100) + "%");
-    $(".editor-pane-nav").width(((data.firstPaneWidth / total) * 100) + "%");
-    $(".preview-pane-nav").width(((data.secondPaneWidth / total) * 100) + "%");
+    $(".filetree-pane-nav").width(data.sidebarWidth);
+    $(".editor-pane-nav").width(data.firstPaneWidth);
+    $(".preview-pane-nav").width(data.secondPaneWidth);
   }
 
   function init(bramble, options) {
