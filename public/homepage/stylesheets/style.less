@@ -218,9 +218,30 @@ footer {
     }
   }
 
+  .new-project-button-wrapper {
+      display: inline-block;
+      padding: 5px;
+      border-radius: 5px;
+      position: relative;
+      top: -5px;
+      left: -5px;
+      transition: background .1s ease-out;
+
+      &:hover {
+          background: #2d9961;
+      }
+
+      &:active {
+          transition: none;
+          background: none;
+      }
+  }
+
   .button {
     background-color: white;
     padding: 11px 21px 10px 45px;
+    line-height: 28px;
+    display: inline-block;
     color: @lightgreen;
     border-radius: 3px;
     box-shadow: 0 2px 0 rgba(0,0,0,.15);
@@ -230,6 +251,8 @@ footer {
     background-position:  13px center;
     background-repeat: no-repeat;
     cursor: pointer;
+    box-sizing: border-box;
+    outline: solid 3px transparent;
 
     &:active {
       position: relative;
@@ -496,13 +519,13 @@ footer {
   height: 20px;
   position: absolute;
   left: 14px;
-  top: 14px;
+  top: 15px;
 
   .pencil {
     width: 90%;
     height: 90%;
     position: absolute;
-    bottom: 6%;
+    bottom: 10%;
     left: 0;
     background: ~"url(/img/pencil-icon.svg)";
     background-size: 100%;
@@ -517,7 +540,7 @@ footer {
 
   .line {
     height: 100%;
-    width: 100%;
+    width: 96%;
     position: absolute;
     transform-origin: left;
     transform: scaleX(0);
@@ -528,7 +551,7 @@ footer {
       width: 100%;
       height: 13%;
       background: #47ad66;
-      bottom: 0;
+      bottom: 0px;
     }
   }
 }
@@ -537,7 +560,7 @@ footer {
   0% {
     transform: translateX(0);
   }
-  30%{
+  13.5%{
     transform: translateX(90%);
   }
   40% {
@@ -552,7 +575,7 @@ footer {
 }
 
 @keyframes line {
-  10% {
+  5.5% {
     transform: scaleX(1);
   }
   20% {
