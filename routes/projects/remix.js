@@ -30,6 +30,15 @@ module.exports = function(config, req, res) {
       return;
     }
 
-    res.redirect(307, "/user/" + user.username + "/" + JSON.parse(body).id);
+    var project;
+    try {
+      project = JSON.parse(body);
+    } catch(e) {
+      console.error("Failed to parse remixed project with ", e.message, "\n at ", e.stack);
+      res.sendStatus(500);
+      return;
+    }
+
+    res.redirect(307, "/user/" + user.username + "/" + project.id);
   });
 };

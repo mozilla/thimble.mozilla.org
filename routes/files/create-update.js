@@ -75,7 +75,13 @@ module.exports = function(config, req, res) {
       });
 
       response.on('end', function() {
-        body = JSON.parse(body);
+        try {
+          body = JSON.parse(body);
+        } catch(e) {
+          console.error("Failed to parse response for sending file with ", e.message, "\n at ", e.stack);
+          res.sendStatus(500);
+          return;
+        }
         delete body.buffer;
 
         if(response.statusCode !== 201 && response.statusCode !== 200) {

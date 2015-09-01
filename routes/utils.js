@@ -6,8 +6,15 @@ var async = require("async");
 var defaultProject = require("../default");
 
 function createProject(config, user, data, callback) {
-  var project = JSON.parse(JSON.stringify(data));
   var createURL = config.publishURL + "/projects";
+  var project;
+  try {
+    project = JSON.parse(JSON.stringify(data));
+  } catch(e) {
+    console.error("Failed to parse project with ", e.message, "\n at ", e.stack);
+    callback(e, 500);
+    return;
+  }
   delete project.id;
 
   if(!user) {
@@ -75,7 +82,13 @@ function persistProjectFiles(config, user, project, data, callback) {
       });
 
       response.once('end', function() {
-        body = JSON.parse(body);
+        try {
+          body = JSON.parse(body);
+        } catch(e) {
+          console.error("Failed to parse response for persisting files with ", e.message, "\n at ", e.stack);
+          callback({ message: e.message, status: 500 });
+          return;
+        }
 
         if(response.statusCode !== 201) {
           callback({ message: body, status: response.statusCode });
@@ -107,7 +120,14 @@ function updateProject(config, user, data, callback) {
     return;
   }
 
-  var project = JSON.parse(JSON.stringify(data));
+  var project;
+  try {
+   project = JSON.parse(JSON.stringify(data));
+  } catch(e) {
+    console.error("Failed to parse project with ", e.message, "\n at ", e.stack);
+    callback(e, 500);
+    return;
+  }
   var updateURL = config.publishURL + "/projects/" + project.id;
   delete project.id;
   delete project.publish_url;
@@ -151,7 +171,14 @@ function getRemixedProject(config, projectId, callback) {
       return;
     }
 
-    var publishedProject = JSON.parse(body);
+    var publishedProject;
+    try {
+      publishedProject = JSON.parse(body);
+    } catch(e) {
+      console.error("Failed to parse published project with ", e.message, "\n at ", e.stack);
+      callback(e, 500);
+      return;
+    }
     publishedProject.title = publishedProject.title + " (remix)";
 
     callback(null, 200, publishedProject);
@@ -183,7 +210,16 @@ function getProjectFileMetadata(config, user, projectId, callback) {
       return;
     }
 
-    callback(null, 200, JSON.parse(body));
+    var files;
+    try {
+      files = JSON.parse(body);
+    } catch(e) {
+      console.error("Failed to parse project file metadata with ", e.message, "\n at ", e.stack);
+      callback(e, 500);
+      return;
+    }
+
+    callback(null, 200, files);
   });
 }
 
@@ -217,7 +253,16 @@ function getRemixedProjectFileMetadata(config, projectId, callback) {
       return;
     }
 
-    callback(null, 200, JSON.parse(body));
+    var files;
+    try {
+      files = JSON.parse(body);
+    } catch(e) {
+      console.error("Failed to parse remixed project file metadata with ", e.message, "\n at ", e.stack);
+      callback(e, 500);
+      return;
+    }
+
+    callback(null, 200, files);
   });
 }
 

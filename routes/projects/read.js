@@ -35,11 +35,20 @@ module.exports = function(config, req, res) {
       return;
     }
 
+    var projects;
+    try {
+      projects = JSON.parse(body);
+    } catch(e) {
+      console.error("Failed to parse user's projects with ", e.message, "\n at ", e.stack);
+      res.sendStatus(500);
+      return;
+    }
+
     var options = {
       csrf: req.csrfToken ? req.csrfToken() : null,
       HTTP_STATIC_URL: "/",
       username: user.username,
-      projects: JSON.parse(body),
+      projects: projects,
       editorHOST: config.editorHOST
     };
 

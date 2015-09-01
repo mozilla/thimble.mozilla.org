@@ -39,7 +39,16 @@ module.exports = function(config, req, res) {
         return;
       }
 
-      res.status(200).send({ link: JSON.parse(body).publish_url });
+      var project;
+      try {
+        project = JSON.parse(body);
+      } catch(e) {
+        console.error("Failed to parse response for publishing project with ", e.message, "\n at ", e.stack);
+        res.sendStatus(500);
+        return;
+      }
+
+      res.status(200).send({ link: project.publish_url });
     });
   });
 };
