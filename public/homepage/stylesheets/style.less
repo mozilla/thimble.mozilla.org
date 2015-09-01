@@ -94,16 +94,20 @@ footer {
     float: left;
     list-style-type: none;
     margin: 0;
+    padding-top: 5px;
+    position: relative;
+    left: 3px;
 
     li {
-      margin-bottom: 4px;
+      line-height: 15px;
+      padding: 0;
+      margin: 0 0 12px 0;
     }
 
     li a {
       display: block;
       position: relative;
       padding-left: 25px;
-      line-height: 1.4;
     }
 
     .icon {
@@ -111,16 +115,8 @@ footer {
       display: block;
       width: 20px;
       height: 20px;
-      top: 1px;
-      left: 0;
-      opacity: .5;
-      transition: opacity .1s linear;
-      -webkit-transition: opacity .1s linear;
-      -moz-transition: opacity .1s linear;
-    }
-
-    a:hover .icon {
-      opacity: 1;
+      top: -3px;
+      left: -2px;
     }
 
     .help .icon {
@@ -141,6 +137,18 @@ footer {
     text-decoration: none;
   }
 
+  .social-links a {
+    opacity: .7;
+    -webkit-transition: opacity .1s linear;
+    -moz-transition: opacity .1s linear;
+    transition: opacity .1s linear;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+
   .project-info {
     background: @darkgreen;
     padding: 18px 20px;
@@ -149,10 +157,11 @@ footer {
     margin: 0;
     position: relative;
     border-radius: 4px;
+    line-height: 22px;
 
     .mozilla-logo {
       position: absolute;
-      bottom: 25px;
+      bottom: 24px;
       left: 20px;
       img {
         display: block;
