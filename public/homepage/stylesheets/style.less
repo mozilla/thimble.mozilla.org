@@ -377,7 +377,14 @@ footer {
         height: 278px;
         position: relative;
         margin: 0 0 20px 0 ;
-        background: #EFEFEF;
+        -moz-transition: all .1s ease-out;
+        transition: all .1s ease-out;
+
+        &:hover {
+          opacity: .90;
+          -moz-transform: translateY(-3px);
+          transform: translateY(-3px);
+        }
 
         .image {
           width: 271px;
@@ -385,7 +392,7 @@ footer {
           height: 278px;
           z-index: 2;
           position: relative;
-          background: #EFEFEF;
+          border-radius: 3px;
         }
 
         &:before {
