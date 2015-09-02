@@ -18,45 +18,7 @@ require.config({
   }
 });
 
-function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility) {
-  var thimbleScript = document.getElementById("thimble-script");
-  var appUrl = thimbleScript.getAttribute("data-app-url");
-  var projectDetails = thimbleScript.getAttribute("data-project-details");
-  var editorUrl = thimbleScript.getAttribute("data-editor-url");
-
-  // Unpack projectDetails details
-  projectDetails = JSON.parse(decodeURIComponent(projectDetails));
-
-  Project.init(projectDetails, appUrl, function(err) {
-    if (err) {
-      console.error("[Bramble] Failed to load Project state, with", err);
-    }
-
-    // Initialize the project name UI
-    ProjectRenameUtility.init(appUrl, BrambleEditor.csrfToken);
-
-    // Initialize the login links
-    SSOOverride.init();
-
-    BrambleEditor.create({
-      editorUrl: editorUrl,
-      appUrl: appUrl
-    });
-  });
-}
-
-require(["jquery", "bowser", "bramble-editor", "project", "sso-override", "fc/project-rename"], function($, bowser, BrambleEditor, Project, SSOOverride, ProjectRenameUtility) {
-  // Temporary check while we finish cross-browser work. We are known
-  // to run well in Firefox, Chrome, Opera, but not Safari, IE.
-  if(!(bowser.firefox || bowser.chrome || bowser.opera)) {
-    $("#browser-support-warning").removeClass("hide");
-
-    $(".let-me-in").on("click", function(e) {
-      $("#browser-support-warning").fadeOut();
-      return false;
-    });
-  }
-
+(function() {
   function onError(err) {
     console.error("[Bramble Error]", err);
     $("#spinner-container").addClass("loading-error");
@@ -71,5 +33,45 @@ require(["jquery", "bowser", "bramble-editor", "project", "sso-override", "fc/pr
 
   Bramble.once("error", onError);
 
-  init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility);
-});
+  function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility) {
+    var thimbleScript = document.getElementById("thimble-script");
+    var appUrl = thimbleScript.getAttribute("data-app-url");
+    var projectDetails = thimbleScript.getAttribute("data-project-details");
+    var editorUrl = thimbleScript.getAttribute("data-editor-url");
+
+    // Unpack projectDetails details
+    projectDetails = JSON.parse(decodeURIComponent(projectDetails));
+
+    Project.init(projectDetails, appUrl, function(err) {
+      if (err) {
+        console.error("[Bramble] Failed to load Project state, with", err);
+      }
+
+      // Initialize the project name UI
+      ProjectRenameUtility.init(appUrl, BrambleEditor.csrfToken);
+
+      // Initialize the login links
+      SSOOverride.init();
+
+      BrambleEditor.create({
+        editorUrl: editorUrl,
+        appUrl: appUrl
+      });
+    });
+  }
+
+  require(["jquery", "bowser"], function($, bowser) {
+    // Temporary check while we finish cross-browser work. We are known
+    // to run well in Firefox, Chrome, Opera, but not Safari, IE.
+    if(!(bowser.firefox || bowser.chrome || bowser.opera)) {
+      $("#browser-support-warning").removeClass("hide");
+
+      $(".let-me-in").on("click", function(e) {
+        $("#browser-support-warning").fadeOut();
+        return false;
+      });
+    }
+
+    require(["bramble-editor", "project", "sso-override", "fc/project-rename"], init);
+  });
+}());

@@ -39,6 +39,7 @@ module.exports = function( grunt ) {
           modules: [{
             name: "../../main"
           }],
+          findNestedDependencies: true,
           optimizeCss: "none",
           removeCombined: true,
           paths: {
