@@ -28,7 +28,6 @@ define(function(require) {
       // Start loading the Bramble editor resources
       Bramble.load("#webmaker-bramble",{
         url: options.editorUrl,
-        autoRecoverFileSystem: true,
         hideUntilReady: true
       });
 
