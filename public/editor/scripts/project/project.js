@@ -108,11 +108,12 @@ define(function(require) {
     Metadata.getTitle(metadataLocation, function(err, title) {
       if (err) {
         if (err.code !== "ENOENT") {
-          return callback(err);
-        } else if (!_user && err.code === "ENOENT") {
+          callback(err);
+        } else {
           _title = projectDetails.title;
-          return callback();
+          callback();
         }
+        return;
       }
 
       if (_user) {
