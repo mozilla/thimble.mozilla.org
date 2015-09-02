@@ -2,9 +2,7 @@
 require.config({
   baseUrl: "/editor/scripts/editor/js",
   paths: {
-    "text": "../vendor/require.text",
-    "i18n": "../vendor/require.i18n",
-    "bowser": "../vendor/bowser",
+    "bowser": "/resources/scripts/vendor/bowser",
     "sso-override": "../../sso-override",
     "jquery": "/bower/jquery/index",
     "localized": "/bower/webmaker-i18n/localized",
@@ -16,12 +14,6 @@ require.config({
   shim: {
     "jquery": {
       exports: "$"
-    }
-  },
-  config: {
-    template: {
-      htmlPath: "templates",
-      i18nPath: "fc/nls/ui"
     }
   }
 });
@@ -53,7 +45,7 @@ function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility) {
   });
 }
 
-require(["jquery", "bowser"], function($, bowser) {
+require(["jquery", "bowser", "bramble-editor", "project", "sso-override", "fc/project-rename"], function($, bowser, BrambleEditor, Project, SSOOverride, ProjectRenameUtility) {
   // Temporary check while we finish cross-browser work. We are known
   // to run well in Firefox, Chrome, Opera, but not Safari, IE.
   if(!(bowser.firefox || bowser.chrome || bowser.opera)) {
@@ -79,5 +71,5 @@ require(["jquery", "bowser"], function($, bowser) {
 
   Bramble.once("error", onError);
 
-  require(["bramble-editor", "project", "sso-override", "fc/project-rename"], init);
+  init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility);
 });
