@@ -102,6 +102,7 @@ td.project-title {
   background-size: 17px;
   background-position: top;
   transition: transform .1s ease-out;
+  -webkit-transition: -webkit-transform .1s ease-out;
 }
 
 .project-delete:hover {
@@ -110,7 +111,9 @@ td.project-title {
 
 .project-delete:hover .icon-garbage-lid {
   transform-origin: left;
+  -webkit-transform-origin: left;
   transform: rotate(-4deg) translateY(-1px);
+  -webkit-transform: rotate(-4deg) translateY(-1px);
 }
 
 td.project-remix {

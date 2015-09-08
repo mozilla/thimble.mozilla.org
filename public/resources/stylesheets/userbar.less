@@ -253,8 +253,8 @@ a.navbar-login:hover {
   border-radius: 1px 0 0 1px;
 
   &.strobe {
-    animation: strobe .3s linear;
-    animation-iteration-count: 3;
+    -webkit-animation: strobe .3s linear 3;
+    animation: strobe .3s linear 3;
   }
 }
 
@@ -263,6 +263,13 @@ a.navbar-login:hover {
   50% {  background: rgba(255,255,255,.15);}
   0% {    background: none; }
 }
+
+@-webkit-keyframes strobe {
+  0% {    background: none; }
+  50% {  background: rgba(255,255,255,.15);}
+  0% {    background: none; }
+}
+
 
 #navbar-logged-in {
   margin-left: 0px;
