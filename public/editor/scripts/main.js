@@ -18,7 +18,18 @@ require.config({
   }
 });
 
-(function() {
+require(["jquery", "bowser"], function($, bowser) {
+  // Temporary check while we finish cross-browser work. We are known
+  // to run well in Firefox, Chrome, Opera, but not Safari or IE.
+  if(bowser.msie || bowser.msedge || bowser.safari) {
+    $("#browser-support-warning").removeClass("hide");
+
+    $(".let-me-in").on("click", function(e) {
+      $("#browser-support-warning").fadeOut();
+      return false;
+    });
+  }
+
   function onError(err) {
     console.error("[Bramble Error]", err);
     $("#spinner-container").addClass("loading-error");
@@ -60,18 +71,5 @@ require.config({
     });
   }
 
-  require(["jquery", "bowser"], function($, bowser) {
-    // Temporary check while we finish cross-browser work. We are known
-    // to run well in Firefox, Chrome, Opera, but not Safari, IE.
-    if(!(bowser.firefox || bowser.chrome || bowser.opera)) {
-      $("#browser-support-warning").removeClass("hide");
-
-      $(".let-me-in").on("click", function(e) {
-        $("#browser-support-warning").fadeOut();
-        return false;
-      });
-    }
-
-    require(["bramble-editor", "project", "sso-override", "fc/project-rename"], init);
-  });
-}());
+  require(["bramble-editor", "project", "sso-override", "fc/project-rename"], init);
+});
