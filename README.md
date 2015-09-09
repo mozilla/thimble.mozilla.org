@@ -38,6 +38,7 @@ is an abbreviated guide to getting it all set up.  Please see each server's READ
 * Make sure you're on the ``bramble`` branch
 * Run ``git submodule update --init`` to install submodules
 * Run ``npm install`` to install dependencies
+* Run `grunt build-browser` to create `/dist` extensions and third-party libs
 * Run ``npm start`` to get a static server running on [http://localhost:8000/src](http://localhost:8000/src). You can try the demo version at [http://localhost:8000/src/hosted.html](http://localhost:8000/src/hosted.html) 
 
 **Thimble**
