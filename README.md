@@ -86,7 +86,16 @@ To publish locally, you'll need to do the following...
 * Run ``createdb webmaker_oauth_test`` to create a test database
 * In your id.webmaker.org folder
   * Run ``node scripts/create-tables.js``
-  * Edit ``scripts/test-data.sql`` and replace it's contents with http://pastebin.com/DUXMjjwF
+  * Edit ``scripts/test-data.sql`` and replace it's contents with:
+      
+      ```sql
+        INSERT INTO clients VALUES
+          ( 'test',
+            'test',
+            '["password", "authorization_code"]'::jsonb,
+            'http://localhost:3500/callback' )
+      ```
+
   * Run ``node scripts/test-data.js``
     * You'll see a ``INSERT 0 1`` message if successful
 
