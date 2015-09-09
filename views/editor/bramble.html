@@ -25,15 +25,16 @@
         }
 
         #spinner-container .error-message {
-          display: none;
+            display: none;
         }
 
         #spinner-container.loading-error .error-message {
-          display: block;
+            display: block;
         }
 
         #spinner-container .loading-message {
             animation: loadingpulse 1s infinite linear;
+            -webkit-animation: loadingpulse 1s infinite linear;
         }
 
         #spinner-container .thimble-spinner {
@@ -54,15 +55,15 @@
         }
 
         #spinner-container.loading-error {
-          background: black;
+            background: black;
         }
 
         #spinner-container.loading-error .loading-message {
-          display: none;
+            display: none;
         }
 
         #spinner-container.loading-error .thimble-spinner {
-          animation: none;
+            animation: none;
         }
 
         @keyframes loadingpulse {
@@ -80,25 +81,39 @@
             }
         }
 
-        @keyframes spinner {
+        @-webkit-keyframes loadingpulse {
             0% {
-                transform: perspective(120px) rotateX(0deg) rotateY(0deg);
-            }
-            25% {
-                transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+                -webkit-transform: scale(1);
+                opacity: .4;
             }
             50% {
-                transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-            }
-            75% {
-                transform: perspective(120px) rotateX(-360deg) rotateY(-179.9deg);
+                -webkit-transform: scale(1.02);
+                opacity: .6;
             }
             100% {
-                transform: perspective(120px) rotateX(-360deg) rotateY(-360deg);
+                -webkit-transform: scale(1);
+                opacity: .4;
             }
         }
 
-    </style>
+        @keyframes spinner {
+            0% {
+                transform: rotateX(0deg) rotateY(0deg);
+            }
+            25% {
+                transform: rotateX(-180.1deg) rotateY(0deg);
+            }
+            50% {
+                transform: rotateX(-180deg) rotateY(-179.9deg);
+            }
+            75% {
+                transform: rotateX(-360deg) rotateY(-179.9deg);
+            }
+            100% {
+                transform: rotateX(-360deg) rotateY(-360deg);
+            }
+        }
+        </style>
 
     <div id="spinner-container">
         <div class="thimble-spinner"></div>

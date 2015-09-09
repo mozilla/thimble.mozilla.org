@@ -27,7 +27,7 @@ define(function(require) {
 
       // Active Indicator
       $("#theme-active").css("position", "absolute").animate({
-        left: 190
+        left: 35
       }, transitionSpeed);
     }
 
@@ -41,7 +41,7 @@ define(function(require) {
 
       // Active indicator
       $("#theme-active").css("position", "absolute").animate({
-        left: 157
+        left: 2
       },transitionSpeed);
     }
 
