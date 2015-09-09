@@ -41,7 +41,7 @@ define(function(require) {
 
         $("#editor-pane-nav-options-menu").hide();
         $("#editor-pane-nav-fileview").hide();
-        $(".filetree-pane-nav").css("display", "inline-flex");
+        $(".filetree-pane-nav").css("display", "block");
       }
     }
 
@@ -77,7 +77,7 @@ define(function(require) {
       $("#editor-pane-nav-options-menu").hide();
       bramble.showSidebar();
       $("#editor-pane-nav-fileview").css("display", "none");
-      $(".filetree-pane-nav").css("display", "inline-flex");
+      $(".filetree-pane-nav").css("display", "block");
     });
 
     $("#filetree-pane-nav-hide").click(function() {
@@ -255,7 +255,7 @@ define(function(require) {
       {
         $("#editor-pane-nav-options-menu").hide();
         $("#editor-pane-nav-fileview").css("display", "none");
-        $(".filetree-pane-nav").css("display", "inline-flex");
+        $(".filetree-pane-nav").css("display", "block");
       }
       else if(data.visible === false)
       {
