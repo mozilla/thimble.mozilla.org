@@ -110,7 +110,7 @@ define(function(require) {
     }
 
     function upgradeFile(path, next) {
-      if (path.endsWith('/')) {
+      if (path.match(/\/$/)) {
         return next();
       }
 
