@@ -15,7 +15,7 @@ define(function(require) {
       var basedir = Path.dirname(path);
 
       sh.mkdirp(basedir, function(err) {
-        if(err && err.code !== "EEXIST") {
+        if(err) {
           return callback(err);
         }
 

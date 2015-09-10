@@ -1,6 +1,6 @@
 define(function(require) {
   var $ = require("jquery");
-  var PROJECT_META_KEY = "thimble-project-meta";
+  var PROJECT_META_KEY = require("constants").PROJECT_META_KEY;
   var fs = Bramble.getFileSystem();
 
   // We only want one operation at a time on the metadata xattrib.
@@ -132,27 +132,70 @@ define(function(require) {
     });
   }
 
+  // Sets a flag on the project root to indicate whether a project needs to
+  // be republished or not
+  function setPublishNeedsUpdate(root, value, callback) {
+    callback = lockSafeCallback(callback);
+
+    lock(function() {
+      getMetadata(root, function(err, metadata) {
+        if(err) {
+          return callback(err);
+        }
+
+        metadata = metadata || {};
+        metadata.publishNeedsUpdate = value;
+
+        fs.setxattr(root, PROJECT_META_KEY, metadata, callback);
+      });
+    });
+  }
+
+  // Gets the flag on the project root to indicate whether a project needs to
+  // be republished or not
+  function getPublishNeedsUpdate(root, callback) {
+    callback = lockSafeCallback(callback);
+
+    lock(function() {
+      getMetadata(root, function(err, metadata) {
+        if(err) {
+          return callback(err);
+        }
+
+        callback(null, metadata && metadata.publishNeedsUpdate);
+      });
+    });
+  }
+
+
   // Places project metadata (project id, file paths + publish ids) as an
   // extended attribute on on the project root folder. We don't lock here
   // because installing the metadata only happens once on startup.
   function setMetadata(config, callback) {
-    var project = {
-      title: config.title
-    };
+    // Check if there is any metadata already present for that root
+    fs.getxattr(config.root, PROJECT_META_KEY, function(err, project) {
+      if(err && err.code !== 'ENOATTR') {
+        return callback(err);
+      }
 
-    // If it exists, data is in the following form, simplify it and make it easier
-    // to get file id using a path:
-    // [{ id: 1, path: "/index.html", project_id: 3 }, ... ]
-    if (config.data) {
-      project.id = config.id;
-      project.paths = {};
+      // If there is, we keep it and overwrite the ones that need to be updated
+      project = project || {};
+      project.title = config.title;
 
-      config.data.forEach(function(info) {
-        project.paths[info.path] = info.id;
-      });
-    }
+      // If it exists, data is in the following form, simplify it and make it easier
+      // to get file id using a path:
+      // [{ id: 1, path: "/index.html", project_id: 3 }, ... ]
+      if (config.data) {
+        project.id = config.id;
+        project.paths = {};
 
-    fs.setxattr(config.root, PROJECT_META_KEY, project, callback);
+        config.data.forEach(function(info) {
+          project.paths[info.path] = info.id;
+        });
+      }
+
+      fs.setxattr(config.root, PROJECT_META_KEY, project, callback);
+    });
   }
 
   function fetchMetadata(config, callback) {
@@ -201,6 +244,7 @@ define(function(require) {
       return fetchMetadata(config, function(err, data) {
         setMetadata({
           data: data,
+          id: config.id,
           root: config.root,
           user: config.user,
           title: config.title
@@ -241,6 +285,8 @@ define(function(require) {
     setFileID: setFileID,
     getTitle: getTitle,
     setTitle: setTitle,
-    removeFile: removeFile
+    removeFile: removeFile,
+    setPublishNeedsUpdate: setPublishNeedsUpdate,
+    getPublishNeedsUpdate: getPublishNeedsUpdate
   };
 });

@@ -43,8 +43,10 @@ define(function(require) {
   Publisher.prototype.init = function() {
     var publisher = this;
     var dialog = publisher.dialog;
+    var publishUrl = Project.getPublishUrl();
     publisher.dialog.trackSyncChanges = true;
     publisher.isProjectPublic = true;
+    publisher.needsUpdate = false;
     publisher.handlers = {
       publish: publisher.publish.bind(publisher),
       unpublish: publisher.unpublish.bind(publisher),
@@ -55,8 +57,8 @@ define(function(require) {
       dialog.description.val(Project.getDescription());
     }
 
-    if(Project.getPublishUrl()) {
-      this.updateDialog(Project.getPublishUrl(), true);
+    if(publishUrl) {
+      this.updateDialog(publishUrl, true);
     }
 
     if(publisher.fsync) {
@@ -66,10 +68,25 @@ define(function(require) {
         }
       });
       publisher.fsync.addAfterEachCallback(function() {
-        if(dialog.trackSyncChanges) {
-          publisher.enable();
-          publisher.handlers.unpublishedChangesPrompt();
+        if(!dialog.trackSyncChanges) {
+          return;
         }
+
+        publisher.enable();
+        publisher.handlers.unpublishedChangesPrompt();
+
+        if(publisher.needsUpdate) {
+          return;
+        }
+
+        Project.publishNeedsUpdate(true, function(err) {
+          if(err) {
+            console.error("[Thimble] Failed to set the publishNeedsUpdate flag after a file change: ", err);
+            return;
+          }
+
+          publisher.needsUpdate = true;
+        });
       });
 
       // Don't allow publishing when we're syncing
@@ -82,6 +99,20 @@ define(function(require) {
     }
 
     dialog.buttons.publish.on("click", publisher.handlers.publish);
+
+    // Were there any files that were updated and not published?
+    Project.getPublishNeedsUpdate(function(err, needsUpdate) {
+      if(err) {
+        console.error("[Thimble] Failed to get the publishNeedsUpdate flag while loading the publish dialog: ", err);
+        return;
+      }
+
+      if(needsUpdate) {
+        publisher.needsUpdate = needsUpdate;
+        publisher.enable();
+        publisher.handlers.unpublishedChangesPrompt();
+      }
+    });
   };
 
   Publisher.prototype.publish = function() {
@@ -110,14 +141,22 @@ define(function(require) {
       var request = publisher.generateRequest("publish");
       request.done(function(project) {
         if(request.status !== 200) {
-          console.error("[Bramble] Server was unable to publish project, responded with status ", request.status);
+          console.error("[Thimble] Server was unable to publish project, responded with status ", request.status);
           return;
         }
 
         publisher.updateDialog(project.link, true);
+        Project.publishNeedsUpdate(false, function(err) {
+          if(err) {
+            console.error("[Thimble] Failed to set the publishNeedsUpdate flag after publishing with: ", err);
+            return;
+          }
+
+          publisher.needsUpdate = false;
+        });
       });
       request.fail(function(jqXHR, status, err) {
-        console.error("[Bramble] Failed to send request to publish project to the server with: ", err);
+        console.error("[Thimble] Failed to send request to publish project to the server with: ", err);
       });
       request.always(function() {
         SyncState.completed();
@@ -131,7 +170,7 @@ define(function(require) {
 
     publisher.fsync.saveAndSyncAll(function(err) {
       if(err) {
-        console.error("[Bramble] Failed to publish project");
+        console.error("[Thimble] Failed to publish project");
         setState(true);
         return;
       }
@@ -165,7 +204,7 @@ define(function(require) {
     var request = publisher.generateRequest("unpublish");
     request.done(function() {
       if(request.status !== 200) {
-        console.error("[Bramble] Server was unable to unpublish project, responded with status ", request.status);
+        console.error("[Thimble] Server was unable to unpublish project, responded with status ", request.status);
         buttons.unpublish.on("click", handlers.unpublish);
         return;
       }
@@ -173,9 +212,18 @@ define(function(require) {
       buttons.parent.removeClass("hide");
 
       publisher.updateDialog("");
+
+      Project.publishNeedsUpdate(false, function(err) {
+        if(err) {
+          console.error("[Thimble] Failed to set the publishNeedsUpdate flag after unpublishing with: ", err);
+          return;
+        }
+
+        publisher.needsUpdate = false;
+      });
     });
     request.fail(function(jqXHR, status, err) {
-      console.error("[Bramble] Failed to send request to unpublish project to the server with: ", err);
+      console.error("[Thimble] Failed to send request to unpublish project to the server with: ", err);
       buttons.unpublish.on("click", handlers.unpublish);
     });
     request.always(function() {

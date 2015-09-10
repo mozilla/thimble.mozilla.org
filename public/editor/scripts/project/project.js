@@ -91,6 +91,18 @@ define(function(require) {
     Metadata.removeFile(getRoot(), stripRoot(path), callback);
   }
 
+  // Sets a flag on the project root that indicates whether we need to update
+  // the published version of this project or not
+  function publishNeedsUpdate(value, callback) {
+    Metadata.setPublishNeedsUpdate(getRoot(), value, callback);
+  }
+
+  // Gets the flag from the project root that indicates whether we need to
+  // update the published version of this project or not
+  function getPublishNeedsUpdate(callback) {
+    Metadata.getPublishNeedsUpdate(getRoot(), callback);
+  }
+
   function init(projectDetails, host, callback) {
     _user = projectDetails.userID;
     _id = projectDetails.id;
@@ -222,6 +234,9 @@ define(function(require) {
 
     stripRoot: stripRoot,
     addRoot: addRoot,
-    removeFile: removeFile
+    removeFile: removeFile,
+
+    publishNeedsUpdate: publishNeedsUpdate,
+    getPublishNeedsUpdate: getPublishNeedsUpdate
   };
 });
