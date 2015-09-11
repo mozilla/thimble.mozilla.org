@@ -19,9 +19,9 @@ require.config({
 });
 
 require(["jquery", "bowser"], function($, bowser) {
-  // Temporary check while we finish cross-browser work. We are known
-  // to run well in Firefox, Chrome, Opera and Safari but not IE.
-  if(bowser.msie || bowser.msedge) {
+  // Warn users of unsupported browsers that they can try something newer,
+  // specifically anything before IE 11 or Safari 8.
+  if((bowser.msie && bowser.version < 11) || (bowser.safari && bowser.version < 8)) {
     $("#browser-support-warning").removeClass("hide");
 
     $(".let-me-in").on("click", function(e) {
