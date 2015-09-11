@@ -59,7 +59,6 @@
   vertical-align: top;
   float: left;
   overflow: hidden;
-  .flex-container;
 
   .nav-container {
     min-width: 150px;
@@ -169,6 +168,7 @@
     }
   }
 }
+
 #filetree-pane-nav-add-menu:after {
   content: '';
   position: absolute;
@@ -182,7 +182,6 @@
   left: 86px;
 }
 
-
 /* ------ LEFT PANE ------ */
 .editor-pane-nav {
   top: 0;
@@ -191,12 +190,11 @@
   height: @toolbarHeight;
   background-color: #3F3F3F;
   color: #757575;
-
+  float: left;
   overflow: hidden;
-  .flex-container;
 
   .nav-container {
-    min-width: 350px;
+    min-width: 385px;
     padding-right: 16px;
   }
 }
@@ -637,12 +635,15 @@
   box-sizing: border-box;
   padding-right: 20px;
   padding-left: 20px;
-  .flex-container;
 
-  /* Hack to perfectly center elements within container (they all vary in heights) */
-  * {
-    .vertical-align;
-  }
+  .flex-vertical-align;
+}
+
+.flex-vertical-align {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
 }
 
 .vertical-align {

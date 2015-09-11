@@ -128,8 +128,7 @@ body {
   }
 
   #navbar-publish {
-    margin: 0 !important;
-    padding-top: 11px;
+    margin: 0;
   }
 
   #navbar-publish-button {
@@ -170,14 +169,15 @@ body {
 
   #navbar-login {
     border-left: 1px solid #7DAF8F;
-    height: 100%;
+    height:60px;
     padding-left: 8px;
     margin-left: 15px;
+
+    .flex-vertical-align;
 
     &.signed-in {
       padding-left: 15px;
       margin-left: 15px;
-
       border-right: 1px solid #7DAF8F;
       margin-right: 15px;
       padding-right: 15px;
@@ -187,26 +187,16 @@ body {
 
   #navbar-left {
     margin-left: 20px;
-    margin-top: auto;
-    margin-bottom: auto;
-
-    /* Vertically align immediate children */
-    * {
-        margin-top: auto;
-        margin-bottom: auto;
-    }
+    .flex-vertical-align;
   }
+
   #navbar-right {
     margin-left: auto;
     margin-right: 20px;
-    height: 100%;
     float: right;
-    right: 0px;
-    * {
-        margin-top: auto;
-        margin-bottom: auto;
-    }
+    .flex-vertical-align;
   }
+
 }
 
 
@@ -241,6 +231,7 @@ a.navbar-login {
   font-weight: normal;
   .transition;
 }
+
 a.navbar-login:hover {
   text-decoration: underline;
 }
@@ -248,7 +239,6 @@ a.navbar-login:hover {
 /* Logged in menu */
 #navbar-anonymous {
   position: relative;
-  top: 11px;
   padding: 7px 9px;
   border-radius: 1px 0 0 1px;
 
@@ -278,7 +268,6 @@ a.navbar-login:hover {
   text-align: center;
   cursor: pointer;
   position: relative;
-  top: 4px;
 
   li {
     padding: 10px;
@@ -324,10 +313,9 @@ a.navbar-login:hover {
     }
   }
 }
-#navbar-logged-in>li {
+#navbar-logged-in > li {
   padding: 6px 10px;
   position: relative;
-  top: 4px;
 }
 
 #navbar-logged-in>li:hover {
@@ -380,4 +368,11 @@ a.navbar-login:hover {
 }
 #navbar-logged-in li ul.dropdown li{
     display: block;
+}
+
+.flex-vertical-align {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
 }
