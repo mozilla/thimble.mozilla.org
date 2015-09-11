@@ -20,8 +20,8 @@ require.config({
 
 require(["jquery", "bowser"], function($, bowser) {
   // Temporary check while we finish cross-browser work. We are known
-  // to run well in Firefox, Chrome, Opera, but not Safari or IE.
-  if(bowser.msie || bowser.msedge || bowser.safari) {
+  // to run well in Firefox, Chrome, Opera and Safari but not IE.
+  if(bowser.msie || bowser.msedge) {
     $("#browser-support-warning").removeClass("hide");
 
     $(".let-me-in").on("click", function(e) {
