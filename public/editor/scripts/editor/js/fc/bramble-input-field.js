@@ -92,12 +92,13 @@ define(function(require) {
   // Get or set the value of the field
   // Similar to JQuery's `.val()` method
   InputField.prototype.val = function() {
-    var value = this.mode === InputField.Modes.STATIC ? "text" : "val";
-
+    // Extract the value from the <input> or <span> depending on input state
     if(arguments.length === 0) {
-      return this._element[value]();
+      return this._element[this.mode === InputField.Modes.STATIC ? "text" : "val"]();
     }
-    this._element[value](arguments[0]);
+
+    // Store the value as harmless text content
+    this._element.text(arguments[0]);
   };
 
   // The `id` of the field in the DOM
