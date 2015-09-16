@@ -13,6 +13,17 @@ define(function(require) {
     var loginUrl = $("#publish-ssooverride").attr("data-loginUrl");
     var joinEl = $('#signup-link');
     var loginEl = $('#login-link');
+    var bramble;
+
+    // If we're running in the context of the Bramble editor/instance
+    // get a reference to it as soon as it becomes available, so that
+    // we can save files before we navigate away for sign-in.
+    if(window.Bramble) {
+      window.Bramble.once("ready", function(brambleInstance) {
+        bramble = brambleInstance;
+      });
+    }
+
 
     function signIn(newUser) {
       return function(e) {
@@ -32,7 +43,15 @@ define(function(require) {
           location += "&anonymousId=" + Project.getAnonymousId();
         }
 
-        window.location = location;
+        function navigate() {
+          window.location = location;
+        }
+
+        if(bramble) {
+          bramble.saveAll(navigate);
+        } else {
+          navigate();
+        }
       };
     }
 
