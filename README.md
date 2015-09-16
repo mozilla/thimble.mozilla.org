@@ -94,6 +94,7 @@ To publish locally, you'll need to do the following...
           ( 'test',
             'test',
             '["password", "authorization_code"]'::jsonb,
+            '["code", "token"]'::jsonb,
             'http://localhost:3500/callback' )
       ```
 
