@@ -350,6 +350,12 @@ footer {
     -ms-flex-align: start;
     align-items: flex-start;
 
+    &:first-of-type {
+      padding-bottom: 45px;
+      margin-bottom: 40px;
+      border-bottom: solid 2px #EEE;
+    }
+
     .project {
       -webkit-flex: 1 1 auto;
       -ms-flex: 1 1 auto;
@@ -364,6 +370,7 @@ footer {
         font-size: 22px;
         color: #545454;
         text-align: center;
+        white-space: nowrap;
       }
 
       &:last-child {
@@ -450,6 +457,18 @@ footer {
 
       &.comic-strip .image {
         background: ~"url(/img/thumbnail-comic-strip.png)" #EFEFEF;
+      }
+
+      &.my-six-word-summer .image {
+        background: ~"url(/img/thumbnail-my-six-word-summer.png)" #29B7FD;
+      }
+
+      &.homework-excuse-generator .image {
+        background: ~"url(/img/thumbnail-homework-excuse-generator.png)" #E0CAAD;
+      }
+
+      &.three-things-i-heart .image {
+        background: ~"url(/img/thumbnail-three-things-i-heart.png)" #E0CAAD;
       }
 
       .remix-button {
