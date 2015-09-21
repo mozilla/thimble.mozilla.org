@@ -4,12 +4,24 @@ define(function(require) {
   var KeyHandler = require("fc/bramble-keyhandler");
   var Underlay = require("fc/bramble-underlay");
 
-  function PopupMenu(button, menu) {
+  function PopupMenu(button, menu, applyOffset) {
     var self = this;
     self._button$ = $(button);
     self._menu$ = $(menu);
 
-    self.close = function() {
+    // If we want the menu offset as a "bubble" we need to apply it
+    if(applyOffset) {
+      self.applyOffset = function() {
+        // Determine where to horizontally place menu based on button's icon location
+        var menuWidth = self._menu$.width();
+        var leftOffset = self._button$.offset().left - menuWidth/2 + 11;
+        self._menu$.css("left", leftOffset);
+      };
+    }
+
+    self.close = function(e) {
+      e.stopPropagation();
+
       if(!self.showing) {
         return;
       }
@@ -32,7 +44,9 @@ define(function(require) {
     };
 
     // Toggle the menu on/off when the button is clicked.
-    self._button$.on("click", function() {
+    self._button$.on("click", function(e) {
+      e.stopPropagation();
+
       if(!self.showing) {
         self.show();
       } else {
@@ -43,14 +57,17 @@ define(function(require) {
   PopupMenu.create = function(button, menu) {
     return new PopupMenu(button, menu);
   };
+  PopupMenu.createWithOffset = function(button, menu) {
+    return new PopupMenu(button, menu, true);
+  };
   PopupMenu.prototype.show = function() {
     var self = this;
 
-    // Determine where to horizontally place menu based on button's icon location
-    var menuWidth = self._menu$.width();
-    var leftOffset = self._button$.offset().left - menuWidth/2 + 11;
-    self._menu$.css("left", leftOffset).show();
+    if(self.applyOffset) {
+      self.applyOffset();
+    }
 
+    self._menu$.show();
     self._underlay = new Underlay(self._menu$, self.close);
     self._escKeyHandler = new KeyHandler.ESC(self.close);
     // Close on resize

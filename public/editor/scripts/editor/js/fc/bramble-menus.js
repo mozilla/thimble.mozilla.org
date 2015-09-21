@@ -3,9 +3,13 @@ define(function(require) {
   var $ = require("jquery");
   var PopupMenu = require("fc/bramble-popupmenu");
 
+  function setupUserMenu() {
+    PopupMenu.create("#navbar-logged-in li", "#navbar-logged-in li ul.dropdown");
+  }
+
   function setupOptionsMenu(bramble) {
     // Gear Options menu
-    PopupMenu.create("#editor-pane-nav-options", "#editor-pane-nav-options-menu");
+    PopupMenu.createWithOffset("#editor-pane-nav-options", "#editor-pane-nav-options-menu");
 
     // Font size
     $("#editor-pane-nav-decrease-font").click(function() {
@@ -82,7 +86,7 @@ define(function(require) {
     var $addTutorial = $("#filetree-pane-nav-add-tutorial");
 
     // Add File button and popup menu
-    var menu = PopupMenu.create("#filetree-pane-nav-add", "#filetree-pane-nav-add-menu");
+    var menu = PopupMenu.createWithOffset("#filetree-pane-nav-add", "#filetree-pane-nav-add-menu");
 
     function downloadFileToFilesystem(location, fileOptions, callback) {
       callback = callback || function noop() {};
@@ -173,6 +177,7 @@ define(function(require) {
   function init(bramble) {
     setupOptionsMenu(bramble);
     setupAddFileMenu(bramble);
+    setupUserMenu();
   }
 
   return {

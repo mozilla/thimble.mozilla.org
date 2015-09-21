@@ -11,7 +11,7 @@ define(function(require) {
 
       e.stopPropagation();
       e.preventDefault();
-      fn();
+      fn(e);
     }
 
     if(typeof elem === "function") {

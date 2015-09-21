@@ -327,9 +327,15 @@ a.navbar-login:hover {
         opacity: 1;
     }
 }
+
 #navbar-logged-in>li>ul>li:hover {
     background-color: rgba(0,0,0,.05);
 }
+
+#navbar-logged-in li ul.dropdown li{
+    display: block;
+}
+
 .dropdown-link {
     text-decoration: none;
     color: black;
@@ -362,12 +368,6 @@ a.navbar-login:hover {
     top: -4px;
     left: 5px;
     opacity: 0.6;
-}
-#navbar-logged-in li:hover ul.dropdown{
-    display: block; /* Display the dropdown */
-}
-#navbar-logged-in li ul.dropdown li{
-    display: block;
 }
 
 .flex-vertical-align {

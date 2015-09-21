@@ -12,7 +12,11 @@ require.config({
     "jquery": "/bower/jquery/index",
     "localized": "/bower/webmaker-i18n/localized",
     "uuid": "/bower/node-uuid/uuid",
-    "cookies": "/bower/cookies-js/dist/cookies"
+    "cookies": "/bower/cookies-js/dist/cookies",
+    // TODO: we should really put the homepage and editor in the same scope for code sharing
+    "fc/bramble-popupmenu": "/editor/scripts/editor/js/fc/bramble-popupmenu",
+    "fc/bramble-keyhandler": "/editor/scripts/editor/js/fc/bramble-keyhandler",
+    "fc/bramble-underlay": "/editor/scripts/editor/js/fc/bramble-underlay"
   },
   shim: {
     "jquery": {
@@ -101,10 +105,11 @@ function setupAuthentication($, uuid, cookies) {
 // flow. If more needs to be added, the logic should be factored out into
 // separate modules, each of which would be initialized here.
 // See: public/editor/scripts/main.js
-function init($, uuid, cookies) {
+function init($, uuid, cookies, PopupMenu) {
+  PopupMenu.create("#navbar-logged-in li", "#navbar-logged-in li ul.dropdown");
   setupAuthentication($, uuid, cookies);
   setupNewProjectLinks($);
   preloadBramble($);
 }
 
-require(['jquery', 'uuid', 'cookies'], init);
+require(['jquery', 'uuid', 'cookies', 'fc/bramble-popupmenu'], init);

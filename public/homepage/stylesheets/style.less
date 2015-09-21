@@ -20,6 +20,17 @@ body, html {
   margin: 0;
 }
 
+// For capturing mouse events over the iframe when menus appear overtop.
+.click-underlay {
+  width: 100%;
+  min-height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 150;
+  overflow: hidden;
+}
+
 header {
     padding: 20px;
     overflow: auto;
