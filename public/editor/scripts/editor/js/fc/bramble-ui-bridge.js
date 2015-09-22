@@ -66,6 +66,33 @@ define(function(require) {
       queryString = queryString === "" ? "?" + cacheBust : queryString + "&" + cacheBust;
       window.location.href = "/projects/new"  + queryString;
     });
+    $('#delete-project-link').click(function() {
+      var projectId = Project.getID();
+
+      // TODO: we can do better than this, but let's at least make it harder to lose data.
+      if(!window.confirm("OK to Delete this project?")) {
+        return false;
+      }
+
+      var request = $.ajax({
+        headers: {
+          "X-Csrf-Token": $("meta[name='csrf-token']").attr("content")
+        },
+        type: "DELETE",
+        url: "/projects/" + projectId
+      });
+      request.done(function() {
+        if(request.status !== 204) {
+          console.error("[Thimble error] sending delete request for project ", projectId, request.status);
+        } else {
+          var queryString = window.location.search;
+          window.location.href = '/projects' + queryString;
+        }
+      });
+      request.fail(function(jqXHR, status, err) {
+        console.error('[Bramble] Delete project request failed', err);
+      });
+    });
 
     $("#export-project-zip").click(function() {
       bramble.export();
