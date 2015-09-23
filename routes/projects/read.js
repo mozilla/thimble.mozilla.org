@@ -44,6 +44,11 @@ module.exports = function(config, req, res) {
       return;
     }
 
+    //Sort projects in ascending order by last updated
+    projects.sort(function(project1, project2) {
+        return new Date(project2.date_updated).getTime() - new Date(project1.date_updated).getTime();
+    });
+
     var options = {
       csrf: req.csrfToken ? req.csrfToken() : null,
       HTTP_STATIC_URL: "/",
