@@ -14,3 +14,9 @@ deploy:
   on:
     repo: mozilla/thimble.webmaker.org
     branch: bramble
+after_deploy:
+  - node invalidate.js
+env:
+  - CLOUDFRONT_DISTRIBUTION_ID="E25G9W2D0007RH"
+  - secure: "UZWFTvdsfT77fn2SG8wVomv2EYXVKAvJWtg/JeLds7i31HHD6mWBWP5/7+E5E9quMfbrVVBtiPukXIdv+leduVbBVMzdSy/oMVItk0/sKwe9m8s90pmvKBbbaX0MDPtwJ61xmoOVPlNFtjZfBu+HqY0yWKQ3oHYOA2UpqFRgVqI="
+  - secure: "KpSpWNrkHJtsSNgVrnQZeBgxXiy6HACLDhITS/uE9EXaq5VLQE8zjZUTXtFyRmvo4AINYPZFi+N2lvSgA8Kkxq4fk7PrYYvOfr/vhhbOW/gdIPa/9dMTsDcnXkfLgjMMUj1XN1tWBDLBYl1NZ51H02HrvKZC+gBG1TkVaPJnm6k="
