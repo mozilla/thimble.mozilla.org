@@ -151,3 +151,9 @@ only necessary in production). See `Gruntfile.js` for details.
 **NOTE:** Our front-end is in transition from an older architecture using Requirejs to
 a new one using our build system. Check in our IRC channel (irc.mozilla.org#thimble) for
 the latest state of development.
+
+Invalidating CloudFront
+----------------------
+
+To invalidate the production CloudFront distribution, make sure you have correct credentials set up in your env file. Then run `node invalidate.js`
+
