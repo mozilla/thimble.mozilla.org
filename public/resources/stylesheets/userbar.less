@@ -70,6 +70,19 @@ body {
       background-color: transparent;
       border: none;
     }
+
+    input#project-title{
+      width: 350px;
+    }
+
+    span#project-title {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 350px;
+      display: inline-block;
+      vertical-align: bottom;
+    }
+
     #project-rename-save {
       display: none;
       font-size: 0.9em;
@@ -172,7 +185,6 @@ body {
     height:60px;
     padding-left: 8px;
     margin-left: 15px;
-
     .flex-vertical-align;
 
     &.signed-in {
@@ -186,11 +198,13 @@ body {
   }
 
   #navbar-left {
+    white-space: nowrap;
     margin-left: 20px;
     .flex-vertical-align;
   }
 
   #navbar-right {
+    white-space: nowrap;
     margin-left: auto;
     margin-right: 20px;
     float: right;
