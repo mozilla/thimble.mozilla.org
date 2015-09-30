@@ -20,8 +20,9 @@ define(function(require) {
     }
 
     self.close = function(e) {
-      e.stopPropagation();
-
+      if(e) {
+        e.stopPropagation();
+      }
       if(!self.showing) {
         return;
       }
