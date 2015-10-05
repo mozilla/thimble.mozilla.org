@@ -38,12 +38,26 @@ define(function(require) {
     } else {
       context.keyHandlers = {
         enter: new KeyHandler.Enter(container, function() {
+          var val = context.titleBar.val();
+          if (val.length === 0) {
+            return;
+          }
+
           context.saveButton.off("click", saveClicked);
           save(context);
         }),
         esc: new KeyHandler.ESC(container, function() {
           context.saveButton.off("click", saveClicked);
           editingComplete(context);
+        }),
+        any: new KeyHandler.Any(container, function() {
+          var input = context.titleBar;
+          var nameLength = input.val().length;
+
+          //add or remove the 'disabled' class based on if length is 0
+          //and also add or remove the click listener
+          context.saveButton[nameLength == 0 ? "addClass" : "removeClass"]("disabled");
+          context.saveButton[nameLength == 0 ? "off" : "on"]("click", saveClicked);
         })
       };
 
