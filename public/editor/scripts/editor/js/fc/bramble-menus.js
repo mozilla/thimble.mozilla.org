@@ -20,6 +20,12 @@ define(function(require) {
       bramble.increaseFontSize();
     });
 
+    // Line wrap toggle
+    $("#line-wrap-toggle").click(function() {
+      $("#line-wrap-toggle").toggleClass("switch-enabled");
+      return false;
+    });
+
     // Theme Toggle
     function lightThemeUI() {
       var transitionSpeed = 200;
