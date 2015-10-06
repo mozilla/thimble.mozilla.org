@@ -383,6 +383,75 @@
   left: 109px;
 }
 
+// Line wrap toggle
+
+#editor-pane-nav-options-menu {
+  .switch-toggle {
+    position: absolute;
+    right: 18px;
+    height: 30px;
+    width: 60px;
+    top: 16px;
+    cursor: pointer;
+
+    &.switch-enabled {
+      .toggle-backing {
+        background: @buttonGreen;
+        opacity: .3;
+      }
+
+      .toggle-button {
+        background: @buttonGreen;
+        left: 30px;
+      }
+
+      &:hover {
+        .toggle-button {
+          background: @buttonGreenHover;
+        }
+      }
+
+      &:active {
+        .toggle-button {
+          background: @buttonGreenActive;
+        }
+      }
+    }
+
+    .toggle-button {
+      height: 30px;
+      width: 30px;
+      background: #7C7C7C;
+      position: absolute;
+      border-radius: 15px;
+      top: 0px;
+      left: 0px;
+      transition: left .1s ease-out;
+    }
+
+    .toggle-backing {
+      height: 16px;
+      position: absolute;
+      top: 7px;
+      background: #C6C6C6;
+      border-radius: 8px;
+      width: 40px;
+      left: 10px;
+    }
+
+    &:hover {
+      .toggle-button {
+        background: #8C8C8C;
+      }
+    }
+
+    &:active {
+      .toggle-button {
+        background: #6D6D6D;
+      }
+    }
+  }
+}
 
 
 /* Font increase/decrease */
