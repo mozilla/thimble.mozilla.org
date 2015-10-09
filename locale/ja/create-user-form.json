@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Webmaker へようこそ！",
+    "webmakerAuthChooseUsername": "ユーザ名を入力してください",
+    "webmakerAuthTakenError": "このユーザ名は既に使われています",
+    "webmakerAuthUsernameInvalid": "ユーザ名の入力が正しくありません。20 文字以内で、\"-\"、\"_\" および、半角英数字のみ使用できます。",
+    "webmakerAuthUsernameRequiredError": "ユーザ名を入力してください",
+    "webmakerAuthMailingList": "Mozilla Webmaker と他のプロジェクトについての更新情報のメールを受け取る",
+    "webmakerAuthAgreeToTerms": "<a href='https://webmaker.org/{{localeInfo.lang}}/terms'>利用規約</a> と <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>プライバシー条件</a> に同意します。",
+    "webmakerAuthAgreeError": "利用規約の同意が必要です。",
+    "webmakerAuthCreateAccount": "アカウントを作成する",
+    "Cancel": "キャンセル"
+}

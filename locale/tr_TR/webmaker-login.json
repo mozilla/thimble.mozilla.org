@@ -1,0 +1,254 @@
+{
+    "TryGoggles": {
+        "message": "Gözlüğü Dene",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "error setting password": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Maalesef!</strong> Parola ayarlanırken bir hata oluştu, lütfen yeniden dene.",
+        "description": "Error displayed if there was a problem setting the new password"
+    },
+    "Verified Visit Email": {
+        "message": "Oturum açmak için gerekli bilgiler e-posta ile gönderildi",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "NotAnEmail": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Uyarı!</strong> Yazdığın metin e-posta adresine pek benzemiyor.",
+        "description": "Error message when the text entered in an email input is not an email address"
+    },
+    "EmailOrUsername": {
+        "message": "E-posta ya da Kullanıcı Adı",
+        "description": "Label text for the sign in input, asks for the username or email of the user's account."
+    },
+    "XRay-Goggles": {
+        "message": "X-Işını Gözlüğü",
+        "description": "The X-Ray Goggles Tool"
+    },
+    "AboutResources": {
+        "message": "Dijital becerileri ve İnternet dilini öğren ve öğret. Webmaker, kaynak araştırma, kurma ve eğitim işlemlerini eğlenceli hale getiren şeylerle dolu.",
+        "description": "A short description about the Resources section"
+    },
+    "Set a Password": {
+        "message": "Bir Parola Belirle",
+        "description": "Label text for the password input box (reset password modal)"
+    },
+    "Enter key": {
+        "message": "Gönderilen anahtarı yaz <i class=\"fa fa-angle-right\"></i>",
+        "description": "Label to enter key that was sent to user's email"
+    },
+    "incorrectToken": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Malesef!</strong> Bu anahtar doğru değil.",
+        "description": "Error message displayed when the token used to log in is rejected."
+    },
+    "Minimum password requirements": {
+        "message": "En düşük parola gereksinimleri",
+        "description": "Text above the list of minimum requirements that a password must satisfy"
+    },
+    "webmakerAuthTakenError": {
+        "message": "<i class=\"fa fa-times\"></i>Bu kullanıcı adı başkası tarafından kullanılıyor. Adın sonuna sevdiğin bir numara eklemeyi dene.",
+        "description": "Error message displayed when the entered username is not available for use."
+    },
+    "Language Preference": {
+        "message": "Dil Ayarı",
+        "description": "Label text for selecting the preferred language for the user."
+    },
+    "That does not look like an email address or username": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Uyarı!</strong> Yazdığın metin bir e-posta adresi ya da kullanıcı adına benzemiyor.",
+        "description": "Error message displayed when the input doesn't match a username or email"
+    },
+    "webmakerAuthCreateAccount": {
+        "message": "Hesap Aç",
+        "description": "The button text for finishing the join Webmaker process."
+    },
+    "passLoginFailed": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Kimlik doğrulanamadı!</strong>",
+        "description": "Error message when a password login attempt fails"
+    },
+    "webmakerAuthServerError": {
+        "message": "Sunucuda bilinmeyen bir hata oluştu. İsteğini yeniden yap ve sorun devam ederse <a class=\"albert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">yardım iste</a>.",
+        "description": "Error message displayed if an error occurs on the server."
+    },
+    "Remember me for one year": {
+        "message": "Bilgilerim hatırlansın",
+        "description": "Message displayed next to the remember me checkbox"
+    },
+    "webmakerAuthAgreeToTerms": {
+        "message": "Mozilla Webmaker <a href='https://webmaker.org/terms'>Kullanım Koşulları</a> ve <a href='https://webmaker.org/privacy'>Gizlilik İlkesini</a> kabul ediyorum",
+        "description": "I agree to Mozilla Webmaker's terms and privacy policy."
+    },
+    "Forgot your password?": {
+        "message": "Parolamı unuttum",
+        "description": "button text for the password reset function"
+    },
+    "problem sending token": {
+        "message": "<i class=\"fa fa-times\"></i> Oturum açma anahtarı gönderilirken bir hata oluştu, lütfen yeniden dene. <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">Yardım iste</a>.",
+        "description": "Error message displayed when the request for a login key fails for some reason."
+    },
+    "Lets Go!": {
+        "message": "Haydi!",
+        "description": "Button text for closing the modal dialog after account creation"
+    },
+    "At least 8 characters": {
+        "message": "En az 8 karakter",
+        "description": "A password must contain 8 or more characters"
+    },
+    "tokenMessage": {
+        "message": "Hesabını doğrulamak için e-postana bak.",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "Done": {
+        "message": "Bitti",
+        "description": "Done, close the window."
+    },
+    "Password Reset Success": {
+        "message": "<i class=\"fa fa-check\"></i> <strong>Tamamdır!</strong> Parolan sıfırlandı, lütfen oturum aç!",
+        "description": "Alert displayed after successfully resetting a password"
+    },
+    "checkEmail": {
+        "message": "E-postana Bak",
+        "description": "Message instructing the user to check their email"
+    },
+    "webmakerAuthMailingList": {
+        "message": "Webmaker ve diğer Mozilla projeleri hakkındaki güncel haberleri e-posta olarak alayım",
+        "description": "Message about opting in for a Mozilla mailing list"
+    },
+    "Sign up": {
+        "message": "Katıl",
+        "description": "Join button text"
+    },
+    "Email": {
+        "message": "E-posta Adresini Yaz",
+        "description": "Label text for the email input"
+    },
+    "Visit Email": {
+        "message": "Anahtarı almak için e-postana bak",
+        "description": "Label text above the login key input field"
+    },
+    "At least 1 upper and lower case character": {
+        "message": "En az 1 tane büyük ve küçük harf",
+        "description": "A password must contain at least 1 upper and lower case character"
+    },
+    "Sign in": {
+        "message": "Oturum Aç",
+        "description": "Sign in Button text"
+    },
+    "aboutWebmaker": {
+        "message": "İnternet sayfanı, etkileşimli görüntülerini, karmalarını ve mobil uygulamalarını üret.",
+        "description": "Short description of Webmaker"
+    },
+    "passwords do not match": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Uyarı!</strong> Parola ile onayı aynı değil!",
+        "description": "Error message displayed when the password input and password confirmation input do not match"
+    },
+    "trouble with email": {
+        "message": "E-posta sorunu mu var? Spam kutuna bak ya da <a href=\"https://support.mozilla.org/kb/webmaker-account-help\" tabindex=\"5\" target=\"_\">yardım iste</a>.",
+        "description": "Text that allows users to get help"
+    },
+    "Expired Login Link": {
+        "message": "Malesef, oturum açna bağlantının süresi dolmuş. Oturum açabilmek için yeni bir e-posta iste.",
+        "description": "Error message displayed if a login link is expired"
+    },
+    "webmakerAuthAgreeError": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Bir dakika!</strong> hüküm ve koşullarımızı kabul etmelisin.",
+        "description": "Error message displayed if the terms and conditions checkbox isn't toggled on."
+    },
+    "resetRequestFailed": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Malesef!</strong> İsteğin işlenirken bir hata oluştu, lütfen daha sonra yeniden dene.",
+        "description": "Error message displayed if the reset request fails for some reason"
+    },
+    "Sign in to Webmaker": {
+        "message": "Webmaker Oturumu Aç",
+        "description": "Header text for the sign in modal dialog"
+    },
+    "webmakerAuthChooseUsername": {
+        "message": "Bir kullanıcı adı seç",
+        "description": "Label text for the username selection input"
+    },
+    "log in with Persona": {
+        "message": "Persona ile oturum aç",
+        "description": "Text for the button that initiates a persona login"
+    },
+    "Resources": {
+        "message": "Kaynaklar",
+        "description": "The Resources section of Webmaker"
+    },
+    "webmakerAuthWelcome": {
+        "message": "Webmaker Uygulamasına Hoşgeldin!",
+        "description": "Welcome message for the join Webmaker modal dialog. Displayed after successfully creating a new Webmaker account"
+    },
+    "you can switch to webmaker login": {
+        "message": "Webmaker Oturum Açma şekline geri dönebilirsin. Sana oturum açma e-postaları gönderilir ve parolanı yazman gerekmez.",
+        "description": "Message reminding users that they can switch back to the Webmaker Login Key system instead of using a password."
+    },
+    "webmakerAuthCreateWelcome": {
+        "message": "Webmaker hesabı aç",
+        "description": "Header text for the join webmaker modal dialog"
+    },
+    "Cancel": {
+        "message": "İptal",
+        "description": "Cancel sign up or sign in"
+    },
+    "Password": {
+        "message": "Parola",
+        "description": "Label text for the password input"
+    },
+    "resetMessage": {
+        "message": "Parola sıfırlama bağlantısı için e-postana bak.",
+        "description": "Directs the user to check their email for a password reset link"
+    },
+    "ExploreWebmaker": {
+        "message": "Webmaker hakkında ayrıntılı bilgi al",
+        "description": "Text for the button which takes the user to webmaker.org/explore"
+    },
+    "No account found for your uid": {
+        "message": "<i class=\"fa fa-times\"></i>Böyle bir kullanıcı adı ya da e-posta adresi bulunamadı. <a href=\"#\" ng-click=\"switchToSignup();\" class=\"alert-link\">Hesap Açmak</a> mı istemiştin? Sorun mu var? <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">Yardım iste</a>.",
+        "description": "Error message displayed when the given username or email doesn't have a Webmaker account and asks if they would like to sign up."
+    },
+    "ChooseUsername": {
+        "message": "Kullanıcı Adı Seç",
+        "description": " Label text for selecting a username"
+    },
+    "Submit": {
+        "message": "Gönder",
+        "description": "Label text for the submit new password button in the Reset Password Modal Dialog"
+    },
+    "At least 1 number": {
+        "message": "En az 1 tane rakam",
+        "description": "a password must contain at least one number character"
+    },
+    "Reset Password": {
+        "message": "Parola Sıfırlama",
+        "description": "Reset Password Modal title"
+    },
+    "Next": {
+        "message": "Sonraki",
+        "description": "Go to the next screen"
+    },
+    "WebmakerAccountExists": {
+        "message": "<i class=\"fa fa-exclamation-circle\"></i> <strong>Uyarı!</strong> Bu e-posta adresini kullanan bir hesap zaten var. <a href=\"#\" class=\"alert-link\" ng-click=\"switchToSignin();\">Oturum Açmayı</a> dene.",
+        "description": "That email already has an accout. Did you mean to sign in?"
+    },
+    "webmakerAuthUsernameInvalid": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Malesef</strong> kullanıcı adı 1-20 karakter uzunluğunda olabilir ve yalnız harf, rakam ve \"-\" karakterini içerebilir",
+        "description": "Error message displayed when the username entered contains symbols that are not allowed."
+    },
+    "or": {
+        "message": "ya da ",
+        "description": "Text beside the button that initiates a persona login"
+    },
+    "VisitResources": {
+        "message": "Kaynaklara Gözat",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "AboutGoggles": {
+        "message": "X-Işını Gözlüğü İnternet üzerindeki web sayfalarını oluşturan parçaları görüp değiştirilebilmeni sağlar. Gözlüğü kullanarak her web sayfasının arkasındaki kodlarla oynayabilirsin.",
+        "description": "A short description of the X-Ray Goggles"
+    },
+    "Confirm your password": {
+        "message": "Parola Onayı",
+        "description": "Label text for the password confirmation input"
+    },
+    "Password too weak": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Dikkat!</strong> Yazdığın parola çok kolay. Parolanda yaygın kullanılan kelime ya da ifadeler ile e-posta adresinin ya da kullanıcı adının yer almadığına emin ol.",
+        "description": "Error message displayed if the server determined the password entered is too weak."
+    }
+}

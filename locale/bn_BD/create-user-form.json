@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "ওয়েবমেকার এ আপনাকে স্বাগতম!",
+    "webmakerAuthChooseUsername": "ব্যবহারকারী হিসেবে একটি নাম বাছাই করুন",
+    "webmakerAuthTakenError": "ব্যবহারকারী হিসেবে এই নামটি ইতিমধ্যেই নেয়া হয়েছে ",
+    "webmakerAuthUsernameInvalid": "অকার্যকর ইউজারনেম। সকল ইউজারনেম 1-20 অক্ষরের নাঝে হতে হবে, শুধুমাত্র \"-\" এবং গানিতিক সংখ্যা থাকতে পারবে।",
+    "webmakerAuthUsernameRequiredError": "আপনাকে অবশ্যই ব্যবহারকারী হিসেবে একটি নাম বাছাই করতে হবে",
+    "webmakerAuthMailingList": "মোজিলা ওয়েবমেকার এবং অন্যান্য প্রকল্প সম্পর্কে হালনাগাদ তথ্যের ইমেইল আমাকে পাঠাবেন",
+    "webmakerAuthAgreeToTerms": "আমি আপনার <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>পরিভাষা</a> এবং <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>শর্তাবলী</a> মেনে নিচ্ছি",
+    "webmakerAuthAgreeError": "আমাদের পরিভাষা এবং শর্তাবলী আপনাকে অবশ্যই মেনে নিতে হবে।",
+    "webmakerAuthCreateAccount": "অ্যাকাউন্ট তৈরী করুন",
+    "Cancel": "বাতিল করুন"
+}

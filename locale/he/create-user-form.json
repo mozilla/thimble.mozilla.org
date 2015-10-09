@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "ברוכים הבאים ל־Webmaker!",
+    "webmakerAuthChooseUsername": "בחר שם משתמש",
+    "webmakerAuthTakenError": "שם משתמש זה תפוס",
+    "webmakerAuthUsernameInvalid": "Invalid username. All usernames must be between 1-20 characters, and only include \"-\" and alphanumeric characters",
+    "webmakerAuthUsernameRequiredError": "בחירת שם משתמש הינה חובה",
+    "webmakerAuthMailingList": "שלחו אלי עדכונים על Mozilla Webmaker ומיזמים אחרים בדואר אלקטרוני",
+    "webmakerAuthAgreeToTerms": "אני מסכים  <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>לתנאים</a> וה<a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>הגבלות</a>",
+    "webmakerAuthAgreeError": "הסכמה לתנאי השימוש שלנו הינה חובה",
+    "webmakerAuthCreateAccount": "יצירת חשבון",
+    "Cancel": "ביטול"
+}

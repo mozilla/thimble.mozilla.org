@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "WebMaker க்கு வரவேற்கிறோம்!",
+    "webmakerAuthChooseUsername": "பயனர் பெயரை தேர்வு செய்க",
+    "webmakerAuthTakenError": "இந்த பயனர்பெயர் எடுக்கப்பட்டுவிட்டது",
+    "webmakerAuthUsernameInvalid": "Invalid username. All usernames must be between 1-20 characters, and only include \"-\" and alphanumeric characters",
+    "webmakerAuthUsernameRequiredError": "நீங்கள் கட்டாயம் பயனர்பெயரை தேர்வு செய்யவும்",
+    "webmakerAuthMailingList": "எனக்கு மோசில்லா WebMaker மற்றும் மற்ற திட்டங்கள் பற்றிய மின்னஞ்சல்களை அனுப்பவும்",
+    "webmakerAuthAgreeToTerms": "நான் உங்கள் <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>விதிமுறைகள்</a> மற்றும் <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>நிபந்தனைகளுக்கு </a> உடன்படுகின்றேன்",
+    "webmakerAuthAgreeError": "மொஸில்லா வலைநர் மற்றும் பிற திட்டங்கள் பற்றி மின்னஞ்சல் மூலம் எனக்கு அனுப்பவும்",
+    "webmakerAuthCreateAccount": "கணக்கை உருவாக்குக",
+    "Cancel": "ரத்து"
+}

@@ -1,0 +1,254 @@
+{
+    "TryGoggles": {
+        "message": "Kokeile Gogglesia nyt",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "error setting password": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>Hups!</strong> Salasanasi asettamisessa havaittiin ongelma, yritä uudelleen.",
+        "description": "Error displayed if there was a problem setting the new password"
+    },
+    "Verified Visit Email": {
+        "message": "Lähetimme sinulle sähköpostitse linkin ja kirjautumisavaimen",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "NotAnEmail": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>Hups!</strong> Tuo ei näytä sähköpostiosoitteelta.",
+        "description": "Error message when the text entered in an email input is not an email address"
+    },
+    "EmailOrUsername": {
+        "message": "Sähköpostiosoite tai käyttäjätunnus",
+        "description": "Label text for the sign in input, asks for the username or email of the user's account."
+    },
+    "XRay-Goggles": {
+        "message": "X-Ray Goggles",
+        "description": "The X-Ray Goggles Tool"
+    },
+    "AboutResources": {
+        "message": "Opeta ja opi digitaalitaitoja ja verkkolukutaitoa. Webmaker-resurssit ovat täynnä hauskoja asioita tutkittavaksi, tehtäväksi ja opetettavaksi.",
+        "description": "A short description about the Resources section"
+    },
+    "Set a Password": {
+        "message": "Aseta salasana",
+        "description": "Label text for the password input box (reset password modal)"
+    },
+    "Enter key": {
+        "message": "Kirjoita avain <i class=\"fa fa-angle-right\"></i>",
+        "description": "Label to enter key that was sent to user's email"
+    },
+    "incorrectToken": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Hups!</strong> Avain ei ole oikea.",
+        "description": "Error message displayed when the token used to log in is rejected."
+    },
+    "Minimum password requirements": {
+        "message": "Salasanan vähimmäisvaatimukset",
+        "description": "Text above the list of minimum requirements that a password must satisfy"
+    },
+    "webmakerAuthTakenError": {
+        "message": "<i class=\"fa fa-times\"></i> Käyttäjätunnus on varattu. Kokeile lisätä suosikkinumerosi loppuun.",
+        "description": "Error message displayed when the entered username is not available for use."
+    },
+    "Language Preference": {
+        "message": "Kielivalinta",
+        "description": "Label text for selecting the preferred language for the user."
+    },
+    "That does not look like an email address or username": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Hups!</strong> Tuo ei näytä sähköpostiosoitteelta tai käyttäjätunnukselta.",
+        "description": "Error message displayed when the input doesn't match a username or email"
+    },
+    "webmakerAuthCreateAccount": {
+        "message": "Luo tili",
+        "description": "The button text for finishing the join Webmaker process."
+    },
+    "passLoginFailed": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Todentaminen epäonnistui!</strong>",
+        "description": "Error message when a password login attempt fails"
+    },
+    "webmakerAuthServerError": {
+        "message": "Palvelimella tapahtui tuntematon virhe. Yritä pyyntöä uudelleen. Jos ongelma jatkuu, <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">lue jatko-ohjeita</a>.",
+        "description": "Error message displayed if an error occurs on the server."
+    },
+    "Remember me for one year": {
+        "message": "Muista minut",
+        "description": "Message displayed next to the remember me checkbox"
+    },
+    "webmakerAuthAgreeToTerms": {
+        "message": "Hyväksyn Mozilla Webmakerin <a href='https://webmaker.org/terms'>käyttöehdot</a> ja <a href='https://webmaker.org/privacy'>yksityisyydensuojan</a>",
+        "description": "I agree to Mozilla Webmaker's terms and privacy policy."
+    },
+    "Forgot your password?": {
+        "message": "Unohtuiko salasana?",
+        "description": "button text for the password reset function"
+    },
+    "problem sending token": {
+        "message": "<i class=\"fa fa-times\"></i> Kirjautumisavaimen lähettämisessä havaittiin ongelma, yritä uudelleen. <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">Lue ohjeita</a>.",
+        "description": "Error message displayed when the request for a login key fails for some reason."
+    },
+    "Lets Go!": {
+        "message": "Jatkakaamme!",
+        "description": "Button text for closing the modal dialog after account creation"
+    },
+    "At least 8 characters": {
+        "message": "Vähintään 8 merkkiä",
+        "description": "A password must contain 8 or more characters"
+    },
+    "tokenMessage": {
+        "message": "Tarkista sähköpostilaatikkosi tilin vahvistamiseksi.",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "Done": {
+        "message": "Valmis",
+        "description": "Done, close the window."
+    },
+    "Password Reset Success": {
+        "message": "<i class=\"fa fa-check\"></i> <strong>Onnistui!</strong> Salasanasi nollaaminen onnistui, kirjaudu sisään!",
+        "description": "Alert displayed after successfully resetting a password"
+    },
+    "checkEmail": {
+        "message": "Tarkista sähköpostisi",
+        "description": "Message instructing the user to check their email"
+    },
+    "webmakerAuthMailingList": {
+        "message": "Lähetä minulle sähköpostipäivityksiä Webmakerista ja muista Mozilla-hankkeista",
+        "description": "Message about opting in for a Mozilla mailing list"
+    },
+    "Sign up": {
+        "message": "Liity",
+        "description": "Join button text"
+    },
+    "Email": {
+        "message": "Kirjoita sähköpostiosoitteesi",
+        "description": "Label text for the email input"
+    },
+    "Visit Email": {
+        "message": "Vieraile sähköpostilaatikossasi avaimen noutamiseksi",
+        "description": "Label text above the login key input field"
+    },
+    "At least 1 upper and lower case character": {
+        "message": "Vähintään 1 iso ja pieni kirjain",
+        "description": "A password must contain at least 1 upper and lower case character"
+    },
+    "Sign in": {
+        "message": "Kirjaudu sisään",
+        "description": "Sign in Button text"
+    },
+    "aboutWebmaker": {
+        "message": "Luo omia verkkosivuja, vuorovaikutteisia videoita, remiksauksia ja mobiilisovelluksia.",
+        "description": "Short description of Webmaker"
+    },
+    "passwords do not match": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>Hups!</strong> Salasanat eivät täsmää!",
+        "description": "Error message displayed when the password input and password confirmation input do not match"
+    },
+    "trouble with email": {
+        "message": "Ongelmia sähköpostin kanssa? Tarkista roskapostikansiosi tai <a href=\"https://support.mozilla.org/kb/webmaker-account-help\" tabindex=\"5\" target=\"_\">lue ohjeita</a>",
+        "description": "Text that allows users to get help"
+    },
+    "Expired Login Link": {
+        "message": "Hups! Kirjautumislinkkisi on vanhentunut. Pyydä uusi sähköpostiviesti kirjautumista varten.",
+        "description": "Error message displayed if a login link is expired"
+    },
+    "webmakerAuthAgreeError": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>Voi ei!</strong> Sinun on hyväksyttävä käyttöehtomme.",
+        "description": "Error message displayed if the terms and conditions checkbox isn't toggled on."
+    },
+    "resetRequestFailed": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>Hups!</strong> Pyyntösi käsittelyssä havaittiin ongelma, yritä uudelleen.",
+        "description": "Error message displayed if the reset request fails for some reason"
+    },
+    "Sign in to Webmaker": {
+        "message": "Kirjaudu Webmakeriin",
+        "description": "Header text for the sign in modal dialog"
+    },
+    "webmakerAuthChooseUsername": {
+        "message": "Valitse käyttäjätunnus",
+        "description": "Label text for the username selection input"
+    },
+    "log in with Persona": {
+        "message": "kirjaudu Persona-palvelulla",
+        "description": "Text for the button that initiates a persona login"
+    },
+    "Resources": {
+        "message": "Resurssit",
+        "description": "The Resources section of Webmaker"
+    },
+    "webmakerAuthWelcome": {
+        "message": "Tervetuloa Webmakeriin!",
+        "description": "Welcome message for the join Webmaker modal dialog. Displayed after successfully creating a new Webmaker account"
+    },
+    "you can switch to webmaker login": {
+        "message": "Voit vaihtaa takaisin Webmaker-kirjautumiseen. Lähetämme sinulle kirjautumissähköposteja, joten et tarvitse salasanaa.",
+        "description": "Message reminding users that they can switch back to the Webmaker Login Key system instead of using a password."
+    },
+    "webmakerAuthCreateWelcome": {
+        "message": "Luo Webmaker-tili",
+        "description": "Header text for the join webmaker modal dialog"
+    },
+    "Cancel": {
+        "message": "Peruuta",
+        "description": "Cancel sign up or sign in"
+    },
+    "Password": {
+        "message": "Salasana",
+        "description": "Label text for the password input"
+    },
+    "resetMessage": {
+        "message": "Tarkista sähköpostilaatikostasi salasanan nollauslinkki.",
+        "description": "Directs the user to check their email for a password reset link"
+    },
+    "ExploreWebmaker": {
+        "message": "Tutki Webmakeria",
+        "description": "Text for the button which takes the user to webmaker.org/explore"
+    },
+    "No account found for your uid": {
+        "message": "<i class=\"fa fa-times\"></i> Emme löytäneet käyttäjätunnustasi tai sähköpostiosoitettasi. Oliko tarkoituksesi <a href=\"#\" ng-click=\"switchToSignup();\" class=\"alert-link\">luoda tili</a>? Ongelmia? <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">Lue ohjeita</a>.",
+        "description": "Error message displayed when the given username or email doesn't have a Webmaker account and asks if they would like to sign up."
+    },
+    "ChooseUsername": {
+        "message": "Valitse käyttäjätunnus",
+        "description": " Label text for selecting a username"
+    },
+    "Submit": {
+        "message": "Lähetä",
+        "description": "Label text for the submit new password button in the Reset Password Modal Dialog"
+    },
+    "At least 1 number": {
+        "message": "Vähintään 1 numero",
+        "description": "a password must contain at least one number character"
+    },
+    "Reset Password": {
+        "message": "Nollaa salasana",
+        "description": "Reset Password Modal title"
+    },
+    "Next": {
+        "message": "Seuraava",
+        "description": "Go to the next screen"
+    },
+    "WebmakerAccountExists": {
+        "message": "<i class=\"fa fa-exclamation-circle\"></i>  <strong>Huomio!</strong> Tuolla sähköpostiosoitteella on jo luotu tili. Oliko tarkoituksesi <a href=\"#\" class=\"alert-link\" ng-click=\"switchToSignin();\">kirjautua sisään</a>?",
+        "description": "That email already has an accout. Did you mean to sign in?"
+    },
+    "webmakerAuthUsernameInvalid": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>Hups!</strong> Käyttäjätunnusten on oltava pituudeltaan 1-20 merkkiä ja ne voivat sisältää vain ”-”-merkin sekä aakkosnumeerisia merkkejä",
+        "description": "Error message displayed when the username entered contains symbols that are not allowed."
+    },
+    "or": {
+        "message": "tai",
+        "description": "Text beside the button that initiates a persona login"
+    },
+    "VisitResources": {
+        "message": "Vieraile resursseissa",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "AboutGoggles": {
+        "message": "X-Ray Gogglesilla voit tutkia ja muokata rakennuslohkoja, joista verkkosivut muodostuvat. Ota Goggles käyttöön, jotta voit leikkiä minkä tahansa verkkosivun koodilla.",
+        "description": "A short description of the X-Ray Goggles"
+    },
+    "Confirm your password": {
+        "message": "Vahvista salasanasi",
+        "description": "Label text for the password confirmation input"
+    },
+    "Password too weak": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>Hups!</strong> Kirjoittamasi salasana on liian heikko. Varmista, että se ei sisällä mitään tavallisia sanoja tai kaavoja eikä myöskään sähköpostiosoitettasi tai käyttäjätunnustasi",
+        "description": "Error message displayed if the server determined the password entered is too weak."
+    }
+}

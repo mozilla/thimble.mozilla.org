@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Dobrodošli u Webmaker!",
+    "webmakerAuthChooseUsername": "Odaberite korisničko ime",
+    "webmakerAuthTakenError": "To korisničko ime se već koristi",
+    "webmakerAuthUsernameInvalid": "Nevažeće korisničko ime. Korisničko ime mora sadržati 1-20 znakova i u sebi može sadržavati jedino \"-\" te slova i brojeve.",
+    "webmakerAuthUsernameRequiredError": "Morate izabrati korisničko ime",
+    "webmakerAuthMailingList": "Šalji mi obavijesti o Webmakeru i drugim Mozillinim projektima putem e-pošte",
+    "webmakerAuthAgreeToTerms": "Prihvaćam vaše <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>uvjete</a> <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>privatnosti</a>",
+    "webmakerAuthAgreeError": "Morate prihvatiti uvjete privatnosti",
+    "webmakerAuthCreateAccount": "Stvori korisnički račun",
+    "Cancel": "Odustani"
+}

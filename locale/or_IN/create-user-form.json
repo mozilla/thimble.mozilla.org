@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "ଆପଣଙ୍କୁ ୱେବମେକରକୁ ପାଛୋଟି ନେଉଛୁ!",
+    "webmakerAuthChooseUsername": "ସଭ୍ୟନାମଟିଏ ତିଆରି କରନ୍ତୁ",
+    "webmakerAuthTakenError": "ଆପଣଙ୍କ ସଭ୍ୟନାମଟି ଆଗରୁ ଆଉଜଣେ ନେଇସାରିଛନ୍ତି",
+    "webmakerAuthUsernameInvalid": "Invalid username. All usernames must be between 1-20 characters, and only include \"-\" and alphanumeric characters",
+    "webmakerAuthUsernameRequiredError": "ଆପଣଙ୍କୁ ସଭ୍ୟନାମଟିଏ ଦେବାକୁ ପଡ଼ିବ",
+    "webmakerAuthMailingList": "ମୋତେ ମୋଜିଲା ୱେବମେକର ଓ ଅନ୍ୟାନ୍ୟ ପ୍ରକଳ୍ପ ବାବଦରେ ଇମେଲ ପଠାଇବେ",
+    "webmakerAuthAgreeToTerms": "ମୁଁ ଆପଣଙ୍କର <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>ନୀତିନିୟମ</a> ଏବଂ <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>ସର୍ତ୍ତାବଳୀରେ</a> ସମ୍ମତ ।",
+    "webmakerAuthAgreeError": "ଆପଣକୁ ଆମର ନୀତି ଓ ସର୍ତ୍ତାବଳୀରେ ସମ୍ମତ ହେବାକୁ ପଡ଼ିବ ।",
+    "webmakerAuthCreateAccount": "ଖାତାଟିଏ ଖୋଲନ୍ତୁ",
+    "Cancel": "ନାକଚ"
+}

@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Velkommen til Webmaker!",
+    "webmakerAuthChooseUsername": "Vælg et brugernavn",
+    "webmakerAuthTakenError": "Brugernavnet er allerede taget",
+    "webmakerAuthUsernameInvalid": "Ugyldigt brugernavn. Brugernavne skal være 1 -20 tegn, og må kun indeholde bogstaver, tal og bindestreg \"-\".",
+    "webmakerAuthUsernameRequiredError": "Vælg venligst et brugernavn",
+    "webmakerAuthMailingList": "Send mig en mail, når der er nyt om Mozilla Webmaker og andre projekter",
+    "webmakerAuthAgreeToTerms": "Jeg accepterer <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>vilkår</a> og <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>betingelser</a> for brug af Webmaker",
+    "webmakerAuthAgreeError": "Du er nødt til at acceptere vores vilkår og betingelser.",
+    "webmakerAuthCreateAccount": "Opret konto",
+    "Cancel": "Annuller"
+}

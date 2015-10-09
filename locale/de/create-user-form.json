@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Willkommen bei Webmaker!",
+    "webmakerAuthChooseUsername": "Wähle einen Benutzernamen",
+    "webmakerAuthTakenError": "Dieser Benutzername wird bereits verwendet",
+    "webmakerAuthUsernameInvalid": "Ungültiger Benutzername. Alle Benutzernamen müssen zwischen 1-20 Zeichen haben und dürfen nur \"-\" und Ziffern enthalten",
+    "webmakerAuthUsernameRequiredError": "Sie müssen einen Benutzernamen wählen",
+    "webmakerAuthMailingList": "Senden Sie mir E-Mail-Updates über Mozilla Webmaker und andere Projekte",
+    "webmakerAuthAgreeToTerms": "Ich stimme den <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>Bestimmungen</a> und <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>Bedingungen</a> zu.",
+    "webmakerAuthAgreeError": "Sie müssen den Bedingungen und Bestimmungen zustimmen.",
+    "webmakerAuthCreateAccount": "Benutzerkonto erstellen",
+    "Cancel": "Abbrechen"
+}

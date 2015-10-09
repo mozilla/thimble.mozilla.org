@@ -1,0 +1,254 @@
+{
+    "TryGoggles": {
+        "message": "Cobalah Goggles sekarang",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "error setting password": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>Uh oh!</strong> Terjadi kesalahan saat mencoba menetapkan kata kunci anda, silakan coba lagi.",
+        "description": "Error displayed if there was a problem setting the new password"
+    },
+    "Verified Visit Email": {
+        "message": "Kami mengirim surel berisi tautan & kunci untuk masuk",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "NotAnEmail": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>Uh Oh!</strong> Ini tidak terlihat seperti surel.",
+        "description": "Error message when the text entered in an email input is not an email address"
+    },
+    "EmailOrUsername": {
+        "message": "Surel atau Nama Pengguna",
+        "description": "Label text for the sign in input, asks for the username or email of the user's account."
+    },
+    "XRay-Goggles": {
+        "message": "X-Ray Goggles",
+        "description": "The X-Ray Goggles Tool"
+    },
+    "AboutResources": {
+        "message": "Ajarkan dan pelajari kemampuan digital dan kemelekan web. Sumberdaya Webmaker penuh hal-hal yang menyenangkan untuk ditemukan, diciptakan dan diajarkan. ",
+        "description": "A short description about the Resources section"
+    },
+    "Set a Password": {
+        "message": "Tetapkan Kata Kunci",
+        "description": "Label text for the password input box (reset password modal)"
+    },
+    "Enter key": {
+        "message": "Masukkan kunci <i class=\"fa fa-angle-right\"></i>",
+        "description": "Label to enter key that was sent to user's email"
+    },
+    "incorrectToken": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Uh oh!</strong> Kunci itu tidak tepat.",
+        "description": "Error message displayed when the token used to log in is rejected."
+    },
+    "Minimum password requirements": {
+        "message": "Syarat minimal kata kunci ",
+        "description": "Text above the list of minimum requirements that a password must satisfy"
+    },
+    "webmakerAuthTakenError": {
+        "message": "<i class=\"fa fa-times\"></i>  Nama pengguna tersebut telah digunakan. Cobalah tambahkan angka favorit Anda di belakangnya.",
+        "description": "Error message displayed when the entered username is not available for use."
+    },
+    "Language Preference": {
+        "message": "Preferensi Bahasa",
+        "description": "Label text for selecting the preferred language for the user."
+    },
+    "That does not look like an email address or username": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Uh oh!</strong> Ini tidak terlihat seperti surel atau nama pengguna.",
+        "description": "Error message displayed when the input doesn't match a username or email"
+    },
+    "webmakerAuthCreateAccount": {
+        "message": "Buat Akun",
+        "description": "The button text for finishing the join Webmaker process."
+    },
+    "passLoginFailed": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Pembuktian gagal!</strong>",
+        "description": "Error message when a password login attempt fails"
+    },
+    "webmakerAuthServerError": {
+        "message": "Terjadi kegagalan pada server. Coba ulangi permintaan Anda. Jika kegagalan masih muncul  <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">dapatkan bantuan</a>",
+        "description": "Error message displayed if an error occurs on the server."
+    },
+    "Remember me for one year": {
+        "message": "Ingat saya",
+        "description": "Message displayed next to the remember me checkbox"
+    },
+    "webmakerAuthAgreeToTerms": {
+        "message": "Saya menyetujui <a href='https://webmaker.org/terms'>Terms</a> and <a href='https://webmaker.org/privacy'>Kebijakan Keamanan</a> Mozilla Webmaker",
+        "description": "I agree to Mozilla Webmaker's terms and privacy policy."
+    },
+    "Forgot your password?": {
+        "message": "Lupa kata sandi Anda?",
+        "description": "button text for the password reset function"
+    },
+    "problem sending token": {
+        "message": "<i class=\"fa fa-times\"></i> Terjadi masalah dalam mengirim kunci masuk pada anda, silakan coba lagi. <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">Dapatkan bantuan</a>.",
+        "description": "Error message displayed when the request for a login key fails for some reason."
+    },
+    "Lets Go!": {
+        "message": "Ayo!",
+        "description": "Button text for closing the modal dialog after account creation"
+    },
+    "At least 8 characters": {
+        "message": "Sedikitnya 8 karakter",
+        "description": "A password must contain 8 or more characters"
+    },
+    "tokenMessage": {
+        "message": "Silakan periksa surel untuk mengkonfirmasi akun Anda.",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "Done": {
+        "message": "Selesai",
+        "description": "Done, close the window."
+    },
+    "Password Reset Success": {
+        "message": "<i class=\"fa fa-check\"></i> <strong>Berhasil!</strong> Anda telah berhasil menetapkan ulang kata kunci, silakan masuk!",
+        "description": "Alert displayed after successfully resetting a password"
+    },
+    "checkEmail": {
+        "message": "Periksa Surel",
+        "description": "Message instructing the user to check their email"
+    },
+    "webmakerAuthMailingList": {
+        "message": "Kirimi saya kabar terbaru tentang Webmaker dan proyek Mozilla lainnya",
+        "description": "Message about opting in for a Mozilla mailing list"
+    },
+    "Sign up": {
+        "message": "Bergabung",
+        "description": "Join button text"
+    },
+    "Email": {
+        "message": "Masukkan Surel Anda",
+        "description": "Label text for the email input"
+    },
+    "Visit Email": {
+        "message": "Buka surel Anda untuk mendapatkan kembali kunci Anda",
+        "description": "Label text above the login key input field"
+    },
+    "At least 1 upper and lower case character": {
+        "message": "Sedikitnya 1 karakter besar dan kecil ",
+        "description": "A password must contain at least 1 upper and lower case character"
+    },
+    "Sign in": {
+        "message": "Masuk",
+        "description": "Sign in Button text"
+    },
+    "aboutWebmaker": {
+        "message": "Buatlah laman web anda, video interaktif, remiks dan mobile apps",
+        "description": "Short description of Webmaker"
+    },
+    "passwords do not match": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>Uh oh!</strong> Kata kunci tidak cocok!",
+        "description": "Error message displayed when the password input and password confirmation input do not match"
+    },
+    "trouble with email": {
+        "message": "Bermasalah dengan surel? Periksa kotak spam Anda atau <a href=\"https://support.mozilla.org/kb/webmaker-account-help\" tabindex=\"5\" target=\"_\">dapatkan bantuan</a>",
+        "description": "Text that allows users to get help"
+    },
+    "Expired Login Link": {
+        "message": "Uh Oh! Tautan masuk anda kedaluwarsa. Mintalah surel baru untuk masuk.",
+        "description": "Error message displayed if a login link is expired"
+    },
+    "webmakerAuthAgreeError": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>Oh maaf!</strong> Anda harus setuju pada syarat dan ketentuan kami.",
+        "description": "Error message displayed if the terms and conditions checkbox isn't toggled on."
+    },
+    "resetRequestFailed": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>Uh oh!</strong> Terjadi masalah dalam memproses permintaan anda, silakan coba lagi.",
+        "description": "Error message displayed if the reset request fails for some reason"
+    },
+    "Sign in to Webmaker": {
+        "message": "Masuk Ke Webmaker",
+        "description": "Header text for the sign in modal dialog"
+    },
+    "webmakerAuthChooseUsername": {
+        "message": "Pilih Nama pengguna",
+        "description": "Label text for the username selection input"
+    },
+    "log in with Persona": {
+        "message": "masuk dengan Persona",
+        "description": "Text for the button that initiates a persona login"
+    },
+    "Resources": {
+        "message": "Sumber Daya",
+        "description": "The Resources section of Webmaker"
+    },
+    "webmakerAuthWelcome": {
+        "message": "Selamat datang di Webmaker!",
+        "description": "Welcome message for the join Webmaker modal dialog. Displayed after successfully creating a new Webmaker account"
+    },
+    "you can switch to webmaker login": {
+        "message": "Anda bisa beralih kembali pada Webmaker Login. Kami akan mengirimkan informasi untuk masuk melalui surel supaya anda tidak perlu kata kunci. ",
+        "description": "Message reminding users that they can switch back to the Webmaker Login Key system instead of using a password."
+    },
+    "webmakerAuthCreateWelcome": {
+        "message": "Buat akun Webmaker",
+        "description": "Header text for the join webmaker modal dialog"
+    },
+    "Cancel": {
+        "message": "Batal",
+        "description": "Cancel sign up or sign in"
+    },
+    "Password": {
+        "message": "Kata kunci",
+        "description": "Label text for the password input"
+    },
+    "resetMessage": {
+        "message": "Periksa surel Anda untuk mendapat tautan atur-ulang kata kunci",
+        "description": "Directs the user to check their email for a password reset link"
+    },
+    "ExploreWebmaker": {
+        "message": "Jelajahi Webmaker sepenuhnya",
+        "description": "Text for the button which takes the user to webmaker.org/explore"
+    },
+    "No account found for your uid": {
+        "message": "<i class=\"fa fa-times\"></i> Kami tidak dapat menemukan nama pengguna atau surel anda. Apakah anda bermaksud untuk <a href=\"#\" ng-click=\"switchToSignup();\" class=\"alert-link\">membuat akun</a>? Ada masalah? <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">Dapatkan bantuan</a>.",
+        "description": "Error message displayed when the given username or email doesn't have a Webmaker account and asks if they would like to sign up."
+    },
+    "ChooseUsername": {
+        "message": "Pilih Nama Pengguna",
+        "description": " Label text for selecting a username"
+    },
+    "Submit": {
+        "message": "Kirim",
+        "description": "Label text for the submit new password button in the Reset Password Modal Dialog"
+    },
+    "At least 1 number": {
+        "message": "Sedikitnya 1 angka",
+        "description": "a password must contain at least one number character"
+    },
+    "Reset Password": {
+        "message": "Tetapkan ulang Kata kunci",
+        "description": "Reset Password Modal title"
+    },
+    "Next": {
+        "message": "Selanjutnya",
+        "description": "Go to the next screen"
+    },
+    "WebmakerAccountExists": {
+        "message": "<i class=\"fa fa-exclamation-circle\"></i>  <strong>Awas!</strong> Surel ini sudah punya akun. Apakah anda bermaksud untuk <a href=\"#\" class=\"alert-link\" ng-click=\"switchToSignin();\">masuk</a>?",
+        "description": "That email already has an accout. Did you mean to sign in?"
+    },
+    "webmakerAuthUsernameInvalid": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Uh oh!</strong> Semua username haruslah menggunakan 1-20 karakter, dan hanya menggunakan \"-\" serta simbol alpanumerik",
+        "description": "Error message displayed when the username entered contains symbols that are not allowed."
+    },
+    "or": {
+        "message": "atau",
+        "description": "Text beside the button that initiates a persona login"
+    },
+    "VisitResources": {
+        "message": "Kunjungi Sumberdaya",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "AboutGoggles": {
+        "message": "X-Ray Goggles memungkinkan anda melihat rancang bangun yang membentuk website di internet. Aktifkan teropong untuk memeriksa kode di balik laman web apapun. ",
+        "description": "A short description of the X-Ray Goggles"
+    },
+    "Confirm your password": {
+        "message": "Konfirmasi Kata Kunci Anda",
+        "description": "Label text for the password confirmation input"
+    },
+    "Password too weak": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>Uh oh!</strong> Kata kunci yang anda pilih terlalu lemah. Pastikan kata kunci anda tidak mengandung kata atau pola yang umum, dan tidak mengandung surel atau nama pengguna anda.",
+        "description": "Error message displayed if the server determined the password entered is too weak."
+    }
+}

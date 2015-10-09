@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Bun venit la Webmaker!",
+    "webmakerAuthChooseUsername": "Alegeți-vă un nume de utilizator",
+    "webmakerAuthTakenError": "Acel nume de utilizator este deja folosit",
+    "webmakerAuthUsernameInvalid": "Numele de utililizator este invalid. Numele de utilizator trebuie să aibă 1-20 de caractere, ce pot conţine numai \"-\", \"_\" şi caractere alfanumerice.",
+    "webmakerAuthUsernameRequiredError": "Trebuie sa alegeți un nume de utilizator",
+    "webmakerAuthMailingList": "Trimiteţi-mi noutăți prin email, despre Mozilla Webmaker și despre alte proiecte",
+    "webmakerAuthAgreeToTerms": "Sunt de acord cu <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>termenii</a> şi <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>\t\ncondițiile</a> dumneavoastră",
+    "webmakerAuthAgreeError": "Trebuie să fiţi de acord cu termenii şi condiţiile noastre.",
+    "webmakerAuthCreateAccount": "Creaţi Cont",
+    "Cancel": "Renunță"
+}

@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Добре дошли в Webmaker!",
+    "webmakerAuthChooseUsername": "Въведете потребителско име",
+    "webmakerAuthTakenError": "Потребителското име е заето",
+    "webmakerAuthUsernameInvalid": "Невалидно потребителско име. Всички потребителски имена трябва да са между 1-20 знака и да включват само \"-\", букви и цифри.",
+    "webmakerAuthUsernameRequiredError": "Трябва да въведете потребителско име",
+    "webmakerAuthMailingList": "Изпращай ми имейли за актуализации свързани с Mozilla Webmaker и други проекти",
+    "webmakerAuthAgreeToTerms": "Съгласен съм с вашите <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>правила</a> и <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>условия</a>",
+    "webmakerAuthAgreeError": "Трябва да приемете нашите правила и условия.",
+    "webmakerAuthCreateAccount": "Създай акаунт",
+    "Cancel": "Отмени"
+}

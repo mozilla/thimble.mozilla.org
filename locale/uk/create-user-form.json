@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Ласкаво просимо до Webmaker!",
+    "webmakerAuthChooseUsername": "Виберіть ім'я користувача",
+    "webmakerAuthTakenError": "Таке ім'я вже зайняте",
+    "webmakerAuthUsernameInvalid": "Некоректне ім'я користувача. Всі імена повинні бути в межах 1-20 символів, і містити тільки \"-\", латинські букви і цифри",
+    "webmakerAuthUsernameRequiredError": "Ви повинні обрати ім'я користувача",
+    "webmakerAuthMailingList": "Надіслати мені емейли з оновленням Mozilla Webmaker та інших проектів",
+    "webmakerAuthAgreeToTerms": "Я погоджуюсь із вашими <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>вимогами</a> і <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>умовами</a>",
+    "webmakerAuthAgreeError": "Ви маєте погодитись із нашими вимогами і умовами",
+    "webmakerAuthCreateAccount": "Створити акаунт",
+    "Cancel": "Скасувати"
+}

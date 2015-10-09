@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "වෙබ්මේකර් වෙත සාදරයෙන් පිළිගනිමු!",
+    "webmakerAuthChooseUsername": "පරිශීලක නාමයක් තෝරන්න",
+    "webmakerAuthTakenError": "එම පරිශීලක නාමය භාවිතයේ ඇත",
+    "webmakerAuthUsernameInvalid": "අවලංගු පරිශීලක නාමයකි. සියලුම පරිශීලක නාමයන් අකුරු 1-20 ත් අතර සහ \"-\" පමණක් ද  අක්ෂරාංක අකුරු වලින් සමන්විත විය යුතුය",
+    "webmakerAuthUsernameRequiredError": "ඔබ පරිශීලක නාමයක් තෝරා ගත යුතුය",
+    "webmakerAuthMailingList": "Mozilla Webmaker සහ අනෙකුත් වියාපෘතින්ගේ යාවත්කාලීන කිරීම් පිළිබද මා හට විත්‍යුත් තැපෑලක් යොමු කරන්න ",
+    "webmakerAuthAgreeToTerms": "මම ඔබගේ <a href='https://webmaker.org/{{localeInfo.lang}}/terms'> නීති</a> සහ <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>රෙගුලාසි වලට එකඟ වෙමි",
+    "webmakerAuthAgreeError": "ඔබ අපගේ නීති සහ රෙගුලාසි වලට එකඟ විය යුතුය.",
+    "webmakerAuthCreateAccount": "ගිණුමක් තනන්න",
+    "Cancel": "අවලංගු කරන්න"
+}

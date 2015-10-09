@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Vitajte vo Webmaker!",
+    "webmakerAuthChooseUsername": "Vyberte používateľské meno",
+    "webmakerAuthTakenError": "Používateľské meno je používané",
+    "webmakerAuthUsernameInvalid": "Nesprávne používateľské meno. Všetky používateľské mená musia mať 1-20 znakov a obsahovať iba \"-\" a alfanumerické znaky",
+    "webmakerAuthUsernameRequiredError": "Musíte si používateľské meno",
+    "webmakerAuthMailingList": "Posielajte mi e-mailom aktualizácie o projekte Mozilla Webmaker a iných projektoch",
+    "webmakerAuthAgreeToTerms": "Súhlasím s vašimi <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>podmienkami</a> a <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>pravidlami</a>",
+    "webmakerAuthAgreeError": "Musíte súhlasiť s našimi podmienkami a pravidlami.",
+    "webmakerAuthCreateAccount": "Vytvoriť účet",
+    "Cancel": "Zrušiť"
+}

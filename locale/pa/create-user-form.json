@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "ਵੈੱਬਮੇਕਰ ਵਿੱਚ ਤੁਹਾਡਾ ਸੁਆਗਤ ਹੈ!",
+    "webmakerAuthChooseUsername": "ਇੱਕ ਯੂਜ਼ਰ ਨਾਂ ਚੁਣੋ",
+    "webmakerAuthTakenError": "ਯੂਜ਼ਰ ਨਾਂ ਲਿਆ ਜਾ ਚੁੱਕਿਆ ਹੈ",
+    "webmakerAuthUsernameInvalid": "ਗਲਤ ਯੂਜ਼ਰ ਨਾਂ। ਸਾਰੇ ਯੂਜ਼ਰ ਨਾਂ 1-20 ਅੱਖਰਾਂ ਦੇ ਵਿੱਚ ਹੋਣੇ ਚਾਹੀਦੇ ਹਨ, ਅਤੇ ਕੇਵਲ \"-\" ਅਤੇ ਵਰਣ ਸ਼ਾਮਲ ਹੋਣ",
+    "webmakerAuthUsernameRequiredError": "ਇੱਕ ਯੂਜ਼ਰ ਨਾਂ ਚੁਣਨਾ ਚਾਹੀਦਾ",
+    "webmakerAuthMailingList": "ਮੈਨੂੰ ਮੌਜੀਲਾ ਵੈੱਬਮੇਕਰ ਅਤੇ ਹੋਰਾਂ ਪ੍ਰੋਜੈਕਟਾਂ ਬਾਰੇ ਈਮੇਲ ਅੱਪਡੇਟਾਂ ਭੇਜੋ",
+    "webmakerAuthAgreeToTerms": "ਮੈਨੂੰ ਤੁਹਾਡੀਆਂ  <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>ਸ਼ਰਤਾਂ</a> ਅਤੇ <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>ਹਲਾਤ</a> ਮਨਜ਼ੂਰ ਹਨ",
+    "webmakerAuthAgreeError": "ਤੁਹਾਨੂੰ ਸਾਡੀਆਂ ਸਰਤਾਂ ਅਤੇ ਹਲਾਤ ਮਨਜ਼ੂਰ ਹੋਣੇ ਚਾਹੀਦੇ ਹਨ।",
+    "webmakerAuthCreateAccount": "ਖਾਤਾ ਬਣਾਓ",
+    "Cancel": "ਰੱਦ"
+}

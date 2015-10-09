@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Webmaker मध्ये आपले स्वागत आहे!",
+    "webmakerAuthChooseUsername": "वापरकर्ता नाव निवडा",
+    "webmakerAuthTakenError": "हे वापरकर्ता नाव उपलब्ध नाही",
+    "webmakerAuthUsernameInvalid": "अवैध वापरकर्ता नाव. सर्व वापरकर्ता नावे १-२० अक्षराच्या दरम्यान असणे, आणि केवळ अक्षर, \"-\", आणि आकडे समाविष्ट करु शकता",
+    "webmakerAuthUsernameRequiredError": "आपणास वापरकर्ता नाव निवडावे लागेल",
+    "webmakerAuthMailingList": "मला Mozilla Webmaker आणि इतर प्रकल्पांबद्दल इमेल अद्यतने पाठवा",
+    "webmakerAuthAgreeToTerms": "मला आपले <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>नियम</a> आणि <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>अटी</a> मान्य आहेत.",
+    "webmakerAuthAgreeError": "आपणास आमचे नियम व अटी मान्य असायला हवेत.",
+    "webmakerAuthCreateAccount": "खाते बनवा",
+    "Cancel": "रद्द करा"
+}

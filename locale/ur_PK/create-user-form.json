@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Welcome to Webmaker!",
+    "webmakerAuthChooseUsername": "Choose a username",
+    "webmakerAuthTakenError": "That username is taken",
+    "webmakerAuthUsernameInvalid": "Invalid username. All usernames must be between 1-20 characters, and only include \"-\" and alphanumeric characters",
+    "webmakerAuthUsernameRequiredError": "You must choose a username",
+    "webmakerAuthMailingList": "مجھے موزیلا Webmaker اور دیگر منصوبوں کے بارے میں ای میل اپ ڈیٹس ارسال کریں",
+    "webmakerAuthAgreeToTerms": "I agree to your <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>terms</a> and <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>conditions</a>",
+    "webmakerAuthAgreeError": "You must agree to our terms and conditions.",
+    "webmakerAuthCreateAccount": "Create Account",
+    "Cancel": "منسوخ"
+}

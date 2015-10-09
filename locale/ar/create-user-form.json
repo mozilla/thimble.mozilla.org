@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "مرحبا بك في صانع الوب",
+    "webmakerAuthChooseUsername": "إختر اسم المستخدم",
+    "webmakerAuthTakenError": "هذا إسمٌ متّخذ",
+    "webmakerAuthUsernameInvalid": "خطأ بإسم المستخدم. إسم المستخدم يجب ان يكون بين 1-20 حرف، و يتضمن \"-\"  وأرقام فقط.",
+    "webmakerAuthUsernameRequiredError": "عليك إختيار اسم المستخدم",
+    "webmakerAuthMailingList": "أرسل لي بريد الكتروني بتحديثات موزيلا صانع الوب والمشاريع الأخرى",
+    "webmakerAuthAgreeToTerms": "أنا اوافق على<a href='https://webmaker.org/{{localeInfo.lang}}/terms'>البنود</a> و<a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>الشروط</a>",
+    "webmakerAuthAgreeError": "عليك الموافقة على بنودنا و شروطنا.",
+    "webmakerAuthCreateAccount": "أنشأ حسابا",
+    "Cancel": "إلغاء"
+}
