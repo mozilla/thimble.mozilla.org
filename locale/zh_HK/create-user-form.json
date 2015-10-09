@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "歡迎來到Webmaker!",
+    "webmakerAuthChooseUsername": "選擇使用者名稱",
+    "webmakerAuthTakenError": "那使用者名稱已經被使用",
+    "webmakerAuthUsernameInvalid": "無效的使用者名稱。所有使用者名稱必須在 1-20 個字符內，亦只可包含 \"-\"、英文及數字字符",
+    "webmakerAuthUsernameRequiredError": "一定要選擇一個使用者名稱",
+    "webmakerAuthMailingList": "發送Mozilla Webmaker及其他專案的更新訊息電郵給我",
+    "webmakerAuthAgreeToTerms": "我同意你的 <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>條款</a>及<a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>細則</a>",
+    "webmakerAuthAgreeError": "你必須同意條款及細則",
+    "webmakerAuthCreateAccount": "建立賬戶",
+    "Cancel": "取消"
+}

@@ -1,0 +1,254 @@
+{
+    "TryGoggles": {
+        "message": "Probar los superlentes ahora",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "error setting password": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>¡Oh no!</strong> Hubo un error al establecer tu contraseña. Por favor, inténtalo de nuevo.",
+        "description": "Error displayed if there was a problem setting the new password"
+    },
+    "Verified Visit Email": {
+        "message": "Te mandamos un correo electrónico con un código para iniciar sesión",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "NotAnEmail": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>¡Oh no!</strong> Ese no parece ser un correo electrónico válido.",
+        "description": "Error message when the text entered in an email input is not an email address"
+    },
+    "EmailOrUsername": {
+        "message": "Correo electrónico o nombre de usuario",
+        "description": "Label text for the sign in input, asks for the username or email of the user's account."
+    },
+    "XRay-Goggles": {
+        "message": "Superlentes de rayos X",
+        "description": "The X-Ray Goggles Tool"
+    },
+    "AboutResources": {
+        "message": "Enseña y aprende las habilidades digitales y la alfabetización web. Los recursos de Webmaker están llenos de cosas divertidas por descubrir, crear y enseñar.",
+        "description": "A short description about the Resources section"
+    },
+    "Set a Password": {
+        "message": "Establece tu contraseña",
+        "description": "Label text for the password input box (reset password modal)"
+    },
+    "Enter key": {
+        "message": "Ingresa el código <i class=\"fa fa-angle-right\"></i>",
+        "description": "Label to enter key that was sent to user's email"
+    },
+    "incorrectToken": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>¡Oh no!</strong> Ese código es incorrecto.",
+        "description": "Error message displayed when the token used to log in is rejected."
+    },
+    "Minimum password requirements": {
+        "message": "Requerimientos mínimos para establecer una contraseña",
+        "description": "Text above the list of minimum requirements that a password must satisfy"
+    },
+    "webmakerAuthTakenError": {
+        "message": "<i class=\"fa fa-times\"></i> Ese nombre de usuario ya ha sido tomado. Intenta agregar tu número favorito al final.",
+        "description": "Error message displayed when the entered username is not available for use."
+    },
+    "Language Preference": {
+        "message": "Especificar idioma",
+        "description": "Label text for selecting the preferred language for the user."
+    },
+    "That does not look like an email address or username": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>¡Uh oh!</strong> Ese no parece ser una dirección de correo electrónico o nombre de usuario.",
+        "description": "Error message displayed when the input doesn't match a username or email"
+    },
+    "webmakerAuthCreateAccount": {
+        "message": "Crear cuenta",
+        "description": "The button text for finishing the join Webmaker process."
+    },
+    "passLoginFailed": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>¡La autenticación falló!</strong>",
+        "description": "Error message when a password login attempt fails"
+    },
+    "webmakerAuthServerError": {
+        "message": "Hubo un error en nuestro servidor. Envía tu petición otra vez. Si el problema persiste, <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">consigue ayuda</a>.",
+        "description": "Error message displayed if an error occurs on the server."
+    },
+    "Remember me for one year": {
+        "message": "Recuérdame",
+        "description": "Message displayed next to the remember me checkbox"
+    },
+    "webmakerAuthAgreeToTerms": {
+        "message": "Estoy de acuerdo con los <a href='https://webmaker.org/terms'>términos</a> y la <a href='https://webmaker.org/privacy'>política de seguridad</a>",
+        "description": "I agree to Mozilla Webmaker's terms and privacy policy."
+    },
+    "Forgot your password?": {
+        "message": "¿Olvidaste tu contraseña?",
+        "description": "button text for the password reset function"
+    },
+    "problem sending token": {
+        "message": "<i class=\"fa fa-times\"></i> Hubo un problema al enviarte un código de inicio sesión. Por favor, inténtalo de nuevo. <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">Consigue ayuda</a>.",
+        "description": "Error message displayed when the request for a login key fails for some reason."
+    },
+    "Lets Go!": {
+        "message": "¡Vamos!",
+        "description": "Button text for closing the modal dialog after account creation"
+    },
+    "At least 8 characters": {
+        "message": "Al menos 8 carácteres",
+        "description": "A password must contain 8 or more characters"
+    },
+    "tokenMessage": {
+        "message": "Por favor, visita tu correo electrónico para confirmar tu cuenta.",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "Done": {
+        "message": "Terminado",
+        "description": "Done, close the window."
+    },
+    "Password Reset Success": {
+        "message": "<i class=\"fa fa-check\"></i> <strong>¡Lo lograste!</strong> Has restablecido tu contraseña. Por favor, inicia sesión.",
+        "description": "Alert displayed after successfully resetting a password"
+    },
+    "checkEmail": {
+        "message": "Visita tu correo electrónico",
+        "description": "Message instructing the user to check their email"
+    },
+    "webmakerAuthMailingList": {
+        "message": "Envíame un correo electrónico con las actualizaciones más recientes de Webmaker y de otros proyectos de Mozilla.",
+        "description": "Message about opting in for a Mozilla mailing list"
+    },
+    "Sign up": {
+        "message": "Unirse",
+        "description": "Join button text"
+    },
+    "Email": {
+        "message": "Ingresa tu correo electrónico",
+        "description": "Label text for the email input"
+    },
+    "Visit Email": {
+        "message": "Visita tu correo electrónico para recuperar tu código",
+        "description": "Label text above the login key input field"
+    },
+    "At least 1 upper and lower case character": {
+        "message": "Al menos una mayúscula y una minúscula",
+        "description": "A password must contain at least 1 upper and lower case character"
+    },
+    "Sign in": {
+        "message": "Conectar",
+        "description": "Sign in Button text"
+    },
+    "aboutWebmaker": {
+        "message": "Crea tus propios sitios de web, videos interactivos, remezclas y applicaciones móviles.",
+        "description": "Short description of Webmaker"
+    },
+    "passwords do not match": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>¡Oh no!</strong> Las contraseñas no coinciden.",
+        "description": "Error message displayed when the password input and password confirmation input do not match"
+    },
+    "trouble with email": {
+        "message": "¿Tienes problemas con tu correo electrónico? Visita tu correo de basura o <a href=\"https://support.mozilla.org/kb/webmaker-account-help\" tabindex=\"5\" target=\"_\">consigue ayuda<a>",
+        "description": "Text that allows users to get help"
+    },
+    "Expired Login Link": {
+        "message": "¡Ups! Tu enlace para conectar ha expirado. Solicita un nuevo correo electrónico para iniciar sesión.",
+        "description": "Error message displayed if a login link is expired"
+    },
+    "webmakerAuthAgreeError": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>¡No se te olvide!</strong> Debes aceptar nuestros términos y condiciones.",
+        "description": "Error message displayed if the terms and conditions checkbox isn't toggled on."
+    },
+    "resetRequestFailed": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>¡Oh no!</strong> Hubo un problema con el servidor. Por favor, inténtalo de nuevo.",
+        "description": "Error message displayed if the reset request fails for some reason"
+    },
+    "Sign in to Webmaker": {
+        "message": "Inicia sesión de Webmaker",
+        "description": "Header text for the sign in modal dialog"
+    },
+    "webmakerAuthChooseUsername": {
+        "message": "Elige tu nombre de usuario",
+        "description": "Label text for the username selection input"
+    },
+    "log in with Persona": {
+        "message": "Iniciar sesión con Persona",
+        "description": "Text for the button that initiates a persona login"
+    },
+    "Resources": {
+        "message": "Recursos",
+        "description": "The Resources section of Webmaker"
+    },
+    "webmakerAuthWelcome": {
+        "message": "¡Bienvenido a Webmaker!",
+        "description": "Welcome message for the join Webmaker modal dialog. Displayed after successfully creating a new Webmaker account"
+    },
+    "you can switch to webmaker login": {
+        "message": "Puedes regresar al inicio sesión de Webmaker. Te enviaremos unos correos electrónicos de inicio sesión para que no tengas que recordar tu contraseña.",
+        "description": "Message reminding users that they can switch back to the Webmaker Login Key system instead of using a password."
+    },
+    "webmakerAuthCreateWelcome": {
+        "message": "Crear una cuenta de Webmaker",
+        "description": "Header text for the join webmaker modal dialog"
+    },
+    "Cancel": {
+        "message": "Cancelar",
+        "description": "Cancel sign up or sign in"
+    },
+    "Password": {
+        "message": "Contraseña",
+        "description": "Label text for the password input"
+    },
+    "resetMessage": {
+        "message": "Visita tu correo electrónico que contiene un enlace para restablecer tu contraseña.",
+        "description": "Directs the user to check their email for a password reset link"
+    },
+    "ExploreWebmaker": {
+        "message": "Explorar el resto de Webmaker",
+        "description": "Text for the button which takes the user to webmaker.org/explore"
+    },
+    "No account found for your uid": {
+        "message": "<i class=\"fa fa-times\"></i> No pudimos encontrar tu nombre de usuario o dirección de correo electrónico. ¿Querías <a href=\"#\" ng-click=\"switchToSignup();\" class=\"alert-link\">crear una cuenta? ¿Tienes algún problema? <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">Consigue ayuda</a>.",
+        "description": "Error message displayed when the given username or email doesn't have a Webmaker account and asks if they would like to sign up."
+    },
+    "ChooseUsername": {
+        "message": "Elegir un nombre de usuario",
+        "description": " Label text for selecting a username"
+    },
+    "Submit": {
+        "message": "Enviar",
+        "description": "Label text for the submit new password button in the Reset Password Modal Dialog"
+    },
+    "At least 1 number": {
+        "message": "Al menos un número",
+        "description": "a password must contain at least one number character"
+    },
+    "Reset Password": {
+        "message": "Restablecer contraseña",
+        "description": "Reset Password Modal title"
+    },
+    "Next": {
+        "message": "Siguiente",
+        "description": "Go to the next screen"
+    },
+    "WebmakerAccountExists": {
+        "message": "<i class=\"fa fa-exclamation-circle\"></i>  <strong>¡Aviso!</strong> Ese correo electrónico ya tiene una cuenta. ¿Querías <a href=\"#\" class=\"alert-link\" ng-click=\"switchToSignin();\">iniciar sesión</a>?",
+        "description": "That email already has an accout. Did you mean to sign in?"
+    },
+    "webmakerAuthUsernameInvalid": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>¡Oh no!</strong> Todos los nombres de usuario deben tener de 1 a 20 carácteres, y solo incluir \"-\" y carácteres alfanuméricos.",
+        "description": "Error message displayed when the username entered contains symbols that are not allowed."
+    },
+    "or": {
+        "message": "o",
+        "description": "Text beside the button that initiates a persona login"
+    },
+    "VisitResources": {
+        "message": "Visitar recursos",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "AboutGoggles": {
+        "message": "Los superlentes de rayos X te permiten ver y cambiar los componentes básicos que constituyen las páginas web en Internet. Activa los superlentes para jugar con el código que está detrás de cualquier página web.",
+        "description": "A short description of the X-Ray Goggles"
+    },
+    "Confirm your password": {
+        "message": "Confirma tu contraseña",
+        "description": "Label text for the password confirmation input"
+    },
+    "Password too weak": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>¡Oh no!</strong> La contraseña que has escogido es muy débil. Asegúrate de que no contenga palabras comunes o patrones, ni tampoco tu correo electrónico o nombre de usuario.",
+        "description": "Error message displayed if the server determined the password entered is too weak."
+    }
+}

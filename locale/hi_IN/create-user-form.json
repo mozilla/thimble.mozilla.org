@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "वेबमेकर में आपका स्वागत हैं!",
+    "webmakerAuthChooseUsername": "उपयोगकर्ता का चयन करें",
+    "webmakerAuthTakenError": "यह नाम पहले ही ले लिया गया है",
+    "webmakerAuthUsernameInvalid": "यूजरनेम अमान्य. सारे यूजरनेम्स 1-20 अंको के बीच होने चाहिए, और केवल \"_\" और सांखियिकी अक्षर का समावेश हो",
+    "webmakerAuthUsernameRequiredError": "आपको उपयोगकर्ता नाम का चयन करना होगा ",
+    "webmakerAuthMailingList": "मोज़िला वेबमेकर और अन्य परियोजनाओं के बारे में मुझे ईमेल अपडेट भेजें",
+    "webmakerAuthAgreeToTerms": "मैं आपकी <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>शर्तें</ a> और <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'> नियमों </ a> से सहमत हूँ।",
+    "webmakerAuthAgreeError": "आपको हमारे नियमों और शर्तों से सहमत होना होगा।",
+    "webmakerAuthCreateAccount": "खाता बनाएँ",
+    "Cancel": "रद्द करना "
+}

@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Velkomin/Velkominn i Webmaker!",
+    "webmakerAuthChooseUsername": "Veldu ther notandanafn",
+    "webmakerAuthTakenError": "Thad notandanafn er fratekid",
+    "webmakerAuthUsernameInvalid": "Ógilt notandanafn. Öll notendanöfn, verða að vera 1-20 tákn, og mega aðeins innihalda \"-\", bókstafi og tölustafi.",
+    "webmakerAuthUsernameRequiredError": "Thess er krafist ad thu veljir notandanafn",
+    "webmakerAuthMailingList": "Sendið mér í tölvupósti, fréttir um Mozilla Webmaker og önnur verkefni",
+    "webmakerAuthAgreeToTerms": "Ég samþykki <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>skilgreiningar</a> ykkar og <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>skilyrði</a>",
+    "webmakerAuthAgreeError": "Thess er krafist ad skilgreiningar og skilmalar seu samthykktir.",
+    "webmakerAuthCreateAccount": "Bua til reikning",
+    "Cancel": "Haetta vid"
+}

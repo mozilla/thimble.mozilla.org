@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Välkommen till Webmaker",
+    "webmakerAuthChooseUsername": "Välj ett användarnamn",
+    "webmakerAuthTakenError": "Användarnamnet är upptaget",
+    "webmakerAuthUsernameInvalid": "Ogiltigt användarnamn. Alla användarnamn måste vara mellan 1-20 tecken. Och får endast innehålla siffror 0-9 och små eller bokstäver A-Z.",
+    "webmakerAuthUsernameRequiredError": "Du måste välja ett användarnamn",
+    "webmakerAuthMailingList": "Skicka mig email-uppdateringar om Mozilla Webmaker och andra projekt",
+    "webmakerAuthAgreeToTerms": "Jag godkänner <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>användvillkoen</a> <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'></a>",
+    "webmakerAuthAgreeError": "Du måste godkänna användarvillkoren. ",
+    "webmakerAuthCreateAccount": "Skapa ett konto",
+    "Cancel": "Avbryt"
+}

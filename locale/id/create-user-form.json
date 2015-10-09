@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Selamat datang di Webmaker!",
+    "webmakerAuthChooseUsername": "Pilih nama pengguna",
+    "webmakerAuthTakenError": "Nama pengguna tersebut tidak tersedia",
+    "webmakerAuthUsernameInvalid": "Nama pengguna tidak valid. Semua nama pengguna harus terdiri dari 1-20 karakter, dan hanya boleh mengandung \"-\" dan karakter alfanumerik",
+    "webmakerAuthUsernameRequiredError": "Anda harus memiliih nama pengguna",
+    "webmakerAuthMailingList": "Kirimi saya surel kabar terbaru tentang Mozilla Webmaker dan proyek lainnya",
+    "webmakerAuthAgreeToTerms": "Saya setuju dengan <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>ketentuan</a> dan <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>syarat-syarat</a>",
+    "webmakerAuthAgreeError": "Anda harus menyetujui syarat dan ketentuan kami.",
+    "webmakerAuthCreateAccount": "Buat Akun",
+    "Cancel": "Batal"
+}

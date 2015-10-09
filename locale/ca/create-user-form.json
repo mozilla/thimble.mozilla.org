@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Benvingut a Webmaker!",
+    "webmakerAuthChooseUsername": "Tria un nom d'usuari",
+    "webmakerAuthTakenError": "Aquest nom d'usuari ja és en ús",
+    "webmakerAuthUsernameInvalid": "Usuari erroni. Aquests han d'estar formats per 1-20 caràcters, incloent-hi \"-\" i caràcters alfanumèrics.",
+    "webmakerAuthUsernameRequiredError": "Has de triar un nom d'usuari",
+    "webmakerAuthMailingList": "Enviar-me actualitzacions de Webmaker o altres projectes Mozilla per correu electrònic",
+    "webmakerAuthAgreeToTerms": "Accepto els seus <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>termes</a> i <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>condicions</a>",
+    "webmakerAuthAgreeError": "Has d'acceptar els nostres termes i condicions",
+    "webmakerAuthCreateAccount": "Crear un compte",
+    "Cancel": "Cancel·lar"
+}

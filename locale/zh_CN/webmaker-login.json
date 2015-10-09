@@ -1,0 +1,254 @@
+{
+    "TryGoggles": {
+        "message": "现在试试 Goggles",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "error setting password": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Uh oh!</strong> 设置密码发送错误,  请重试.",
+        "description": "Error displayed if there was a problem setting the new password"
+    },
+    "Verified Visit Email": {
+        "message": "我们给您发送了一封邮件，包含用来登录的链接和密钥",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "NotAnEmail": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>噢！</strong> 这看起来不像是一个电子邮件地址。",
+        "description": "Error message when the text entered in an email input is not an email address"
+    },
+    "EmailOrUsername": {
+        "message": "电子邮件地址或用户名",
+        "description": "Label text for the sign in input, asks for the username or email of the user's account."
+    },
+    "XRay-Goggles": {
+        "message": "X-Ray Goggles",
+        "description": "The X-Ray Goggles Tool"
+    },
+    "AboutResources": {
+        "message": "传授并学习数字技巧和网络文化。Webmaker 包括了很多有趣的资源以供发现，创造和教育。",
+        "description": "A short description about the Resources section"
+    },
+    "Set a Password": {
+        "message": "设置一个密码",
+        "description": "Label text for the password input box (reset password modal)"
+    },
+    "Enter key": {
+        "message": "请输入密钥 <i class=\"fa fa-angle-right\"></i>",
+        "description": "Label to enter key that was sent to user's email"
+    },
+    "incorrectToken": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>噢！</strong> 此密钥不正确。",
+        "description": "Error message displayed when the token used to log in is rejected."
+    },
+    "Minimum password requirements": {
+        "message": "密码最低要求",
+        "description": "Text above the list of minimum requirements that a password must satisfy"
+    },
+    "webmakerAuthTakenError": {
+        "message": "<i class=\"fa fa-times\"></i> 该用户名已被使用。您可以试着加入喜欢的数字作为结尾。",
+        "description": "Error message displayed when the entered username is not available for use."
+    },
+    "Language Preference": {
+        "message": "首选语言",
+        "description": "Label text for selecting the preferred language for the user."
+    },
+    "That does not look like an email address or username": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>啊哦！</strong> 这不是邮箱地址或用户名。",
+        "description": "Error message displayed when the input doesn't match a username or email"
+    },
+    "webmakerAuthCreateAccount": {
+        "message": "创建账户",
+        "description": "The button text for finishing the join Webmaker process."
+    },
+    "passLoginFailed": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>身份验证失败！</strong>",
+        "description": "Error message when a password login attempt fails"
+    },
+    "webmakerAuthServerError": {
+        "message": "服务器发生了一个未知错误。请重试您的请求。如果此问题持续发生，请<a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">获取帮助</a>。",
+        "description": "Error message displayed if an error occurs on the server."
+    },
+    "Remember me for one year": {
+        "message": "记住我",
+        "description": "Message displayed next to the remember me checkbox"
+    },
+    "webmakerAuthAgreeToTerms": {
+        "message": "我同意 Mozilla Webmaker 的<a href='https://webmaker.org/terms'>条款</a>和<a href='https://webmaker.org/privacy'>隐私政策</a>",
+        "description": "I agree to Mozilla Webmaker's terms and privacy policy."
+    },
+    "Forgot your password?": {
+        "message": "忘了您的密码？",
+        "description": "button text for the password reset function"
+    },
+    "problem sending token": {
+        "message": "<i class=\"fa fa-times\"></i> 给您发送登录密码时遇到问题，请重试。<a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">获取帮助</a>.",
+        "description": "Error message displayed when the request for a login key fails for some reason."
+    },
+    "Lets Go!": {
+        "message": "出发！",
+        "description": "Button text for closing the modal dialog after account creation"
+    },
+    "At least 8 characters": {
+        "message": "至少 8 个字符",
+        "description": "A password must contain 8 or more characters"
+    },
+    "tokenMessage": {
+        "message": "请检查您的电子邮箱确认您的账户。",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "Done": {
+        "message": "完成",
+        "description": "Done, close the window."
+    },
+    "Password Reset Success": {
+        "message": "<i class=\"fa fa-check\"></i> <strong>成功！</strong> 您已成功重置您的密码，请登录！",
+        "description": "Alert displayed after successfully resetting a password"
+    },
+    "checkEmail": {
+        "message": "请检查您的邮箱",
+        "description": "Message instructing the user to check their email"
+    },
+    "webmakerAuthMailingList": {
+        "message": "给我发送邮件通知有关 Webmaker 和其他 Mozilla 项目的更新",
+        "description": "Message about opting in for a Mozilla mailing list"
+    },
+    "Sign up": {
+        "message": "加入",
+        "description": "Join button text"
+    },
+    "Email": {
+        "message": "请输入您的电子邮件地址",
+        "description": "Label text for the email input"
+    },
+    "Visit Email": {
+        "message": "访问您的电子邮箱获得您的密钥",
+        "description": "Label text above the login key input field"
+    },
+    "At least 1 upper and lower case character": {
+        "message": "至少 1 个大写字母及小写字母",
+        "description": "A password must contain at least 1 upper and lower case character"
+    },
+    "Sign in": {
+        "message": "登录",
+        "description": "Sign in Button text"
+    },
+    "aboutWebmaker": {
+        "message": "制作您自己的网页、互动视频、混搭和移动应用程序。",
+        "description": "Short description of Webmaker"
+    },
+    "passwords do not match": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>啊哦！</strong> 密码不匹配！",
+        "description": "Error message displayed when the password input and password confirmation input do not match"
+    },
+    "trouble with email": {
+        "message": "没收到邮件？请检查您的垃圾箱，或者<a href=\"https://support.mozilla.org/kb/webmaker-account-help\" tabindex=\"5\" target=\"_\">获取帮助</a>",
+        "description": "Text that allows users to get help"
+    },
+    "Expired Login Link": {
+        "message": "噢不！您的登录链接已过期。请求一封新邮件以登录。",
+        "description": "Error message displayed if a login link is expired"
+    },
+    "webmakerAuthAgreeError": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>唔！</strong> 您必须同意我们的条款和条件。",
+        "description": "Error message displayed if the terms and conditions checkbox isn't toggled on."
+    },
+    "resetRequestFailed": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>噢！</strong> 处理您的请求时出现问题，请重试。",
+        "description": "Error message displayed if the reset request fails for some reason"
+    },
+    "Sign in to Webmaker": {
+        "message": "登录到 Webmaker",
+        "description": "Header text for the sign in modal dialog"
+    },
+    "webmakerAuthChooseUsername": {
+        "message": "选择一个用户名",
+        "description": "Label text for the username selection input"
+    },
+    "log in with Persona": {
+        "message": "用 Persona 登录",
+        "description": "Text for the button that initiates a persona login"
+    },
+    "Resources": {
+        "message": "资源",
+        "description": "The Resources section of Webmaker"
+    },
+    "webmakerAuthWelcome": {
+        "message": "欢迎来到 Webmaker！",
+        "description": "Welcome message for the join Webmaker modal dialog. Displayed after successfully creating a new Webmaker account"
+    },
+    "you can switch to webmaker login": {
+        "message": "您可以切换回我们的 Webmaker 登录体验。我们将给您发送登录邮件让您无须密码进行登录。",
+        "description": "Message reminding users that they can switch back to the Webmaker Login Key system instead of using a password."
+    },
+    "webmakerAuthCreateWelcome": {
+        "message": "创建一个 Webmaker 账户",
+        "description": "Header text for the join webmaker modal dialog"
+    },
+    "Cancel": {
+        "message": "取消",
+        "description": "Cancel sign up or sign in"
+    },
+    "Password": {
+        "message": "密码",
+        "description": "Label text for the password input"
+    },
+    "resetMessage": {
+        "message": "请检查您的电子邮箱获得密码重置链接。",
+        "description": "Directs the user to check their email for a password reset link"
+    },
+    "ExploreWebmaker": {
+        "message": "探索 Webmaker 的其他部分",
+        "description": "Text for the button which takes the user to webmaker.org/explore"
+    },
+    "No account found for your uid": {
+        "message": "<i class=\"fa fa-times\"></i> 没有找到您的用户名或邮箱对应的账户。您是想要 <a href=\"#\" ng-click=\"switchToSignup();\" class=\"alert-link\">创建一个账户</a>？遇到困难？<a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">获取帮助</a>.",
+        "description": "Error message displayed when the given username or email doesn't have a Webmaker account and asks if they would like to sign up."
+    },
+    "ChooseUsername": {
+        "message": "选择用户名",
+        "description": " Label text for selecting a username"
+    },
+    "Submit": {
+        "message": "提交",
+        "description": "Label text for the submit new password button in the Reset Password Modal Dialog"
+    },
+    "At least 1 number": {
+        "message": "至少 1 个数字",
+        "description": "a password must contain at least one number character"
+    },
+    "Reset Password": {
+        "message": "重置密码",
+        "description": "Reset Password Modal title"
+    },
+    "Next": {
+        "message": "下一步",
+        "description": "Go to the next screen"
+    },
+    "WebmakerAccountExists": {
+        "message": "<i class=\"fa fa-exclamation-circle\"></i> <strong>注意！</strong> 此邮箱已注册账户。您是不是想 <a href=\"#\" class=\"alert-link\" ng-click=\"switchToSignin();\">登录</a>?",
+        "description": "That email already has an accout. Did you mean to sign in?"
+    },
+    "webmakerAuthUsernameInvalid": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>噢！</strong> 所有用户名必须在1至20个字符之间，并且只能使用 \"-\" 和字母与数字。",
+        "description": "Error message displayed when the username entered contains symbols that are not allowed."
+    },
+    "or": {
+        "message": "或",
+        "description": "Text beside the button that initiates a persona login"
+    },
+    "VisitResources": {
+        "message": "访问资源",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "AboutGoggles": {
+        "message": "X光眼镜使你可以看到并改变构成互联网网站的各个部分。激活眼镜来探究任一网页的源码。",
+        "description": "A short description of the X-Ray Goggles"
+    },
+    "Confirm your password": {
+        "message": "确认您的密码",
+        "description": "Label text for the password confirmation input"
+    },
+    "Password too weak": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>噢！</strong> 您输入的密码太弱。请确保它不包含任何常用词或模式，并且不包含您的电子邮件地址或者用户名",
+        "description": "Error message displayed if the server determined the password entered is too weak."
+    }
+}

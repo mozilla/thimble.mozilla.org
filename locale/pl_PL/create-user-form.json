@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Witamy w Webmaker!",
+    "webmakerAuthChooseUsername": "Wybierz nazwę użytkownika",
+    "webmakerAuthTakenError": "Ta nazwa użytkownika jest już zajęta",
+    "webmakerAuthUsernameInvalid": "Niepoprawna nazwa użytkownika. Wszystkie nazwy muszą mieć 1-20 znaków i zawierać tylko \"-\" i znaki alfanumeryczne.",
+    "webmakerAuthUsernameRequiredError": "Musisz wybrać nazwę użytkownika",
+    "webmakerAuthMailingList": "Chcę otrzymywać emailowe informacje dotyczące Webmakera oraz innych projektow",
+    "webmakerAuthAgreeToTerms": "Akceptuję  <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>regulamin</a>  i  <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>politykę prywatności</a>",
+    "webmakerAuthAgreeError": "Musisz zaakceptować nasz regulamin i politykę prywatności.",
+    "webmakerAuthCreateAccount": "Stwórz konto",
+    "Cancel": "Anuluj"
+}

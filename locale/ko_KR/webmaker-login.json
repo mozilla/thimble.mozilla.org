@@ -1,0 +1,254 @@
+{
+    "TryGoggles": {
+        "message": "지금 Goggles 를 써보세요",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "error setting password": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>오우!</strong> 오류로 인해 비밀번호를 설정할 수 없습니다. 다시 시도해주세요.",
+        "description": "Error displayed if there was a problem setting the new password"
+    },
+    "Verified Visit Email": {
+        "message": "로그인용 키를 당신의 이메일로 발송했습니다.",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "NotAnEmail": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>오우!</strong> 이메일 주소가 아닌거 같습니다.",
+        "description": "Error message when the text entered in an email input is not an email address"
+    },
+    "EmailOrUsername": {
+        "message": "이메일 또는 사용자명",
+        "description": "Label text for the sign in input, asks for the username or email of the user's account."
+    },
+    "XRay-Goggles": {
+        "message": "엑스레이고글",
+        "description": "The X-Ray Goggles Tool"
+    },
+    "AboutResources": {
+        "message": "Teach and learn digital skills and web literacy. Webmaker Resources are full of fun things to discover, make and teach.",
+        "description": "A short description about the Resources section"
+    },
+    "Set a Password": {
+        "message": "비밀번호 설정",
+        "description": "Label text for the password input box (reset password modal)"
+    },
+    "Enter key": {
+        "message": "키를 입력하세요 <i class=\"fa fa-angle-right\"></i>",
+        "description": "Label to enter key that was sent to user's email"
+    },
+    "incorrectToken": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>오우!</strong> 올바른 키가 아닙니다.",
+        "description": "Error message displayed when the token used to log in is rejected."
+    },
+    "Minimum password requirements": {
+        "message": "최소한의 비밀번호 요구사항",
+        "description": "Text above the list of minimum requirements that a password must satisfy"
+    },
+    "webmakerAuthTakenError": {
+        "message": "<i class=\"fa fa-times\"></i> 이미 사용하고 있는 사용자명입니다. 사용자명뒤에 선호하는 숫자를 붙여보세요.",
+        "description": "Error message displayed when the entered username is not available for use."
+    },
+    "Language Preference": {
+        "message": "언어 환경설정",
+        "description": "Label text for selecting the preferred language for the user."
+    },
+    "That does not look like an email address or username": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>오우!</strong> 이메일 또는 사용자명이 아닌거 같습니다.",
+        "description": "Error message displayed when the input doesn't match a username or email"
+    },
+    "webmakerAuthCreateAccount": {
+        "message": "계정 생성",
+        "description": "The button text for finishing the join Webmaker process."
+    },
+    "passLoginFailed": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>인증 실패</strong>",
+        "description": "Error message when a password login attempt fails"
+    },
+    "webmakerAuthServerError": {
+        "message": "An unknown error occurred on the server. Try your request again. If the problem persists, <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">get help</a>.",
+        "description": "Error message displayed if an error occurs on the server."
+    },
+    "Remember me for one year": {
+        "message": "계정 기억",
+        "description": "Message displayed next to the remember me checkbox"
+    },
+    "webmakerAuthAgreeToTerms": {
+        "message": "나는 <a href='https://webmaker.org/terms'>이용약관</a> 및 <a href='https://webmaker.org/privacy'>개인정보 보호정책</a>에 동의합니다.",
+        "description": "I agree to Mozilla Webmaker's terms and privacy policy."
+    },
+    "Forgot your password?": {
+        "message": "비밀번호를 잃어버렸나요?",
+        "description": "button text for the password reset function"
+    },
+    "problem sending token": {
+        "message": "<i class=\"fa fa-times\"></i> There was a problem sending a login key to you, please try again. <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">Get help</a>.",
+        "description": "Error message displayed when the request for a login key fails for some reason."
+    },
+    "Lets Go!": {
+        "message": "출발합시다!",
+        "description": "Button text for closing the modal dialog after account creation"
+    },
+    "At least 8 characters": {
+        "message": "8자 이상의 문자",
+        "description": "A password must contain 8 or more characters"
+    },
+    "tokenMessage": {
+        "message": "인증을 위해 당신의 이메일을 확인해주세요.",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "Done": {
+        "message": "완료",
+        "description": "Done, close the window."
+    },
+    "Password Reset Success": {
+        "message": "<i class=\"fa fa-check\"></i> <strong>Success!</strong> You've successfully reset your password, please sign in!",
+        "description": "Alert displayed after successfully resetting a password"
+    },
+    "checkEmail": {
+        "message": "이메일 확인",
+        "description": "Message instructing the user to check their email"
+    },
+    "webmakerAuthMailingList": {
+        "message": "Webmaker와 모질라 프로젝트 정보를 이메일로 받아보겠습니다.",
+        "description": "Message about opting in for a Mozilla mailing list"
+    },
+    "Sign up": {
+        "message": "가입하기",
+        "description": "Join button text"
+    },
+    "Email": {
+        "message": "이메일 주소를 입력하세요",
+        "description": "Label text for the email input"
+    },
+    "Visit Email": {
+        "message": "이메일을 방문해 키를 확인하세요. ",
+        "description": "Label text above the login key input field"
+    },
+    "At least 1 upper and lower case character": {
+        "message": "1개 이상의 대소문자",
+        "description": "A password must contain at least 1 upper and lower case character"
+    },
+    "Sign in": {
+        "message": "로그인",
+        "description": "Sign in Button text"
+    },
+    "aboutWebmaker": {
+        "message": "Make your own web pages, interactive videos, remixes and mobile apps.",
+        "description": "Short description of Webmaker"
+    },
+    "passwords do not match": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>오우!</strong> 비밀번호가 일치하지 않습니다.",
+        "description": "Error message displayed when the password input and password confirmation input do not match"
+    },
+    "trouble with email": {
+        "message": "Trouble with email? Check your spam or <a href=\"https://support.mozilla.org/kb/webmaker-account-help\" tabindex=\"5\" target=\"_\">get help</a>",
+        "description": "Text that allows users to get help"
+    },
+    "Expired Login Link": {
+        "message": "앗! 로그인 링크가 만료되었습니다. 로그인하기 위해서 새 이메일을 요청하세요,",
+        "description": "Error message displayed if a login link is expired"
+    },
+    "webmakerAuthAgreeError": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>오우!</strong> 이용약관 및 개인정보 보호정책에 동의해야 합니다.",
+        "description": "Error message displayed if the terms and conditions checkbox isn't toggled on."
+    },
+    "resetRequestFailed": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>오우!</strong> 처리중 문제가 발생했습니다. 다시 시도해주세요.",
+        "description": "Error message displayed if the reset request fails for some reason"
+    },
+    "Sign in to Webmaker": {
+        "message": "웹메이커에 로그인",
+        "description": "Header text for the sign in modal dialog"
+    },
+    "webmakerAuthChooseUsername": {
+        "message": "사용자명을 선택하세요",
+        "description": "Label text for the username selection input"
+    },
+    "log in with Persona": {
+        "message": "페르소나로 로그인",
+        "description": "Text for the button that initiates a persona login"
+    },
+    "Resources": {
+        "message": "리소스",
+        "description": "The Resources section of Webmaker"
+    },
+    "webmakerAuthWelcome": {
+        "message": "Webmaker에 오신 것을 환영합니다!",
+        "description": "Welcome message for the join Webmaker modal dialog. Displayed after successfully creating a new Webmaker account"
+    },
+    "you can switch to webmaker login": {
+        "message": "You can switch back to our Webmaker Login experience. We will send you login emails so you do not need a password.",
+        "description": "Message reminding users that they can switch back to the Webmaker Login Key system instead of using a password."
+    },
+    "webmakerAuthCreateWelcome": {
+        "message": "Webmaker 계정 생성",
+        "description": "Header text for the join webmaker modal dialog"
+    },
+    "Cancel": {
+        "message": "취소",
+        "description": "Cancel sign up or sign in"
+    },
+    "Password": {
+        "message": "비밀번호",
+        "description": "Label text for the password input"
+    },
+    "resetMessage": {
+        "message": "비밀번호 재설정 링크가 담긴 이메일을 확인해보세요.",
+        "description": "Directs the user to check their email for a password reset link"
+    },
+    "ExploreWebmaker": {
+        "message": "나머지 웹메이커를 확인하세요",
+        "description": "Text for the button which takes the user to webmaker.org/explore"
+    },
+    "No account found for your uid": {
+        "message": "<i class=\"fa fa-times\"></i> 당신의 사용자명 또는 이메일정보를 찾을 수 없습니다.  <a href=\"#\" ng-click=\"switchToSignup();\" class=\"alert-link\">계정 생성</a>을 원하셨나요? 문제가 있다면<a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">도움말</a>를 확인하세요.",
+        "description": "Error message displayed when the given username or email doesn't have a Webmaker account and asks if they would like to sign up."
+    },
+    "ChooseUsername": {
+        "message": "유저네임 선택",
+        "description": " Label text for selecting a username"
+    },
+    "Submit": {
+        "message": "제출",
+        "description": "Label text for the submit new password button in the Reset Password Modal Dialog"
+    },
+    "At least 1 number": {
+        "message": "1개 이상의 숫자",
+        "description": "a password must contain at least one number character"
+    },
+    "Reset Password": {
+        "message": "비밀번호 재설정",
+        "description": "Reset Password Modal title"
+    },
+    "Next": {
+        "message": "다음",
+        "description": "Go to the next screen"
+    },
+    "WebmakerAccountExists": {
+        "message": "<i class=\"fa fa-exclamation-circle\"></i>  <strong>Heads up!</strong> That email already has an account. Did you mean to <a href=\"#\" class=\"alert-link\" ng-click=\"switchToSignin();\">sign in</a>?",
+        "description": "That email already has an accout. Did you mean to sign in?"
+    },
+    "webmakerAuthUsernameInvalid": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>오우!</strong> 사용자명은 1-20자 이내여야 하며 \"-\" 및 영문자, 숫자만 포함되어야 합니다.\nAll usernames must be between 1-20 characters, and only include \"-\" and alphanumeric symbols",
+        "description": "Error message displayed when the username entered contains symbols that are not allowed."
+    },
+    "or": {
+        "message": "또는",
+        "description": "Text beside the button that initiates a persona login"
+    },
+    "VisitResources": {
+        "message": "자료 열람",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "AboutGoggles": {
+        "message": "X-Ray Goggles allow you to see and change the building blocks that make up websites on the Internet. Activate the goggles to play with the code behind any webpage.",
+        "description": "A short description of the X-Ray Goggles"
+    },
+    "Confirm your password": {
+        "message": "비밀번호 확인",
+        "description": "Label text for the password confirmation input"
+    },
+    "Password too weak": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>Uh oh!</strong> The password you've entered is too weak. Make sure it doesn't contain any common words or patterns, and doesn't contain your email or username",
+        "description": "Error message displayed if the server determined the password entered is too weak."
+    }
+}

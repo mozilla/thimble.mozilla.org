@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Üdvözlünk a Webmaker-ben!",
+    "webmakerAuthChooseUsername": "Felhasználói név kiválasztása",
+    "webmakerAuthTakenError": "Ez a felhasználónév már használatban van",
+    "webmakerAuthUsernameInvalid": "Érvénytelen felhasználónév. A felhasználónevek 1-20 karakter hosszúak kell legyenek, és az alfanumerikus karakterek mellett csak \"-\" karaktert tartalmazhatnak. ",
+    "webmakerAuthUsernameRequiredError": "Felhasználói nevet kell választanod",
+    "webmakerAuthMailingList": "Kérek értesítést a Mozilla Webmaker és más projektekről",
+    "webmakerAuthAgreeToTerms": "Elfogadom az  <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>terms</a>Általános Felhasználói Feltételeket </a> és az<a href='https://webmaker.org/{{localeInfo.lang}}/privacy'> Adatvédelmi feltételeket.</a>",
+    "webmakerAuthAgreeError": "El kell fogadni az előírásokat és feltételeket",
+    "webmakerAuthCreateAccount": "Felhasználói fiók létrehozása",
+    "Cancel": "Mégse"
+}

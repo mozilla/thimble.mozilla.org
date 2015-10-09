@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Benvido a Webmaker",
+    "webmakerAuthChooseUsername": "Escolle un nome de usuaria",
+    "webmakerAuthTakenError": "Ese nome xa está collido",
+    "webmakerAuthUsernameInvalid": "Nome de usuaria inválido. Todos os nomes deben ter entre 1-20 caracteres, e só incluír \"-\" e caracteres alfanuméricos",
+    "webmakerAuthUsernameRequiredError": "Ten que escoller un nome de usuaria",
+    "webmakerAuthMailingList": "Enviarme actualizacións por correo-e sobre Mozilla Webmaker e outros proxectos",
+    "webmakerAuthAgreeToTerms": "Acepto os seus <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>termos</a> e <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>condicións</a>",
+    "webmakerAuthAgreeError": "Tes que aceptar os nosos termos e condicións.",
+    "webmakerAuthCreateAccount": "Crear unha conta",
+    "Cancel": "Cancelar"
+}

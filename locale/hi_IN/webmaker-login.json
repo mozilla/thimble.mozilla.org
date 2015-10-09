@@ -1,0 +1,254 @@
+{
+    "TryGoggles": {
+        "message": "गॉगल्स प्रयोग करे",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "error setting password": {
+        "message": "<मैं वर्ग = \"एफए एफए-बार\"> </ मैं> <मजबूत> उह ओह! </ strong> अपना password, कोशिश कर रहा एक त्रुटि थी, फिर से प्रयास करें.",
+        "description": "Error displayed if there was a problem setting the new password"
+    },
+    "Verified Visit Email": {
+        "message": "Sign करने के लिए हमने आपको एक key और link ईमेल की है ",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "NotAnEmail": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>अरे यार !</strong> ये तो किसी ईमेल पता जैसा नहीं लगता ।",
+        "description": "Error message when the text entered in an email input is not an email address"
+    },
+    "EmailOrUsername": {
+        "message": "ईमेल या उपयोगकर्ता नाम",
+        "description": "Label text for the sign in input, asks for the username or email of the user's account."
+    },
+    "XRay-Goggles": {
+        "message": "एक्स रे चश्में",
+        "description": "The X-Ray Goggles Tool"
+    },
+    "AboutResources": {
+        "message": "Teach और डिजिटल skills और web literacy सीखते हैं. Webmaker Recources discover, make और teach के लिए मजेदार बातें से भरे हुए हैं.",
+        "description": "A short description about the Resources section"
+    },
+    "Set a Password": {
+        "message": "एक पासवर्ड सेट",
+        "description": "Label text for the password input box (reset password modal)"
+    },
+    "Enter key": {
+        "message": "key दर्ज करे <i class=\"fa fa-angle-right\"></i>",
+        "description": "Label to enter key that was sent to user's email"
+    },
+    "incorrectToken": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Uh oh!</strong> वह key सही नहीं है ",
+        "description": "Error message displayed when the token used to log in is rejected."
+    },
+    "Minimum password requirements": {
+        "message": "न्यूनतम पासवर्ड आवश्यकताओं",
+        "description": "Text above the list of minimum requirements that a password must satisfy"
+    },
+    "webmakerAuthTakenError": {
+        "message": "<i class=\"fa fa-times\"></i> इस उपयोगकर्ता नाम का पहले ही चयन हो चुका है । इसके अंत में अपने मनपसंद अंक को जोड कर प्रयास करें ।",
+        "description": "Error message displayed when the entered username is not available for use."
+    },
+    "Language Preference": {
+        "message": "भाषा वरीयता",
+        "description": "Label text for selecting the preferred language for the user."
+    },
+    "That does not look like an email address or username": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>उह ओह!</strong> वह एक ईमेल पता या उपयोगकर्ता नाम की तरह नहीं दिखता है।",
+        "description": "Error message displayed when the input doesn't match a username or email"
+    },
+    "webmakerAuthCreateAccount": {
+        "message": "खाता बनाएँ",
+        "description": "The button text for finishing the join Webmaker process."
+    },
+    "passLoginFailed": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>सत्यापन असफल रहा !</strong>",
+        "description": "Error message when a password login attempt fails"
+    },
+    "webmakerAuthServerError": {
+        "message": "एक अज्ञात त्रुटि सर्वर पर आ गई है । अपने अनुरोध की फिर से कोशिश करें । यदि समस्या बनी रहती है, तो <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">सहायता </a> लें ।",
+        "description": "Error message displayed if an error occurs on the server."
+    },
+    "Remember me for one year": {
+        "message": "मुझे याद करो.",
+        "description": "Message displayed next to the remember me checkbox"
+    },
+    "webmakerAuthAgreeToTerms": {
+        "message": "मैं Mozilla Webmaker के <a href='https://webmaker.org/terms'>शर्तें</a> और <a href='https://webmaker.org/privacy'>गोपनीयता नीति</a> से सहमत हुँ ।",
+        "description": "I agree to Mozilla Webmaker's terms and privacy policy."
+    },
+    "Forgot your password?": {
+        "message": "आप कूटशब्द भूल गये ?",
+        "description": "button text for the password reset function"
+    },
+    "problem sending token": {
+        "message": "<i class=\"fa fa-times\"></i> आप के लिए एक लॉगिन कुंजी भेजने में कोई समस्या थी, फिर से प्रयास करें। <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">Get help </a> .",
+        "description": "Error message displayed when the request for a login key fails for some reason."
+    },
+    "Lets Go!": {
+        "message": "चलते हेँ!",
+        "description": "Button text for closing the modal dialog after account creation"
+    },
+    "At least 8 characters": {
+        "message": "कम से कम 8 अक्षर",
+        "description": "A password must contain 8 or more characters"
+    },
+    "tokenMessage": {
+        "message": "कृपया अपने ईमेल को जाँच कर अपने खाते की पुष्टि करें ।",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "Done": {
+        "message": "होगया ",
+        "description": "Done, close the window."
+    },
+    "Password Reset Success": {
+        "message": "<मैं वर्ग = \"एफए एफए जाँच\"> </ i> <मजबूत> सफलता! </ strong> आप सफलतापूर्वक अपना password कर दिया है, में sign in करें.",
+        "description": "Alert displayed after successfully resetting a password"
+    },
+    "checkEmail": {
+        "message": "अपने ईमेल की जाँच",
+        "description": "Message instructing the user to check their email"
+    },
+    "webmakerAuthMailingList": {
+        "message": "मुझे Webmaker और अन्य मोज़िला परियोजनाओं के बारे में अद्यतन ईमेल भेजें.",
+        "description": "Message about opting in for a Mozilla mailing list"
+    },
+    "Sign up": {
+        "message": "जुड़ें",
+        "description": "Join button text"
+    },
+    "Email": {
+        "message": "अपने ईमेल दर्ज करें",
+        "description": "Label text for the email input"
+    },
+    "Visit Email": {
+        "message": "अपनी key प्राप्त के लिए ईमेल पे जाये ",
+        "description": "Label text above the login key input field"
+    },
+    "At least 1 upper and lower case character": {
+        "message": "कम से कम 1 बड़ा व छोटा अक्षर डाले। ",
+        "description": "A password must contain at least 1 upper and lower case character"
+    },
+    "Sign in": {
+        "message": "साइन इन",
+        "description": "Sign in Button text"
+    },
+    "aboutWebmaker": {
+        "message": "Make अपने खुद के web पन्नों, इंटरैक्टिव वीडियो, रीमिक्स और मोबाइल क्षुधा बनाने.",
+        "description": "Short description of Webmaker"
+    },
+    "passwords do not match": {
+        "message": "<मैं वर्ग = \"एफए एफए-बार\"> </ मैं> <मजबूत> उह ओह! </ strong> पासवर्ड मेल नहीं खाते.",
+        "description": "Error message displayed when the password input and password confirmation input do not match"
+    },
+    "trouble with email": {
+        "message": "email के साथ दिक्कत यह है? Get help </a>target=\"_\"> अपने स्पैम या <a href=\"https://support.mozilla.org/kb/webmaker-account-help\" tabindex=\"5\" जाँचें",
+        "description": "Text that allows users to get help"
+    },
+    "Expired Login Link": {
+        "message": "अरे नहीं ! आपका लोगिन link समाप्त हो चुका  है।  साइन-इन के  लिए नए ईमेल से आवेदन करे।  ",
+        "description": "Error message displayed if a login link is expired"
+    },
+    "webmakerAuthAgreeError": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>अरे अरे !</strong> आपको हमारी शर्तों व प्रतिबंधो को मानना होगा ।",
+        "description": "Error message displayed if the terms and conditions checkbox isn't toggled on."
+    },
+    "resetRequestFailed": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>अरे ये क्या हुआ !</strong> आपके अनुरोध को संसाधित करने में एक त्रुटि हो गयी है, कृपया पुनः प्रयास करें ।",
+        "description": "Error message displayed if the reset request fails for some reason"
+    },
+    "Sign in to Webmaker": {
+        "message": "Webmaker में साइन इन करें",
+        "description": "Header text for the sign in modal dialog"
+    },
+    "webmakerAuthChooseUsername": {
+        "message": "एक उपयोगकर्ता नाम चुनें",
+        "description": "Label text for the username selection input"
+    },
+    "log in with Persona": {
+        "message": "Persona के साथ लॉग इन करें",
+        "description": "Text for the button that initiates a persona login"
+    },
+    "Resources": {
+        "message": "संसाधन",
+        "description": "The Resources section of Webmaker"
+    },
+    "webmakerAuthWelcome": {
+        "message": "वेबमेकर में आपका स्वागत हैं!",
+        "description": "Welcome message for the join Webmaker modal dialog. Displayed after successfully creating a new Webmaker account"
+    },
+    "you can switch to webmaker login": {
+        "message": "आप हमारे Webmaker लॉगिन अनुभव पर वापस स्विच कर सकते हैं । आपको पासवर्ड की जरूरत नहीं हो इसलिए आपको हम लॉगइन ईमेल भेज देंगे ।",
+        "description": "Message reminding users that they can switch back to the Webmaker Login Key system instead of using a password."
+    },
+    "webmakerAuthCreateWelcome": {
+        "message": "वेबमेकर में खाता बनाऐं ।",
+        "description": "Header text for the join webmaker modal dialog"
+    },
+    "Cancel": {
+        "message": "रद्द करना ",
+        "description": "Cancel sign up or sign in"
+    },
+    "Password": {
+        "message": "कूटशब्द",
+        "description": "Label text for the password input"
+    },
+    "resetMessage": {
+        "message": "अपने ईमेल को कूटशब्द को पुनःस्थापित करने की कड़ी हेतु जाँचें ।",
+        "description": "Directs the user to check their email for a password reset link"
+    },
+    "ExploreWebmaker": {
+        "message": "Webmaker का बचा हुआ भाग भर्मण करे ",
+        "description": "Text for the button which takes the user to webmaker.org/explore"
+    },
+    "No account found for your uid": {
+        "message": "<मैं वर्ग = \"एफए एफए-बार\"> </ i> हम आपके username या email address पते नहीं मिल सकता है. आप एक href <करने के लिए आपका मतलब है = \"#\" एनजी-क्लिक करें = \"switchToSignup ();\" वर्ग = \"चेतावनी-link\"> एक खाता </a> बना? परेशानी? <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\"  target=\"_\">Get help</a>.",
+        "description": "Error message displayed when the given username or email doesn't have a Webmaker account and asks if they would like to sign up."
+    },
+    "ChooseUsername": {
+        "message": "उपयोगकर्ता नाम का चयन करें",
+        "description": " Label text for selecting a username"
+    },
+    "Submit": {
+        "message": "सबमिट करें",
+        "description": "Label text for the submit new password button in the Reset Password Modal Dialog"
+    },
+    "At least 1 number": {
+        "message": "कम से कम 1 संख्या",
+        "description": "a password must contain at least one number character"
+    },
+    "Reset Password": {
+        "message": "Password रीसेट करें",
+        "description": "Reset Password Modal title"
+    },
+    "Next": {
+        "message": "अगला ",
+        "description": "Go to the next screen"
+    },
+    "WebmakerAccountExists": {
+        "message": "<i class=\"fa fa-exclamation-circle\"></i> <strong>ध्यान दीजिये !</strong> इस ईमेल पते का तो पहले से ही खाता है । क्या आप <a href=\"#\" class=\"alert-link\" ng-click=\"switchToSignin();\"> खाते में प्रवेश </a> करना चाहते हैं ?",
+        "description": "That email already has an accout. Did you mean to sign in?"
+    },
+    "webmakerAuthUsernameInvalid": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>अरे गड़बड़ हो गयी !</strong> सभी उपयोगकर्ता नाम १-२० अक्षरों के , व केवल \"-\" व अक्षरांकीय चिन्ह ही होने चाहिये ।",
+        "description": "Error message displayed when the username entered contains symbols that are not allowed."
+    },
+    "or": {
+        "message": "या",
+        "description": "Text beside the button that initiates a persona login"
+    },
+    "VisitResources": {
+        "message": "संसाधनों का भर्मण करे ",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "AboutGoggles": {
+        "message": "X-Ray Goggles आप देख सकते हैं और इंटरनेट पर वेबसाइटों है कि make अप इमारत ब्लॉकों को बदलने के लिए अनुमति देते हैं. किसी भी वेबपेज के पीछे कोड के साथ खेलने के लिए काले चश्मे को सक्रिय करें.",
+        "description": "A short description of the X-Ray Goggles"
+    },
+    "Confirm your password": {
+        "message": "अपने पासवर्ड की पुष्टि",
+        "description": "Label text for the password confirmation input"
+    },
+    "Password too weak": {
+        "message": "<मैं वर्ग = \"एफए एफए-बार\"> </ मैं> <मजबूत> उह ओह! </ strong> प्रवेश कर लिया है password बहुत कमजोर है. यह किसी भी आम शब्दों या पैटर्न शामिल नहीं करता है, और अपने email या username शामिल नहीं है Make करें",
+        "description": "Error message displayed if the server determined the password entered is too weak."
+    }
+}

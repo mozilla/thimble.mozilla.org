@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Dobrodošli v Webmaker!",
+    "webmakerAuthChooseUsername": "Izberite uporabniško ime",
+    "webmakerAuthTakenError": "To uporabniško ime je zasedeno",
+    "webmakerAuthUsernameInvalid": "Uporabniško ime je napačno. Vsa uporabniška imena so omejena na dolžino 1-20 znakov, dovoljeni so \"-\" in alfanumerični znaki.",
+    "webmakerAuthUsernameRequiredError": "Izberati si morate uporabniško ime",
+    "webmakerAuthMailingList": "Naroči me na e-novice o Mozilla Webmaker in povezanih projektih",
+    "webmakerAuthAgreeToTerms": "Strinjam se z <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>pogoji</a> in <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>pravili zasebnosti</a>",
+    "webmakerAuthAgreeError": "Strinjate se morate z našimi pravili in pogoji.",
+    "webmakerAuthCreateAccount": "Ustvari račun",
+    "Cancel": "Prekliči"
+}

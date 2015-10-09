@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "വെബ്മേക്കർലേക്ക് സ്വാഗതം  ",
+    "webmakerAuthChooseUsername": "ഒരു ഉപയോക്തൃനാമം തിരഞ്ഞെടുക്കുക ",
+    "webmakerAuthTakenError": "ആ ഉപയോക്തൃനാമം മറ്റൊരാളുടെതാണ് ",
+    "webmakerAuthUsernameInvalid": "ഇതൊരു അസാധുവായ ഉപയോക്തൃനാമമാണ്. എല്ലാ ഉപയോക്തൃനാമത്തിലും 1-20 അക്ഷരങ്ങൾ  ഉണ്ടാവേണ്ടതാണ്. ഇംഗ്ലീഷ് അക്ഷരങ്ങളും അക്കങ്ങളും \"-\"  പാടുള്ളൂ .",
+    "webmakerAuthUsernameRequiredError": "നിങ്ങൾ നിശ്ചയമായും ഒരു ഉപയോക്തൃനാമം തിരഞ്ഞെടുക്കേണ്ടതാണ് ",
+    "webmakerAuthMailingList": "മോസില്ല വെബ്മേക്കറിനെയും മറ്റു പദ്ധതികളെയും കുറിച്ചുള്ള പുതിയ വിവരങ്ങള്‍ എനിക്ക് ഇമെയില്‍ ചെയ്യുക",
+    "webmakerAuthAgreeToTerms": "I agree to your <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>terms</a> and <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>conditions</a>",
+    "webmakerAuthAgreeError": "You must agree to our terms and conditions.",
+    "webmakerAuthCreateAccount": "അക്കൗണ്ട്‌ ഉണ്ടാക്കുക ",
+    "Cancel": "ഉപേക്ഷിക്കുക"
+}

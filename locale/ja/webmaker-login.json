@@ -1,0 +1,254 @@
+{
+    "TryGoggles": {
+        "message": "ゴーグルを試してみましょう",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "error setting password": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>申し訳ありません。</strong>パスワードのセット時にエラーが発生しました。もう一度お試し下さい。",
+        "description": "Error displayed if there was a problem setting the new password"
+    },
+    "Verified Visit Email": {
+        "message": "サインイン用のリンクとキーをメールで送信しました",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "NotAnEmail": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>おっと！</strong> メールアドレスの形式で入力してください。",
+        "description": "Error message when the text entered in an email input is not an email address"
+    },
+    "EmailOrUsername": {
+        "message": "メールアドレスまたはユーザ名",
+        "description": "Label text for the sign in input, asks for the username or email of the user's account."
+    },
+    "XRay-Goggles": {
+        "message": "X-Ray ゴーグル",
+        "description": "The X-Ray Goggles Tool"
+    },
+    "AboutResources": {
+        "message": "デジタルスキルと Web リテラシーを学び、教えましょう。Webmaker リソースにはたくさんの楽しい発見や創作や教え方が含まれています。",
+        "description": "A short description about the Resources section"
+    },
+    "Set a Password": {
+        "message": "パスワードを設定する",
+        "description": "Label text for the password input box (reset password modal)"
+    },
+    "Enter key": {
+        "message": "キーを入力してください <i class=\"fa fa-angle-right\"></i>",
+        "description": "Label to enter key that was sent to user's email"
+    },
+    "incorrectToken": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>おっと！</strong>このキーは正しくありません。",
+        "description": "Error message displayed when the token used to log in is rejected."
+    },
+    "Minimum password requirements": {
+        "message": "パスワードの最低必須条件",
+        "description": "Text above the list of minimum requirements that a password must satisfy"
+    },
+    "webmakerAuthTakenError": {
+        "message": "<i class=\"fa fa-times\"></i> このユーザ名は既に使用されています。後ろに数字を追加するなどして別の名前にしてください。",
+        "description": "Error message displayed when the entered username is not available for use."
+    },
+    "Language Preference": {
+        "message": "言語設定",
+        "description": "Label text for selecting the preferred language for the user."
+    },
+    "That does not look like an email address or username": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>おっと</strong> メールアドレスまたはユーザ名の入力に間違えがあります。",
+        "description": "Error message displayed when the input doesn't match a username or email"
+    },
+    "webmakerAuthCreateAccount": {
+        "message": "アカウントを作成する",
+        "description": "The button text for finishing the join Webmaker process."
+    },
+    "passLoginFailed": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>認証に失敗しました！</strong>",
+        "description": "Error message when a password login attempt fails"
+    },
+    "webmakerAuthServerError": {
+        "message": "サーバ上で不明なエラーが発生しました。もう一度お試し下さい。解決しない場合は、<a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">ヘルプ</a> をご覧ください。",
+        "description": "Error message displayed if an error occurs on the server."
+    },
+    "Remember me for one year": {
+        "message": "記憶する",
+        "description": "Message displayed next to the remember me checkbox"
+    },
+    "webmakerAuthAgreeToTerms": {
+        "message": "Mozilla Webmaker <a href='https://webmaker.org/terms'>利用規約</a> と <a href='https://webmaker.org/privacy'>プライバシーポリシー</a> に同意。",
+        "description": "I agree to Mozilla Webmaker's terms and privacy policy."
+    },
+    "Forgot your password?": {
+        "message": "パスワードをお忘れですか？",
+        "description": "button text for the password reset function"
+    },
+    "problem sending token": {
+        "message": "<i class=\"fa fa-times\"></i> ログインキーを送信する際に問題が発生しました。もう一度お試し下さい。 <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">ヘルプ</a> はこちら。",
+        "description": "Error message displayed when the request for a login key fails for some reason."
+    },
+    "Lets Go!": {
+        "message": "Let's Go!",
+        "description": "Button text for closing the modal dialog after account creation"
+    },
+    "At least 8 characters": {
+        "message": "最低 8 文字",
+        "description": "A password must contain 8 or more characters"
+    },
+    "tokenMessage": {
+        "message": "メールを確認してアカウントを認証して下さい。",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "Done": {
+        "message": "完了",
+        "description": "Done, close the window."
+    },
+    "Password Reset Success": {
+        "message": "<i class=\"fa fa-check\"></i> <strong>成功しました。</strong>パスワードがリセットされました。サインインを試してください。",
+        "description": "Alert displayed after successfully resetting a password"
+    },
+    "checkEmail": {
+        "message": "メールを確認してください",
+        "description": "Message instructing the user to check their email"
+    },
+    "webmakerAuthMailingList": {
+        "message": "Webmaker や他の Mozilla プロジェクトについての更新をメールで送信する",
+        "description": "Message about opting in for a Mozilla mailing list"
+    },
+    "Sign up": {
+        "message": "参加する",
+        "description": "Join button text"
+    },
+    "Email": {
+        "message": "メールアドレスを入力してください",
+        "description": "Label text for the email input"
+    },
+    "Visit Email": {
+        "message": "メールを確認してキーを入力してください",
+        "description": "Label text above the login key input field"
+    },
+    "At least 1 upper and lower case character": {
+        "message": "最低 1 文字の大文字と小文字",
+        "description": "A password must contain at least 1 upper and lower case character"
+    },
+    "Sign in": {
+        "message": "サインイン",
+        "description": "Sign in Button text"
+    },
+    "aboutWebmaker": {
+        "message": "あなたの Web ページ、インタラクティブな動画、リミックス、モバイルアプリなどを作りましょう。",
+        "description": "Short description of Webmaker"
+    },
+    "passwords do not match": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>申し訳ありません。</strong>パスワードが一致しません。",
+        "description": "Error message displayed when the password input and password confirmation input do not match"
+    },
+    "trouble with email": {
+        "message": "メールが届いていませんか？スパムに振り分けられていないか確認してください。または、<a href=\"https://support.mozilla.org/kb/webmaker-account-help\" tabindex=\"5\" target=\"_\">ヘルプをご覧ください。</a>",
+        "description": "Text that allows users to get help"
+    },
+    "Expired Login Link": {
+        "message": "申し訳ありません。ログインリンクは期限切れです。新しいメールをリクエストしてサインインインして下さい。",
+        "description": "Error message displayed if a login link is expired"
+    },
+    "webmakerAuthAgreeError": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>おっと！</strong> 利用規約に同意してください。",
+        "description": "Error message displayed if the terms and conditions checkbox isn't toggled on."
+    },
+    "resetRequestFailed": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>申し訳ありません。</strong>リクエストの処理に問題が発生しました。もう一度お試し下さい。",
+        "description": "Error message displayed if the reset request fails for some reason"
+    },
+    "Sign in to Webmaker": {
+        "message": "Webmaker にサインイン",
+        "description": "Header text for the sign in modal dialog"
+    },
+    "webmakerAuthChooseUsername": {
+        "message": "ユーザ名を選択する",
+        "description": "Label text for the username selection input"
+    },
+    "log in with Persona": {
+        "message": "Pesona でログインする",
+        "description": "Text for the button that initiates a persona login"
+    },
+    "Resources": {
+        "message": "リソース",
+        "description": "The Resources section of Webmaker"
+    },
+    "webmakerAuthWelcome": {
+        "message": "Webmaker へようこそ！",
+        "description": "Welcome message for the join Webmaker modal dialog. Displayed after successfully creating a new Webmaker account"
+    },
+    "you can switch to webmaker login": {
+        "message": "Webmaker Login に変更できます。ログイン用メールを送信しました。パスワードは必要ありません。",
+        "description": "Message reminding users that they can switch back to the Webmaker Login Key system instead of using a password."
+    },
+    "webmakerAuthCreateWelcome": {
+        "message": "Webmaker アカウントを作る",
+        "description": "Header text for the join webmaker modal dialog"
+    },
+    "Cancel": {
+        "message": "キャンセル",
+        "description": "Cancel sign up or sign in"
+    },
+    "Password": {
+        "message": "パスワード",
+        "description": "Label text for the password input"
+    },
+    "resetMessage": {
+        "message": "パスワードリセットのリンクをメールで確認して下さい。",
+        "description": "Directs the user to check their email for a password reset link"
+    },
+    "ExploreWebmaker": {
+        "message": "Webmaker を探検する",
+        "description": "Text for the button which takes the user to webmaker.org/explore"
+    },
+    "No account found for your uid": {
+        "message": "<i class=\"fa fa-times\"></i> このユーザ名またはメールアドレスは登録されていません。<a href=\"#\" ng-click=\"switchToSignup();\" class=\"alert-link\">アカウントを作成</a> しますか？問題が発生していますか？<a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">ヘルプをご覧ください</a>。",
+        "description": "Error message displayed when the given username or email doesn't have a Webmaker account and asks if they would like to sign up."
+    },
+    "ChooseUsername": {
+        "message": "ユーザ名を選択する",
+        "description": " Label text for selecting a username"
+    },
+    "Submit": {
+        "message": "送信",
+        "description": "Label text for the submit new password button in the Reset Password Modal Dialog"
+    },
+    "At least 1 number": {
+        "message": "最低 1 つの数字",
+        "description": "a password must contain at least one number character"
+    },
+    "Reset Password": {
+        "message": "パスワードをリセットする",
+        "description": "Reset Password Modal title"
+    },
+    "Next": {
+        "message": "次へ",
+        "description": "Go to the next screen"
+    },
+    "WebmakerAccountExists": {
+        "message": "<i class=\"fa fa-exclamation-circle\"></i>  <strong>ご注意下さい！</strong> このメールアドレスはすでにアカウント登録されています。<a href=\"#\" class=\"alert-link\" ng-click=\"switchToSignin();\">サインイン</a> とお間違えではないですか？",
+        "description": "That email already has an accout. Did you mean to sign in?"
+    },
+    "webmakerAuthUsernameInvalid": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>うわぉ！</strong> ユーザ名は、20文字以内で、\"-\" と半角英数字のみ使用できます。",
+        "description": "Error message displayed when the username entered contains symbols that are not allowed."
+    },
+    "or": {
+        "message": "もしくは",
+        "description": "Text beside the button that initiates a persona login"
+    },
+    "VisitResources": {
+        "message": "リソースを見る",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "AboutGoggles": {
+        "message": "X-Ray ゴーグルを使うと、インターネット上の Web サイトを構成するパーツを見たり変更したりできます。X-Ray ゴーグルをオンにして Web ページの裏側のコードをのぞいてみましょう。",
+        "description": "A short description of the X-Ray Goggles"
+    },
+    "Confirm your password": {
+        "message": "パスワードを確認して下さい",
+        "description": "Label text for the password confirmation input"
+    },
+    "Password too weak": {
+        "message": "<i class=\"fa fa-times\"></i>  <strong>申し訳ありません。</strong> あなたの入力したパスワードは脆弱です。一般的な用語やパターン、メールアドレスやユーザ名が含まれていないことを確認して下さい。",
+        "description": "Error message displayed if the server determined the password entered is too weak."
+    }
+}

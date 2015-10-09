@@ -1,0 +1,254 @@
+{
+    "TryGoggles": {
+        "message": "Încearcă Goggles acum",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "error setting password": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>O, nu!</strong> S-a produs o eroare la încercarea de a-ți seta parola, te rugăm să reîncerci.",
+        "description": "Error displayed if there was a problem setting the new password"
+    },
+    "Verified Visit Email": {
+        "message": "Ți-am trimis un link și o cheie de autentificare pe e-mail.",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "NotAnEmail": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Vai!</strong> Asta nu pare a fi o adresă de e-mail.",
+        "description": "Error message when the text entered in an email input is not an email address"
+    },
+    "EmailOrUsername": {
+        "message": "E-mail sau nume utilizator",
+        "description": "Label text for the sign in input, asks for the username or email of the user's account."
+    },
+    "XRay-Goggles": {
+        "message": "X-Ray Goggles",
+        "description": "The X-Ray Goggles Tool"
+    },
+    "AboutResources": {
+        "message": "Instruiește și învață abilități digitale și despre web, în detaliu. Resursele Webmaker sunt pline de lucruri distractive de descoperit, creat și de folosit pentru a-i învăța pe alții.",
+        "description": "A short description about the Resources section"
+    },
+    "Set a Password": {
+        "message": "Setează o parolă",
+        "description": "Label text for the password input box (reset password modal)"
+    },
+    "Enter key": {
+        "message": "Introdu cheia <i class=\"fa fa-angle-right\"></i>",
+        "description": "Label to enter key that was sent to user's email"
+    },
+    "incorrectToken": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>O, nu!</strong> Acea cheie nu este corectă.",
+        "description": "Error message displayed when the token used to log in is rejected."
+    },
+    "Minimum password requirements": {
+        "message": "Cerințe minime pentru parolă",
+        "description": "Text above the list of minimum requirements that a password must satisfy"
+    },
+    "webmakerAuthTakenError": {
+        "message": "<i class=\"fa fa-times\"></i> Acel nume de utilizator este deja folosit. Încearcă să adaugi numărul favorit la sfârșit.",
+        "description": "Error message displayed when the entered username is not available for use."
+    },
+    "Language Preference": {
+        "message": "Limba preferată",
+        "description": "Label text for selecting the preferred language for the user."
+    },
+    "That does not look like an email address or username": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>O, nu!</strong> Aceasta nu pare a fi o adresă de e-mail sau nume de utilizator.",
+        "description": "Error message displayed when the input doesn't match a username or email"
+    },
+    "webmakerAuthCreateAccount": {
+        "message": "Creează cont",
+        "description": "The button text for finishing the join Webmaker process."
+    },
+    "passLoginFailed": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Autentificarea a eșuat!</strong>",
+        "description": "Error message when a password login attempt fails"
+    },
+    "webmakerAuthServerError": {
+        "message": "S-a produs o eroare necunoscută pe server. Încearcă din nou. Dacă problema persistă,  <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">poți obține ajutor</a>.",
+        "description": "Error message displayed if an error occurs on the server."
+    },
+    "Remember me for one year": {
+        "message": "Ține-mă minte",
+        "description": "Message displayed next to the remember me checkbox"
+    },
+    "webmakerAuthAgreeToTerms": {
+        "message": "Sunt de acord cu <a href='https://webmaker.org/terms'>Termenii</a> și <a href='https://webmaker.org/privacy'>Politica de confidențialitate</a> Mozilla Webmaker",
+        "description": "I agree to Mozilla Webmaker's terms and privacy policy."
+    },
+    "Forgot your password?": {
+        "message": "Ai uitat parola?",
+        "description": "button text for the password reset function"
+    },
+    "problem sending token": {
+        "message": "<i class=\"fa fa-times\"></i> A fost o problemă când am încercat să vă trimitem o cheie pentru autentificare, te rugăm să reîncerci. <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">Obține ajutor</a>.",
+        "description": "Error message displayed when the request for a login key fails for some reason."
+    },
+    "Lets Go!": {
+        "message": "Hai să mergem!",
+        "description": "Button text for closing the modal dialog after account creation"
+    },
+    "At least 8 characters": {
+        "message": "Să aibă cel puțin 8 caractere",
+        "description": "A password must contain 8 or more characters"
+    },
+    "tokenMessage": {
+        "message": "Te rugăm să verifici e-mailul pentru a-ți confirma contul.",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "Done": {
+        "message": "Gata",
+        "description": "Done, close the window."
+    },
+    "Password Reset Success": {
+        "message": "<i class=\"fa fa-check\"></i> <strong>Succes!</strong> Ți-ai resetat parola cu succes, te rugăm să te autentifici!",
+        "description": "Alert displayed after successfully resetting a password"
+    },
+    "checkEmail": {
+        "message": "Verifică-ți e-mailul",
+        "description": "Message instructing the user to check their email"
+    },
+    "webmakerAuthMailingList": {
+        "message": "Trimite-mi actualizări pe e-mail despre Webmaker și alte proiecte Mozilla",
+        "description": "Message about opting in for a Mozilla mailing list"
+    },
+    "Sign up": {
+        "message": "Înregistrare",
+        "description": "Join button text"
+    },
+    "Email": {
+        "message": "Introdu adresa ta de e-mail",
+        "description": "Label text for the email input"
+    },
+    "Visit Email": {
+        "message": "Verifică e-mailul pentru a recupera cheia",
+        "description": "Label text above the login key input field"
+    },
+    "At least 1 upper and lower case character": {
+        "message": "Să conțină cel puțin 1 caracter cu majusculă și cu minusculă",
+        "description": "A password must contain at least 1 upper and lower case character"
+    },
+    "Sign in": {
+        "message": "Autentificare",
+        "description": "Sign in Button text"
+    },
+    "aboutWebmaker": {
+        "message": "Creează propriile pagini web, videoclipuri interactive, remixări și aplicații mobile.",
+        "description": "Short description of Webmaker"
+    },
+    "passwords do not match": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>O, nu!</strong> Parolele nu se potrivesc!",
+        "description": "Error message displayed when the password input and password confirmation input do not match"
+    },
+    "trouble with email": {
+        "message": "Ai probleme cu e-mailul? Verifică dosarul de spam sau <a href=\"https://support.mozilla.org/kb/webmaker-account-help\" tabindex=\"5\" target=\"_\">obține ajutor</a>",
+        "description": "Text that allows users to get help"
+    },
+    "Expired Login Link": {
+        "message": "O, nu! Linkul de autentificare a expirat. Poți solicita alt e-mail pentru a te autentifica.",
+        "description": "Error message displayed if a login link is expired"
+    },
+    "webmakerAuthAgreeError": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>O, nu!</strong> Trebuie să fii de acord cu termenii și condițiile noastre.",
+        "description": "Error message displayed if the terms and conditions checkbox isn't toggled on."
+    },
+    "resetRequestFailed": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>O, nu!</strong> S-a produs o eroare în timpul procesării cererii tale, te rugăm să reîncerci.",
+        "description": "Error message displayed if the reset request fails for some reason"
+    },
+    "Sign in to Webmaker": {
+        "message": "Autentifică-te în Webmake",
+        "description": "Header text for the sign in modal dialog"
+    },
+    "webmakerAuthChooseUsername": {
+        "message": "Alege un nume de utilizator",
+        "description": "Label text for the username selection input"
+    },
+    "log in with Persona": {
+        "message": "autentificare cu Persona",
+        "description": "Text for the button that initiates a persona login"
+    },
+    "Resources": {
+        "message": "Resurse",
+        "description": "The Resources section of Webmaker"
+    },
+    "webmakerAuthWelcome": {
+        "message": "Bun venit la Webmaker!",
+        "description": "Welcome message for the join Webmaker modal dialog. Displayed after successfully creating a new Webmaker account"
+    },
+    "you can switch to webmaker login": {
+        "message": "Poți comuta înapoi la experiența de autentificare Webmaker. Îți vom trimite e-mailuri de autentificare ca să nu ai nevoie de o parolă.",
+        "description": "Message reminding users that they can switch back to the Webmaker Login Key system instead of using a password."
+    },
+    "webmakerAuthCreateWelcome": {
+        "message": "Creează un cont Webmaker",
+        "description": "Header text for the join webmaker modal dialog"
+    },
+    "Cancel": {
+        "message": "Renunță",
+        "description": "Cancel sign up or sign in"
+    },
+    "Password": {
+        "message": "Parola",
+        "description": "Label text for the password input"
+    },
+    "resetMessage": {
+        "message": "Verifică e-mailul pentru a primi un link de resetare a parolei.",
+        "description": "Directs the user to check their email for a password reset link"
+    },
+    "ExploreWebmaker": {
+        "message": "Explorează restul Webmaker-ului",
+        "description": "Text for the button which takes the user to webmaker.org/explore"
+    },
+    "No account found for your uid": {
+        "message": "<i class=\"fa fa-times\"></i> Nu am putut găsi numele tău de utilizator sau adresa de e-mail. Doreai de fapt să-ți <a href=\"#\" ng-click=\"switchToSignup();\" class=\"alert-link\">creezi un cont</a>? Ai întâmpinat alte probleme? <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">Obține ajutor</a>.",
+        "description": "Error message displayed when the given username or email doesn't have a Webmaker account and asks if they would like to sign up."
+    },
+    "ChooseUsername": {
+        "message": "Alege un nume de utilizator",
+        "description": " Label text for selecting a username"
+    },
+    "Submit": {
+        "message": "Trimite",
+        "description": "Label text for the submit new password button in the Reset Password Modal Dialog"
+    },
+    "At least 1 number": {
+        "message": "Cel puțin 1 număr",
+        "description": "a password must contain at least one number character"
+    },
+    "Reset Password": {
+        "message": "Resetează parola",
+        "description": "Reset Password Modal title"
+    },
+    "Next": {
+        "message": "Mai departe",
+        "description": "Go to the next screen"
+    },
+    "WebmakerAccountExists": {
+        "message": "<i class=\"fa fa-exclamation-circle\"></i> <strong>Atenție!</strong> Această adresă de e-mail are deja un cont. Doreai de fapt să te <a href=\"#\" class=\"alert-link\" ng-click=\"switchToSignin();\">autentifici</a>?",
+        "description": "That email already has an accout. Did you mean to sign in?"
+    },
+    "webmakerAuthUsernameInvalid": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Uh oh!</strong> Toate numele de utilizator trebuie să fie între 1-20 de caractere și pot include doar „-” și simboluri alfanumerice.",
+        "description": "Error message displayed when the username entered contains symbols that are not allowed."
+    },
+    "or": {
+        "message": "sau",
+        "description": "Text beside the button that initiates a persona login"
+    },
+    "VisitResources": {
+        "message": "Vizitează Resursele",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "AboutGoggles": {
+        "message": "X-Ray Goggles îți permite să vezi și să modifici piesele componente din care sunt alcătuite site-urile web pe internet. Activează „ochelarii” pentru a te juca cu codul din spatele fiecărei pagini web.",
+        "description": "A short description of the X-Ray Goggles"
+    },
+    "Confirm your password": {
+        "message": "Confirmă parola",
+        "description": "Label text for the password confirmation input"
+    },
+    "Password too weak": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>O, nu!</strong> Parola introdusă este prea slabă. Ai grijă să nu conțină cuvinte sau tipicuri comune și să nu conțină e-mailul sau numele de utilizator.",
+        "description": "Error message displayed if the server determined the password entered is too weak."
+    }
+}

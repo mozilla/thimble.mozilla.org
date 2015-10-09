@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Webmaker မှ ကြိုဆိုပါ၏။",
+    "webmakerAuthChooseUsername": "အသုံးပြုမည့် အမည် ရွေးပါ",
+    "webmakerAuthTakenError": "ထို အမည်ကို တစ်ယောက်ယောက် ယူပြီးပြီ",
+    "webmakerAuthUsernameInvalid": "username က အဆင်မပြေပါဘူး ။ စကားလုံးအရေအတွက် 1-20  ပါနိုင်ပြီး alphanumeric characters တွေသာသုံးဆွဲ နိုင်ပါတယ်။",
+    "webmakerAuthUsernameRequiredError": "သင် အသုံးပြုမည့် အမည် ရွေးရမည်",
+    "webmakerAuthMailingList": "မိုဇီလာ Webmaker နှင့်ပတ်သတ်သော အကြောင်းကြားချက် email ပို့ပေးပါ",
+    "webmakerAuthAgreeToTerms": "သင်တို့၏ <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>စကားရပ်များ</a> နှင့် <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>သတ်မှတ်ချက်များ</a> ကို ကျွနိုပ် သဘောတူပါသည်",
+    "webmakerAuthAgreeError": "ကျွနိုပ်တို့၏ စည်ကမ်းများနှင့် သတ်မှတ်ချက်များကို သင် သဘောတူရပါမည်",
+    "webmakerAuthCreateAccount": "အကောင့် ဖန်တီးပါ",
+    "Cancel": "မပြုလုပ်ပါ"
+}

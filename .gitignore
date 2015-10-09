@@ -5,6 +5,3 @@ thimble.sqlite
 fakes3
 bower_components
 .htaccess
-locale/
-!locale/en_US/*
-!locale/localeinfo.json

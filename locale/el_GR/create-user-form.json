@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Καλωσορίσατε στο Webmaker!",
+    "webmakerAuthChooseUsername": "Επιλέξτε Όνομα Χρήστη",
+    "webmakerAuthTakenError": "Αυτό το Όνομα Χρήστη είναι κατειλημμένο",
+    "webmakerAuthUsernameInvalid": "Μη έγκυρο Όνομα Χρήστη. Όλα τα Ονόματα Χρηστών πρέπει να περιέχουν 1-20 χαρακτήρες, και να περιλαμβάνουν μόνο \"-\" και αλφαριθμητικούς χαρακτήρες.",
+    "webmakerAuthUsernameRequiredError": "Πρέπει να επιλέξετε Όνομα Χρήστη",
+    "webmakerAuthMailingList": "Να μου αποστέλνεται email με ενημερώσεις σχετικά με το Mozilla Webmaker και άλλα έργα",
+    "webmakerAuthAgreeToTerms": "Συμφωνώ με τους <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>όρους</a> και τις <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>προϋποθέσεις</a> σας.",
+    "webmakerAuthAgreeError": "Πρέπει να συμφωνήσετε με τους όρους και τις προϋποθέσεις μας",
+    "webmakerAuthCreateAccount": "Δημιουργήστε λογαριασμό ",
+    "Cancel": "Άκυρο"
+}

@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Webmaker'a Hoşgeldiniz!",
+    "webmakerAuthChooseUsername": "Bir kullanıcı adı seçin",
+    "webmakerAuthTakenError": "Seçtiğiniz kullanıcı adı daha önce alınmış",
+    "webmakerAuthUsernameInvalid": "Geçersiz kullanıcı adı. Tüm kullanıcı adları 1-20 karakter arasında olmalıdır ve sadece \"-\" ve alfanümerik karakter içermelidir.",
+    "webmakerAuthUsernameRequiredError": "Bir kullanıcı adı seçmelisiniz",
+    "webmakerAuthMailingList": "Bana Mozilla Webmaker ve diğer projeler hakkında e-posta güncellemeleri gönder",
+    "webmakerAuthAgreeToTerms": "<a href='https://webmaker.org/{{localeInfo.lang}}/terms'>Şartlar</a> ve <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>koşullarınızı</a> kabul ediyorum",
+    "webmakerAuthAgreeError": "Şartlar ve koşullarımızı kabul etmeniz gerekli.",
+    "webmakerAuthCreateAccount": "Bir Hesap Oluştur",
+    "Cancel": "İptal"
+}

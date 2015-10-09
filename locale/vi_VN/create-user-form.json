@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Chào mừng đến với Webmarker!",
+    "webmakerAuthChooseUsername": "Chọn tên đăng nhập",
+    "webmakerAuthTakenError": "Tên đăng nhập đã tồn tại",
+    "webmakerAuthUsernameInvalid": "Tên người dùng không hợp lệ. Mọi tên người dùng phải có 1-20 kí tự, bao gồm dấu \"-\" và số",
+    "webmakerAuthUsernameRequiredError": "Bạn phải chọn tên đăng nhập",
+    "webmakerAuthMailingList": "Gửi email thông báo khi có cập nhật về Mozilla Webmarker và những dự án khác",
+    "webmakerAuthAgreeToTerms": "Tôi đồng ý với các <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>điều khoản</a> và <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>chính sách</a> của Webmaker",
+    "webmakerAuthAgreeError": "Bạn phải chấp nhận các điều khoản và điều kiện của chúng tôi.",
+    "webmakerAuthCreateAccount": "Tạo tài khoản",
+    "Cancel": "Hủy bỏ"
+}

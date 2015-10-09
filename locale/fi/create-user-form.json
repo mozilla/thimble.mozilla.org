@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Tervetuloa Webmakeriin!",
+    "webmakerAuthChooseUsername": "Valitse käyttäjätunnus",
+    "webmakerAuthTakenError": "Käyttäjätunnus on jo käytössä",
+    "webmakerAuthUsernameInvalid": "Käyttäjätunnus ei kelpaa. Käyttäjätunnuksen täytyy olla 1-20 merkkiä pitkä, ja se saa sisältää vain \"-\" ja aakkosnumeerisia merkkejä.",
+    "webmakerAuthUsernameRequiredError": "Sinun pitää valita käyttäjätunnus",
+    "webmakerAuthMailingList": "Lähetä sähköpostilla päivityksiä Mozilla Webmakerista ja muista projekteista",
+    "webmakerAuthAgreeToTerms": "Hyväksyn <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>käyttöehdot</a> ja <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>yksityisyydensuojan</a>",
+    "webmakerAuthAgreeError": "Sinun pitää hyväksyä käyttöehtomme ja yksityisyydensuojamme.",
+    "webmakerAuthCreateAccount": "Luo tili",
+    "Cancel": "Peruuta"
+}

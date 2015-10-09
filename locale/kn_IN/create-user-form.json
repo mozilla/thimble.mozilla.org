@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "ವೆಬ್ ಮೇಕರ್ ಗೆ ಸ್ವಾಗತ",
+    "webmakerAuthChooseUsername": "ನಿಮ್ಮ ಬಳಕೆದಾರ ಹೆಸರನ್ನು ಆಯ್ಕೆ ಮಾಡಿ",
+    "webmakerAuthTakenError": "ಈ ಬಳಕೆದಾರಹೆಸರು ತೆಗೆದುಕೊಳ್ಳಲಾಗಿದೆ",
+    "webmakerAuthUsernameInvalid": "ಬಳಕೆದಾರ ಹೆಸರು ಸರಿಯಿಲ್ಲ. ಎಲ್ಲಾ ಬಳಕೆದಾರರ ಹೆಸರು 1-20 ಅಕ್ಷರಗಳ ನಡುವೆ ಇರಬೇಕು, ಕೇವಲ \"-\"  ಒಳಗೊಂಡಿರಬೇಕು ಮತ್ತು ಸಂಖ್ಯಾಕ್ಷರವಾಗಿರಬೇಕು ",
+    "webmakerAuthUsernameRequiredError": "ನೀವು ಒಂದು ಬಳಕೆದಾರ ಹೆಸರನ್ನು ಆಯ್ಕೆ ಮಾಡಬೇಕು",
+    "webmakerAuthMailingList": "ನನಗೆ ಮೊಜಿಲ್ಲಾ ವೆಬ್ ಮೇಕರ್ ಮತ್ತು ಇತರ ಯೋಜನೆಗಳ ನವೀಕರಣಗಳ ಬಗ್ಗೆ ಇಮೇಲ್ ಕಳುಹಿಸಿ",
+    "webmakerAuthAgreeToTerms": "ನಾನು ನಿಮ್ಮ <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>ನಿಯಮಗಳು</a> and <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>ಷರತ್ತುಗಳನ್ನು</a>ಒಪ್ಪುತ್ತೇನೆ.",
+    "webmakerAuthAgreeError": "ನೀವು ನಮ್ಮ ನಿಯಮಗಳು ಮತ್ತು ಷರತ್ತುಗಳನ್ನು ಒಪ್ಪಿಕೊಳ್ಳಬೇಕು.",
+    "webmakerAuthCreateAccount": "ಖಾತೆಯನ್ನು ರಚಿಸು",
+    "Cancel": "ರದ್ದುಗೊಳಿಸು"
+}

@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "ברוך הבא לוובמרקר!",
+    "webmakerAuthChooseUsername": "בחר שם משתמש",
+    "webmakerAuthTakenError": "שם משתמש זה תפוס",
+    "webmakerAuthUsernameInvalid": "Invalid username. All usernames must be between 1-20 characters, and only include \"-\" and alphanumeric characters",
+    "webmakerAuthUsernameRequiredError": "עליך לבחור שם משתמש",
+    "webmakerAuthMailingList": "שלח לי עדכונים בדוא\"ל על מוזילה וובמרקר ופרוייקטים נוספים",
+    "webmakerAuthAgreeToTerms": "I agree to your <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>terms</a> and <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>conditions</a>",
+    "webmakerAuthAgreeError": "עליך להסכים לתנאי השימוש באתר",
+    "webmakerAuthCreateAccount": "צור חשבון",
+    "Cancel": "בטל"
+}

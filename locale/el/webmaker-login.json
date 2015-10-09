@@ -1,0 +1,254 @@
+{
+    "TryGoggles": {
+        "message": "Δοκιμάστε το Goggles τώρα",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "error setting password": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Ωχ όχι!</strong> Υπήρξε ένα σφάλμα κατά την ρύθμιση του κωδικού σας, παρακαλώ δοκιμάστε ξανά.",
+        "description": "Error displayed if there was a problem setting the new password"
+    },
+    "Verified Visit Email": {
+        "message": "Σας στείλαμε στο email σας έναν σύνδεσμο και ένα κλειδί για να συνδεθείτε",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "NotAnEmail": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Ωχ όχι!</strong> Αυτό δεν μοιάζει με διεύθυνση email.",
+        "description": "Error message when the text entered in an email input is not an email address"
+    },
+    "EmailOrUsername": {
+        "message": "Email ή Όνομα Χρήστη",
+        "description": "Label text for the sign in input, asks for the username or email of the user's account."
+    },
+    "XRay-Goggles": {
+        "message": "X-Ray Goggles",
+        "description": "The X-Ray Goggles Tool"
+    },
+    "AboutResources": {
+        "message": "Διδάξτε και μάθετε ψηφιακές δεξιότητες και web παιδεία. Οι Webmaker Πόροι είναι γεμάτοι διασκέδαστικά πράγματα για να ανακαλύψετε, να δημιουργήσετε και να διδάξετε.",
+        "description": "A short description about the Resources section"
+    },
+    "Set a Password": {
+        "message": "Set A Password",
+        "description": "Label text for the password input box (reset password modal)"
+    },
+    "Enter key": {
+        "message": "Εισάγετε το κλειδί <i class=\"fa fa-angle-right\"></i>",
+        "description": "Label to enter key that was sent to user's email"
+    },
+    "incorrectToken": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Ωχ όχι!</strong> Αυτό το κλειδί δεν είναι σωστό.",
+        "description": "Error message displayed when the token used to log in is rejected."
+    },
+    "Minimum password requirements": {
+        "message": "Ελάχιστες προϋποθέσεις κωδικού",
+        "description": "Text above the list of minimum requirements that a password must satisfy"
+    },
+    "webmakerAuthTakenError": {
+        "message": "<i class=\"fa fa-times\"></i> Αυτό το όνομα χρήστη είναι πιασμένο. Προσπαθήστε να προσθέσετε τον αγαπημένο αριθμό σας στο τέλος.",
+        "description": "Error message displayed when the entered username is not available for use."
+    },
+    "Language Preference": {
+        "message": "Προτιμήσεις γλώσσας",
+        "description": "Label text for selecting the preferred language for the user."
+    },
+    "That does not look like an email address or username": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Ωχ όχι!</strong> Αυτό δεν μοιάζει με διεύθυνση email ή όνομα χρήστη.",
+        "description": "Error message displayed when the input doesn't match a username or email"
+    },
+    "webmakerAuthCreateAccount": {
+        "message": "Δημιουργία Λογαριασμού",
+        "description": "The button text for finishing the join Webmaker process."
+    },
+    "passLoginFailed": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Έλεγχος ταυτότητας απέτυχε!</strong>",
+        "description": "Error message when a password login attempt fails"
+    },
+    "webmakerAuthServerError": {
+        "message": "Προέκυψε ένα άγνωστο σφάλμα στο διακομιστή. Δοκιμάστε ξανά το αίτημά σας. Εάν το πρόβλημα παραμένει, <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">ζητήστε βοήθεια</a>.",
+        "description": "Error message displayed if an error occurs on the server."
+    },
+    "Remember me for one year": {
+        "message": "Remember me",
+        "description": "Message displayed next to the remember me checkbox"
+    },
+    "webmakerAuthAgreeToTerms": {
+        "message": "I agree to Mozilla Webmaker's <a href='https://webmaker.org/terms'>Terms</a> and <a href='https://webmaker.org/privacy'>Privacy Policy</a>",
+        "description": "I agree to Mozilla Webmaker's terms and privacy policy."
+    },
+    "Forgot your password?": {
+        "message": "Ξέχασες τον κωδικό σου;",
+        "description": "button text for the password reset function"
+    },
+    "problem sending token": {
+        "message": "<i class=\"fa fa-times\"></i> Υπήρξε πρόβλημα κατα την αποστολή του κλειδιού σύνδεσής σας, παρακαλώ δοκιμάστε ξανά. <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">Ζητήστε βοήθεια</a>.",
+        "description": "Error message displayed when the request for a login key fails for some reason."
+    },
+    "Lets Go!": {
+        "message": "Let's Go!",
+        "description": "Button text for closing the modal dialog after account creation"
+    },
+    "At least 8 characters": {
+        "message": "Τουλάχιστον 8 χαρακτήρες",
+        "description": "A password must contain 8 or more characters"
+    },
+    "tokenMessage": {
+        "message": "Παρακαλώ ελέγξτε το email σας για να επιβεβαιώσετε τον λογαριασμό σας.",
+        "description": "Message instructing the user to check their email for an account confirmation link"
+    },
+    "Done": {
+        "message": "Ολοκληρώθηκε",
+        "description": "Done, close the window."
+    },
+    "Password Reset Success": {
+        "message": "<i class=\"fa fa-check\"></i> <strong>Συγχαρητήρια!</strong> Επαναφέρατε τον κωδικό σας επιτυχώς, παρακαλώ συνδεθείτε!",
+        "description": "Alert displayed after successfully resetting a password"
+    },
+    "checkEmail": {
+        "message": "Check Your Email",
+        "description": "Message instructing the user to check their email"
+    },
+    "webmakerAuthMailingList": {
+        "message": "Αποστολή email που αφορούν το Webmaker και άλλα προϊόντα της Mozilla",
+        "description": "Message about opting in for a Mozilla mailing list"
+    },
+    "Sign up": {
+        "message": "Γίνετε μέλος",
+        "description": "Join button text"
+    },
+    "Email": {
+        "message": "Διεύθυνση Email",
+        "description": "Label text for the email input"
+    },
+    "Visit Email": {
+        "message": "Επισκεφθείτε το email σας για να ανακτήσετε το κλειδί σας",
+        "description": "Label text above the login key input field"
+    },
+    "At least 1 upper and lower case character": {
+        "message": "Τουλάχιστον 1 κεφαλαίος και ένας μικρός χαρακτήρας",
+        "description": "A password must contain at least 1 upper and lower case character"
+    },
+    "Sign in": {
+        "message": "Είσοδος",
+        "description": "Sign in Button text"
+    },
+    "aboutWebmaker": {
+        "message": "Δημιουργήστε τις δικές σας ιστοσελίδες, διαδραστικά βίντεο, remixes και εφαρμογές.",
+        "description": "Short description of Webmaker"
+    },
+    "passwords do not match": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Ωχ όχι!</strong> Οι κωδικοί δεν ταιριάζουν!",
+        "description": "Error message displayed when the password input and password confirmation input do not match"
+    },
+    "trouble with email": {
+        "message": "Πρόβλημα με το email; Ελέγξτε το φάκελο με τα spam σας ή <a href=\"https://support.mozilla.org/kb/webmaker-account-help\" tabindex=\"5\" target=\"_\">ζητήστε βοήθεια</a>",
+        "description": "Text that allows users to get help"
+    },
+    "Expired Login Link": {
+        "message": "Uh Oh! Your login link expired. Request a new email to sign in.",
+        "description": "Error message displayed if a login link is expired"
+    },
+    "webmakerAuthAgreeError": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Επ!</strong> Πρέπει να συμφωνήσετε με τους όρους χρήσης μας.",
+        "description": "Error message displayed if the terms and conditions checkbox isn't toggled on."
+    },
+    "resetRequestFailed": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Ωχ όχι!</strong> Υπήρξε ένα πρόβλημα κατά την επεξεργασία του αιτήματος σας, παρακαλώ δοκιμάστε ξανά.",
+        "description": "Error message displayed if the reset request fails for some reason"
+    },
+    "Sign in to Webmaker": {
+        "message": "Σύνδεση στο Webmaker",
+        "description": "Header text for the sign in modal dialog"
+    },
+    "webmakerAuthChooseUsername": {
+        "message": "Όνομα Χρήστη",
+        "description": "Label text for the username selection input"
+    },
+    "log in with Persona": {
+        "message": "log in with Persona",
+        "description": "Text for the button that initiates a persona login"
+    },
+    "Resources": {
+        "message": "Πηγές",
+        "description": "The Resources section of Webmaker"
+    },
+    "webmakerAuthWelcome": {
+        "message": "Καλώς Ήλθατε στο Webmaker!",
+        "description": "Welcome message for the join Webmaker modal dialog. Displayed after successfully creating a new Webmaker account"
+    },
+    "you can switch to webmaker login": {
+        "message": "Μπορείτε να επιλέξετε την εμπειρία Σύνδεσης Webmaker. Θα σας αποστείλουμε email σύνδεσης ώστε να μην χρειαστείτε κωδικό πρόσβασης.",
+        "description": "Message reminding users that they can switch back to the Webmaker Login Key system instead of using a password."
+    },
+    "webmakerAuthCreateWelcome": {
+        "message": "Δημιουργήστε έναν λογαριασμό Webmaker",
+        "description": "Header text for the join webmaker modal dialog"
+    },
+    "Cancel": {
+        "message": "Άκυρο",
+        "description": "Cancel sign up or sign in"
+    },
+    "Password": {
+        "message": "Κωδικός",
+        "description": "Label text for the password input"
+    },
+    "resetMessage": {
+        "message": "Ελέγξτε το email σας για να βρείτε τον σύνδεσμο επαναφοράς κωδικού.",
+        "description": "Directs the user to check their email for a password reset link"
+    },
+    "ExploreWebmaker": {
+        "message": "Εξερευνήστε περαιτέρω το Webmaker",
+        "description": "Text for the button which takes the user to webmaker.org/explore"
+    },
+    "No account found for your uid": {
+        "message": "<i class=\"fa fa-times\"></i> Δεν μπορέσαμε να βρούμε το όνομα χρήστη ή τη διεύθυνση email. Μήπως εννοούσατε <a href=\"#\" ng-click=\"switchToSignup();\" class=\"alert-link\">δημιουργία λογαριασμού</a>; Έχετε πρόβλημα; <a class=\"alert-link\" href=\"https://support.mozilla.org/kb/webmaker-account-help\" target=\"_\">Ζητήστε βοήθεια</a>.",
+        "description": "Error message displayed when the given username or email doesn't have a Webmaker account and asks if they would like to sign up."
+    },
+    "ChooseUsername": {
+        "message": "Επιλέξτε Όνομα Χρήστη",
+        "description": " Label text for selecting a username"
+    },
+    "Submit": {
+        "message": "Υποβολή",
+        "description": "Label text for the submit new password button in the Reset Password Modal Dialog"
+    },
+    "At least 1 number": {
+        "message": "Τουλάχιστον 1 αριθμός",
+        "description": "a password must contain at least one number character"
+    },
+    "Reset Password": {
+        "message": "Επαναφορά Κωδικού",
+        "description": "Reset Password Modal title"
+    },
+    "Next": {
+        "message": "Επόμενο",
+        "description": "Go to the next screen"
+    },
+    "WebmakerAccountExists": {
+        "message": "<i class=\"fa fa-exclamation-circle\"></i> <strong>Για δες!</strong> Αυτό το email έχει ήδη λογαριασμό. Μήπως θα θέλατε να <a href=\"#\" class=\"alert-link\" ng-click=\"switchToSignin();\">συνδεθείτε</a>;",
+        "description": "That email already has an accout. Did you mean to sign in?"
+    },
+    "webmakerAuthUsernameInvalid": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Ωχ όχι!</strong> Όλα τα ονόματα χρήστη πρέπει να είναι ανάμεσα σε 1-20 χαρακτήρες, και να περιέχουν μόνο \"-\" και αλφαριθμητικά σύμβολα",
+        "description": "Error message displayed when the username entered contains symbols that are not allowed."
+    },
+    "or": {
+        "message": "or",
+        "description": "Text beside the button that initiates a persona login"
+    },
+    "VisitResources": {
+        "message": "Επισκεφθείτε τις Πηγές",
+        "description": "Text for the button that takes the user to the X-Ray Goggles homepage"
+    },
+    "AboutGoggles": {
+        "message": "X-Ray Goggles allow you to see and change the building blocks that make up websites on the Internet. Activate the goggles to play with the code behind any webpage.",
+        "description": "A short description of the X-Ray Goggles"
+    },
+    "Confirm your password": {
+        "message": "Confirm Your Password",
+        "description": "Label text for the password confirmation input"
+    },
+    "Password too weak": {
+        "message": "<i class=\"fa fa-times\"></i> <strong>Ωχ όχι!</strong> Ο κωδικός που πληκτρολογήσατε είναι αδύναμος. Βεβαιωθείτε ότι δεν περιέχει κοινές λέξεις ή μοτίβα,  και δεν περιέχει το email ή το όνομα χρήστη σας",
+        "description": "Error message displayed if the server determined the password entered is too weak."
+    }
+}

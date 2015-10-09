@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "欢迎来到Webmaker！",
+    "webmakerAuthChooseUsername": "请选择您的用户名",
+    "webmakerAuthTakenError": "该用户名已被使用",
+    "webmakerAuthUsernameInvalid": "Invalid username. All usernames must be between 1-20 characters, and only include \"-\" and alphanumeric characters",
+    "webmakerAuthUsernameRequiredError": "您必须选择一个用户名",
+    "webmakerAuthMailingList": "将Mozilla Webmaker和其他项目的更新状况通过邮件发送给我",
+    "webmakerAuthAgreeToTerms": "我同意 <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>terms</a> 和<a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>conditions</a>",
+    "webmakerAuthAgreeError": "您需要同意我们的条款和细则",
+    "webmakerAuthCreateAccount": "创建账号",
+    "Cancel": "取消"
+}

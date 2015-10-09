@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "వేబ్మకేర్ కు స్వాగతం!",
+    "webmakerAuthChooseUsername": "వినియోగదారు పేరును ఎంచుకోండి",
+    "webmakerAuthTakenError": "ఆ యూజర్పేరు తీసుకున్నారు ",
+    "webmakerAuthUsernameInvalid": "చెల్లని వినయోగదారు పేరు.అన్ని యూజర్ పేర్లు 1-20 అక్షరాల మధ్య ఉండాలి,మరియు \"-\" కూడా  ఉండాలి మరియు ఆల్ఫాన్యూమరిక్ అక్షరాలను కూడా  ఉండాలి",
+    "webmakerAuthUsernameRequiredError": "మీరు ఒక యూజర్పేరు ఎంచుకోవాలి",
+    "webmakerAuthMailingList": "Mozilla webmaker మరియు ఇతర ప్రాజెక్ట్ గురించి updates నా emailకు పంపించు",
+    "webmakerAuthAgreeToTerms": "నేను మీ <a href='https://webmaker.org/{{localeInfo.lang}}/terms'> నిబంధనలు </ a> అంగీకరించక <a  href = 'https://webmaker.org/ {{localeInfo . lang}} / గోప్యతకు> పరిస్థితులు </ a> ",
+    "webmakerAuthAgreeError": "మీరు మా నిబంధనలను అంగీకరించాలి.",
+    "webmakerAuthCreateAccount": "ఖాతా సృష్టించు",
+    "Cancel": "రద్దుచేయి"
+}

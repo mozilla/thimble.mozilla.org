@@ -1,0 +1,12 @@
+{
+    "webmakerAuthWelcome": "Maligayang Pagdating sa Webmaker!",
+    "webmakerAuthChooseUsername": "Pumili ng username",
+    "webmakerAuthTakenError": "Ang username na napili ay nakuha na",
+    "webmakerAuthUsernameInvalid": "Imbalidong username. Lahat ng username ay kailangang nasa pagitan ng 1-20 mga titik, at \"-\" lang ang maaaring isama. Maaari ring gumamit ng alphanumeric na mga titik.",
+    "webmakerAuthUsernameRequiredError": "Kailangan mong pumili ng username",
+    "webmakerAuthMailingList": "Padalhan ako ng email ukol sa pagbabago ng Mozilla Webmaker at iba pang proyekto",
+    "webmakerAuthAgreeToTerms": "Sumasang-ayon ako sa inyong <a href='https://webmaker.org/{{localeInfo.lang}}/terms'>mga tuntunin</a> at <a href='https://webmaker.org/{{localeInfo.lang}}/privacy'>kundisyon</a>",
+    "webmakerAuthAgreeError": "Kailangan munang sumang-ayon sa aming mga tuntunin at kundisyon",
+    "webmakerAuthCreateAccount": "Gumawa ng \"account\"",
+    "Cancel": "I-cancel"
+}
