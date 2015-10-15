@@ -1,6 +1,7 @@
 {
   "name": "thimble.webmaker.org",
   "dependencies": {
+    "eventEmitter": "~4.3.0",
     "jquery": "http://code.jquery.com/jquery-2.1.4.min.js",
     "cookies-js": "~1.2.1",
     "node-uuid": "~1.4.3",

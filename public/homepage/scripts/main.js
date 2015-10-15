@@ -1,3 +1,5 @@
+/* global requirejs */
+
 // Because we pre-load require scripts needed by the editor, we need to
 // eat error messages related to fetching but not using those modules.
 requirejs.onError = function(err) {

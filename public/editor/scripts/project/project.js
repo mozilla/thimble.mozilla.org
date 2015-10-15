@@ -2,6 +2,8 @@ define(function(require) {
   var Constants = require("constants");
   var Remote = require("../../project/remote");
   var Metadata = require("../../project/metadata");
+  var logger = require("logger");
+  var PathCache = require("PathCache");
   var Path = Bramble.Filer.Path;
 
   var _host;
@@ -58,6 +60,10 @@ define(function(require) {
     return _publishUrl;
   }
 
+  function setPublishUrl(value) {
+    _publishUrl = value;
+  }
+
   function getRoot() {
     if(!_user) {
       return Path.join(Constants.ANONYMOUS_USER_FOLDER, _anonymousId.toString());
@@ -103,6 +109,27 @@ define(function(require) {
     Metadata.getPublishNeedsUpdate(getRoot(), callback);
   }
 
+  // Gets the file sync operation queue on the project root, which has information
+  // about all paths that need to be sync'ed with the server, and what needs to happen.
+  function getSyncQueue(callback) {
+    Metadata.getSyncQueue(getRoot(), callback);
+  }
+
+  // Sets the file sync operation queue on the project root
+  function setSyncQueue(value, callback) {
+    Metadata.setSyncQueue(getRoot(), value, callback);
+  }
+
+  function queueFileUpdate(path) {
+    logger("project", "queueFileUpdate", path);
+    PathCache.addItem(path, Constants.SYNC_OPERATION_UPDATE);
+  }
+
+  function queueFileDelete(path) {
+    logger("project", "queueFileDelete", path);
+    PathCache.addItem(path, Constants.SYNC_OPERATION_DELETE);
+  }
+
   function init(projectDetails, host, callback) {
     _user = projectDetails.userID;
     _id = projectDetails.id;
@@ -143,7 +170,7 @@ define(function(require) {
   }
 
   // Set all necesary data for this project, based on makeDetails rendered into page.
-  function load(fsync, csrfToken, callback) {
+  function _load(csrfToken, syncQueue, callback) {
     // Step 1: download the project's contents (files + metadata) or upload an
     // anonymous project's content if this is an upgrade, and install into the root
     Remote.loadProject({
@@ -153,19 +180,30 @@ define(function(require) {
       id: _id,
       remixId: _remixId,
       anonymousId: _anonymousId,
-      fsync: fsync
-    }, function(err) {
+      syncQueue: syncQueue
+    }, function(err, pathUpdatesCache) {
       if(err) {
-        return callback(err);
+        // If we have paths to sync in the SyncQueue, ignore this error and keep going
+        if(!Object.keys(syncQueue.pending).length) {
+          return callback(err);
+        }
+      }
+
+      // If there are cached paths that need to be updated, queue those now
+      if(pathUpdatesCache && pathUpdatesCache.length) {
+        pathUpdatesCache.forEach(function(path) {
+          queueFileUpdate(path);
+        });
       }
 
       var now = (new Date()).toISOString();
+      var isUpdate = !!_user && !!_anonymousId;
 
       // Step 2: If this was a project upgrade (from anonymous to authenticated),
       // update the project metadata on the server
       Metadata.update({
         host: _host,
-        update: !!_user && !!_anonymousId,
+        update: isUpdate,
         id: _id,
         csrfToken: csrfToken,
         data: {
@@ -187,7 +225,8 @@ define(function(require) {
           user: _user,
           remixId: _remixId,
           id: _id,
-          title: _title
+          title: _title,
+          update: isUpdate,
         }, function(err) {
           if(err) {
             return callback(err);
@@ -215,6 +254,40 @@ define(function(require) {
     });
   }
 
+  /**
+   * The load process happens in a number of stages.  First, we deal with any
+   * cached path operations that were unprocessed/unfinished when the app closed.
+   * After we have an accurate SyncQueue, we continue loading the files/metadata
+   * for the project.
+   */
+  function load(csrfToken, callback) {
+    PathCache.init(getRoot());
+    getSyncQueue(function(err, syncQueue) {
+      if(err) {
+        // If the project root doesn't exist yet, we can simulate an empty SyncQueue
+        // since there are no path operations needing to be run yet.
+        if(err.code === "ENOENT") {
+          _load(csrfToken, {pending: {}}, callback);
+        } else {
+          callback(err);
+        }
+        return;
+      }
+
+      // If we had cached path operations, merge them into the SyncQueue and save.
+      syncQueue = PathCache.transferToSyncQueue(syncQueue);
+
+      setSyncQueue(syncQueue, function(err) {
+        if(err) {
+          callback(err);
+          return;
+        }
+
+        _load(csrfToken, syncQueue, callback);
+      });
+    });
+  }
+
   return {
     init: init,
     load: load,
@@ -224,6 +297,7 @@ define(function(require) {
     getID: getID,
     getHost: getHost,
     getPublishUrl: getPublishUrl,
+    setPublishUrl: setPublishUrl,
     getFileID: getFileID,
     setFileID: setFileID,
     getTitle: getTitle,
@@ -237,6 +311,11 @@ define(function(require) {
     removeFile: removeFile,
 
     publishNeedsUpdate: publishNeedsUpdate,
-    getPublishNeedsUpdate: getPublishNeedsUpdate
+    getPublishNeedsUpdate: getPublishNeedsUpdate,
+
+    setSyncQueue: setSyncQueue,
+    getSyncQueue: getSyncQueue,
+    queueFileUpdate: queueFileUpdate,
+    queueFileDelete: queueFileDelete
   };
 });

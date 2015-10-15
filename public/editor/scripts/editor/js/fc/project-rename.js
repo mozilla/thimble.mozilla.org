@@ -56,8 +56,8 @@ define(function(require) {
 
           //add or remove the 'disabled' class based on if length is 0
           //and also add or remove the click listener
-          context.saveButton[nameLength == 0 ? "addClass" : "removeClass"]("disabled");
-          context.saveButton[nameLength == 0 ? "off" : "on"]("click", saveClicked);
+          context.saveButton[nameLength === 0 ? "addClass" : "removeClass"]("disabled");
+          context.saveButton[nameLength === 0 ? "off" : "on"]("click", saveClicked);
         })
       };
 

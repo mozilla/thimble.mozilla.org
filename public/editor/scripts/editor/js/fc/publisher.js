@@ -1,6 +1,7 @@
 define(function(require) {
   var $ = require("jquery");
   var Project = require("project");
+  var FileSystemSync = require("fc/filesystem-sync");
   var SyncState = require("fc/sync-state");
   var host;
 
@@ -19,8 +20,7 @@ define(function(require) {
       .on("click", publish);
   }
 
-  function Publisher(options) {
-    this.fsync = options.sync;
+  function Publisher() {
     host = Project.getHost();
     this.csrfToken = $("meta[name='csrf-token']").attr("content");
     this.dialog = {
@@ -40,11 +40,11 @@ define(function(require) {
     this.button = $("#navbar-publish-button");
   }
 
-  Publisher.prototype.init = function() {
+  Publisher.prototype.init = function(bramble) {
     var publisher = this;
     var dialog = publisher.dialog;
     var publishUrl = Project.getPublishUrl();
-    publisher.dialog.trackSyncChanges = true;
+
     publisher.isProjectPublic = true;
     publisher.needsUpdate = false;
     publisher.handlers = {
@@ -61,42 +61,28 @@ define(function(require) {
       this.updateDialog(publishUrl, true);
     }
 
-    if(publisher.fsync) {
-      publisher.fsync.addBeforeEachCallback(function() {
-        if(dialog.trackSyncChanges) {
-          publisher.disable();
-        }
-      });
-      publisher.fsync.addAfterEachCallback(function() {
-        if(!dialog.trackSyncChanges) {
+    // When there are file events triggered by the editor, update the publish/republish status
+    function handleFileEvent() {
+      if(publisher.needsUpdate) {
+        return;
+      }
+
+      if(!Project.getPublishUrl()) {
+        return;
+      }
+
+      publisher.handlers.unpublishedChangesPrompt();
+      Project.publishNeedsUpdate(true, function(err) {
+        if(err) {
+          console.error("[Thimble] Failed to set the publishNeedsUpdate flag after a file change: ", err);
           return;
         }
-
-        publisher.enable();
-        publisher.handlers.unpublishedChangesPrompt();
-
-        if(publisher.needsUpdate) {
-          return;
-        }
-
-        Project.publishNeedsUpdate(true, function(err) {
-          if(err) {
-            console.error("[Thimble] Failed to set the publishNeedsUpdate flag after a file change: ", err);
-            return;
-          }
-
-          publisher.needsUpdate = true;
-        });
-      });
-
-      // Don't allow publishing when we're syncing
-      SyncState.onSyncing(function() {
-        publisher.disable();
-      });
-      SyncState.onCompleted(function() {
-        publisher.enable();
+        publisher.needsUpdate = true;
       });
     }
+    bramble.on("fileChange", handleFileEvent);
+    bramble.on("fileDelete", handleFileEvent);
+    bramble.on("fileRename", handleFileEvent);
 
     dialog.buttons.publish.on("click", publisher.handlers.publish);
 
@@ -152,6 +138,7 @@ define(function(require) {
             return;
           }
 
+          Project.setPublishUrl(project.link);
           publisher.needsUpdate = false;
         });
       });
@@ -166,16 +153,14 @@ define(function(require) {
     }
 
     setState(false);
-    dialog.trackSyncChanges = false;
 
-    publisher.fsync.saveAndSyncAll(function(err) {
+    FileSystemSync.saveAndSyncAll(function(err) {
       if(err) {
         console.error("[Thimble] Failed to publish project");
         setState(true);
         return;
       }
 
-      dialog.trackSyncChanges = true;
       run();
     });
   };
@@ -219,6 +204,7 @@ define(function(require) {
           return;
         }
 
+        Project.setPublishUrl(null);
         publisher.needsUpdate = false;
       });
     });

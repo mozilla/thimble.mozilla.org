@@ -1,9 +1,12 @@
-define(function() {
+/**
+ * Manage a warning on application close depending on whether we're
+ * currently syncing (file sync or publish) with the server or not.
+ */
 
-  var _registeredFns = {
-    syncing: [],
-    completed: []
-  };
+define(function(require) {
+
+  var EventEmitter = require("EventEmitter");
+  var SyncState = new EventEmitter();
 
   function _onbeforeunload(e) {
     var s = "Sync in progress...";
@@ -16,37 +19,19 @@ define(function() {
     return s;
   }
 
-  function _trigger(type) {
-    _registeredFns[type].forEach(function(fn) { fn(); });
-  }
-
-  function isSyncing() {
+  SyncState.isSyncing = function() {
     return !!window.onbeforeunload;
-  }
-
-  function onSyncing(fn) {
-    _registeredFns.syncing.push(fn);
-  }
-
-  function syncing() {
-    window.onbeforeunload = _onbeforeunload;
-    _trigger("syncing");
-  }
-
-  function completed() {
-    window.onbeforeunload = null;
-    _trigger("completed");
-  }
-
-  function onCompleted(fn) {
-    _registeredFns.completed.push(fn);
-  }
-
-  return {
-    isSyncing: isSyncing,
-    syncing: syncing,
-    onSyncing: onSyncing,
-    completed: completed,
-    onCompleted: onCompleted
   };
+
+  SyncState.syncing = function() {
+    window.onbeforeunload = _onbeforeunload;
+    SyncState.trigger("syncing");
+  };
+
+  SyncState.completed = function() {
+    window.onbeforeunload = null;
+    SyncState.trigger("completed");
+  };
+
+  return SyncState;
 });
