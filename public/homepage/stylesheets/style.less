@@ -89,7 +89,7 @@ header {
 
 footer {
   background: @lightgreen;
-  margin-top: 75px;
+  margin-top: 80px;
 
   .content-wrapper {
     padding: 40px 0 40px 0;
@@ -102,17 +102,25 @@ footer {
   }
 
   .social-links {
-    float: left;
     list-style-type: none;
-    margin: 0;
-    padding-top: 5px;
-    position: relative;
-    left: 3px;
+    margin: 0 0 32px 0;
+    display: flex;
+    justify-content: center;
+    padding: 0;
 
     li {
       line-height: 15px;
       padding: 0;
-      margin: 0 0 12px 0;
+      margin: 0 15px;
+
+      &:first-child {
+        margin-left: 2px;
+      }
+
+      &:last-child {
+        margin-right: 2px;
+      }
+
     }
 
     li a {
@@ -126,8 +134,14 @@ footer {
       display: block;
       width: 20px;
       height: 20px;
-      top: -3px;
+      top: -4px;
       left: -2px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .email .icon {
+      background-image: ~"url(/img/footer-icon-email.svg)";
     }
 
     .help .icon {
@@ -141,15 +155,22 @@ footer {
     .github .icon {
       background-image: ~"url(/img/footer-icon-github.svg)";
     }
-  }
 
-  .social-links a {
-    color: white;
-    text-decoration: none;
+    .terms .icon {
+      background-image: ~"url(/img/footer-icon-terms.svg)";
+      top: -5px;
+    }
+
+    .privacy .icon {
+      background-image: ~"url(/img/footer-icon-privacy.svg)";
+      top: -5px;
+    }
   }
 
   .social-links a {
     opacity: .7;
+    color: white;
+    text-decoration: none;
     .transition(opacity .1s linear);
 
     &:hover {
@@ -157,13 +178,11 @@ footer {
     }
   }
 
-
   .project-info {
     background: @darkgreen;
     padding: 18px 20px;
     width: 610px;
-    float: left;
-    margin: 0;
+    margin: 0 auto;
     position: relative;
     border-radius: 4px;
     line-height: 22px;
@@ -172,6 +191,7 @@ footer {
       position: absolute;
       bottom: 24px;
       left: 20px;
+
       img {
         display: block;
         width: 100px;
