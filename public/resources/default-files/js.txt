@@ -1,5 +1,5 @@
 /***************************
-This is JavaScript (JS), the programming lanaguage that powers the web (and this is a comment, which you can delete).
+This is JavaScript (JS), the programming language that powers the web (and this is a comment, which you can delete).
 
 To use this file, link it to your markup by placing a <script> in the <body> of your HTML file:
 
