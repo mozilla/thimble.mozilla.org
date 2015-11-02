@@ -147,3 +147,10 @@
     transform: translateY(0px);
   }
 }
+
+/* Deal with smaller screens not having room for details bar */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  .remix-details-bar {
+    display: none !important;
+  }
+}

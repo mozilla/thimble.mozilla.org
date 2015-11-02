@@ -17,7 +17,8 @@ var detailsBarHtml =
 function customizeScroll($) {
   var bodyEl = $("body");
   var detailsBar = $(".remix-details-bar");
-  var detailsBarHeight = 64;
+  // If the remix details bar is not visible, don't add padding
+  var detailsBarHeight = detailsBar.is(":visible") ? detailsBar.height() : 0;
   var currentPadding = parseInt(bodyEl.css("padding-top"));
   bodyEl.css("padding-top", currentPadding + detailsBarHeight);
 
