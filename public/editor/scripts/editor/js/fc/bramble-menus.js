@@ -43,6 +43,24 @@ define(function(require) {
     setWordWrapUI(bramble.getWordWrap());
 
 
+    // Enable/Disable JavaScript in Preview
+    $("#allow-scripts-toggle").click(function() {
+      // Toggle current value
+      var $allowScriptsToggle = $("#allow-scripts-toggle");
+      var toggle = !($allowScriptsToggle.hasClass("switch-enabled"));
+
+      if(toggle) {
+        $allowScriptsToggle.addClass("switch-enabled");
+        bramble.enableJavaScript();
+      } else {
+        $allowScriptsToggle.removeClass("switch-enabled");
+        bramble.disableJavaScript();
+      }
+
+      return false;
+    });
+
+
     // Theme Toggle
     function lightThemeUI() {
       var transitionSpeed = 200;
