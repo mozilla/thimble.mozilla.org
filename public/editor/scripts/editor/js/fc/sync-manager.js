@@ -174,6 +174,10 @@ define(function(require) {
     var self = this;
     var csrfToken = self.csrfToken;
 
+    function finish() {
+      Project.removeFile(path, callback);
+    }
+
     function doDelete(id) {
       var request = $.ajax({
         contentType: "application/json",
@@ -188,7 +192,7 @@ define(function(require) {
           return callback(new Error("[Thimble] unable to persist `" + path + "`. Server responded with status " + request.status));
         }
 
-        Project.removeFile(path, callback);
+        finish();
       });
       request.fail(function(jqXHR, status, err) {
         logger("SyncManager", "unable to persist the file delete to the server", err);
@@ -199,6 +203,14 @@ define(function(require) {
     Project.getFileID(path, function(err, id) {
       if(err) {
         return callback(err);
+      }
+
+      // If the file hasn't been saved to the server yet (i.e., we have
+      // no id for this file path), we're done and can just clean up and bail.
+      if(!id) {
+        logger("SyncManager", "skipping remote delete step, no file id for path", path);
+        finish();
+        return;
       }
 
       doDelete(id);
