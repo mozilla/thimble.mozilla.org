@@ -9,18 +9,20 @@ define(function(require) {
     var titleBar = context.titleBar;
     var saveButton = context.saveButton;
 
-    function saveClicked(e) {
-        context.saveButton.off("click", saveClicked);
+    function saveClicked() {
+      // Ignore clicks if the button is disabled.
+      if(context.saveButton.hasClass("disabled")) {
+        return false;
+      }
 
-        e.stopPropagation();
-        e.preventDefault();
-        save(context);
+      context.saveButton.off("click", saveClicked);
+      save(context);
+      return false;
     }
 
-    function textClicked(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        rename(context);
+    function textClicked() {
+      rename(context);
+      return false;
     }
 
     saveButton[isSave ? "hide" : "show"]();
@@ -47,6 +49,9 @@ define(function(require) {
           save(context);
         }),
         esc: new KeyHandler.ESC(container, function() {
+          // Restore the current title if ESC is pressed
+          context.titleBar.val(Project.getTitle());
+
           context.saveButton.off("click", saveClicked);
           editingComplete(context);
         }),
@@ -54,10 +59,8 @@ define(function(require) {
           var input = context.titleBar;
           var nameLength = input.val().length;
 
-          //add or remove the 'disabled' class based on if length is 0
-          //and also add or remove the click listener
-          context.saveButton[nameLength == 0 ? "addClass" : "removeClass"]("disabled");
-          context.saveButton[nameLength == 0 ? "off" : "on"]("click", saveClicked);
+          // Add or remove the 'disabled' class based on title length
+          context.saveButton[nameLength === 0 ? "addClass" : "removeClass"]("disabled");
         })
       };
 

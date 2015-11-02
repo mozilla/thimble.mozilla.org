@@ -20,6 +20,29 @@ define(function(require) {
       bramble.increaseFontSize();
     });
 
+
+    // Word Wrap toggle
+    function setWordWrapUI(value) {
+      if(value) {
+        $("#line-wrap-toggle").addClass("switch-enabled");
+      } else {
+        $("#line-wrap-toggle").removeClass("switch-enabled");
+      }
+    }
+    function setWordWrap(value) {
+      bramble[value ? "enableWordWrap" : "disableWordWrap"](function() {
+        setWordWrapUI(value);
+      });
+    }
+    $("#line-wrap-toggle").click(function() {
+      // Toggle current value
+      setWordWrap(!bramble.getWordWrap());
+      return false;
+    });
+    // Set initial UI value to match editor value
+    setWordWrapUI(bramble.getWordWrap());
+
+
     // Theme Toggle
     function lightThemeUI() {
       var transitionSpeed = 200;

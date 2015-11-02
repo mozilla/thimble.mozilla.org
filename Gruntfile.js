@@ -45,12 +45,15 @@ module.exports = function( grunt ) {
           paths: {
             "bowser": "../../../../resources/scripts/vendor/bowser",
             "sso-override": "../../sso-override",
+            "logger": "../../logger",
             "jquery": "../../../../../bower_components/jquery/index",
             "localized": "../../../../../bower_components/webmaker-i18n/localized",
             "uuid": "../../../../../bower_components/node-uuid/uuid",
             "cookies": "../../../../../bower_components/cookies-js/dist/cookies",
             "project": "../../project/project",
-            "constants": "../../constants"
+            "PathCache": "../../path-cache",
+            "constants": "../../constants",
+            "EventEmitter": "../../../../../bower_components/eventEmitter/EventEmitter.min"
           },
           shim: {
             "jquery": {
@@ -125,11 +128,10 @@ module.exports = function( grunt ) {
         },
         files: {
           src: [
-            // Temporary, until we shift entirely to browserify
-            "public/scripts/**/*.js",
-            "!public/scripts/editor/vendor/*.js",
-            "frontend/src/scripts/**/*.js",
-            "frontend/src/scripts/*.js"
+            "public/editor/**/*.js",
+            "public/homepage/**/*.js",
+            "!public/homepage/scripts/google-analytics.js",
+            "!public/editor/scripts/google-analytics.js"
           ]
         }
       }

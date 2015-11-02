@@ -167,6 +167,41 @@ define(function(require) {
     });
   }
 
+  // Gets the file sync operation queue on the project root, which has information
+  // about all paths that need to be sync'ed with the server, and what needs to happen.
+  function getSyncQueue(root, callback) {
+    callback = lockSafeCallback(callback);
+
+    lock(function() {
+      getMetadata(root, function(err, metadata) {
+        if(err) {
+          return callback(err);
+        }
+
+        // Always return an object that has a `pending` child object.
+        var syncQueue = metadata && metadata.syncQueue || {pending: {}};
+        callback(null, syncQueue);
+      });
+    });
+  }
+
+  // Sets the file sync operation queue on the project root
+  function setSyncQueue(root, value, callback) {
+    callback = lockSafeCallback(callback);
+
+    lock(function() {
+      getMetadata(root, function(err, metadata) {
+        if(err) {
+          return callback(err);
+        }
+
+        metadata = metadata || {};
+        metadata.syncQueue = value;
+
+        fs.setxattr(root, PROJECT_META_KEY, metadata, callback);
+      });
+    });
+  }
 
   // Places project metadata (project id, file paths + publish ids) as an
   // extended attribute on on the project root folder. We don't lock here
@@ -181,13 +216,13 @@ define(function(require) {
       // If there is, we keep it and overwrite the ones that need to be updated
       project = project || {};
       project.title = config.title;
+      project.paths = {};
 
       // If it exists, data is in the following form, simplify it and make it easier
       // to get file id using a path:
       // [{ id: 1, path: "/index.html", project_id: 3 }, ... ]
       if (config.data) {
         project.id = config.id;
-        project.paths = {};
 
         config.data.forEach(function(info) {
           project.paths[info.path] = info.id;
@@ -241,6 +276,10 @@ define(function(require) {
 
   function load(config, callback) {
     if (config.user) {
+      if (config.update) {
+        return setMetadata(config, callback);
+      }
+
       return fetchMetadata(config, function(err, data) {
         setMetadata({
           data: data,
@@ -287,6 +326,8 @@ define(function(require) {
     setTitle: setTitle,
     removeFile: removeFile,
     setPublishNeedsUpdate: setPublishNeedsUpdate,
-    getPublishNeedsUpdate: getPublishNeedsUpdate
+    getPublishNeedsUpdate: getPublishNeedsUpdate,
+    getSyncQueue: getSyncQueue,
+    setSyncQueue: setSyncQueue
   };
 });
