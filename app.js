@@ -273,30 +273,43 @@ app.get('/templates/:name',
         routes.index );
 
 // publish a remix (to the db)
-app.post('/publish',
-         middleware.checkForAuth,
-         middleware.checkForPublishData,
-         middleware.ensureMetaData,
-         middleware.sanitizeMetaData,
-         middleware.checkPageOperation(databaseAPI),
-         middleware.sanitizeHTML,
-         middleware.saveData(databaseAPI, env.get('APP_HOSTNAME')),
-         middleware.rewritePublishId(databaseAPI),
-         middleware.generateUrls(appName, env.get('S3'), env.get('USER_SUBDOMAIN'), databaseAPI),
-         middleware.finalizeProject(env.get("APP_HOSTNAME")),
-         middleware.publishData(env.get('S3')),
-         middleware.rewriteUrl,
-         // update the database now that we have a S3-published URL
-         middleware.saveUrl(databaseAPI, env.get('APP_HOSTNAME')),
-         middleware.getRemixedFrom(databaseAPI, make),
-         middleware.publishMake(make),
-  function(req, res) {
-    res.json({
-      'published-url': req.publishedUrl,
-      'remix-id': req.publishId
-    });
-  }
-);
+if (!env.get('DISABLE_PUBLISH_ROUTE')) {
+  app.post('/publish',
+           middleware.checkForAuth,
+           middleware.checkForPublishData,
+           middleware.ensureMetaData,
+           middleware.sanitizeMetaData,
+           middleware.checkPageOperation(databaseAPI),
+           middleware.sanitizeHTML,
+           middleware.saveData(databaseAPI, env.get('APP_HOSTNAME')),
+           middleware.rewritePublishId(databaseAPI),
+           middleware.generateUrls(appName, env.get('S3'), env.get('USER_SUBDOMAIN'), databaseAPI),
+           middleware.finalizeProject(env.get("APP_HOSTNAME")),
+           middleware.publishData(env.get('S3')),
+           middleware.rewriteUrl,
+           // update the database now that we have a S3-published URL
+           middleware.saveUrl(databaseAPI, env.get('APP_HOSTNAME')),
+           middleware.getRemixedFrom(databaseAPI, make),
+           middleware.publishMake(make),
+    function(req, res) {
+      res.json({
+        'published-url': req.publishedUrl,
+        'remix-id': req.publishId
+      });
+    }
+  );
+} else {
+  // DISABLED
+  app.post('/publish',
+    function(req, res) {
+      res.status(500);
+      res.json({
+        status: 500,
+        message: "Publishing has been disabled"
+      });
+    }
+  );
+}
 
 // Localized Strings
 app.get( '/strings/:lang?', i18n.stringsRoute( 'en-US' ) );
