@@ -11,25 +11,6 @@ module.exports = function( grunt ) {
   grunt.initConfig({
     pkg: grunt.file.readJSON( "package.json" ),
 
-    watch: {
-      default: {
-        files: [
-          'frontend/src/scripts/**/*.js',
-          'frontend/src/styles/**/*.less'
-        ],
-        tasks: [
-          'jshint:frontend',
-          'browserify',
-          'lesslint',
-          'less'
-        ],
-        options: {
-          spawn: true,
-          interrupt: true
-        }
-      }
-    },
-
      requirejs: {
       dist: {
         options: {
@@ -130,91 +111,17 @@ module.exports = function( grunt ) {
           src: [
             "public/editor/**/*.js",
             "public/homepage/**/*.js",
+            "public/resources/remix/index.js",
             "!public/homepage/scripts/google-analytics.js",
             "!public/editor/scripts/google-analytics.js"
           ]
         }
       }
-    },
-
-    // Minification
-    uglify: {
-      default: {
-        files: {
-          'frontend/dist/scripts/thimble.min.js': ['frontend/dist/scripts/thimble.js']
-        }
-      }
-    },
-    cssmin: {
-      default: {
-        files: [{
-          expand: true,
-          cwd: 'frontend/src/styles',
-          src: ['*.css'],
-          dest: 'frontend/dist/styles',
-          ext: '.min.css'
-        }]
-      }
-    },
-
-    // Build
-    browserify: {
-      default: {
-        src: "./frontend/src/scripts/index.js",
-        dest: "./frontend/dist/scripts/thimble.js",
-        options: {
-          alias: {
-            // Specify bower dependencies here for use with commonjs
-            // requires e.g. require('zepto');
-            "zepto": "./bower_components/zepto/zepto.min.js"
-          },
-          browserifyOptions: {
-            commondir: false
-          }
-        }
-      },
-    },
-    less: {
-      default: {
-        options: {
-          compress: true
-        },
-        files: {
-          "frontend/dist/styles/error.css": "frontend/src/styles/error.less"
-        }
-      }
     }
-  });
-
-  // Thimble-task: build
-  //   Lints and builds the thimble front-end JavaScript and
-  //   LESS styles. Optional uglification. Optional watchifying
-  //   Takes:
-  //    [environment] - 'dev' or 'prod'
-  //    [watch] - true or false, but [environment] must be 'dev'
-  grunt.registerTask( "build", function(environment, watch) {
-    environment = environment === "prod" ? "prod" : "dev";
-    watch = watch == "true" ? true : false;
-
-    var tasks = [
-      "lesslint",
-      "less",
-      "jshint:frontend",
-      "browserify"
-    ];
-
-    if (environment === 'prod') {
-      tasks.push('uglify');
-      tasks.push('cssmin');
-    } else if (watch) {
-      grunt.task.run(['watch']);
-      return;
-    }
-
-    grunt.task.run(tasks);
   });
 
   grunt.registerTask( "test", [ "jshint:server", "jshint:frontend", "lesslint" ]);
+  grunt.registerTask( "build", [ "test", "requirejs:dist" ]);
   grunt.registerTask( "default", [ "test" ]);
 };
 
