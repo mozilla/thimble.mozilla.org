@@ -17,8 +17,8 @@ var detailsBarHtml =
 function customizeScroll($) {
   var bodyEl = $("body");
   var detailsBar = $(".remix-details-bar");
-  // If the remix details bar is not visible, don't add padding
-  var detailsBarHeight = detailsBar.is(":visible") ? detailsBar.height() : 0;
+  // If we're on a small screen (480px == phone in landscape), don't add padding
+  var detailsBarHeight = window.innerWidth >= 480 ? detailsBar.height() : 0;
   var currentPadding = parseInt(bodyEl.css("padding-top"));
   bodyEl.css("padding-top", currentPadding + detailsBarHeight);
 
