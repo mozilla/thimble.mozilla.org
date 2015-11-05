@@ -31,7 +31,7 @@ exec('git rev-parse HEAD', function(err, commitHash, stderr) {
       return process.exit(1);
     }
 
-    console.log('Successfully invalidated CloudFront for thimble.mozilla.org!\n', data);
+    console.log('Successfully invalidated CloudFront!\n', data);
     process.exit(0);
   });
 });

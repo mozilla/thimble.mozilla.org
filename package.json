@@ -65,6 +65,7 @@
   "scripts": {
     "postinstall": "node_modules/.bin/bower install && grunt requirejs:dist",
     "test": "node_modules/.bin/grunt",
-    "start": "node app.js"
+    "start": "node app.js",
+    "invalidate": "node invalidate.js"
   }
 }
