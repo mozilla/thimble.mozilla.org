@@ -52,7 +52,8 @@ require(["jquery"], function($) {
     $(projectSelector + " .project-information").text(getElapsedTime(lastEdited));
   });
 
-  $("#project-0").on("click", function() {
+  $("#project-0").one("click", function() {
+    $("#project-0").text("Creating...");
     window.location.href = "/projects/new" + queryString + (queryString === "" ? "?" : "&") +  "cacheBust=" + Date.now();
   });
 

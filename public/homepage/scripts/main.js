@@ -56,21 +56,20 @@ function setupNewProjectLinks($) {
     var cacheBust = "cacheBust=" + Date.now();
     var qs = queryString === "" ? "?" + cacheBust : queryString + "&" + cacheBust;
 
-    window.location.href = "/projects/new"  + qs;
+    $("#new-project-button-text").text("Creating new project...");
+
+    if(authenticated) {
+      window.location.href = "/projects/new" + qs;
+    } else {
+      window.location.href = "/editor" + queryString;
+    }
   }
 
   if(authenticated) {
-    newProjectButton.one("click", newProjectClickHandler);
     $("#new-project-link").one("click", newProjectClickHandler);
-    return;
   }
 
-  newProjectButton.one("click", function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    window.location.href = "/editor" + queryString;
-  });
+  newProjectButton.one("click", newProjectClickHandler);
 }
 
 function setupAuthentication($, uuid, cookies) {
