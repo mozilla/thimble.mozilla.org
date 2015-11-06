@@ -25,6 +25,7 @@ define(function(require) {
       return false;
     }
 
+    saveButton.text("Save");
     saveButton[isSave ? "hide" : "show"]();
     context.renameButton[isSave ? "show" : "hide"]();
     titleBar[isSave ? "save" : "edit"]();
@@ -110,6 +111,8 @@ define(function(require) {
   }
 
   function save(context) {
+    context.saveButton.text("Saving...");
+
     persist.call(context, context.titleBar.val(), function(err) {
       if(err) {
         console.error("[Bramble] Failed to rename the project with ", err);
