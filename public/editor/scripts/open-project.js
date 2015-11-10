@@ -9,7 +9,7 @@ require.config({
   }
 });
 
-require(["jquery"], function($) {
+require(["jquery", "constants"], function($, Constants) {
   var projects = document.querySelectorAll("tr.bramble-user-project");
   var username = encodeURIComponent($("#project-list").attr("data-username"));
   var queryString = window.location.search;
@@ -73,7 +73,8 @@ require(["jquery"], function($) {
         "X-Csrf-Token": $("meta[name='csrf-token']").attr("content")
       },
       type: "DELETE",
-      url: "/projects/" + projectId
+      url: "/projects/" + projectId,
+      timeout: Constants.AJAX_DEFAULT_TIMEOUT_MS
     });
     request.done(function() {
       if(request.status !== 204) {
@@ -81,6 +82,7 @@ require(["jquery"], function($) {
       }
     });
     request.fail(function(jqXHR, status, err) {
+      err = err || new Error("unknown network error");
       console.error(err);
     });
 
