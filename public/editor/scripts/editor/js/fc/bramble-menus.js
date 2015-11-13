@@ -109,13 +109,12 @@ define(function(require) {
     $("#theme-light").click(toggleTheme);
     $("#theme-dark").click(toggleTheme);
 
-    var previousTheme = bramble.getTheme();
-    if(previousTheme) {
-      if(previousTheme === "light-theme") {
-        lightThemeUI();
-      } else if(previousTheme === "dark-theme") {
-        darkThemeUI();
-      }
+    // If the user explicitly set the light-theme last time, use that
+    // otherwise default to using the dark-theme.
+    if(bramble.getTheme() === "light-theme") {
+      setTheme("light-theme");
+    } else {
+      setTheme("dark-theme");
     }
   }
 
