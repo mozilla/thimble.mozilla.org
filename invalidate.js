@@ -5,16 +5,15 @@
  */
 var exec = require('child_process').exec;
 exec('git rev-parse HEAD', function(err, commitHash, stderr) {
-  var env = require('habitat').load('.env');
   var AWS = require('aws-sdk');
   AWS.config.update({
-    accessKeyId: env.get('AWS_ACCESS_KEY_ID'),
-    secretAccessKey: env.get('AWS_SECRET_ACCESS_KEY')
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
   });
 
   var cloudfront = new AWS.CloudFront();
   var params = {
-    DistributionId: env.get('CLOUDFRONT_DISTRIBUTION_ID'),
+    DistributionId: process.env.CLOUDFRONT_DISTRIBUTION_ID,
     InvalidationBatch: {
       CallerReference: commitHash,
       Paths: {
