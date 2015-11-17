@@ -14,6 +14,7 @@ module.exports = function( grunt ) {
      requirejs: {
       dist: {
         options: {
+          waitSeconds: 120,
           appDir: "./public/editor/scripts/",
           baseUrl: "./editor/js",
           dir: "./dist",

@@ -9,6 +9,7 @@ requirejs.onError = function(err) {
 };
 
 require.config({
+  waitSeconds: 120,
   baseUrl: "/homepage/scripts",
   paths: {
     "jquery": "/bower/jquery/index",

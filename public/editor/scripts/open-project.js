@@ -1,4 +1,5 @@
 require.config({
+  waitSeconds: 120,
   paths: {
     "jquery": "/bower/jquery/index"
   },

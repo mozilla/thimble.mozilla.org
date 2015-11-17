@@ -1,5 +1,6 @@
 // NOTE: if you change this, update Gruntfile's requirejs:dist task too
 require.config({
+  waitSeconds: 120,
   baseUrl: "/editor/scripts/editor/js",
   paths: {
     "bowser": "/resources/scripts/vendor/bowser",
