@@ -3,6 +3,7 @@ define(function(require) {
   var InputField = require("fc/bramble-input-field");
   var KeyHandler = require("fc/bramble-keyhandler");
   var Project = require("project");
+  var analytics = require("analytics");
   var AJAX_DEFAULT_TIMEOUT_MS = require("constants").AJAX_DEFAULT_TIMEOUT_MS;
 
   function toggleComponents(context, isSave) {
@@ -128,6 +129,7 @@ define(function(require) {
           return;
         }
         editingComplete(context);
+        analytics.event("ProjectRenamed");
       });
     });
   }

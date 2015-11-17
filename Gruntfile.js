@@ -35,7 +35,8 @@ module.exports = function( grunt ) {
             "project": "../../project/project",
             "PathCache": "../../path-cache",
             "constants": "../../constants",
-            "EventEmitter": "../../../../../bower_components/eventEmitter/EventEmitter.min"
+            "EventEmitter": "../../../../../bower_components/eventEmitter/EventEmitter.min",
+            "analytics": "../../../../../bower_components/webmaker-analytics/analytics"
           },
           shim: {
             "jquery": {
