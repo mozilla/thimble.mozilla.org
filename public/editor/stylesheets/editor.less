@@ -632,13 +632,13 @@
 .preview-device-toggle {
   background: #f9f9f9;
   border-radius: 30px;
-  height: 34px;
+  height: 30px;
 
   img {
     width: 20px;
     height: 20px;
     position: relative;
-    top: 7px;
+    top: 5px;
   }
 }
 
@@ -668,6 +668,32 @@
 .viewmode-inactive {
   opacity: 0.3;
   filter: alpha(opacity=30);
+}
+
+
+.fullscreen-preview-toggle {
+  padding: 4px;
+  margin-left: 8px;
+  line-height: 18px;
+  cursor: pointer;
+
+  .fullscreen-off {
+    display: none
+  }
+
+  &:hover {
+    img {
+      opacity: .6;
+    }
+  }
+
+  img {
+    width: 18px;
+    height: 18px;
+    position: relative;
+    opacity: .3;
+    top: 2px;
+  }
 }
 
 /* ------ MIXINS ------ */
@@ -786,4 +812,71 @@
             }
         }
     }
+}
+
+
+
+.fullscreen-preview {
+
+  #webmaker-bramble {
+    top: 0px;
+  }
+
+  .filetree-pane-nav, .editor-pane-nav, nav  {
+    display: none !important;
+  }
+
+  .bramble-toolbar {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 98px;
+    height: 52px;
+    padding: 4px;
+    background: rgba(0,0,0,.3);
+    border-radius: 3px;
+    box-sizing: border-box;
+
+    .preview-pane-nav {
+      height: 44px;
+      position: absolute;
+      width: 90px !important;
+      top: 4px;
+      right: 8px;
+      box-sizing: border-box;
+      min-width: 0;
+      border-radius: 1px;
+
+      .nav-container {
+        min-width: 0;
+        padding: 0 12px;
+
+        .pull-right {
+          margin-left: 0px;
+        }
+      }
+    }
+
+    #preview-pane-nav-refresh {
+      margin: 0 10px 0 0;
+    }
+
+    .fullscreen-preview-toggle {
+      margin-left: 0px;
+
+      .fullscreen-on {
+        display: none;
+      }
+
+      .fullscreen-off {
+        display: block;
+      }
+    }
+
+    .preview-tutorial-toggle,
+    .preview-device-toggle {
+      display: none;
+    }
+
+  }
 }

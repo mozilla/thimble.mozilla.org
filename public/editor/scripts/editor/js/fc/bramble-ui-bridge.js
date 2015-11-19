@@ -222,6 +222,22 @@ define(function(require) {
       }
     }
 
+    $(".fullscreen-preview-toggle").click(function() {
+      toggleFullscreenPreview();
+    });
+
+    function toggleFullscreenPreview(){
+      if($("body").hasClass("fullscreen-preview")){
+        analytics.event("Fullscreen Off");
+      } else {
+        analytics.event("Fullscreen On");
+      }
+
+      $("body").toggleClass("fullscreen-preview");
+
+      bramble.toggleFullscreenPreview();
+    }
+
     var publishDialogUnderlay;
     function hidePublishDialog() {
       publishDialogUnderlay.remove();
