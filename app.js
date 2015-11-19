@@ -36,7 +36,6 @@ var favicon = require('serve-favicon'),
 var appName = "thimble",
     app = express(),
     env = require('./lib/environment'),
-    emulate_s3 = env.get('S3_EMULATION') || !env.get('S3_KEY'),
     WWW_ROOT = path.resolve(__dirname, 'public'),
 
     middleware = require('./lib/middleware')(),
@@ -50,7 +49,6 @@ var appName = "thimble",
     ], {
       autoescape: true
     }),
-    parameters = require('./lib/parameters')(),
     routes = require('./routes')( utils, nunjucksEnv, appName ),
     webmakerProxy = require('./lib/proxy')();
 
@@ -159,18 +157,11 @@ app.use(express.static(path.join(__dirname, 'learning_projects'), {maxAge: "1d"}
 app.use(express.static(path.join(__dirname, 'templates'), {maxAge: "1d"}));
 app.use( "/bower", express.static( path.join(__dirname, "bower_components" ), {maxAge: "1d"}));
 
-// what do we do when a project request comes in by name (:name route)?
-app.param('name', parameters.name);
-
 // resource proxying for http-on-https
 webmakerProxy(app, middleware.checkForAuth);
 
 // Localized Strings
 app.get( '/strings/:lang?', i18n.stringsRoute( 'en-US' ) );
-
-app.get( '/external/make-api.js', function( req, res ) {
-  res.sendfile( path.resolve( __dirname, "node_modules/makeapi-client/src/make-api.js" ) );
-});
 
 // DEVOPS - Healthcheck
 app.get('/healthcheck', function( req, res ) {
@@ -196,9 +187,3 @@ app.use(errorhandling.pageNotFoundHandler);
 app.listen(env.get("PORT"), function(){
   console.log('Express server listening on ' + env.get("APP_HOSTNAME"));
 });
-
-// If we're in running in emulated S3 mode, run a mini
-// server for serving up the "s3" published content.
-if (emulate_s3) {
-  require("mox-server").runServer(env.get("MOX_PORT", 12319));
-}
