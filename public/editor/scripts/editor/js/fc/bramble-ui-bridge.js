@@ -5,7 +5,7 @@ define(function(require) {
   var BrambleMenus = require("fc/bramble-menus");
   var Underlay = require("fc/bramble-underlay");
   var FileSystemSync = require("fc/filesystem-sync");
-  var Project = require("project");
+  var Project = require("project/project");
   var analytics = require("analytics");
 
   var _escKeyHandler;

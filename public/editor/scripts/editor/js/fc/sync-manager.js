@@ -38,7 +38,7 @@ define(function(require) {
   var AUTOSYNC_INTERVAL_MS = require("constants").AUTOSYNC_INTERVAL_MS;
   var AJAX_DEFAULT_DELAY_MS = require("constants").AJAX_DEFAULT_DELAY_MS;
   var AJAX_DEFAULT_TIMEOUT_MS = require("constants").AJAX_DEFAULT_TIMEOUT_MS;
-  var Project = require("project");
+  var Project = require("project/project");
   var PathCache = require("PathCache");
   var Backoff = require("fc/backoff");
   var logger = require("logger");

@@ -11,32 +11,39 @@ module.exports = function( grunt ) {
   grunt.initConfig({
     pkg: grunt.file.readJSON( "package.json" ),
 
-     requirejs: {
+    requirejs: {
       dist: {
         options: {
           waitSeconds: 120,
-          appDir: "./public/editor/scripts/",
-          baseUrl: "./editor/js",
-          dir: "./dist",
+          appDir: "public/",
+          baseUrl: "./",
+          dir: "dist",
           modules: [{
-            name: "../../main"
+            name: "editor/scripts/main"
+          }, {
+            name: "homepage/scripts/main"
           }],
           findNestedDependencies: true,
           optimizeCss: "none",
           removeCombined: true,
           paths: {
-            "bowser": "../../../../resources/scripts/vendor/bowser",
-            "sso-override": "../../sso-override",
-            "logger": "../../logger",
-            "jquery": "../../../../../bower_components/jquery/index",
-            "localized": "../../../../../bower_components/webmaker-i18n/localized",
-            "uuid": "../../../../../bower_components/node-uuid/uuid",
-            "cookies": "../../../../../bower_components/cookies-js/dist/cookies",
-            "project": "../../project/project",
-            "PathCache": "../../path-cache",
-            "constants": "../../constants",
-            "EventEmitter": "../../../../../bower_components/eventEmitter/EventEmitter.min",
-            "analytics": "../../../../../bower_components/webmaker-analytics/analytics"
+            // Folders
+            "fc": "editor/scripts/editor/js/fc",
+            "project": "editor/scripts/project",
+
+            // Files
+            "bowser": "resources/scripts/vendor/bowser",
+            "bramble-editor": "editor/scripts/editor/js/bramble-editor",
+            "sso-override": "editor/scripts/sso-override",
+            "logger": "editor/scripts/logger",
+            "jquery": "../bower_components/jquery/index",
+            "localized": "../bower_components/webmaker-i18n/localized",
+            "uuid": "../bower_components/node-uuid/uuid",
+            "cookies": "../bower_components/cookies-js/dist/cookies",
+            "PathCache": "editor/scripts/path-cache",
+            "constants": "editor/scripts/constants",
+            "EventEmitter": "../bower_components/eventEmitter/EventEmitter.min",
+            "analytics": "../bower_components/webmaker-analytics/analytics"
           },
           shim: {
             "jquery": {

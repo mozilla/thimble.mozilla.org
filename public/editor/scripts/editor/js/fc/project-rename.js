@@ -2,7 +2,7 @@ define(function(require) {
   var $ = require("jquery");
   var InputField = require("fc/bramble-input-field");
   var KeyHandler = require("fc/bramble-keyhandler");
-  var Project = require("project");
+  var Project = require("project/project");
   var analytics = require("analytics");
   var AJAX_DEFAULT_TIMEOUT_MS = require("constants").AJAX_DEFAULT_TIMEOUT_MS;
 

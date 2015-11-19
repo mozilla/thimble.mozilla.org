@@ -150,7 +150,14 @@ app.use(function(req, res, next) {
   next();
 });
 app.use(express.static(tmpDir, {maxAge: "1d"}));
-app.use('/dist', express.static(path.join(__dirname, 'dist'), {maxAge: "1d"}));
+
+// We use pre-built resources in production
+if (env.get("NODE_ENV") === "production") {
+  app.use('/', express.static(path.join(__dirname, 'dist'), {maxAge: "1d"}));
+} else {
+  app.use('/', express.static(path.join(__dirname, 'public'), {maxAge: "1d"}));
+}
+
 app.use(express.static(path.join(__dirname, 'public'), {maxAge: "1d"}));
 app.use(express.static(path.join(__dirname, 'public/resources'), {maxAge: "1d"}));
 app.use(express.static(path.join(__dirname, 'learning_projects'), {maxAge: "1d"}));

@@ -2,7 +2,7 @@ define(function(require) {
   var $ = require("jquery"),
       BrambleUIBridge = require("fc/bramble-ui-bridge"),
       FileSystemSync = require("fc/filesystem-sync"),
-      Project = require("project");
+      Project = require("project/project");
 
   var csrfToken = $("meta[name='csrf-token']").attr("content");
 

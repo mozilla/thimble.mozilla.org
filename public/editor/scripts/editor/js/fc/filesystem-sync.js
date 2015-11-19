@@ -6,7 +6,7 @@
 
 define(function(require) {
   var $ = require("jquery");
-  var Project = require("project");
+  var Project = require("project/project");
   var SyncManager = require("fc/sync-manager");
   var SyncState = require("fc/sync-state");
 

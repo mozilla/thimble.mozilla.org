@@ -3,6 +3,10 @@ require.config({
   waitSeconds: 120,
   baseUrl: "/editor/scripts/editor/js",
   paths: {
+    // Folders
+    "project": "../../project",
+
+    // Files
     "bowser": "/resources/scripts/vendor/bowser",
     "sso-override": "../../sso-override",
     "logger": "../../logger",
@@ -10,7 +14,6 @@ require.config({
     "localized": "/bower/webmaker-i18n/localized",
     "uuid": "/bower/node-uuid/uuid",
     "cookies": "/bower/cookies-js/dist/cookies",
-    "project": "../../project/project",
     "PathCache": "../../path-cache",
     "constants": "../../constants",
     "EventEmitter": "/bower/eventEmitter/EventEmitter.min",
@@ -76,5 +79,5 @@ require(["jquery", "bowser"], function($, bowser) {
     });
   }
 
-  require(["bramble-editor", "project", "sso-override", "fc/project-rename"], init);
+  require(["bramble-editor", "project/project", "sso-override", "fc/project-rename"], init);
 });
