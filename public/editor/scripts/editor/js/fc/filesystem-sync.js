@@ -36,10 +36,15 @@ define(function(require) {
 
     // Update the UI with a "Saving..." indicator whenever we sync a file
     syncManager.on("file-sync-start", function() {
+      $("#navbar-save-indicator").text("Saving...");
       $("#navbar-save-indicator").removeClass("hide");
     });
     syncManager.on("file-sync-stop", function() {
       $("#navbar-save-indicator").addClass("hide");
+    });
+    syncManager.on("file-sync-error", function() {
+      // Saving over the network failed, let the user know, and that we'll retry
+      $("#navbar-save-indicator").text("Saving failed, retrying...");
     });
 
     // Warn the user when we're syncing so they don't close the window by accident

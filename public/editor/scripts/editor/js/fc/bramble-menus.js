@@ -2,6 +2,7 @@ define(function(require) {
 
   var $ = require("jquery");
   var PopupMenu = require("fc/bramble-popupmenu");
+  var analytics = require("analytics");
 
   function setupUserMenu() {
     PopupMenu.create("#navbar-logged-in li", "#navbar-logged-in li ul.dropdown");
@@ -13,11 +14,17 @@ define(function(require) {
 
     // Font size
     $("#editor-pane-nav-decrease-font").click(function() {
-      bramble.decreaseFontSize();
+      bramble.decreaseFontSize(function() {
+        var fontSize = bramble.getFontSize();
+        analytics.event("DecreaseFontSize", {label: "Decreased font size to " + fontSize});
+      });
     });
 
     $("#editor-pane-nav-increase-font").click(function() {
-      bramble.increaseFontSize();
+      bramble.increaseFontSize(function() {
+        var fontSize = bramble.getFontSize();
+        analytics.event("IncreaseFontSize", {label: "Increased font size to " + fontSize});
+      });
     });
 
 
@@ -30,8 +37,10 @@ define(function(require) {
       }
     }
     function setWordWrap(value) {
-      bramble[value ? "enableWordWrap" : "disableWordWrap"](function() {
+      var method = value ? "enableWordWrap" : "disableWordWrap";
+      bramble[method](function() {
         setWordWrapUI(value);
+        analytics.event(method);
       });
     }
     $("#line-wrap-toggle").click(function() {
@@ -41,6 +50,26 @@ define(function(require) {
     });
     // Set initial UI value to match editor value
     setWordWrapUI(bramble.getWordWrap());
+
+
+    // Enable/Disable JavaScript in Preview
+    $("#allow-scripts-toggle").click(function() {
+      // Toggle current value
+      var $allowScriptsToggle = $("#allow-scripts-toggle");
+      var toggle = !($allowScriptsToggle.hasClass("switch-enabled"));
+
+      if(toggle) {
+        $allowScriptsToggle.addClass("switch-enabled");
+        bramble.enableJavaScript();
+        analytics.event("EnableJavaScript");
+      } else {
+        $allowScriptsToggle.removeClass("switch-enabled");
+        bramble.disableJavaScript();
+        analytics.event("DisableJavaScript");
+      }
+
+      return false;
+    });
 
 
     // Theme Toggle
@@ -76,9 +105,11 @@ define(function(require) {
       if(theme === "light-theme") {
         bramble.useLightTheme();
         lightThemeUI();
+        analytics.event("LightTheme");
       } else if(theme === "dark-theme") {
         bramble.useDarkTheme();
         darkThemeUI();
+        analytics.event("DarkTheme");
       }
     }
     function toggleTheme() {
@@ -91,13 +122,12 @@ define(function(require) {
     $("#theme-light").click(toggleTheme);
     $("#theme-dark").click(toggleTheme);
 
-    var previousTheme = bramble.getTheme();
-    if(previousTheme) {
-      if(previousTheme === "light-theme") {
-        lightThemeUI();
-      } else if(previousTheme === "dark-theme") {
-        darkThemeUI();
-      }
+    // If the user explicitly set the light-theme last time, use that
+    // otherwise default to using the dark-theme.
+    if(bramble.getTheme() === "light-theme") {
+      setTheme("light-theme");
+    } else {
+      setTheme("dark-theme");
     }
   }
 
@@ -146,6 +176,7 @@ define(function(require) {
         if (err) {
           console.log("[Brackets] Failed to insert default HTML file", err);
         }
+        analytics.event("AddHTMLFile");
       });
     });
     $addCss.click(function() {
@@ -157,6 +188,7 @@ define(function(require) {
         if (err) {
           console.log("[Brackets] Failed to insert default CSS file", err);
         }
+        analytics.event("AddCSSFile");
       });
     });
     $addJs.click(function() {
@@ -168,6 +200,7 @@ define(function(require) {
         if (err) {
           console.log("[Brackets] Failed to insert default JS file", err);
         }
+        analytics.event("AddJSFile");
       });
     });
     $addTutorial.click(function() {
@@ -175,12 +208,14 @@ define(function(require) {
         if (err) {
           console.log("[Brackets] Failed to insert tutorial.html", err);
         }
+        analytics.event('AddTutorial');
       });
     });
 
     $addUpload.click(function() {
       menu.close();
       bramble.showUploadFilesDialog();
+      analytics.event("ShowUploadFilesDialog");
     });
 
     // We hide the add tutorial button if a tutorial exists

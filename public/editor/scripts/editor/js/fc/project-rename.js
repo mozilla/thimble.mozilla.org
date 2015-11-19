@@ -3,6 +3,8 @@ define(function(require) {
   var InputField = require("fc/bramble-input-field");
   var KeyHandler = require("fc/bramble-keyhandler");
   var Project = require("project");
+  var analytics = require("analytics");
+  var AJAX_DEFAULT_TIMEOUT_MS = require("constants").AJAX_DEFAULT_TIMEOUT_MS;
 
   function toggleComponents(context, isSave) {
     var container = context.container;
@@ -25,6 +27,7 @@ define(function(require) {
       return false;
     }
 
+    saveButton.text("Save");
     saveButton[isSave ? "hide" : "show"]();
     context.renameButton[isSave ? "show" : "hide"]();
     titleBar[isSave ? "save" : "edit"]();
@@ -86,7 +89,8 @@ define(function(require) {
       url: appUrl + "/projects/" + Project.getID() + "/rename",
       data: JSON.stringify({
         title: title
-      })
+      }),
+      timeout: AJAX_DEFAULT_TIMEOUT_MS
     });
     request.done(function(data) {
       if(request.status !== 200) {
@@ -97,6 +101,7 @@ define(function(require) {
       callback();
     });
     request.fail(function(jqXHR, status, err) {
+      err = err || new Error("unknown network error");
       callback(err);
     });
   }
@@ -110,6 +115,8 @@ define(function(require) {
   }
 
   function save(context) {
+    context.saveButton.text("Saving...");
+
     persist.call(context, context.titleBar.val(), function(err) {
       if(err) {
         console.error("[Bramble] Failed to rename the project with ", err);
@@ -122,6 +129,7 @@ define(function(require) {
           return;
         }
         editingComplete(context);
+        analytics.event("ProjectRenamed");
       });
     });
   }

@@ -9,12 +9,14 @@ requirejs.onError = function(err) {
 };
 
 require.config({
+  waitSeconds: 120,
   baseUrl: "/homepage/scripts",
   paths: {
     "jquery": "/bower/jquery/index",
     "localized": "/bower/webmaker-i18n/localized",
     "uuid": "/bower/node-uuid/uuid",
     "cookies": "/bower/cookies-js/dist/cookies",
+    "analytics": "/bower/webmaker-analytics/analytics",
     // TODO: we should really put the homepage and editor in the same scope for code sharing
     "fc/bramble-popupmenu": "/editor/scripts/editor/js/fc/bramble-popupmenu",
     "fc/bramble-keyhandler": "/editor/scripts/editor/js/fc/bramble-keyhandler",
@@ -41,7 +43,7 @@ function preloadBramble($) {
   });
 }
 
-function setupNewProjectLinks($) {
+function setupNewProjectLinks($, analytics) {
   var authenticated = $("#navbar-login").hasClass("signed-in");
   var newProjectButton = $("#new-project-button");
   var queryString = window.location.search;
@@ -56,24 +58,25 @@ function setupNewProjectLinks($) {
     var cacheBust = "cacheBust=" + Date.now();
     var qs = queryString === "" ? "?" + cacheBust : queryString + "&" + cacheBust;
 
-    window.location.href = "/projects/new"  + qs;
+    $("#new-project-button-text").text("Creating new project...");
+
+    if(authenticated) {
+      analytics.event("NewProject", {label: "New authenticated project"});
+      window.location.href = "/projects/new" + qs;
+    } else {
+      analytics.event("NewProject", {label: "New anonymous project"});
+      window.location.href = "/editor" + queryString;
+    }
   }
 
   if(authenticated) {
-    newProjectButton.one("click", newProjectClickHandler);
     $("#new-project-link").one("click", newProjectClickHandler);
-    return;
   }
 
-  newProjectButton.one("click", function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    window.location.href = "/editor" + queryString;
-  });
+  newProjectButton.one("click", newProjectClickHandler);
 }
 
-function setupAuthentication($, uuid, cookies) {
+function setupAuthentication($, uuid, cookies, analytics) {
   var joinEl = $('#signup-link');
   var loginEl = $('#login-link');
   var loginUrl = loginEl.attr("data-loginUrl");
@@ -89,7 +92,10 @@ function setupAuthentication($, uuid, cookies) {
       var location = loginUrl;
 
       if (newUser) {
+        analytics.event("SignUp");
         location += "?signup=true";
+      } else {
+        analytics.event("SignIn");
       }
 
       window.location = location;
@@ -107,11 +113,11 @@ function setupAuthentication($, uuid, cookies) {
 // flow. If more needs to be added, the logic should be factored out into
 // separate modules, each of which would be initialized here.
 // See: public/editor/scripts/main.js
-function init($, uuid, cookies, PopupMenu) {
+function init($, uuid, cookies, PopupMenu, analytics) {
   PopupMenu.create("#navbar-logged-in li", "#navbar-logged-in li ul.dropdown");
-  setupAuthentication($, uuid, cookies);
-  setupNewProjectLinks($);
+  setupAuthentication($, uuid, cookies, analytics);
+  setupNewProjectLinks($, analytics);
   preloadBramble($);
 }
 
-require(['jquery', 'uuid', 'cookies', 'fc/bramble-popupmenu'], init);
+require(['jquery', 'uuid', 'cookies', 'fc/bramble-popupmenu', 'analytics'], init);

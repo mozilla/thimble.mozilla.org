@@ -1,6 +1,7 @@
 define(function(require) {
   var $ = require("jquery");
   var PROJECT_META_KEY = require("constants").PROJECT_META_KEY;
+  var AJAX_DEFAULT_TIMEOUT_MS = require("constants").AJAX_DEFAULT_TIMEOUT_MS;
   var fs = Bramble.getFileSystem();
 
   // We only want one operation at a time on the metadata xattrib.
@@ -245,12 +246,14 @@ define(function(require) {
       headers: {
         "Accept": "application/json"
       },
-      url: url
+      url: url,
+      timeout: AJAX_DEFAULT_TIMEOUT_MS
     });
     request.done(function(data) {
       callback(null, data);
     });
     request.fail(function(jqXHR, status, err) {
+      err = err || new Error("unknown network error");
       callback(err);
     });
   }
@@ -307,12 +310,14 @@ define(function(require) {
         "X-Csrf-Token": config.csrfToken
       },
       url: config.host + "/projects/" + config.id,
-      data: JSON.stringify(config.data)
+      data: JSON.stringify(config.data),
+      timeout: AJAX_DEFAULT_TIMEOUT_MS
     });
     request.done(function() {
       callback();
     });
     request.fail(function(jqXHR, status, err) {
+      err = err || new Error("unknown network error");
       callback(err);
     });
   }

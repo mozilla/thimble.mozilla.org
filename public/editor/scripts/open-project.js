@@ -1,6 +1,8 @@
 require.config({
+  waitSeconds: 120,
   paths: {
-    "jquery": "/bower/jquery/index"
+    "jquery": "/bower/jquery/index",
+    "analytics": "/bower/webmaker-analytics/analytics"
   },
   shim: {
     "jquery": {
@@ -9,7 +11,7 @@ require.config({
   }
 });
 
-require(["jquery"], function($) {
+require(["jquery", "constants", "analytics"], function($, Constants, analytics) {
   var projects = document.querySelectorAll("tr.bramble-user-project");
   var username = encodeURIComponent($("#project-list").attr("data-username"));
   var queryString = window.location.search;
@@ -52,7 +54,10 @@ require(["jquery"], function($) {
     $(projectSelector + " .project-information").text(getElapsedTime(lastEdited));
   });
 
-  $("#project-0").on("click", function() {
+  $("#project-0").one("click", function() {
+    analytics.event("NewProject", {label: "New authenticated project"});
+
+    $("#project-0").text("Creating...");
     window.location.href = "/projects/new" + queryString + (queryString === "" ? "?" : "&") +  "cacheBust=" + Date.now();
   });
 
@@ -67,12 +72,15 @@ require(["jquery"], function($) {
     var projectElementId = project.attr("id");
     $("#" + projectElementId + " > .project-title").off("click");
 
+    analytics.event("DeleteProject");
+
     var request = $.ajax({
       headers: {
         "X-Csrf-Token": $("meta[name='csrf-token']").attr("content")
       },
       type: "DELETE",
-      url: "/projects/" + projectId
+      url: "/projects/" + projectId,
+      timeout: Constants.AJAX_DEFAULT_TIMEOUT_MS
     });
     request.done(function() {
       if(request.status !== 204) {
@@ -80,6 +88,7 @@ require(["jquery"], function($) {
       }
     });
     request.fail(function(jqXHR, status, err) {
+      err = err || new Error("unknown network error");
       console.error(err);
     });
 

@@ -1,5 +1,6 @@
 // NOTE: if you change this, update Gruntfile's requirejs:dist task too
 require.config({
+  waitSeconds: 120,
   baseUrl: "/editor/scripts/editor/js",
   paths: {
     "bowser": "/resources/scripts/vendor/bowser",
@@ -12,7 +13,8 @@ require.config({
     "project": "../../project/project",
     "PathCache": "../../path-cache",
     "constants": "../../constants",
-    "EventEmitter": "/bower/eventEmitter/EventEmitter.min"
+    "EventEmitter": "/bower/eventEmitter/EventEmitter.min",
+    "analytics": "/bower/webmaker-analytics/analytics"
   },
   shim: {
     "jquery": {

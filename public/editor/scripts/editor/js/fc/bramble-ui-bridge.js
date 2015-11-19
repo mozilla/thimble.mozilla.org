@@ -6,6 +6,7 @@ define(function(require) {
   var Underlay = require("fc/bramble-underlay");
   var FileSystemSync = require("fc/filesystem-sync");
   var Project = require("project");
+  var analytics = require("analytics");
 
   var _escKeyHandler;
 
@@ -28,8 +29,7 @@ define(function(require) {
     function checkIfMultiFile() {
       var data = bramble.getLayout();
 
-      if(data.sidebarWidth > 0)
-      {
+      if(data.sidebarWidth > 0) {
         // Total width of window
         var total = data.sidebarWidth + data.firstPaneWidth + data.secondPaneWidth;
 
@@ -54,6 +54,8 @@ define(function(require) {
       e.preventDefault();
       e.stopPropagation();
 
+      analytics.event("NewProject", {label: "New authenticated project"});
+
       var queryString = window.location.search;
       var cacheBust = "cacheBust=" + Date.now();
       queryString = queryString === "" ? "?" + cacheBust : queryString + "&" + cacheBust;
@@ -66,6 +68,8 @@ define(function(require) {
       if(!window.confirm("OK to Delete this project?")) {
         return false;
       }
+
+      analytics.event("DeleteProject");
 
       var request = $.ajax({
         headers: {
@@ -89,6 +93,7 @@ define(function(require) {
 
     $("#export-project-zip").click(function() {
       bramble.export();
+      analytics.event("ExportZip");
       return false;
     });
 
@@ -113,16 +118,19 @@ define(function(require) {
     // Undo
     $("#editor-pane-nav-undo").click(function() {
       bramble.undo();
+      analytics.event("Undo");
     });
 
     // Redo
     $("#editor-pane-nav-redo").click(function() {
       bramble.redo();
+      analytics.event("Redo");
     });
 
     // Refresh Preview
     $("#preview-pane-nav-refresh").click(function() {
       bramble.refreshPreview();
+      analytics.event("RefreshPreview");
     });
 
 
@@ -145,11 +153,15 @@ define(function(require) {
     function setNormalPreview() {
       $("#tutorial-title").removeClass("preview-title-highlighted");
       $("#preview-title").addClass("preview-title-highlighted");
+
+      analytics.event("NormalPreview", {label: "User switched to normal preview mode vs. tutorial"});
     }
 
     function setTutorialPreview() {
       $("#preview-title").removeClass("preview-title-highlighted");
       $("#tutorial-title").addClass("preview-title-highlighted");
+
+      analytics.event("TutorialPreview", {label: "User switched to tutorial mode vs. preview"});
     }
 
     // User change to tutorial vs. regular preview mode
@@ -195,8 +207,9 @@ define(function(require) {
 
         $("#preview-pane-nav-desktop").removeClass("viewmode-active");
         $("#preview-pane-nav-desktop").addClass("viewmode-inactive");
-      }
-      else if (mode === "desktop") {
+
+        analytics.event("MobilePreview");
+      } else if (mode === "desktop") {
         bramble.useDesktopPreview();
 
         $("#preview-pane-nav-desktop").removeClass("viewmode-inactive");
@@ -204,6 +217,8 @@ define(function(require) {
 
         $("#preview-pane-nav-phone").removeClass("viewmode-active");
         $("#preview-pane-nav-phone").addClass("viewmode-inactive");
+
+        analytics.event("DesktopPreview");
       }
     }
 
@@ -231,6 +246,8 @@ define(function(require) {
           return;
         }
       });
+
+      analytics.event("Publish");
     }
 
     function showPublishHelper() {
@@ -265,30 +282,24 @@ define(function(require) {
     // Hook up event listeners
     bramble.on("layout", updateLayout);
 
-    bramble.on("previewModeChange", function(data) {
-      console.log("thimble side", "previewModeChange", data);
-    });
-
     bramble.on("sidebarChange", function(data) {
-      console.log("thimble side", "sidebarChange", data);
-
       // Open/close filetree nav during hidden double click
-      if(data.visible === true)
-      {
+      if(data.visible) {
         $("#editor-pane-nav-options-menu").hide();
         $("#editor-pane-nav-fileview").css("display", "none");
         $(".filetree-pane-nav").css("display", "block");
-      }
-      else if(data.visible === false)
-      {
+
+        analytics.event("ShowSidebar");
+      } else {
         $("#editor-pane-nav-options-menu").hide();
         $("#editor-pane-nav-fileview").css("display", "block");
         $(".filetree-pane-nav").css("display", "none");
+
+        analytics.event("HideSidebar");
       }
     });
 
     bramble.on("activeEditorChange", function(data) {
-      console.log("thimble side", "activeEditorChange", data);
       setNavFilename(data.filename);
     });
 

@@ -35,9 +35,12 @@ define(function(require) {
   var EventEmitter = require("EventEmitter");
   var SYNC_OPERATION_UPDATE = require("constants").SYNC_OPERATION_UPDATE;
   var SYNC_OPERATION_DELETE = require("constants").SYNC_OPERATION_DELETE;
-  var SYNC_TIMEOUT_MS = require("constants").SYNC_TIMEOUT_MS;
+  var AUTOSYNC_INTERVAL_MS = require("constants").AUTOSYNC_INTERVAL_MS;
+  var AJAX_DEFAULT_DELAY_MS = require("constants").AJAX_DEFAULT_DELAY_MS;
+  var AJAX_DEFAULT_TIMEOUT_MS = require("constants").AJAX_DEFAULT_TIMEOUT_MS;
   var Project = require("project");
   var PathCache = require("PathCache");
+  var Backoff = require("fc/backoff");
   var logger = require("logger");
 
   // SyncManager instance
@@ -79,33 +82,31 @@ define(function(require) {
     return _instance;
   };
 
-  // Start the autosync interval.
+  // Start auto-syncing.
   SyncManager.prototype.start = function() {
     if(this._interval) {
       return;
     }
-    this._interval = setInterval(this.sync.bind(this), SYNC_TIMEOUT_MS);
+    // Schedule future syncing
+    this._interval = setInterval(this.sync.bind(this), AUTOSYNC_INTERVAL_MS);
+    // And also do one now
+    this.sync();
   };
 
   SyncManager.prototype.emitProgressEvent = function() {
     var pendingCount = this.pendingCount;
 
-     // Emit either a `complete` event or a `pending` event depending on queue length.
-    if(pendingCount === 0) {
-      logger("SyncManager", "complete event");
-      this.trigger("complete");
-    } else {
-      logger("SyncManager", "progress event - pending paths to sync:", pendingCount);
-      this.trigger("progress", [pendingCount]);
-    }
+    logger("SyncManager", "progress event - pending paths to sync:", pendingCount);
+    this.trigger("progress", [pendingCount]);
+  };
+  SyncManager.prototype.emitCompleteEvent = function() {
+    logger("SyncManager", "complete event");
+    this.trigger("complete");
   };
   SyncManager.prototype.emitErrorEvent = function(err) {
     this.setSyncing(false);
     this.trigger("error", [err]);
     logger("SyncManager", "error event", err);
-
-    // Try running the operation again, or the next one at least
-    this.runNextOperation();
   };
 
   SyncManager.prototype.setPendingCount = function(syncQueue) {
@@ -129,7 +130,8 @@ define(function(require) {
       url: Project.getHost() + "/projects/" + Project.getID() + "/files",
       cache: false,
       contentType: false,
-      processData: false
+      processData: false,
+      timeout: AJAX_DEFAULT_TIMEOUT_MS
     };
 
     function send(id) {
@@ -149,6 +151,7 @@ define(function(require) {
         Project.setFileID(path, data.id, callback);
       });
       request.fail(function(jqXHR, status, err) {
+        err = err || new Error("unknown network error during update operation");
         logger("SyncManager", "unable to persist the file update to the server", err);
         callback(err);
       });
@@ -174,6 +177,10 @@ define(function(require) {
     var self = this;
     var csrfToken = self.csrfToken;
 
+    function finish() {
+      Project.removeFile(path, callback);
+    }
+
     function doDelete(id) {
       var request = $.ajax({
         contentType: "application/json",
@@ -182,15 +189,17 @@ define(function(require) {
         },
         type: "DELETE",
         url: Project.getHost() + "/projects/" + Project.getID() + "/files/" + id + "?dateUpdated=" + (new Date()).toISOString(),
+        timeout: AJAX_DEFAULT_TIMEOUT_MS
       });
       request.done(function() {
         if(request.status !== 200) {
           return callback(new Error("[Thimble] unable to persist `" + path + "`. Server responded with status " + request.status));
         }
 
-        Project.removeFile(path, callback);
+        finish();
       });
       request.fail(function(jqXHR, status, err) {
+        err = err || new Error("unknown network error during delete operation");
         logger("SyncManager", "unable to persist the file delete to the server", err);
         callback(err);
       });
@@ -199,6 +208,14 @@ define(function(require) {
     Project.getFileID(path, function(err, id) {
       if(err) {
         return callback(err);
+      }
+
+      // If the file hasn't been saved to the server yet (i.e., we have
+      // no id for this file path), we're done and can just clean up and bail.
+      if(!id) {
+        logger("SyncManager", "skipping remote delete step, no file id for path", path);
+        finish();
+        return;
       }
 
       doDelete(id);
@@ -224,10 +241,15 @@ define(function(require) {
         }
 
         function finish() {
-          // Operation synced successfully, remove it and save the SyncQueue.
+          // Current operation finished, remove it and save the SyncQueue.
           delete syncQueue.current;
 
+          // Add any recent/failed (re-queued) operations to the queue
+          syncQueue = PathCache.transferToSyncQueue(syncQueue);
+
           Project.setSyncQueue(syncQueue, function(err) {
+            var delay;
+
             if(err) {
               self.emitErrorEvent(err);
               return;
@@ -235,11 +257,18 @@ define(function(require) {
 
             self.setPendingCount(syncQueue);
 
-            // If there are more files to sync, run the next one
+            // If there are more files to sync, run the next one.
             if(self.getPendingCount() > 0) {
-              self.runNextOperation();
+              self.emitProgressEvent();
+
+              // If the last operation errored, apply a backoff delay.
+              delay = (self.backoff && self.backoff.next()) || AJAX_DEFAULT_DELAY_MS;
+
+              logger("SyncManager", "finished current operation (" + (ajaxError ? "failed" : "success") + "), will run next in " + delay + "ms. " + self.getPendingCount() + " operation(s) remain.");
+              setTimeout(self.runNextOperation.bind(self), delay);
             } else {
               self.setSyncing(false);
+              self.emitCompleteEvent();
             }
           });
         }
@@ -255,9 +284,17 @@ define(function(require) {
         }
 
         // If the network operation errored, put this file operation back in the pending list
+        // and create a backoff delay object.  If it worked, remove a previous backoff delay (if any).
         if(ajaxError) {
           logger("SyncManager", "error syncing file, requeuing operation", ajaxError);
+          self.trigger("file-sync-error");
           queueOperation();
+
+          if(!self.backoff) {
+            self.backoff = new Backoff();
+          }
+        } else {
+          delete self.backoff;
         }
 
         finish();
@@ -274,7 +311,6 @@ define(function(require) {
       } else {
         self.emitErrorEvent(new Error("[Thimble Error] unknown sync operation:" + currentOperation));
       }
-      self.emitProgressEvent();
     }
 
     function selectCurrent(syncQueue) {
@@ -285,7 +321,7 @@ define(function(require) {
       // If there are no pending paths to sync, we're done.
       if(self.pendingCount === 0) {
         logger("SyncManager", "no pending sync operations, stopping syncing.");
-        self.emitProgressEvent();
+        self.emitCompleteEvent();
         self.setSyncing(false);
         return;
       }
