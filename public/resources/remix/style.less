@@ -11,106 +11,58 @@
   font-style: normal;
 }
 
-.remix-details-bar {
-  position: absolute !important;
-  width: 100% !important;
+.details-bar {
+  position: fixed !important;
   top: 0 !important;
-  left: 0 !important;
-  height: 64px;
-  transition: opacity .2s !important;
-  background: white !important;
-  padding: 11px 0 11px 76px !important;
-  box-sizing: border-box !important;
+  right: 0 !important;
   font-family: "Fira Medium", "Helvetica Neue", sans-serif !important;
-  z-index: @BASE_Z_INDEX;
 
-  .thimble-logo {
-    position: absolute !important;
-    width: 60px !important;
-    background: #2E9961 !important;
-    height: 100% !important;
-    top: 0px !important;
-    left: 0px !important;
-    display: block !important;
-
-    .remix-icon {
-      position: absolute !important;
-      left: 0px !important;
-      top: 0px !important;
-      bottom: 0px !important;
-      right: 0px !important;
-      background-image: ~"url(thimble-logo.svg)" !important;
-      background-position: 16px center !important;
-      background-size: 24px !important;
-      background-repeat: no-repeat !important;
-      transition: transform .05s linear !important;
-    }
-
-
-    &:hover .icon {
-      transform: scale(1.1) !important;
-    }
-
-    &:active {
-      background: #28915a !important;
-      .icon {
-        transform: scale(1) !important;
-      }
-    }
-  }
-
-  .remix-project-title, .remix-project-meta {
-    font-size: 16px !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    color: black !important;
-    text-align: left !important;
-    font-weight: normal !important;
-    letter-spacing: 0 !important;
-    text-transform: none !important;
+  .remix-project-title, .remix-project-meta, .remix-project-author {
     color: #2E9961 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
   }
 
   .remix-project-title {
-    margin: 3px 0 2px 0 !important;
-    font-size: 20px !important;
+    margin: 1px 0 3px 0 !important;
+    font-size: 18px !important;
     line-height: 22px !important;
+    font-weight: normal !important;
+    padding: 0 !important;
   }
 
   .remix-project-meta {
-    font-size: 13px !important;
+    font-size: 14px !important;
     line-height: 15px !important;
     opacity: .6 !important;
 
     .remix-project-author {
       color: inherit !important;
       text-decoration: none !important;
-
-      &:hover {
-        text-decoration: underline !important;
-      }
     }
   }
 
   .details-bar-remix-button-wrapper {
     position: absolute !important;
-    right: 8px !important;
-    top: 8px !important;
-    background: transparent !important;
-    padding: 4px 4px 6px 4px !important;
-    border-radius: 2px !important;
-    z-index: @BASE_Z_INDEX + 1;
+    right: 5px !important;
+    top: 5px !important;
+    border-radius: 3px !important;
+    background: none !important;
+    transition: none important;
 
     .details-bar-remix-button {
       border-radius: 2px !important;
-      font-size: 18px !important;
+      font-size: 16px !important;
+      line-height: 16px !important;
+      height: 17px !important;
       display: block !important;
       cursor: pointer !important;
       background: #47AD66 !important;
+      box-shadow: 0 2px 0 #417C53 !important;
       position: relative !important;
-      padding: 11px 15px 9px 15px !important;
+      padding: 12px 18px 10px 18px !important;
       border-radius: 2px !important;
-      box-shadow: 0px 2px 0px #417C53 !important;
       color: white !important;
       text-align: center !important;
       text-decoration: none !important;
@@ -127,23 +79,181 @@
     }
   }
 
-  &.scrolled {
-    .details-bar-remix-button-wrapper {
-      position: fixed !important;
-      animation: showbutton .2s cubic-bezier(0.780, -0.480, 0.365, 1.530) !important;
+  &.mouse-mode {
 
-      .details-bar-remix-button {
-        box-shadow: 0px 2px 0px rgba(0,0,0,.4) !important;
+    width: 400px !important;
+    top: 5px !important;
+    right: 6px !important;
+    height: 64px !important;
+    background: white !important;
+    padding: 11px 110px 11px 76px !important;
+    box-sizing: border-box !important;
+    font-family: "Fira Medium", "Helvetica Neue", sans-serif !important;
+    box-shadow: 0 2px 2px rgba(0,0,0,.5) !important;
+    max-width: ~"calc(100% - 12px)" !important;
+    transition: width ease-out .1s, background ease-out .1s !important;
+
+    .details-bar-remix-button-wrapper {
+      padding: 7px 7px 8px 7px !important;
+    }
+
+    .thimble-logo {
+      position: absolute !important;
+      width: 60px !important;
+      background: #2E9961 !important;
+      height: 100% !important;
+      top: 0 !important;
+      left: 0 !important;
+      display: block !important;
+
+      .icon {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        background-image: ~"url(thimble-logo.svg)" !important;
+        background-position: 16px center !important;
+        background-size: 24px !important;
+        background-repeat: no-repeat !important;
+        transition: transform .05s linear !important;
+      }
+
+      &:hover .icon {
+        transform: scale(1.1) !important;
+      }
+
+      &:active {
+        background: #28915a !important;
+        .icon {
+          transform: scale(1) !important;
+        }
+      }
+    }
+
+    .close-details-bar {
+      display: none !important;
+    }
+
+    &.collapsed {
+      width: 112px !important;
+      padding: 11px 11px 11px 14px !important;
+      box-shadow: 0 1px 1px rgba(0,0,0,.2) !important;
+      box-shadow: none !important;
+      text-align: right !important;
+      background: none !important;
+      transition: width cubic-bezier(0.520, -0.580, 0.595, 1.010) .15s, background ease-out .1s .15s !important;
+
+      .details-bar-remix-button-wrapper {
+        background: rgba(255,255,255,.2) !important;
+        border-radius: 3px !important;
+        background: rgba(0,0,0,.2) !important;
+        transition: background ease-out .2s .2s !important;
+
+        .details-bar-remix-button {
+          transition: box-shadow ease-out .2s .2s !important;
+          box-shadow: 0 2px 0 rgba(0,0,0,.3) !important;
+        }
+
+      }
+
+     .thimble-logo, .remix-project-title, .remix-project-meta {
+        opacity: 0 !important;
+        transition: none !important;
       }
     }
   }
-}
 
-@keyframes showbutton {
-  0% {
-    transform: translateY(-100px);
-  }
-  100% {
-    transform: translateY(0px);
+  &.touch-mode {
+    top: 6px !important;
+    right: 6px !important;
+    max-width: ~"calc(100% - 12px)" !important;
+    background: white !important;
+    padding: 15px 55px 15px 15px !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 2px 2px rgba(0,0,0,.5) !important;
+
+    .details-bar-remix-button-wrapper {
+      margin-top: 10px !important;
+      position: static !important;
+      padding: 0 !important;
+    }
+
+    .thimble-button {
+      position: absolute !important;
+      display: block !important;
+      border-radius: 30px !important;
+      background: rgba(0,0,0,.2) !important;
+      width: 48px !important;
+      height: 49px !important;
+      padding: 7px !important;
+      top: 0 !important;
+      right: 0 !important;
+      display: none !important;
+      cursor: pointer !important;
+
+      .icon {
+        display: block !important;
+        width: 48px !important;
+        height: 48px !important;
+        border-radius: 50% !important;
+        background-color: #47AD66 !important;
+        box-shadow: 0 2px 0 rgba(0,0,0,.3) !important;
+        background-image: ~"url(thimble-logo.svg)" !important;
+        background-position: center !important;
+        background-size: 22px !important;
+        background-repeat: no-repeat !important;
+        transition: transform .05s linear !important;
+        cursor: pointer !important;
+      }
+
+      &:hover .icon {
+        background-color: #4fb86f !important;
+      }
+    }
+
+    .close-details-bar {
+      display: block !important;
+      position: absolute !important;
+      top: 8px !important;
+      right: 7px !important;
+      padding: 10px !important;
+      opacity: .3 !important;
+      cursor: pointer !important;
+
+      img {
+        height: 15px !important;
+        width: 15px !important;
+        cursor: pointer !important;
+      }
+
+      &:hover {
+        opacity: .5 !important;
+      }
+    }
+
+    &.collapsed {
+      box-shadow: none !important;
+      background: none !important;
+
+      .thimble-button {
+        display: block !important;
+      }
+
+      .details-bar-remix-button-wrapper {
+        display: none !important;
+      }
+
+     .thimble-logo,
+     .remix-project-title,
+     .remix-project-meta,
+     .close-details-bar,
+     .details-bar-remix-button-wrapper{
+        display: none;
+        opacity: 0 !important;
+        transition: none !important;
+      }
+    }
+
   }
 }

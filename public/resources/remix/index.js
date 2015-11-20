@@ -6,20 +6,32 @@
 
   var gaTrackingId = 'UA-68630113-1';
 
-  function customizeScroll($) {
-    var bodyEl = $("body");
-    var detailsBar = $(".remix-details-bar");
-    var detailsBarHeight = 64;
-    var currentPadding = parseInt(bodyEl.css("padding-top"));
-    bodyEl.css("padding-top", currentPadding + detailsBarHeight);
+  function setupBar($){
+    var isTouchDevice = 'ontouchstart' in document.documentElement;
+    var detailsBar = $(".details-bar");
 
-    $(window).on("scroll", function() {
-      var scrollDistance = $(this).scrollTop();
-      if(scrollDistance >= detailsBarHeight) {
-        detailsBar.addClass("scrolled");
-      } else {
-        detailsBar.removeClass("scrolled");
-      }
+    if(isTouchDevice) {
+      detailsBar.addClass("touch-mode");
+    } else {
+      detailsBar.addClass("mouse-mode");
+    }
+
+    detailsBar.on("click", ".thimble-button",function(){
+      detailsBar.removeClass("collapsed");
+      return false;
+    });
+
+    detailsBar.on("click", ".close-details-bar", function(){
+      detailsBar.addClass("collapsed");
+      return false;
+    });
+
+    $(".mouse-mode").on("mouseenter",function(){
+      detailsBar.removeClass("collapsed");
+    });
+
+    $(".mouse-mode").on("mouseleave",function(){
+      detailsBar.addClass("collapsed");
     });
   }
 
@@ -68,15 +80,21 @@
   function injectDetailsBar($, metadata) {
     var detailsBarHtml =
     '\n<!-- Remix bar -->\n' +
-    '<div class="remix-details-bar cleanslate">\n' +
-    '    <a class="thimble-logo" href="https://thimble.mozilla.org">\n' +
-    '        <span class="remix-icon"></span>\n' +
-    '    </a>\n' +
-    '    <h1 class="remix-project-title"></h1>\n' +
-    '    <div class="remix-project-meta"><a class="remix-project-author" href="#"></a></div>\n' +
-    '    <div class="details-bar-remix-button-wrapper">\n' +
-    '        <a class="details-bar-remix-button">Remix</a>\n' +
-    '    </div>\n' +
+    '<div class="details-bar collapsed cleanslate">\n' +
+    '  <a class="thimble-logo" title="Thimble by Mozilla" href="https://thimble.mozilla.org">\n' +
+    '    <span class="icon"></span>\n' +
+    '  </a>\n' +
+    '  <h1 class="remix-project-title"></h1>\n' +
+    '  <div class="remix-project-meta">\n' +
+    '    By <span class="remix-project-author"></span>\n' +
+    '  </div>\n' +
+    '  <div class="details-bar-remix-button-wrapper">\n' +
+    '    <a title="Remix this project with Thimble" class="details-bar-remix-button">Remix</a>\n' +
+    '  </div>\n' +
+    '  <div class="close-details-bar"><img src="' + metadata.host + '/resources/remix/close-x.svg" /></div>\n' +
+    '  <div class="thimble-button" title="Thimble by Mozilla">\n' +
+    '    <span class="icon"></span>\n' +
+    '   </div>\n' +
     '</div>\n' +
     '<!-- End of Remix bar -->\n';
 
@@ -84,7 +102,6 @@
     $(".remix-project-title").text(metadata.projectTitle);
     $(".remix-project-author").text(metadata.projectAuthor);
     $(".remix-project-meta").append(document.createTextNode(" - " + getElapsedTime(metadata.dateUpdated)));
-
     $(".details-bar-remix-button").attr("href", metadata.host + "/projects/" + metadata.projectId + "/remix");
   }
 
@@ -120,11 +137,10 @@
     var $$ = $.noConflict(true);
     $$(document).ready(function($) {
       var metadata = getMetadata($);
-
       injectAnalytics($);
       injectStyleSheets($, metadata);
       injectDetailsBar($, metadata);
-      customizeScroll($);
+      setupBar($);
     });
   }
 
