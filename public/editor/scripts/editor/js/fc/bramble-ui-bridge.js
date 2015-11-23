@@ -222,6 +222,26 @@ define(function(require) {
       }
     }
 
+    $(".fullscreen-preview-toggle .enable-fullscreen").click(function() {
+      enableFullscreenPreview();
+    });
+
+    $(".fullscreen-preview-toggle .disable-fullscreen").click(function() {
+      disableFullscreenPreview();
+    });
+
+    function enableFullscreenPreview(){
+      $("body").addClass("fullscreen-preview");
+      analytics.event("FullscreenPreviewOn");
+      bramble.enableFullscreenPreview();
+    }
+
+    function disableFullscreenPreview(){
+      $("body").removeClass("fullscreen-preview");
+      analytics.event("FullscreenPreviewOff");
+      bramble.disableFullscreenPreview();
+    }
+
     var publishDialogUnderlay;
     function hidePublishDialog() {
       publishDialogUnderlay.remove();
