@@ -9,6 +9,7 @@
   function setupBar($){
     var isTouchDevice = 'ontouchstart' in document.documentElement;
     var detailsBar = $(".details-bar");
+    detailsBar.css("display", "block");
 
     if(isTouchDevice) {
       detailsBar.addClass("touch-mode");
@@ -80,7 +81,7 @@
   function injectDetailsBar($, metadata) {
     var detailsBarHtml =
     '\n<!-- Remix bar -->\n' +
-    '<div class="details-bar collapsed cleanslate">\n' +
+    '<div class="details-bar collapsed cleanslate" style="display: none !important">\n' +
     '  <a class="thimble-logo" title="Thimble by Mozilla" href="https://thimble.mozilla.org">\n' +
     '    <span class="icon"></span>\n' +
     '  </a>\n' +
