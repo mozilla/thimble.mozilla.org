@@ -3,34 +3,31 @@
  * the cloudfront edge caches for Thimble whenever
  * we deploy a new version.
  */
-var exec = require('child_process').exec;
-exec('git rev-parse HEAD', function(err, commitHash, stderr) {
-  var AWS = require('aws-sdk');
-  AWS.config.update({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-  });
+var AWS = require('aws-sdk');
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+});
 
-  var cloudfront = new AWS.CloudFront();
-  var params = {
-    DistributionId: process.env.CLOUDFRONT_DISTRIBUTION_ID,
-    InvalidationBatch: {
-      CallerReference: commitHash,
-      Paths: {
-        Quantity: 1,
-        // We invalidate everything
-        Items: [ '/*' ]
-      }
+var cloudfront = new AWS.CloudFront();
+var params = {
+  DistributionId: process.env.CLOUDFRONT_DISTRIBUTION_ID,
+  InvalidationBatch: {
+    CallerReference: Date.now(),
+    Paths: {
+      Quantity: 1,
+      // We invalidate everything
+      Items: [ '/*' ]
     }
-  };
+  }
+};
 
-  cloudfront.createInvalidation(params, function(err, data) {
-    if (err) {
-      console.log(err, err.stack);
-      return process.exit(1);
-    }
+cloudfront.createInvalidation(params, function(err, data) {
+  if (err) {
+    console.log(err, err.stack);
+    return process.exit(1);
+  }
 
-    console.log('Successfully invalidated CloudFront!\n', data);
-    process.exit(0);
-  });
+  console.log('Successfully invalidated CloudFront!\n', data);
+  process.exit(0);
 });
