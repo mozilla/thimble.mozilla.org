@@ -127,6 +127,32 @@ define(function(require) {
       analytics.event("Redo");
     });
 
+    // Inspector
+    var _inspectorEnabled = false;
+    function setInspector(value) {
+      if(value) {
+        bramble.enableInspector();
+      } else {
+        bramble.disableInspector();
+      }
+    }
+    $("#preview-pane-nav-inspector").click(function() {
+      setInspector(!_inspectorEnabled);
+      return false;
+    });
+    // Also listen for state changes in the inspector from the editor
+    bramble.on("inspectorChange", function(data) {
+      if(data.enabled) {
+        $("#preview-pane-nav-inspector").addClass("enabled");
+        analytics.event("InspectorEnabled");
+      } else {
+        $("#preview-pane-nav-inspector").removeClass("enabled");
+        analytics.event("InspectorDisabled");
+      }
+
+      _inspectorEnabled = data.enabled;
+    });
+
     // Refresh Preview
     $("#preview-pane-nav-refresh").click(function() {
       bramble.refreshPreview();
@@ -233,6 +259,8 @@ define(function(require) {
     function enableFullscreenPreview(){
       $("body").addClass("fullscreen-preview");
       analytics.event("FullscreenPreviewOn");
+      // In case it's on, turn off the inspector
+      bramble.disableInspector();
       bramble.enableFullscreenPreview();
     }
 
