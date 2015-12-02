@@ -1,8 +1,20 @@
 {% extends "./layout.html" %}
+
+{% block head %}
+  <link rel="stylesheet" href="/editor/stylesheets/projects-style.css">
+  <link rel="stylesheet" href="/homepage/stylesheets/style.css">
+{% endblock %}
+
 {% block body %}
+
+  {% include '../homepage/userbar.html' %}
+
   <div class="project-list-wrapper">
     <div id="container">
       <h2>Your Projects</h2>
+
+      <div title="Start a new project from scratch" class="project-button" id="project-0">Create a new Project</div>
+
       <table id="project-list" data-username="{{ username }}">
 
       {% for project in projects %}
@@ -29,10 +41,8 @@
 
       </table>
 
-      <div title="Start a new Thimble Project from scratch" class="project-button" id="project-0">Create a new Project</div>
-
     <script src="/scripts/vendor/require.min.js"
-            data-main="/editor/scripts/open-project.js">
+            data-main="/editor/scripts/project-list.js">
     </script>
     <div class="project-list-scroll"></div>
   </div>

@@ -2,7 +2,12 @@ require.config({
   waitSeconds: 120,
   paths: {
     "jquery": "/bower/jquery/index",
-    "analytics": "/bower/webmaker-analytics/analytics"
+    "analytics": "/bower/webmaker-analytics/analytics",
+    "uuid": "/bower/node-uuid/uuid",
+    "cookies": "/bower/cookies-js/dist/cookies",
+    "fc/bramble-popupmenu": "/editor/scripts/editor/js/fc/bramble-popupmenu",
+    "fc/bramble-keyhandler": "/editor/scripts/editor/js/fc/bramble-keyhandler",
+    "fc/bramble-underlay": "/editor/scripts/editor/js/fc/bramble-underlay"
   },
   shim: {
     "jquery": {
@@ -54,13 +59,6 @@ require(["jquery", "constants", "analytics"], function($, Constants, analytics) 
     $(projectSelector + " .project-information").text(getElapsedTime(lastEdited));
   });
 
-  $("#project-0").one("click", function() {
-    analytics.event("NewProject", {label: "New authenticated project"});
-
-    $("#project-0").text("Creating...");
-    window.location.href = "/projects/new" + queryString + (queryString === "" ? "?" : "&") +  "cacheBust=" + Date.now();
-  });
-
   $(".project-delete").click(function() {
     // TODO: we can do better than this, but let's at least make it harder to lose data.
     if(!window.confirm("OK to Delete this project?")) {
@@ -101,3 +99,30 @@ require(["jquery", "constants", "analytics"], function($, Constants, analytics) 
     });
   });
 });
+
+function init($, uuid, cookies, PopupMenu, analytics) {
+  PopupMenu.create("#navbar-logged-in li", "#navbar-logged-in li ul.dropdown");
+  setupNewProjectLinks($, analytics);
+}
+
+function setupNewProjectLinks($, analytics) {
+  var queryString = window.location.search;
+
+  function newProjectClickHandler(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var cacheBust = "cacheBust=" + Date.now();
+    var qs = queryString === "" ? "?" + cacheBust : queryString + "&" + cacheBust;
+
+    $(e.target).text("Creating new project...");
+
+    analytics.event("NewProject", {label: "New authenticated project"});
+    window.location.href = "/projects/new" + qs;
+  }
+
+  $("#new-project-link").one("click", newProjectClickHandler);
+  $("#project-0").one("click", newProjectClickHandler);
+}
+
+require(['jquery', 'uuid', 'cookies', 'fc/bramble-popupmenu', 'analytics'], init);

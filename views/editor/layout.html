@@ -12,10 +12,10 @@
     <title>{{ gettext("Mozilla Thimble") }}</title>
 
     <link rel="stylesheet" href="/editor/stylesheets/normalize.css">
-    <link rel="stylesheet" href="/editor/stylesheets/editor.css">
     <link rel="stylesheet" href="/resources/stylesheets/userbar.css">
-    <link rel="stylesheet" href="/editor/stylesheets/projects-style.css">
     <link rel="stylesheet" href="/editor/stylesheets/publish.css">
+
+    {% block head %}{% endblock %}
 
     {% if GA_ACCOUNT %}
     <script id="google-analytics-js" src="/editor/scripts/google-analytics.js"
