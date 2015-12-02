@@ -1,21 +1,12 @@
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 1em;
-  overflow: hidden;
-}
-
-.project-list-wrapper {
-  position: fixed;
-  overflow: scroll;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
 }
 
 #container {
-  width: 80%;
+  width: 65%;
   margin: 35px auto;
+  position: relative;
 }
 
 table#project-list {
@@ -44,13 +35,16 @@ tr.project:last-child td {
 }
 
 h2 {
-  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 22px;
+  padding: 6px 0 0 4px;
+  margin: 0 0 30px 0;
 }
 
 td {
-	padding: 10px 0;
-	vertical-align: bottom;
-	border-bottom: 1px solid #DDD;
+  padding: 10px 0;
+  vertical-align: bottom;
+  border-bottom: 1px solid #DDD;
 }
 
 td.side-fill {
@@ -126,7 +120,7 @@ td.project-remix {
 .project-button {
   background-color: #2A9961;
   display: inline-block;
-  padding: 8px 15px;
+  padding: 8px 15px 6px 15px;
   cursor: pointer;
   color: white;
   -webkit-user-select: none;
@@ -134,6 +128,9 @@ td.project-remix {
   -ms-user-select: none;
   border-bottom: solid 2px rgba(0,0,0,.3);
   border-radius: 2px;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .project-button:hover {
@@ -142,7 +139,6 @@ td.project-remix {
 
 .project-button:active {
   background-color: #288952;
-  position: relative;
   top: 2px;
   border: none;
 }

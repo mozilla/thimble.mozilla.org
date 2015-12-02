@@ -53,8 +53,10 @@ module.exports = function(config, req, res) {
       csrf: req.csrfToken ? req.csrfToken() : null,
       HTTP_STATIC_URL: "/",
       username: user.username,
+      avatar : user.avatar,
       projects: projects,
-      editorHOST: config.editorHOST
+      editorHOST: config.editorHOST,
+      logoutURL : config.logoutURL
     };
 
     res.render("editor/projects.html", options);
