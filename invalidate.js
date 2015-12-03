@@ -13,7 +13,7 @@ var cloudfront = new AWS.CloudFront();
 var params = {
   DistributionId: process.env.CLOUDFRONT_DISTRIBUTION_ID,
   InvalidationBatch: {
-    CallerReference: Date.now(),
+    CallerReference: Date.now().toString(),
     Paths: {
       Quantity: 1,
       // We invalidate everything
