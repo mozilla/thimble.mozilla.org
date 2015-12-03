@@ -1,6 +1,5 @@
 define(function(require) {
   var Constants = require("constants");
-  var SYNC_OPERATION_DELETE = require("constants").SYNC_OPERATION_DELETE;
   var Path = Bramble.Filer.Path;
   var Buffer = Bramble.Filer.Buffer;
   var fs = Bramble.getFileSystem();
@@ -25,14 +24,14 @@ define(function(require) {
       });
     }
 
-    // If there are pending delete operations to be run in the SyncQueue for a
+    // If there are pending operations to be run in the SyncQueue for a
     // given path in the project (e.g., user deleted a file locally, but closed
     // before the change could be synced to the server), we can safely ignore
-    // the initial extract, since we'll just delete the file soon anyway. 
+    // the initial extract, since we'll just be modifying the file anyway.
     function maybeExtract(path, data, callback) {
       path = Path.join(root, path);
 
-      if(pendingOperations[path] === SYNC_OPERATION_DELETE) {
+      if(pendingOperations[path]) {
         callback();
         return;
       }
