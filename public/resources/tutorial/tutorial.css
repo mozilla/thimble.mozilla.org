@@ -53,7 +53,6 @@ h6 {
   margin: 20px 0 5px 0;
 }
 
-
 code {
   background: rgba(0,0,0,.1);
   font-family: monospace;
@@ -136,18 +135,21 @@ li {
   margin: 0 0 10px 0;
 }
 
-img {
+img.border {
   display: block;
-  margin: 5px 0 10px;
+  margin: 10px 0;
   border: solid 5px white;
   box-shadow: 0px 2px 3px rgba(0,0,0,.2);
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .code {
   background: #222;
-  padding: 10px 12px;
+  padding: 12px;
   display: block;
   font-size: 14px;
   color: rgba(255,255,255,.8);
   border-radius: 2px;
+  overflow: auto;
 }
