@@ -136,6 +136,7 @@ define(function(require) {
     var $addCss = $("#filetree-pane-nav-add-css");
     var $addJs = $("#filetree-pane-nav-add-js");
     var $addUpload = $("#filetree-pane-nav-add-upload");
+    var $addSelfie = $("#filetree-pane-nav-add-selfie");
     var $addTutorial = $("#filetree-pane-nav-add-tutorial");
 
     // Add File button and popup menu
@@ -216,6 +217,12 @@ define(function(require) {
       menu.close();
       bramble.showUploadFilesDialog();
       analytics.event("ShowUploadFilesDialog");
+    });
+
+    $addSelfie.click(function() {
+      menu.close();
+      bramble.showSelfieDialog();
+      analytics.event("ShowSelfieDialog");
     });
 
     // We hide the add tutorial button if a tutorial exists
