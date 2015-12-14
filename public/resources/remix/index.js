@@ -9,7 +9,7 @@
   function setupBar($){
     var isTouchDevice = 'ontouchstart' in document.documentElement;
     var detailsBar = $(".details-bar");
-    detailsBar.css("display", "block");
+    detailsBar.attr("style", "");
 
     if(isTouchDevice) {
       detailsBar.addClass("touch-mode");
