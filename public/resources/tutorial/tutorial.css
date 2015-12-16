@@ -73,8 +73,6 @@ ol.steps > li {
   position: relative;
   margin: 0 0 35px 0;
   min-height: 45px;
-  display: flex;
-  align-items:center;
 }
 
 ol.steps > li h6 {
