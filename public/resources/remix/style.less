@@ -166,11 +166,12 @@
   }
 
   &.touch-mode {
-    top: 6px !important;
+    bottom: 6px !important;
+    top: auto !important;
     right: 6px !important;
     max-width: ~"calc(100% - 12px)" !important;
     background: white !important;
-    padding: 15px 55px 15px 15px !important;
+    padding: 15px 15px 15px 15px !important;
     box-sizing: border-box !important;
     box-shadow: 0 2px 2px rgba(0,0,0,.5) !important;
 
@@ -178,6 +179,7 @@
       margin-top: 10px !important;
       position: static !important;
       padding: 0 !important;
+      margin-right: 46px !important;
     }
 
     .thimble-button {
@@ -188,7 +190,7 @@
       width: 48px !important;
       height: 49px !important;
       padding: 7px !important;
-      top: 0 !important;
+      bottom: 0 !important;
       right: 0 !important;
       display: none !important;
       cursor: pointer !important;
@@ -216,20 +218,23 @@
     .close-details-bar {
       display: block !important;
       position: absolute !important;
-      top: 8px !important;
-      right: 7px !important;
-      padding: 10px !important;
-      opacity: .3 !important;
+      border-radius: 50% !important;
+      bottom: 13px !important;
+      right: 10px !important;
+      opacity: .25 !important;
       cursor: pointer !important;
+      width: 42px !important;
+      height: 42px !important;
+      border: solid 2px #777 !important;
+      box-sizing: border-box !important;
 
       img {
-        height: 15px !important;
-        width: 15px !important;
+        height: 13px !important;
+        width: 13px !important;
+        top: 13px !important;
+        left: 13px !important;
         cursor: pointer !important;
-      }
-
-      &:hover {
-        opacity: .5 !important;
+        position: absolute !important;
       }
     }
 
@@ -255,6 +260,5 @@
         transition: none !important;
       }
     }
-
   }
 }
