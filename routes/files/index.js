@@ -17,7 +17,7 @@ module.exports = {
       middleware.checkForAuth,
       middleware.setUserIfTokenExists,
       middleware.fileUpload,
-      middleware.validateRequest(["dateUpdated", "bramblePath"]),
+      middleware.validateRequest(["bramblePath"]),
       middleware.setProject,
       require("./create-update").bind(app, config));
 
