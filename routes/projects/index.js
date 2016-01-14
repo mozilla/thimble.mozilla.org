@@ -9,7 +9,6 @@ module.exports = {
 
     // Create a new project for a user
     app.get("/projects/new",
-      middleware.checkForAuth,
       middleware.setUserIfTokenExists,
       middleware.setPublishUser,
       require("./create").bind(app, config));

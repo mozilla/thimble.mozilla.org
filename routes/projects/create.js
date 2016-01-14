@@ -5,22 +5,27 @@ var Constants = require("../../constants");
 var defaultProject = require("../../default");
 
 module.exports = function(config, req, res) {
-  var qs;
   var user = req.user;
   var now = req.query.now || (new Date()).toISOString();
+
+  delete req.query.now;
+  delete req.query.cacheBust;
+  var qs = querystring.stringify(req.query);
+  if(qs !== "") {
+    qs = "?" + qs;
+  }
+
+  if(!user) {
+    res.redirect(307, "/editor" + qs);
+    return;
+  }
+
   var project = {
     title: Constants.DEFAULT_PROJECT_NAME,
     date_created: now,
     date_updated: now,
     user_id: user && user.publishId
   };
-
-  delete req.query.now;
-  delete req.query.cacheBust;
-  qs = querystring.stringify(req.query);
-  if(qs !== "") {
-    qs = "?" + qs;
-  }
 
   utils.createProject(config, user, project, function(err, status, project) {
     if(err) {
@@ -43,7 +48,7 @@ module.exports = function(config, req, res) {
         return;
       }
 
-      res.redirect(307, "/user/" + user.username + "/" + project.id);
+      res.redirect(307, "/user/" + user.username + "/" + project.id + qs);
     });
   });
 };
