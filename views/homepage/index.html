@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="/resources/stylesheets/userbar.css">
     <link rel="stylesheet" href="/homepage/stylesheets/style.css">
-    <title>Thimble by Mozilla - An online code editor for learners &amp; educators.</title>
+    <title>{{ gettext("thimbleHeading") | safe }}</title>
 
     {% if GA_ACCOUNT %}
     <script id="google-analytics-js" src="/homepage/scripts/google-analytics.js"
@@ -30,14 +30,12 @@
     <section class="main-cta">
       <div class="content-wrapper">
         <div class="left-side">
-          <h1>Write the Web <br/> On the Web</h1>
+          <h1>{{ gettext("thimbleTagLine") | safe }}</h1>
           <p>
-            Thimble is an online code editor that makes it easy to create and publish
-            your own web pages while learning <a title="Learn about HTML" href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a>,
-            <a title="Learn about CSS" href="https://developer.mozilla.org/en-US/docs/Web/CSS">CSS</a> &amp; <a title="Learn about JavaScript" href="https://developer.mozilla.org/en-US/Learn/JavaScript">JavaScript</a>.
+            {{ gettext("thimbleDescription") | safe }}
           </p>
           <div class="new-project-button-wrapper">
-            <a id="new-project-button" href="/projects/new" title="Start a new Thimble project from scratch." class="button">
+            <a id="new-project-button" href="/projects/new" title="{{ gettext("newProjectBtnTitle") }}" class="button">
               <div class="pencil-animation">
                 <div class="line-wrapper">
                   <div class="line line-one"></div>
@@ -46,7 +44,7 @@
                 </div>
                 <div class="pencil"></div>
               </div>
-              <span id="new-project-button-text">Start a project from scratch</span>
+              <span id="new-project-button-text">{{ gettext("newProjectBtn") }}</span>
             </a>
           </div>
         </div>
@@ -59,84 +57,98 @@
     </section>
 
     <section class="remix-projects">
+      {# Cache the remix projects' localized names #}
+      {% set keepCalmPoster = gettext("keepCalmPoster") %}
+      {% set backToSchoolPostcard = gettext("backToSchoolPostcard") %}
+      {% set currentEventsComic = gettext("currentEventsComic") %}
+      {% set threeThingsILove = gettext("threeThingsILove") | safe %}
+      {% set homeworkExcuseGenerator = gettext("homeworkExcuseGenerator") %}
+      {% set mySixWordSummer = gettext("mySixWordSummer") %}
+
+      {# Cache localized representations of repeated phrases #}
+      {% set teachingKit = gettext("teachingKit") %}
+      {% set remixThisProject = gettext("remixThisProject") %}
+      {% set or = gettext("or") %}
+      {% set useItToTeach = gettext("useItToTeach") %}
+
       <div class="content-wrapper">
-          <h2 class="projects-heading">Make your own version of these popular projects...</h2>
+          <h2 class="projects-heading">{{ gettext("remixProjectsHeading") }}</h2>
 
           <div class="remixable-projects">
 
             <!-- Keep Calm› Project -->
             <div class="project keep-calm">
-              <h2 class="title">Keep Calm Poster</h2>
+              <h2 class="title">{{ keepCalmPoster }}</h2>
               <div class="thumbnail">
-                <a href="{{ keepCalmRemixUrl }}" title="Remix the Keep Calm Poster project" class="image"></a>
+                <a href="{{ keepCalmRemixUrl }}" title="{{ gettext("keepCalmPosterRemixTitle") | instantiate }}" class="image"></a>
               </div>
               <p class="description">
-                Change the design of this poster to make it your own.
+                {{ gettext("keepCalmPosterDescription") }}
               </p>
-              <a title="Remix the Keep Calm Poster project" href="{{ keepCalmRemixUrl }}" class="remix-button">Remix this Project</a>
+              <a title="{{ gettext("keepCalmPosterRemixTitle") | instantiate }}" href="{{ keepCalmRemixUrl }}" class="remix-button">{{ remixThisProject }}</a>
               <div class="or-wrapper">
                 <hr />
-                <div class="or">or</div>
+                <div class="or">{{ or }}</div>
               </div>
               <div class="teach">
-                <h3>Use it to teach</h3>
+                <h3>{{ useItToTeach }}</h3>
                 <ul>
-                  <li>How to design a poster</li>
-                  <li>Editing HTML content</li>
-                  <li>Editing CSS styles</li>
+                  <li>{{ gettext("remixGoal1") }}</li>
+                  <li>{{ gettext("remixGoal2") }}</li>
+                  <li>{{ gettext("remixGoal3") }}</li>
                 </ul>
-                <a href="{{ keepCalmPublishedUrl }}" title="Read the Keep Calm teaching kit" class="teaching-kit">Keep Calm Teaching Kit</a>
+                <a href="{{ keepCalmPublishedUrl }}" title="{{ gettext("keepCalmPosterTeachingKitTitle") | instantiate }}" class="teaching-kit">{{ gettext("keepCalmPosterTeachingKit") | instantiate }}</a>
               </div>
             </div>
 
             <!-- Back to School Postcard Project -->
             <div class="project postcard">
-              <h2 class="title">Back-to-School Postcard</h2>
+              <h2 class="title">{{ backToSchoolPostcard }}</h2>
               <div class="thumbnail">
-                <a href="{{ backToSchoolRemixUrl }}" title="Remix the Back-to-School Postcard project" class="image"></a>
+                <a href="{{ backToSchoolRemixUrl }}" title="{{ gettext("backToSchoolPostcardRemixTitle") | instantiate }}" class="image"></a>
               </div>
               <p class="description">
-                Add your own content to this interactive postcard.
+                {{ gettext("backToSchoolPostcardDescription") }}
               </p>
-              <a href="{{ backToSchoolRemixUrl }}" title="Remix the Back-to-School Poster project" class="remix-button">Remix this Project</a>
+              <a href="{{ backToSchoolRemixUrl }}" title="{{ gettext("backToSchoolPostcardRemixTitle") | instantiate }}" class="remix-button">{{ remixThisProject }}</a>
               <div class="or-wrapper">
                 <hr />
-                <div class="or">or</div>
+                <div class="or">{{ or }}</div>
               </div>
               <div class="teach">
-                <h3>Use it to teach</h3>
+                <h3>{{ useItToTeach }}</h3>
                 <ul>
-                  <li>Editing HTML content</li>
-                  <li>CSS colors</li>
-                  <li>Creating an interactive element<br/> with JavaScript</li>
+                  <li>{{ gettext("remixGoal2") }}</li>
+                  <li>{{ gettext("remixGoal4") }}</li>
+                  <li>{{ gettext("remixGoal5") | safe }}</li>
                 </ul>
-                <a href="{{ backToSchoolPublishedUrl }}" title="Read the Back-to-School Postcard teaching kit" class="teaching-kit">Postcard Teaching Kit</a>
+                <a href="{{ backToSchoolPublishedUrl }}" title="{{ gettext("backToSchoolPostcardTeachingKitTitle") | instantiate }}" class="teaching-kit">{{ gettext("backToSchoolPostcardTeachingKit") | instantiate }}</a>
               </div>
             </div>
 
 
             <!-- Comic Strip Project -->
             <div class="project comic-strip">
-              <h2 class="title">Current Events Comic</h2>
+              <h2 class="title">{{ currentEventsComic }}</h2>
               <div class="thumbnail">
-                <a href="{{ comicStripRemixUrl }}" title="Remix the Current Events Comic Strip project" class="image"></a>
+                <a href="{{ comicStripRemixUrl }}" title="{{ gettext("currentEventsComicRemixTitle") | instantiate }}" class="image"></a>
               </div>
               <p class="description">
-                Create your very own version of this comic strip.
+                {{ gettext("currentEventsComicDescription") }}
               </p>
-              <a href="{{ comicStripRemixUrl }}" title="Remix the Comic Strip project"  class="remix-button">Remix this Project</a>
+              <a href="{{ comicStripRemixUrl }}" title="{{ gettext("currentEventsComicRemixTitle") | instantiate }}"  class="remix-button">{{ remixThisProject }}</a>
               <div class="or-wrapper">
                 <hr />
-                <div class="or">or</div>
+                <div class="or">{{ or }}</div>
               </div>
               <div class="teach">
-                <h3>Use it to teach</h3>
+                <h3>{{ useItToTeach }}</h3>
                 <ul>
-                  <li>Editing HTML content</li>
-                  <li>Finding Creative Commons-licensed images</li>
-                  <li>CSS colors</li>
+                  <li>{{ gettext("remixGoal2") }}</li>
+                  <li>{{ gettext("remixGoal6") }}</li>
+                  <li>{{ gettext("remixGoal4") }}</li>
                 </ul>
-                <a href="{{ comicStripPublishedUrl }}" title="Read the Comic Strip project teaching kit" class="teaching-kit">Comic Strip Teaching Kit</a>
+                <a href="{{ comicStripPublishedUrl }}" title="{{ gettext("currentEventsComicTeachingKitTitle") | instantiate }}" class="teaching-kit">{{ gettext("currentEventsComicTeachingKit") | instantiate }}</a>
               </div>
             </div>
 
@@ -146,74 +158,74 @@
           <div class="remixable-projects">
 
             <div class="project three-things-i-heart">
-              <h2 class="title">Three things I &lt;3</h2>
+              <h2 class="title">{{ threeThingsILove }}</h2>
               <div class="thumbnail">
-                <a href="{{ threeThingsIHeartRemixUrl }}" title="Remix the Things I Love project" class="image"></a>
+                <a href="{{ threeThingsIHeartRemixUrl }}" title="{{ gettext("threeThingsILoveRemixTitle")  | instantiate | safe }}" class="image"></a>
               </div>
               <p class="description">
-                Make a simple website to share what you love.
+                {{ gettext("threeThingsILoveDescription") }}
               </p>
-              <a title="Remix the Three Things project" href="{{ threeThingsIHeartRemixUrl }}" class="remix-button">Remix this Project</a>
+              <a title="{{ gettext("threeThingsILoveRemixTitle") | instantiate | safe }}" href="{{ threeThingsIHeartRemixUrl }}" class="remix-button">{{ remixThisProject }}</a>
               <div class="or-wrapper">
                 <hr />
-                <div class="or">or</div>
+                <div class="or">{{ or }}</div>
               </div>
               <div class="teach">
-                <h3>Use it to teach</h3>
+                <h3>{{ useItToTeach }}</h3>
                 <ul>
-                  <li>Navigation inside a website</li>
-                  <li>Editing HTML content</li>
-                  <li>Embedding media in webpages</li>
+                  <li>{{ gettext("remixGoal7") }}</li>
+                  <li>{{ gettext("remixGoal2") }}</li>
+                  <li>{{ gettext("remixGoal8") }}</li>
                 </ul>
-                <a href="{{ threeThingsIHeartKitUrl }}" title="Read the Things I Love teaching kit" class="teaching-kit">Things I Love Teaching Kit</a>
+                <a href="{{ threeThingsIHeartKitUrl }}" title="{{ gettext("threeThingsILoveTeachingKitTitle") | instantiate | safe }}" class="teaching-kit">{{ gettext("threeThingsILoveTeachingKit") | instantiate }}</a>
               </div>
             </div>
 
             <div class="project homework-excuse-generator">
-              <h2 class="title">Homework Excuse Generator</h2>
+              <h2 class="title">{{ homeworkExcuseGenerator }}</h2>
               <div class="thumbnail">
-                <a href="{{ homeworkExcuseGeneratorRemixUrl }}" title="Remix the Excuse Generator project" class="image"></a>
+                <a href="{{ homeworkExcuseGeneratorRemixUrl }}" title="{{ gettext("homeworkExcuseGeneratorRemixTitle") | instantiate }}" class="image"></a>
               </div>
               <p class="description">
-                Remix a basic JavaScript function to explain why your homework is late.
+                {{ gettext("homeworkExcuseGeneratorDescription") }}
               </p>
-              <a href="{{ homeworkExcuseGeneratorRemixUrl }}" title="Remix the Excuse Generator project" class="remix-button">Remix this Project</a>
+              <a href="{{ homeworkExcuseGeneratorRemixUrl }}" title="{{ gettext("homeworkExcuseGeneratorRemixTitle") | instantiate }}" class="remix-button">{{ remixThisProject }}</a>
               <div class="or-wrapper">
                 <hr />
-                <div class="or">or</div>
+                <div class="or">{{ or }}</div>
               </div>
               <div class="teach">
-                <h3>Use it to teach</h3>
+                <h3>{{ useItToTeach }}</h3>
                 <ul>
-                  <li>Basic coding ideas</li>
-                  <li>Editing JavaScript content</li>
-                  <li>Creating an interactive button<br /> with JavaScript</li>
+                  <li>{{ gettext("remixGoal9") }}</li>
+                  <li>{{ gettext("remixGoal10") }}</li>
+                  <li>{{ gettext("remixGoal11") | safe }}</li>
                 </ul>
-                <a href="{{ homeworkExcuseGeneratorKitUrl }}" title="Read the Excuse Generator project teaching kit" class="teaching-kit">Excuse Generator Teaching Kit</a>
+                <a href="{{ homeworkExcuseGeneratorKitUrl }}" title="{{ gettext("homeworkExcuseGeneratorTeachingKitTitle") | instantiate }}" class="teaching-kit">{{ gettext("homeworkExcuseGeneratorTeachingKit") | instantiate }}</a>
               </div>
             </div>
 
             <div class="project my-six-word-summer">
-              <h2 class="title">My Six-Word Summer</h2>
+              <h2 class="title">{{ mySixWordSummer }}</h2>
               <div class="thumbnail">
-                <a href="{{ sixWordSummerRemixUrl }}" title="Remix the Six-Word Summer project" class="image"></a>
+                <a href="{{ sixWordSummerRemixUrl }}" title="{{ gettext("mySixWordSummerRemixTitle") | instantiate }}" class="image"></a>
               </div>
               <p class="description">
-                Tell us what you did last summer in just six words.
+                {{ gettext("mySixWordSummerDescription") }}
               </p>
-              <a href="{{ sixWordSummerRemixUrl }}" title="Remix the Six-Word Summer project" class="remix-button">Remix this Project</a>
+              <a href="{{ sixWordSummerRemixUrl }}" title="{{ gettext("mySixWordSummerRemixTitle") | instantiate }}" class="remix-button">{{ remixThisProject }}</a>
               <div class="or-wrapper">
                 <hr />
-                <div class="or">or</div>
+                <div class="or">{{ or }}</div>
               </div>
               <div class="teach">
-                <h3>Use it to teach</h3>
+                <h3>{{ useItToTeach }}</h3>
                 <ul>
-                  <li>Searching for openly licensed<br /> images online</li>
-                  <li>Editing HTML content</li>
-                  <li>Editing for specific word choice</li>
+                  <li>{{ gettext("remixGoal12") | safe }}</li>
+                  <li>{{ gettext("remixGoal2") }}</li>
+                  <li>{{ gettext("remixGoal13") }}</li>
                 </ul>
-                <a href="{{ sixWordSummerKitUrl }}" title="Read the Six-Word Summmer project teaching kit" class="teaching-kit">Six-Word Summmer Teaching Kit</a>
+                <a href="{{ sixWordSummerKitUrl }}" title="{{ gettext("mySixWordSummerTeachingKitTitle") | instantiate }}" class="teaching-kit">{{ gettext("mySixWordSummerTeachingKit") | instantiate }}</a>
               </div>
             </div>
 
@@ -224,18 +236,17 @@
     <footer>
       <div class="content-wrapper">
         <ul class="social-links">
-          <li><a title="Email us" class="email" href="mailto:thimble@mozillafoundation.org"><span class="icon"></span>Email Us</a></li>
-          <li><a title="Say Hi on Twitter" class="twitter" href="https://twitter.com/mozteach"><span class="icon"></span>Talk to us on Twitter</a></li>
-          <li><a title="Read the Docs" class="help" href="https://support.mozilla.org/en-US/products/webmaker/thimble"><span class="icon"></span>Read the Docs</a></li>
-          <li><a title="Contribute" class="github" href="https://github.com/mozilla/thimble.webmaker.org"><span class="icon"></span>Contribute on Github</a></li>
-          <li><a title="Terms of Use" class="terms" href="https://beta.webmaker.org/#/legal"><span class="icon"></span>Terms of Use</a></li>
-          <li><a title="Privacy Policy" class="privacy" href="https://www.mozilla.org/en-US/privacy/websites/"><span class="icon"></span>Privacy Policy</a></li>
+          <li><a title="{{ gettext("contactEmail") }}" class="email" href="mailto:thimble@mozillafoundation.org"><span class="icon"></span>{{ gettext("contactEmail") }}</a></li>
+          <li><a title="{{ gettext("contactTwitterTitle") }}" class="twitter" href="https://twitter.com/mozteach"><span class="icon"></span>{{ gettext("contactTwitter") }}</a></li>
+          <li><a title="{{ gettext("readTheDocs") }}" class="help" href="https://support.mozilla.org/products/webmaker/thimble"><span class="icon"></span>{{ gettext("readTheDocs") }}</a></li>
+          <li><a title="{{ gettext("contributeTitle") }}" class="github" href="https://github.com/mozilla/thimble.webmaker.org"><span class="icon"></span>{{ gettext("contribute") }}</a></li>
+          <li><a title="{{ gettext("termsOfUse") }}" class="terms" href="https://beta.webmaker.org/#/legal"><span class="icon"></span>{{ gettext("termsOfUse") }}</a></li>
+          <li><a title="{{ gettext("privacyPolicy") }}" class="privacy" href="https://www.mozilla.org/privacy/websites/"><span class="icon"></span>{{ gettext("privacyPolicy") }}</a></li>
         </ul>
         <div class="project-info">
-          <a class="mozilla-logo" title="Mozilla" href="https://www.mozilla.org/en-US/"><img alt="Mozilla" src="img/mozilla-logo.svg" /></a>
+          <a class="mozilla-logo" title="Mozilla" href="https://www.mozilla.org"><img alt="Mozilla" src="img/mozilla-logo.svg" /></a>
           <p class="thimble-context">
-            Thimble is part of the Mozilla Learning Network. <br/>
-            Learn to teach like mozilla at <a href="http://teach.mozilla.org">teach.mozilla.org</a>.
+            {{ gettext("thimbleFooter") | safe }}
           </p>
         </div>
       </div>

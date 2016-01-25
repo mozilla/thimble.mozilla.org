@@ -16,26 +16,26 @@
           <ul id="navbar-logged-in">
             <li>
               <img class="avatar" src="{{avatar}}">
-              <span>Hi, {{username}}</span>
+              <span>{{ gettext("loginWelcome") | instantiate }}</span>
               <img class="icon-arrow-down" src="/img/icon/dropdown-arrow.svg">
 
               <ul class="dropdown">
                 <li>
                   <a id="new-project-link" href="/projects/new" class="dropdown-link">
                     <img src="/img/icon/new-project.svg" class="dropdown-icon">
-                    New Project
+                    {{ gettext("newProjectLink") }}
                   </a>
                 </li>
                 <li>
                   <a href="/projects/{{ queryString }}" class="dropdown-link" target="_self">
                     <img src="/img/icon/your-projects.svg" class="dropdown-icon">
-                    Your Projects
+                    {{ gettext("yourProjectsLink") }}
                   </a>
                 </li>
                 <li>
                   <a href="{{ logoutURL }}" id="logout-link" class="dropdown-link" target="_self">
                     <img src="/img/icon/sign-out.svg" class="dropdown-icon">
-                    Sign Out
+                    {{ gettext("signOutLink") }}
                   </a>
                 </li>
               </ul>
@@ -43,7 +43,7 @@
           </ul>
         {% else %}
           <div id="navbar-anonymous">
-            <a href="#" title="Log in to Thimble" id="login-link" data-loginUrl="{{ loginURL }}" class="navbar-login">Log in</a> or <a href="#" title="Create an account" id="signup-link" class="navbar-login">Sign Up</a>
+            {{ gettext("loginPrompt") | instantiate | safe }}
           </div>
         {% endif %}
         </div>

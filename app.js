@@ -17,7 +17,7 @@ if ( process.env.NEW_RELIC_ENABLED ) {
  */
 var express = require('express'),
     helmet = require("helmet"),
-    i18n = require('webmaker-i18n'),
+    i18n = require("webmaker-i18n"),
     lessMiddleWare = require("less-middleware"),
     nunjucks = require('nunjucks'),
     path = require('path'),
@@ -113,8 +113,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(configuredCookieSession());
 
-app.use( i18n.middleware({
-  supported_languages: env.get( "SUPPORTED_LANGS" ),
+app.use(i18n.middleware({
+  supported_languages: env.get("SUPPORTED_LANGS"),
   default_lang: "en-US",
   mappings: require("webmaker-locale-mapping"),
   translation_directory: path.resolve( __dirname, "locale" )
