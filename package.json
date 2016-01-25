@@ -52,7 +52,7 @@
     "webmaker-translation-stats": "0.0.1"
   },
   "scripts": {
-    "postinstall": "node_modules/.bin/bower install && grunt requirejs:dist",
+    "postinstall": "node_modules/.bin/bower install && npm run localize && grunt requirejs:dist",
     "test": "node_modules/.bin/grunt",
     "start": "node app.js",
     "invalidate": "node invalidate.js",
