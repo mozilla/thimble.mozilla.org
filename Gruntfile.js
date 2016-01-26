@@ -18,6 +18,7 @@ module.exports = function( grunt ) {
           appDir: "public/",
           baseUrl: "./",
           dir: "dist",
+          keepBuildDir: true,
           modules: [{
             name: "editor/scripts/main"
           }, {

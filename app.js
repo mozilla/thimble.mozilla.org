@@ -113,11 +113,12 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(configuredCookieSession());
 
+var l10n = env.get("L10N");
 app.use(i18n.middleware({
-  supported_languages: env.get("SUPPORTED_LANGS"),
+  supported_languages: l10n.supported_languages,
   default_lang: "en-US",
   mappings: require("webmaker-locale-mapping"),
-  translation_directory: path.resolve( __dirname, "locale" )
+  translation_directory: path.resolve(__dirname, l10n.locale_dest)
 }));
 
 app.locals.GA_ACCOUNT = env.get("GA_ACCOUNT");

@@ -6,15 +6,18 @@ var properties = require("properties-parser");
 var write = require("fs-writefile-promise");
 var path = require("path");
 var FS = require("q-io/fs");
+var env = require("./lib/environment");
 
-var localeDir = path.join(process.cwd(), process.env["LOCALE_DIR"] || "locale");
+var l10nConfig = env.get("L10N");
+var localeSrc = path.join(process.cwd(), l10nConfig.locale_src || "locales");
+var localeDest = path.join(process.cwd(), l10nConfig.locale_dest || l10nConfig.locale_src || "locales");
 
 function getListLocales() {
   return new Promise(function(resolve, reject) {
-    FS.listDirectoryTree(localeDir).then(function(dirTree) {
+    FS.listDirectoryTree(localeSrc).then(function(dirTree) {
       var list = [];
       dirTree.forEach(function(i) {
-        var that = i.split(localeDir + "/");
+        var that = i.split(localeSrc + "/");
         if (that[1]) {
           list.push(that[1]);
         }
@@ -24,18 +27,26 @@ function getListLocales() {
   });
 }
 
-function writeFile(entries) {
-  entries.reduce(function(prevEntry, entry) {
-    write(path.join(localeDir, entry.locale, "messages.json"), JSON.stringify(entry.content, null, 2), "utf-8")
-    .then(function(filename) {
-      console.log("Done writing: " + filename);
+function writeFiles(localeInfoList) {
+  localeInfoList.forEach(function(localeInfo) {
+    var langDir = path.join(localeDest, localeInfo.locale.replace(/-/g, "_"));
+
+    FS.makeTree(langDir)
+    .then(function() {
+      return write(path.join(langDir, "messages.json"), JSON.stringify(localeInfo.content, null, 2), "utf-8")
+      .then(function(filename) {
+        console.log("Done writing: " + filename);
+      });
+    })
+    .catch(function(err) {
+      console.error(err);
     });
-  }, {});
+  });
 }
 
 function getContentMessages(locale) {
   return new Promise(function(resolve, reject) {
-    properties.read(path.join(localeDir, locale, "messages.properties"), function(message_error, message_properties) {
+    properties.read(path.join(localeSrc, locale, "messages.properties"), function(message_error, message_properties) {
       if (message_error && message_error.code !== "ENOENT") {
         return reject(message_error);
       }
@@ -49,7 +60,9 @@ function processMessageFiles(locales) {
   return Promise.all(locales.map(getContentMessages));
 }
 
-getListLocales().then(processMessageFiles)
-.then(writeFile).catch(function(err) {
+getListLocales()
+.then(processMessageFiles)
+.then(writeFiles)
+.catch(function(err) {
   console.error(err);
 });
