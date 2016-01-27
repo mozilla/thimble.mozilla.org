@@ -117,21 +117,20 @@
 
     <div id="spinner-container">
         <div class="thimble-spinner"></div>
-        <div class="loading-message message">Loading Project</div>
+        <div class="loading-message message">{{ gettext("loadingProject") }}</div>
         <div class="error-message message">
-            <p>There was an error loading your Project.<br>
-            Please refresh your browser.</p>
-            <p>NOTE: if you are using Private Browsing mode, please reload in normal mode.</p>
+            <p>{{ gettext("errorLoadingProject") }}</p>
+            <p>{{ gettext("errorLoadingProjectSuggestion") }}</p>
         </div>
     </div>
 
     <div id="browser-support-warning" class="hide">
       <div class="message-box">
-        <h1>Sorry, Thimble won't work in your Browser</h1>
+        <h1>{{ gettext("errorUnsupportedBrowser") }}</h1>
         <p>
-          Thimble works in all of the following browsers: <a title="Download Mozilla Firefox" href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a>, <a title="Download Google Chrome" href="https://www.google.com/chrome/browser/desktop/index.html">Chrome</a>, Internet Explorer 11, Microsoft Edge, Safari (8+), and <a title="Download Opera" href="http://www.opera.com/download">Opera</a>.
+          {{ gettext("errorUnsupportedBrowserSuggestion") }}
         </p>
-        <div title="Continue using Thimble" class="let-me-in">Let me try anyway!</div>
+        <div title="{{ gettext("errorUnsupportedBrowserIgnoreTitle") }}" class="let-me-in">{{ gettext("errorUnsupportedBrowserIgnore") }}</div>
       </div>
     </div>
 

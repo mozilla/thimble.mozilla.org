@@ -8,21 +8,21 @@
           <img src="/img/thimble-icon.svg" class="thimble-logo">
         </a>
       </div>
-      <div title="Rename your Project" id="navbar-project-title" class="shadow">
-        <span id="project-rename-save">Save</span>
+      <div title="{{ gettext("renameProjectInputBoxTitle") }}" id="navbar-project-title" class="shadow">
+        <span id="project-rename-save">{{ gettext("renameProjectSaveBtn") }}</span>
         <span id="navbar-rename-project">
           <img src="/img/icon/edit.svg" class="icon-edit">
         </span>
       </div>
       <div id="navbar-save-indicator" class="hide">
-        Saving...
+        {{ gettext("fileSavingIndicator") }}
       </div>
     </div>
 
     <div id="navbar-right" class="container-flex">
-      <div title="Visit the Help site" id="navbar-help">
+      <div title="{{ gettext("helpIconTitle") }}" id="navbar-help">
         <img src="/img/icon/question-mark.svg" class="icon-question-mark">
-        Help
+        {{ gettext("help") }}
       </div>
       <div id="navbar-login" {% if username %}class="signed-in"{% endif %}>
         <div id="navbar-login-inner">
@@ -30,39 +30,39 @@
           <ul id="navbar-logged-in">
             <li>
               <img class="avatar" src="{{avatar}}">
-              <span>Hi, {{username}}</span>
+              <span>{{ gettext("loginWelcome") | instantiate }}</span>
               <img class="icon-arrow-down" src="/img/icon/dropdown-arrow.svg">
 
               <ul class="dropdown" class="hide">
                 <li>
                   <a id="new-project-link" href="/projects/new" class="dropdown-link">
                     <img src="/img/icon/new-project.svg" class="dropdown-icon">
-                    New Project
+                    {{ gettext("newProjectLink") }}
                   </a>
                 </li>
                 <li>
                   <a id="delete-project-link" class="dropdown-link">
                     <img src="/img/icon/garbage-can.svg" class="dropdown-icon" />
-                    Delete Project
+                    {{ gettext("deleteProjectLink") }}
                   </a>
                 </li>
                 <li>
                   <a href="/projects/{{ queryString }}" class="dropdown-link" target="_self">
                     <img src="/img/icon/your-projects.svg" class="dropdown-icon">
-                    Your Projects
+                    {{ gettext("yourProjectsLink") }}
                   </a>
                 </li>
                 <li>
                   <a href="#" id="export-project-zip" class="dropdown-link" target="_self">
                     <!--TODO: change this icon-->
                     <img src="/img/icon/download-cloud.svg" class="dropdown-icon">
-                    Export (.zip)
+                    {{ gettext("exportProjectLink") }}
                   </a>
                 </li>
                 <li>
                   <a href="{{ logoutURL }}" id="logout-link" class="dropdown-link" target="_self">
                     <img src="/img/icon/sign-out.svg" class="dropdown-icon">
-                    Sign Out
+                    {{ gettext("signOutLink") }}
                   </a>
                 </li>
               </ul>
@@ -70,15 +70,15 @@
           </ul>
         {% else %}
           <div id="navbar-anonymous">
-            <a href="#" title="Log in to Thimble" id="login-link" class="navbar-login">Log in</a> or <a href="#" title="Create an account" id="signup-link" class="navbar-login">Sign Up</a> to Save and
+            {{ gettext("loginPromptEditor") | safe }}
           </div>
         {% endif %}
         </div>
       </div>
       <div id="navbar-publish">
-        <div title="Publish and share your Project" id="navbar-publish-button">
+        <div title="{{ gettext("publishBtnTitle") }}" id="navbar-publish-button">
           <img src="/img/icon/publish.svg" class="icon-publish">
-          Publish
+          {{ gettext("publishBtn") }}
         </div>
       </div>
     </div>

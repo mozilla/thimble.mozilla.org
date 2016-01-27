@@ -39,13 +39,14 @@ is an abbreviated guide to getting it all set up.  Please see each server's READ
 * Run ``git submodule update --init`` to install submodules
 * Run ``npm install`` to install dependencies
 * Run `grunt build-browser` to create `/dist` extensions and third-party libs
-* Run ``npm start`` to get a static server running on [http://localhost:8000/src](http://localhost:8000/src). You can try the demo version at [http://localhost:8000/src/hosted.html](http://localhost:8000/src/hosted.html) 
+* Run ``npm start`` to get a static server running on [http://localhost:8000/src](http://localhost:8000/src). You can try the demo version at [http://localhost:8000/src/hosted.html](http://localhost:8000/src/hosted.html)
 
 **Thimble**
 * Fork and clone https://github.com/mozilla/thimble.webmaker.org
 * Make sure you're on the ``bramble`` branch
 * Run ``npm install`` to install dependencies
 * Run ``cp env.dist .env`` to create an environment file
+* Run ``npm run localize`` to generate the locale files
 * Run ``npm start`` to start the server
 * Once everything is ready and running, Thimble will be available at [http://localhost:3500/](http://localhost:3500/)
 
@@ -88,7 +89,7 @@ To publish locally, you'll need to do the following...
 * In your id.webmaker.org folder
   * Run ``node scripts/create-tables.js``
   * Edit ``scripts/test-data.sql`` and replace it's contents with:
-      
+
       ```sql
         INSERT INTO clients VALUES
           ( 'test',

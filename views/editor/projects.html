@@ -11,10 +11,10 @@
 
   <div class="project-list-wrapper">
     <div id="container">
-      <h2>Your Projects</h2>
+      <h2>{{ gettext("yourProjectsLink") }}</h2>
 
       <a href="/projects/new" id="project-0">
-        <div title="Start a new project from scratch" class="project-button">Create a new Project</div>
+        <div title="{{ gettext("prjListNewProjectBtnTitle") }}" class="project-button">{{ gettext("prjListNewProjectBtn") }}</div>
       </a>
 
       <table id="project-list" data-username="{{ username }}">
@@ -31,11 +31,11 @@
             <span class="project-information"></span>
           </td>
           <td>
-            <div class="project-delete" title="Delete this Project">
+            <div class="project-delete" title="{{ gettext("prjListDeleteProjectBtnTitle") }}">
               <div class="icon-garbage-can">
                 <div class="icon-garbage-lid"></div>
               </div>
-              Delete
+              {{ gettext("prjListDeleteProjectBtn") }}
             </div>
           </td>
         </tr>

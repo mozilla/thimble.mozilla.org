@@ -6,36 +6,36 @@
 </div>
 <div id="publish-dialog" class="hide">
   <div id="publish-title">
-    Publish your Project
+    {{ gettext("publishHeader") }}
   </div>
 
   <div id="publish-live" class="hide">
-    <div>Here's a link you can share...</div>
+    <div>{{ gettext("publishShareLink") }}</div>
     <div id="publish-link">
-      <a title="Your published project" href="test"></a>
+      <a title="{{ gettext("publishShareLinkTitle") }}" href="test"></a>
     </div>
 
     <div id="publish-changes" class="hide">
-      <div>You've made changes since you last published this project.</div>
-      <div id="publish-button-update">Update published version</div>
+      <div>{{ gettext("publishChangesPrompt") }}</div>
+      <div id="publish-button-update">{{ gettext("publishChangesBtn") }}</div>
     </div>
     <div id="publish-button-unpublish">
       <svg height="16" width="16" id="unpublish-icon">
         <circle cx="8" cy="8" r="8" fill="white" />
         <line x1="11" y1="8" x2="5" y2="8" stroke="#B0B0B0" strokeWeight="1" />
       </svg>
-      <span>Unpublish</span>
+      <span>{{ gettext("publishUnpublishBtn") }}</span>
     </div>
   </div>
 
   <div id="publish-details">
-    <label>Project Description</label>
-    <textarea class="publish-description" placeholder="What is your project about?"></textarea>
+    <label>{{ gettext("publishProjectDescription") }}</label>
+    <textarea class="publish-description" placeholder="{{ gettext("publishProjectDescriptionPlaceholder") }}"></textarea>
   </div>
 
   <div id="publish-buttons">
-    <div id="publish-button-publish">Publish</div>
-    <div id="publish-button-cancel">Cancel</div>
+    <div id="publish-button-publish">{{ gettext("publishBtn") }}</div>
+    <div id="publish-button-cancel">{{ gettext("publishCancelBtn") }}</div>
   </div>
 </div>
 {% endblock %}

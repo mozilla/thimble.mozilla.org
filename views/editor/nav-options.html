@@ -4,25 +4,25 @@
   <div class="filetree-pane-nav hide">
     <div class="nav-container">
       <div class="filetree-pane-nav-title">
-        FILES
+        {{ gettext("navFiles") }}
       </div>
 
       <div class="flex-container pull-right">
         <div id="filetree-pane-nav-add">
-          <div title="Add a file to your project" class="filetree-pane-nav-btn"></div>
+          <div title="{{ gettext("navAddFileIconTitle") }}" class="filetree-pane-nav-btn"></div>
         </div>
 
         <div id="filetree-pane-nav-add-menu" class="hide">
           <ul>
-            <li title="Add an HTML file" id="filetree-pane-nav-add-html"><span>HTML</span>
-            <li title="Add a CSS file" id="filetree-pane-nav-add-css"><span>CSS</span>
-            <li title="Add a JavaScript file" id="filetree-pane-nav-add-js"><span>JavaScript</span>
-            <li title="Add a Tutorial" id="filetree-pane-nav-add-tutorial"><span>Tutorial</span>
-            <li title="Upload a file from your computer" id="filetree-pane-nav-add-upload" class="top-border"><span>Upload...</span>
+            <li title="{{ gettext("navHTMLTitle") }}" id="filetree-pane-nav-add-html"><span>{{ gettext("navHTML") }}</span>
+            <li title="{{ gettext("navCSSTitle") }}" id="filetree-pane-nav-add-css"><span>{{ gettext("navCSS") }}</span>
+            <li title="{{ gettext("navJavascriptTitle") }}" id="filetree-pane-nav-add-js"><span>{{ gettext("navJavascript") }}</span>
+            <li title="{{ gettext("navTutorial") }}" id="filetree-pane-nav-add-tutorial"><span>{{ gettext("navTutorial") }}</span>
+            <li title="{{ gettext("navUploadTitle") }}" id="filetree-pane-nav-add-upload" class="top-border"><span>{{ gettext("navUpload") }}</span>
           </ul>
         </div>
 
-        <div title="Collapse the file tray" id="filetree-pane-nav-hide">
+        <div title="{{ gettext("navCollapseFileTrayIconTitle") }}" id="filetree-pane-nav-hide">
           <div class="filetree-pane-nav-btn"></div>
         </div>
       </div>
@@ -32,60 +32,60 @@
   <!-- LEFT SIDE -->
   <div class="editor-pane-nav">
     <div class="nav-container">
-      <div title="Expand the file tray" id="editor-pane-nav-fileview">
+      <div title="{{ gettext("navExpandFileTrayIconTitle") }}" id="editor-pane-nav-fileview">
         <div></div>
       </div>
 
-      <span class="editor-pane-nav-title">EDITOR</span>
+      <span class="editor-pane-nav-title">{{ gettext("navEditor") }}</span>
       <span>&nbsp;-&nbsp;</span>
       <span id="editor-pane-nav-filename"></span>
 
       <div class="flex-container pull-right">
 
-        <div title="Undo your last edit" id="editor-pane-nav-undo">
+        <div title="{{ gettext("navUndoTitle") }}" id="editor-pane-nav-undo">
           <img src="/img/icon/undo.svg">
-          <span>Undo</span>
+          <span>{{ gettext("navUndo") }}</span>
         </div>
 
-        <div title="Redo your last edit" id="editor-pane-nav-redo">
+        <div title="{{ gettext("navRedoIconTitle") }}" id="editor-pane-nav-redo">
           <img src="/img/icon/redo.svg">
         </div>
-          <div title="Change editor options" id="editor-pane-nav-options">
+          <div title="{{ gettext("navEditorOptionsIconTitle") }}" id="editor-pane-nav-options">
             <img src="/img/icon/gear-white.svg">
           </div>
           <div id="editor-pane-nav-options-menu" class="hide">
             <ul>
               <li>
-                <span>Text size</span>
+                <span>{{ gettext("navTextSize") }}</span>
                 <div class="text-size-ui">
-                  <div title="Decrease the editor font size" id="editor-pane-nav-decrease-font" class="font-size-button"></div>
-                  <div title="Increase the editor font size" id="editor-pane-nav-increase-font" class="font-size-button"></div>
+                  <div title="{{ gettext("navDecreaseTextSizeIconTitle") }}" id="editor-pane-nav-decrease-font" class="font-size-button"></div>
+                  <div title="{{ gettext("navIncreaseTextSizeIconTitle") }}" id="editor-pane-nav-increase-font" class="font-size-button"></div>
                 </div>
               </li>
               <li>
-                <span>Color theme</span>
+                <span>{{ gettext("navColorTheme") }}</span>
                 <div id="editor-pane-nav-toggle-theme">
                   <div id="theme-active"></div>
-                  <div title="Switch to the dark theme" id="theme-dark">
+                  <div title="{{ gettext("navDarkThemeIconTitle") }}" id="theme-dark">
                     <img id="moon-white" src="/img/icon/theme-moon-white.svg" width="15px" height="15px">
                     <img id="moon-green" class="hide" src="/img/icon/theme-moon-green.svg" width="15px" height="15px">
                   </div>
-                  <div title="Switch to the light theme" id="theme-light">
+                  <div title="{{ gettext("navLightThemeIconTitle") }}" id="theme-light">
                     <img id="sun-white" class="hide" src="/img/icon/theme-sun-white.svg" width="20px" class="hide" height="20px">
                     <img id="sun-green" src="/img/icon/theme-sun-green.svg" width="20px" height="20px">
                   </div>
                 </div>
               </li>
               <li>
-                <span>Wrap long lines</span>
-                <div title="Toggle wrapping long lines of code" class="switch-toggle switch-enabled" id="line-wrap-toggle">
+                <span>{{ gettext("navWrapText") }}</span>
+                <div title="{{ gettext("navWrapTextTitle") }}" class="switch-toggle switch-enabled" id="line-wrap-toggle">
                   <div class="toggle-backing"></div>
                   <div class="toggle-button"></div>
                 </div>
               </li>
               <li>
-                <span>Allow JavaScript</span>
-                <div title="Toggle running JavaScript code in the preview" class="switch-toggle switch-enabled" id="allow-scripts-toggle">
+                <span>{{ gettext("navAllowJS") }}</span>
+                <div title="{{ gettext("navAllowJSTitle") }}" class="switch-toggle switch-enabled" id="allow-scripts-toggle">
                   <div class="toggle-backing"></div>
                   <div class="toggle-button"></div>
                 </div>
@@ -101,26 +101,26 @@
   <div class="preview-pane-nav">
     <div class="nav-container">
       <div class="preview-tutorial-toggle">
-        <span title="View the Preview" id="preview-title" class="preview-pane-nav-title preview-title-highlighted">PREVIEW</span>
-        <span title="View the Project Tutorial" id="tutorial-title" class="preview-pane-nav-title hide">TUTORIAL</span>
+        <span title="{{ gettext("navPreviewTitle") }}" id="preview-title" class="preview-pane-nav-title preview-title-highlighted">{{ gettext("navPreview") }}</span>
+        <span title="{{ gettext("navViewTutorialTitle") }}" id="tutorial-title" class="preview-pane-nav-title hide">{{ gettext("navViewTutorial") }}</span>
       </div>
 
       <div class="flex-container pull-right">
-        <div title="Toggle Element Inspector" id="preview-pane-nav-inspector">
+        <div title="{{ gettext("navDOMElementInspectorIconTitle") }}" id="preview-pane-nav-inspector">
           <div class="icon-wrapper"></div>
         </div>
-        <div title="Refresh the Preview" id="preview-pane-nav-refresh">
+        <div title="{{ gettext("navRefreshPreviewIconTitle") }}" id="preview-pane-nav-refresh">
           <img src="/img/icon/refresh.svg">
         </div>
         <div class="preview-device-toggle">
-          <img title="Preview in desktop mode" id="preview-pane-nav-desktop" class="viewmode-active" src="/img/icon/desktop.svg">
-          <img title="Preview in mobile mode" id="preview-pane-nav-phone" class="viewmode-inactive" src="/img/icon/phone-portrait.svg">
+          <img title="{{ gettext("navDesktopPreviewIconTitle") }}" id="preview-pane-nav-desktop" class="viewmode-active" src="/img/icon/desktop.svg">
+          <img title="{{ gettext("navMobilePreviewIconTitle") }}" id="preview-pane-nav-phone" class="viewmode-inactive" src="/img/icon/phone-portrait.svg">
         </div>
         <div class="fullscreen-preview-toggle">
-          <div class="enable-fullscreen" title="Enable fullscreen preview">
+          <div class="enable-fullscreen" title="{{ gettext("navEnableFullscreenPreviewIconTitle") }}">
             <img src="/img/icon/fullscreen-on.svg">
           </div>
-          <div class="disable-fullscreen" title="Disable fullscreen preview">
+          <div class="disable-fullscreen" title="{{ gettext("navDisableFullscreenPreviewIconTitle") }}">
             <img src="/img/icon/fullscreen-off.svg">
           </div>
         </div>
