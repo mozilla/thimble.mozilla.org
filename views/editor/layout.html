@@ -1,5 +1,6 @@
+{% set locale = localeInfo.lang %}
 <!DOCTYPE html>
-<html lang="{{localeInfo.lang}}" dir="{{localeInfo.direction}}">
+<html lang="{{ locale }}" dir="{{ localeInfo.direction }}">
   <head>
     <meta charset="utf-8">
     {{ newrelic.getBrowserTimingHeader() | safe }}

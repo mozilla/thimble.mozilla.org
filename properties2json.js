@@ -44,6 +44,22 @@ function writeFiles(localeInfoList) {
   });
 }
 
+function removeOldLocales(localeInfoList) {
+  return new Promise(function(resolve, reject) {
+    FS.removeTree(localeDest)
+    .then(function() {
+      resolve(localeInfoList);
+    })
+    .catch(function(err) {
+      if(err.code !== "ENOENT") {
+        reject(err);
+      } else {
+        resolve(localeInfoList);
+      }
+    });
+  });
+}
+
 function getContentMessages(locale) {
   return new Promise(function(resolve, reject) {
     properties.read(path.join(localeSrc, locale, "messages.properties"), function(message_error, message_properties) {
@@ -62,6 +78,7 @@ function processMessageFiles(locales) {
 
 getListLocales()
 .then(processMessageFiles)
+.then(removeOldLocales)
 .then(writeFiles)
 .catch(function(err) {
   console.error(err);
