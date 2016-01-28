@@ -1,17 +1,3 @@
-process.env.NEW_RELIC_BROWSER_MONITOR_ENABLE = false;
-
-// New Relic Server monitoring support
-var newrelic;
-if ( process.env.NEW_RELIC_ENABLED ) {
-  newrelic = require( "newrelic" );
-} else {
-  newrelic = {
-    getBrowserTimingHeader: function () {
-      return "<!-- New Relic RUM disabled -->";
-    }
-  };
-}
-
 /**
  * Module dependencies.
  */
@@ -28,10 +14,10 @@ var express = require('express'),
 var favicon = require('serve-favicon'),
     cookieSession = require('cookie-session'),
     cookieParser = require('cookie-parser'),
-    logger = require('morgan'),
     compress = require('compression'),
     bodyParser = require('body-parser'),
-    csrf = require('csurf');
+    csrf = require('csurf'),
+    logger = require("morgan");
 
 var appName = "thimble",
     app = express(),
@@ -40,8 +26,6 @@ var appName = "thimble",
 
     middleware = require('./lib/middleware')(),
     errorhandling= require('./lib/errorhandling'),
-    logger,
-    messina,
     nunjucksEnv = new nunjucks.Environment([
       new nunjucks.FileSystemLoader('views'),
       new nunjucks.FileSystemLoader('learning_projects'),
@@ -49,9 +33,10 @@ var appName = "thimble",
     ], {
       autoescape: true
     }),
-    routes = require('./routes')( utils, nunjucksEnv, appName ),
-    webmakerProxy = require('./lib/proxy')();
+    routes = require('./routes')(utils, nunjucksEnv, appName);
 
+var isProduction = (env.get( "NODE_ENV" ) !== "development"),
+    tmpDir = path.join( require("os").tmpDir(), "mozilla.webmaker.org");
 
 function configuredCookieSession() {
   var options = {
@@ -84,20 +69,12 @@ app.disable('x-powered-by');
 app.use(compress());
 
 // adding Content Security Policy (CSP)
-app.use(middleware.addCSP({
-  personaHost: env.get('PERSONA_HOST'),
-  brambleHost: env.get('BRAMBLE_URI')
-}));
+app.use(middleware.addCSP({ brambleHost: env.get('BRAMBLE_URI') }));
 
 app.use(favicon(__dirname + '/public/resources/img/favicon.png'));
 
-if ( env.get( "ENABLE_GELF_LOGS" ) ) {
-  messina = require( "messina" );
-  logger = messina( "thimble.webmaker.org-" + env.get( "NODE_ENV" ) || "development" );
-  logger.init();
-  app.use( logger.middleware() );
-} else {
-  app.use( logger( "dev" ) );
+if(!isProduction) {
+  app.use(logger("dev"));
 }
 
 app.use(helmet.xssFilter());
@@ -124,32 +101,23 @@ app.use(i18n.middleware({
 app.locals.GA_ACCOUNT = env.get("GA_ACCOUNT");
 app.locals.GA_DOMAIN = env.get("GA_DOMAIN");
 app.locals.languages = i18n.getSupportLanguages();
-app.locals.newrelic = newrelic;
 app.locals.bower_path = "bower_components";
 
 app.use(csrf());
 app.use(helmet.xframe());
 
-var optimize = (env.get( "NODE_ENV" ) !== "development"),
-    tmpDir = path.join( require("os").tmpDir(), "mozilla.webmaker.org");
-
 app.use(lessMiddleWare('public', {
-  once: optimize,
-  debug: !optimize,
+  once: isProduction,
+  debug: !isProduction,
   dest: tmpDir,
   src: WWW_ROOT,
   compress: true,
-  yuicompress: optimize,
-  optimization: optimize ? 0 : 2
+  yuicompress: isProduction,
+  optimization: isProduction ? 0 : 2
 }));
 
 routes.init(app, middleware);
 
-// We only want to allow CORS on our public resources
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  next();
-});
 app.use(express.static(tmpDir, {maxAge: "1d"}));
 
 // We use pre-built resources in production
@@ -159,14 +127,8 @@ if (env.get("NODE_ENV") === "production") {
   app.use('/', express.static(path.join(__dirname, 'public'), {maxAge: "1d"}));
 }
 
-app.use(express.static(path.join(__dirname, 'public'), {maxAge: "1d"}));
 app.use(express.static(path.join(__dirname, 'public/resources'), {maxAge: "1d"}));
-app.use(express.static(path.join(__dirname, 'learning_projects'), {maxAge: "1d"}));
-app.use(express.static(path.join(__dirname, 'templates'), {maxAge: "1d"}));
 app.use( "/bower", express.static( path.join(__dirname, "bower_components" ), {maxAge: "1d"}));
-
-// resource proxying for http-on-https
-webmakerProxy(app, middleware.checkForAuth);
 
 // Localized Strings
 app.get( '/strings/:lang?', i18n.stringsRoute( 'en-US' ) );

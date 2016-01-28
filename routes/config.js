@@ -17,7 +17,6 @@ editorHOST = editorHOST.protocol +"//"+ editorHOST.host + editorHOST.pathname;
 
 module.exports = {
   appURL: env.get("APP_HOSTNAME"),
-  webmaker: env.get("WEBMAKER_URL"),
   oauth: oauth,
   loginURL: loginURL,
   logoutURL: logoutURL,

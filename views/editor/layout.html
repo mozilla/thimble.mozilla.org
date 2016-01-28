@@ -2,7 +2,6 @@
 <html lang="{{localeInfo.lang}}" dir="{{localeInfo.direction}}">
   <head>
     <meta charset="utf-8">
-    {{ newrelic.getBrowserTimingHeader() | safe }}
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="persona-email" content="{{email}}">
     <meta name="thimble-operation" content="{{pageOperation}}">
@@ -25,7 +24,7 @@
     </script>
     {% endif %}
   </head>
-  <body data-make-url="{{ makeUrl }}" data-make-endpoint="{{ MAKE_ENDPOINT }}">
+  <body>
     {% block body %}{% endblock %}
   </body>
 </html>
