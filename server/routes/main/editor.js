@@ -1,7 +1,7 @@
 var url = require("url");
 var querystring = require("querystring");
 
-var Constants = require("../../constants");
+var Constants = require("../../../constants");
 var utils = require("../utils");
 
 function getProjectMetadata(config, req, callback) {

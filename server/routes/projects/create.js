@@ -1,8 +1,8 @@
 var querystring = require("querystring");
 
 var utils = require("../utils");
-var Constants = require("../../constants");
-var defaultProject = require("../../default");
+var Constants = require("../../../constants");
+var defaultProject = require("../../../default");
 
 module.exports = function(config, req, res) {
   var user = req.user;

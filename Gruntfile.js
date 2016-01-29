@@ -110,8 +110,8 @@ module.exports = function( grunt ) {
           src: [
             "Gruntfile.js",
             "app.js",
-            "lib/**/*.js",
-            "routes/**/*.js"
+            "server/**/*.js",
+            "constants.js"
           ]
         }
       },

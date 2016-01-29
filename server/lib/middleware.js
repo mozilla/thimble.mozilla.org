@@ -14,7 +14,6 @@ var publishHost = env.get("PUBLISH_HOSTNAME");
 
 module.exports = function middlewareConstructor() {
   var utils = require("./utils"),
-      hood = require("hood"),
       Cryptr = require("cryptr");
 
   var cryptr = new Cryptr(env.get("SESSION_SECRET"));
@@ -24,63 +23,6 @@ module.exports = function middlewareConstructor() {
      * Multipart File Upload of a single `brambleFile` form field
      */
     fileUpload: upload.single("brambleFile"),
-
-    /**
-     * Content Security Policy HTTP response header
-     * helps you reduce XSS risks on modern browsers
-     * by declaring what dynamic resources are allowed
-     * to load via a HTTP Header.
-     */
-    addCSP: function ( options ) {
-      return hood.csp({
-        headers: [
-          "Content-Security-Policy-Report-Only"
-        ],
-        policy: {
-          'connect-src': [
-            "'self'"
-          ],
-          'default-src': [
-            "'self'"
-          ],
-          'frame-src': [
-            "'self'",
-            "https://docs.google.com",
-            options.brambleHost,
-            options.personaHost
-          ],
-          'font-src': [
-            "'self'",
-            "https://fonts.gstatic.com",
-            "https://netdna.bootstrapcdn.com",
-            "https://code.cdn.mozilla.net/"
-          ],
-          'img-src': [
-            "*"
-          ],
-          'media-src': [
-            "*"
-          ],
-          'script-src': [
-            "'self'",
-            "http://mozorg.cdn.mozilla.net",
-            "https://ajax.googleapis.com",
-            "https://mozorg.cdn.mozilla.net",
-            "https://www.google-analytics.com",
-            options.brambleHost,
-            options.personaHost
-          ],
-          'style-src': [
-            "'self'",
-            "http://mozorg.cdn.mozilla.net",
-            "https://ajax.googleapis.com",
-            "https://fonts.googleapis.com",
-            "https://mozorg.cdn.mozilla.net",
-            "https://netdna.bootstrapcdn.com"
-          ]
-        }
-      });
-    },
 
     /**
      * Check whether the requesting user has been authenticated.

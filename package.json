@@ -46,14 +46,13 @@
     "time-grunt": "^1.2.1",
     "uuid": "^2.0.1",
     "webmaker-i18n": "0.3.27",
-    "webmaker-locale-mapping": "0.0.5",
-    "webmaker-translation-stats": "0.0.1"
+    "webmaker-locale-mapping": "0.0.5"
   },
   "scripts": {
     "postinstall": "node_modules/.bin/bower install && npm run localize && grunt requirejs:dist",
     "test": "node_modules/.bin/grunt",
     "start": "node app.js",
-    "invalidate": "node invalidate.js",
-    "localize": "node properties2json.js"
+    "invalidate": "node scripts/invalidate.js",
+    "localize": "node scripts/properties2json.js"
   }
 }

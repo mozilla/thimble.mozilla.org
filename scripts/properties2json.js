@@ -6,7 +6,7 @@ var properties = require("properties-parser");
 var write = require("fs-writefile-promise");
 var path = require("path");
 var FS = require("q-io/fs");
-var env = require("./lib/environment");
+var env = require("../server/lib/environment");
 
 var l10nConfig = env.get("L10N");
 var localeSrc = path.join(process.cwd(), l10nConfig.locale_src || "locales");

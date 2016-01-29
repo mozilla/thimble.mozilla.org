@@ -2,7 +2,7 @@ var querystring = require("querystring");
 var uuid = require("uuid");
 
 var utils = require("../utils");
-var Constants = require("../../constants");
+var Constants = require("../../../constants");
 
 module.exports = function(config, req, res) {
   var user = req.user;

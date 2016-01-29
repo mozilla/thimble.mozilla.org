@@ -1,6 +1,6 @@
 var editor = require("./editor");
 var utils = require("../utils");
-var Constants = require("../../constants");
+var Constants = require("../../../constants");
 
 function getProject(config, remixId, callback) {
   if(!remixId) {

@@ -3,7 +3,7 @@ var url = require("url");
 var NodeFormData = require("form-data");
 var async = require("async");
 
-var defaultProject = require("../default");
+var defaultProject = require("../../default");
 
 function createProject(config, user, data, callback) {
   var createURL = config.publishURL + "/projects";
