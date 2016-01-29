@@ -22,6 +22,8 @@ module.exports = function( grunt ) {
           modules: [{
             name: "editor/scripts/main"
           }, {
+            name: "editor/scripts/project-list"
+          }, {
             name: "homepage/scripts/main"
           }],
           findNestedDependencies: true,
