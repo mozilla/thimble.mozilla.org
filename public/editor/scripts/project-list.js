@@ -19,6 +19,7 @@ require.config({
 require(["jquery", "constants", "analytics"], function($, Constants, analytics) {
   var projects = document.querySelectorAll("tr.bramble-user-project");
   var username = encodeURIComponent($("#project-list").attr("data-username"));
+  var locale = $("html")[0].lang;
   var queryString = window.location.search;
 
   function getElapsedTime(lastEdited) {
@@ -54,7 +55,7 @@ require(["jquery", "constants", "analytics"], function($, Constants, analytics) 
     var lastEdited = project.getAttribute("data-project-date_updated");
 
     $(projectSelector + " > .project-title").on("click", function() {
-      window.location.href = "/user/" + username + "/" + project.getAttribute("data-project-id") + queryString;
+      window.location.href = "/" + locale + "/user/" + username + "/" + project.getAttribute("data-project-id") + queryString;
     });
     $(projectSelector + " .project-information").text(getElapsedTime(lastEdited));
   });
@@ -77,7 +78,7 @@ require(["jquery", "constants", "analytics"], function($, Constants, analytics) 
         "X-Csrf-Token": $("meta[name='csrf-token']").attr("content")
       },
       type: "DELETE",
-      url: "/projects/" + projectId,
+      url: "/" + locale + "/projects/" + projectId,
       timeout: Constants.AJAX_DEFAULT_TIMEOUT_MS
     });
     request.done(function() {
@@ -107,6 +108,7 @@ function init($, uuid, cookies, PopupMenu, analytics) {
 
 function setupNewProjectLinks($, analytics) {
   var queryString = window.location.search;
+  var locale = $("html")[0].lang;
 
   function newProjectClickHandler(e) {
     e.preventDefault();
@@ -118,7 +120,7 @@ function setupNewProjectLinks($, analytics) {
     $(e.target).text("Creating new project...");
 
     analytics.event("NewProject", {label: "New authenticated project"});
-    window.location.href = "/projects/new" + qs;
+    window.location.href = "/" + locale + "/projects/new" + qs;
   }
 
   $("#new-project-link").one("click", newProjectClickHandler);

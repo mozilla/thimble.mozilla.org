@@ -18,6 +18,7 @@ define(function(require) {
 
   function init(bramble) {
     var publisher;
+    var locale = $("html")[0].lang;
 
     // *******ON LOAD
     checkIfMultiFile();
@@ -47,7 +48,7 @@ define(function(require) {
     // *******EVENTS
     // User bar menu help
     $("#navbar-help").click(function() {
-      window.open("https://support.mozilla.org/en-US/products/webmaker/thimble");
+      window.open("https://support.mozilla.org/" + locale + "/products/webmaker/thimble");
     });
 
     $("#new-project-link").click(function(e) {
@@ -59,9 +60,9 @@ define(function(require) {
       var queryString = window.location.search;
       var cacheBust = "cacheBust=" + Date.now();
       queryString = queryString === "" ? "?" + cacheBust : queryString + "&" + cacheBust;
-      window.location.href = "/projects/new"  + queryString;
+      window.location.href = "/" + locale + "/projects/new"  + queryString;
     });
-    $('#delete-project-link').click(function() {
+    $("#delete-project-link").click(function() {
       var projectId = Project.getID();
 
       // TODO: we can do better than this, but let's at least make it harder to lose data.
@@ -76,18 +77,18 @@ define(function(require) {
           "X-Csrf-Token": $("meta[name='csrf-token']").attr("content")
         },
         type: "DELETE",
-        url: "/projects/" + projectId
+        url: "/" + locale + "/projects/" + projectId
       });
       request.done(function() {
         if(request.status !== 204) {
           console.error("[Thimble error] sending delete request for project ", projectId, request.status);
         } else {
           var queryString = window.location.search;
-          window.location.href = '/projects' + queryString;
+          window.location.href = "/" + locale + "/projects" + queryString;
         }
       });
       request.fail(function(jqXHR, status, err) {
-        console.error('[Bramble] Delete project request failed', err);
+        console.error("[Bramble] Delete project request failed", err);
       });
     });
 
@@ -290,7 +291,7 @@ define(function(require) {
       // written to disk before we sync and publish.
       FileSystemSync.saveAndSyncAll(function(err) {
         if (err) {
-          console.log('[Bramble] Error saving and persisting dirty files:', err);
+          console.log("[Bramble] Error saving and persisting dirty files:", err);
           return;
         }
       });
