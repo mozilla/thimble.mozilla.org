@@ -2,7 +2,7 @@ var querystring = require("querystring");
 var uuid = require("uuid");
 
 var utils = require("../utils");
-var Constants = require("../../../constants");
+var defaultProjectNameKey = require("../../../constants").DEFAULT_PROJECT_NAME_KEY;
 
 module.exports = function(config, req, res) {
   var user = req.user;
@@ -37,7 +37,7 @@ module.exports = function(config, req, res) {
   // with the migrated project id
   var now = (new Date()).toISOString();
   var project = {
-    title: Constants.DEFAULT_PROJECT_NAME,
+    title: req.gettext(defaultProjectNameKey, req.localeInfo.locale),
     date_created: now,
     date_updated: now,
     user_id: user.publishId
