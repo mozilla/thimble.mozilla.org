@@ -128,7 +128,7 @@
       <div class="message-box">
         <h1>{{ gettext("errorUnsupportedBrowser") }}</h1>
         <p>
-          {{ gettext("errorUnsupportedBrowserSuggestion") }}
+          {{ gettext("errorUnsupportedBrowserSuggestion") | instantiate }}
         </p>
         <div title="{{ gettext("errorUnsupportedBrowserIgnoreTitle") }}" class="let-me-in">{{ gettext("errorUnsupportedBrowserIgnore") }}</div>
       </div>
@@ -145,6 +145,6 @@
             data-project-details="{{ projectMetadata }}"
             data-editor-host="{{ editorHOST }}"
             data-editor-url="{{ editorURL }}"
-            data-app-url="{{ appURL }}">
+            data-app-url="{{ appURL }}/{{ locale }}">
     </script>
 {% endblock %}

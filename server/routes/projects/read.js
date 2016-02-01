@@ -4,6 +4,7 @@ var querystring = require("querystring");
 module.exports = function(config, req, res) {
   var publishURL = config.publishURL;
   var user = req.user;
+  var locale = req.localeInfo && req.localeInfo.lang || "en-US";
   var qs = querystring.stringify(req.query);
   if(qs !== "") {
     qs = "?" + qs;
@@ -26,7 +27,7 @@ module.exports = function(config, req, res) {
 
     if(response.statusCode === 404) {
       // If there aren't any projects for this user, create one with a redirect
-      res.redirect(301, "/projects/new" + qs);
+      res.redirect(301, "/" + locale + "/projects/new" + qs);
       return;
     }
 
@@ -51,7 +52,7 @@ module.exports = function(config, req, res) {
 
     var options = {
       csrf: req.csrfToken ? req.csrfToken() : null,
-      HTTP_STATIC_URL: "/",
+      HTTP_STATIC_URL: "/" + locale,
       username: user.username,
       avatar : user.avatar,
       projects: projects,
