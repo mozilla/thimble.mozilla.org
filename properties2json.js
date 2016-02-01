@@ -16,10 +16,10 @@ function getListLocales() {
   return new Promise(function(resolve, reject) {
     FS.listDirectoryTree(localeSrc).then(function(dirTree) {
       var list = [];
-      dirTree.forEach(function(i) {
-        var that = i.split(localeSrc + "/");
-        if (that[1]) {
-          list.push(that[1]);
+      dirTree.forEach(function(locale) {
+        locale = path.relative(localeSrc, locale);
+        if (locale) {
+          list.push(locale);
         }
       });
       return resolve(list);
