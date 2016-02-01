@@ -1,7 +1,7 @@
 var querystring = require("querystring");
 
 var utils = require("../utils");
-var Constants = require("../../constants");
+var defaultProjectNameKey = require("../../constants").DEFAULT_PROJECT_NAME_KEY;
 var defaultProject = require("../../default");
 
 module.exports = function(config, req, res) {
@@ -21,7 +21,7 @@ module.exports = function(config, req, res) {
   }
 
   var project = {
-    title: Constants.DEFAULT_PROJECT_NAME,
+    title: req.gettext(defaultProjectNameKey, req.localeInfo.locale),
     date_created: now,
     date_updated: now,
     user_id: user && user.publishId
