@@ -46,6 +46,7 @@ function preloadBramble($) {
 function setupNewProjectLinks($, analytics) {
   var authenticated = $("#navbar-login").hasClass("signed-in");
   var newProjectButton = $("#new-project-button");
+  var locale = $("html")[0].lang;
   var queryString = window.location.search;
 
   // This is necessary (versus a simple <a> tag) because
@@ -62,10 +63,10 @@ function setupNewProjectLinks($, analytics) {
 
     if(authenticated) {
       analytics.event("NewProject", {label: "New authenticated project"});
-      window.location.href = "/projects/new" + qs;
+      window.location.href = "/" + locale + "/projects/new" + qs;
     } else {
       analytics.event("NewProject", {label: "New anonymous project"});
-      window.location.href = "/editor" + queryString;
+      window.location.href = "/" + locale + "/editor" + queryString;
     }
   }
 
