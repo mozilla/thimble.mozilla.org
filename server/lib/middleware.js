@@ -29,7 +29,7 @@ module.exports = function middlewareConstructor() {
      */
     checkForAuth: function(req, res, next) {
       if (!req.session.user) {
-        return res.redirect(301, "/");
+        return res.redirect(301, "/" + (req.localeInfo && req.localeInfo.lang || "en-US"));
       }
       next();
     },
@@ -51,6 +51,7 @@ module.exports = function middlewareConstructor() {
     },
 
     redirectAnonymousUsers: function(req, res, next) {
+      var locale = req.localeInfo && req.localeInfo.lang || "en-US";
       var qs = querystring.stringify(req.query);
       if(qs !== "") {
         qs = "?" + qs;
@@ -59,7 +60,7 @@ module.exports = function middlewareConstructor() {
       if(req.session.user) {
         next();
       } else {
-        res.redirect(307, "/anonymous/" + uuid.v4() + qs);
+        res.redirect(307, "/" + locale + "/anonymous/" + uuid.v4() + qs, req.localeInfo);
       }
     },
 

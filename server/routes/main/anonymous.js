@@ -51,6 +51,8 @@ module.exports = function(config, req, res) {
         return;
       }
 
+      var locale = req.localeInfo && req.localeInfo.lang || "en-US";
+
       // Temporarily cache the anonymous remix id in the session
       req.session.project = {
         anonymousId: req.params.anonymousId,
@@ -58,7 +60,7 @@ module.exports = function(config, req, res) {
       };
 
       // And finally redirect to the authenticated user's main entry point
-      res.redirect(307, "/user/" + user.username + "/" + project.id);
+      res.redirect(307, "/" + locale + "/user/" + user.username + "/" + project.id);
     });
   });
 };

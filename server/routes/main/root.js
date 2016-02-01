@@ -7,6 +7,7 @@ var Constants = require("../../../constants");
 module.exports = function(config, req, res) {
   var user = req.user;
   var migrate = req.session.project && req.session.project.migrate;
+  var locale = req.localeInfo && req.localeInfo.lang || "en-US";
 
   var qs = querystring.stringify(req.query);
   if(qs !== "") {
@@ -19,14 +20,14 @@ module.exports = function(config, req, res) {
 
   // Anonymous user: redirect to the anonymous entry point
   if(!user) {
-    res.redirect(307, "/anonymous/" + uuid.v4() + qs);
+    res.redirect(307, "/" + locale + "/anonymous/" + uuid.v4() + qs);
     return;
   }
 
   // Authenticated user without a selected project: redirect to the project
   // list page
   if(!migrate) {
-    res.redirect(307, "/projects/" + qs);
+    res.redirect(307, "/" + locale + "/projects/" + qs);
     return;
   }
 
@@ -54,6 +55,6 @@ module.exports = function(config, req, res) {
 
     delete req.session.project.migrate;
 
-    res.redirect(307, "/user/" + user.username + "/" + project.id);
+    res.redirect(307, "/" + locale + "/user/" + user.username + "/" + project.id);
   });
 };

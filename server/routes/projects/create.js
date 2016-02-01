@@ -7,6 +7,7 @@ var defaultProject = require("../../../default");
 module.exports = function(config, req, res) {
   var user = req.user;
   var now = req.query.now || (new Date()).toISOString();
+  var locale = req.localeInfo && req.localeInfo.lang || "en-US";
 
   delete req.query.now;
   delete req.query.cacheBust;
@@ -16,7 +17,7 @@ module.exports = function(config, req, res) {
   }
 
   if(!user) {
-    res.redirect(307, "/editor" + qs);
+    res.redirect(307, "/" + locale + "/editor" + qs);
     return;
   }
 
@@ -48,7 +49,7 @@ module.exports = function(config, req, res) {
         return;
       }
 
-      res.redirect(307, "/user/" + user.username + "/" + project.id + qs);
+      res.redirect(307, "/" + locale + "/user/" + user.username + "/" + project.id + qs);
     });
   });
 };

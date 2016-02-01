@@ -1,12 +1,15 @@
 var request = require("request");
+var path = require("path");
 
 module.exports = function(config, req, res, next) {
   var oauth = config.oauth;
   var cryptr = config.cryptr;
+  var locale = req.session.locale;
+  delete req.session.locale;
 
   if (req.query.logout) {
     req.session = null;
-    return res.redirect(301, '/');
+    return res.redirect(301, path.join("/", locale));
   }
 
   if (!req.query.code) {
@@ -79,10 +82,10 @@ module.exports = function(config, req, res, next) {
       // Was this sign-in triggered from the home page?
       if (req.session.home) {
         delete req.session.home;
-        return res.redirect(301, '/');
+        return res.redirect(301, path.join("/", locale));
       }
 
-      res.redirect(301, '/editor');
+      res.redirect(301, path.join("/", locale, "/editor"));
     });
   });
 };

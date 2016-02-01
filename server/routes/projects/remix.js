@@ -2,10 +2,11 @@ var request = require("request");
 var uuid = require("uuid");
 
 module.exports = function(config, req, res) {
+  var locale = req.localeInfo && req.localeInfo.lang || "en-US";
   var publishedId = req.params.publishedId;
   var user = req.user;
   if(!user) {
-    res.redirect(307, "/anonymous/" + uuid.v4() + "/" + publishedId);
+    res.redirect(307, "/" + locale + "/anonymous/" + uuid.v4() + "/" + publishedId);
     return;
   }
 
@@ -39,6 +40,6 @@ module.exports = function(config, req, res) {
       return;
     }
 
-    res.redirect(307, "/user/" + user.username + "/" + project.id);
+    res.redirect(307, "/" + locale + "/user/" + user.username + "/" + project.id);
   });
 };
