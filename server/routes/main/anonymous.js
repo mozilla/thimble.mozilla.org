@@ -1,11 +1,11 @@
 var editor = require("./editor");
 var utils = require("../utils");
-var Constants = require("../../../constants");
+var defaultProjectNameKey = require("../../../constants").DEFAULT_PROJECT_NAME_KEY;
 
-function getProject(config, remixId, callback) {
+function getProject(config, req, remixId, callback) {
   if(!remixId) {
     callback(null, 200, {
-      title: Constants.DEFAULT_PROJECT_NAME
+      title: req.gettext(defaultProjectNameKey, req.localeInfo.locale)
     });
     return;
   }
@@ -25,7 +25,7 @@ module.exports = function(config, req, res) {
   // Otherwise, upgrade the anonymous project for the authenticated user
   var remixId = req.params.remixId;
 
-  getProject(config, remixId, function(err, status, project) {
+  getProject(config, req, remixId, function(err, status, project) {
     if(err) {
       if(status === 500) {
         res.sendStatus(500);
@@ -51,6 +51,8 @@ module.exports = function(config, req, res) {
         return;
       }
 
+      var locale = req.localeInfo && req.localeInfo.lang || "en-US";
+
       // Temporarily cache the anonymous remix id in the session
       req.session.project = {
         anonymousId: req.params.anonymousId,
@@ -58,7 +60,7 @@ module.exports = function(config, req, res) {
       };
 
       // And finally redirect to the authenticated user's main entry point
-      res.redirect(307, "/user/" + user.username + "/" + project.id);
+      res.redirect(307, "/" + locale + "/user/" + user.username + "/" + project.id);
     });
   });
 };

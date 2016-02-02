@@ -14,6 +14,17 @@ module.exports = function localize(server, options) {
     translation_directory: path.resolve(root, options.locale_dest)
   }));
 
+  // Redirect routes without the locale in the url to one with it.
+  server.use((req, res, next) => {
+    let locale = req.localeInfo && req.localeInfo.lang || "en-US";
+
+    if(req.originalUrl.indexOf(locale) !== 1) {
+      res.redirect(307, path.join("/", locale, req.originalUrl));
+    } else {
+      next();
+    }
+  });
+
   server.locals.languages = webmakerI18N.getSupportLanguages();
 
   server.get("/strings/:lang?", webmakerI18N.stringsRoute('en-US'));

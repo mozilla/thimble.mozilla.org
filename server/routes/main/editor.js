@@ -1,7 +1,7 @@
 var url = require("url");
 var querystring = require("querystring");
 
-var Constants = require("../../../constants");
+var defaultProjectNameKey = require("../../../constants").DEFAULT_PROJECT_NAME_KEY;
 var utils = require("../utils");
 
 function getProjectMetadata(config, req, callback) {
@@ -28,7 +28,7 @@ function getProjectMetadata(config, req, callback) {
   if(!remixId) {
     callback(null, {
       anonymousId: anonymousId,
-      title: Constants.DEFAULT_PROJECT_NAME,
+      title: req.gettext(defaultProjectNameKey, req.localeInfo.locale)
     });
     return;
   }

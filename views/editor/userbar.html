@@ -4,7 +4,7 @@
 
     <div id="navbar-left" class="container-flex">
       <div class="navbar-logo-container">
-        <a href="/{{localeInfo.lang}}" class="logo">
+        <a href="/{{ locale }}" class="logo">
           <img src="/img/thimble-icon.svg" class="thimble-logo">
         </a>
       </div>
@@ -35,7 +35,7 @@
 
               <ul class="dropdown" class="hide">
                 <li>
-                  <a id="new-project-link" href="/projects/new" class="dropdown-link">
+                  <a id="new-project-link" href="/{{ locale }}/projects/new" class="dropdown-link">
                     <img src="/img/icon/new-project.svg" class="dropdown-icon">
                     {{ gettext("newProjectLink") }}
                   </a>
@@ -47,7 +47,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="/projects/{{ queryString }}" class="dropdown-link" target="_self">
+                  <a href="/{{ locale }}/projects/{{ queryString }}" class="dropdown-link" target="_self">
                     <img src="/img/icon/your-projects.svg" class="dropdown-icon">
                     {{ gettext("yourProjectsLink") }}
                   </a>
