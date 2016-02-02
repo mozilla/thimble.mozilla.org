@@ -6,26 +6,13 @@ var properties = require("properties-parser");
 var write = require("fs-writefile-promise");
 var path = require("path");
 var FS = require("q-io/fs");
+
 var env = require("../server/lib/environment");
+var getListLocales = require("./common").getListLocales;
 
 var l10nConfig = env.get("L10N");
 var localeSrc = path.join(process.cwd(), l10nConfig.locale_src || "locales");
 var localeDest = path.join(process.cwd(), l10nConfig.locale_dest || l10nConfig.locale_src || "locales");
-
-function getListLocales() {
-  return new Promise(function(resolve, reject) {
-    FS.listDirectoryTree(localeSrc).then(function(dirTree) {
-      var list = [];
-      dirTree.forEach(function(locale) {
-        locale = path.relative(localeSrc, locale);
-        if (locale) {
-          list.push(locale);
-        }
-      });
-      return resolve(list);
-    }).catch(reject);
-  });
-}
 
 function writeFiles(localeInfoList) {
   localeInfoList.forEach(function(localeInfo) {
@@ -76,7 +63,7 @@ function processMessageFiles(locales) {
   return Promise.all(locales.map(getContentMessages));
 }
 
-getListLocales()
+getListLocales(localeSrc)
 .then(processMessageFiles)
 .then(removeOldLocales)
 .then(writeFiles)

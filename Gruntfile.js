@@ -132,8 +132,8 @@ module.exports = function( grunt ) {
     }
   });
 
-  grunt.registerTask( "test", [ "jshint:server", "jshint:frontend", "lesslint" ]);
-  grunt.registerTask( "build", [ "test", "requirejs:dist" ]);
-  grunt.registerTask( "default", [ "test" ]);
+  grunt.registerTask("test", [ "jshint:server", "jshint:frontend", "lesslint" ]);
+  grunt.registerTask("build", [ "test", "requirejs:dist" ]);
+  grunt.registerTask("default", [ "test" ]);
 };
 

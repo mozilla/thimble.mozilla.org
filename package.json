@@ -49,10 +49,11 @@
     "webmaker-locale-mapping": "0.0.5"
   },
   "scripts": {
-    "postinstall": "node_modules/.bin/bower install && npm run localize && grunt requirejs:dist",
+    "postinstall": "node_modules/.bin/bower install && grunt requirejs:dist && npm run localize",
     "test": "node_modules/.bin/grunt",
-    "start": "node app.js",
+    "start": "npm run localize && node app.js",
     "invalidate": "node scripts/invalidate.js",
-    "localize": "node scripts/properties2json.js"
+    "localize": "node scripts/properties2json.js && npm run localize-client",
+    "localize-client": "node scripts/localize-client.js"
   }
 }
