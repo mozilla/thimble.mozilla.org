@@ -8,6 +8,7 @@ function getProjectMetadata(config, req, callback) {
   var project = req.project;
   var remixId = req.params.remixId;
   var anonymousId = req.params.anonymousId;
+  var locale = (req.localeInfo && req.localeInfo.locale) ? req.localeInfo.locale : "en-US";
 
   if(project) {
     callback(null, {
@@ -28,7 +29,7 @@ function getProjectMetadata(config, req, callback) {
   if(!remixId) {
     callback(null, {
       anonymousId: anonymousId,
-      title: req.gettext(defaultProjectNameKey, req.localeInfo.locale)
+      title: req.gettext(defaultProjectNameKey, locale)
     });
     return;
   }
@@ -49,6 +50,7 @@ function getProjectMetadata(config, req, callback) {
 }
 
 module.exports = function(config, req, res) {
+  var locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
   var qs = querystring.stringify(req.query);
   if(qs !== "") {
     qs = "?" + qs;
@@ -58,7 +60,7 @@ module.exports = function(config, req, res) {
     appURL: config.appURL,
     csrf: req.csrfToken(),
     editorHOST: config.editorHOST,
-    loginURL: config.appURL + "/login",
+    loginURL: config.appURL + "/" + locale + "/login",
     logoutURL: config.logoutURL,
     queryString: qs
   };
@@ -67,7 +69,7 @@ module.exports = function(config, req, res) {
   // and set search prop to nothing forcing query to be used during url.format()
   var urlObj = url.parse(req.url, true);
   urlObj.search = "";
-  urlObj.query.locale = req.localeInfo.lang;
+  urlObj.query.locale = locale;
   var thimbleUrl = url.format(urlObj);
 
   // We forward query string params down to the editor iframe so that

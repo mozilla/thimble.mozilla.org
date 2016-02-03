@@ -4,7 +4,7 @@ var querystring = require("querystring");
 module.exports = function(config, req, res) {
   var publishURL = config.publishURL;
   var user = req.user;
-  var locale = req.localeInfo && req.localeInfo.lang || "en-US";
+  var locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
   var qs = querystring.stringify(req.query);
   if(qs !== "") {
     qs = "?" + qs;

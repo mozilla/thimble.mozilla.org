@@ -2,7 +2,7 @@ var request = require("request");
 var uuid = require("uuid");
 
 module.exports = function(config, req, res) {
-  var locale = req.localeInfo && req.localeInfo.lang || "en-US";
+  var locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
   var publishedId = req.params.publishedId;
   var user = req.user;
   if(!user) {

@@ -7,7 +7,8 @@ var defaultProjectNameKey = require("../../../constants").DEFAULT_PROJECT_NAME_K
 module.exports = function(config, req, res) {
   var user = req.user;
   var migrate = req.session.project && req.session.project.migrate;
-  var locale = req.localeInfo && req.localeInfo.lang || "en-US";
+  var localeInfo = req.localeInfo;
+  var locale = (localeInfo && localeInfo.lang) ? localeInfo.lang : "en-US";
 
   var qs = querystring.stringify(req.query);
   if(qs !== "") {
@@ -37,7 +38,7 @@ module.exports = function(config, req, res) {
   // with the migrated project id
   var now = (new Date()).toISOString();
   var project = {
-    title: req.gettext(defaultProjectNameKey, req.localeInfo.locale),
+    title: req.gettext(defaultProjectNameKey, (localeInfo && localeInfo.locale) ? localeInfo.locale : "en-US"),
     date_created: now,
     date_updated: now,
     user_id: user.publishId

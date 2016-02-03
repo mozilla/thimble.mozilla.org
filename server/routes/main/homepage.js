@@ -8,7 +8,8 @@ function urlLocalizer(locale, remixUrl) {
 }
 
 module.exports = function(config, req, res) {
-  var localize = urlLocalizer.bind(null, req.localeInfo.lang);
+  var locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
+  var localize = urlLocalizer.bind(null, locale);
   var qs = querystring.stringify(req.query);
   if(qs !== "") {
     qs = "?" + qs;
@@ -27,7 +28,7 @@ module.exports = function(config, req, res) {
     homeworkExcuseGeneratorKitUrl: env.get("HOMEWORK_EXCUSE_GENERATOR_KIT_URL"),
     sixWordSummerRemixUrl: localize(env.get("SIX_WORD_SUMMER_REMIX_URL")),
     sixWordSummerKitUrl: env.get("SIX_WORD_SUMMER_KIT_URL"),
-    loginURL: config.appURL + "/login",
+    loginURL: config.appURL + "/" + locale + "/login",
     editorHOST: config.editorHOST,
     editorURL: config.editorURL
   };

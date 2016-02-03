@@ -16,7 +16,7 @@ module.exports = function localize(server, options) {
 
   // Redirect routes without the locale in the url to one with it.
   server.use((req, res, next) => {
-    let locale = req.localeInfo && req.localeInfo.lang || "en-US";
+    let locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
 
     if(req.originalUrl.indexOf(locale) !== 1) {
       res.redirect(307, path.join("/", locale, req.originalUrl));

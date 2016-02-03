@@ -7,7 +7,8 @@ var defaultProject = require("../../../default");
 module.exports = function(config, req, res) {
   var user = req.user;
   var now = req.query.now || (new Date()).toISOString();
-  var locale = req.localeInfo && req.localeInfo.lang || "en-US";
+  var localeInfo = req.localeInfo;
+  var locale = (localeInfo && localeInfo.lang) ? localeInfo.lang : "en-US";
 
   delete req.query.now;
   delete req.query.cacheBust;
@@ -22,7 +23,7 @@ module.exports = function(config, req, res) {
   }
 
   var project = {
-    title: req.gettext(defaultProjectNameKey, req.localeInfo.locale),
+    title: req.gettext(defaultProjectNameKey, (localeInfo && localeInfo.locale) ? localeInfo.locale : "en-US"),
     date_created: now,
     date_updated: now,
     user_id: user && user.publishId

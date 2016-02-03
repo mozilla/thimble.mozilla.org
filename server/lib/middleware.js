@@ -28,10 +28,12 @@ module.exports = function middlewareConstructor() {
      * Check whether the requesting user has been authenticated.
      */
     checkForAuth: function(req, res, next) {
-      if (!req.session.user) {
-        return res.redirect(301, "/" + (req.localeInfo && req.localeInfo.lang || "en-US"));
+      if (req.session.user) {
+        return next();
       }
-      next();
+
+      var locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
+      res.redirect(301, "/" + locale);
     },
 
     /**
@@ -51,7 +53,7 @@ module.exports = function middlewareConstructor() {
     },
 
     redirectAnonymousUsers: function(req, res, next) {
-      var locale = req.localeInfo && req.localeInfo.lang || "en-US";
+      var locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
       var qs = querystring.stringify(req.query);
       if(qs !== "") {
         qs = "?" + qs;
@@ -60,7 +62,7 @@ module.exports = function middlewareConstructor() {
       if(req.session.user) {
         next();
       } else {
-        res.redirect(307, "/" + locale + "/anonymous/" + uuid.v4() + qs, req.localeInfo);
+        res.redirect(307, "/" + locale + "/anonymous/" + uuid.v4() + qs);
       }
     },
 

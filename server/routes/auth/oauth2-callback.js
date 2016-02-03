@@ -5,7 +5,6 @@ module.exports = function(config, req, res, next) {
   var oauth = config.oauth;
   var cryptr = config.cryptr;
   var locale = req.session.locale;
-  delete req.session.locale;
 
   if (req.query.logout) {
     req.session = null;
