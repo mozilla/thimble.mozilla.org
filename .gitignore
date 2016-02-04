@@ -9,3 +9,4 @@ bower_components
 locale/**/*.json
 public/stylesheets/userbar.css
 dist/
+client/

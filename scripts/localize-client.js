@@ -12,7 +12,6 @@ let src = path.join(process.cwd(), development ? "public" : "dist");
 let dest = path.join(process.cwd(), development ? "client" : "dist");
 let localeDir = path.join(process.cwd(), env.get("L10N").locale_dest || "dist/locales");
 
-let templateEngine = new nunjucks.Environment(new nunjucks.FileSystemLoader(src));
 let locales = [];
 let strings = {
   "en_US": require(path.join(localeDir, "en_US", "messages.json"))
@@ -28,7 +27,7 @@ function makeLocalizedCopy(locale, srcPath, isJS, template) {
     }
 
     return new Promise((resolve, reject) => {
-      template.render(strings[locale], function(err, localizedContent) {
+      template.render(srcPath, strings[locale], (err, localizedContent) => {
         if(err) {
           reject(err);
           return;
@@ -41,6 +40,17 @@ function makeLocalizedCopy(locale, srcPath, isJS, template) {
   });
 }
 
+function localizeFile(filePath) {
+  let isJS = path.extname(filePath) === ".js";
+  let template;
+
+  if(isJS) {
+    template = nunjucks.configure(filePath, { noCache: true });
+  }
+
+  return Promise.all(locales.map(locale => makeLocalizedCopy(locale, filePath, isJS, template)));
+}
+
 function localizeClientFiles() {
   return fs.listTree(src)
   .then(nodePaths => Promise.all(nodePaths.map(nodePath => {
@@ -50,13 +60,7 @@ function localizeClientFiles() {
         return;
       }
 
-      let isJS = path.extname(nodePath) === ".js";
-      let template;
-      if(isJS) {
-        template = templateEngine.getTemplate(path.relative(src, nodePath));
-      }
-
-      return Promise.all(locales.map(locale => makeLocalizedCopy(locale, nodePath, isJS, template)));
+      return localizeFile(nodePath);
     });
   })));
 }
@@ -97,10 +101,19 @@ function readLocaleStrings(localeList) {
   });
 }
 
-getListLocales(localeDir)
-.then(readLocaleStrings)
-.then(cleanupOldClient)
-.then(createClientLocaleDirectories)
-.then(localizeClientFiles)
-.then(() => console.log("Successfully localized the client at: ", dest))
-.catch((err) => console.error("Failed to generate localized client with: ", err));
+if(require.main === module) {
+  getListLocales(localeDir)
+  .then(readLocaleStrings)
+  .then(cleanupOldClient)
+  .then(createClientLocaleDirectories)
+  .then(localizeClientFiles)
+  .then(() => console.log("Successfully localized the client at: ", dest))
+  .catch((err) => console.error("Failed to generate localized client with: ", err));
+}
+
+module.exports = {
+  readLocaleStrings,
+  localizeClientFiles,
+  localizeFile,
+  makeLocalizedCopy
+};
