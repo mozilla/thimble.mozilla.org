@@ -52,7 +52,7 @@
     "webmaker-locale-mapping": "0.0.5"
   },
   "scripts": {
-    "postinstall": "bower install && grunt requirejs:dist",
+    "postinstall": "bower install && grunt requirejs:dist && npm run localize && npm run localize-client",
     "test": "grunt",
     "preclient": "npm run localize-client",
     "client": "node scripts/watch-client",
