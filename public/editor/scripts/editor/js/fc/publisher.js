@@ -3,13 +3,14 @@ define(function(require) {
   var Project = require("project/project");
   var FileSystemSync = require("fc/filesystem-sync");
   var SyncState = require("fc/sync-state");
+
   var host;
 
-  var TEXT_PUBLISH = "Publish";
-  var TEXT_PUBLISHING = "Publishing...";
-  var TEXT_UNPUBLISH = "Unpublish";
-  var TEXT_UNPUBLISHING = "Unpublishing...";
-  var TEXT_UPDATE_PUBLISH = "Update published version";
+  var TEXT_PUBLISH = "{{ publishBtn }}";
+  var TEXT_PUBLISHING = "{{ publishPublishingIndicator }}";
+  var TEXT_UNPUBLISH = "{{ publishUnpublishBtn }}";
+  var TEXT_UNPUBLISHING = "{{ publishUnpublishingIndicator }}";
+  var TEXT_UPDATE_PUBLISH = "{{ publishChangesBtn }}";
 
   function unpublishedChangesPrompt() {
     var dialog = this.dialog;

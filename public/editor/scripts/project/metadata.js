@@ -1,7 +1,9 @@
 define(function(require) {
   var $ = require("jquery");
-  var PROJECT_META_KEY = require("constants").PROJECT_META_KEY;
-  var AJAX_DEFAULT_TIMEOUT_MS = require("constants").AJAX_DEFAULT_TIMEOUT_MS;
+  var constants = require("constants");
+
+  var PROJECT_META_KEY = constants.PROJECT_META_KEY;
+  var AJAX_DEFAULT_TIMEOUT_MS = constants.AJAX_DEFAULT_TIMEOUT_MS;
   var fs = Bramble.getFileSystem();
 
   // We only want one operation at a time on the metadata xattrib.

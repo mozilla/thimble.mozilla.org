@@ -62,7 +62,7 @@ require(["jquery", "constants", "analytics"], function($, Constants, analytics) 
 
   $(".project-delete").click(function() {
     // TODO: we can do better than this, but let's at least make it harder to lose data.
-    if(!window.confirm("OK to Delete this project?")) {
+    if(!window.confirm("{{ deleteProjectConfirmText }}")) {
       return false;
     }
 
@@ -117,7 +117,7 @@ function setupNewProjectLinks($, analytics) {
     var cacheBust = "cacheBust=" + Date.now();
     var qs = queryString === "" ? "?" + cacheBust : queryString + "&" + cacheBust;
 
-    $(e.target).text("Creating new project...");
+    $(e.target).text("{{ newProjectInProgressIndicator }}");
 
     analytics.event("NewProject", {label: "New authenticated project"});
     window.location.href = "/" + locale + "/projects/new" + qs;

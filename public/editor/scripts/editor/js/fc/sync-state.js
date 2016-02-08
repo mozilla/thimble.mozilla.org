@@ -9,7 +9,7 @@ define(function(require) {
   var SyncState = new EventEmitter();
 
   function _onbeforeunload(e) {
-    var s = "Sync in progress...";
+    var s = "{{ windowCloseFileSavingIndicator }}";
     var e = e || window.event;
 
     if(e) {

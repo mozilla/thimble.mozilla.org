@@ -33,15 +33,17 @@
 define(function(require) {
   var $ = require("jquery");
   var EventEmitter = require("EventEmitter");
-  var SYNC_OPERATION_UPDATE = require("constants").SYNC_OPERATION_UPDATE;
-  var SYNC_OPERATION_DELETE = require("constants").SYNC_OPERATION_DELETE;
-  var AUTOSYNC_INTERVAL_MS = require("constants").AUTOSYNC_INTERVAL_MS;
-  var AJAX_DEFAULT_DELAY_MS = require("constants").AJAX_DEFAULT_DELAY_MS;
-  var AJAX_DEFAULT_TIMEOUT_MS = require("constants").AJAX_DEFAULT_TIMEOUT_MS;
+  var constants = require("constants");
   var Project = require("project/project");
   var PathCache = require("PathCache");
   var Backoff = require("fc/backoff");
   var logger = require("logger");
+
+  var SYNC_OPERATION_UPDATE = constants.SYNC_OPERATION_UPDATE;
+  var SYNC_OPERATION_DELETE = constants.SYNC_OPERATION_DELETE;
+  var AUTOSYNC_INTERVAL_MS = constants.AUTOSYNC_INTERVAL_MS;
+  var AJAX_DEFAULT_DELAY_MS = constants.AJAX_DEFAULT_DELAY_MS;
+  var AJAX_DEFAULT_TIMEOUT_MS = constants.AJAX_DEFAULT_TIMEOUT_MS;
 
   // SyncManager instance
   var _instance;
@@ -59,7 +61,6 @@ define(function(require) {
     return formData;
   }
 
-  
   function SyncManager(csrfToken) {
     this.csrfToken = csrfToken;
     this.fs = Bramble.getFileSystem();

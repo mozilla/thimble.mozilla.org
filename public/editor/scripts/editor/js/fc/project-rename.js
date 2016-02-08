@@ -4,7 +4,9 @@ define(function(require) {
   var KeyHandler = require("fc/bramble-keyhandler");
   var Project = require("project/project");
   var analytics = require("analytics");
-  var AJAX_DEFAULT_TIMEOUT_MS = require("constants").AJAX_DEFAULT_TIMEOUT_MS;
+  var constants = require("constants");
+
+  var AJAX_DEFAULT_TIMEOUT_MS = constants.AJAX_DEFAULT_TIMEOUT_MS;
 
   function toggleComponents(context, isSave) {
     var container = context.container;
@@ -27,7 +29,7 @@ define(function(require) {
       return false;
     }
 
-    saveButton.text("Save");
+    saveButton.text("{{ renameProjectSaveBtn }}");
     saveButton[isSave ? "hide" : "show"]();
     context.renameButton[isSave ? "show" : "hide"]();
     titleBar[isSave ? "save" : "edit"]();
@@ -115,7 +117,7 @@ define(function(require) {
   }
 
   function save(context) {
-    context.saveButton.text("Saving...");
+    context.saveButton.text("{{ renameProjectSavingIndicator }}");
 
     persist.call(context, context.titleBar.val(), function(err) {
       if(err) {

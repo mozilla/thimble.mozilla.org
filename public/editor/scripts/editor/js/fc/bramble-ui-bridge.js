@@ -66,7 +66,7 @@ define(function(require) {
       var projectId = Project.getID();
 
       // TODO: we can do better than this, but let's at least make it harder to lose data.
-      if(!window.confirm("OK to Delete this project?")) {
+      if(!window.confirm("{{ deleteProjectConfirmText }}")) {
         return false;
       }
 

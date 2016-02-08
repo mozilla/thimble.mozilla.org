@@ -59,7 +59,7 @@ function setupNewProjectLinks($, analytics) {
     var cacheBust = "cacheBust=" + Date.now();
     var qs = queryString === "" ? "?" + cacheBust : queryString + "&" + cacheBust;
 
-    $("#new-project-button-text").text("Creating new project...");
+    $("#new-project-button-text").text("{{ newProjectInProgressIndicator }}");
 
     if(authenticated) {
       analytics.event("NewProject", {label: "New authenticated project"});
