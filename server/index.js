@@ -95,6 +95,9 @@ getFileList(path.join(root, "public"), "!(*.js)")
 server.use(express.static(client, maxCacheAge));
 server.use(express.static(cssAssets, maxCacheAge));
 server.use(express.static(path.join(root, "public/resources"), maxCacheAge));
+// So that we don't break compatibility with existing published projects,
+// we serve the remix resources through this route as well
+server.use("/resources/remix", express.static(path.join(root, "public/resources/remix"), maxCacheAge));
 server.use("/bower", express.static(path.join(root, server.locals.bower_path), maxCacheAge));
 
 
