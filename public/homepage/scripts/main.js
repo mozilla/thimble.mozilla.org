@@ -10,7 +10,7 @@ requirejs.onError = function(err) {
 
 require.config({
   waitSeconds: 120,
-  baseUrl: "/homepage/scripts",
+  baseUrl: "/{{ locale }}/homepage/scripts",
   paths: {
     "jquery": "/bower/jquery/index",
     "localized": "/bower/webmaker-i18n/localized",
@@ -18,9 +18,9 @@ require.config({
     "cookies": "/bower/cookies-js/dist/cookies",
     "analytics": "/bower/webmaker-analytics/analytics",
     // TODO: we should really put the homepage and editor in the same scope for code sharing
-    "fc/bramble-popupmenu": "/editor/scripts/editor/js/fc/bramble-popupmenu",
-    "fc/bramble-keyhandler": "/editor/scripts/editor/js/fc/bramble-keyhandler",
-    "fc/bramble-underlay": "/editor/scripts/editor/js/fc/bramble-underlay"
+    "fc/bramble-popupmenu": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-popupmenu",
+    "fc/bramble-keyhandler": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-keyhandler",
+    "fc/bramble-underlay": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-underlay"
   },
   shim: {
     "jquery": {
@@ -33,10 +33,10 @@ require.config({
 function preloadBramble($) {
   var brambleHost = $("meta[name='bramble-host']").attr("content");
   [
-    brambleHost + "/dist/styles/brackets.min.css",
-    brambleHost + "/dist/bramble.js",
-    brambleHost + "/dist/main.js",
-    brambleHost + "/dist/thirdparty/thirdparty.min.js"
+    brambleHost + "dist/styles/brackets.min.css",
+    brambleHost + "dist/bramble.js",
+    brambleHost + "dist/main.js",
+    brambleHost + "dist/thirdparty/thirdparty.min.js"
   ].forEach(function(url) {
     // Load and cache files as plain text (don't parse) and ignore results.
     $.ajax({url: url, dataType: "text"});

@@ -35,14 +35,14 @@ function deleteFile(relativeFilePath) {
 function updateClient(event, filePath) {
   if(event === "unlink") {
     return deleteFile(path.relative("public", filePath))
-    .then(() => log.info("Deleted localized instances of ", filePath, "\n"))
-    .catch((err) => log.error("Failed to delete localized versions of ", filePath, " with: ", err, "\n"));
+    .then(() => log.info("Deleted localized instances of ", filePath))
+    .catch((err) => log.error("Failed to delete localized versions of ", filePath, " with: ", err));
   }
 
   if(event === "add" || event === "change") {
     return localizeClient.localizeFile(path.join(root, filePath))
-    .then(() => log.info("Updated localized instances of ", filePath, "\n"))
-    .catch((err) => log.error("Failed to update localized versions of ", filePath, " with: ", err, "\n"));
+    .then(() => log.info("Updated localized instances of ", filePath))
+    .catch((err) => log.error("Failed to update localized versions of ", filePath, " with: ", err));
   }
 }
 
@@ -53,6 +53,6 @@ getListLocales(localeDir)
   return localizeClient.readLocaleStrings(locales);
 })
 .then(() => {
-  let watcher = chokidar.watch("public/homepage/scripts/main.js", { cwd: root});
+  let watcher = chokidar.watch("public", { cwd: root });
   watcher.on("ready", () => watcher.on("all", updateClient));
 });

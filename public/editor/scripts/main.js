@@ -1,13 +1,13 @@
 // NOTE: if you change this, update Gruntfile's requirejs:dist task too
 require.config({
   waitSeconds: 120,
-  baseUrl: "/editor/scripts/editor/js",
+  baseUrl: "/{{ locale }}/editor/scripts/editor/js",
   paths: {
     // Folders
     "project": "../../project",
 
     // Files
-    "bowser": "/resources/scripts/vendor/bowser",
+    "bowser": "/scripts/vendor/bowser",
     "sso-override": "../../sso-override",
     "logger": "../../logger",
     "jquery": "/bower/jquery/index",

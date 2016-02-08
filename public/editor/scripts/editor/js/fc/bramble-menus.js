@@ -172,7 +172,7 @@ define(function(require) {
         basenamePrefix: "index",
         ext: ".html"
       };
-      downloadFileToFilesystem("/resources/default-files/html.txt", options, function(err) {
+      downloadFileToFilesystem("/default-files/html.txt", options, function(err) {
         if (err) {
           console.log("[Brackets] Failed to insert default HTML file", err);
         }
@@ -184,7 +184,7 @@ define(function(require) {
         basenamePrefix: "style",
         ext: ".css"
       };
-      downloadFileToFilesystem("/resources/default-files/css.txt", options, function(err) {
+      downloadFileToFilesystem("/default-files/css.txt", options, function(err) {
         if (err) {
           console.log("[Brackets] Failed to insert default CSS file", err);
         }
@@ -196,7 +196,7 @@ define(function(require) {
         basenamePrefix: "script",
         ext: ".js"
       };
-      downloadFileToFilesystem("/resources/default-files/js.txt", options, function(err) {
+      downloadFileToFilesystem("/default-files/js.txt", options, function(err) {
         if (err) {
           console.log("[Brackets] Failed to insert default JS file", err);
         }

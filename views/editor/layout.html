@@ -1,4 +1,5 @@
 {% set locale = localeInfo.lang %}
+{% set localeDir = localeInfo.locale %}
 <!DOCTYPE html>
 <html lang="{{ locale }}" dir="{{ localeInfo.direction }}">
   <head>
@@ -18,7 +19,7 @@
     {% block head %}{% endblock %}
 
     {% if GA_ACCOUNT %}
-    <script id="google-analytics-js" src="/editor/scripts/google-analytics.js"
+    <script id="google-analytics-js" src="/{{ localeDir }}/editor/scripts/google-analytics.js"
             data-ga-account="{{ GA_ACCOUNT }}"
             data-ga-domain="{{ GA_DOMAIN }}"
             async>

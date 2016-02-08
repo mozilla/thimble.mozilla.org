@@ -5,9 +5,9 @@ require.config({
     "analytics": "/bower/webmaker-analytics/analytics",
     "uuid": "/bower/node-uuid/uuid",
     "cookies": "/bower/cookies-js/dist/cookies",
-    "fc/bramble-popupmenu": "/editor/scripts/editor/js/fc/bramble-popupmenu",
-    "fc/bramble-keyhandler": "/editor/scripts/editor/js/fc/bramble-keyhandler",
-    "fc/bramble-underlay": "/editor/scripts/editor/js/fc/bramble-underlay"
+    "fc/bramble-popupmenu": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-popupmenu",
+    "fc/bramble-keyhandler": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-keyhandler",
+    "fc/bramble-underlay": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-underlay"
   },
   shim: {
     "jquery": {

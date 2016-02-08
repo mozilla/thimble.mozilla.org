@@ -1,4 +1,5 @@
 {% set locale = localeInfo.lang %}
+{% set localeDir = localeInfo.locale %}
 <!DOCTYPE html>
 <html lang="{{ locale }}" dir="{{ localeInfo.direction }}">
   <head>
@@ -11,7 +12,7 @@
     <title>{{ gettext("thimbleHeading") | safe }}</title>
 
     {% if GA_ACCOUNT %}
-    <script id="google-analytics-js" src="/homepage/scripts/google-analytics.js"
+    <script id="google-analytics-js" src="/{{ localeDir }}/homepage/scripts/google-analytics.js"
             data-ga-account="{{ GA_ACCOUNT }}"
             data-ga-domain="{{ GA_DOMAIN }}"
             async>
@@ -24,7 +25,7 @@
 
     <script id="homepage-script"
         src="/scripts/vendor/require.min.js"
-        data-main="/homepage/scripts/main.js">
+        data-main="/{{ localeDir }}/homepage/scripts/main.js">
     </script>
 
     <section class="main-cta">
