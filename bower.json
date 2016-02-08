@@ -6,7 +6,8 @@
     "cookies-js": "~1.2.1",
     "node-uuid": "~1.4.3",
     "webmaker-i18n": "https://github.com/mozilla/node-webmaker-i18n/archive/v0.3.8.tar.gz",
-    "webmaker-analytics": "~0.1.5"
+    "webmaker-analytics": "~0.1.5",
+    "moment": "^2.11.2"
   },
   "version": "1.0.94"
 }

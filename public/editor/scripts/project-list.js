@@ -5,6 +5,7 @@ require.config({
     "analytics": "/bower/webmaker-analytics/analytics",
     "uuid": "/bower/node-uuid/uuid",
     "cookies": "/bower/cookies-js/dist/cookies",
+    "moment": "/bower/moment/min/moment-with-locales.min",
     "fc/bramble-popupmenu": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-popupmenu",
     "fc/bramble-keyhandler": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-keyhandler",
     "fc/bramble-underlay": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-underlay"
@@ -16,38 +17,17 @@ require.config({
   }
 });
 
-require(["jquery", "constants", "analytics"], function($, Constants, analytics) {
+require(["jquery", "constants", "analytics", "moment"], function($, Constants, analytics, moment) {
   var projects = document.querySelectorAll("tr.bramble-user-project");
   var username = encodeURIComponent($("#project-list").attr("data-username"));
   var locale = $("html")[0].lang;
   var queryString = window.location.search;
+  moment.locale($("meta[name='moment-lang']").attr("content"));
 
   function getElapsedTime(lastEdited) {
-    var now = Date.now();
-    lastEdited = new Date(lastEdited);
-    var elapsedTime, unit = "";
-    var secondsElapsed = (now - lastEdited) / 1000;
-    var minutesElapsed = secondsElapsed / 60;
-    var hoursElapsed = minutesElapsed / 60;
-    var daysElapsed = hoursElapsed / 24;
+    var timeElapsed = moment(new Date(lastEdited)).fromNow();
 
-    if(daysElapsed > 31) {
-      elapsedTime = "over a month";
-    } else if(daysElapsed >= 1) {
-      elapsedTime = Math.round(daysElapsed);
-      unit = elapsedTime === 1 ? " day" : " days";
-    } else if(hoursElapsed >= 1) {
-      elapsedTime = Math.round(hoursElapsed);
-      unit = elapsedTime === 1 ? " hour" : " hours";
-    } else if(minutesElapsed >= 1) {
-      elapsedTime = Math.round(minutesElapsed);
-      unit = elapsedTime === 1 ? " minute" : " minutes";
-    } else {
-      elapsedTime = Math.round(secondsElapsed);
-      unit = elapsedTime === 1 ? " second" : " seconds";
-    }
-
-    return "Last edited " + elapsedTime + unit + " ago";
+    return "{{ momentJSLastEdited | safe }}".replace("<% timeElapsed %>", timeElapsed);
   }
 
   Array.prototype.forEach.call(projects, function(project) {
