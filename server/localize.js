@@ -6,6 +6,7 @@ let path = require("path");
 let bestlang = require("bestlang");
 
 let root = path.dirname(__dirname);
+let knownLocales = Object.keys(webmakerI18N.getAllLocaleCodes());
 
 module.exports = function localize(server, options) {
   server.use(webmakerI18N.middleware({
@@ -19,13 +20,23 @@ module.exports = function localize(server, options) {
   server.use((req, res, next) => {
     let locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
 
-    if(req.originalUrl.indexOf(locale) !== 1) {
-      var URL = req.originalUrl.match(/^\/([^\/]*)(\/|$)/);
-      var bestLanguage = bestlang(req.localeInfo.otherLangPrefs, webmakerI18N.getSupportLanguages(), "en-US");
-      res.redirect(307, req.originalUrl.replace(URL[1], bestLanguage));
-    } else {
-      next();
+    if(req.originalUrl.indexOf(locale) === 1) {
+      return next();
     }
+
+    let langPrefs = req.localeInfo.otherLangPrefs.slice();
+    langPrefs.unshift(req.localeInfo.lang);
+    let urlLocale = req.originalUrl.match(/^\/([^\/]*)(\/|$)/)[1];
+    let bestLanguage = bestlang(langPrefs, webmakerI18N.getSupportLanguages(), "en-US");
+    let localizedUrl;
+
+    if(knownLocales.indexOf(urlLocale) !== -1) {
+      localizedUrl = req.originalUrl.replace(urlLocale, bestLanguage);
+    } else {
+      localizedUrl = path.join("/", bestLanguage, req.originalUrl);
+    }
+
+    res.redirect(307, localizedUrl);
   });
 
   server.locals.languages = webmakerI18N.getSupportLanguages();
