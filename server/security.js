@@ -6,15 +6,23 @@ let csurf = require("csurf");
 
 const defaultTrustedDomains = {
   default: [ "'self'" ],
-  connection: [ "'self'" ],
+  connection: [
+                "'self'",
+                "https://pontoon.mozilla.org"
+              ],
   frame: [
           "'self'",
-          "https://docs.google.com"],
+          "https://docs.google.com"
+         ],
+  iframe: [
+            "https://pontoon.mozilla.org"
+          ],
   font: [
           "'self'",
           "https://fonts.gstatic.com",
           "https://netdna.bootstrapcdn.com",
-          "https://code.cdn.mozilla.net/"
+          "https://code.cdn.mozilla.net/",
+          "https://pontoon.mozilla.org"
         ],
   image: [ "*" ],
   media: [ "*" ],
@@ -23,7 +31,8 @@ const defaultTrustedDomains = {
             "http://mozorg.cdn.mozilla.net",
             "https://ajax.googleapis.com",
             "https://mozorg.cdn.mozilla.net",
-            "https://www.google-analytics.com"
+            "https://www.google-analytics.com",
+            "https://pontoon.mozilla.org"
           ],
   stylesheet: [
                 "'self'",
@@ -31,7 +40,8 @@ const defaultTrustedDomains = {
                 "https://ajax.googleapis.com",
                 "https://fonts.googleapis.com",
                 "https://mozorg.cdn.mozilla.net",
-                "https://netdna.bootstrapcdn.com"
+                "https://netdna.bootstrapcdn.com",
+                "https://pontoon.mozilla.org"
               ]
 };
 
@@ -59,6 +69,7 @@ Security.prototype = {
         "default-src": domainList.default,
         "connect-src": domainList.connection,
         "frame-src": domainList.frame,
+        "child-src": domainList.iframe,
         "font-src": domainList.font,
         "img-src": domainList.image,
         "media-src": domainList.media,
