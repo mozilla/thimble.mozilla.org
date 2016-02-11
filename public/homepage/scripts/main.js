@@ -115,7 +115,8 @@ function setupAuthentication($, uuid, cookies, analytics) {
 // separate modules, each of which would be initialized here.
 // See: public/editor/scripts/main.js
 function init($, uuid, cookies, PopupMenu, analytics) {
-  PopupMenu.create("#navbar-logged-in li", "#navbar-logged-in li ul.dropdown");
+  PopupMenu.create("#navbar-logged-in .dropdown-toggle", "#navbar-logged-in .dropdown-content");
+  PopupMenu.create("#navbar-locale .dropdown-toggle", "#navbar-locale .dropdown-content");
   setupAuthentication($, uuid, cookies, analytics);
   setupNewProjectLinks($, analytics);
   preloadBramble($);
