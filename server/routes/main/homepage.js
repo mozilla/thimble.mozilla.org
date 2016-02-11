@@ -30,7 +30,8 @@ module.exports = function(config, req, res) {
     sixWordSummerKitUrl: env.get("SIX_WORD_SUMMER_KIT_URL"),
     loginURL: config.appURL + "/" + locale + "/login",
     editorHOST: config.editorHOST,
-    editorURL: config.editorURL
+    editorURL: config.editorURL,
+    languages: req.app.locals.languages
   };
 
   if (req.user) {

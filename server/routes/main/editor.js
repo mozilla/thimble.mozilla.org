@@ -58,6 +58,7 @@ module.exports = function(config, req, res) {
 
   var options = {
     appURL: config.appURL,
+    languages: req.app.locals.languages,
     csrf: req.csrfToken(),
     editorHOST: config.editorHOST,
     loginURL: config.appURL + "/" + locale + "/login",

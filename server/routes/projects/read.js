@@ -51,6 +51,7 @@ module.exports = function(config, req, res) {
     });
 
     var options = {
+      languages: req.app.locals.languages,
       csrf: req.csrfToken ? req.csrfToken() : null,
       HTTP_STATIC_URL: "/" + locale,
       username: user.username,
