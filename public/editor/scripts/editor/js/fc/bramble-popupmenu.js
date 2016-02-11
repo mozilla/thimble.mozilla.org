@@ -28,6 +28,7 @@ define(function(require) {
       }
 
       $(window).off("resize", self.close);
+      self._button$.closest(".dropdown").removeClass("expanded");
 
       self._menu$.hide();
 
@@ -71,6 +72,7 @@ define(function(require) {
     self._menu$.show();
     self._underlay = new Underlay(self._menu$, self.close);
     self._escKeyHandler = new KeyHandler.ESC(self.close);
+    self._button$.closest(".dropdown").addClass("expanded");
     // Close on resize
     $(window).on("resize", self.close);
 

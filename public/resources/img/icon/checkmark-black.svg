@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="10px" height="9px" viewBox="0 0 10 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4.2 (15857) - http://www.bohemiancoding.com/sketch -->
+    <title>checkmark-black</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#000000" stop-opacity="0.5" offset="0%"></stop>
+            <stop stop-color="#000000" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="checkmark-black" sketch:type="MSArtboardGroup" fill="#000000">
+            <path d="M9.703,1.078 C9.734,1.141 9.75,1.187 9.75,1.218 C9.75,1.25 9.734,1.297 9.703,1.359 L3.867,8.859 C3.774,8.953 3.703,9 3.656,9 C3.578,9 3.5,8.961 3.422,8.882 L0.117,5.695 L0.047,5.625 C0.016,5.562 0,5.515 0,5.484 C0,5.468 0.016,5.43 0.047,5.367 L0.094,5.32 C0.531,4.851 0.875,4.492 1.125,4.242 C1.219,4.148 1.281,4.101 1.313,4.101 C1.375,4.101 1.453,4.148 1.547,4.242 L3.422,6.07 L8.109,0.046 C8.141,0.015 8.188,0 8.25,0 C8.297,0 8.352,0.015 8.414,0.046 L9.703,1.078" id="Imported-Layers" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

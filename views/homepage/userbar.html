@@ -10,37 +10,58 @@
     </div>
 
     <div id="navbar-right" class="container-flex">
-      <div id="navbar-login" {% if username %}class="signed-in"{% endif %}>
+
+      <div id="navbar-locale" class="nav-chunk">
+        <div class="dropdown">
+          <div class="dropdown-toggle">
+            {{ languages[locale].nativeName }}
+            <img class="icon-arrow-down" src="/img/icon/dropdown-arrow.svg">
+          </div>
+          <div class="dropdown-content">
+            <ul class="language-list">
+              {% for langCode, obj in languages %}
+                <li><a {% if langCode == locale %} class="selected" {% endif %} target="_self" href="/{{ langCode }}{{ URL_PATHNAME }}">{{ obj.nativeName }}</a></li>
+              {% endfor %}
+            </ul>
+            <p class="bottom-message">
+              Don't see your language? <a href="#">Help add it.</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div id="navbar-login" class="{% if username %}signed-in{% endif %} nav-chunk" >
         <div id="navbar-login-inner">
         {% if username %}
-          <ul id="navbar-logged-in">
-            <li>
+          <div id="navbar-logged-in" class="dropdown">
+            <div class="dropdown-toggle">
               <img class="avatar" src="{{avatar}}">
-              <span>{{ gettext("loginWelcome") | instantiate }}</span>
-              <img class="icon-arrow-down" src="/img/icon/dropdown-arrow.svg">
+              {{ gettext("loginWelcome") | instantiate }}
+              <img class="icon-arrow-down" src="/img/icon/dropdown-arrow.svg" />
+            </div>
 
+            <div class="dropdown-content">
               <ul class="dropdown">
                 <li>
-                  <a id="new-project-link" href="/{{ locale }}/projects/new" class="dropdown-link">
-                    <img src="/img/icon/new-project.svg" class="dropdown-icon">
+                  <a id="new-project-link" href="/{{ locale }}/projects/new">
+                    <img src="/img/icon/new-project.svg" />
                     {{ gettext("newProjectLink") }}
                   </a>
                 </li>
                 <li>
-                  <a href="/{{ locale }}/projects/{{ queryString }}" class="dropdown-link" target="_self">
-                    <img src="/img/icon/your-projects.svg" class="dropdown-icon">
+                  <a href="/{{ locale }}/projects/{{ queryString }}" target="_self">
+                    <img src="/img/icon/your-projects.svg" />
                     {{ gettext("yourProjectsLink") }}
                   </a>
                 </li>
                 <li>
-                  <a href="{{ logoutURL }}" id="logout-link" class="dropdown-link" target="_self">
-                    <img src="/img/icon/sign-out.svg" class="dropdown-icon">
+                  <a href="{{ logoutURL }}" id="logout-link" target="_self">
+                    <img src="/img/icon/sign-out.svg" />
                     {{ gettext("signOutLink") }}
                   </a>
                 </li>
               </ul>
-            </li>
-          </ul>
+            </div>
         {% else %}
           <div id="navbar-anonymous">
             {{ gettext("loginPromptHomepage") | instantiate | safe }}
