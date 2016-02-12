@@ -99,7 +99,7 @@ Security.prototype = {
     return this;
   },
   xframe() {
-    this.server.use(helmet.xframe());
+    this.server.use(helmet.xframe("allow-from", "https://pontoon.mozilla.org"));
     return this;
   }
 };
