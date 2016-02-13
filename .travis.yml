@@ -14,5 +14,5 @@ deploy:
     secure: C/eOW0vXt30EUSbxlqQawBX1i28PX8dBuFgmfOAbYEY+xYOOcJ7oDWbgXXhrD1q/mc4cfgWHHmC0cgAQ8rqcpLyDscgqsoEQp+qt/IUA9tiSx95PVjkn4z+UtLrcd8HoyMdLbBmsbhriZys5Kzwl9Weqvi3at33pmUhFs+Mb2aM=
   app: bramble-staging
   on:
-    repo: mozilla/thimble.webmaker.org
+    repo: mozilla/thimble.mozilla.org
     branch: bramble
