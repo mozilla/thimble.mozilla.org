@@ -8,7 +8,7 @@ staging server).
 
 ![Thimble](/screenshots/thimble.png?raw=true "Thimble")
 
-You can read more about some of Thimble's main features [in the wiki](https://github.com/mozilla/thimble.webmaker.org/wiki/Using-Thimble), or [watch a demo video](https://air.mozilla.org/thimble-demo/).
+You can read more about some of Thimble's main features [in the wiki](https://github.com/mozilla/thimble.mozilla.org/wiki/Using-Thimble), or [watch a demo video](https://air.mozilla.org/thimble-demo/).
 
 Thimble uses a modified version of the amazing [Brackets](http://brackets.io) code editor
 [updated to run within web browsers](https://github.com/humphd/brackets).  You can read more about
@@ -42,7 +42,7 @@ is an abbreviated guide to getting it all set up.  Please see each server's READ
 * Run ``npm start`` to get a static server running on [http://localhost:8000/src](http://localhost:8000/src). You can try the demo version at [http://localhost:8000/src/hosted.html](http://localhost:8000/src/hosted.html)
 
 **Thimble**
-* Fork and clone https://github.com/mozilla/thimble.webmaker.org
+* Fork and clone https://github.com/mozilla/thimble.mozilla.org
 * Make sure you're on the ``bramble`` branch
 * Run ``npm install`` to install dependencies
 * Run ``cp env.dist .env`` to create an environment file
