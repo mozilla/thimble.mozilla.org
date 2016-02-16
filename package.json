@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "private": true,
   "engines": {
-    "node": "4.2.x"
+    "node": "4.3.x"
   },
   "dependencies": {
     "async": "0.2.7",
