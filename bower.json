@@ -1,5 +1,5 @@
 {
-  "name": "thimble.webmaker.org",
+  "name": "thimble.mozilla.org",
   "dependencies": {
     "eventEmitter": "~4.3.0",
     "jquery": "http://code.jquery.com/jquery-2.1.4.min.js",
