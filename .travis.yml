@@ -11,7 +11,7 @@ cache:
 deploy:
   provider: heroku
   api_key:
-    secure: C/eOW0vXt30EUSbxlqQawBX1i28PX8dBuFgmfOAbYEY+xYOOcJ7oDWbgXXhrD1q/mc4cfgWHHmC0cgAQ8rqcpLyDscgqsoEQp+qt/IUA9tiSx95PVjkn4z+UtLrcd8HoyMdLbBmsbhriZys5Kzwl9Weqvi3at33pmUhFs+Mb2aM=
+    secure: E2houbiE3BVUltZqlMlaCIUOoAjecJTFVi/J5+TPGV04ZPitOXNs5NXsZ21nSBYRapTdUwDI3ulD54fgR50vlOnW/FWnC3NdSjqWrCJDpGzXnSYRzPFeAejs8DtNvIsBvjLoLDS8eK5L4tlW7swyiFV2huAXloqKNR6LnvEFzVQ=
   app: bramble-staging
   on:
     repo: mozilla/thimble.mozilla.org
