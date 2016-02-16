@@ -43,7 +43,6 @@ is an abbreviated guide to getting it all set up.  Please see each server's READ
 
 **Thimble**
 * Fork and clone https://github.com/mozilla/thimble.mozilla.org
-* Make sure you're on the ``bramble`` branch
 * Run ``npm install`` to install dependencies
 * Run ``cp env.dist .env`` to create an environment file
 * Run ``npm run localize`` to generate the locale files

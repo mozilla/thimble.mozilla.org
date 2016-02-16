@@ -15,4 +15,4 @@ deploy:
   app: bramble-staging
   on:
     repo: mozilla/thimble.mozilla.org
-    branch: bramble
+    branch: master
