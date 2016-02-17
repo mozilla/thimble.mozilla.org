@@ -1,7 +1,24 @@
 {
-  "name": "thimble",
+  "name": "thimble.mozilla.org",
   "version": "2.0.0",
   "private": true,
+  "description": "Online code editor geared to people teaching and learning HTML, CSS, and JavaScript",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mozilla/thimble.mozilla.org.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mozilla/thimble.mozilla.org/issues"
+  },
+  "keywords": [
+    "mozilla",
+    "thimble",
+    "editor"
+  ],
+  "author": "Mozilla",
+  "license": "MPL-2.0",
+  "homepage": "https://thimble.mozilla.org",
   "engines": {
     "node": "4.3.x"
   },
