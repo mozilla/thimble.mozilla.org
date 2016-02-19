@@ -11,7 +11,7 @@ staging server).
 You can read more about some of Thimble's main features [in the wiki](https://github.com/mozilla/thimble.mozilla.org/wiki/Using-Thimble), or [watch a demo video](https://air.mozilla.org/thimble-demo/).
 
 Thimble uses a modified version of the amazing [Brackets](http://brackets.io) code editor
-[updated to run within web browsers](https://github.com/humphd/brackets).  You can read more about
+[updated to run within web browsers](https://github.com/mozilla/brackets).  You can read more about
 how it works in [this blog post](http://blog.humphd.org/thimble-and-bramble/).
 
 Thimble requires a modern web browser, and we recommend using Mozilla Firefox or Google Chrome.
@@ -34,8 +34,7 @@ is an abbreviated guide to getting it all set up.  Please see each server's READ
 ## Installing the Parts
 
 **Bramble**
-* Fork and clone https://github.com/humphd/brackets
-* Make sure you're on the ``bramble`` branch
+* Fork and clone https://github.com/mozilla/brackets
 * Run ``git submodule update --init`` to install submodules
 * Run ``npm install`` to install dependencies
 * Run `grunt build-browser` to create `/dist` extensions and third-party libs
@@ -147,10 +146,6 @@ Building the front-end
 
 Run `grunt requirejs:dist` to regenerate the front-end `dist/` folder if you so desire (it's
 only necessary in production). See `Gruntfile.js` for details.
-
-**NOTE:** Our front-end is in transition from an older architecture using Requirejs to
-a new one using our build system. Check in our IRC channel (irc.mozilla.org#thimble) for
-the latest state of development.
 
 Invalidating CloudFront
 ----------------------
