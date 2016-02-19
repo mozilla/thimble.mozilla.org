@@ -18,6 +18,11 @@ function writeFiles(localeInfoList) {
   localeInfoList.forEach(function(localeInfo) {
     var langDir = path.join(localeDest, localeInfo.locale.replace(/-/g, "_"));
 
+    if(!localeInfo.content) {
+      console.log("Skipping ", localeInfo.locale, " due to missing strings");
+      return Promise.resolve();
+    }
+
     FS.makeTree(langDir)
     .then(function() {
       return write(path.join(langDir, "messages.json"), JSON.stringify(localeInfo.content, null, 2), "utf-8")
@@ -54,7 +59,7 @@ function getContentMessages(locale) {
         return reject(message_error);
       }
 
-      resolve({content: message_properties || {}, locale: locale});
+      resolve({content: message_properties, locale: locale});
     });
   });
 }
