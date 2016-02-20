@@ -42,8 +42,8 @@ is an abbreviated guide to getting it all set up.  Please see each server's READ
 
 **Thimble**
 * Fork and clone https://github.com/mozilla/thimble.mozilla.org
-* Run ``npm install`` to install dependencies
 * Run ``cp env.dist .env`` to create an environment file
+* Run ``npm install`` to install dependencies
 * Run ``npm run localize`` to generate the locale files
 * Run ``npm start`` to start the server
 * Once everything is ready and running, Thimble will be available at [http://localhost:3500/](http://localhost:3500/)
