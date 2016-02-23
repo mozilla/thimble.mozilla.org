@@ -59,6 +59,7 @@ is an abbreviated guide to getting it all set up.  Please see each server's READ
 * Run ``npm install`` to install dependencies
 * Run ``cp env.sample .env`` to create an environment file
 * Run ``npm start`` the server
+* **Note:** login.webmaker.org needs a node version of 0.12 while all the other dependencies work with a node version of 4.x and above. We suggest installing [NVM](https://github.com/creationix/nvm) to allow the use of multiple versions of node.
 
 **PostgreSQL**
 * Install Postgres via Homebrew
@@ -146,6 +147,11 @@ Building the front-end
 
 Run `grunt requirejs:dist` to regenerate the front-end `dist/` folder if you so desire (it's
 only necessary in production). See `Gruntfile.js` for details.
+
+Localization
+----------------------
+
+Please refer to the [Wiki](https://github.com/mozilla/thimble.mozilla.org/wiki/Localization) for information on the localization procedures used in Thimble.
 
 Invalidating CloudFront
 ----------------------
