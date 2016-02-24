@@ -21,6 +21,7 @@ module.exports = {
   loginURL: loginURL,
   logoutURL: logoutURL,
   publishURL: env.get("PUBLISH_HOSTNAME"),
+  publishedProjectsHostname: env.get("PUBLISHED_PROJECTS_HOSTNAME"),
   editorHOST: editorHOST,
   editorURL: env.get("NODE_ENV") === "development" ? env.get("BRAMBLE_URI") + "/src" : env.get("BRAMBLE_URI") + "/dist",
   cryptr: new Cryptr(env.get("SESSION_SECRET")),

@@ -57,6 +57,7 @@
     "jit-grunt": "^0.9.1",
     "less-middleware": "2.0.1",
     "memorystream": "^0.3.1",
+    "moment": "^2.11.2",
     "morgan": "^1.6.1",
     "multer": "^1.0.1",
     "npm-run-all": "^1.5.1",

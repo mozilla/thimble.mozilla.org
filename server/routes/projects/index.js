@@ -57,5 +57,10 @@ module.exports = {
       middleware.setUserIfTokenExists,
       middleware.setPublishUser,
       require("./remix").bind(app, config));
+
+    // Project Remix Bar HTML fragment to be injected inot a published project
+    app.get("/projects/remix-bar",
+      middleware.enableCORS(config.publishedProjectsHostname),
+      require("./remix-bar").bind(app, config));
   }
 };

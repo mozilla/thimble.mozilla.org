@@ -104,7 +104,9 @@ server.use("/bower", express.static(path.join(root, server.locals.bower_path), m
 /**
  * L10N
  */
-localize(server, env.get("L10N"));
+localize(server, Object.assign(env.get("L10N"), {
+   excludeLocaleInUrl: [ "/projects/remix-bar" ]
+}));
 
 
 /**
