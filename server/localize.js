@@ -9,6 +9,8 @@ let root = path.dirname(__dirname);
 let knownLocales = Object.keys(webmakerI18N.getAllLocaleCodes());
 
 module.exports = function localize(server, options) {
+  let excludeLocaleInUrl = options.excludeLocaleInUrl || [];
+
   server.use(webmakerI18N.middleware({
     supported_languages: options.supported_languages,
     default_lang: "en-US",
@@ -18,6 +20,11 @@ module.exports = function localize(server, options) {
 
   // Redirect routes without the locale in the url to one with it.
   server.use((req, res, next) => {
+    // Do not redirect to a url with the locale if the route is in the `exclude` list
+    if(excludeLocaleInUrl.indexOf(req.path) !== -1) {
+      return next();
+    }
+
     let locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
 
     if(req.originalUrl.indexOf(locale) === 1) {
@@ -44,7 +51,7 @@ module.exports = function localize(server, options) {
   webmakerI18N.getSupportLanguages().forEach(locale => {
     languages[locale] = allLanguages[locale];
   });
-  
+
   server.locals.languages = languages;
 
   server.get("/strings/:lang?", webmakerI18N.stringsRoute("en-US"));
