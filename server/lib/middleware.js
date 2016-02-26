@@ -1,22 +1,23 @@
-var env = require('./environment');
-var multer = require("multer");
-var upload = multer({
-  dest: require("os").tmpdir(),
-  limits: {
-    fileSize: env.get("MAX_FILE_SIZE_BYTES")
-  }
-});
-var request = require("request");
-var querystring = require("querystring");
-var uuid = require("uuid");
+"use strict";
 
-var publishHost = env.get("PUBLISH_HOSTNAME");
+let multer = require("multer");
+let request = require("request");
+let querystring = require("querystring");
+let uuid = require("uuid");
+let cors = require("cors");
+let Cryptr = require("cryptr");
+
+let env = require("./environment");
+let utils = require("./utils");
+
+let upload = multer({
+  dest: require("os").tmpdir(),
+  limits: { fileSize: env.get("MAX_FILE_SIZE_BYTES") }
+});
+const publishHost = env.get("PUBLISH_HOSTNAME");
 
 module.exports = function middlewareConstructor() {
-  var utils = require("./utils"),
-      Cryptr = require("cryptr");
-
-  var cryptr = new Cryptr(env.get("SESSION_SECRET"));
+  let cryptr = new Cryptr(env.get("SESSION_SECRET"));
 
   return {
     /**
@@ -25,22 +26,34 @@ module.exports = function middlewareConstructor() {
     fileUpload: upload.single("brambleFile"),
 
     /**
+     * Add CORS Headers to the response
+     */
+    enableCORS(whiteList) {
+      whiteList = Array.isArray(whiteList) ? whiteList : [ whiteList ];
+      return cors({
+        origin(origin, callback) {
+          callback(null, whiteList.indexOf(origin) !== -1);
+        }
+      });
+    },
+
+    /**
      * Check whether the requesting user has been authenticated.
      */
-    checkForAuth: function(req, res, next) {
-      if (req.session.user) {
+    checkForAuth(req, res, next) {
+      if(req.session.user) {
         return next();
       }
 
-      var locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
-      res.redirect(301, "/" + locale);
+      let locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
+      res.redirect(301, `/${locale}`);
     },
 
     /**
      * If there's an oauth token, decrypt it and set the
      * local user object.
      */
-    setUserIfTokenExists: function(req, res, next) {
+    setUserIfTokenExists(req, res, next) {
       if (!req.session || !req.session.token) {
         return next();
       }
@@ -52,28 +65,27 @@ module.exports = function middlewareConstructor() {
       next();
     },
 
-    redirectAnonymousUsers: function(req, res, next) {
-      var locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
-      var qs = querystring.stringify(req.query);
+    redirectAnonymousUsers(req, res, next) {
+      let locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
+      let qs = querystring.stringify(req.query);
       if(qs !== "") {
-        qs = "?" + qs;
+        qs = `?${qs}`;
       }
 
       if(req.session.user) {
         next();
       } else {
-        res.redirect(307, "/" + locale + "/anonymous/" + uuid.v4() + qs);
+        res.redirect(307, `/${locale}/anonymous/${uuid.v4()}${qs}`);
       }
     },
 
     /**
      * Validate the request payload based on the properties passed in
      */
-    validateRequest: function(properties) {
+    validateRequest(properties) {
       return function(req, res, next) {
-        var valid = !!req.body && properties.every(function(prop) {
-          return req.body[prop] !== null && req.body[prop] !== undefined;
-        });
+        let valid = !!req.body &&
+          properties.every(prop => req.body[prop] !== null && req.body[prop] !== undefined);
 
         if(!valid) {
           next(utils.error(400, "Request body missing data"));
@@ -88,33 +100,29 @@ module.exports = function middlewareConstructor() {
      * set it on the request's `user` property which should be set by calling
      * the `setUserIfTokenExists` middleware operation
      */
-    setPublishUser: function(req, res, next) {
-      var user = req.user;
-
+    setPublishUser(req, res, next) {
+      let user = req.user;
       if(!user) {
-        next();
-        return;
+        return next();
       }
 
       request({
         method: "POST",
-        url: publishHost + "/users/login",
+        url: `${publishHost}/users/login`,
         headers: {
-          "Authorization": "token " + user.token
+          "Authorization": `token ${user.token}`
         },
         body: {
           name: user.username
         },
         json: true
-      }, function(err, response, body) {
+      }, (err, response, body) => {
         if(err) {
-          next(utils.error(500));
-          return;
+          return next(utils.error(500));
         }
 
         if(response.statusCode !== 200 &&  response.statusCode !== 201) {
-          next(utils.error(response.statusCode, response.body));
-          return;
+          return next(utils.error(response.statusCode, response.body));
         }
 
         req.user.publishId = body.id;
@@ -126,37 +134,33 @@ module.exports = function middlewareConstructor() {
      * id provided as a parameter. The request's `user` property must
      * be set by calling the `setUserIfTokenExists` middleware operation.
      */
-    setProject: function(req, res, next) {
-      var projectId = req.params.projectId;
+    setProject(req, res, next) {
+      let projectId = req.params.projectId;
       if(!projectId || !req.user) {
         req.project = null;
-        next();
-        return;
+        return next();
       }
 
       // Get project data from publish.wm.org
       request.get({
-        url: publishHost + "/projects/" + projectId,
+        url: `${publishHost}/projects/${projectId}`,
         headers: {
-          "Authorization": "token " + req.user.token
+          "Authorization": `token ${req.user.token}`
         }
-      }, function(err, response, body) {
+      }, (err, response, body) => {
         if(err) {
-          next(utils.error(500));
-          return;
+          return next(utils.error(500));
         }
 
         if(response.statusCode !== 200) {
-          next(utils.error(response.statusCode, response.body));
-          return;
+          return next(utils.error(response.statusCode, response.body));
         }
 
         try {
           req.project = JSON.parse(body);
         } catch(e) {
           console.error("Failed to parse project sent by the publish server in `setProject` middleware with ", e);
-          next(utils.error(500));
-          return;
+          return next(utils.error(500));
         }
 
         next();
@@ -169,7 +173,7 @@ module.exports = function middlewareConstructor() {
      * this flag is removed in every circumstance but the
      * final login redirect
      */
-    clearRedirects: function(req, res, next) {
+    clearRedirects(req, res, next) {
       delete req.session.home;
       next();
     }

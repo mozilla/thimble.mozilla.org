@@ -15,6 +15,7 @@ const defaultTrustedDomains = {
           "https://docs.google.com"
          ],
   iframe: [
+            "'self'",
             "https://pontoon.mozilla.org"
           ],
   font: [
