@@ -1,0 +1,22 @@
+<!-- Project Remix bar -->
+<div lang="{{ lang }}" class="details-bar collapsed cleanslate" style="display: none !important">
+  <a class="thimble-logo" title="{{ gettext("thimbleByMozilla") }}" href="https://thimble.mozilla.org">
+    <span class="icon"></span>
+  </a>
+
+  <h1 class="remix-project-title">{{ title | safe }}</h1>
+  <div class="remix-project-meta">
+    <span class="remix-project-author">{{ gettext("createdBy") | instantiate }} - {{ updated }}</span>
+  </div>
+  <div class="details-bar-remix-button-wrapper">
+    <a title="{{ gettext("remixWithThimble") }}"
+       class="details-bar-remix-button"
+       href="{{ host }}/{{ lang }}/projects/{{ id }}/remix">{{ gettext("remix") }}
+    </a>
+  </div>
+  <div class="close-details-bar"><img src="{{ host }}/resources/remix/close-x.svg" /></div>
+  <div class="thimble-button" title="{{ gettext("thimbleByMozilla") }}">
+    <span class="icon"></span>
+  </div>
+</div>
+<!-- End of Remix bar -->

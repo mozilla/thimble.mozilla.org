@@ -2,11 +2,30 @@
  * Thimble Remix and Analytics injection, automatically
  * added to published projects.
  */
-(function(document, head){
+(function(document, head) {
 
   var gaTrackingId = 'UA-68630113-1';
 
-  function setupBar($){
+  function injectAnalytics($) {
+    var analyticsHtml =
+    '\n<script>\n' +
+    '(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\n' +
+    '(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\n' +
+    'm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n' +
+    '})(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');\n' +
+    'ga(\'create\', \'' + gaTrackingId + '\', \'auto\');\n' +
+    'ga(\'send\', \'pageview\');\n' +
+    '</script>\n';
+
+    $(head).append(analyticsHtml);
+  }
+
+  function setupBar(err, $) {
+    if(err) {
+      console.log("[Thimble Error] Unable to inject Remix UI. Error was: `" + err + "`");
+      return;
+    }
+
     var isTouchDevice = 'ontouchstart' in document.documentElement;
     var detailsBar = $(".details-bar");
     detailsBar.attr("style", "");
@@ -36,74 +55,27 @@
     });
   }
 
-  function getElapsedTime(lastEdited) {
-    var now = Date.now();
-    lastEdited = new Date(lastEdited);
-    var elapsedTime, unit = "";
-    var secondsElapsed = (now - lastEdited) / 1000;
-    var minutesElapsed = secondsElapsed / 60;
-    var hoursElapsed = minutesElapsed / 60;
-    var daysElapsed = hoursElapsed / 24;
-
-    if(daysElapsed > 31) {
-      elapsedTime = "over a month";
-    } else if(daysElapsed >= 1) {
-      elapsedTime = Math.round(daysElapsed);
-      unit = elapsedTime === 1 ? " day" : " days";
-    } else if(hoursElapsed >= 1) {
-      elapsedTime = Math.round(hoursElapsed);
-      unit = elapsedTime === 1 ? " hour" : " hours";
-    } else if(minutesElapsed >= 1) {
-      elapsedTime = Math.round(minutesElapsed);
-      unit = elapsedTime === 1 ? " minute" : " minutes";
-    } else {
-      elapsedTime = Math.round(secondsElapsed);
-      unit = elapsedTime === 1 ? " second" : " seconds";
-    }
-
-    return elapsedTime + unit + " ago";
-  }
-
-  function injectAnalytics($) {
-    var analyticsHtml =
-    '\n<script>\n' +
-    '(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\n' +
-    '(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\n' +
-    'm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n' +
-    '})(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');\n' +
-    'ga(\'create\', \'' + gaTrackingId + '\', \'auto\');\n' +
-    'ga(\'send\', \'pageview\');\n' +
-    '</script>\n';
-
-    $(head).append(analyticsHtml);
-  }
-
-  function injectDetailsBar($, metadata) {
-    var detailsBarHtml =
-    '\n<!-- Remix bar -->\n' +
-    '<div class="details-bar collapsed cleanslate" style="display: none !important">\n' +
-    '  <a class="thimble-logo" title="Thimble by Mozilla" href="https://thimble.mozilla.org">\n' +
-    '    <span class="icon"></span>\n' +
-    '  </a>\n' +
-    '  <h1 class="remix-project-title"></h1>\n' +
-    '  <div class="remix-project-meta">\n' +
-    '    By <span class="remix-project-author"></span>\n' +
-    '  </div>\n' +
-    '  <div class="details-bar-remix-button-wrapper">\n' +
-    '    <a title="Remix this project with Thimble" class="details-bar-remix-button">Remix</a>\n' +
-    '  </div>\n' +
-    '  <div class="close-details-bar"><img src="' + metadata.host + '/resources/remix/close-x.svg" /></div>\n' +
-    '  <div class="thimble-button" title="Thimble by Mozilla">\n' +
-    '    <span class="icon"></span>\n' +
-    '   </div>\n' +
-    '</div>\n' +
-    '<!-- End of Remix bar -->\n';
-
-    $(detailsBarHtml).prependTo("body");
-    $(".remix-project-title").text(metadata.projectTitle);
-    $(".remix-project-author").text(metadata.projectAuthor);
-    $(".remix-project-meta").append(document.createTextNode(" - " + getElapsedTime(metadata.dateUpdated)));
-    $(".details-bar-remix-button").attr("href", metadata.host + "/projects/" + metadata.projectId + "/remix");
+  function injectDetailsBar($, metadata, callback) {
+    $.ajax({
+      url: metadata.host + "/projects/remix-bar",
+      cache: false,
+      accepts: "text/html",
+      dataType: "html",
+      data: {
+        host: metadata.host,
+        id: metadata.projectId,
+        title: metadata.projectTitle,
+        author: metadata.projectAuthor,
+        updated: metadata.dateUpdated
+      }
+    })
+    .done(function(response) {
+      $(response).prependTo("body");
+      callback(null, $);
+    })
+    .fail(function(jqXHR, textStatus) {
+      callback(textStatus);
+    });
   }
 
   function injectStyleSheets($, metadata) {
@@ -140,8 +112,7 @@
       var metadata = getMetadata($);
       injectAnalytics($);
       injectStyleSheets($, metadata);
-      injectDetailsBar($, metadata);
-      setupBar($);
+      injectDetailsBar($, metadata, setupBar);
     });
   }
 
