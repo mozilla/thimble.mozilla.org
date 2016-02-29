@@ -20,6 +20,7 @@
     </div>
 
     <div id="navbar-right" class="container-flex">
+      {% set publishBtnTitle = gettext("publishBtnTitle") %}
 
       <div class="nav-chunk">
         <div title="{{ gettext("helpIconTitle") }}" id="navbar-help" class="nav-link">
@@ -93,19 +94,23 @@
             </div>
           </div>
         {% else %}
+          {% set publishBtnOpenTag = '<span title="{{ publishBtnTitle }}" id="navbar-publish-button"><img src="/img/icon/publish.svg" class="icon-publish">' | instantiate | safe %}
+          {% set publishBtnCloseTag = '</span>' | safe %}
           <div id="navbar-anonymous">
-            {{ gettext("loginPromptEditor") | safe }}
+            {{ gettext("loginPromptEditor") | instantiate | safe }}
           </div>
         {% endif %}
         </div>
       </div>
 
+    {% if username %}
       <div id="navbar-publish" class="nav-chunk">
-        <div title="{{ gettext("publishBtnTitle") }}" id="navbar-publish-button">
+        <div title="{{ publishBtnTitle }}" id="navbar-publish-button">
           <img src="/img/icon/publish.svg" class="icon-publish">
           {{ gettext("publishBtn") }}
         </div>
       </div>
+    {% endif %}
     </div>
 
   </nav>
