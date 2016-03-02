@@ -53,6 +53,6 @@ getListLocales(localeDir)
   return localizeClient.readLocaleStrings(locales);
 })
 .then(() => {
-  let watcher = chokidar.watch("public", { cwd: root });
+  let watcher = chokidar.watch("public/**/*.js", { cwd: root });
   watcher.on("ready", () => watcher.on("all", updateClient));
 });
