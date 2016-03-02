@@ -40,7 +40,7 @@ function makeLocalizedCopy(locale, srcPath, template) {
 function localizeFile(filePath) {
   let isJS = path.extname(filePath) === ".js";
   if(!isJS) {
-    return Promise.resolve();
+    return;
   }
 
   let template = nunjucks.configure(filePath, { noCache: true });
