@@ -13,19 +13,22 @@ var getListLocales = require("./common").getListLocales;
 var l10nConfig = env.get("L10N");
 var localeSrc = path.join(process.cwd(), l10nConfig.locale_src || "locales");
 var localeDest = path.join(process.cwd(), l10nConfig.locale_dest || l10nConfig.locale_src || "locales");
+var en_USStrings;
 
 function writeFiles(localeInfoList) {
   localeInfoList.forEach(function(localeInfo) {
     var langDir = path.join(localeDest, localeInfo.locale.replace(/-/g, "_"));
 
-    if(!localeInfo.content) {
+    if(!localeInfo.content || Object.keys(localeInfo.content).length < 1) {
       console.log("Skipping ", localeInfo.locale, " due to missing strings");
       return Promise.resolve();
     }
 
     FS.makeTree(langDir)
     .then(function() {
-      return write(path.join(langDir, "messages.json"), JSON.stringify(localeInfo.content, null, 2), "utf-8")
+      var content = Object.assign({}, en_USStrings, localeInfo.content);
+
+      return write(path.join(langDir, "messages.json"), JSON.stringify(content, null, 2), "utf-8")
       .then(function(filename) {
         console.log("Done writing: " + filename);
       });
@@ -57,6 +60,10 @@ function getContentMessages(locale) {
     properties.read(path.join(localeSrc, locale, "messages.properties"), function(message_error, message_properties) {
       if (message_error && message_error.code !== "ENOENT") {
         return reject(message_error);
+      }
+
+      if(locale === "en-US") {
+        en_USStrings = message_properties;
       }
 
       resolve({content: message_properties, locale: locale});
