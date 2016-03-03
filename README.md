@@ -37,8 +37,9 @@ is an abbreviated guide to getting it all set up.  Please see each server's READ
 * Fork and clone https://github.com/mozilla/brackets
 * Run ``git submodule update --init`` to install submodules
 * Run ``npm install`` to install dependencies
-* Run `grunt build-browser` to create `/dist` extensions and third-party libs
+* Run `npm run build` to create `/dist` extensions and third-party libs
 * Run ``npm start`` to get a static server running on [http://localhost:8000/src](http://localhost:8000/src). You can try the demo version at [http://localhost:8000/src/hosted.html](http://localhost:8000/src/hosted.html)
+* For more information on setting up Bramble, refer to [Bramble Setup](https://github.com/mozilla/brackets#how-to-setup-bramble-brackets-in-your-local-machine)
 
 **Thimble**
 * Fork and clone https://github.com/mozilla/thimble.mozilla.org
