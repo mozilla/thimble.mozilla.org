@@ -154,6 +154,10 @@ Localization
 
 Please refer to the [Wiki](https://github.com/mozilla/thimble.mozilla.org/wiki/Localization) for information on the localization procedures used in Thimble.
 
+##### Our Localization Community
+
+[Our localization community](https://pontoon.mozilla.org/projects/thimble/contributors) is awesome! They work very hard to translate Thimble so that we can expand our global reach and engage even more users in other languages. We can't thank them enough!
+
 Invalidating CloudFront
 ----------------------
 
