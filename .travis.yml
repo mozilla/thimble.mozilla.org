@@ -3,11 +3,15 @@ node_js:
 - '4.3'
 sudo: false
 env:
-- L10N_LOCALE_SRC="locales" L10N_LOCALE_DEST="dist/locales"
+  global:
+  - L10N_LOCALE_SRC: locales
+  - L10N_LOCALE_DEST: dist/locales
+  - secure: EAbCzlvar10vLD/tkch8k7aeJj55AG5puDLIdj8CcqE9oBIplhZMMkEfLYCFYkubm0eIKMKnbSRqs/pddjebiQwGmjzWBN5Lhf6U3k7df36UB4WQwbisl88jxTKWmve4vLtYeJBuVQrr4eFxeB0OY0davbrmGItETG0ZaQYrJjY=
 cache:
   directories:
   - node_modules
-  - locale
+after_script:
+- bash ./scripts/localize-brackets.sh
 deploy:
   provider: heroku
   api_key:
