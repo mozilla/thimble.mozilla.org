@@ -23,7 +23,7 @@ then
   COMMIT_AUTHOR="$(git show --format=\"%cn\" --no-patch $TRAVIS_COMMIT)"
 
   # Exit if the commit's author is not Pontoon
-  if [ "$COMMIT_AUTHOR" == "Mozilla Pontoon" ]
+  if [ "$COMMIT_AUTHOR" == "\"Mozilla Pontoon\"" ]
   then
     # Get the list of file changes
     CHANGE_SET="$(git diff-tree --name-only --no-commit-id -r $TRAVIS_COMMIT)"
