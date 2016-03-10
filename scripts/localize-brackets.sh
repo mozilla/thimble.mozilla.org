@@ -8,10 +8,7 @@ body='{
   "request": {
     "branch": "master",
     "config": {
-      "env": {
-        "global": ["UPDATE_STRINGS=true"]
-      },
-      "script": "bash ./scripts/pull-new-strings.sh"
+      "script": "export UPDATE_STRINGS=true; bash ./scripts/pull-new-strings.sh"
     }
   }
 }'
