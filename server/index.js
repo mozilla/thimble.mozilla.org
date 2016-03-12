@@ -80,7 +80,8 @@ secure.xss()
 .xframe()
 .csp({
   frame: [ env.get("BRAMBLE_URI") ],
-  script: [ env.get("BRAMBLE_URI") ]
+  script: [ env.get("BRAMBLE_URI") ],
+  connection: [ env.get("BRAMBLE_URI")]
 });
 if(!!env.get("FORCE_SSL")) {
   secure.ssl();
