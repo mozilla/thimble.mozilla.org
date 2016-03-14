@@ -6,6 +6,7 @@
 let express = require("express");
 let path = require("path");
 let favicon = require("serve-favicon");
+let url = require("url");
 
 let env = require("./lib/environment");
 let templatize = require("./templatize");
@@ -22,6 +23,8 @@ let isDevelopment = env.get("NODE_ENV") === "development";
 let root = path.dirname(__dirname);
 let client = path.join(root, isDevelopment ? "client" : "dist");
 let cssAssets = path.join(require("os").tmpDir(), "mozilla.webmaker.org");
+let editor = url.parse(env.get("BRAMBLE_URI"));
+let editorHost = `${editor.protocol}//${editor.host}`;
 const maxCacheAge = { maxAge: "1d" };
 
 /*
@@ -79,9 +82,9 @@ secure.xss()
 .csrf()
 .xframe()
 .csp({
-  frame: [ env.get("BRAMBLE_URI") ],
-  script: [ env.get("BRAMBLE_URI") ],
-  connection: [ env.get("BRAMBLE_URI")]
+  frame: [ editorHost, "https://www.youtube.com/embed/JecFOjD9I3k" ],
+  script: [ editorHost ],
+  connection: [ editorHost ]
 });
 if(!!env.get("FORCE_SSL")) {
   secure.ssl();
