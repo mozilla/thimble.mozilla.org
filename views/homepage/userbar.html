@@ -23,9 +23,11 @@
                 <li><a {% if langCode == locale %} class="selected" {% endif %} target="_self" href="/{{ langCode }}{{ URL_PATHNAME }}">{{ obj.nativeName }}</a></li>
               {% endfor %}
             </ul>
+            <!-- We're going to disable this for now until we figure out where to link this to
             <p class="bottom-message">
               Don't see your language? <a href="#">Help add it.</a>
             </p>
+            -->
           </div>
         </div>
       </div>
