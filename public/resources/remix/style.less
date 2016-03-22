@@ -11,6 +11,12 @@
   font-style: normal;
 }
 
+@media print {
+  .details-bar, .collapsed, .cleanslate, .mouse-mode {
+    display: none !important;
+  }
+}
+
 .details-bar {
   position: fixed !important;
   top: 0 !important;
