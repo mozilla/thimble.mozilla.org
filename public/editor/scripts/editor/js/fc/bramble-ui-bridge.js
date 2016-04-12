@@ -154,12 +154,34 @@ define(function(require) {
       _inspectorEnabled = data.enabled;
     });
 
+    // Preview auto-refresh toggle
+    $(".toggle-auto-update").on("click", function() {
+      var refreshWrapper = $(".refresh-wrapper");
+      var enabled = refreshWrapper.hasClass("enabled");
+      if(enabled) {
+        refreshWrapper.removeClass("enabled");
+        bramble.disableAutoUpdate();
+        analytics.event("disableAutoUpdate");
+      } else {
+        refreshWrapper.addClass("enabled");
+        bramble.enableAutoUpdate();
+        analytics.event("enableAutoUpdate");
+      }
+    });
+
+    // Refresh Preview
+    $("#preview-pane-nav-refresh").click(function() {
+      var el = $(this);
+      el.removeClass("spin").width(el.width()).addClass("spin");
+      bramble.refreshPreview();
+      analytics.event("RefreshPreview");
+    });
+
     // Refresh Preview
     $("#preview-pane-nav-refresh").click(function() {
       bramble.refreshPreview();
       analytics.event("RefreshPreview");
     });
-
 
     // Preview vs. Tutorial preview mode. First check to see if there
     // is a tutorial.html file, and only show the TUTORIAL link if there is.

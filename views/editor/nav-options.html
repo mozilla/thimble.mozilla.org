@@ -105,12 +105,21 @@
         <span title="{{ gettext("navViewTutorialTitle") }}" id="tutorial-title" class="preview-pane-nav-title hide">{{ gettext("navViewTutorial") }}</span>
       </div>
 
+      <div class="refresh-wrapper enabled">
+        <div title="{{ gettext("navRefreshPreviewIconTitle") }}" id="preview-pane-nav-refresh">
+          <img src="/img/icon/refresh.svg">
+        </div>
+        <div title="{{ gettext("navToggleAutoUpdateTitle") }}" class="toggle-auto-update">
+          <span class="checkbox">
+            <img class="checkbox-icon" src="/img/icon/checkmark-white.svg"/>
+          </span>
+          {{ gettext("navToggleAutoUpdateLabel") }}
+        </div>
+      </div>
+
       <div class="flex-container pull-right">
         <div title="{{ gettext("navDOMElementInspectorIconTitle") }}" id="preview-pane-nav-inspector">
           <div class="icon-wrapper"></div>
-        </div>
-        <div title="{{ gettext("navRefreshPreviewIconTitle") }}" id="preview-pane-nav-refresh">
-          <img src="/img/icon/refresh.svg">
         </div>
         <div class="preview-device-toggle">
           <img title="{{ gettext("navDesktopPreviewIconTitle") }}" id="preview-pane-nav-desktop" class="viewmode-active" src="/img/icon/desktop.svg">
