@@ -15,7 +15,7 @@ after_script:
 deploy:
   provider: heroku
   api_key:
-    secure: E2houbiE3BVUltZqlMlaCIUOoAjecJTFVi/J5+TPGV04ZPitOXNs5NXsZ21nSBYRapTdUwDI3ulD54fgR50vlOnW/FWnC3NdSjqWrCJDpGzXnSYRzPFeAejs8DtNvIsBvjLoLDS8eK5L4tlW7swyiFV2huAXloqKNR6LnvEFzVQ=
+    secure: fBMXtEXYNL6m8gjBmx+ic86qX7iG6TI58lCoRy+N10nuDFTvGp4mRI9BH2HAY4c4JhZyfRFHKGH9RCRcmmmGVx2AogWDfRn4QxKZ9x90zRk9A8xE/I+NHsV6SjgmuAgejLgPqheU9HzLE7TEX/DRFEBJnIbnwI/EPec1FN4tD+A=
   app: bramble-staging
   on:
     repo: mozilla/thimble.mozilla.org
