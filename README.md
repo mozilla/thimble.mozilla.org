@@ -33,6 +33,8 @@ is an abbreviated guide to getting it all set up.  Please see each server's READ
 
 ## Installing the Parts
 
+Please note: On Windows, use copy instead of cp
+
 **Bramble**
 * Fork and clone https://github.com/mozilla/brackets
 * Run ``git submodule update --init`` to install submodules
