@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="{{localeInfo.lang}}" dir="{{localeInfo.direction}}" class="deployment-type-development">
   <head>
+  <script>
+    // force users onto HTTPS rather than HTTP, the hacky way.
+    if (window.location.protocol === "http:") {
+      window.location = window.location.toString().replace("http:","https:");
+    }
+    </script>    
     <meta charset="utf-8">
     {{ newrelic.getBrowserTimingHeader() | safe }}
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
