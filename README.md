@@ -62,7 +62,7 @@ Please note: On Windows, use copy instead of cp
 * Run ``npm install`` to install dependencies
 * Run ``cp env.sample .env`` to create an environment file
 * Run ``npm start`` the server
-* **Note:** login.webmaker.org needs a node version of 0.12 while all the other dependencies work with a node version of 4.x and above. We suggest installing [NVM](https://github.com/creationix/nvm) to allow the use of multiple versions of node.
+* **Note:** login.webmaker.org needs a node version of 4.x only while all the other dependencies work with a node version of 4.x and above. We suggest installing [NVM](https://github.com/creationix/nvm) to allow the use of multiple versions of node.
 
 **PostgreSQL**
 * Install Postgres via Homebrew
