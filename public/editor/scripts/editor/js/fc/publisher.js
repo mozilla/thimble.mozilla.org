@@ -84,6 +84,7 @@ define(function(require) {
     bramble.on("fileChange", handleFileEvent);
     bramble.on("fileDelete", handleFileEvent);
     bramble.on("fileRename", handleFileEvent);
+    bramble.on("folderRename", handleFileEvent);
 
     dialog.buttons.publish.on("click", publisher.handlers.publish);
 

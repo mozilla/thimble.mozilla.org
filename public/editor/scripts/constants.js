@@ -4,6 +4,7 @@ define(function() {
     PROJECT_META_KEY: "thimble-project-meta",
     SYNC_OPERATION_UPDATE: "update",
     SYNC_OPERATION_DELETE: "delete",
+    SYNC_OPERATION_RENAME_FOLDER: "rename-folder",
     // Default amount of time (ms) to wait between successful AJAX operations
     AJAX_DEFAULT_DELAY_MS: 10,
     // Default timeout period for AJAX requests so .fail() always gets called
