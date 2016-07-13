@@ -36,6 +36,14 @@ module.exports = {
       middleware.validateRequest(["title"]),
       require("./rename").bind(app, config));
 
+    // Rename a folder in a project
+    app.put("/projects/:projectId/renamefolder",
+      middleware.checkForAuth,
+      middleware.setUserIfTokenExists,
+      middleware.setProject,
+      middleware.validateRequest(["paths", "dateUpdated"]),
+      require("./rename-folder").bind(app, config));
+
     // Publish an existing project for a user
     app.put("/projects/:projectId/publish",
       middleware.checkForAuth,

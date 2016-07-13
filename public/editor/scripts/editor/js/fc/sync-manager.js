@@ -1,7 +1,8 @@
 /**
  * The SyncQueue keeps track of sync operations to be performed on paths.
- * This currently includes UPDATE and DELETE operations (create, update, delete
- * and rename are all done using these two). The data structure looks like this:
+ * This currently includes UPDATE, DELETE and FOLDER_RENAME operations (
+ * create, update, delete, rename and folder renames are all done using these two).
+ * The data structure looks like this:
  *
  * syncQueue = {
  *   current: {
@@ -11,6 +12,11 @@
  *   pending: {
  *     "/path/to/file/needing/sync": "update",
  *     "/path/to/another/file/needing/sync": "delete",
+ *     "/new/path/to/old/folder/which/was/renamed": {
+ *       "operation": "folder-rename"
+ *       "presistedPath": "/path/on/the/data/persistence/server"
+ *       "changed": [ relativeFilePath1, relativeFilePath2, ... ]
+ *     }
  *     ...
  *   }
  * }
@@ -41,6 +47,7 @@ define(function(require) {
 
   var SYNC_OPERATION_UPDATE = constants.SYNC_OPERATION_UPDATE;
   var SYNC_OPERATION_DELETE = constants.SYNC_OPERATION_DELETE;
+  var SYNC_OPERATION_FOLDER_RENAME = constants.SYNC_OPERATION_FOLDER_RENAME;
   var AUTOSYNC_INTERVAL_MS = constants.AUTOSYNC_INTERVAL_MS;
   var AJAX_DEFAULT_DELAY_MS = constants.AJAX_DEFAULT_DELAY_MS;
   var AJAX_DEFAULT_TIMEOUT_MS = constants.AJAX_DEFAULT_TIMEOUT_MS;
@@ -223,6 +230,45 @@ define(function(require) {
     });
   };
 
+  SyncManager.prototype.folderRenameOperation = function(newPath, renameInfo, callback) {
+    var self = this;
+    var csrfToken = self.csrfToken;
+    var oldPath = Project.stripRoot(renameInfo.persistedPath).replace(/\/?$/, "/");
+    newPath = Project.stripRoot(newPath).replace(/\/?$/, "/");
+    var fileRenames = {};
+
+    renameInfo.changed.forEach(function(relPath) {
+      fileRenames[oldPath + relPath] = newPath + relPath;
+    });
+
+    var request = $.ajax({
+      headers: {
+        "X-Csrf-Token": csrfToken
+      },
+      type: "PUT",
+      url: Project.getHost() + "/projects/" + Project.getID() + "/renamefolder",
+      data: JSON.stringify({
+        paths: fileRenames,
+        dateUpdated: (new Date()).toISOString()
+      }),
+      cache: false,
+      contentType: "application/json",
+      timeout: AJAX_DEFAULT_TIMEOUT_MS
+    });
+    request.done(function() {
+      if(request.status !== 200) {
+        return callback(new Error("[Thimble] unable to persist renaming `" + newPath + "`. Server responded with status " + request.status));
+      }
+
+      callback();
+    });
+    request.fail(function(jqXHR, status, err) {
+      err = err || new Error("unknown network error during folder rename operation");
+      logger("SyncManager", "unable to persist the folder rename to the server", err);
+      callback(err);
+    });
+  };
+
   // Run an operation in the SyncQueue, and return the number of pending operations after it
   // completes on the callback.  Throughout the process we work hard to keep the SyncQueue
   // saved to disk. We also transfer anything in the PathCache into the SyncQueue, restart
@@ -231,6 +277,7 @@ define(function(require) {
     var self = this;
     var currentPath;
     var currentOperation;
+    var currentPathInfo;
 
     self.setSyncing(true);
 
@@ -279,6 +326,12 @@ define(function(require) {
             Project.queueFileUpdate(currentPath);
           } else if(currentOperation === SYNC_OPERATION_DELETE) {
             Project.queueFileDelete(currentPath);
+          } else if(currentOperation === SYNC_OPERATION_FOLDER_RENAME) {
+            Project.queueFolderRename({
+              oldPath: currentPathInfo.persistedPath,
+              newPath: currentPath,
+              children: currentPathInfo.changed
+            }, true);
           } else {
             self.emitErrorEvent(new Error("[Thimble Error] unknown sync operation:" + currentOperation));
           }
@@ -309,9 +362,31 @@ define(function(require) {
         self.updateOperation(currentPath, finalizeOperation);
       } else if(currentOperation === SYNC_OPERATION_DELETE) {
         self.deleteOperation(currentPath, finalizeOperation);
+      } else if(currentOperation === SYNC_OPERATION_FOLDER_RENAME) {
+        self.folderRenameOperation(currentPath, currentPathInfo, finalizeOperation);
       } else {
         self.emitErrorEvent(new Error("[Thimble Error] unknown sync operation:" + currentOperation));
       }
+    }
+
+    function selectPathToSync(queue) {
+      var paths = Object.keys(queue);
+      var selectedPath = paths[0];
+
+      // Always prioritize a folder rename operation over other operations
+      // Here we loop through the operations until we find an operation that
+      // is a folder rename
+      paths.every(function(queuedPath) {
+        if(typeof queue[queuedPath] === "object" &&
+           queue[queuedPath].operation === SYNC_OPERATION_FOLDER_RENAME) {
+          selectedPath = queuedPath;
+          return false;
+        }
+
+        return true;
+      });
+
+      return selectedPath;
     }
 
     function selectCurrent(syncQueue) {
@@ -328,15 +403,27 @@ define(function(require) {
       }
 
       // Select and sync a path from the pending list
-      var paths = Object.keys(syncQueue.pending);
-      currentPath = paths[0];
-      currentOperation = syncQueue.pending[currentPath];
+      currentPath = selectPathToSync(syncQueue.pending);
+      currentOperation = typeof syncQueue.pending[currentPath] === "object" ?
+        syncQueue.pending[currentPath].operation :
+        syncQueue.pending[currentPath];
+
+      if(currentOperation === SYNC_OPERATION_FOLDER_RENAME) {
+        currentPathInfo = {
+          changed: syncQueue.pending[currentPath].changed,
+          persistedPath: syncQueue.pending[currentPath].persistedPath
+        };
+      } else {
+        currentPathInfo = null;
+      }
 
       // Update current to the new path/operation, and remove from pending
       syncQueue.current = {
         path: currentPath,
+        pathInfo: currentPathInfo,
         operation: currentOperation
       };
+
       delete syncQueue.pending[currentPath];
 
       // Persist this sync info to disk before going further so we can recover
@@ -362,10 +449,12 @@ define(function(require) {
 
       // If there's already a current operation in the queue, restart it
       // since it probably means the browser shutdown before it could complete.
-      // Otherwise, pick a random file/opeartion to run.
+      // Otherwise, select a random file/operation to run, prioritizing folder
+      // renames first.
       if(syncQueue.current) {
         currentPath = syncQueue.current.path;
         currentOperation = syncQueue.current.operation;
+        currentPathInfo = syncQueue.current.pathInfo;
         logger("SyncManager", "restarting cached sync", currentPath, currentOperation);
         runCurrent();
       } else {

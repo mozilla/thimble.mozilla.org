@@ -71,9 +71,14 @@ define(function(require) {
         Project.queueFileDelete(oldFilename);
       }
 
+      function handleFolderRename(paths) {
+        Project.queueFolderRename(paths);
+      }
+
       bramble.on("fileChange", handleFileChange);
       bramble.on("fileDelete", handleFileDelete);
       bramble.on("fileRename", handleFileRename);
+      bramble.on("folderRename", handleFolderRename);
 
       // Begin autosyncing
       syncManager.start();

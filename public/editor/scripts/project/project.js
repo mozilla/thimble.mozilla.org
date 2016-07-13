@@ -130,6 +130,11 @@ define(function(require) {
     PathCache.addItem(path, Constants.SYNC_OPERATION_DELETE);
   }
 
+  function queueFolderRename(paths, addToTop) {
+    logger("project", "queueFolderRename", paths);
+    PathCache.addItem(paths, Constants.SYNC_OPERATION_RENAME_FOLDER, addToTop);
+  }
+
   function init(projectDetails, host, callback) {
     _user = projectDetails.userID;
     _id = projectDetails.id;
@@ -316,6 +321,7 @@ define(function(require) {
     setSyncQueue: setSyncQueue,
     getSyncQueue: getSyncQueue,
     queueFileUpdate: queueFileUpdate,
-    queueFileDelete: queueFileDelete
+    queueFileDelete: queueFileDelete,
+    queueFolderRename: queueFolderRename
   };
 });
