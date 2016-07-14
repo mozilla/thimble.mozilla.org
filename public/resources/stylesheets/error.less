@@ -1,0 +1,105 @@
+.centered-message {
+  text-align: center;
+
+  h1 {
+    margin: 15px auto 30px auto;
+  }
+
+  img.spilled-thimble {
+    width: 290px;
+    display: inline-block;
+  }
+
+  h2 {
+    color: rgba(255,255,255,.6);
+    max-width: 60%;
+    margin: 0 auto;
+    font-size: 1.8em;
+    line-height: 1.3em;
+    position: relative;
+
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: -120px;
+      height: 150px;
+      width: 150px;
+      right: 10px;
+      background-image: ~"url(/img/sketchy-arrow.png)";
+      background-repeat: no-repeat;
+      background-size: 100%;
+    }
+  }
+
+  .contact-icons {
+    margin: 55px 0 35px 0;
+
+    a {
+      display: inline-block;
+      opacity: .8;
+      margin: 0 12px;
+      transition: transform .2s ease-out, opacity .2s ease-out;
+
+      &:hover {
+        opacity: 1;
+        transform: scale(1.04);
+      }
+    }
+
+    .icon {
+      display: inline-block;
+      width: 52px;
+      height: 52px;
+      background-position: center;
+      background-size: 100%;
+      background-repeat: no-repeat;
+    }
+  }
+
+  .email .icon {
+    background-image: ~"url(/img/footer-icon-email.svg)";
+  }
+
+  .twitter .icon {
+    background-image: ~"url(/img/footer-icon-twitter.svg)";
+  }
+
+  .github .icon {
+    background-image: ~"url(/img/footer-icon-github.svg)";
+  }
+
+  .error-details-wrapper {
+    margin: 30px auto 40px auto;
+    border: solid 4px rgba(0,0,0,.3);
+    border-radius: 3px;
+    display: inline-block;
+    min-width: 35%;
+  }
+
+  .error-details {
+    background: #222222;
+    text-align: center;
+
+    *  {
+      font-size: 14px;
+      color: rgba(255,255,255,.7);
+    }
+
+    h1 {
+      font-weight:800;
+      padding: 15px;
+      margin: 0;
+      color: rgba(255,255,255,.8);
+      border-bottom: solid 1px rgba(255,255,255,.2);
+      line-height: 16px;
+    }
+
+    .details {
+      padding: 15px;
+      line-height: 18px;
+    }
+
+  }
+
+
+}
