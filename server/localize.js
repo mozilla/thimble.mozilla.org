@@ -17,7 +17,7 @@ module.exports = function localize(server, options) {
   }));
 
   // Redirect routes without the locale in the url to one with it.
-  server.use((req, res, next) => {
+  server.use(function(req, res, next) {
     // Do not redirect to a url with the locale if the route is in the `exclude` list
     if(excludeLocaleInUrl.indexOf(req.path) !== -1) {
       return next();
@@ -46,7 +46,7 @@ module.exports = function localize(server, options) {
 
   let allLanguages = webmakerI18N.getAllLocaleCodes();
   let languages = {};
-  webmakerI18N.getSupportLanguages().forEach(locale => {
+  webmakerI18N.getSupportLanguages().forEach(function(locale) {
     languages[locale] = allLanguages[locale];
   });
 
