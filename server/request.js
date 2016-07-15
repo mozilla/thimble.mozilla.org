@@ -1,12 +1,49 @@
 "use strict";
 
 let compression = require("compression");
-let logger = require("morgan");
+let morgan = require("morgan");
 let bodyParser = require("body-parser");
 let cookieParser = require("cookie-parser");
 let cookieSession = require("cookie-session");
 let lessMiddleWare = require("less-middleware");
+const colors = require("colors");
+
 let version = require("../package").version;
+const Logger = require("./logger");
+
+const logFormats = {
+  production: "[request_id=:request-id] date=:date[clf] method=:method path=:url status=:status fwd=:fwd bytes=:res[content-length]",
+  development:
+    "method".cyan + "=:method " +
+    "path".cyan + "=:url " +
+    "status".cyan + "=:status " +
+    "bytes".cyan + "=:res[content-length] " +
+    "response_time".cyan + "=:response-time[0]"
+};
+
+morgan.token("request-id", function(request, response) {
+  return request.get("X-Request-Id");
+});
+
+morgan.token("fwd", function(request, response) {
+  return request.get("X-Forwarded-For");
+});
+
+morgan.token("status", function(request, response) {
+  // Taken from morgan.js
+  if(!response._header) {
+    return "-";
+  }
+
+  const status = response.statusCode;
+  const statusStr = status.toString();
+
+  return status >= 500 ? statusStr.red
+    : status >= 400 ? statusStr.yellow
+    : status >= 300 ? statusStr.blue
+    : status >= 200 ? statusStr.green
+    : status;
+});
 
 function Request(server) {
   this.server = server;
@@ -21,8 +58,15 @@ Request.prototype = {
     headers.forEach(header => this.server.disable(header));
     return this;
   },
-  log(mode) {
-    this.server.use(logger(mode));
+  enableLogging(environment, level) {
+    const format = logFormats[environment] || logFormats.development;
+
+    this.server.use(morgan(format));
+    this.server.use(function(request, response, next) {
+      request.log = new Logger(request, environment, level);
+      next();
+    });
+
     return this;
   },
   json(options) {
