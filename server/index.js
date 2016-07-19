@@ -13,7 +13,7 @@ let templatize = require("./templatize");
 let Request = require("./request");
 let Security = require("./security");
 let localize = require("./localize");
-let errorhandling = require("./lib/errorhandling");
+const HttpError = require("./lib/http-error.js");
 let middleware = require("./lib/middleware")();
 let routes = require("./routes")();
 let getFileList = require("./lib/utils").getFileList;
@@ -121,8 +121,8 @@ routes.init(server, middleware);
 /*
  * Error handlers
  */
-server.use(errorhandling.errorHandler);
-server.use(errorhandling.pageNotFoundHandler);
+server.use(HttpError.generic);
+server.use(HttpError.notFound);
 
 /*
  * export the server object
