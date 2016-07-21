@@ -126,8 +126,6 @@ server.use(errorhandling.errorHandler);
 server.use(errorhandling.pageNotFoundHandler);
 
 /*
- * Start the server
+ * export the server object
  */
-server.listen(env.get("PORT"), function() {
-  console.log("Express server listening on " + env.get("APP_HOSTNAME"));
-});
+ module.exports = server;
