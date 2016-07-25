@@ -1,10 +1,15 @@
+"use strict";
+
 var request = require("request");
 var path = require("path");
+
+const HttpError = require("../../lib/http-error");
 
 module.exports = function(config, req, res, next) {
   var oauth = config.oauth;
   var cryptr = config.cryptr;
   var locale = req.session.locale;
+  const authURL = `${oauth.authorization_url}/login/oauth/access_token`;
 
   if (req.query.logout) {
     req.session = null;
@@ -12,24 +17,52 @@ module.exports = function(config, req, res, next) {
   }
 
   if (!req.query.code) {
-    return next({ status: 401, message: "OAUTH: Code required" });
+    res.status(401);
+    return next(
+      HttpError.format({
+        userMessageKey: "errorAuthenticating",
+        message: "OAuth code was not set by the authentication server",
+        context: req.query
+      }, req)
+    );
   }
 
   if (!req.cookies.state || !req.query.state) {
-    return next({ status: 401, message: "OAUTH: State required" });
+    res.status(410);
+    return next(
+      HttpError.format({
+        userMessageKey: "errorAuthenticating",
+        message: "No state information was passed back by the authentication server",
+        context: req.query
+      }, req)
+    );
   }
 
   if (req.cookies.state !== req.query.state) {
-    return next({ status: 401, message: "OAUTH: Invalid state" });
+    res.status(401);
+    return next(
+      HttpError.format({
+        userMessageKey: "errorAuthenticating",
+        message: "The initial state during login does not match the state returned by the authentication server.",
+        context: req.query
+      }, req)
+    );
   }
 
   if (req.query.client_id !== oauth.client_id) {
-    return next({ status: 401, message: "OAUTH: Invalid client credentials" });
+    res.status(401);
+    return next(
+      HttpError.format({
+        userMessageKey: "errorAuthenticating",
+        message: "The client id returned by the authentication server does not match Thimble's client id.",
+        context: req.query
+      }, req)
+    );
   }
 
   // First, fetch the token
   request.post({
-    url: oauth.authorization_url + '/login/oauth/access_token',
+    url: authURL,
     form: {
       client_id: oauth.client_id,
       client_secret: oauth.client_secret,
@@ -38,44 +71,86 @@ module.exports = function(config, req, res, next) {
     }
   }, function(err, response, body) {
     if (err) {
-      console.log("Request error: ", err, " Body: ", body);
-      return next({ status: 500, message: "Internal server error. See logs for details" });
+      res.status(500);
+      return next(
+        HttpError.format({
+          userMessageKey: "errorAuthenticating",
+          message: `Failed to send request to ${authURL}. Verify that the authentication server is up and running.`,
+          context: err
+        }, req)
+      );
     }
 
     if (response.statusCode !== 200) {
-      console.log("Code " + response.statusCode + ". Error getting access token: ", body);
-      return next({ status: response.statusCode, message: body });
+      res.status(response.statusCode);
+      return next(
+        HttpError.format({
+          userMessageKey: "errorAuthenticating",
+          message: `Request to ${authURL} returned a status of ${response.statusCode}`,
+          context: response.body
+        }, req)
+      );
     }
 
     try {
       body = JSON.parse(body);
     } catch(e) {
-      return next({status: 500, err: e});
+      res.status(500);
+      return next(
+        HttpError.format({
+          userMessageKey: "errorAuthenticating",
+          message: "Data (access token) sent by the authentication server was in an invalid format. Failed to run `JSON.parse`",
+          context: e.message,
+          stack: e.stack
+        }, req)
+      );
     }
 
     req.session.token = cryptr.encrypt(body.access_token);
 
+    const userURL = `${oauth.authorization_url}/user`;
+
     // Next, fetch user data
     request.get({
-      url: oauth.authorization_url + "/user",
+      url: userURL,
       headers: {
         "Authorization": "token " + body.access_token
       }
     }, function(err, response, body) {
       if (err) {
-        console.log("Request error: ", err, " Body: ", body);
-        return next({ status: 500, message: "Internal server error. See logs for details" });
+        res.status(500);
+        return next(
+          HttpError.format({
+            userMessageKey: "errorAuthenticating",
+            message: `Failed to send request to ${userURL}. Verify that the authentication server is up and running.`,
+            context: err
+          }, req)
+        );
       }
 
       if (response.statusCode !== 200) {
-        console.log("Code " + response.statusCode + ". Error getting user data: ", body);
-        return next({ status: response.statusCode, message: body });
+        res.status(response.statusCode);
+        return next(
+          HttpError.format({
+            userMessageKey: "errorAuthenticating",
+            message: `Request to ${userURL} returned a status of ${response.statusCode}`,
+            context: response.body
+          }, req)
+        );
       }
 
       try {
         req.session.user = JSON.parse(body);
       } catch(e) {
-        return next({status: 500, err: e});
+        res.status(500);
+        return next(
+          HttpError.format({
+            userMessageKey: "errorAuthenticating",
+            message: "User data sent by the authentication server was in an invalid format. Failed to run `JSON.parse`",
+            context: e.message,
+            stack: e.stack
+          }, req)
+        );
       }
 
       // Was this sign-in triggered from the home page?

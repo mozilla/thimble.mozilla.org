@@ -1,6 +1,9 @@
-var utils = require("../utils");
+"use strict";
 
-module.exports = function(config, req, res) {
+var utils = require("../utils");
+const HttpError = require("../../lib/http-error");
+
+module.exports = function(config, req, res, next) {
   var user = req.user;
   var project = req.project;
 
@@ -12,11 +15,8 @@ module.exports = function(config, req, res) {
 
   utils.updateProject(config, user, project, function(err, status, project) {
     if(err) {
-      if(status === 500) {
-        res.sendStatus(500);
-      } else {
-        res.status(status).send({error: err});
-      }
+      res.status(status);
+      next(HttpError.format(err, req));
       return;
     }
 

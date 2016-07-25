@@ -8,7 +8,7 @@ let cors = require("cors");
 let Cryptr = require("cryptr");
 
 let env = require("./environment");
-let utils = require("./utils");
+const HttpError = require("./http-error");
 
 let upload = multer({
   dest: require("os").tmpdir(),
@@ -35,6 +35,18 @@ module.exports = function middlewareConstructor() {
           callback(null, whiteList.indexOf(origin) !== -1);
         }
       });
+    },
+
+    /**
+     * On the request, set a prefix to use for user error messages
+     * Takes a function or a string as a prefix. If it is a function,
+     * it is called with the request to get the error prefix.
+     */
+    setErrorPrefix(errorPrefix) {
+      return function(req, res, next) {
+        req.errorPrefix = typeof errorPrefix === "function" ? errorPrefix(req) : errorPrefix;
+        next();
+      };
     },
 
     /**
@@ -85,13 +97,25 @@ module.exports = function middlewareConstructor() {
     validateRequest(properties) {
       return function(req, res, next) {
         let valid = !!req.body &&
-          properties.every(prop => req.body[prop] !== null && req.body[prop] !== undefined);
+          properties.every(function(prop) {
+            return req.body[prop] !== null && req.body[prop] !== undefined
+          });
 
-        if(!valid) {
-          next(utils.error(400, "Request body missing data"));
-        } else {
-          next();
+        if(valid) {
+          return next();
         }
+
+        res.status(400);
+        next(
+          HttpError.format({
+            userMessageKey: "errorMissingData",
+            message: `Data validation in middleware failed for ${req.originalUrl}`,
+            context: {
+              expected: properties,
+              actual: req.body
+            }
+          }, req)
+        );
       };
     },
 
@@ -106,9 +130,11 @@ module.exports = function middlewareConstructor() {
         return next();
       }
 
+      const userUrl = `${publishHost}/users/login`;
+
       request({
         method: "POST",
-        url: `${publishHost}/users/login`,
+        url: userUrl,
         headers: {
           "Authorization": `token ${user.token}`
         },
@@ -116,13 +142,27 @@ module.exports = function middlewareConstructor() {
           name: user.username
         },
         json: true
-      }, (err, response, body) => {
+      }, function(err, response, body) {
         if(err) {
-          return next(utils.error(500));
+          res.status(500);
+          return next(
+            HttpError.format({
+              userMessageKey: "errorRequestFailureGettingUserInfo",
+              message: `Failed to send request to ${userUrl}`,
+              context: err
+            }, req)
+          );
         }
 
-        if(response.statusCode !== 200 &&  response.statusCode !== 201) {
-          return next(utils.error(response.statusCode, response.body));
+        if(response.statusCode !== 200 && response.statusCode !== 201) {
+          res.status(response.statusCode);
+          return next(
+            HttpError.format({
+              userMessageKey: "errorUnknownResponseGettingUserInfo",
+              message: `Request to ${userUrl} returned a status of ${response.statusCode}`,
+              context: response.body
+            }, req)
+          );
         }
 
         req.user.publishId = body.id;
@@ -141,26 +181,49 @@ module.exports = function middlewareConstructor() {
         return next();
       }
 
+      const projectUrl = `${publishHost}/projects/${projectId}`;
+
       // Get project data from publish.wm.org
       request.get({
-        url: `${publishHost}/projects/${projectId}`,
+        url: projectUrl,
         headers: {
           "Authorization": `token ${req.user.token}`
         }
-      }, (err, response, body) => {
+      }, function(err, response, body) {
         if(err) {
-          return next(utils.error(500));
+          res.status(500);
+          return next(
+            HttpError.format({
+              userMessageKey: "errorRequestFailureGettingProject",
+              message: `Failed to send request to ${projectUrl}`,
+              context: err
+            }, req)
+          );
         }
 
         if(response.statusCode !== 200) {
-          return next(utils.error(response.statusCode, response.body));
+          res.status(response.statusCode);
+          return next(
+            HttpError.format({
+              userMessageKey: "errorUnknownResponseGettingProject",
+              message: `Request to ${projectUrl} returned a status of ${response.statusCode}`,
+              context: response.body
+            }, req)
+          );
         }
 
         try {
           req.project = JSON.parse(body);
         } catch(e) {
-          console.error("Failed to parse project sent by the publish server in `setProject` middleware with ", e);
-          return next(utils.error(500));
+          res.status(500);
+          return next(
+            HttpError.format({
+              userMessageKey: "errorProjectDataIncorrectFormatGettingProject",
+              message: "Project data received from the publish server was in an invalid format. Failed to run `JSON.parse`",
+              context: e.message,
+              stack: e.stack
+            }, req)
+          );
         }
 
         next();

@@ -1,10 +1,13 @@
+"use strict";
+
 var querystring = require("querystring");
 
 var utils = require("../utils");
 var defaultProjectNameKey = require("../../../constants").DEFAULT_PROJECT_NAME_KEY;
 var defaultProject = require("../../../default");
+const HttpError = require("../../lib/http-error");
 
-module.exports = function(config, req, res) {
+module.exports = function(config, req, res, next) {
   var user = req.user;
   var now = req.query.now || (new Date()).toISOString();
   var localeInfo = req.localeInfo;
@@ -31,22 +34,16 @@ module.exports = function(config, req, res) {
 
   utils.createProject(config, user, project, function(err, status, project) {
     if(err) {
-      if(status === 500) {
-        res.sendStatus(500);
-      } else {
-        res.status(status).send({error: err});
-      }
+      res.status(status);
+      next(HttpError.format(err, req));
       return;
     }
 
     var defaultFiles = defaultProject.getAsStreams(config.DEFAULT_PROJECT_TITLE);
     utils.persistProjectFiles(config, user, project, defaultFiles, function(err, status) {
       if(err) {
-        if(status === 500) {
-          res.sendStatus(500);
-        } else {
-          res.status(status).send({error: err});
-        }
+        res.status(status);
+        next(HttpError.format(err, req));
         return;
       }
 

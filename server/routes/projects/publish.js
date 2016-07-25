@@ -1,8 +1,11 @@
+"use strict";
+
 var request = require("request");
 
 var utils = require("../utils");
+const HttpError = require("../../lib/http-error");
 
-module.exports = function(config, req, res) {
+module.exports = function(config, req, res, next) {
   var project = req.project;
   project.description = req.body.description;
   // Uncomment the line below once https://github.com/mozilla/publish.webmaker.org/issues/98 is done
@@ -11,11 +14,8 @@ module.exports = function(config, req, res) {
 
   utils.updateProject(config, req.user, project, function(err, status, project) {
     if(err) {
-      if(status === 500) {
-        res.sendStatus(500);
-      } else {
-        res.status(status).send({error: err});
-      }
+      res.status(status);
+      next(HttpError.format(err, req));
       return;
     }
 
@@ -28,14 +28,26 @@ module.exports = function(config, req, res) {
         "Authorization": "token " + req.user.token
       }
     }, function(err, response, body) {
+      let failure = false;
+
       if(err) {
-        console.error("Failed to send request to " + publishURL + " with: ", err);
-        res.sendStatus(500);
-        return;
+        res.status(500);
+        failure = {
+          userMessageKey: "errorRequestFailurePublishingProject",
+          message: "Failed to send request to " + publishURL,
+          context: err
+        };
+      } else if(response.statusCode !== 200) {
+        res.status(response.statusCode);
+        failure = {
+          userMessageKey: "errorUnknownResponsePublishingProject",
+          message: "Request to " + publishURL + " returned a status of " + response.statusCode,
+          context: response.body
+        };
       }
 
-      if(response.statusCode !== 200) {
-        res.status(response.statusCode).send({error: response.body});
+      if(failure) {
+        next(HttpError.format(failure, req));
         return;
       }
 
@@ -43,8 +55,15 @@ module.exports = function(config, req, res) {
       try {
         project = JSON.parse(body);
       } catch(e) {
-        console.error("Failed to parse response for publishing project with ", e.message, "\n at ", e.stack);
-        res.sendStatus(500);
+        res.status(500);
+        next(
+          HttpError.format({
+            userMessageKey: "errorProjectDataIncorrectFormatPublishingProject",
+            message: "Project sent by calling function was in an invalid format. Failed to run `JSON.parse`",
+            context: e.message,
+            stack: e.stack
+          }, req)
+        );
         return;
       }
 

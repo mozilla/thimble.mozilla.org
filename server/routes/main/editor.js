@@ -1,8 +1,11 @@
+"use strict";
+
 var url = require("url");
 var querystring = require("querystring");
 
 var defaultProjectNameKey = require("../../../constants").DEFAULT_PROJECT_NAME_KEY;
 var utils = require("../utils");
+const HttpError = require("../../lib/http-error");
 
 function getProjectMetadata(config, req, callback) {
   var project = req.project;
@@ -11,7 +14,7 @@ function getProjectMetadata(config, req, callback) {
   var locale = (req.localeInfo && req.localeInfo.locale) ? req.localeInfo.locale : "en-US";
 
   if(project) {
-    callback(null, {
+    callback(null, 200, {
       id: project.id,
       userID: req.user.publishId,
       anonymousId: project.anonymousId,
@@ -27,7 +30,7 @@ function getProjectMetadata(config, req, callback) {
   }
 
   if(!remixId) {
-    callback(null, {
+    callback(null, 200, {
       anonymousId: anonymousId,
       title: req.gettext(defaultProjectNameKey, locale)
     });
@@ -36,11 +39,11 @@ function getProjectMetadata(config, req, callback) {
 
   utils.getRemixedProject(config, remixId, function(err, status, project) {
     if(err) {
-      callback(err);
+      callback(err, status);
       return;
     }
 
-    callback(null, {
+    callback(null, 200, {
       anonymousId: anonymousId,
       remixId: remixId,
       title: project.title,
@@ -49,7 +52,7 @@ function getProjectMetadata(config, req, callback) {
   });
 }
 
-module.exports = function(config, req, res) {
+module.exports = function(config, req, res, next) {
   var locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
   var qs = querystring.stringify(req.query);
   if(qs !== "") {
@@ -83,17 +86,18 @@ module.exports = function(config, req, res) {
     options.avatar = req.user.avatar;
   }
 
-  getProjectMetadata(config, req, function(err, projectMetadata) {
+  getProjectMetadata(config, req, function(err, status, projectMetadata) {
+    res.set({
+      "Cache-Control": "no-cache"
+    });
+
     if(err) {
-      res.sendStatus(500);
+      res.status(status);
+      next(HttpError.format(err, req));
       return;
     }
 
     options.projectMetadata = encodeURIComponent(JSON.stringify(projectMetadata));
-
-    res.set({
-      "Cache-Control": "no-cache"
-    });
 
     res.render("editor/index.html", options);
   });

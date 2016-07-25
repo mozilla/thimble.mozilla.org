@@ -1,12 +1,26 @@
+"use strict";
+
 var fs = require("fs");
 var url = require("url");
 var NodeFormData = require("form-data");
 
 var utils = require("../utils");
+const HttpError = require("../../lib/http-error");
 
-module.exports = function(config, req, res) {
-  if(!req.file) {
-    res.status(400).send({error: "Request missing file data"});
+module.exports = function(config, req, res, next) {
+  var file = req.file;
+  var fileId = req.params.fileId;
+  var filePath = req.body.bramblePath;
+  const errorLogSuffix = filePath ? `for path ${filePath}` : "";
+
+  if(!file) {
+    res.status(400);
+    next(
+      HttpError.format({
+        userMessageKey: "errorMissingFileData",
+        message: `File data missing from request body ${errorLogSuffix}`
+      }, req)
+    );
     return;
   }
 
@@ -14,9 +28,6 @@ module.exports = function(config, req, res) {
   var token = user.token;
   var project = req.project;
   var dateUpdated = req.body.dateUpdated;
-  var file = req.file;
-  var fileId = req.params.fileId;
-  var filePath = req.body.bramblePath;
   var httpMethod = fileId ? "put" : "post";
   var resource = "/files" + (fileId ? "/" + fileId : "");
 
@@ -38,7 +49,7 @@ module.exports = function(config, req, res) {
       // Dump the temp file upload, but don't wait around for it to finish
       fs.unlink(tmpFile, function(err) {
         if (err) {
-          console.log("unable to remove upload tmp file, `" + tmpFile + "`", err);
+          console.error("unable to remove upload tmp file, `" + tmpFile + "`", err);
         }
       });
     }
@@ -58,15 +69,27 @@ module.exports = function(config, req, res) {
       var body = "";
 
       if(err) {
-        console.error("Failed to send request to " + config.publishURL + resource + " with: ", err);
-        res.sendStatus(500);
+        res.status(500);
+        next(
+          HttpError.format({
+            userMessageKey: "errorRequestFailureSavingFiles",
+            message: `Failed to initiate request to ${options.pathname} ${errorLogSuffix}`,
+            context: err
+          }, req)
+        );
         cleanup();
         return;
       }
 
       response.on('error', function(err) {
-        console.error("Failed to receive response from " + config.publishURL + resource + " with: ", err);
-        res.sendStatus(500);
+        res.status(500);
+        next(
+          HttpError.format({
+            userMessageKey: "errorDuringSavingFiles",
+            message: `Failed to send request to ${options.pathname} ${errorLogSuffix}`,
+            context: err
+          }, req)
+        );
         cleanup();
       });
 
@@ -78,14 +101,28 @@ module.exports = function(config, req, res) {
         try {
           body = JSON.parse(body);
         } catch(e) {
-          console.error("Failed to parse response for sending file with ", e.message, "\n at ", e.stack);
-          res.sendStatus(500);
+          res.status(500);
+          next(
+            HttpError.format({
+              userMessageKey: "errorProjectDataIncorrectFormatSavingFiles",
+              message: `Data sent by the publish server was in an invalid format. Failed to run \`JSON.parse\` ${errorLogSuffix}`,
+              context: e.message,
+              stack: e.stack
+            }, req)
+          );
           return;
         }
         delete body.buffer;
 
         if(response.statusCode !== 201 && response.statusCode !== 200) {
-          res.status(response.statusCode).send({error: body});
+          res.status(reponse.statusCode);
+          next(
+            HttpError.format({
+              userMessageKey: "errorUnknownResponseSavingFiles",
+              message: `Request to ${options.pathname} returned a status of ${response.statusCode} ${errorLogSuffix}`,
+              context: body,
+            }, req)
+          );
           cleanup();
           return;
         }
@@ -94,11 +131,8 @@ module.exports = function(config, req, res) {
 
         utils.updateProject(config, user, project, function(err, status) {
           if(err) {
-            if(status === 500) {
-              res.sendStatus(500);
-            } else {
-              res.status(status).send({error: err});
-            }
+            res.status(status);
+            next(HttpError.format(err, req));
             cleanup();
             return;
           }
@@ -112,8 +146,14 @@ module.exports = function(config, req, res) {
 
   getUploadStream(function(err, result) {
     if(err) {
-      console.error("Failed to read file upload buffer:", err);
-      res.sendStatus(500);
+      res.status(500);
+      next(
+        HttpError.format({
+          userMessageKey: "errorMissingFileData",
+          message: `File data could not be read from stream ${errorLogSuffix}`,
+          context: err
+        }, req)
+      )
       return;
     }
 

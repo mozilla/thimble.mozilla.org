@@ -1,6 +1,9 @@
+"use strict";
+
 var editor = require("./editor");
 var utils = require("../utils");
 var defaultProjectNameKey = require("../../../constants").DEFAULT_PROJECT_NAME_KEY;
+const HttpError = require("../../lib/http-error");
 
 function getProject(config, req, remixId, callback) {
   if(!remixId) {
@@ -13,7 +16,7 @@ function getProject(config, req, remixId, callback) {
   utils.getRemixedProject(config, remixId, callback);
 }
 
-module.exports = function(config, req, res) {
+module.exports = function(config, req, res, next) {
   var user = req.user;
   // If an anonymous user enters through this anonymous entry point, show them
   // thimble immediately
@@ -27,11 +30,8 @@ module.exports = function(config, req, res) {
 
   getProject(config, req, remixId, function(err, status, project) {
     if(err) {
-      if(status === 500) {
-        res.sendStatus(500);
-      } else {
-        res.status(status).send({error: err});
-      }
+      res.status(status);
+      next(HttpError.format(err, req));
       return;
     }
 
@@ -43,11 +43,8 @@ module.exports = function(config, req, res) {
 
     utils.createProject(config, user, project, function(err, status, project) {
       if(err) {
-        if(status === 500) {
-          res.sendStatus(500);
-        } else {
-          res.status(status).send({error: err});
-        }
+        res.status(status);
+        next(HttpError.format(err, req));
         return;
       }
 

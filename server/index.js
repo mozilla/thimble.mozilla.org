@@ -16,7 +16,7 @@ let localize = require("./localize");
 const HttpError = require("./lib/http-error.js");
 let middleware = require("./lib/middleware")();
 let routes = require("./routes")();
-let getFileList = require("./lib/utils").getFileList;
+const Utils = require("./lib/utils");
 
 let server = express();
 const environment = env.get("NODE_ENV");
@@ -91,7 +91,7 @@ if(!!env.get("FORCE_SSL")) {
 /**
  * Static assets
  */
-getFileList(path.join(root, "public"), "!(*.js)")
+Utils.getFileList(path.join(root, "public"), "!(*.js)")
 .forEach(file => server.use(express.static(file, maxCacheAge)));
 server.use(express.static(cssAssets, maxCacheAge));
 server.use(express.static(path.join(root, "public/resources"), maxCacheAge));
