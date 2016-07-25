@@ -2,6 +2,7 @@
 
 class HttpError {
   static generic(error, request, response, next) {
+    //jshint unused:vars
     const userFriendlyError = {
       status: response.statusCode || 500,
       message: error.userMessage || error
@@ -26,6 +27,7 @@ class HttpError {
   }
 
   static notFound(request, response, next) {
+    //jshint unused:vars
     response.status(404);
     response.render("error.html", { status: 404 });
   }

@@ -3,7 +3,7 @@
 const util = require("util");
 const colors = require("colors");
 
-const LOG_LEVELS = ["info", "warn", "error"]
+const LOG_LEVELS = ["info", "warn", "error"];
 
 class Logger {
   constructor(request, environment, level) {

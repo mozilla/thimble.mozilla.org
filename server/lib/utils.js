@@ -1,6 +1,5 @@
 "use strict";
 
-const http = require("http");
 const glob = require("glob");
 const path = require("path");
 

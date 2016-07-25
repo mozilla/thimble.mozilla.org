@@ -98,7 +98,7 @@ module.exports = function middlewareConstructor() {
       return function(req, res, next) {
         let valid = !!req.body &&
           properties.every(function(prop) {
-            return req.body[prop] !== null && req.body[prop] !== undefined
+            return req.body[prop] !== null && req.body[prop] !== undefined;
           });
 
         if(valid) {

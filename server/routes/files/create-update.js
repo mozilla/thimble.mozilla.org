@@ -115,7 +115,7 @@ module.exports = function(config, req, res, next) {
         delete body.buffer;
 
         if(response.statusCode !== 201 && response.statusCode !== 200) {
-          res.status(reponse.statusCode);
+          res.status(response.statusCode);
           next(
             HttpError.format({
               userMessageKey: "errorUnknownResponseSavingFiles",
@@ -153,7 +153,7 @@ module.exports = function(config, req, res, next) {
           message: `File data could not be read from stream ${errorLogSuffix}`,
           context: err
         }, req)
-      )
+      );
       return;
     }
 

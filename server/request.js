@@ -6,7 +6,6 @@ let bodyParser = require("body-parser");
 let cookieParser = require("cookie-parser");
 let cookieSession = require("cookie-session");
 let lessMiddleWare = require("less-middleware");
-const colors = require("colors");
 
 let version = require("../package").version;
 const Logger = require("./logger");
@@ -22,10 +21,12 @@ const logFormats = {
 };
 
 morgan.token("request-id", function(request, response) {
+  //jshint unused:vars
   return request.get("X-Request-Id");
 });
 
 morgan.token("fwd", function(request, response) {
+  //jshint unused:vars
   return request.get("X-Forwarded-For");
 });
 
