@@ -79,9 +79,9 @@ secure.xss()
 .csrf()
 .xframe()
 .csp({
-  frame: [ editorHost, "https://www.youtube.com/embed/JecFOjD9I3k" ],
-  script: [ editorHost ],
-  connection: [ editorHost ]
+  frameSrc: [ editorHost, "https://www.youtube.com/embed/JecFOjD9I3k" ],
+  scriptSrc: [ editorHost ],
+  connectSrc: [ editorHost ]
 });
 if(!!env.get("FORCE_SSL")) {
   secure.ssl();

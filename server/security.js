@@ -1,51 +1,55 @@
 "use strict";
 
-let hood = require("hood");
 let helmet = require("helmet");
 let csurf = require("csurf");
 
-const defaultTrustedDomains = {
-  default: [ "'self'" ],
-  connection: [
-                "'self'",
-                "https://pontoon.mozilla.org"
-              ],
-  frame: [
-          "'self'",
-          "https://docs.google.com"
-         ],
-  iframe: [
-            "'self'",
-            "https://pontoon.mozilla.org"
-          ],
-  font: [
-          "'self'",
-          "https://fonts.gstatic.com",
-          "https://netdna.bootstrapcdn.com",
-          "https://code.cdn.mozilla.net/",
-          "https://pontoon.mozilla.org"
-        ],
-  image: [ "*" ],
-  media: [ "*" ],
-  script: [
-            "'self'",
-            "http://mozorg.cdn.mozilla.net",
-            "https://ajax.googleapis.com",
-            "https://mozorg.cdn.mozilla.net",
-            "https://www.google-analytics.com",
-            "https://pontoon.mozilla.org"
-          ],
-  stylesheet: [
-                "'self'",
-                "http://mozorg.cdn.mozilla.net",
-                "https://ajax.googleapis.com",
-                "https://fonts.googleapis.com",
-                "https://mozorg.cdn.mozilla.net",
-                "https://netdna.bootstrapcdn.com",
-                "https://pontoon.mozilla.org",
-                // Inline style for the spinner
-                "'sha256-jxjTomDIR9qe7wntK24mAd+gIoz39DrBll8o6DEBALs='"
-              ]
+const ONE_YEAR = 31536000000;
+
+let defaultCSPDirectives = {
+  defaultSrc: [ "'self'" ],
+  connectSrc: [
+    "'self'",
+    "https://pontoon.mozilla.org"
+  ],
+  frameSrc: [
+    "'self'",
+    "https://docs.google.com"
+  ],
+  childSrc: [
+    "'self'",
+    "https://pontoon.mozilla.org"
+  ],
+  frameAncestors: [
+    "https://pontoon.mozilla.org"
+  ],
+  fontSrc: [
+    "'self'",
+    "https://fonts.gstatic.com",
+    "https://netdna.bootstrapcdn.com",
+    "https://code.cdn.mozilla.net/",
+    "https://pontoon.mozilla.org"
+  ],
+  imgSrc: [ "*" ],
+  mediaSrc: [ "*" ],
+  scriptSrc: [
+    "'self'",
+    "http://mozorg.cdn.mozilla.net",
+    "https://ajax.googleapis.com",
+    "https://mozorg.cdn.mozilla.net",
+    "https://www.google-analytics.com",
+    "https://pontoon.mozilla.org"
+  ],
+  styleSrc: [
+    "'self'",
+    "http://mozorg.cdn.mozilla.net",
+    "https://ajax.googleapis.com",
+    "https://fonts.googleapis.com",
+    "https://mozorg.cdn.mozilla.net",
+    "https://netdna.bootstrapcdn.com",
+    "https://pontoon.mozilla.org",
+    // Inline style for the spinner
+    "'sha256-jxjTomDIR9qe7wntK24mAd+gIoz39DrBll8o6DEBALs='"
+  ]
 };
 
 function Security(server) {
@@ -53,38 +57,27 @@ function Security(server) {
 }
 
 Security.prototype = {
-  csp(domainList) {
-    domainList = domainList || {};
-    Object.keys(defaultTrustedDomains).forEach(mimeType => {
-      let domainsToAdd = domainList[mimeType];
-      let defaultDomains = defaultTrustedDomains[mimeType];
+  csp(directiveList) {
+    directiveList = directiveList || {};
+    Object.keys(defaultCSPDirectives).forEach(function(directive) {
+      let domainsToAdd = directiveList[directive];
+      let defaultDomains = defaultCSPDirectives[directive];
 
       if(domainsToAdd && defaultDomains.indexOf("*") !== -1) {
-        domainList[mimeType] = domainsToAdd;
+        directiveList[directive] = domainsToAdd;
       } else {
-        domainList[mimeType] = defaultDomains.concat((domainsToAdd || []));
+        directiveList[directive] = defaultDomains.concat((domainsToAdd || []));
       }
     });
 
-    this.server.use(hood.csp({
-      headers: [ "Content-Security-Policy-Report-Only" ],
-      policy: {
-        "default-src": domainList.default,
-        "connect-src": domainList.connection,
-        "frame-src": domainList.frame,
-        "child-src": domainList.iframe,
-        "font-src": domainList.font,
-        "img-src": domainList.image,
-        "media-src": domainList.media,
-        "script-src": domainList.script,
-        "style-src": domainList.stylesheet
-      }
+    this.server.use(helmet.contentSecurityPolicy({
+      directives: directiveList
     }));
 
     return this;
   },
   ssl() {
-    this.server.use(helmet.hsts());
+    this.server.use(helmet.hsts({ maxAge: ONE_YEAR }));
     this.server.enable("trust proxy");
 
     return this;
@@ -102,7 +95,7 @@ Security.prototype = {
     return this;
   },
   xframe() {
-    this.server.use(helmet.xframe("allow-from", "https://pontoon.mozilla.org"));
+    this.server.use(helmet.frameguard({ action: "DENY" }));
     return this;
   }
 };
