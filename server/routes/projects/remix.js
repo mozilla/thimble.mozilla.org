@@ -3,7 +3,7 @@
 var request = require("request");
 var uuid = require("uuid");
 
-const HttpError = require("../../lib/http-error");
+var HttpError = require("../../lib/http-error");
 
 module.exports = function(config, req, res, next) {
   var locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
@@ -28,7 +28,6 @@ module.exports = function(config, req, res, next) {
       res.status(500);
       next(
         HttpError.format({
-          userMessageKey: "errorRequestFailureRemixingProject",
           message: "Failed to send request to " + options.uri,
           context: err
         }, req)
@@ -40,7 +39,6 @@ module.exports = function(config, req, res, next) {
       res.status(response.statusCode);
       next(
         HttpError.format({
-          userMessageKey: "errorUnknownResponseRemixingProject",
           message: "Request to " + options.uri + " returned a status of " + response.statusCode,
           context: response.body
         }, req)
@@ -55,7 +53,6 @@ module.exports = function(config, req, res, next) {
       res.status(500);
       next(
         HttpError.format({
-          userMessageKey: "errorProjectDataIncorrectFormatRemixingProject",
           message: "Project sent by calling function was in an invalid format. Failed to run `JSON.parse`",
           context: e.message,
           stack: e.stack

@@ -12,7 +12,6 @@ function createProject(config, user, data, callback) {
     project = JSON.parse(JSON.stringify(data));
   } catch(e) {
     callback({
-      userMessageKey: "errorProjectDataIncorrectFormatCreatingProject",
       message: "Project sent by calling function was in an invalid format. Failed to run `JSON.parse`",
       context: e.message,
       stack: e.stack
@@ -37,7 +36,6 @@ function createProject(config, user, data, callback) {
   }, function(err, response, body) {
     if(err) {
       callback({
-        userMessageKey: "errorRequestFailureCreatingProject",
         message: "Failed to send request to " + createURL,
         context: err
       }, 500);
@@ -46,7 +44,6 @@ function createProject(config, user, data, callback) {
 
     if(response.statusCode !== 201) {
       callback({
-        userMessageKey: "errorUnknownResponseCreatingProject",
         message: "Request to " + createURL + " returned a status of " + response.statusCode,
         context: response.body
       }, response.statusCode);
@@ -80,7 +77,6 @@ function persistProjectFiles(config, user, project, data, callback) {
       if(err) {
         callback({
           error: {
-            userMessageKey: "errorRequestFailureSavingFiles",
             message: "Failed to initiate request to " + publishURL,
             context: err
           },
@@ -92,7 +88,6 @@ function persistProjectFiles(config, user, project, data, callback) {
       response.once('error', function(err) {
         callback({
           error: {
-            userMessageKey: "errorDuringSavingFiles",
             message: "Failed to send request to " + publishURL,
             context: err
           },
@@ -110,7 +105,6 @@ function persistProjectFiles(config, user, project, data, callback) {
         } catch(e) {
           callback({
             error: {
-              userMessageKey: "errorProjectDataIncorrectFormatSavingFiles",
               message: "Data sent by the publish server was in an invalid format. Failed to run `JSON.parse`",
               context: e.message,
               stack: e.stack
@@ -123,7 +117,6 @@ function persistProjectFiles(config, user, project, data, callback) {
         if(response.statusCode !== 201) {
           callback({
             error: {
-              userMessageKey: "errorUnknownResponseSavingFiles",
               message: "Request to " + publishURL + " returned a status of " + response.statusCode,
               context: body,
             },
@@ -162,7 +155,6 @@ function updateProject(config, user, data, callback) {
    project = JSON.parse(JSON.stringify(data));
   } catch(e) {
     callback({
-      userMessageKey: "errorProjectDataIncorrectFormatUpdatingProject",
       message: "Project sent by calling function was in an invalid format. Failed to run `JSON.parse`",
       context: e.message,
       stack: e.stack
@@ -184,7 +176,6 @@ function updateProject(config, user, data, callback) {
   }, function(err, response, body) {
     if(err) {
       callback({
-        userMessageKey: "errorRequestFailureUpdatingProject",
         message: "Failed to send request to " + updateURL,
         context: err
       }, 500);
@@ -193,7 +184,6 @@ function updateProject(config, user, data, callback) {
 
     if(response.statusCode !== 201 && response.statusCode !== 200) {
       callback({
-        userMessageKey: "errorUnknownResponseUpdatingProject",
         message: "Request to " + updateURL + " returned a status of " + response.statusCode,
         context: response.body
       }, response.statusCode);
@@ -210,7 +200,6 @@ function getRemixedProject(config, projectId, callback) {
   request.get({ uri: publishURL }, function(err, response, body) {
     if(err) {
       callback({
-        userMessageKey: "errorRequestFailureGettingRemixedProject",
         message: "Failed to send request to " + publishURL,
         context: err
       }, 500);
@@ -219,7 +208,6 @@ function getRemixedProject(config, projectId, callback) {
 
     if(response.statusCode !== 200) {
       callback({
-        userMessageKey: "errorUnknownResponseGettingRemixedProject",
         message: "Request to " + publishURL + " returned a status of " + response.statusCode,
         context: response.body
       }, response.statusCode);
@@ -231,7 +219,6 @@ function getRemixedProject(config, projectId, callback) {
       publishedProject = JSON.parse(body);
     } catch(e) {
       callback({
-        userMessageKey: "errorProjectDataIncorrectFormatGettingRemixedProject",
         message: `Project data received by the publish server for ${publishURL} was in an invalid format. Failed to run \`JSON.parse\``,
         context: e.message,
         stack: e.stack
@@ -260,7 +247,6 @@ function getProjectFileMetadata(config, user, projectId, callback) {
   }, function(err, response, body) {
     if(err) {
       callback({
-        userMessageKey: "errorRequestFailureGettingProjectFiles",
         message: "Failed to send request to " + url,
         context: err
       }, 500);
@@ -269,7 +255,6 @@ function getProjectFileMetadata(config, user, projectId, callback) {
 
     if(response.statusCode !== 200) {
       callback({
-        userMessageKey: "errorUnknownResponseGettingProjectFiles",
         message: "Request to " + url + " returned a status of " + response.statusCode,
         context: response.body
       }, response.statusCode);
@@ -281,7 +266,6 @@ function getProjectFileMetadata(config, user, projectId, callback) {
       files = JSON.parse(body);
     } catch(e) {
       callback({
-        userMessageKey: "errorProjectDataIncorrectFormatGettingProjectFiles",
         message: `Project data received by the publish server for ${url} was in an invalid format. Failed to run \`JSON.parse\``,
         context: e.message,
         stack: e.stack
@@ -314,7 +298,6 @@ function getRemixedProjectFileMetadata(config, projectId, callback) {
   request.get({ uri: publishURL }, function(err, response, body) {
     if(err) {
       callback({
-        userMessageKey: "errorRequestFailureGettingRemixedProjectFiles",
         message: "Failed to send request to " + publishURL,
         context: err
       }, 500);
@@ -323,7 +306,6 @@ function getRemixedProjectFileMetadata(config, projectId, callback) {
 
     if(response.statusCode !== 200) {
       callback({
-        userMessageKey: "errorUnknownResponseGettingRemixedProjectFiles",
         message: "Request to " + publishURL + " returned a status of " + response.statusCode,
         context: response.body
       }, response.statusCode);
@@ -335,7 +317,6 @@ function getRemixedProjectFileMetadata(config, projectId, callback) {
       files = JSON.parse(body);
     } catch(e) {
       callback({
-        userMessageKey: "errorProjectDataIncorrectFormatGettingRemixedProjectFiles",
         message: `Project data received by the publish server for ${publishURL} was in an invalid format. Failed to run \`JSON.parse\``,
         context: e.message,
         stack: e.stack

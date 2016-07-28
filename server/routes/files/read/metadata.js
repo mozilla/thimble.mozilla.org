@@ -1,7 +1,7 @@
 "use strict";
 
 var utils = require("../../utils");
-const HttpError = require("../../../lib/http-error");
+var HttpError = require("../../../lib/http-error");
 
 module.exports = function(config, req, res, next) {
   var user = req.user;

@@ -3,7 +3,7 @@
 var request = require("request");
 
 var utils = require("../utils");
-const HttpError = require("../../lib/http-error");
+var HttpError = require("../../lib/http-error");
 
 module.exports = function(config, req, res, next) {
   var project = req.project;
@@ -28,19 +28,17 @@ module.exports = function(config, req, res, next) {
         "Authorization": "token " + req.user.token
       }
     }, function(err, response, body) {
-      let failure = false;
+      var failure = false;
 
       if(err) {
         res.status(500);
         failure = {
-          userMessageKey: "errorRequestFailurePublishingProject",
           message: "Failed to send request to " + publishURL,
           context: err
         };
       } else if(response.statusCode !== 200) {
         res.status(response.statusCode);
         failure = {
-          userMessageKey: "errorUnknownResponsePublishingProject",
           message: "Request to " + publishURL + " returned a status of " + response.statusCode,
           context: response.body
         };
@@ -58,7 +56,6 @@ module.exports = function(config, req, res, next) {
         res.status(500);
         next(
           HttpError.format({
-            userMessageKey: "errorProjectDataIncorrectFormatPublishingProject",
             message: "Project sent by calling function was in an invalid format. Failed to run `JSON.parse`",
             context: e.message,
             stack: e.stack

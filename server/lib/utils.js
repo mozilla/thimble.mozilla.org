@@ -1,7 +1,7 @@
 "use strict";
 
-const glob = require("glob");
-const path = require("path");
+let glob = require("glob");
+let path = require("path");
 
 class Utils {
   static getFileList(root, pattern) {

@@ -2,7 +2,7 @@ module.exports = {
   init: function(app, middleware, config) {
     // Get all projects for a user
     app.get("/projects",
-      middleware.setErrorPrefix("errorGettingProjectList"),
+      middleware.setErrorMessage("errorGettingProjectList"),
       middleware.checkForAuth,
       middleware.setUserIfTokenExists,
       middleware.setPublishUser,
@@ -10,14 +10,14 @@ module.exports = {
 
     // Create a new project for a user
     app.get("/projects/new",
-      middleware.setErrorPrefix("errorCreatingProject"),
+      middleware.setErrorMessage("errorCreatingProject"),
       middleware.setUserIfTokenExists,
       middleware.setPublishUser,
       require("./create").bind(app, config));
 
     // Update project metadata for a user
     app.put("/projects/:projectId",
-      middleware.setErrorPrefix("errorUpdatingProject"),
+      middleware.setErrorMessage("errorUpdatingProject"),
       middleware.checkForAuth,
       middleware.setUserIfTokenExists,
       middleware.setPublishUser,
@@ -27,14 +27,14 @@ module.exports = {
 
     // Delete a project for a user
     app["delete"]("/projects/:projectId",
-      middleware.setErrorPrefix("errorDeletingProject"),
+      middleware.setErrorMessage("errorDeletingProject"),
       middleware.checkForAuth,
       middleware.setUserIfTokenExists,
       require("./delete").bind(app, config));
 
     // Rename a project for a user
     app.put("/projects/:projectId/rename",
-      middleware.setErrorPrefix("errorRenamingProject"),
+      middleware.setErrorMessage("errorRenamingProject"),
       middleware.checkForAuth,
       middleware.setUserIfTokenExists,
       middleware.setProject,
@@ -43,7 +43,7 @@ module.exports = {
 
     // Rename a folder in a project
     app.put("/projects/:projectId/renamefolder",
-      middleware.setErrorPrefix("errorRenamingProjectFolder"),
+      middleware.setErrorMessage("errorRenamingProjectFolder"),
       middleware.checkForAuth,
       middleware.setUserIfTokenExists,
       middleware.setProject,
@@ -52,7 +52,7 @@ module.exports = {
 
     // Publish an existing project for a user
     app.put("/projects/:projectId/publish",
-      middleware.setErrorPrefix("errorPublishingProject"),
+      middleware.setErrorMessage("errorPublishingProject"),
       middleware.checkForAuth,
       middleware.setUserIfTokenExists,
       middleware.setProject,
@@ -61,7 +61,7 @@ module.exports = {
 
     // Unpublish an existing project for a user
     app.put("/projects/:projectId/unpublish",
-      middleware.setErrorPrefix("errorUnpublishingProject"),
+      middleware.setErrorMessage("errorUnpublishingProject"),
       middleware.checkForAuth,
       middleware.setUserIfTokenExists,
       middleware.setProject,
@@ -70,7 +70,7 @@ module.exports = {
 
     // Remix an existing project
     app.get("/projects/:publishedId/remix",
-      middleware.setErrorPrefix("errorRemixingProject"),
+      middleware.setErrorMessage("errorRemixingProject"),
       middleware.setUserIfTokenExists,
       middleware.setPublishUser,
       require("./remix").bind(app, config));

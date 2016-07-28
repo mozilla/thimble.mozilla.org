@@ -5,7 +5,7 @@ var uuid = require("uuid");
 
 var utils = require("../utils");
 var defaultProjectNameKey = require("../../../constants").DEFAULT_PROJECT_NAME_KEY;
-const HttpError = require("../../lib/http-error");
+var HttpError = require("../../lib/http-error");
 
 module.exports = function(config, req, res, next) {
   var user = req.user;

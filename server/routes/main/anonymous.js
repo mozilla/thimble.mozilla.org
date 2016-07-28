@@ -3,7 +3,7 @@
 var editor = require("./editor");
 var utils = require("../utils");
 var defaultProjectNameKey = require("../../../constants").DEFAULT_PROJECT_NAME_KEY;
-const HttpError = require("../../lib/http-error");
+var HttpError = require("../../lib/http-error");
 
 function getProject(config, req, remixId, callback) {
   if(!remixId) {

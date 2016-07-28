@@ -5,19 +5,18 @@ var url = require("url");
 var NodeFormData = require("form-data");
 
 var utils = require("../utils");
-const HttpError = require("../../lib/http-error");
+var HttpError = require("../../lib/http-error");
 
 module.exports = function(config, req, res, next) {
   var file = req.file;
   var fileId = req.params.fileId;
   var filePath = req.body.bramblePath;
-  const errorLogSuffix = filePath ? `for path ${filePath}` : "";
+  var errorLogSuffix = filePath ? `for path ${filePath}` : "";
 
   if(!file) {
     res.status(400);
     next(
       HttpError.format({
-        userMessageKey: "errorMissingFileData",
         message: `File data missing from request body ${errorLogSuffix}`
       }, req)
     );
@@ -72,7 +71,6 @@ module.exports = function(config, req, res, next) {
         res.status(500);
         next(
           HttpError.format({
-            userMessageKey: "errorRequestFailureSavingFiles",
             message: `Failed to initiate request to ${options.pathname} ${errorLogSuffix}`,
             context: err
           }, req)
@@ -85,7 +83,6 @@ module.exports = function(config, req, res, next) {
         res.status(500);
         next(
           HttpError.format({
-            userMessageKey: "errorDuringSavingFiles",
             message: `Failed to send request to ${options.pathname} ${errorLogSuffix}`,
             context: err
           }, req)
@@ -104,7 +101,6 @@ module.exports = function(config, req, res, next) {
           res.status(500);
           next(
             HttpError.format({
-              userMessageKey: "errorProjectDataIncorrectFormatSavingFiles",
               message: `Data sent by the publish server was in an invalid format. Failed to run \`JSON.parse\` ${errorLogSuffix}`,
               context: e.message,
               stack: e.stack
@@ -118,7 +114,6 @@ module.exports = function(config, req, res, next) {
           res.status(response.statusCode);
           next(
             HttpError.format({
-              userMessageKey: "errorUnknownResponseSavingFiles",
               message: `Request to ${options.pathname} returned a status of ${response.statusCode} ${errorLogSuffix}`,
               context: body,
             }, req)
@@ -149,7 +144,6 @@ module.exports = function(config, req, res, next) {
       res.status(500);
       next(
         HttpError.format({
-          userMessageKey: "errorMissingFileData",
           message: `File data could not be read from stream ${errorLogSuffix}`,
           context: err
         }, req)

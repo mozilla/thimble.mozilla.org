@@ -4,6 +4,7 @@ module.exports = {
       require("./login").bind(app, config));
 
     app.get("/callback",
+      middleware.setErrorMessage("errorAuthenticating"),
       require("./oauth2-callback").bind(app, config));
   }
 };

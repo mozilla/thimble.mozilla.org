@@ -5,7 +5,7 @@ var querystring = require("querystring");
 var utils = require("../utils");
 var defaultProjectNameKey = require("../../../constants").DEFAULT_PROJECT_NAME_KEY;
 var defaultProject = require("../../../default");
-const HttpError = require("../../lib/http-error");
+var HttpError = require("../../lib/http-error");
 
 module.exports = function(config, req, res, next) {
   var user = req.user;

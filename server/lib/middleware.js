@@ -8,7 +8,7 @@ let cors = require("cors");
 let Cryptr = require("cryptr");
 
 let env = require("./environment");
-const HttpError = require("./http-error");
+let HttpError = require("./http-error");
 
 let upload = multer({
   dest: require("os").tmpdir(),
@@ -38,16 +38,16 @@ module.exports = function middlewareConstructor() {
     },
 
     /**
-     * On the request, set a prefix to use for user error messages
-     * Takes a function or a string as a prefix. If it is a function,
-     * it is called with the request to get the error prefix.
+     * On the request, set the key to use for user error messages
+     * Takes a function or a string. If it is a function,
+     * it is called with the request to get the error message's key.
      */
-    setErrorPrefix(errorPrefix) {
+    setErrorMessage(errorMessageKey) {
       return function(req, res, next) {
-        req.errorPrefix = typeof errorPrefix === "function" ? errorPrefix(req) : errorPrefix;
+        req.errorMessageKey = typeof errorMessageKey === "function" ? errorMessageKey(req) : errorMessageKey;
         next();
-      };
-    },
+       };
+     },
 
     /**
      * Check whether the requesting user has been authenticated.
@@ -108,7 +108,6 @@ module.exports = function middlewareConstructor() {
         res.status(400);
         next(
           HttpError.format({
-            userMessageKey: "errorMissingData",
             message: `Data validation in middleware failed for ${req.originalUrl}`,
             context: {
               expected: properties,
@@ -130,7 +129,7 @@ module.exports = function middlewareConstructor() {
         return next();
       }
 
-      const userUrl = `${publishHost}/users/login`;
+      let userUrl = `${publishHost}/users/login`;
 
       request({
         method: "POST",
@@ -147,7 +146,6 @@ module.exports = function middlewareConstructor() {
           res.status(500);
           return next(
             HttpError.format({
-              userMessageKey: "errorRequestFailureGettingUserInfo",
               message: `Failed to send request to ${userUrl}`,
               context: err
             }, req)
@@ -158,7 +156,6 @@ module.exports = function middlewareConstructor() {
           res.status(response.statusCode);
           return next(
             HttpError.format({
-              userMessageKey: "errorUnknownResponseGettingUserInfo",
               message: `Request to ${userUrl} returned a status of ${response.statusCode}`,
               context: response.body
             }, req)
@@ -181,7 +178,7 @@ module.exports = function middlewareConstructor() {
         return next();
       }
 
-      const projectUrl = `${publishHost}/projects/${projectId}`;
+      let projectUrl = `${publishHost}/projects/${projectId}`;
 
       // Get project data from publish.wm.org
       request.get({
@@ -194,7 +191,6 @@ module.exports = function middlewareConstructor() {
           res.status(500);
           return next(
             HttpError.format({
-              userMessageKey: "errorRequestFailureGettingProject",
               message: `Failed to send request to ${projectUrl}`,
               context: err
             }, req)
@@ -205,7 +201,6 @@ module.exports = function middlewareConstructor() {
           res.status(response.statusCode);
           return next(
             HttpError.format({
-              userMessageKey: "errorUnknownResponseGettingProject",
               message: `Request to ${projectUrl} returned a status of ${response.statusCode}`,
               context: response.body
             }, req)
@@ -218,7 +213,6 @@ module.exports = function middlewareConstructor() {
           res.status(500);
           return next(
             HttpError.format({
-              userMessageKey: "errorProjectDataIncorrectFormatGettingProject",
               message: "Project data received from the publish server was in an invalid format. Failed to run `JSON.parse`",
               context: e.message,
               stack: e.stack

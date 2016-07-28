@@ -13,20 +13,20 @@ let templatize = require("./templatize");
 let Request = require("./request");
 let Security = require("./security");
 let localize = require("./localize");
-const HttpError = require("./lib/http-error.js");
+let HttpError = require("./lib/http-error.js");
 let middleware = require("./lib/middleware")();
 let routes = require("./routes")();
-const Utils = require("./lib/utils");
+let Utils = require("./lib/utils");
 
 let server = express();
-const environment = env.get("NODE_ENV");
+let environment = env.get("NODE_ENV");
 let isDevelopment = environment === "development";
 let root = path.dirname(__dirname);
 let client = path.join(root, isDevelopment ? "client" : "dist");
 let cssAssets = path.join(require("os").tmpDir(), "mozilla.webmaker.org");
 let editor = url.parse(env.get("BRAMBLE_URI"));
 let editorHost = `${editor.protocol}//${editor.host}`;
-const maxCacheAge = { maxAge: "1d" };
+let maxCacheAge = { maxAge: "1d" };
 
 /*
  * Local server variables

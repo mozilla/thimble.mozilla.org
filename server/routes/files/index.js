@@ -9,13 +9,13 @@ module.exports = {
 
     // Get all file metadata for a project
     app.get("/projects/:projectId?/files/meta",
-      middleware.setErrorPrefix("errorGettingProjectFiles"),
+      middleware.setErrorMessage("errorGettingProjectFiles"),
       middleware.setUserIfTokenExists,
       read.metadata.bind(app, config));
 
     // Create or update a file for a project for a user
     app.put("/projects/:projectId/files/:fileId?",
-      middleware.setErrorPrefix(function(request) {
+      middleware.setErrorMessage(function(request) {
         return request.params.fileId ? "errorUpdatingFile" : "errorCreatingFile";
       }),
       middleware.checkForAuth,
@@ -27,7 +27,7 @@ module.exports = {
 
     // Delete a file for a project for a user
     app["delete"]("/projects/:projectId/files/:fileId",
-      middleware.setErrorPrefix("errorDeletingFile"),
+      middleware.setErrorMessage("errorDeletingFile"),
       middleware.checkForAuth,
       middleware.setUserIfTokenExists,
       middleware.setProject,

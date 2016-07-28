@@ -5,7 +5,7 @@ var querystring = require("querystring");
 
 var defaultProjectNameKey = require("../../../constants").DEFAULT_PROJECT_NAME_KEY;
 var utils = require("../utils");
-const HttpError = require("../../lib/http-error");
+var HttpError = require("../../lib/http-error");
 
 function getProjectMetadata(config, req, callback) {
   var project = req.project;

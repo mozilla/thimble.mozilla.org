@@ -3,7 +3,7 @@
 var request = require("request");
 
 var utils = require("../utils");
-const HttpError = require("../../lib/http-error");
+var HttpError = require("../../lib/http-error");
 
 module.exports = function(config, req, res, next) {
   var project = req.project;
@@ -33,19 +33,17 @@ module.exports = function(config, req, res, next) {
         return;
       }
 
-      let failure = false;
+      var failure = false;
 
       if(err) {
         res.status(500);
         failure = {
-          userMessageKey: "errorRequestFailureUnpublishingProject",
           message: "Failed to send request to " + unpublishURL,
           context: err
         };
       } else {
         res.status(response.statusCode);
         failure = {
-          userMessageKey: "errorUnknownResponseUnpublishingProject",
           message: "Request to " + unpublishURL + " returned a status of " + response.statusCode,
           context: response.body
         };

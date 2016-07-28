@@ -3,13 +3,13 @@
 var request = require("request");
 var path = require("path");
 
-const HttpError = require("../../lib/http-error");
+var HttpError = require("../../lib/http-error");
 
 module.exports = function(config, req, res, next) {
   var oauth = config.oauth;
   var cryptr = config.cryptr;
   var locale = req.session.locale;
-  const authURL = `${oauth.authorization_url}/login/oauth/access_token`;
+  var authURL = `${oauth.authorization_url}/login/oauth/access_token`;
 
   if (req.query.logout) {
     req.session = null;
@@ -20,7 +20,6 @@ module.exports = function(config, req, res, next) {
     res.status(401);
     return next(
       HttpError.format({
-        userMessageKey: "errorAuthenticating",
         message: "OAuth code was not set by the authentication server",
         context: req.query
       }, req)
@@ -28,10 +27,9 @@ module.exports = function(config, req, res, next) {
   }
 
   if (!req.cookies.state || !req.query.state) {
-    res.status(410);
+    res.status(401);
     return next(
       HttpError.format({
-        userMessageKey: "errorAuthenticating",
         message: "No state information was passed back by the authentication server",
         context: req.query
       }, req)
@@ -42,7 +40,6 @@ module.exports = function(config, req, res, next) {
     res.status(401);
     return next(
       HttpError.format({
-        userMessageKey: "errorAuthenticating",
         message: "The initial state during login does not match the state returned by the authentication server.",
         context: req.query
       }, req)
@@ -53,7 +50,6 @@ module.exports = function(config, req, res, next) {
     res.status(401);
     return next(
       HttpError.format({
-        userMessageKey: "errorAuthenticating",
         message: "The client id returned by the authentication server does not match Thimble's client id.",
         context: req.query
       }, req)
@@ -74,7 +70,6 @@ module.exports = function(config, req, res, next) {
       res.status(500);
       return next(
         HttpError.format({
-          userMessageKey: "errorAuthenticating",
           message: `Failed to send request to ${authURL}. Verify that the authentication server is up and running.`,
           context: err
         }, req)
@@ -85,7 +80,6 @@ module.exports = function(config, req, res, next) {
       res.status(response.statusCode);
       return next(
         HttpError.format({
-          userMessageKey: "errorAuthenticating",
           message: `Request to ${authURL} returned a status of ${response.statusCode}`,
           context: response.body
         }, req)
@@ -98,7 +92,6 @@ module.exports = function(config, req, res, next) {
       res.status(500);
       return next(
         HttpError.format({
-          userMessageKey: "errorAuthenticating",
           message: "Data (access token) sent by the authentication server was in an invalid format. Failed to run `JSON.parse`",
           context: e.message,
           stack: e.stack
@@ -108,7 +101,7 @@ module.exports = function(config, req, res, next) {
 
     req.session.token = cryptr.encrypt(body.access_token);
 
-    const userURL = `${oauth.authorization_url}/user`;
+    var userURL = `${oauth.authorization_url}/user`;
 
     // Next, fetch user data
     request.get({
@@ -121,7 +114,6 @@ module.exports = function(config, req, res, next) {
         res.status(500);
         return next(
           HttpError.format({
-            userMessageKey: "errorAuthenticating",
             message: `Failed to send request to ${userURL}. Verify that the authentication server is up and running.`,
             context: err
           }, req)
@@ -132,7 +124,6 @@ module.exports = function(config, req, res, next) {
         res.status(response.statusCode);
         return next(
           HttpError.format({
-            userMessageKey: "errorAuthenticating",
             message: `Request to ${userURL} returned a status of ${response.statusCode}`,
             context: response.body
           }, req)
@@ -145,7 +136,6 @@ module.exports = function(config, req, res, next) {
         res.status(500);
         return next(
           HttpError.format({
-            userMessageKey: "errorAuthenticating",
             message: "User data sent by the authentication server was in an invalid format. Failed to run `JSON.parse`",
             context: e.message,
             stack: e.stack
