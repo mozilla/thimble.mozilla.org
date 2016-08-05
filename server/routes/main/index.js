@@ -8,6 +8,7 @@ module.exports = {
 
     // Entry point to the editor for all users
     app.get("/editor",
+      middleware.setErrorMessage("errorMigratingProject"),
       middleware.clearRedirects,
       middleware.setUserIfTokenExists,
       middleware.setPublishUser,
@@ -15,6 +16,7 @@ module.exports = {
 
     // Load an authenticated user's project
     app.get("/user/:username/:projectId",
+      middleware.setErrorMessage("errorLoadingThimble"),
       middleware.clearRedirects,
       middleware.redirectAnonymousUsers,
       middleware.setUserIfTokenExists,
@@ -24,6 +26,7 @@ module.exports = {
 
     // Load an anonymous user's project
     app.get("/anonymous/:anonymousId/:remixId?",
+      middleware.setErrorMessage("errorLoadingThimble"),
       middleware.clearRedirects,
       middleware.setUserIfTokenExists,
       middleware.setPublishUser,

@@ -1,27 +1,40 @@
 var request = require("request");
 
 var utils = require("../utils");
+var HttpError = require("../../lib/http-error");
 
-module.exports = function(config, req, res) {
+module.exports = function(config, req, res, next) {
   var user = req.user;
   var project = req.project;
   var fileId = req.params.fileId;
+  var url = config.publishURL + "/files/" + fileId;
 
   request({
     method: "DELETE",
-    uri: config.publishURL + "/files/" + fileId,
+    uri: url,
     headers: {
       "Authorization": "token " + user.token
     }
   }, function(err, response) {
     if(err) {
-      console.error("Failed to send request to " + config.publishURL + "/files/" + fileId + " with: ", err);
-      res.sendStatus(500);
+      res.status(500);
+      next(
+        HttpError.format({
+          message: `Failed to send request to ${url}`,
+          context: err
+        }, req)
+      );
       return;
     }
 
     if(response.statusCode !== 204) {
-      res.status(response.statusCode).send({error: response.body});
+      res.status(status);
+      next(
+        HttpError.format({
+          message: `Request to ${url} returned a status of ${response.statusCode}`,
+          context: response.body
+        }, req)
+      );
       return;
     }
 
@@ -29,11 +42,8 @@ module.exports = function(config, req, res) {
 
     utils.updateProject(config, user, project, function(err, status) {
       if(err) {
-        if(status === 500) {
-          res.sendStatus(500);
-        } else {
-          res.status(status).send({error: err});
-        }
+        res.status(status);
+        next(HttpError.format(err, req));
         return;
       }
 

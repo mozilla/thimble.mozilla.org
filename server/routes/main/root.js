@@ -1,10 +1,13 @@
+"use strict";
+
 var querystring = require("querystring");
 var uuid = require("uuid");
 
 var utils = require("../utils");
 var defaultProjectNameKey = require("../../../constants").DEFAULT_PROJECT_NAME_KEY;
+var HttpError = require("../../lib/http-error");
 
-module.exports = function(config, req, res) {
+module.exports = function(config, req, res, next) {
   var user = req.user;
   var migrate = req.session.project && req.session.project.migrate;
   var localeInfo = req.localeInfo;
@@ -46,11 +49,8 @@ module.exports = function(config, req, res) {
 
   utils.createProject(config, user, project, function(err, status, project) {
     if(err) {
-      if(status === 500) {
-        res.sendStatus(500);
-      } else {
-        res.status(status).send({error: err});
-      }
+      res.status(status);
+      next(HttpError.format(err, req));
       return;
     }
 

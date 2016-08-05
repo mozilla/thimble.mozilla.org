@@ -2,7 +2,7 @@
 <html lang="{{ localeInfo.lang }}" dir="{{ localeInfo.direction }}">
   <head>
     <meta charset="utf-8">
-    <title>Oops, something went wrong!</title>
+    <title>{{ gettext("errorSomethingWentWrong") }}</title>
     <link rel="stylesheet" href="/resources/stylesheets/userbar.css">
     <link rel="stylesheet" href="/homepage/stylesheets/style.css">
     <link rel="stylesheet" href="/resources/stylesheets/error.css">
@@ -23,15 +23,15 @@
       <div class="content-wrapper centered-message">
         {% if status == 404 %}
           <img class="spilled-thimble" src="/img/thimble-404.png" />
-          <h1>Oh no, page not found!</h1>
+          <h1>{{ gettext("errorPageNotFound") }}</h1>
           <h2>
-            If you think this page should be here, <br/> let us know.
+            {{ gettext("errorPageNotFoundDetails") | safe }}
           </h2>
         {% else %}
           <img class="spilled-thimble" src="/img/spilled-thimble.png" />
-          <h1>Oops, something went wrong!</h1>
+          <h1>{{ gettext("errorSomethingWentWrong") }}</h1>
           <h2>
-            Please try what you did again. If you keep seeing this error, let us know.
+            {{ gettext("errorSomethingWentWrongDetails") }}
           </h2>
         {% endif %}
 
@@ -50,9 +50,9 @@
         {% if status != 404 %}
           <div class="error-details-wrapper">
             <div class="error-details">
-              <h1>Error Details</h1>
+              <h1>{{ gettext("errorDetailsHeader") }}</h1>
               <div class="details">
-                {{status}}: {{message}}
+                {{ statusMessage }}: {{ message }}
               </div>
             </div>
           </div>

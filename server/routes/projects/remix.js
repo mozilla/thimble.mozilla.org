@@ -1,7 +1,11 @@
+"use strict";
+
 var request = require("request");
 var uuid = require("uuid");
 
-module.exports = function(config, req, res) {
+var HttpError = require("../../lib/http-error");
+
+module.exports = function(config, req, res, next) {
   var locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
   var publishedId = req.params.publishedId;
   var user = req.user;
@@ -21,13 +25,24 @@ module.exports = function(config, req, res) {
 
   request(options, function(err, response, body) {
     if(err) {
-      console.error("Failed to send request to " + options.uri + " with: ", err);
-      res.sendStatus(500);
+      res.status(500);
+      next(
+        HttpError.format({
+          message: "Failed to send request to " + options.uri,
+          context: err
+        }, req)
+      );
       return;
     }
 
     if(response.statusCode !== 200) {
-      res.status(response.statusCode).send({error: response.body});
+      res.status(response.statusCode);
+      next(
+        HttpError.format({
+          message: "Request to " + options.uri + " returned a status of " + response.statusCode,
+          context: response.body
+        }, req)
+      );
       return;
     }
 
@@ -35,8 +50,14 @@ module.exports = function(config, req, res) {
     try {
       project = JSON.parse(body);
     } catch(e) {
-      console.error("Failed to parse remixed project with ", e.message, "\n at ", e.stack);
-      res.sendStatus(500);
+      res.status(500);
+      next(
+        HttpError.format({
+          message: "Project sent by calling function was in an invalid format. Failed to run `JSON.parse`",
+          context: e.message,
+          stack: e.stack
+        }, req)
+      );
       return;
     }
 

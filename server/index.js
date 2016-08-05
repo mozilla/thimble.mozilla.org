@@ -13,19 +13,20 @@ let templatize = require("./templatize");
 let Request = require("./request");
 let Security = require("./security");
 let localize = require("./localize");
-let errorhandling = require("./lib/errorhandling");
+let HttpError = require("./lib/http-error.js");
 let middleware = require("./lib/middleware")();
 let routes = require("./routes")();
-let getFileList = require("./lib/utils").getFileList;
+let Utils = require("./lib/utils");
 
 let server = express();
-let isDevelopment = env.get("NODE_ENV") === "development";
+let environment = env.get("NODE_ENV");
+let isDevelopment = environment === "development";
 let root = path.dirname(__dirname);
 let client = path.join(root, isDevelopment ? "client" : "dist");
 let cssAssets = path.join(require("os").tmpDir(), "mozilla.webmaker.org");
 let editor = url.parse(env.get("BRAMBLE_URI"));
 let editorHost = `${editor.protocol}//${editor.host}`;
-const maxCacheAge = { maxAge: "1d" };
+let maxCacheAge = { maxAge: "1d" };
 
 /*
  * Local server variables
@@ -60,10 +61,6 @@ requests.disableHeaders([ "x-powered-by" ])
   },
   proxy: true
 });
-// Logging
-if(isDevelopment) {
-  requests.log("dev");
-}
 
 
 /**
@@ -94,15 +91,17 @@ if(!!env.get("FORCE_SSL")) {
 /**
  * Static assets
  */
-getFileList(path.join(root, "public"), "!(*.js)")
+Utils.getFileList(path.join(root, "public"), "!(*.js)")
 .forEach(file => server.use(express.static(file, maxCacheAge)));
-server.use(express.static(client, maxCacheAge));
 server.use(express.static(cssAssets, maxCacheAge));
 server.use(express.static(path.join(root, "public/resources"), maxCacheAge));
+server.use("/bower", express.static(path.join(root, server.locals.bower_path), maxCacheAge));
+// Start logging requests for routes that serve JS
+requests.enableLogging(environment);
+server.use(express.static(client, maxCacheAge));
 // So that we don't break compatibility with existing published projects,
 // we serve the remix resources through this route as well
 server.use("/resources/remix", express.static(path.join(root, "public/resources/remix"), maxCacheAge));
-server.use("/bower", express.static(path.join(root, server.locals.bower_path), maxCacheAge));
 
 
 /**
@@ -122,8 +121,8 @@ routes.init(server, middleware);
 /*
  * Error handlers
  */
-server.use(errorhandling.errorHandler);
-server.use(errorhandling.pageNotFoundHandler);
+server.use(HttpError.generic);
+server.use(HttpError.notFound);
 
 /*
  * export the server object

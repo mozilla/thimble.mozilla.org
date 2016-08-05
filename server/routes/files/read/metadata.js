@@ -1,6 +1,9 @@
-var utils = require("../../utils");
+"use strict";
 
-module.exports = function(config, req, res) {
+var utils = require("../../utils");
+var HttpError = require("../../../lib/http-error");
+
+module.exports = function(config, req, res, next) {
   var user = req.user;
   var projectId = req.params.projectId;
   var getMetadata = utils.getProjectFileMetadata;
@@ -15,11 +18,8 @@ module.exports = function(config, req, res) {
 
   params.push(function(err, status, metadata) {
     if(err) {
-      if(status === 500) {
-        res.sendStatus(500);
-      } else {
-        res.status(status).send({error: err});
-      }
+      res.status(status);
+      next(HttpError.format(err, req));
       return;
     }
 

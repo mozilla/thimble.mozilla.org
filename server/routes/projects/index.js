@@ -2,6 +2,7 @@ module.exports = {
   init: function(app, middleware, config) {
     // Get all projects for a user
     app.get("/projects",
+      middleware.setErrorMessage("errorGettingProjectList"),
       middleware.checkForAuth,
       middleware.setUserIfTokenExists,
       middleware.setPublishUser,
@@ -9,12 +10,14 @@ module.exports = {
 
     // Create a new project for a user
     app.get("/projects/new",
+      middleware.setErrorMessage("errorCreatingProject"),
       middleware.setUserIfTokenExists,
       middleware.setPublishUser,
       require("./create").bind(app, config));
 
     // Update project metadata for a user
     app.put("/projects/:projectId",
+      middleware.setErrorMessage("errorUpdatingProject"),
       middleware.checkForAuth,
       middleware.setUserIfTokenExists,
       middleware.setPublishUser,
@@ -24,12 +27,14 @@ module.exports = {
 
     // Delete a project for a user
     app["delete"]("/projects/:projectId",
+      middleware.setErrorMessage("errorDeletingProject"),
       middleware.checkForAuth,
       middleware.setUserIfTokenExists,
       require("./delete").bind(app, config));
 
     // Rename a project for a user
     app.put("/projects/:projectId/rename",
+      middleware.setErrorMessage("errorRenamingProject"),
       middleware.checkForAuth,
       middleware.setUserIfTokenExists,
       middleware.setProject,
@@ -38,6 +43,7 @@ module.exports = {
 
     // Rename a folder in a project
     app.put("/projects/:projectId/renamefolder",
+      middleware.setErrorMessage("errorRenamingProjectFolder"),
       middleware.checkForAuth,
       middleware.setUserIfTokenExists,
       middleware.setProject,
@@ -46,6 +52,7 @@ module.exports = {
 
     // Publish an existing project for a user
     app.put("/projects/:projectId/publish",
+      middleware.setErrorMessage("errorPublishingProject"),
       middleware.checkForAuth,
       middleware.setUserIfTokenExists,
       middleware.setProject,
@@ -54,6 +61,7 @@ module.exports = {
 
     // Unpublish an existing project for a user
     app.put("/projects/:projectId/unpublish",
+      middleware.setErrorMessage("errorUnpublishingProject"),
       middleware.checkForAuth,
       middleware.setUserIfTokenExists,
       middleware.setProject,
@@ -62,6 +70,7 @@ module.exports = {
 
     // Remix an existing project
     app.get("/projects/:publishedId/remix",
+      middleware.setErrorMessage("errorRemixingProject"),
       middleware.setUserIfTokenExists,
       middleware.setPublishUser,
       require("./remix").bind(app, config));

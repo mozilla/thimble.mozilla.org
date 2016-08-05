@@ -3,8 +3,9 @@
 const request = require("request");
 
 const utils = require("../utils");
+const HttpError = require("../../lib/http-error");
 
-module.exports = function(config, req, res) {
+module.exports = function(config, req, res, next) {
   const user = req.user;
   const project = req.project;
   const dateUpdated = req.body.dateUpdated;
@@ -20,13 +21,24 @@ module.exports = function(config, req, res) {
     json: true
   }, function(err, response) {
     if(err) {
-      console.error(`Failed to send request to ${uri} with: ${err}`);
-      res.sendStatus(500);
+      res.status(500);
+      next(
+        HttpError.format({
+          message: `Failed to send request to ${uri}, paths sent: ${JSON.stringify(req.body.paths, null, 2)}`,
+          context: err
+        }, req)
+      );
       return;
     }
 
     if(response.statusCode !== 200) {
-      res.status(response.statusCode).send({error: response.body});
+      res.status(response.statusCode);
+      next(
+        HttpError.format({
+          message: `Request to ${uri} returned a status of ${response.statusCode}. Paths sent: ${JSON.stringify(req.body.paths, null, 2)}`,
+          context: response.body
+        }, req)
+      );
       return;
     }
 
@@ -34,11 +46,8 @@ module.exports = function(config, req, res) {
 
     utils.updateProject(config, user, project, function(err, status) {
       if(err) {
-        if(status === 500) {
-          res.sendStatus(500);
-        } else {
-          res.status(status).send({error: err});
-        }
+        res.status(status);
+        next(HttpError.format(err, req));
         return;
       }
 

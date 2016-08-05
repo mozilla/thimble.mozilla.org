@@ -1,9 +1,14 @@
+"use strict";
+
 var request = require("request");
 var querystring = require("querystring");
 
-module.exports = function(config, req, res) {
+var HttpError = require("../../lib/http-error");
+
+module.exports = function(config, req, res, next) {
   var publishURL = config.publishURL;
   var user = req.user;
+  var readURL = publishURL + "/users/" + user.publishId + "/projects";
   var locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
   var qs = querystring.stringify(req.query);
   if(qs !== "") {
@@ -11,19 +16,25 @@ module.exports = function(config, req, res) {
   }
 
   request.get({
-    url: publishURL + "/users/" + user.publishId + "/projects",
+    url: readURL,
     headers: {
       "Authorization": "token " + user.token
     }
   }, function(err, response, body) {
-    if(err) {
-      res.status(500).send({error: err});
-      return;
-    }
-
     res.set({
       "Cache-Control": "no-cache"
     });
+
+    if(err) {
+      res.status(500);
+      next(
+        HttpError.format({
+          message: "Failed to send request to " + readURL,
+          context: err
+        }, req)
+      );
+      return;
+    }
 
     if(response.statusCode === 404) {
       // If there aren't any projects for this user, create one with a redirect
@@ -32,7 +43,13 @@ module.exports = function(config, req, res) {
     }
 
     if(response.statusCode !== 200) {
-      res.status(response.statusCode).send({error: response.body});
+      res.status(response.statusCode);
+      next(
+        HttpError.format({
+          message: "Request to " + readURL + " returned a status of " + response.statusCode,
+          context: response.body
+        }, req)
+      );
       return;
     }
 
@@ -40,8 +57,14 @@ module.exports = function(config, req, res) {
     try {
       projects = JSON.parse(body);
     } catch(e) {
-      console.error("Failed to parse user's projects with ", e.message, "\n at ", e.stack);
-      res.sendStatus(500);
+      res.status(500);
+      next(
+        HttpError.format({
+          message: "Project sent by calling function was in an invalid format. Failed to run `JSON.parse`",
+          context: e.message,
+          stack: e.stack
+        }, req)
+      );
       return;
     }
 
