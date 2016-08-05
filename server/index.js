@@ -80,6 +80,7 @@ secure.xss()
 .xframe()
 .csp({
   frameSrc: [ editorHost, "https://www.youtube.com/embed/JecFOjD9I3k" ],
+  childSrc: [ editorHost, "https://www.youtube.com/embed/JecFOjD9I3k" ],
   scriptSrc: [ editorHost ],
   connectSrc: [ editorHost ]
 });
