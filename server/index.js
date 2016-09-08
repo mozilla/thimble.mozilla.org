@@ -27,6 +27,7 @@ let cssAssets = path.join(require("os").tmpDir(), "mozilla.webmaker.org");
 let editor = url.parse(env.get("BRAMBLE_URI"));
 let editorHost = `${editor.protocol}//${editor.host}`;
 let maxCacheAge = { maxAge: "1d" };
+let homepageVideoLink = "https://www.youtube.com/embed/JecFOjD9I3k";
 
 /*
  * Local server variables
@@ -79,9 +80,10 @@ secure.xss()
 .csrf()
 .xframe()
 .csp({
-  frame: [ editorHost, "https://www.youtube.com/embed/JecFOjD9I3k" ],
-  script: [ editorHost ],
-  connection: [ editorHost ]
+  frameSrc: [ editorHost, homepageVideoLink ],
+  childSrc: [ editorHost, homepageVideoLink ],
+  scriptSrc: [ editorHost ],
+  connectSrc: [ editorHost ]
 });
 if(!!env.get("FORCE_SSL")) {
   secure.ssl();
