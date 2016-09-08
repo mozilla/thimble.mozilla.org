@@ -21,7 +21,7 @@ module.exports = function(config, req, res, next) {
   // If an anonymous user enters through this anonymous entry point, show them
   // thimble immediately
   if(!user) {
-    editor.call(this, config, req, res);
+    editor.call(this, config, req, res, next);
     return;
   }
 
