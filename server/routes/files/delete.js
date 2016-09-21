@@ -28,7 +28,7 @@ module.exports = function(config, req, res, next) {
     }
 
     if(response.statusCode !== 204) {
-      res.status(status);
+      res.status(response.statusCode);
       next(
         HttpError.format({
           message: `Request to ${url} returned a status of ${response.statusCode}`,
