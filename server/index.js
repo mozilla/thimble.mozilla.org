@@ -32,6 +32,7 @@ let homepageVideoLink = "https://www.youtube.com/embed/JecFOjD9I3k";
 /*
  * Local server variables
  */
+ server.locals.APP_HOSTNAME = env.get("APP_HOSTNAME");
 server.locals.GA_ACCOUNT = env.get("GA_ACCOUNT");
 server.locals.GA_DOMAIN = env.get("GA_DOMAIN");
 server.locals.bower_path = "bower_components";
