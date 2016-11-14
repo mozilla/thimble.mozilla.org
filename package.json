@@ -69,7 +69,7 @@
     "throng": "^4.0.0",
     "time-grunt": "^1.2.1",
     "uuid": "^2.0.1",
-    "webmaker-i18n": "^0.3.30"
+    "webmaker-i18n": "^0.3.31"
   },
   "scripts": {
     "postinstall": "bower install && grunt requirejs:dist && npm run localize && npm run localize-client",
