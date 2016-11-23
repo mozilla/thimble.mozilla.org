@@ -35,13 +35,13 @@ let homepageVideoLink = "https://www.youtube.com/embed/JecFOjD9I3k";
  server.locals.APP_HOSTNAME = env.get("APP_HOSTNAME");
 server.locals.GA_ACCOUNT = env.get("GA_ACCOUNT");
 server.locals.GA_DOMAIN = env.get("GA_DOMAIN");
-server.locals.bower_path = "bower_components";
+server.locals.node_path = "node_modules";
 
 
 /**
  * Templating engine
  */
-templatize(server, [ "views", "bower_components" ]);
+templatize(server, [ "views", "node_modules" ]);
 
 
 /**
@@ -98,7 +98,7 @@ Utils.getFileList(path.join(root, "public"), "!(*.js)")
 .forEach(file => server.use(express.static(file, maxCacheAge)));
 server.use(express.static(cssAssets, maxCacheAge));
 server.use(express.static(path.join(root, "public/resources"), maxCacheAge));
-server.use("/bower", express.static(path.join(root, server.locals.bower_path), maxCacheAge));
+server.use("/node_modules", express.static(path.join(root, server.locals.node_path), maxCacheAge));
 // Start logging requests for routes that serve JS
 requests.enableLogging(environment);
 server.use(express.static(client, maxCacheAge));
