@@ -4,7 +4,6 @@ thimble.sqlite
 .env
 .heroku
 fakes3
-bower_components
 .htaccess
 locale/**/*.json
 public/stylesheets/userbar.css

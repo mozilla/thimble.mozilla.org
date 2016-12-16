@@ -10,14 +10,14 @@ require.config({
     "bowser": "/scripts/vendor/bowser",
     "sso-override": "../../sso-override",
     "logger": "../../logger",
-    "jquery": "/bower/jquery/index",
-    "localized": "/bower/webmaker-i18n/localized",
-    "uuid": "/bower/node-uuid/uuid",
-    "cookies": "/bower/cookies-js/dist/cookies",
+    "jquery": "/node_modules/jquery/dist/jquery.min",
+    "localized": "/node_modules/webmaker-i18n/localized",
+    "uuid": "/node_modules/node-uuid/uuid",
+    "cookies": "/node_modules/cookies-js/dist/cookies",
     "PathCache": "../../path-cache",
     "constants": "../../constants",
-    "EventEmitter": "/bower/eventEmitter/EventEmitter.min",
-    "analytics": "/bower/webmaker-analytics/analytics"
+    "EventEmitter": "/node_modules/wolfy87-eventemitter/EventEmitter.min",
+    "analytics": "/node_modules/webmaker-analytics/analytics"
   },
   shim: {
     "jquery": {

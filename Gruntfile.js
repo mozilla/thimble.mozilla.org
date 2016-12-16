@@ -39,15 +39,15 @@ module.exports = function( grunt ) {
             "bramble-editor": "editor/scripts/editor/js/bramble-editor",
             "sso-override": "editor/scripts/sso-override",
             "logger": "editor/scripts/logger",
-            "jquery": "../bower_components/jquery/index",
-            "localized": "../bower_components/webmaker-i18n/localized",
-            "uuid": "../bower_components/node-uuid/uuid",
-            "cookies": "../bower_components/cookies-js/dist/cookies",
+            "jquery": "../node_modules/jquery/dist/jquery.min",
+            "localized": "../node_modules/webmaker-i18n/localized",
+            "uuid": "../node_modules/node-uuid/uuid",
+            "cookies": "../node_modules/cookies-js/dist/cookies",
             "PathCache": "editor/scripts/path-cache",
             "constants": "editor/scripts/constants",
-            "EventEmitter": "../bower_components/eventEmitter/EventEmitter.min",
-            "analytics": "../bower_components/webmaker-analytics/analytics",
-            "moment": "../bower_components/moment/min/moment-with-locales.min"
+            "EventEmitter": "../node_modules/wolfy87-eventemitter/EventEmitter.min",
+            "analytics": "../node_modules/webmaker-analytics/analytics",
+            "moment": "../node_modules/moment/min/moment-with-locales.min"
           },
           shim: {
             "jquery": {
@@ -137,4 +137,3 @@ module.exports = function( grunt ) {
   grunt.registerTask("build", [ "test", "requirejs:dist" ]);
   grunt.registerTask("default", [ "test" ]);
 };
-

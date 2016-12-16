@@ -1,11 +1,11 @@
 require.config({
   waitSeconds: 120,
   paths: {
-    "jquery": "/bower/jquery/index",
-    "analytics": "/bower/webmaker-analytics/analytics",
-    "uuid": "/bower/node-uuid/uuid",
-    "cookies": "/bower/cookies-js/dist/cookies",
-    "moment": "/bower/moment/min/moment-with-locales.min",
+    "jquery": "/node_modules/jquery/dist/jquery.min",
+    "analytics": "/node_modules/webmaker-analytics/analytics",
+    "uuid": "/node_modules/node-uuid/uuid",
+    "cookies": "/node_modules/cookies-js/dist/cookies",
+    "moment": "/node_modules/moment/min/moment-with-locales.min",
     "fc/bramble-popupmenu": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-popupmenu",
     "fc/bramble-keyhandler": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-keyhandler",
     "fc/bramble-underlay": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-underlay"

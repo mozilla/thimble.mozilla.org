@@ -12,11 +12,11 @@ require.config({
   waitSeconds: 120,
   baseUrl: "/{{ locale }}/homepage/scripts",
   paths: {
-    "jquery": "/bower/jquery/index",
-    "localized": "/bower/webmaker-i18n/localized",
-    "uuid": "/bower/node-uuid/uuid",
-    "cookies": "/bower/cookies-js/dist/cookies",
-    "analytics": "/bower/webmaker-analytics/analytics",
+    "jquery": "/node_modules/jquery/dist/jquery.min",
+    "localized": "/node_modules/webmaker-i18n/localized",
+    "uuid": "/node_modules/node-uuid/uuid",
+    "cookies": "/node_modules/cookies-js/dist/cookies",
+    "analytics": "/node_modules/webmaker-analytics/analytics",
     // TODO: we should really put the homepage and editor in the same scope for code sharing
     "fc/bramble-popupmenu": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-popupmenu",
     "fc/bramble-keyhandler": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-keyhandler",
