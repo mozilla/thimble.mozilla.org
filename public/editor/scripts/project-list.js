@@ -82,7 +82,8 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
 });
 
 function init($, uuid, cookies, PopupMenu, analytics) {
-  PopupMenu.create("#navbar-logged-in li", "#navbar-logged-in li ul.dropdown");
+  PopupMenu.create("#navbar-logged-in .dropdown-toggle", "#navbar-logged-in .dropdown-content");
+  PopupMenu.create("#navbar-locale .dropdown-toggle", "#navbar-locale .dropdown-content");
   setupNewProjectLinks($, analytics);
 }
 

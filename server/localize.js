@@ -39,7 +39,13 @@ module.exports = function localize(server, options) {
     res.redirect(307, localizedUrl);
   });
 
-  server.locals.languages = webmakerI18N.getSupportLanguages();
+  let allLanguages = webmakerI18N.getAllLocaleCodes();
+  let languages = {};
+  webmakerI18N.getSupportLanguages().forEach(locale => {
+    languages[locale] = allLanguages[locale];
+  });
+  
+  server.locals.languages = languages;
 
   server.get("/strings/:lang?", webmakerI18N.stringsRoute("en-US"));
 };

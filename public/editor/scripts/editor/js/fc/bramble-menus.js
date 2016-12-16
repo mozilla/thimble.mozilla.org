@@ -5,7 +5,11 @@ define(function(require) {
   var analytics = require("analytics");
 
   function setupUserMenu() {
-    PopupMenu.create("#navbar-logged-in li", "#navbar-logged-in li ul.dropdown");
+    PopupMenu.create("#navbar-logged-in .dropdown-toggle", "#navbar-logged-in .dropdown-content");
+  }
+
+  function setupLocaleMenu() {
+    PopupMenu.create("#navbar-locale .dropdown-toggle", "#navbar-locale .dropdown-content");
   }
 
   function setupOptionsMenu(bramble) {
@@ -236,6 +240,7 @@ define(function(require) {
     setupOptionsMenu(bramble);
     setupAddFileMenu(bramble);
     setupUserMenu();
+    setupLocaleMenu();
   }
 
   return {
