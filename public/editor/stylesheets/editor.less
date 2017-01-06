@@ -358,7 +358,6 @@ body {
   -webkit-box-shadow: 0 3px 9px rgba(0,0,0,0.24);
   -moz-box-shadow: 0 3px 9px rgba(0,0,0,0.24);
   box-shadow: 0 3px 9px rgba(0,0,0,0.24);
-  min-width: 240px;
   top: 65px;
   border-radius: 1px;
 
@@ -367,7 +366,7 @@ body {
     margin: 0;
     padding: 0;
     li {
-     padding: 20px;
+     padding: 20px 100px 20px 20px;
      position: relative;
     }
     li+li {
@@ -386,7 +385,7 @@ body {
   width: 0;
   z-index: 1;
   top: -15px;
-  left: 109px;
+  left: calc(~"50% - 11px");
 }
 
 // Line wrap toggle
