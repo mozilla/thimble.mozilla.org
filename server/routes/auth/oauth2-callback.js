@@ -11,9 +11,11 @@ module.exports = function(config, req, res, next) {
   var locale = req.session.locale;
   var authURL = `${oauth.authorization_url}/login/oauth/access_token`;
 
+  res.set("Cache-Control", "no-cache");
+
   if (req.query.logout) {
     req.session = null;
-    return res.redirect(301, path.join("/", locale));
+    return res.redirect(307, path.join("/", locale));
   }
 
   if (!req.query.code) {
