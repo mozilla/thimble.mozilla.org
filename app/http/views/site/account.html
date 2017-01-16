@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="{{ localeInfo.lang }}" dir="{{ localeInfo.direction }}">
+<head>
+  <meta charset="utf-8">
+  {{ newrelic.getBrowserTimingHeader() | safe }}
+  <meta name="csrf-token" content="{{ csrf }}">
+  <title>Webmaker</title>
+  <link rel="stylesheet" href="/bower/font-awesome/css/font-awesome.min.css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="/bower/makerstrap/dist/makerstrap.min.css" rel="stylesheet">
+  <link href="/bower/webmaker-login-ux/dist/css/webmakerLogin.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/account.{{ localeInfo.direction }}.css">
+  <script src="/bower/webmaker-login-ux/dist/webmakerLogin.js"></script>
+</head>
+<body>
+<div id="webmaker-nav">
+  <!-- the webmaker bar -->
+  <nav class="webmaker-nav-container">
+    <a id="logo" href="https://webmaker.org/{{localeInfo.lang}}"><img src="/img/webmaker-logo.png" alt="Mozilla Webmaker" /></a>
+    <ul class="webmaker-nav user-info">
+      <li class="user">
+        {{ gettext('Hi') }} <span id="identity" class="user-name-container"></span>
+      </li>
+      <li>
+        <button class="btn btn-primary join-webmaker">{{ gettext('Join Webmaker') }}</button>
+        <button class="btn btn-secondary-nav webmaker-signin">{{ gettext('Sign in') }}</button>
+        <span class="webmaker-logout hidden">{{ gettext('Sign out') }}</span>
+      </li>
+    </ul>
+  </nav>
+</div>
+<div id="logged-out-message" class="wm-logged-out-panel" style="display: none;">
+  <div class="ui-wrapper ui-body">
+    <div class="ui-poster">
+      <div class="ui-row">
+        <div class="g-8">
+          <h1 class="login-above">{{ gettext( 'Login above to access your account information') }}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="wm-user-panel">
+  <div class="ui-wrapper ui-body">
+      <div class="ui-poster">
+        <div class="ui-row">
+          <div class="g-3">
+            <div id="user-avatar" class="ui-circle-frame"></div>
+          </div>
+          <div class="g-5">
+            <h1>{{ gettext('Hi') }} <span class="wm-username"></span>!</h1>
+            <ul class="no-list-styling">
+              <li><span class="field-label">{{ gettext('Username') }}</span><span class="wm-username"></span></li>
+              <li><span class="field-label">{{ gettext('My profile') }}</span><span class="wm-page"></span></li>
+              <li><span class="field-label">{{ gettext('Email') }}</span><span class="wm-email"></span></li>
+              <li><span class="field-label">{{ gettext('Security') }}</span>
+                <ul class="wm-security-pref-list no-list-styling">
+                  <li class="webmaker-login-message"><i class="fa fa-lock"></i> {{ gettext('Using Webmaker Login') }}</li>
+                  <li class="custom-password-message"><i class="fa fa-lock"></i> {{ gettext('Using Custom Password') }}</li>
+                  <li class="subtext webmaker-login-subtext">{{ gettext('About Webmaker Login') }}</li>
+                  <li class="subtext password-login-subtext">{{ gettext('About Password Login') }}</li>
+                  <li class="set-password"><a href="#">{{ gettext('Set a Permanent Password') }}</a></li>
+                  <li class="disable-password">
+                    <a href="#">{{ gettext('Use Webmaker Login') }}</a>
+                    <input type="hidden" name="confirmDeletePassword" value="{{ gettext('Switch to Webmaker Login') }}">
+                  </li>
+                  <li class="remove-password-failed"><span>{{ gettext("Failed to remove password") }}</span></li>
+                  <!-- Show/hide this ul to display password fields and submit -->
+                  <li>
+                    <ul class="create-password-form no-list-styling" style="display: none" class="no-list-styling">
+                      <li><input class="password-input-main" type="password" class="form-control account-form" placeholder="{{ gettext('Enter Password') }}"/></li>
+                      <li><input class="password-input-confirm" type="password" class="form-control account-form" placeholder="{{ gettext('Confirm Password') }}"/></li>
+                      <li>
+                        <button class="btn btn-primary set-password-button">{{ gettext('Set Password') }}</button>
+                        <input type="hidden" name="confirmSetPassword" value="{{ gettext('Switch to custom password') }}">
+                      </li>
+                      <li class="set-password-failed">
+                        <span>
+                          {{ gettext("Failed to set password") }}
+                          <ul>
+                            <li id="too-short">{{ gettext('At least 8') }}</li>
+                            <li id="too-long">{{ gettext('At most 256') }}</li>
+                            <li id="char-classes">{{ gettext('At least 2 character classes') }}</li>
+                            <li id="common-password">{{ gettext('common password') }}</li>
+                          </ul>
+                        </span>
+                      </li>
+                    </ul>
+                  </li>
+                  <!--  -->
+                </ul>
+              </li>
+
+              <li><span class="field-label">{{ gettext('Send me emails when') }}:</span>
+                  <ul class="wm-email-pref-list no-list-styling">
+                    <li>
+                      <input type="checkbox" id="sendEventCreationEmailsCheckbox">
+                      <label for="sendEventCreationEmailsCheckbox">{{ gettext('I create an event') }}</label>
+                    </li>
+                    <li>
+                      <input type="checkbox" id="sendMentorRequestEmailsCheckbox">
+                      <label for="sendMentorRequestEmailsCheckbox">{{ gettext('I receive an Event Mentor request') }}</label>
+                    </li>
+                    <li>
+                      <input type="checkbox" id="sendCoorganizerNotificationEmailsCheckbox">
+                      <label for="sendCoorganizerNotificationEmailsCheckbox">{{ gettext('I receive an Event Co-organizer request') }}</label>
+                    </li>
+                  </ul>
+              </li>
+              <li><span class="field-label">{{ gettext("Language") }}</span>
+                <span class="wm-lang">
+                  <select name="languagePref" id="languagePref" data-supported="{{languages}}">
+                  {% for locale in languages %}<option value="{{ locale }}"{%
+                  if locale == localeInfo.lang %} selected="selected"{% endif
+                  %}>{{ languageNameFor(locale) }}</option>{% endfor %}
+                 </select>
+                </span>
+              </li>
+              <li><span class="field-label">Account</span><span class="wm-delete"><a id="delete-account">{{ gettext('Delete account') }}</a></span></li>
+              <li>
+                <span class="field-label"></span>
+                <span class="email-prefs prefs-saved">{{ gettext("Your preferences have been saved") }}</span>
+                <span class="email-prefs prefs-error">{{ gettext("Your preferences failed to save") }}</span>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="confirm-delete" class="ui-wrapper ui-body">
+      <i class="icon-remove boxclose" id="boxclose"></i>
+      <h2>{{ gettext('Are you sure you want to leave?') }}</h2>
+      <p>{{ gettext('Enter your email to confirm:') }}</p>
+      <p><input id="email-check"></p>
+      <p><a id="delete-me" class="ui-btn">{{ gettext('Delete me forever') }}</a></p>
+    </div>
+  </div>
+  <div class="ui-wrapper ui-body" id="logout-message">{{ gettext('Your user account was deleted!') }}</div>
+  <div class="ui-wrapper ui-body" id="wrong-email">{{ gettext("Looks like that isnt your email") }}</div>
+  <script src="{{ personaHostname }}/include.js"></script>
+  <script src="/js/ext/require.js" data-main="/js/account"></script>
+  {% if ga_account %}
+  <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '{{ ga_account }}', 'auto');
+    ga('send', 'pageview');
+  </script>
+  {% endif %}
+</body>
+</html>

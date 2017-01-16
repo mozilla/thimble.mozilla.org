@@ -1,0 +1,3 @@
+ALTER TABLE Users
+  ADD COLUMN `isSuperMentor` TINYINT(1) DEFAULT '0',
+  ADD COLUMN `isMentor` TINYINT(1) DEFAULT '0';
