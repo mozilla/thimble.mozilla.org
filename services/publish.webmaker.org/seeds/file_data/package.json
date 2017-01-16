@@ -1,0 +1,66 @@
+{
+  "name": "endpoints",
+  "description": "a hypermedia API framework for javascript.",
+  "version": "0.9.0",
+  "homepage": "https://github.com/endpoints/endpoints",
+  "author": {
+    "name": "Tyler Kellen",
+    "url": "http://goingslowly.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/endpoints/endpoints.git"
+  },
+  "bugs": {
+    "url": "https://github.com/endpoints/endpoints/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/endpoints/endpoints/blob/master/LICENSE"
+    }
+  ],
+  "main": "es5/index.js",
+  "engines": {
+    "node": ">= 0.10"
+  },
+  "scripts": {
+    "build": "babel src --loose all --out-dir es5",
+    "lint": "jshint src test",
+    "style": "jscs src test",
+    "test-coverage": "istanbul cover _mocha --compilers js:babel/register -b -R spec test/unit",
+    "test-unit": "mocha --compilers js:babel/register -b -R spec test/unit",
+    "test-integration": "mocha --compilers js:babel/register -b -R spec test/integration",
+    "test": "npm run lint && npm run style && npm run test-unit && npm run test-integration",
+    "start": "node website",
+    "build-website": "jsdoc ./src/***/**.js -R ./README.md -P ./package.json -d ./website/app/public/api"
+  },
+  "devDependencies": {
+    "babel": "^5.4.7",
+    "body-parser": "^1.12.4",
+    "bookshelf": "^0.8.1",
+    "chai": "^2.3.0",
+    "express": "^4.12.4",
+    "express-routebuilder": "^2.1.0",
+    "fantasy-database": "^1.1.1",
+    "istanbul": "^0.3.14",
+    "jade": "^1.10.0",
+    "jscs": "^1.13.1",
+    "jscs-jsdoc": "^1.0.1",
+    "jsdoc": "^3.3.0",
+    "jsdoc-toolkit": "0.0.2",
+    "jshint": "^2.8.0",
+    "knex": "^0.8.6",
+    "markdown": "^0.5.0",
+    "mocha": "^2.2.5",
+    "sinon": "^1.14.1",
+    "sqlite3": "^3.0.8",
+    "superagent": "0.21.0"
+  },
+  "dependencies": {
+    "bluebird": "^2.9.27",
+    "is-my-json-valid": "^2.12.0",
+    "kapow": "^1.0.0",
+    "lodash": "^3.9.3"
+  }
+}
