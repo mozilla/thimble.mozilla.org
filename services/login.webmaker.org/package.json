@@ -1,0 +1,64 @@
+{
+  "author": "Webmaker Product Team <webmaker-staff@mozillafoundation.org>",
+  "name": "login.webmaker.org",
+  "version": "1.5.23",
+  "homepage": "https://github.com/mozilla/login.webmaker.org",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mozilla/login.webmaker.org.git"
+  },
+  "license": "MPL-2.0",
+  "engines": {
+    "node": "^4.6"
+  },
+  "dependencies": {
+    "MD5": "1.0.3",
+    "async": "0.2.9",
+    "badword": "0.0.1",
+    "bcrypt": "0.8.7",
+    "bluebird": "2.3.2",
+    "bower": "1.3.8",
+    "browserid-verify": "0.1.2",
+    "express": "3.4.5",
+    "express-limiter": "1.3.0",
+    "habitat": "3.1.2",
+    "hat": "0.0.3",
+    "hatchet": "0.3.2",
+    "helmet": "0.1.2",
+    "less": "1.7.5",
+    "less-middleware": "0.1.15",
+    "messina": "0.1.1",
+    "moment": "2.8.2",
+    "mysql": "2.0.1",
+    "newrelic": "^1.21.1",
+    "node-statsd": "0.0.7",
+    "nunjucks": "0.1.10",
+    "pass-test": "1.0.2",
+    "proquint": "0.0.1",
+    "redis": "0.12.1",
+    "sequelize": "1.7.10",
+    "webmaker-auth": "1.0.4",
+    "webmaker-download-locales": "0.2.5",
+    "webmaker-i18n": "0.3.19",
+    "webmaker-locale-mapping": "0.0.5",
+    "webmaker-translation-stats": "0.0.1"
+  },
+  "devDependencies": {
+    "grunt": "0.4.5",
+    "grunt-cli": "1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-jsbeautifier": "0.2.8",
+    "grunt-jscs": "1.5.0",
+    "mocha": "1.9.0",
+    "mofo-style": "1.0.1",
+    "request": "2.20.0",
+    "sqlite3": "3.1.4",
+    "supertest": "0.15.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "grunt --verbose && mocha --timeout 60000 --reporter spec",
+    "postinstall": "bower install",
+    "download-locales": "webmaker-download-locales login"
+  }
+}

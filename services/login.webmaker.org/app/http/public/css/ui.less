@@ -1,0 +1,359 @@
+/*********************************************************
+* UI
+*/
+
+
+@blue: #20ABDC;
+@red: #E03634;
+@green: #3FB58E;
+@grey: #555;
+@lightgrey: #F4F5F5;
+@midgrey: #DDD;
+
+@uiFontSize: 13px;
+@uiHeight: 30px;
+
+/*********************************************************
+* Base
+*/
+
+body {
+  background: #e3eaee;
+  color: #555;
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/*********************************************************
+* Grid
+*/
+
+@unit: 1px;
+@column: 110;
+@gutter: 20;
+@row: 110;
+
+.width( @cols:1 ) {
+  width: ( @cols * ( @column + @gutter ) - @gutter ) * @unit;
+}
+.padleft( @cols:1 ) {
+  padding-left: ( @cols * ( @column + @gutter ) - @gutter ) + @gutter * @unit;
+}
+.padright( @cols:1 ) {
+  padding-right: ( @cols * ( @column + @gutter ) - @gutter ) + @gutter * @unit;
+}
+.height( @rows:1 ) {
+  height: ( @rows * ( @row + @gutter ) - @gutter ) * @unit;
+}
+
+.ui-row {
+  margin-bottom: @gutter * @unit;
+  .clearfix;
+  display: block;
+}
+.ui-row > div {
+  float: left;
+  margin-right: @gutter * @unit;
+}
+.ui-row > div:last-of-type {
+  margin-right: 0;
+}
+
+.g-1 { .width( 1 ); }
+.g-2 { .width( 2 ); }
+.g-3 { .width( 3 ); }
+.g-4 { .width( 4 ); }
+.g-5 { .width( 5 ); }
+.g-6 { .width( 6 ); }
+.g-7 { .width( 7 ); }
+.g-8 { .width( 8 ); }
+
+@media (max-width: 640px) {
+  .g-1,
+  .g-2,
+  .g-3,
+  .g-4,
+  .g-5,
+  .g-6,
+  .g-7,
+  .g-8 {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: @gutter * @unit;
+  }
+}
+
+/*********************************************************
+* Wrappers, main secitons
+*/
+
+.ui-wrapper {
+  display: block;
+  position: relative;
+  margin: @gutter * 2 * @unit auto 0 auto;
+  padding: 0;
+  .border-box;
+  .width(8);
+}
+
+#index {
+  @media (max-width: 640px) {
+    .ui-wrapper {
+      width: 100%;
+      padding: 0 @gutter * 2 * @unit;
+    }
+  }
+  @media (min-width: 1539px) {
+    .ui-wrapper {
+      width: 1020px;
+    }
+  }
+  @media (min-width: 1540px) { // 12 cols
+    .ui-wrapper {
+      width: 1540px;
+    }
+  }
+}
+
+.ui-section {
+  padding-top: @gutter * @unit;
+  padding-bottom: @gutter * 5 * @unit;
+  .padleft(1);
+  .padright(1);
+}
+
+@media (max-width: 640px) {
+  .ui-wrapper {
+    width: 100%;
+  }
+  .ui-section {
+     padding: @gutter * @unit;
+  }
+}
+
+
+/*********************************************************
+* Type
+*/
+
+.ui-body {
+  font-size: 14px;
+  color: @grey;
+  line-height: 1.8;
+  background: #FFF;
+  border-radius: 4px;
+  box-shadow: 0 35px 20px -40px rgba( 0, 0, 0, 0.9 );
+  clear: both;
+}
+
+.ui-body {
+  h1, h2, h3 {
+    margin: 0 0 (@gutter / 2 * @unit) 0;
+  }
+  h1, h2 {
+    font-weight: 200;
+    color: @green;
+    line-height: 1.2;
+  }
+  h1 {
+    font-size: 2.5em;
+  }
+  h2 {
+    font-size: 1.8em;
+  }
+  h3 {
+    font-weight: normal;
+  }
+  .subtitle {
+    font-weight: 200;
+    font-size: 1.2em;
+  }
+
+  .ui-ul {
+    padding: 0;
+    li {
+      list-style: none;
+      padding-left: 2em;
+      position: relative;
+      &:before {
+        position: absolute;
+        left: 0;
+        content: "\00b7"
+      }
+    }
+  }
+}
+@media (max-width: 640px) {
+  .ui-wrapper {
+    width: 100%;
+    box-shadow: none;
+  }
+  .ui-section {
+     padding: @gutter * @unit;
+  }
+}
+
+/*********************************************************
+* Images and cool stuff
+*/
+
+.ui-poster {
+  display: block;
+  width: 100%;
+  min-height: 560px;
+  background: @green;
+  position: relative;
+}
+
+.ui-img {
+  width: 100%;
+  box-shadow: 0 35px 20px -40px rgba( 0, 0, 0, 0.9 );
+}
+
+.ui-circle-frame {
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  background: @grey;
+  overflow: hidden;
+  background-size: cover;
+}
+
+.ui-box {
+  background: @lightgrey;
+  border: 1px solid darken( @lightgrey, 10% );
+  padding: @gutter * @unit;
+  .ui-circle-frame {
+    float: left;
+    margin-right: @gutter * @unit;
+  }
+  cite {
+    &:before {
+      content: "\2014\2002";
+    }
+  }
+}
+
+/*********************************************************
+* Sizes
+*/
+.ui-small {
+  width: 100px;
+}
+.ui-smedium {
+  width: 130px;
+}
+.ui-medium {
+  width: 200px;
+}
+.ui-large {
+  width: 300px;
+}
+
+/*********************************************************
+* Buttons
+*/
+.ui-btn {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1em;
+  color: #555;
+  border: 1px solid @lightgrey;
+  background: #FFF;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+/*********************************************************
+* Appended icons
+*/
+.ui-append {
+  display: inline-block;
+  vertical-align: center;
+  position: relative;
+  line-height: @uiHeight;
+  height: @uiHeight;
+  padding: 0 0 0 1em;
+  background: #FFF;
+  &:hover {
+    border-color: @blue;
+    box-shadow: 0 2px 4px -2px rgba( 0, 0, 0, 0.1 );
+  }
+}
+
+.ui-append > .icon {
+  border: none;
+  padding: 0 10px;
+  margin: 0 0 0 12px;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  top: -1px;
+  right: -1px;
+  line-height: @uiHeight + 2;
+  color: #FFF;
+  background-color: @blue;
+  &:hover {
+    color: #FFF;
+    background-color: darken( @blue, 5% );
+    text-decoration: none;
+  }
+}
+
+.ui-input > input {
+  border: 0;
+  width: 200px;
+  &:focus {
+    outline: none;
+    color: @blue;
+  }
+}
+
+/*********************************************************
+* Selects
+*/
+
+.ui-select {
+  position: relative;
+  cursor: pointer;
+  text-align: left;
+  border: 1px solid @midgrey;
+}
+
+.ui-selected {
+  display: inline-block;
+}
+
+.ui-select-menu {
+  display: none;
+  position: absolute;
+  left: -1px;
+  border: 1px solid @midgrey;
+  &:hover {
+    border-color: @blue;
+  }
+  top: 100%;
+  width: 100%;
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    > li {
+      color: lighten( @grey, 30% );
+      padding: 0 1em;
+      background: #FFF;
+      border-bottom: 1px solid @midgrey;
+      &:last-child {
+        border-bottom: none;
+      }
+      &:hover,
+      &[data-selected] {
+        color: @grey;
+        background: @lightgrey;
+      }
+    }
+  }
+}

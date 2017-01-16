@@ -1,0 +1,538 @@
+@import "mixins";
+@import "webfonts";
+@import "colors";
+@import "ui";
+
+// selectize override
+.selectize-control {
+  max-width: 350px;
+}
+
+.wm-user-panel {
+  display: none;
+}
+
+ul.password-strength > li.invalid {
+  color: #EB5D52;
+}
+
+ul.password-strength > li.valid {
+    color: #3FB58E;
+}
+
+#confirm-delete {
+  font-size: 14px;
+  display: none;
+  .width( 4 );
+  padding: 3em;
+  .border-box;
+  h2 {
+    color: @red;
+    font-weight: 200;
+    font-size: 1.5em;
+    margin-top: 0;
+  }
+  p {
+    line-height: 1.4;
+  }
+}
+
+#email-check {
+  display: block;
+  width: 100%;
+  padding: 0.7em;
+  border: 1px solid @midgrey;
+  font-size: 1em;
+  color: lighten( @grey, 10% );
+  .border-box;
+  &:focus {
+    outline: none;
+    border-color: @red;
+  }
+}
+
+#delete-me {
+  background: @red;
+  color: #FFF;
+  padding: 1em;
+  &:hover {
+    background: lighten( @red, 10% );
+  }
+}
+
+.ui-poster {
+  min-height: 0;
+  background: #FFF;
+}
+
+#user-avatar {
+  height: 150px;
+  width: 150px;
+  border-radius: 200px;
+  margin: 20px auto;
+}
+
+#wrong-email {
+  display: none;
+  text-align: center;
+  font-size: 1.5em;
+  padding: 1em;
+}
+
+#logout-message {
+  display: none;
+  text-align: center;
+  font-size: 1.5em;
+  padding: 1em;
+}
+
+#logged-out-message {
+  text-align: center;
+}
+
+h1.login-above {
+  margin-bottom: 1em;
+}
+
+.subtext {
+  width: 75%;
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 18px;
+  color: @textgrey;
+}
+
+.ui-body h1 {
+  margin-top: 1em;
+}
+
+.field-label {
+  display: inline-block;
+  color: lighten(@grey, 30%);
+  width: 30%;
+  padding-right: 5%;
+}
+
+.wm-email-pref-list, .wm-security-pref-list {
+  vertical-align: top;
+  width: 60%;
+  display: inline-block;
+  position: relative;
+  > li > input[type="checkbox"] {
+    margin: 0 15px 0 0;
+    padding: 0;
+  }
+}
+
+.email-prefs {
+  border-radius: 0.25em;
+  color: #FFF;
+  display: none;
+  padding: 0.25em 0.5em;
+
+  &.prefs-saved {
+    background-color: @green;
+  }
+
+  &.prefs-error {
+    background-color: @red;
+  }
+}
+
+.no-list-styling {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+iframe {
+  border: none;
+  width: 100%;
+  height: 300px;
+}
+
+.webmaker-login-message,
+.custom-password-message {
+  color: @green;
+}
+
+/*********************************************************
+* Filter
+*/
+
+.gallery-header {
+  .header {
+    float: left;
+    padding-bottom: 10px;
+    font-family: 'Open Sans Light', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    margin-right: @gutter * @unit;
+
+    h1, p {
+      display: inline;
+      margin-right: 10px;
+      font-weight: normal;
+      letter-spacing: -0.25px
+    }
+
+    h1 {
+      font-size: 2.4em;
+      line-height: 16px;
+      color: @green;
+    }
+
+    p {
+      font-size: 1.4em;
+      color: @grey;
+
+      a {
+        color: @blue;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+          color: lighten(@blue, 10%);
+        }
+      }
+    }
+  }
+}
+
+#tools h1 {
+  line-height: 1.4em;
+}
+
+.filter {
+  position: relative;
+  background: @green;
+  float: right;
+  z-index: 3;
+  padding: 0.5em 1em 1em;
+  .border-box;
+
+  label {
+    color: #FFF;
+    line-height: 1.6;
+  }
+
+  #search-filter {
+    border-color: darken(@green, 5%);
+    &:hover {
+      border-color: darken(@green, 15%);
+    }
+    .icon {
+      background: darken(@green, 10%);
+    }
+    .ui-select-menu {
+      border-color: @green;
+    }
+  }
+
+  &:before { // Arrow
+    content: "";
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid @green;
+    margin-left: -10px;
+  }
+}
+
+// Closing button for the confirm delete block
+i.boxclose {
+  border: 1px solid #DDD;
+  color: #999;
+  cursor: pointer;
+  float: right;
+  height: 12px;
+  top: 10px;
+  right: 10px;
+  padding: 8px;
+  position: absolute;
+  text-align: center;
+  width: 12px;
+}
+
+/*********************************************************
+* Login / logout
+*/
+
+.webmaker-logout {
+  top: -0.5em;
+  position: relative;
+  padding: 0;
+  border: medium none;
+  margin-left: 10px;
+  line-height: 30px;
+  font-size: 13px;
+  color: #555;
+  width: 4em !important;
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+/*********************************************************
+* Forms
+*/
+
+.form-control .account-form {
+  width: 60%;
+  padding: 8px;
+  font-size: 12px;
+  outline: none;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+  border: 1px solid #CCC;
+  margin-top: 10px;
+  .transition(border-color 0.15s ease-in);
+  &:focus {
+    border-color: #27AAE1;
+  }
+}
+
+li .set-password,
+li .disable-password {
+  display: inline-block;
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+/*********************************************************
+* Webmaker nav
+*/
+#webmaker-nav {
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 13px;
+  width: 100%;
+  color: #373737;
+}
+.webmaker-nav-container {
+  overflow: hidden;
+  background: #eaeff2;
+  border-bottom: 1px solid #fff;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 15px;
+}
+
+.webmaker-nav {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-size: 1em;
+}
+
+.webmaker-nav > li > a {
+  display: block;
+  height: 100%;
+  padding: 0 10px;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.webmaker-nav > li > a:hover {
+  text-decoration: underline;
+}
+
+#logo {
+  line-height: 1;
+  float: left;
+  display: block;
+}
+/*********************************************************
+* User/Login Styles
+*/
+.user-info {
+  float: right;
+  text-align: right;
+}
+
+.user-info > li {
+  float: left;
+  border-right: none;
+  height: 100%;
+  margin: 0.9em 0;
+  border-right: 1px solid #b5b7b8;
+  &:last-child {
+    border-right: none;
+  }
+}
+
+.webmaker-nav .user {
+  position: relative;
+  padding-left: 36px;
+  border-right: none;
+  img {
+    position: absolute;
+    left: 0;
+    top: -0.4em;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+  }
+}
+
+#identity {
+  font-weight: bold;
+  > a {
+    color: inherit;
+  }
+}
+
+
+.webmaker-create-user {
+  display: none;
+  padding: 2em 1em;
+  background: #F4F5F5;
+  border-bottom: 1px solid #DDD;
+  color: #555;
+  text-align: center;
+}
+
+.webmaker-create-user > form {
+  display: inline-block;
+  text-align: left;
+  width: 500px;
+  .error-message {
+    color: #ff0000;
+    overflow: hidden;
+  }
+}
+/*********************************************************
+* Helpers
+*/
+.webmaker-create-user .row {
+  margin: 1em 0;
+}
+
+.webmaker-create-user .inline {
+  display: inline-block;
+}
+
+.webmaker-create-user .visually-hidden {
+  display: block;
+  height: 1px;
+  overflow: hidden;
+  left: -99999em;
+}
+
+
+/*********************************************************
+* Title
+*/
+.webmaker-create-user legend {
+  font-size: 1.8em;
+  font-weight: 700;
+  margin: 0;
+}
+
+/*********************************************************
+* Display username
+*/
+.display-username-container {
+  font-size: 1.5em;
+}
+.display-username-container,
+.display-username-input {
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+}
+.display-username-input {
+  font-size: 1em;
+  padding: 0.5em;
+  width: 16em;
+  border: 1px solid #3FB58E;
+  border-radius: 2px;
+  color: #3FB58E;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.display-username-input:focus {
+  outline: none;
+  box-shadow: 0 2px 3px -3px #3FB58E;
+}
+
+/*********************************************************
+* Buttons, iframe
+*/
+a {
+  color: #27aae1;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+a:hover {
+  text-decoration: underline;
+}
+.create-user-submit,
+.access-button {
+  color: #FFF;
+  border: 1px solid #519369;
+  background: #3FB58E;
+  font-size: 1em;
+  border-radius: 2px;
+}
+
+.create-user-submit {
+  padding: 1em;
+  font-size: 1.2em;
+}
+
+.create-user-submit:hover {
+  background: #79b790;
+}
+
+/*********************************************************
+* Login button states - done via a JS class switch
+*/
+/* Initial we don't want anything shown */
+#webmaker-nav {
+  .user,
+  .dash,
+  .makes,
+  #webmaker-logout {
+    display: none;
+  }
+}
+/* We're logged in - show all the things */
+#webmaker-nav.loggedin {
+  .user,
+  .dash,
+  .makes {
+    display: block;
+  }
+}
+/*********************************************************
+* My projects
+*/
+.my-projects-container {
+  display:none;
+}
+.my-projects-container iframe {
+  width: 100%;
+  height: 0;
+  z-index: 0;
+  border-bottom: 1px solid #CCC;
+  border: none;
+}
+
+.my-projects-container.open {
+  z-index: 5;
+  position: relative;
+  display: block;
+}
+
+.my-projects-container.open iframe {
+  height: 300px;
+}
+
+.my-projects-title.hidden {
+  display: none;
+}
