@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+- '4.6'
+before_script:
+- npm install -g lab
+- npm install -g knex
+- psql -c 'create database publish;' -U postgres
+sudo: false
+env:
+- NODE_ENV="development" API_HOST="0.0.0.0" PORT=2015 LOG_LEVEL="info" DATABASE_URL="postgres:///publish" DEBUG=false S3_EMULATION=true REMIX_SCRIPT="http://localhost:3500/resources/remix/index.js"
+cache:
+  directories:
+  - node_modules
+notifications:
+  irc: irc.mozilla.org#publish
+deploy:
+  provider: heroku
+  api_key:
+    secure: iBj7b0hZYomajSTBOGbMtjmC+TmNbiHc6RAZ32CBwxTwh4qmGFzUvxRR+VichFrlyJWiIPB4QmUPlMBT5XL2VhPblhicUbxq06HhQrNzZhtNk2zCfSkqP3+AaW01sDCv1OaeLhJyPaGKGCDYdZ8hEjPWGDtiQBYsdczFKY4cIUCyQxxkfCGmBIaQN4zAfSkA5FXskdFSDUz2k9lelR+Yt4SNqE/XFo5kkZi0+7glFY7/0jtcFLdfxWHDXs8HvEnP2MwUt5ulksXTXLrMZbYjYn3dHx0QJIxd6y1bcm4+y4oMQ6c4dBEZQsrmPHjcmCpVazMTcAHUvBd+x2uwhEfGLq0tof02brMGz9aBLQAN/wRt0P3h/T+R1+b3eIwRHaTlc3ZxKKiJ1KhfC/TfgaBkKEmdLqHCJDCm/qOPaoQqnOKwwhYleTklk8XJ2F1ccv8Ls7nWj4TZKE9FZ1s62OVvYbQAtoc6lBCf/e96/4ayPJ+3WLiW0NYszvsraoKEyDYtK2reSimqzv4OpCWkddzDMXzSUahRGxdgtKfP0JJx9+WYhYntfaxuZnBaKHX0odB3gTKWI3ioS9JdbfN90ZU84TeRNClhYw6WHqjJ/t5SG/bsDMPijvqVQcA8MB9X2xUqL5Qn13ZvI1qQFCPEuhfwF7zZ5WzzTW/60lVX39SClh8=
+  on:
+    branch: master
+    repo: mozilla/publish.webmaker.org
+  app: publish-webmaker-org-staging

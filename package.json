@@ -1,0 +1,62 @@
+{
+  "name": "publish.webmaker.org",
+  "version": "0.0.1",
+  "description": "A server to save and publish makes/projects created on Thimble and X-ray Goggles",
+  "main": "app.js",
+  "scripts": {
+    "start": "node server",
+    "env": "cp env.dist .env",
+    "knex": "npm run migrate && npm run seed",
+    "migrate": "knex migrate:latest",
+    "seed": "knex seed:run",
+    "pretest": "npm run knex && npm run lint",
+    "test": "lab -t 80 -c --verbose --colors --assert code --timeout 5000",
+    "lint": "eslint adaptors api lib server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mozilla/publish.webmaker.org.git"
+  },
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/mozilla/publish.webmaker.org/issues"
+  },
+  "homepage": "https://github.com/mozilla/publish.webmaker.org",
+  "engines": {
+    "node": "4.6.x"
+  },
+  "dependencies": {
+    "bluebird": "^2.9.30",
+    "bookshelf": "^0.8.1",
+    "boom": "^2.7.2",
+    "bunyan": "^1.3.6",
+    "bunyan-prettystream": "^0.1.3",
+    "habitat": "^3.1.2",
+    "hapi": "^8.6.0",
+    "hapi-auth-bearer-token": "^3.1.1",
+    "hapi-bunyan": "^0.6.0",
+    "hoek": "^2.14.0",
+    "joi": "^6.4.3",
+    "knex": "^0.8.6",
+    "lout": "^6.2.2",
+    "mime": "^1.3.4",
+    "newrelic": "^1.22.0",
+    "noxmox": "^0.2.4",
+    "pg": "^4.4.0",
+    "pg-query-stream": "^0.7.0",
+    "request": "^2.58.0",
+    "sqlite3": "^3.1.0",
+    "tar-stream": "^1.2.1"
+  },
+  "devDependencies": {
+    "code": "^1.4.0",
+    "colors": "^1.1.2",
+    "commander": "^2.9.0",
+    "cross-spawn": "^0.4.0",
+    "eslint": "^2.13.1",
+    "lab": "^10.8.2",
+    "mofo-style": "^2.4.0",
+    "mox-server": "^0.2.0",
+    "pg": "^4.5.5"
+  }
+}
