@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS access_tokens;
+DROP TABLE IF EXISTS auth_codes;
+DROP TABLE IF EXISTS clients;

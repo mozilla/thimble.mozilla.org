@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Awesome tests</title>
+  <link rel="stylesheet" media="all" href="mocha.css">
+</head>
+<body>
+  <div id="mocha"></div>
+  <div id="messages"></div>
+  <div id="fixtures"></div>
+  <script src="mocha.js"></script>
+  <script>
+    mocha.setup('bdd');
+  </script>
+  <script src="../tests.bundle.js"></script>
+  <script>
+    if (window.mochaPhantomJS) {
+      mochaPhantomJS.run();
+    } else {
+      mocha.run();
+    }
+  </script>
+</body>
+</html>
+
