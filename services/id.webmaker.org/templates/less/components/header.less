@@ -1,0 +1,47 @@
+.navbar {
+  /* fallback */
+  background-color: #1F93D0;
+  height: 40px;
+  width: 100%;
+  border-radius: 0;
+  position: relative;
+  min-height: 40px;
+}
+
+.desktopHeader {
+  visibility: hidden;
+  display: none;
+  margin-bottom: 60px;
+}
+
+@media (min-width : 451px) {
+  .mobileHeader {
+    visibility: hidden;
+    display: none;
+  }
+  .desktopHeader {
+    visibility: visible;
+    display: block;
+  }
+}
+
+
+.logo, .wordmark {
+  height: 30px;
+  margin-top: 10px;
+  padding-left: 28px;
+}
+
+.wordmark {
+  height: 40px;
+  margin-top: -1px;
+}
+
+.redirect {
+  margin: 9px 26px 0 0;
+  float: right;
+  color: #F9F7FF;
+  a {
+    color: #F9F7FF;
+  }
+}

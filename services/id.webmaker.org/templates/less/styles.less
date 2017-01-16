@@ -1,0 +1,70 @@
+@import "../../node_modules/bootstrap/less/bootstrap";
+// Font awesome
+@import "../../node_modules/font-awesome/less/font-awesome";
+@fa-font-path: "/assets/font-awesome/fonts";
+// Open Sans font
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,300italic,700);
+
+@import "components/index";
+@import "mixins";
+
+@import "pages/reset-password";
+@import "pages/login";
+@import "pages/migrate";
+@import "pages/signup";
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 300;
+  background-color: #F6F6F6;
+  color: #464646;
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+h1 {
+  font-weight: 500;
+  font-size: 3.7rem;
+  letter-spacing: 0.05rem;
+  text-shadow: rgba(0, 0, 0, 0.6) 0 0.1rem 0.1rem;
+}
+
+h2 {
+  font-weight: 200;
+  font-size: 2.3rem;
+  margin: 1rem 0 2.5rem 0;
+}
+
+h3 {
+  font-weight: 400;
+  font-size: 1.6rem;
+}
+
+@media (min-width : 451px) {
+  h1 {
+    font-size: 3.9rem;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+  }
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.innerForm {
+  text-align: center;
+
+  @media (min-width : 451px) {
+    text-align: right;
+  }
+}
