@@ -1,0 +1,112 @@
+.loginNoPass {
+  .text {
+    margin-left: 80px;
+    display: block;
+  }
+}
+
+.migrateKeyContainer {
+  max-width: 400px;
+  width: 100%;
+  margin: auto;
+  height: 400px;
+  .migrateKey {
+    height: 170px;
+    padding: 30px;
+    background-color: #FFFFFF;
+    margin-top: 30px;
+  }
+  .fullHeight {
+    height: auto;
+  }
+}
+
+.setPassMigration {
+  height: 180px;
+  padding-top: 30px;
+  background-color: #FFFFFF;
+}
+
+.arrow_box {
+  position: relative;
+  box-shadow: 0 1px 0 0 #DADADA;
+  border-radius: 5px;
+  &:after {
+    content: "";
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    margin-left: -0.5em;
+    bottom: -1em;
+    left: 50%;
+    box-sizing: border-box;
+    border-width: 0.5em;
+    border-style: solid;
+    -moz-border-top-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    border-image: none;
+    border-color: transparent transparent #F9FDFF #F9FDFF;
+    transform-origin: 0px 0px 0px;
+    transform: rotate(-45deg);
+    box-shadow: -1px 1px 0 0px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.successBanner {
+  display: block;
+  background-color: #53C0A3;
+  color: #FAFAFA;
+  padding: 0 15px;
+  color: #FAFAFA;
+  width: 100%;
+  max-width: 400px;
+  height: 200px;
+  @media (min-width : 451px) {
+    height: 180px;
+  }
+  .successBannerIcon {
+    &:before {
+      top: 17px;
+      left: 19px;
+      position: relative;
+      color: #FAFAFA;
+      .icon(@fa-check);
+      font-size: 28px;
+    }
+    float: left;
+    display: inline-block;
+    vertical-align: bottom;
+    border: 2px solid #FAFAFA;
+    margin-right: 1rem;
+    width: 7rem;
+    height: 7rem;
+    border-radius: 2.5em;
+    position: relative;
+    top: 55px;
+  }
+  .text {
+    display: inline-block;
+    width: 100%;
+    max-width: 200px;
+    padding: 20px;
+    @media (min-width : 451px) {
+      max-width: 275px;
+    }
+    p {
+      font-size: 15px;
+    }
+    a {
+      color: #FAFAFA;
+      text-decoration: underline;
+      font-weight: 500;
+    }
+    .successBannerHeader {
+      margin: 0;
+      font-size: 20px;
+      line-height: 30px;
+      font-weight: lighter;
+    }
+  }
+}

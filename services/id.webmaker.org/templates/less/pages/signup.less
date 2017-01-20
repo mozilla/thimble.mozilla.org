@@ -1,0 +1,167 @@
+.signup-bg {
+  background-image: url('/assets/img/background.jpg');
+  background-size: 100% 100%;
+}
+.signup-page {
+
+  .signup-button {
+    float: inherit;
+    width: 90%;
+    max-width: 100%;
+    .btn.btn-awsm {
+      max-width: 100%;
+      width: 100%;
+    }
+    @media (min-width : 451px) {
+      float: right;
+      max-width: 170px;
+    }
+  }
+
+
+  .inputBox {
+    display: table;
+    text-align: left;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    span {
+      display: table-cell;
+      text-align: left;
+      vertical-align: middle;
+    }
+    .checkBox {
+      padding-right: 5px;
+    }
+  }
+
+  .navbar {
+    background: transparent;
+  }
+
+  @white: /* not #F9F7FF...? */ white;
+  @dim: 6rem;
+  @border: 1.7px solid rgba(255,255,255,0.7);
+  @contentWidth: 47rem;
+
+  h1, h2 {
+    color: @white;
+    text-align: center;
+  }
+
+  .wordmark {
+    display: inline-block;
+    color: @white;
+  }
+
+  div[role=form] {
+    background: @white;
+    padding: 3rem 3rem 1.5rem 3rem;
+    margin: auto;
+    max-width: @contentWidth;
+    width: 100%;
+    border-radius: 0.5rem;
+
+    label {
+      display: block;
+      ::-webkit-input-placeholder {
+         line-height: 2.5;
+      }
+
+      ::-moz-placeholder {  /* Firefox 19+ */
+         line-height: 2.5;
+      }
+
+      :-ms-input-placeholder {
+         line-height: 2.5;
+      }
+      input {
+        height: 5.5rem;
+        font-size: 2rem;
+        line-height: 2.58em;
+      }
+      span {
+        font-weight: normal;
+      }
+    }
+
+    #feedback {
+      z-index: 99999;
+      position: absolute;
+      bottom: 999999px;
+      overflow: hidden;
+      width: 0;
+      &:focus + span {
+        border-color: #52C29E;
+        box-shadow: none;
+        outline: none;
+      }
+      & + span {
+        display:inline-block;
+        width: 2.5rem;
+        height: 2.5rem;
+        vertical-align: bottom;
+        border: 1px solid rgba(0,0,0,0.25);
+        border-radius: 0.5em;
+        margin-right: 1rem;
+      }
+      &:checked + span {
+        background: url('img/icon-check.svg');
+        background-size: 100% 100%;
+      }
+    }
+  }
+
+  .commit {
+
+    max-width: @contentWidth;
+    width: 100%;
+    margin: auto;
+    height: @dim;
+    color: @white;
+    margin-top: 3rem;
+
+    div {
+      display: inline-block;
+      vertical-align: middle;
+      padding: 10px;
+      @media (min-width : 451px) {
+        padding: 0;
+      }
+
+      &.eula {
+        max-width: calc(@contentWidth * 0.45);
+      }
+
+      &.agreement {
+        position: relative;
+        width: @dim;
+        height: @dim;
+        border: @border;
+        border-radius: @dim;
+        background: url('img/icon-check.svg');
+        background-size: 3.5rem 3.5rem;
+        background-position: center center;
+        background-repeat: no-repeat;
+      }
+
+      & + div {
+        margin-left: 1rem;
+      }
+
+      a {
+        color: rgba(255,255,255,0.8);
+      }
+    }
+  }
+
+  .innerForm {
+    @media (min-width : 451px) {
+      margin-top: 60px;
+    }
+  }
+}

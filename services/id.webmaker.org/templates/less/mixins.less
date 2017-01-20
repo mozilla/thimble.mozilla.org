@@ -1,0 +1,38 @@
+.icon(@fa-icon) {
+  content: @fa-icon;
+  .fa();
+}
+
+.label(@fa-icon) {
+  .icon(@fa-icon);
+  color: #B5B1A6;
+  font-family: FontAwesome;
+  position: absolute;
+  display: block;
+  font-size: 18px;
+}
+
+.flex() {
+  display: -webkit-flex;
+  display:         flex;
+}
+
+.flex-shrink(@num) {
+  -webkit-flex-shrink: @num;
+          flex-shrink: @num;
+}
+
+.align-items(@alignment) {
+  -webkit-align-items: @alignment;
+          align-items: @alignment;
+}
+
+.flex-dir(@direction) {
+  -webkit-direction: @direction;
+     flex-direction: @direction;
+}
+
+.flex-order(@ord) {
+  -webkit-order: @ord;
+          order: @ord;
+}

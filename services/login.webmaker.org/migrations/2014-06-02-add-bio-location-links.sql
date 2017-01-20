@@ -1,0 +1,4 @@
+ALTER TABLE Users
+  ADD COLUMN `bio` VARCHAR(255),
+  ADD COLUMN `location` VARCHAR(255),
+  ADD COLUMN `links` VARCHAR(255);

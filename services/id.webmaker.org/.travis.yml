@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+- '4.6'
+sudo: false
+cache:
+  directories:
+  - node_modules
+addons:
+  postgresql: "9.4"
+before_script:
+  - psql -c 'create database webmaker_oauth_test' -U postgres

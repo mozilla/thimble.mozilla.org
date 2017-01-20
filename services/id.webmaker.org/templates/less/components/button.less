@@ -1,0 +1,29 @@
+.btn {
+  &.btn-awsm {
+    position: relative;
+    width: 90%;
+    max-width: 165px;
+    vertical-align: baseline;
+    line-height: 39px;
+    height: 55px;
+    background-color: #53C0A3;
+    color: #FCFFFF;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.01rem;
+    border: medium none transparent;
+    box-shadow: 0px 0.4rem 0px #23B687,
+                0px 0.1rem 0px rgba(255, 255, 255, 0.5) inset;
+    &:hover, &:focus {
+      top: 0.2rem;
+      box-shadow: 0px 0.2rem 0px #23B687,
+                  0px 0.1rem 0px rgba(255, 255, 255, 0.5) inset;
+                  outline: none;
+    }
+    &:active {
+      top: 0.4rem;
+      box-shadow: 0px 0.1rem 0.1rem rgba(0, 0, 0, 0.2) inset;
+    }
+  }
+}

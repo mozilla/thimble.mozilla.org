@@ -1,0 +1,14 @@
+extends: "./node_modules/mofo-style/.eslintrc.yaml"
+
+parserOptions:
+  ecmaVersion: 6
+
+env:
+  node: true
+  es6: true
+
+rules:
+  prefer-const: [2]
+  camelcase: [2, {"properties": "never"}]
+  prefer-arrow-callback: [0]
+  radix: [2, "as-needed"]
