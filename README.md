@@ -26,6 +26,7 @@ Setup
 
 - Node.js (version 4.6 or later) [[download](https://nodejs.org/en/download/)]
 - Vagrant (version 1.9 or later) [[download](https://www.vagrantup.com/downloads.html)]
+  - __Note:__ On Windows machines, you may need to restart your computer after installing Vagrant for it to be fully usable
 - Virtualbox (version 5.1 or later) [[download](https://www.virtualbox.org/wiki/Downloads)]
 
 The setup of Thimble can be divided into two distinct sections:
@@ -34,7 +35,7 @@ The setup of Thimble can be divided into two distinct sections:
 
 To fully use Thimble locally, you need to first setup Brackets locally first. This can be done by following the steps outlined below:
 
-- Fork and clone the [Brackets repository](https://github.com/mozilla/brackets)
+- Fork the [Brackets repository](https://github.com/mozilla/brackets) and then clone it to your local machine using `git clone --recursive https://github.com/<your_username>/brackets.git` (replace `<your_username>` with your Github username for the account you forked Brackets into)
 - In the cloned repository directory, run `npm install` to install the dependencies for Brackets
 - Run `npm run build` to create the built editor files that will be used by Thimble
 - Run `npm start` to start a server that will allow the editor to be accessed on [http://localhost:8000/src](http://localhost:8000/src)
