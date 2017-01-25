@@ -172,3 +172,8 @@ Concurrency
 -----------
 
 Thimble uses the [throng](https://www.npmjs.com/package/throng) module to leverage Node's [Cluster API](https://nodejs.org/api/cluster.html) for concurrency. To specify the number of server processes to start set `WEB_CONCURRENCY` to a positive integer value.
+
+Chat with the team
+-----------
+
+You can talk with the team in the [contributing channel]( http://chat.mozillafoundation.org) on [mattermost](https://about.mattermost.com). We're a friendly group! 
