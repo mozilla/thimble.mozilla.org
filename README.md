@@ -25,9 +25,9 @@ Setup
 ### Requirements
 
 - Node.js (version 4.6 or later) [[download](https://nodejs.org/en/download/)]
+- Virtualbox (version 5.1 or later) [[download](https://www.virtualbox.org/wiki/Downloads)]
 - Vagrant (version 1.9 or later) [[download](https://www.vagrantup.com/downloads.html)]
   - __Note:__ On Windows machines, you may need to restart your computer after installing Vagrant for it to be fully usable
-- Virtualbox (version 5.1 or later) [[download](https://www.virtualbox.org/wiki/Downloads)]
 
 The setup of Thimble can be divided into two distinct sections:
 
@@ -55,7 +55,7 @@ For the first time, to start all dependent services and Thimble, simply run:
 ```
 vagrant up
 ```
-This process can take about 10-15 minutes as it needs to download all dependencies. Once you see a log that says `Express server listening on http://localhost:3500`, you can access Thimble on [http://localhost:3500](http://localhost:3500).
+This process can take a while depending on your internet connection speed as it needs to download all dependencies. Once you see a log that says `Express server listening on http://localhost:3500`, you can access Thimble on [http://localhost:3500](http://localhost:3500).
 
 You can now make changes to the Thimble source code on your system and they should be automatically reflected on [http://localhost:3500](http://localhost:3500).
 
