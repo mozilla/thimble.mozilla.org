@@ -54,20 +54,21 @@ For the first time, to start all dependent services and Thimble, simply run:
 ```
 vagrant up
 ```
+This process can take a while depending on your internet connection speed as it needs to download all dependencies.
+The Vagrant VM is set to use 1 virtual CPU and 1.5G of RAM. If you find you need to adjust these resource levels, you
+can do so in the `/Vagrantfile`.
 
-Depending on your internet connection speed, this process can take a while (since it needs to download all dependencies not listed above).
-Once you see `Express server listening on http://localhost:3500`, you are ready to start using Thimble on [http://localhost:3500](http://localhost:3500)!
-Any changes made to the Thimble source code on your system will automatically be reflected on [http://localhost:3500](http://localhost:3500).
+When Vagrant finishes provisioning the VM, you will see a log that says `Starting Thimble server on http://localhost:3500/ (this may take a minute...)`.
+At this point you can access Thimble on [http://localhost:3500](http://localhost:3500). NOTE: if it does not work right away, give the server
+another minute to finish starting.
 
-To stop Thimble, simply press `Ctrl+C` twice.
+If you want to manually force the Vagrant Thimble server to restart, use `npm run restart-server`.
 
-To restart Thimble, run:
+To suspend the VM use `vagrant suspend` (like putting it to sleep). You can also use `vagrant halt` to do a full shutdown.
 
-```
-vagrant reload --provision
-```
+To restart the VM and Thimble again, re-run `vagrant up`.
 
-This will take less time to setup compared to the `vagrant up` command.
+To see logs for the services running in Vagrant, use `npm run logs`.
 
 ## Manual Installation
 You can also setup Thimble and its needed components outside Vagrant and Virtualbox. This might be needed if you want to:
@@ -155,7 +156,6 @@ To publish locally, you'll need an account.
 * When you've created your account, click ``Set permanent password instead``
   * This lets you authenticate your account without needing email
 * Go back to Thimble and Log In with your new account
-
 
 It's that simple! You are now ready to start using Thimble to its full potential!
 
