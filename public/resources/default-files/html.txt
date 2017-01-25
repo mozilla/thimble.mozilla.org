@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Made with Thimble</title>
-</head>
-<body>
-
-  <h1>Welcome to Thimble</h1>
-
-  <p>Make something <strong>amazing</strong> with the web!</p>
-
-</body>
+  <head>
+    <title>Made with Thimble</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>Welcome to Thimble</h1>
+    <p>Make something <strong>amazing</strong> with the web!</p>
+  </body>
 </html>
