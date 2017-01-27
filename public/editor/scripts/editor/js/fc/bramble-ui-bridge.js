@@ -330,7 +330,11 @@ define(function(require) {
 
     if (Project.getUser()) {
       //Publish button
-      $("#navbar-publish-button").click(showPublishDialog);
+      $("#navbar-publish-button").mousedown(function(e) {
+        if (e.which === 1) {
+          showPublishDialog();
+        }
+      });
       $("#publish-button-cancel").click(hidePublishDialog);
 
       publisher = new Publisher();
