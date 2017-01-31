@@ -19,53 +19,57 @@ how it works in [this blog post](http://blog.humphd.org/thimble-and-bramble/).
 
 Thimble requires a modern web browser, and we recommend using Mozilla Firefox or Google Chrome.
 
-Setup
------
-
-### Requirements
-
-- Node.js (version 4.6 or later) [[download](https://nodejs.org/en/download/)]
-- Virtualbox (version 5.1 or later) [[download](https://www.virtualbox.org/wiki/Downloads)]
-- Vagrant (version 1.9 or later) [[download](https://www.vagrantup.com/downloads.html)]
-  - __Note:__ On Windows machines, you may need to restart your computer after installing Vagrant for it to be fully usable
-
-The setup of Thimble can be divided into two distinct sections:
-
-### Editor
-
-To fully use Thimble locally, you need to first setup Brackets locally first. This can be done by following the steps outlined below:
-
-- Fork the [Brackets repository](https://github.com/mozilla/brackets) and then clone it to your local machine using `git clone --recursive https://github.com/<your_username>/brackets.git` (replace `<your_username>` with your Github username for the account you forked Brackets into)
-- In the cloned repository directory, run `npm install` to install the dependencies for Brackets
-- Run `npm run build` to create the built editor files that will be used by Thimble
-- Run `npm start` to start a server that will allow the editor to be accessed on [http://localhost:8000/src](http://localhost:8000/src)
-- You can find out more information about setting up Brackets locally by referring to the instructions [here](https://github.com/mozilla/brackets#how-to-setup-bramble-brackets-in-your-local-machine)
-
-### Thimble and Services
-
 Thimble interacts with the Publish API (source managed in [publish.webmaker.org](https://github.com/mozilla/publish.webmaker.org)) to store users, projects, files and other content as well as publish user projects.
 
 For authentication and user management, Thimble uses Webmaker OAuth which consists of the Webmaker ID System (source managed in [id.webmaker.org](htps://github.com/mozilla/id.webmaker.org)) and the Webmaker Login API (source managed in [login.webmaker.org](https://github.com/mozilla/login.webmaker.org)).
 
 All three services along with Thimble are bundled together using Git subtrees and run together using Vagrant.
 
-The first step is to fork and clone Thimble and navigate to the cloned directory in a terminal shell.
+Setup
+-----
 
-For the first time, to start all dependent services and Thimble, simply run:
+### Pre-Requisites
+In order for Thimble to execute correctly, the following dependencies needs to be installed:
+
+- Brackets (Bramble) [[download](https://github.com/mozilla/brackets)]
+- Node.js (version 4.6 or later) [[download](https://nodejs.org/en/download/)]
+- Virtualbox (version 5.1 or later) [[download](https://www.virtualbox.org/wiki/Downloads)]
+- Vagrant (version 1.9 or later) [[download](https://www.vagrantup.com/downloads.html)]
+  - __Note:__ On Windows machines, you may need to restart your computer after installing Vagrant for it to be fully usable.
+
+Only continue the Thimble installation after the above has been successfully installed!
+
+### Installing Thimble
+
+After forking and cloning Thimble, installing it is quite simple. All we need to do is run the following command inside the cloned directory and let vagrant do the heavy lifting for us:
+
 ```
 vagrant up
 ```
-This process can take a while depending on your internet connection speed as it needs to download all dependencies. Once you see a log that says `Express server listening on http://localhost:3500`, you can access Thimble on [http://localhost:3500](http://localhost:3500).
 
-You can now make changes to the Thimble source code on your system and they should be automatically reflected on [http://localhost:3500](http://localhost:3500).
+Depending on your internet connection speed, this process can take a while (Since it needs to download all dependencies not listed above).
+Once you see `Express server listening on http://localhost:3500`, you are ready to start using Thimble!
+Any changes made to the Thimble source code on your system will automatically be reflected on [http://localhost:3500](http://localhost:3500).
 
-To stop running Thimble, simply press `Ctrl+C` twice.
+To stop Thimble, simply press `Ctrl+C` twice.
 
-To restart Thimble again, run:
+To restart Thimble, run:
+
 ```
 vagrant reload --provision
 ```
-This will take a much shorter time to setup compared to the `vagrant up` command.
+
+This will take less time to setup compared to the `vagrant up` command.
+
+### Running Brackets (Bramble)
+
+After starting Thimble, Brackets also needs to be started. On your local machine, navigate to the cloned version of Brackets and run the following command:
+
+```
+npm start
+```
+
+It's that simple! You are now ready to start using Thimble to its full pontetial!
 
 Localization
 ----------------------
