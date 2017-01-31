@@ -16,7 +16,7 @@ require.config({
     "cookies": "/node_modules/cookies-js/dist/cookies",
     "PathCache": "../../path-cache",
     "constants": "../../constants",
-    "reloadProtection": "../../require",
+    "reloadProtection": "../../reload-protection",
     "EventEmitter": "/node_modules/wolfy87-eventemitter/EventEmitter.min",
     "analytics": "/node_modules/webmaker-analytics/analytics"
   },
