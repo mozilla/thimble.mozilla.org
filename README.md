@@ -25,11 +25,11 @@ For authentication and user management, Thimble uses Webmaker OAuth which consis
 
 All three services along with Thimble are bundled together using Git subtrees and run together using Vagrant.
 
-Setup
------
+Setup/Installation
+--------
 
-### Pre-Requisites
-In order for Thimble to execute correctly, the following dependencies needs to be installed:
+## 1) Pre-Requisites
+In order for Thimble to be installed correctly, the following dependencies needs to be installed:
 
 - Brackets (Bramble) [[download](https://github.com/mozilla/brackets)]
 - Node.js (version 4.6 or later) [[download](https://nodejs.org/en/download/)]
@@ -37,10 +37,16 @@ In order for Thimble to execute correctly, the following dependencies needs to b
 - Vagrant (version 1.9 or later) [[download](https://www.vagrantup.com/downloads.html)]
   - __Note:__ On Windows machines, you may need to restart your computer after installing Vagrant for it to be fully usable.
 
-Only continue the Thimble installation after the above has been successfully installed!
+### Installing Brackets (Bramble)
+* Fork and clone https://github.com/mozilla/brackets
+* Make sure you're on the ``bramble`` branch
+* Run ``git submodule update --init`` to install submodules
+* Run ``npm install`` to install dependencies
+* Run `npm run build` to build Bramble
+* Run ``npm start`` to get a static server running on [http://localhost:8000/src](http://localhost:8000/src). You can try the demo version at [http://localhost:8000/src/hosted.html](http://localhost:8000/src/hosted.html)
 
-### Installing Thimble
-
+## 2) Thimble Installation
+### Automated Installation (Preferred Method)
 After forking and cloning Thimble, installing it is quite simple. All we need to do is run the following command inside the cloned directory and let vagrant do the heavy lifting for us:
 
 ```
@@ -61,15 +67,57 @@ vagrant reload --provision
 
 This will take less time to setup compared to the `vagrant up` command.
 
-### Running Brackets (Bramble)
+### Manual Installation (Optional)
 
-After starting Thimble, Brackets also needs to be started. On your local machine, navigate to the cloned version of Brackets and run the following command:
+If you don't want to install Thimble and its dependencies automatically, you can manually install them by running the following commands:
 
-```
-npm start
-```
+**Thimble**
+* Fork and clone https://github.com/mozilla/thimble.mozilla.org
+* Make sure you're on the ``bramble`` branch
+* Run ``npm install`` to install dependencies
+* Run ``cp env.dist .env`` to create an environment file
+* Run ``npm run localize`` to generate the locale files
+* Run ``npm start`` to start the server
+* Once everything is ready and running, Thimble will be available at [http://localhost:3500/](http://localhost:3500/)
 
-It's that simple! You are now ready to start using Thimble to its full pontetial!
+**id.webmaker.org**
+* Clone https://github.com/mozilla/id.webmaker.org
+* Run ``cp sample.env .env`` to create an environment file
+* Run ``npm install`` to install dependencies
+* Run ``npm start`` to start the server
+
+**login.webmaker.org**
+* Clone https://github.com/mozilla/login.webmaker.org
+* Run ``npm install`` to install dependencies
+* Run ``cp env.sample .env`` to create an environment file
+* Run ``npm start`` the server
+
+**publish.webmaker.org**
+* These steps assume you've followed the PostgreSQL steps above, including creating the publish database.
+* Clone https://github.com/mozilla/publish.webmaker.org
+* Run ``npm install`` to install dependencies
+* Run ``npm run env``
+* Run ``npm install knex -g`` to install knex
+* Run ``npm run knex`` to seed the publish database created earlier
+* Run ``npm start`` to run the server
+
+
+## 3) Running the parts
+If you installed Thimble via the **Automated Installation** method, you need to run the following commands:
+
+* Navigate to Thimble and run: ``vagrant reload --provision``
+* Navigate to Bramble and run: ``npm start``
+
+If you installed Thimble via the **Manual Installation** method, you need to run the following commands:
+
+* Navigate to Thimble and run: ``npm start``
+* Navigate to Bramble and run: ``npm start``
+* Navigate to Webmaker ID server and run: ``npm start``
+* Navigate to Webmaker Login Server and run: ``npm start``
+* Navigate to Webmaker Publishing Server and run: ``npm start``
+
+
+It's that simple! You are now ready to start using Thimble to its full potential!
 
 Localization
 ----------------------
