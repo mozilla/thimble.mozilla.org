@@ -40,7 +40,8 @@ module.exports = function localize(server, options) {
     if(knownLocales.indexOf(urlLocale) !== -1) {
       localizedUrl = orgUrl.replace(urlLocale, bestLanguage);
     } else {
-      localizedUrl = "/" + bestLanguage + "/" + (orgUrl === "/" ? "" : orgUrl);
+      // This regex makes sure that orgUrl always begins with `/` and inserts one if it doesn't
+      localizedUrl = "/" + bestLanguage + orgUrl.replace(/^\/?/, "/");
     }
 
     res.redirect(307, localizedUrl);
