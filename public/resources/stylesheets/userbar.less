@@ -201,6 +201,22 @@ body {
       top: 2px;
       border: none;
     }
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: -2px;
+    }
+
+    &:active:after {
+      top: -3px;
+      left: 0;
+      right: 0;
+      bottom: 1px;
+    }
   }
 
   #navbar-login {
