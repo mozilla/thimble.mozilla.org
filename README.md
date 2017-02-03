@@ -19,42 +19,45 @@ how it works in [this blog post](http://blog.humphd.org/thimble-and-bramble/).
 
 Thimble requires a modern web browser, and we recommend using Mozilla Firefox or Google Chrome.
 
+#Setup/Installation
+
 Thimble interacts with the Publish API (source managed in [publish.webmaker.org](https://github.com/mozilla/publish.webmaker.org)) to store users, projects, files and other content as well as publish user projects.
 
 For authentication and user management, Thimble uses Webmaker OAuth which consists of the Webmaker ID System (source managed in [id.webmaker.org](htps://github.com/mozilla/id.webmaker.org)) and the Webmaker Login API (source managed in [login.webmaker.org](https://github.com/mozilla/login.webmaker.org)).
 
-All three services along with Thimble are bundled together using Git subtrees and run together using Vagrant.
+All three services along with Thimble are bundled together using Git subtrees and can either be run together using Vagrant, or [manually](#1b-manual-installation).
 
-Setup/Installation
---------
+## 1) Installing Thimble and Services
+### 1a) Automated Installation (Preferred Method)
+**Note:** If you aren't able to properly run virtualization software on your machine (for e.g. some versions of Windows only allow one virtualization client to run at a time and if that isn't VirtualBox, you can't run the required VirtualBox as well. This is often a problem if you have docker installed on Windows) or are trying to host Thimble on your own, refer to the [Manual Installation](#1b-manual-installation) instructions instead.
 
-## 1) Pre-Requisites
-In order for Thimble to be installed correctly, the following dependencies needs to be installed:
+#### Pre-Requisites for Automated Installation
+In order for Thimble to be installed correctly, the following dependencies needs to be installed in order:
 
-- Brackets (Bramble) [[download](https://github.com/mozilla/brackets)]
 - Node.js (version 4.6 or later) [[download](https://nodejs.org/en/download/)]
+- [Brackets (Bramble)](#installing-brackets-bramble)
 - Virtualbox (version 5.1 or later) [[download](https://www.virtualbox.org/wiki/Downloads)]
 - Vagrant (version 1.9 or later) [[download](https://www.vagrantup.com/downloads.html)]
   - __Note:__ On Windows machines, you may need to restart your computer after installing Vagrant for it to be fully usable.
 
-### Installing Brackets (Bramble)
-* Fork and clone https://github.com/mozilla/brackets
-* Make sure you're on the ``bramble`` branch
-* Run ``git submodule update --init`` to install submodules
-* Run ``npm install`` to install dependencies
-* Run `npm run build` to build Bramble
-* Run ``npm start`` to get a static server running on [http://localhost:8000/src](http://localhost:8000/src). You can try the demo version at [http://localhost:8000/src/hosted.html](http://localhost:8000/src/hosted.html)
+#### Installing Brackets (Bramble)
+- Fork the [Brackets repository](https://github.com/mozilla/brackets) and then clone it to your local machine using `git clone --recursive https://github.com/<your_username>/brackets.git` (replace `<your_username>` with your Github username for the account you forked Brackets into)
+- In the cloned repository directory, run `npm install` to install the dependencies for Brackets
+- Run `npm run build` to create the built editor files that will be used by Thimble
+- Run `npm start` to start a server that will allow the editor to be accessed on [http://localhost:8000/src](http://localhost:8000/src)
+ -- You can find out more information about setting up Brackets locally by referring to the instructions [here](https://github.com/mozilla/brackets#how-to-setup-bramble-brackets-in-your-local-machine)
 
-## 2) Thimble Installation
-### Automated Installation (Preferred Method)
-After forking and cloning Thimble, installing it is quite simple. All we need to do is run the following command inside the cloned directory and let vagrant do the heavy lifting for us:
+#### Installing Thimble and Services with Vagrant
+The first step is to fork and clone Thimble and navigate to the cloned directory in a terminal shell.
+
+For the first time, to start all dependent services and Thimble, simply run:
 
 ```
 vagrant up
 ```
 
 Depending on your internet connection speed, this process can take a while (Since it needs to download all dependencies not listed above).
-Once you see `Express server listening on http://localhost:3500`, you are ready to start using Thimble!
+Once you see `Express server listening on http://localhost:3500`, you are ready to start using Thimble on [http://localhost:3500](http://localhost:3500)!
 Any changes made to the Thimble source code on your system will automatically be reflected on [http://localhost:3500](http://localhost:3500).
 
 To stop Thimble, simply press `Ctrl+C` twice.
@@ -67,32 +70,54 @@ vagrant reload --provision
 
 This will take less time to setup compared to the `vagrant up` command.
 
-### Manual Installation (Optional)
+### 1b)Manual Installation
+You can also setup Thimble and it's needed components outside Vagrant and Virtualbox. This might be needed if you want to:
+- Host your own instance of Thimble
+- Cannot run virtualization software on your computer
 
-If you don't want to install Thimble and its dependencies automatically, you can manually install them by running the following commands:
+#### Pre-Requisites for Manual Installation
+In order for Thimble to be installed correctly, the following dependencies needs to be installed:
 
-**Thimble**
+- Node.js 4.x or above (see note below)
+  - * **Note:** The login.webmaker.org dependency needs a node version of 4.x only while all the other dependencies work with a node version of 4.x and above. We suggest installing [NVM](https://github.com/creationix/nvm) to allow the use of multiple versions of node.
+- [Brackets (Bramble)](#installing-brackets-bramble)
+- [Webmaker ID server](#id.webmaker.org)
+- [Webmaker Publishing Server](#publish.webmaker.org)
+- [Postgresql 9.4 or above (for the publish.webmaker.org dependency)](#PostgreSQL)
+- g++ 4.8 or above (for the login.webmaker.org dependency)
+- [Webmaker Login Server](#login.webmaker.org)
+
+The following is an abbreviated guide to getting it all set up. Please see each server's README for more details.
+
+## Manually Installing the Parts
+Please note: On Windows, use ``copy`` instead of ``cp``
+
+###Thimble
 * Fork and clone https://github.com/mozilla/thimble.mozilla.org
-* Make sure you're on the ``bramble`` branch
-* Run ``npm install`` to install dependencies
 * Run ``cp env.dist .env`` to create an environment file
-* Run ``npm run localize`` to generate the locale files
+* Run ``npm install`` to install dependencies
 * Run ``npm start`` to start the server
 * Once everything is ready and running, Thimble will be available at [http://localhost:3500/](http://localhost:3500/)
 
-**id.webmaker.org**
+###id.webmaker.org
 * Clone https://github.com/mozilla/id.webmaker.org
 * Run ``cp sample.env .env`` to create an environment file
 * Run ``npm install`` to install dependencies
 * Run ``npm start`` to start the server
 
-**login.webmaker.org**
+###login.webmaker.org
 * Clone https://github.com/mozilla/login.webmaker.org
 * Run ``npm install`` to install dependencies
 * Run ``cp env.sample .env`` to create an environment file
 * Run ``npm start`` the server
 
-**publish.webmaker.org**
+###PostgreSQL
+* Run ``initdb -D /usr/local/var/postgres`` to initialize PostreSQL
+  * If this already exists, run ``rm -rf /usr/local/var/postgres`` to remove it
+* Run ``postgres -D /usr/local/var/postgres`` to start the PostgreSQL server
+* Run ``createdb publish`` to create the Publish database
+
+###publish.webmaker.org
 * These steps assume you've followed the PostgreSQL steps above, including creating the publish database.
 * Clone https://github.com/mozilla/publish.webmaker.org
 * Run ``npm install`` to install dependencies
@@ -101,6 +126,36 @@ If you don't want to install Thimble and its dependencies automatically, you can
 * Run ``npm run knex`` to seed the publish database created earlier
 * Run ``npm start`` to run the server
 
+## Getting Ready to Publish
+To publish locally, you'll need to do the following...
+
+###Teach the ID server about the Publish server
+
+* Run ``createdb webmaker_oauth_test`` to create a test database
+* In your id.webmaker.org folder
+  * Run ``node scripts/create-tables.js``
+  * Edit ``scripts/test-data.sql`` and replace it's contents with:
+
+      ```sql
+        INSERT INTO clients VALUES
+          ( 'test',
+            'test',
+            '["password", "authorization_code"]'::jsonb,
+            '["code", "token"]'::jsonb,
+            'http://localhost:3500/callback' )
+      ```
+
+  * Run ``node scripts/test-data.js``
+    * You'll see a ``INSERT 0 1`` message if successful
+
+###Sign In
+
+To publish locally, you'll need an account.
+* Go to [http://localhost:3000/account](http://localhost:3000/account)
+* Click ``Join Webmaker`` and complete the process, you can use a fake email
+* When you've created your account, click ``Set permanent password instead``
+  * This lets you authenticate your account without needing email
+* Go back to Thimble and Log In with your new account
 
 ## 3) Running the parts
 If you installed Thimble via the **Automated Installation** method, you need to run the following commands:
@@ -110,11 +165,12 @@ If you installed Thimble via the **Automated Installation** method, you need to 
 
 If you installed Thimble via the **Manual Installation** method, you need to run the following commands:
 
-* Navigate to Thimble and run: ``npm start``
-* Navigate to Bramble and run: ``npm start``
-* Navigate to Webmaker ID server and run: ``npm start``
-* Navigate to Webmaker Login Server and run: ``npm start``
-* Navigate to Webmaker Publishing Server and run: ``npm start``
+* Thimble ``npm start``
+* Bramble ``npm start``
+* PostgreSQL Database ``postgres -D /usr/local/var/postgres``
+* Webmaker ID server ``npm start``
+* Webmaker Login Server ``npm start``
+* Webmaker Publishing Server and Published Projects Server ``npm start``
 
 
 It's that simple! You are now ready to start using Thimble to its full potential!
