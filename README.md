@@ -25,14 +25,13 @@ Thimble interacts with the Publish API (source managed in [publish.webmaker.org]
 
 For authentication and user management, Thimble uses Webmaker OAuth which consists of the Webmaker ID System (source managed in [id.webmaker.org](htps://github.com/mozilla/id.webmaker.org)) and the Webmaker Login API (source managed in [login.webmaker.org](https://github.com/mozilla/login.webmaker.org)).
 
-All three services along with Thimble are bundled together using Git subtrees and can either be run together using Vagrant, or [manually](#1b-manual-installation).
+All three services along with Thimble are bundled together using Git subtrees and can either be run together using Vagrant, or [manually](#manual-installation).
 
-# 1) Installing Thimble and Services
-##1a) Automated Installation (Preferred Method)
-**Note:** If you aren't able to properly run virtualization software on your machine (for e.g. some versions of Windows only allow one virtualization client to run at a time and if that isn't VirtualBox, you can't run the required VirtualBox as well. This is often a problem if you have docker installed on Windows) or are trying to host Thimble on your own, refer to the [Manual Installation](#1b-manual-installation) instructions instead.
+## Automated Installation (Preferred Method)
+**Note:** If you aren't able to properly run virtualization software on your machine (for e.g. some versions of Windows only allow one virtualization client to run at a time and if that isn't VirtualBox, you can't run the required VirtualBox as well. This is often a problem if you have docker installed on Windows) or are trying to host Thimble on your own, refer to the [Manual Installation](#manual-installation) instructions instead.
 
-### Pre-Requisites for Automated Installation
-In order for Thimble to be installed correctly, the following dependencies needs to be installed in order:
+### Prerequisites for Automated Installation
+In order for Thimble to be installed correctly, the following dependencies need to be installed in order:
 
 - Node.js (version 4.6 or later) [[download](https://nodejs.org/en/download/)]
 - [Brackets (Bramble)](#installing-brackets-bramble)
@@ -56,7 +55,7 @@ For the first time, to start all dependent services and Thimble, simply run:
 vagrant up
 ```
 
-Depending on your internet connection speed, this process can take a while (Since it needs to download all dependencies not listed above).
+Depending on your internet connection speed, this process can take a while (since it needs to download all dependencies not listed above).
 Once you see `Express server listening on http://localhost:3500`, you are ready to start using Thimble on [http://localhost:3500](http://localhost:3500)!
 Any changes made to the Thimble source code on your system will automatically be reflected on [http://localhost:3500](http://localhost:3500).
 
@@ -70,16 +69,16 @@ vagrant reload --provision
 
 This will take less time to setup compared to the `vagrant up` command.
 
-##1b) Manual Installation
-You can also setup Thimble and it's needed components outside Vagrant and Virtualbox. This might be needed if you want to:
+## Manual Installation
+You can also setup Thimble and its needed components outside Vagrant and Virtualbox. This might be needed if you want to:
 - Host your own instance of Thimble
 - Cannot run virtualization software on your computer
 
-### Pre-Requisites for Manual Installation
-In order for Thimble to be installed correctly, the following dependencies needs to be installed:
+### Prerequisites for Manual Installation
+In order for Thimble to be installed correctly, the following dependencies need to be installed:
 
 - Node.js 4.x or above (see note below)
-  - * **Note:** The login.webmaker.org dependency needs a node version of 4.x only while all the other dependencies work with a node version of 4.x and above. We suggest installing [NVM](https://github.com/creationix/nvm) to allow the use of multiple versions of node.
+  - **Note:** The login.webmaker.org dependency needs a node version of 4.x only while all the other dependencies work with a node version of 4.x and above. We suggest installing [NVM](https://github.com/creationix/nvm) to allow the use of multiple versions of node.
 - [Brackets (Bramble)](#installing-brackets-bramble)
 - [Webmaker ID server](#idwebmakerorg)
 - [Webmaker Publishing Server](#publishwebmakerorg)
@@ -97,7 +96,6 @@ Please note: On Windows, use ``copy`` instead of ``cp``
 * Run ``cp env.dist .env`` to create an environment file
 * Run ``npm install`` to install dependencies
 * Run ``npm start`` to start the server
-* Once everything is ready and running, Thimble will be available at [http://localhost:3500/](http://localhost:3500/)
 
 ####id.webmaker.org
 * Clone https://github.com/mozilla/id.webmaker.org
@@ -122,9 +120,10 @@ Please note: On Windows, use ``copy`` instead of ``cp``
 * Clone https://github.com/mozilla/publish.webmaker.org
 * Run ``npm install`` to install dependencies
 * Run ``npm run env``
-* Run ``npm install knex -g`` to install knex
 * Run ``npm run knex`` to seed the publish database created earlier
 * Run ``npm start`` to run the server
+
+Once everything is ready and running, Thimble will be available at [http://localhost:3500/](http://localhost:3500/)
 
 ### Getting Ready to Publish
 To publish locally, you'll need to do the following...
@@ -134,7 +133,7 @@ To publish locally, you'll need to do the following...
 * Run ``createdb webmaker_oauth_test`` to create a test database
 * In your id.webmaker.org folder
   * Run ``node scripts/create-tables.js``
-  * Edit ``scripts/test-data.sql`` and replace it's contents with:
+  * Edit ``scripts/test-data.sql`` and replace its contents with:
 
       ```sql
         INSERT INTO clients VALUES
@@ -156,21 +155,6 @@ To publish locally, you'll need an account.
 * When you've created your account, click ``Set permanent password instead``
   * This lets you authenticate your account without needing email
 * Go back to Thimble and Log In with your new account
-
-# 2) Running the parts
-If you installed Thimble via the **Automated Installation** method, you need to run the following commands:
-
-* Navigate to Thimble and run: ``vagrant reload --provision``
-* Navigate to Bramble and run: ``npm start``
-
-If you installed Thimble via the **Manual Installation** method, you need to run the following commands:
-
-* Thimble ``npm start``
-* Bramble ``npm start``
-* PostgreSQL Database ``postgres -D /usr/local/var/postgres``
-* Webmaker ID server ``npm start``
-* Webmaker Login Server ``npm start``
-* Webmaker Publishing Server and Published Projects Server ``npm start``
 
 
 It's that simple! You are now ready to start using Thimble to its full potential!
