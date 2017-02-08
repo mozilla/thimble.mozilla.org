@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 15">
+  <title>
+    file-white
+  </title>
+  <g data-name="Layer 1" fill="#fff">
+    <path d="M7 6V0H0v15h13V6H7"/>
+    <path d="M8 5h5L8 0v5"/>
+  </g>
+</svg>
