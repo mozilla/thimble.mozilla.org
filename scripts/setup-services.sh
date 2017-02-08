@@ -7,7 +7,7 @@ DB_PASSWORD="thimble"
 
 # --- Install OS level dependencies ---
 apt-get update -y
-curl -sL https://deb.nodesource.com/setup_4.x | sh
+curl -sL https://deb.nodesource.com/setup_6.x | sh
 apt-get install -y nodejs
 # --- Postgres ---
 echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" > /etc/apt/sources.list.d/pgdg.list
@@ -83,7 +83,8 @@ cd services
 echo "Setting up login.webmaker.org"
 cd login.webmaker.org
 cp env.sample .env
-sudo npm install --no-bin-links --loglevel=error # sudo needed for bcrypt permissions
+# Refer to https://github.com/npm/npm/issues/10776#issuecomment-209638410 on why we run npm install twice
+sudo npm install --no-bin-links --loglevel=error || sudo npm install --no-bin-links --loglevel=error # sudo needed for bcrypt permissions
 cd ..
 # ---
 
@@ -91,7 +92,8 @@ cd ..
 echo "Setting up id.webmaker.org"
 cd id.webmaker.org
 cp sample.env .env
-npm install --no-bin-links --unsafe-perm --loglevel=error # --unsafe-perm needed to run with root privileges to avoid getting the error "cannot run in wd" thrown by one of the dependencies
+# Refer to https://github.com/npm/npm/issues/10776#issuecomment-209638410 on why we run npm install twice
+npm install --no-bin-links --unsafe-perm --loglevel=error || npm install --no-bin-links --unsafe-perm --loglevel=error # --unsafe-perm needed to run with root privileges to avoid getting the error "cannot run in wd" thrown by one of the dependencies
 su postgres -c "node scripts/create-tables.js"
 su postgres -c "psql -d webmaker_oauth_test -f ../../scripts/sql/oauth-setup.sql"
 cd ..
@@ -101,7 +103,8 @@ cd ..
 echo "Setting up publish.webmaker.org"
 cd publish.webmaker.org
 npm run env
-npm install --no-bin-links --loglevel=error
+# Refer to https://github.com/npm/npm/issues/10776#issuecomment-209638410 on why we run npm install twice
+npm install --no-bin-links --loglevel=error || npm install --no-bin-links --loglevel=error
 eval "DATABASE_URL=postgres://$DB_USERNAME:$DB_PASSWORD@localhost:5432/publish npm run migrate"
 cd ..
 mkdir -p /tmp/mox/test # Serve published projects from here
