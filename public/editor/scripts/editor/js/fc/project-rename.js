@@ -135,18 +135,19 @@ define(function(require) {
         analytics.event("ProjectRenamed");
 
         var publisher = new Publisher();
-        publisher.init(bramble);
+        publisher.init(context.bramble);
         publisher.showUnpublishedChangesPrompt();
       });
     });
   }
 
-  function ProjectRenameUtility(appUrl, csrfToken, publisher) {
+  function ProjectRenameUtility(appUrl, csrfToken, publisher, bramble) {
     var context = this;
 
     this.appUrl = appUrl;
     this.csrfToken = csrfToken;
     this.publisher = publisher;
+    this.bramble = bramble;
     this.container = $("#navbar-project-title");
     this.saveButton = $("#project-rename-save");
     this.renameButton = $("#navbar-rename-project");
@@ -162,8 +163,8 @@ define(function(require) {
     });
   }
 
-  function init(appUrl, csrfToken, publisher) {
-    return new ProjectRenameUtility(appUrl, csrfToken, publisher);
+  function init(appUrl, csrfToken, publisher, bramble) {
+    return new ProjectRenameUtility(appUrl, csrfToken, publisher, bramble);
   }
 
   return {

@@ -340,7 +340,7 @@ define(function(require) {
       publisher.init(bramble);
 
       // Initialize the project name UI
-      ProjectRenameUtility.init(appUrl, csrfToken, publisher);
+      ProjectRenameUtility.init(appUrl, csrfToken, publisher, bramble);
     } else {
       $("#navbar-publish-button").click(showPublishHelper);
     }
