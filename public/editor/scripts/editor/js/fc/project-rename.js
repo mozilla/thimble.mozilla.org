@@ -1,5 +1,6 @@
 define(function(require) {
   var $ = require("jquery");
+  var Publisher = require("fc/publisher");
   var InputField = require("fc/bramble-input-field");
   var KeyHandler = require("fc/bramble-keyhandler");
   var Project = require("project/project");
@@ -132,15 +133,20 @@ define(function(require) {
         }
         editingComplete(context);
         analytics.event("ProjectRenamed");
+
+        var publisher = new Publisher();
+        publisher.init(bramble);
+        publisher.showUnpublishedChangesPrompt();
       });
     });
   }
 
-  function ProjectRenameUtility(appUrl, csrfToken) {
+  function ProjectRenameUtility(appUrl, csrfToken, publisher) {
     var context = this;
 
     this.appUrl = appUrl;
     this.csrfToken = csrfToken;
+    this.publisher = publisher;
     this.container = $("#navbar-project-title");
     this.saveButton = $("#project-rename-save");
     this.renameButton = $("#navbar-rename-project");
@@ -156,8 +162,8 @@ define(function(require) {
     });
   }
 
-  function init(appUrl, csrfToken) {
-    return new ProjectRenameUtility(appUrl, csrfToken);
+  function init(appUrl, csrfToken, publisher) {
+    return new ProjectRenameUtility(appUrl, csrfToken, publisher);
   }
 
   return {

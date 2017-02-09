@@ -66,15 +66,13 @@ require(["jquery", "bowser"], function($, bowser) {
         console.error("[Bramble] Failed to load Project state, with", err);
       }
 
-      // Initialize the project name UI
-      ProjectRenameUtility.init(appUrl, BrambleEditor.csrfToken);
-
       // Initialize the login links
       SSOOverride.init();
 
       BrambleEditor.create({
         editorUrl: editorUrl,
-        appUrl: appUrl
+        appUrl: appUrl,
+        ProjectRenameUtility : ProjectRenameUtility
       });
     });
   }

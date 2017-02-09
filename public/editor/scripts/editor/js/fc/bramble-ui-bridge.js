@@ -16,7 +16,7 @@ define(function(require) {
     $(".preview-pane-nav").width(data.secondPaneWidth);
   }
 
-  function init(bramble) {
+  function init(bramble, csrfToken, appUrl, ProjectRenameUtility) {
     var publisher;
     var locale = $("html")[0].lang;
 
@@ -338,6 +338,9 @@ define(function(require) {
 
       publisher = new Publisher();
       publisher.init(bramble);
+
+      // Initialize the project name UI
+      ProjectRenameUtility.init(appUrl, csrfToken, publisher);
     } else {
       $("#navbar-publish-button").click(showPublishHelper);
     }
