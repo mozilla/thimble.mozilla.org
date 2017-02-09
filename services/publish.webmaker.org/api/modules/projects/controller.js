@@ -120,9 +120,10 @@ class ProjectsController extends BaseController {
   publish(request, reply) {
     const project = request.pre.records.models[0];
     const publisher = new Publisher(project);
+    const readonly = request.query.readonly;
 
     const result = publisher
-    .publish()
+    .publish(readonly)
     .then(DateTracker.convertToISOStringsForModel)
     .then(function(publishedModel) {
       return request.generateResponse(publishedModel).code(200);

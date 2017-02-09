@@ -16,7 +16,12 @@ const base = Joi.object().keys({
 
 const updatePaths = Joi.object();
 
+const publishQuery = Joi.object().keys({
+  readonly: Joi.boolean()
+});
+
 module.exports = {
   base,
-  updatePaths
+  updatePaths,
+  publishQuery
 };
