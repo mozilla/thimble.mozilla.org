@@ -25,7 +25,28 @@ Thimble interacts with the Publish API (source managed in [publish.webmaker.org]
 
 For authentication and user management, Thimble uses Webmaker OAuth which consists of the Webmaker ID System (source managed in [id.webmaker.org](htps://github.com/mozilla/id.webmaker.org)) and the Webmaker Login API (source managed in [login.webmaker.org](https://github.com/mozilla/login.webmaker.org)).
 
-All three services along with Thimble are bundled together using Git subtrees and can either be run together using Vagrant, or [manually](#manual-installation).
+All three services along with Thimble are bundled together using Git subtrees to be run together using Vagrant, or, they may be run separately with Thimble [manually](#manual-installation).
+
+**Note:** The Git subtree bundle mentioned above for use with the automated installation can be found in the `/services` folder. It contains a subtree for each of the three services. These subtrees are not automatically kept in sync with their corresponding service's parent repositories. If you need to update one of the subtrees to match the history of its parent repository, follow these instructions:
+  - Create a separate branch and checkout to it.
+  - Run the following to get the history of the service's repository:
+
+  ```
+  git fetch https://github.com/mozilla/<service's repository name> <branch name>
+  ```
+
+  Replace `<service's repository name>` with the remote repository name of the service you are trying to update and `<branch name>` with the name of the branch on that repository you want to update the subtree with.<br>
+  For e.g. `git fetch https://github.com/mozilla/publish.webmaker.org master`.
+  - Now to update the subtree, run:
+
+  ```
+  git subtree pull --prefix services/<service's repository name> https://github.com/mozilla/<service's repository name> <branch name> --squash
+  ```
+
+  Replace `<service's repository name>` and `<branch name>` with the same values you used in the previous command.<br>
+  For e.g. `git subtree pull --prefix services/publish.webmaker.org https://github.com/mozilla/publish.webmaker.org master --squash`.
+  - Update your remote branch with this new change.
+  - Open a pull request to have the subtree update reviewied and merged.
 
 ## Automated Installation (Preferred Method)
 **Note:** If you aren't able to properly run virtualization software on your machine (for e.g. some versions of Windows only allow one virtualization client to run at a time and if that isn't VirtualBox, you can't run the required VirtualBox as well. This is often a problem if you have docker installed on Windows) or are trying to host Thimble on your own, refer to the [Manual Installation](#manual-installation) instructions instead.
