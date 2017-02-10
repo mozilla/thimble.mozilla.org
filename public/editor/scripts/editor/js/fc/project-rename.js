@@ -1,6 +1,5 @@
 define(function(require) {
   var $ = require("jquery");
-  var Publisher = require("fc/publisher");
   var InputField = require("fc/bramble-input-field");
   var KeyHandler = require("fc/bramble-keyhandler");
   var Project = require("project/project");
