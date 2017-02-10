@@ -35,10 +35,13 @@ module.exports = function localize(server, options) {
     let bestLanguage = bestlang(langPrefs, webmakerI18N.getSupportLanguages(), "en-US");
     let localizedUrl;
 
+    let orgUrl = req.originalUrl;
+
     if(knownLocales.indexOf(urlLocale) !== -1) {
-      localizedUrl = req.originalUrl.replace(urlLocale, bestLanguage);
+      localizedUrl = orgUrl.replace(urlLocale, bestLanguage);
     } else {
-      localizedUrl = path.join("/", bestLanguage, req.originalUrl);
+      // This regex makes sure that orgUrl always begins with `/` and inserts one if it doesn't
+      localizedUrl = "/" + bestLanguage + orgUrl.replace(/^\/*/, "/");
     }
 
     res.redirect(307, localizedUrl);

@@ -27,7 +27,6 @@
     "helmet": "0.1.2",
     "less": "1.7.5",
     "less-middleware": "0.1.15",
-    "messina": "0.1.1",
     "moment": "2.8.2",
     "mysql": "2.0.1",
     "newrelic": "^1.21.1",

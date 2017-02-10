@@ -201,6 +201,18 @@ class BasePublisher {
     });
   }
 
+  updateProjectReadOnlyProperty(readonly) {
+    if (typeof readonly !== `boolean`) {
+      return Promise.resolve();
+    }
+
+    return projectsQueryBuilder
+    .updateOne(this.project.id, { readonly })
+    .then(() => {
+      this.project.readonly = readonly;
+    });
+  }
+
   setRemixDataForPublishedProject() {
     this.remixData = {
       projectId: this.publishedProject.id,
@@ -371,9 +383,10 @@ class Publisher extends BasePublisher {
     this.project = project.toJSON();
   }
 
-  publish() {
+  publish(readonly) {
     return Promise.resolve()
     .then(() => this.fetchUserForProject())
+    .then(() => this.updateProjectReadOnlyProperty(readonly))
     .then(() => this.createOrUpdatePublishedProject())
     .then(() => this.setRemixDataForPublishedProject())
     .then(() => this.uploadNewFiles())

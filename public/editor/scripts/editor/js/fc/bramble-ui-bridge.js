@@ -92,7 +92,7 @@ define(function(require) {
       });
     });
 
-    $("#export-project-zip").click(function() {
+    $("#filetree-pane-nav-export-project-zip").click(function() {
       bramble.export();
       analytics.event("ExportZip");
       return false;
@@ -332,6 +332,9 @@ define(function(require) {
       //Publish button
       $("#navbar-publish-button").click(showPublishDialog);
       $("#publish-button-cancel").click(hidePublishDialog);
+
+      //Publish link
+      $("#link-publish-link").click(hidePublishDialog);
 
       publisher = new Publisher();
       publisher.init(bramble);

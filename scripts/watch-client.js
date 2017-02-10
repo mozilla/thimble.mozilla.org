@@ -53,6 +53,9 @@ getListLocales(localeDir)
   return localizeClient.readLocaleStrings(locales);
 })
 .then(() => {
-  let watcher = chokidar.watch("public/**/*.js", { cwd: root });
-  watcher.on("ready", () => watcher.on("all", updateClient));
+  let watcher = chokidar.watch("public/**/*.js", { cwd: root, usePolling: true });
+  watcher.on("ready", () => {
+    watcher.on("all", updateClient)
+    log.info("Thimble client watching started for changes to public/**/*.js");
+  });
 });
