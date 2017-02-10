@@ -27,8 +27,8 @@
         {% endfor %}
         >
           <td class="project-title">
-            {{ project.title }}
-            <span class="project-information"></span>
+          <a target="_self" href="/{{locale}}/user/{{username}}/{{project.id}}/{{queryString}}"> {{project.title}}
+            <span class="project-information"></span></a>
           </td>
           <td>
             <div class="project-delete" title="{{ gettext("prjListDeleteProjectBtnTitle") }}">
