@@ -51,7 +51,7 @@ define(function(require) {
     publisher.handlers = {
       publish: publisher.publish.bind(publisher),
       unpublish: publisher.unpublish.bind(publisher),
-      unpublishedChangesPrompt: unpublishedChangesPrompt.bind(publisher),
+      unpublishedChangesPrompt: unpublishedChangesPrompt.bind(publisher)
     };
 
     if(Project.getDescription()) {
