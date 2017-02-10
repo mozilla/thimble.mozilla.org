@@ -19,9 +19,7 @@ require.config({
 
 require(["jquery", "constants", "analytics", "moment"], function($, Constants, analytics, moment) {
   var projects = document.querySelectorAll("tr.bramble-user-project");
-  var username = encodeURIComponent($("#project-list").attr("data-username"));
   var locale = $("html")[0].lang;
-  var queryString = window.location.search;
   moment.locale($("meta[name='moment-lang']").attr("content"));
 
   function getElapsedTime(lastEdited) {
