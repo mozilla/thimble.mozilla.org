@@ -30,7 +30,7 @@ define(function(require) {
       return false;
     }
 
-    saveButton.text("Save");
+    saveButton.text("{{ renameProjectSaveBtn }}");
     saveButton[isSave ? "hide" : "show"]();
     context.renameButton[isSave ? "show" : "hide"]();
     titleBar[isSave ? "save" : "edit"]();
@@ -118,7 +118,7 @@ define(function(require) {
   }
 
   function save(context) {
-    context.saveButton.text("Saving...");
+    context.saveButton.text("{{ renameProjectSavingIndicator }}");
 
     persist.call(context, context.titleBar.val(), function(err) {
       if(err) {
