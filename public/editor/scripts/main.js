@@ -76,5 +76,5 @@ require(["jquery", "bowser"], function($, bowser) {
     });
   }
 
-  require(["bramble-editor", "project/project", "sso-override", "fc/project-rename"], init);
+  require(["bramble-editor", "project/project", "sso-override"], init);
 });

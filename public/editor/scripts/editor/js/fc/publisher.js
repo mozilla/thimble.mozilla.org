@@ -52,7 +52,6 @@ define(function(require) {
       publish: publisher.publish.bind(publisher),
       unpublish: publisher.unpublish.bind(publisher),
       unpublishedChangesPrompt: unpublishedChangesPrompt.bind(publisher),
-      showUnpublishedChangesPrompt : publisher.showUnpublishedChangesPrompt.bind(publisher)
     };
 
     if(Project.getDescription()) {
@@ -63,10 +62,10 @@ define(function(require) {
       this.updateDialog(publishUrl, true);
     }
 
-    bramble.on("fileChange", publisher.showUnpublishedChangesPrompt);
-    bramble.on("fileDelete", publisher.showUnpublishedChangesPrompt);
-    bramble.on("fileRename", publisher.showUnpublishedChangesPrompt);
-    bramble.on("folderRename", publisher.showUnpublishedChangesPrompt);
+    bramble.on("fileChange", publisher.showUnpublishedChangesPrompt.bind(publisher));
+    bramble.on("fileDelete", publisher.showUnpublishedChangesPrompt.bind(publisher));
+    bramble.on("fileRename", publisher.showUnpublishedChangesPrompt.bind(publisher));
+    bramble.on("folderRename", publisher.showUnpublishedChangesPrompt.bind(publisher));
 
     dialog.buttons.publish.on("click", publisher.handlers.publish);
 
@@ -93,10 +92,12 @@ define(function(require) {
 
     if(publisher.needsUpdate) {
       callback();
+      return;
     }
 
     if(!Project.getPublishUrl()) {
       callback();
+      return;
     }
 
     publisher.handlers.unpublishedChangesPrompt();
@@ -104,7 +105,9 @@ define(function(require) {
       if(err) {
         console.error("[Thimble] Failed to set the publishNeedsUpdate flag after a file change: ", err);
         callback(err);
+        return;
       }
+
       publisher.needsUpdate = true;
       callback();
     });
