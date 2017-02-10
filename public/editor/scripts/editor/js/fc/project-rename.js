@@ -30,7 +30,7 @@ define(function(require) {
       return false;
     }
 
-    saveButton.text("{{ renameProjectSaveBtn }}");
+    saveButton.text("Save");
     saveButton[isSave ? "hide" : "show"]();
     context.renameButton[isSave ? "show" : "hide"]();
     titleBar[isSave ? "save" : "edit"]();
@@ -118,7 +118,7 @@ define(function(require) {
   }
 
   function save(context) {
-    context.saveButton.text("{{ renameProjectSavingIndicator }}");
+    context.saveButton.text("Saving...");
 
     persist.call(context, context.titleBar.val(), function(err) {
       if(err) {
@@ -134,20 +134,17 @@ define(function(require) {
         editingComplete(context);
         analytics.event("ProjectRenamed");
 
-        var publisher = new Publisher();
-        publisher.init(context.bramble);
-        publisher.showUnpublishedChangesPrompt();
+        context.publisher.showUnpublishedChangesPrompt();
       });
     });
   }
 
-  function ProjectRenameUtility(appUrl, csrfToken, publisher, bramble) {
+  function ProjectRenameUtility(appUrl, csrfToken, publisher) {
     var context = this;
 
     this.appUrl = appUrl;
     this.csrfToken = csrfToken;
     this.publisher = publisher;
-    this.bramble = bramble;
     this.container = $("#navbar-project-title");
     this.saveButton = $("#project-rename-save");
     this.renameButton = $("#navbar-rename-project");
@@ -163,8 +160,8 @@ define(function(require) {
     });
   }
 
-  function init(appUrl, csrfToken, publisher, bramble) {
-    return new ProjectRenameUtility(appUrl, csrfToken, publisher, bramble);
+  function init(appUrl, csrfToken, publisher) {
+    return new ProjectRenameUtility(appUrl, csrfToken, publisher);
   }
 
   return {

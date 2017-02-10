@@ -6,11 +6,11 @@ define(function(require) {
 
   var host;
 
-  var TEXT_PUBLISH = "{{ publishBtn }}";
-  var TEXT_PUBLISHING = "{{ publishPublishingIndicator }}";
-  var TEXT_UNPUBLISH = "{{ publishUnpublishBtn }}";
-  var TEXT_UNPUBLISHING = "{{ publishUnpublishingIndicator }}";
-  var TEXT_UPDATE_PUBLISH = "{{ publishChangesBtn }}";
+  var TEXT_PUBLISH = "Publish";
+  var TEXT_PUBLISHING = "Publishing...";
+  var TEXT_UNPUBLISH = "Unpublish";
+  var TEXT_UNPUBLISHING = "Unpublishing...";
+  var TEXT_UPDATE_PUBLISH = "Update published version";
 
   function unpublishedChangesPrompt() {
     var dialog = this.dialog;
@@ -51,7 +51,8 @@ define(function(require) {
     publisher.handlers = {
       publish: publisher.publish.bind(publisher),
       unpublish: publisher.unpublish.bind(publisher),
-      unpublishedChangesPrompt: unpublishedChangesPrompt.bind(publisher)
+      unpublishedChangesPrompt: unpublishedChangesPrompt.bind(publisher),
+      showUnpublishedChangesPrompt : publisher.showUnpublishedChangesPrompt.bind(publisher)
     };
 
     if(Project.getDescription()) {
@@ -85,24 +86,27 @@ define(function(require) {
   };
 
   // When there are file events triggered by the editor (or project is renamed), update the publish/republish status
-  Publisher.prototype.showUnpublishedChangesPrompt = function() {
+  Publisher.prototype.showUnpublishedChangesPrompt = function(callback) {
     var publisher = this;
 
+    callback = callback || function() {};
+
     if(publisher.needsUpdate) {
-      return;
+      callback();
     }
 
     if(!Project.getPublishUrl()) {
-      return;
+      callback();
     }
 
     publisher.handlers.unpublishedChangesPrompt();
     Project.publishNeedsUpdate(true, function(err) {
       if(err) {
         console.error("[Thimble] Failed to set the publishNeedsUpdate flag after a file change: ", err);
-        return;
+        callback(err);
       }
       publisher.needsUpdate = true;
+      callback();
     });
   };  
 

@@ -52,7 +52,7 @@ require(["jquery", "bowser"], function($, bowser) {
 
   Bramble.once("error", onError);
 
-  function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility) {
+  function init(BrambleEditor, Project, SSOOverride) {
     var thimbleScript = document.getElementById("thimble-script");
     var appUrl = thimbleScript.getAttribute("data-app-url");
     var projectDetails = thimbleScript.getAttribute("data-project-details");
@@ -71,8 +71,7 @@ require(["jquery", "bowser"], function($, bowser) {
 
       BrambleEditor.create({
         editorUrl: editorUrl,
-        appUrl: appUrl,
-        ProjectRenameUtility : ProjectRenameUtility
+        appUrl: appUrl
       });
     });
   }
