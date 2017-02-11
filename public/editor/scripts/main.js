@@ -16,6 +16,7 @@ require.config({
     "cookies": "/node_modules/cookies-js/dist/cookies",
     "PathCache": "../../path-cache",
     "constants": "../../constants",
+    "reloadProtection": "../../reload-protection",
     "EventEmitter": "/node_modules/wolfy87-eventemitter/EventEmitter.min",
     "analytics": "/node_modules/webmaker-analytics/analytics"
   },
@@ -52,12 +53,14 @@ require(["jquery", "bowser"], function($, bowser) {
 
   Bramble.once("error", onError);
 
-  function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility) {
+  function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility, reloadProtection) {
     var thimbleScript = document.getElementById("thimble-script");
     var appUrl = thimbleScript.getAttribute("data-app-url");
     var projectDetails = thimbleScript.getAttribute("data-project-details");
     var editorUrl = thimbleScript.getAttribute("data-editor-url");
 
+    unloadProtection.enable();
+    
     // Unpack projectDetails details
     projectDetails = JSON.parse(decodeURIComponent(projectDetails));
 
@@ -79,5 +82,5 @@ require(["jquery", "bowser"], function($, bowser) {
     });
   }
 
-  require(["bramble-editor", "project/project", "sso-override", "fc/project-rename"], init);
+  require(["bramble-editor", "project/project", "sso-override", "fc/project-rename", "reloadProtection"], init);
 });
