@@ -23,7 +23,7 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
   var queryString = window.location.search;
   var favorites;
   if(localStorage.getItem('project-favorites') === null){
-    favorites = new Array[];
+    favorites = [];
   }
   else{
     favorites = JSON.parse(localStorage.getItem('project-favorites'));
@@ -49,7 +49,7 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
     }
   }
  
-  var favoriteArray = new Array[];
+  var favoriteArray = [];
 
   Array.prototype.forEach.call(projects, function(project) {
     var projectSelector = "#" + project.getAttribute("id");
