@@ -54,8 +54,12 @@ define(function(require) {
     });
     // Set initial UI value to match editor value
     setWordWrapUI(bramble.getWordWrap());
-
-
+    //set initial UI value to allow javascript UI
+    if(bramble.getAllowJavaScript()) {
+        $("#allow-scripts-toggle").addClass("switch-enabled");
+    } else {
+        $("#allow-scripts-toggle").removeClass("switch-enabled");
+    }
     // Enable/Disable JavaScript in Preview
     $("#allow-scripts-toggle").click(function() {
       // Toggle current value
