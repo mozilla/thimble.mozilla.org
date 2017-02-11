@@ -64,7 +64,7 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
       $(projectSelector + " .project-favorite").on("click", function() {
         favorites = JSON.parse(localStorage.getItem('project-favorites'));
         if(favorites === null){
-          favorites = new Array[];
+          favorites = [];
         }
         if(favorites.indexOf(projectId) == -1) {
           favorites.push(projectId);
