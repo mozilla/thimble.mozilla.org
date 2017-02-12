@@ -111,5 +111,5 @@ chown -R vagrant:vagrant /tmp/mox/test # Let vagrant write to this dir
 # --- thimble setup ---
 cd "$ROOT"
 cp env.dist .env
-npm install --no-bin-links --loglevel=error
+npm install --no-bin-links --unsafe-perm --loglevel=error
 # ---
