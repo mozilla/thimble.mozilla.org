@@ -11,7 +11,7 @@ body {
 @brambleTop: 120px;
 
 /* Transition time for hover effects */
-@transitionTime: 0.5s;
+@transitionTime: 0.15s;
 
 #webmaker-bramble {
     position: absolute;
@@ -95,6 +95,7 @@ body {
   margin-right: 5px;
   border-radius: 1px;
   .icon;
+  .transition;
 
   div {
     background-image:url("/img/icon/plus-white.svg");
@@ -117,6 +118,7 @@ body {
   background-color: #3F3F3F;
   border-radius: 1px;
   .icon;
+  .transition;
 
   div {
     background-image:url("/img/icon/file-tray-arrow-left.svg");
@@ -219,7 +221,6 @@ body {
   margin-right: 10px;
   background-color: #2B2B2B;
   border-radius: 2px;
-
   .icon;
 
   div {
@@ -230,6 +231,7 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 10px;
+	.transition;
   }
 
   &:hover div {
@@ -258,6 +260,7 @@ body {
     width: 15px;
     position: relative;
     top: 0;
+	.transition;
   }
 
   span {
@@ -267,6 +270,7 @@ body {
     top: -1px;
     opacity: 0.5;
     filter: alpha(opacity=50);
+	.transition;
   }
 
   &:hover {
@@ -314,6 +318,7 @@ body {
     position: absolute;
     top: 7px;
     left: 8px;
+	.transition;
   }
 
   &:hover {
@@ -338,6 +343,7 @@ body {
   opacity: 0.5;
   filter: alpha(opacity=50);
   padding: 4px;
+  .transition;
 
   img {
       width: 22px;
@@ -408,6 +414,7 @@ body {
       .toggle-button {
         background: @buttonGreen;
         left: 30px;
+		.transition;
       }
 
       &:hover {
@@ -487,6 +494,7 @@ body {
     font-size: 1.2em;
     display: inline-block;
     .icon;
+	.transition;
 
     &:hover {
       background-color: @buttonGreenHover;
@@ -615,6 +623,7 @@ body {
       position: relative;
       top: -1px;
       left: -1px;
+	  .transition;
     }
     .icon;
 
@@ -745,6 +754,7 @@ body {
     background-repeat: no-repeat;
     opacity: .3;
     filter: alpha(opacity=30);
+	.transition;
   }
 
   &:hover {
@@ -775,6 +785,7 @@ body {
     height: 20px;
     position: relative;
     top: 5px;
+	.transition;
   }
 }
 
@@ -803,6 +814,7 @@ body {
 .viewmode-inactive {
   opacity: 0.3;
   filter: alpha(opacity=30);
+  .transition;
 }
 
 
@@ -828,6 +840,7 @@ body {
     opacity: .3;
     top: 2px;
     margin: 4px;
+	.transition;
   }
 }
 
