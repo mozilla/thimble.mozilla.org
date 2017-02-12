@@ -191,6 +191,11 @@ define(function(require) {
     var dialog = publisher.dialog;
     var buttons = dialog.buttons;
 
+    var didConfirm = window.confirm("Are you sure you want to unpublish this project? Links that have already been shared will no longer work.");
+
+    if (!didConfirm) {
+      return;
+    }
     if (publisher.unpublishing) {
       return;
     }

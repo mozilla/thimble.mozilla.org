@@ -152,11 +152,15 @@
   border-color: #A9A9A9;
   background-color: #B0B0B0;
   .publish-button;
-  .grey-button;
+  .red-button;
+  margin-top: 20px;
 
-  svg {
+  img {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    height: 15px;
+    width: 15px;
     position: relative;
-    top: 2px;
     left: -2px;
   }
 
@@ -196,13 +200,26 @@
 }
 
 .grey-button {
-    background-color: #B0B0B0;
+  background-color: #B0B0B0;
 
-    &:hover {
-      background-color: #BCBCBC;
-    }
+  &:hover {
+    background-color: #BCBCBC;
+  }
 
-    &:active {
-      background-color: #9B9B9B;
-    }
+  &:active {
+    background-color: #9B9B9B;
+  }
 }
+
+.red-button {
+  background-color: @red;
+
+  &:hover {
+    background-color: darken(@red, 10%);
+  }
+
+  &:active {
+    background-color: @red;
+  }
+}
+
