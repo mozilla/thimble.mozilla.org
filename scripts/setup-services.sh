@@ -32,6 +32,7 @@ npm install -g node-pre-gyp --loglevel=error # For login.webmaker.org sqlite3
 npm install -g autoless@0.1.7 webpack@1.7.3 --loglevel=error # For id.webmaker.org
 npm install -g knex@">=0.8.6 <0.9.0" --loglevel=error # For publish.webmaker.org
 npm install -g pm2 --loglevel=error # For running Thimble, see scripts/start-services.sh
+npm install -g grunt-cli --loglevel=error # For Thimble's npm postinstall script
 # ---
 
 cd /vagrant
