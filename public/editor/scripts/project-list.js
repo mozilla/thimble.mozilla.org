@@ -21,12 +21,17 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
   var projects = document.querySelectorAll("tr.bramble-user-project");
   var locale = $("html")[0].lang;
   var queryString = window.location.search;
+  var isLocalStorageAvailable = !!(window.localStorage);
   var favorites;
-  if(localStorage.getItem('project-favorites') === null){
-    favorites = [];
-  }
-  else{
-    favorites = JSON.parse(localStorage.getItem('project-favorites'));
+  if(isLocalStorageAvailable){
+    try {
+      favorites = JSON.parse(localStorage.getItem("project-favorites"));
+      if(favorites === null) {
+        favorites = [];
+      }
+    } catch(e) {
+      console.error("failed to get project favorites from localStorage with: ", e);
+    }
   }
   moment.locale($("meta[name='moment-lang']").attr("content"));
 
@@ -36,47 +41,44 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
     return "{{ momentJSLastEdited | safe }}".replace("<% timeElapsed %>", timeElapsed);
   }
 
-  function storageAvailable(type) {
-    try {
-      var storage = window[type],
-      x = '__storage_test__';
-      storage.setItem(x, x);
-      storage.removeItem(x);
-      return true;
+  function updateFavorite(projectId, projectSelector, project){
+    var indexOfProjectInFavorites = favorites.indexOf(projectId);
+    var projectFavoriteButton = projectSelector + " .project-favorite-button";
+
+    if(indexOfProjectInFavorites !== -1){
+      favoriteProjectsElementList.push(project);
+      $(projectFavoriteButton).toggleClass("project-favorite-selected");
+      $(projectFavoriteButton).text("Unfavorite");
     }
-    catch(e) {
-      return false;
-    }
+
+    $(projectSelector + " .project-favorite").on("click", function() {
+      indexOfProjectInFavorites = favorites.indexOf(projectId);
+      projectFavoriteButton = projectSelector + " .project-favorite-button";
+
+      if(indexOfProjectInFavorites === -1) {
+        favorites.push(projectId);
+        localStorage.setItem("project-favorites", JSON.stringify(favorites));
+        $(projectFavoriteButton).toggleClass("project-favorite-selected");
+        $(projectFavoriteButton).text("Unfavorite");
+      }
+      else {
+        favorites.splice(indexOfProjectInFavorites, 1);
+        localStorage.setItem("project-favorites", JSON.stringify(favorites));
+        $(projectFavoriteButton).toggleClass("project-favorite-selected");
+        $(projectFavoriteButton).text("Favorite");
+      }
+    });
   }
- 
-  var favoriteArray = [];
+
+  var favoriteProjectsElementList = [];
 
   Array.prototype.forEach.call(projects, function(project) {
     var projectSelector = "#" + project.getAttribute("id");
     var lastEdited = project.getAttribute("data-project-date_updated");
+    var projectId = project.getAttribute("data-project-id");
 
-    if(storageAvailable('localStorage')) {
-      var projectId = project.getAttribute("data-project-id");
-      if(favorites.indexOf(projectId) != -1){
-        favoriteArray.push(project);
-        $(projectSelector + " .project-favorite-button").toggleClass("project-unfavorite-button");
-      }
-      $(projectSelector + " .project-favorite").on("click", function() {
-        favorites = JSON.parse(localStorage.getItem('project-favorites'));
-        if(favorites === null){
-          favorites = [];
-        }
-        if(favorites.indexOf(projectId) == -1) {
-          favorites.push(projectId);
-          localStorage.setItem('project-favorites', JSON.stringify(favorites));
-          $(projectSelector + " .project-favorite-button").toggleClass("project-unfavorite-button");
-        }
-        else {
-          favorites.splice(favorites.indexOf(project.getAttribute("data-project-id")), 1);
-          localStorage.setItem('project-favorites', JSON.stringify(favorites));
-          $(projectSelector + " .project-favorite-button").toggleClass("project-unfavorite-button");
-        }
-      });
+    if(isLocalStorageAvailable) {
+      updateFavorite(projectId, projectSelector, project);
     }
 	  
     $(projectSelector + " > .project-title").on("click", function() {
@@ -85,7 +87,7 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
     $(projectSelector + " .project-information").text(getElapsedTime(lastEdited));
   });
 
-  $("#project-list").prepend(favoriteArray);
+  $("#project-list").prepend(favoriteProjectsElementList);
 
   $(".project-delete").click(function() {
     // TODO: we can do better than this, but let's at least make it harder to lose data.
