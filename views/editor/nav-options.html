@@ -3,7 +3,7 @@
   <!-- FILE TREE -->
   <div class="filetree-pane-nav hide">
     <div class="nav-container">
-      <div class="filetree-pane-nav-title">
+      <div adapt-order="1" class="filetree-pane-nav-title">
         {{ gettext("navFiles") }}
       </div>
 
@@ -30,20 +30,21 @@
     </div>
   </div>
 
-  <!-- LEFT SIDE -->
+  <!-- LEFT SIDE - Editor -->
   <div class="editor-pane-nav">
+
     <div class="nav-container">
       <div title="{{ gettext("navExpandFileTrayIconTitle") }}" id="editor-pane-nav-fileview">
         <div></div>
       </div>
 
-      <span class="editor-pane-nav-title">{{ gettext("navEditor") }}</span>
-      <span>&nbsp;-&nbsp;</span>
-      <span id="editor-pane-nav-filename"></span>
+      <span adapt-order="2" class="editor-pane-nav-title">{{ gettext("navEditor") }}</span>
+
+      <span adapt-order="3" id="editor-pane-nav-filename"></span>
 
       <div class="flex-container pull-right">
 
-        <div title="{{ gettext("navUndoTitle") }}" id="editor-pane-nav-undo">
+        <div adapt-order="1" title="{{ gettext("navUndoTitle") }}" id="editor-pane-nav-undo">
           <img src="/img/icon/undo.svg">
           <span>{{ gettext("navUndo") }}</span>
         </div>
@@ -51,6 +52,7 @@
         <div title="{{ gettext("navRedoIconTitle") }}" id="editor-pane-nav-redo">
           <img src="/img/icon/redo.svg">
         </div>
+
           <div title="{{ gettext("navEditorOptionsIconTitle") }}" id="editor-pane-nav-options">
             <img src="/img/icon/gear-white.svg">
           </div>
@@ -98,15 +100,16 @@
     </div>
   </div>
 
-  <!-- RIGHT SIDE -->
+  <!-- RIGHT SIDE - Preview & Tutorial -->
+
   <div class="preview-pane-nav">
     <div class="nav-container">
-      <div class="preview-tutorial-toggle">
+      <div class="preview-tutorial-toggle" adapt-order="1">
         <span title="{{ gettext("navPreviewTitle") }}" id="preview-title" class="preview-pane-nav-title preview-title-highlighted">{{ gettext("navPreview") }}</span>
         <span title="{{ gettext("navViewTutorialTitle") }}" id="tutorial-title" class="preview-pane-nav-title hide">{{ gettext("navViewTutorial") }}</span>
       </div>
 
-      <div class="refresh-wrapper enabled">
+      <div class="refresh-wrapper enabled"  adapt-order="2">
         <div title="{{ gettext("navRefreshPreviewIconTitle") }}" id="preview-pane-nav-refresh">
           <img src="/img/icon/refresh.svg">
         </div>
@@ -119,7 +122,7 @@
       </div>
 
       <div class="flex-container pull-right">
-        <div title="{{ gettext("navDOMElementInspectorIconTitle") }}" id="preview-pane-nav-inspector">
+        <div adapt-order="3" title="{{ gettext("navDOMElementInspectorIconTitle") }}" id="preview-pane-nav-inspector">
           <div class="icon-wrapper"></div>
         </div>
         <div class="preview-device-toggle">

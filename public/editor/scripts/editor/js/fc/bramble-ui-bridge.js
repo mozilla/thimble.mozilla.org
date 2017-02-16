@@ -11,10 +11,70 @@ define(function(require) {
 
   var _escKeyHandler;
 
+  var adapting = false;
+  var adaptTimeout = 200; // How often we adapt editor bar layout
+
   function updateLayout(data) {
     $(".filetree-pane-nav").width(data.sidebarWidth);
     $(".editor-pane-nav").width(data.firstPaneWidth);
     $(".preview-pane-nav").width(data.secondPaneWidth);
+
+    // Only adapt the layout every once in a while
+    if(!adapting) {
+      adapting = true;
+      adaptLayout();
+      setTimeout(function(){
+        adapting = false;
+      },adaptTimeout)
+    }
+  }
+
+  // Adapt each of the pane header elements
+  function adaptLayout(){
+    $(".nav-container").each(function(){
+      adaptElement($(this));
+    });
+  }
+
+  // Checks if there is enough room for all of the elements inside it
+  // Adds a 'narrow' class, in priority order, when there isn't.
+  function adaptElement(el){
+    var itemCount = el.find("[adapt-order]").length;
+    el.find("[adapt-order]").addClass("narrow");
+
+    for(var i = itemCount; i > 0; i--) {
+      if(hasEnoughRoom(el)) {
+        el.find("[adapt-order="+i+"]").removeClass("narrow");
+      } else {
+        break;
+      }
+      if(!hasEnoughRoom(el)) {
+        el.find("[adapt-order="+i+"]").addClass("narrow");
+      }
+    }
+  }
+
+  // Checks if the current element has enough room for everything in it
+  // by checking if the last visible element is too far to the right.
+  function hasEnoughRoom(el) {
+    var maxRight = el.width();
+
+    // Finds the last visible first-order child
+    var lastEl = false;
+    el.find("> *").each(function(){
+      if($(this).is(":visible")){
+        lastEl = $(this);
+      }
+    });
+
+    if(lastEl) {
+      var lastLeft = lastEl.position().left;
+      var lastWidth = lastEl.outerWidth();
+      var lastRight = lastLeft + lastWidth;
+      return lastRight < maxRight;
+    } else {
+      return true;
+    }
   }
 
   function init(bramble, csrfToken, appUrl) {
