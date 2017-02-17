@@ -178,7 +178,7 @@ body {
     filter: alpha(opacity=90);
     opacity: 0.9;
     box-sizing: border-box;
-	.transition;
+    .transition;
 
     .icon;
 
@@ -207,7 +207,7 @@ body {
   #navbar-login {
     padding-right: 0;
     border-right: none;
-	.transition;
+    .transition;
 
     &.signed-in {
       border-right: 1px solid #7DAF8F;
@@ -249,6 +249,7 @@ body {
   -ms-transition: @transitionTime;
   -o-transition: @transitionTime;
   transition: @transitionTime;
+  transition-timing-function: ease-out;
 }
 
 .transition-only-opacity {
@@ -257,6 +258,7 @@ body {
   -ms-transition: opacity @transitionTime ease-in-out;
   -o-transition: opacity @transitionTime ease-in-out;
   transition: opacity @transitionTime ease-in-out;
+  transition-timing-function: opacity @transitionTime ease-out;
 }
 
 /* Link for login section */

@@ -231,7 +231,7 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 10px;
-	.transition;
+    .transition;
   }
 
   &:hover div {
@@ -260,7 +260,7 @@ body {
     width: 15px;
     position: relative;
     top: 0;
-	.transition;
+    .transition;
   }
 
   span {
@@ -270,7 +270,7 @@ body {
     top: -1px;
     opacity: 0.5;
     filter: alpha(opacity=50);
-	.transition;
+    .transition;
   }
 
   &:hover {
@@ -318,7 +318,7 @@ body {
     position: absolute;
     top: 7px;
     left: 8px;
-	.transition;
+    .transition;
   }
 
   &:hover {
@@ -414,7 +414,7 @@ body {
       .toggle-button {
         background: @buttonGreen;
         left: 30px;
-		.transition;
+        .transition;
       }
 
       &:hover {
@@ -494,7 +494,7 @@ body {
     font-size: 1.2em;
     display: inline-block;
     .icon;
-	.transition;
+    .transition;
 
     &:hover {
       background-color: @buttonGreenHover;
@@ -623,7 +623,7 @@ body {
       position: relative;
       top: -1px;
       left: -1px;
-	  .transition;
+      .transition;
     }
     .icon;
 
@@ -754,7 +754,7 @@ body {
     background-repeat: no-repeat;
     opacity: .3;
     filter: alpha(opacity=30);
-	.transition;
+    .transition;
   }
 
   &:hover {
@@ -785,7 +785,7 @@ body {
     height: 20px;
     position: relative;
     top: 5px;
-	.transition;
+    .transition;
   }
 }
 
@@ -840,7 +840,7 @@ body {
     opacity: .3;
     top: 2px;
     margin: 4px;
-	.transition;
+    .transition;
   }
 }
 
@@ -850,13 +850,14 @@ body {
 }
 
 .transition {
-    -webkit-transition: @transitionTime;
-    -moz-transition: @transitionTime;
-    -ms-transition: @transitionTime;
-    -o-transition: @transitionTime;
-    transition: @transitionTime;
+    -webkit-transition: @transitionTime ease-out;
+    -moz-transition: @transitionTime ease-out;
+    -ms-transition: @transitionTime ease-out;
+    -o-transition: @transitionTime ease-out;
+    transition: @transitionTime ease-out;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+	transition-timing-function: ease-out;
 }
 
 .icon {
