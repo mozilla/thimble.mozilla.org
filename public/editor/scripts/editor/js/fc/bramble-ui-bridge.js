@@ -73,7 +73,7 @@ define(function(require) {
       var lastWidth = lastEl[0].getBoundingClientRect().width;
       var lastRight = lastLeft + lastWidth;
 
-      return lastRight <= maxRight;
+      return Math.round(lastRight) <= Math.round(maxRight);
     } else {
       return true;
     }
