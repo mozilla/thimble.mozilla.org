@@ -62,29 +62,10 @@ define(function(require) {
       this.updateDialog(publishUrl, true);
     }
 
-    // When there are file events triggered by the editor, update the publish/republish status
-    function handleFileEvent() {
-      if(publisher.needsUpdate) {
-        return;
-      }
-
-      if(!Project.getPublishUrl()) {
-        return;
-      }
-
-      publisher.handlers.unpublishedChangesPrompt();
-      Project.publishNeedsUpdate(true, function(err) {
-        if(err) {
-          console.error("[Thimble] Failed to set the publishNeedsUpdate flag after a file change: ", err);
-          return;
-        }
-        publisher.needsUpdate = true;
-      });
-    }
-    bramble.on("fileChange", handleFileEvent);
-    bramble.on("fileDelete", handleFileEvent);
-    bramble.on("fileRename", handleFileEvent);
-    bramble.on("folderRename", handleFileEvent);
+    bramble.on("fileChange", publisher.showUnpublishedChangesPrompt.bind(publisher));
+    bramble.on("fileDelete", publisher.showUnpublishedChangesPrompt.bind(publisher));
+    bramble.on("fileRename", publisher.showUnpublishedChangesPrompt.bind(publisher));
+    bramble.on("folderRename", publisher.showUnpublishedChangesPrompt.bind(publisher));
 
     dialog.buttons.publish.on("click", publisher.handlers.publish);
 
@@ -102,6 +83,35 @@ define(function(require) {
       }
     });
   };
+
+  // When there are file events triggered by the editor (or project is renamed), update the publish/republish status
+  Publisher.prototype.showUnpublishedChangesPrompt = function(callback) {
+    var publisher = this;
+
+    callback = callback || function() {};
+
+    if(publisher.needsUpdate) {
+      callback();
+      return;
+    }
+
+    if(!Project.getPublishUrl()) {
+      callback();
+      return;
+    }
+
+    publisher.handlers.unpublishedChangesPrompt();
+    Project.publishNeedsUpdate(true, function(err) {
+      if(err) {
+        console.error("[Thimble] Failed to set the publishNeedsUpdate flag after a file change: ", err);
+        callback(err);
+        return;
+      }
+
+      publisher.needsUpdate = true;
+      callback();
+    });
+  };  
 
   Publisher.prototype.publish = function() {
     var publisher = this;

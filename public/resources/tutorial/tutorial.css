@@ -135,6 +135,10 @@ li {
   margin: 0 0 10px 0;
 }
 
+img {
+  max-width: 100%;
+}
+
 img.border {
   display: block;
   margin: 10px 0;

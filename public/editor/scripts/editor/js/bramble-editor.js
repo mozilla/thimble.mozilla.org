@@ -33,7 +33,7 @@ define(function(require) {
       Bramble.once("ready", function(bramble) {
         // For debugging, attach to window.
         window.bramble = bramble;
-        BrambleUIBridge.init(bramble);
+        BrambleUIBridge.init(bramble, csrfToken, options.appUrl);
       });
     }
   };

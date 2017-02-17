@@ -1,6 +1,7 @@
 define(function(require) {
   var $ = require("jquery");
   var Publisher = require("fc/publisher");
+  var ProjectRenameUtility = require("fc/project-rename");
   var KeyHandler = require("fc/bramble-keyhandler");
   var BrambleMenus = require("fc/bramble-menus");
   var Underlay = require("fc/bramble-underlay");
@@ -16,7 +17,7 @@ define(function(require) {
     $(".preview-pane-nav").width(data.secondPaneWidth);
   }
 
-  function init(bramble) {
+  function init(bramble, csrfToken, appUrl) {
     var publisher;
     var locale = $("html")[0].lang;
 
@@ -92,7 +93,7 @@ define(function(require) {
       });
     });
 
-    $("#export-project-zip").click(function() {
+    $("#filetree-pane-nav-export-project-zip").click(function() {
       bramble.export();
       analytics.event("ExportZip");
       return false;
@@ -333,8 +334,14 @@ define(function(require) {
       $("#navbar-publish-button").click(showPublishDialog);
       $("#publish-button-cancel").click(hidePublishDialog);
 
+      //Publish link
+      $("#link-publish-link").click(hidePublishDialog);
+
       publisher = new Publisher();
       publisher.init(bramble);
+
+      // Initialize the project name UI
+      ProjectRenameUtility.init(appUrl, csrfToken, publisher);
     } else {
       $("#navbar-publish-button").click(showPublishHelper);
     }

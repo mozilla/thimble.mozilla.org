@@ -33,7 +33,11 @@ body {
   .navbar-logo-container {
     margin-right: 5px;
     position: relative;
-    top: 1px;
+    top: 2px;
+
+    .thimble-logo-full {
+      width: 238px;
+    }
 
     &:hover {
       transform: scale(1.05);
@@ -200,6 +204,22 @@ body {
       position: relative;
       top: 2px;
       border: none;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: -2px;
+    }
+
+    &:active:after {
+      top: -3px;
+      left: 0;
+      right: 0;
+      bottom: 1px;
     }
   }
 
@@ -476,8 +496,7 @@ a.navbar-login:hover {
       margin: 0;
 
       li {
-        display: block;
-        padding: 12px;
+        padding: 0;
 
         &:last-child {
           border-top: 1px solid #e9e9e9;
@@ -490,6 +509,8 @@ a.navbar-login:hover {
         a {
           text-decoration: none;
           color: black;
+          display: block;
+          padding: 12px;
 
           img {
             padding-right: 10px;
