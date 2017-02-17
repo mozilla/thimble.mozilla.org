@@ -57,7 +57,7 @@ define(function(require) {
   // Checks if the current element has enough room for everything in it
   // by checking if the last visible element is too far to the right.
   function hasEnoughRoom(el) {
-    var maxRight = el.width();
+    var maxRight = el[0].getBoundingClientRect().width - parseInt(el.css("padding-left"));
 
     // Finds the last visible first-order child
     var lastEl = false;
@@ -68,10 +68,12 @@ define(function(require) {
     });
 
     if(lastEl) {
-      var lastLeft = lastEl.position().left;
-      var lastWidth = lastEl.outerWidth();
+      var parentLeft = el[0].getBoundingClientRect().left;
+      var lastLeft = lastEl[0].getBoundingClientRect().left - parentLeft;
+      var lastWidth = lastEl[0].getBoundingClientRect().width;
       var lastRight = lastLeft + lastWidth;
-      return lastRight < maxRight;
+
+      return lastRight <= maxRight;
     } else {
       return true;
     }
