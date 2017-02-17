@@ -12,7 +12,7 @@ define(function(require) {
   var _escKeyHandler;
 
   var adapting = false;
-  var adaptTimeout = 200; // How often we adapt editor bar layout
+  var adaptTimeoutMS = 200; // How often we adapt editor bar layout
 
   function updateLayout(data) {
     $(".filetree-pane-nav").width(data.sidebarWidth);
@@ -25,7 +25,7 @@ define(function(require) {
       adaptLayout();
       setTimeout(function(){
         adapting = false;
-      },adaptTimeout)
+      },adaptTimeoutMS);
     }
   }
 
