@@ -154,6 +154,13 @@ define(function(require) {
       _inspectorEnabled = data.enabled;
     });
 
+    // Set initial auto-refresh toggle to last known setting
+    if(bramble.getAutoUpdate() === true) {
+        $(".refresh-wrapper").addClass("enabled");
+    } else {
+        $(".refresh-wrapper").removeClass("enabled");
+    }
+
     // Preview auto-refresh toggle
     $(".toggle-auto-update").on("click", function() {
       var refreshWrapper = $(".refresh-wrapper");
