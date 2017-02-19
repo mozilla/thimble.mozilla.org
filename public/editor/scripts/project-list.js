@@ -22,13 +22,10 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
   var locale = $("html")[0].lang;
   var queryString = window.location.search;
   var isLocalStorageAvailable = !!(window.localStorage);
-  var favorites;
-  if(isLocalStorageAvailable){
+  var favorites = [];
+  if(isLocalStorageAvailable && localStorage.getItem("project-favorites") !== null){
     try {
       favorites = JSON.parse(localStorage.getItem("project-favorites"));
-      if(favorites === null) {
-        favorites = [];
-      }
     } catch(e) {
       console.error("failed to get project favorites from localStorage with: ", e);
     }
@@ -41,32 +38,27 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
     return "{{ momentJSLastEdited | safe }}".replace("<% timeElapsed %>", timeElapsed);
   }
 
-  function updateFavorite(projectId, projectSelector, project){
+  function setFavoriteDataForProject(projectId, projectSelector, project){
     var indexOfProjectInFavorites = favorites.indexOf(projectId);
     var projectFavoriteButton = projectSelector + " .project-favorite-button";
 
     if(indexOfProjectInFavorites !== -1){
       favoriteProjectsElementList.push(project);
       $(projectFavoriteButton).toggleClass("project-favorite-selected");
-      $(projectFavoriteButton).text("Unfavorite");
     }
 
     $(projectSelector + " .project-favorite").on("click", function() {
-      indexOfProjectInFavorites = favorites.indexOf(projectId);
-      projectFavoriteButton = projectSelector + " .project-favorite-button";
+      var indexOfProjectInFavorites = favorites.indexOf(projectId);
+      var projectFavoriteButton = projectSelector + " .project-favorite-button";
 
       if(indexOfProjectInFavorites === -1) {
         favorites.push(projectId);
-        localStorage.setItem("project-favorites", JSON.stringify(favorites));
-        $(projectFavoriteButton).toggleClass("project-favorite-selected");
-        $(projectFavoriteButton).text("Unfavorite");
-      }
-      else {
+      } else {
         favorites.splice(indexOfProjectInFavorites, 1);
-        localStorage.setItem("project-favorites", JSON.stringify(favorites));
-        $(projectFavoriteButton).toggleClass("project-favorite-selected");
-        $(projectFavoriteButton).text("Favorite");
       }
+
+      localStorage.setItem("project-favorites", JSON.stringify(favorites));
+      $(projectFavoriteButton).toggleClass("project-favorite-selected");
     });
   }
 
@@ -78,7 +70,7 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
     var projectId = project.getAttribute("data-project-id");
 
     if(isLocalStorageAvailable) {
-      updateFavorite(projectId, projectSelector, project);
+      setFavoriteDataForProject(projectId, projectSelector, project);
     }
 	  
     $(projectSelector + " > .project-title").on("click", function() {
