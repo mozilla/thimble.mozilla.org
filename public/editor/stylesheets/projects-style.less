@@ -117,28 +117,30 @@ td.project-title {
 }
 
 .project-favorite {
-  color: black;
+  left: -30px;
+  position: absolute;
   white-space: nowrap;
-  opacity: .3;
 }
 
-.project-favorite:hover {
-  opacity: .6;
+.project-favorite:hover .project-favorite-button {
+  background-image: url(/img/icon/star-on.svg);
+  opacity: .7;
 }
 
 .project-favorite-button {
-  padding-left: 20px;
+  float: left;
+  top: 8px;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  background-image: url(/img/icon/star-off.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 23px;
 }
 
 .project-favorite-selected {
-  float: left;
-  width: 15px;
-  position: relative;
-  display: inline-block;
-  background-image: url(/img/icon/checkmark-black.svg);
-  background-repeat: no-repeat;
-  background-size: 15px;
-  background-position: left center;
+  background-image: url(/img/icon/star-on.svg);
 }
 
 td.project-remix {
