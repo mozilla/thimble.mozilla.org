@@ -26,11 +26,9 @@
           {{ [ "data", "project", key ] | join("-") }}="{{ value }}"
         {% endfor %}
         >
-          <td>
-            <div class="project-favorite">
-              <div class="project-favorite-button">Favorite
-              </div>
-            </div>
+          <td class="project-favorite">
+            <a class="project-favorite-button">
+            </a>
           </td>
           <td class="project-title">
             <a target="_self" href="/{{locale}}/user/{{username}}/{{project.id}}/{{queryString}}"> 
