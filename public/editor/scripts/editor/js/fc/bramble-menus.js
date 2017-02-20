@@ -104,18 +104,18 @@ define(function(require) {
     });
 
     //Edit SVG as XML
-    $("edit-SVG-toggle").click(function() {
+    $("#edit-SVG-toggle").click(function() {
       // Toggle current value
       var $editSVGToggle = $("#edit-SVG-toggle");
       var toggle = !($editSVGToggle.hasClass("switch-enabled"));
 
       if(toggle) {
         $editSVGToggle.addClass("switch-enabled");
-        //bramble.enableJavaScript();
+        bramble.openSVGasXML();
         //analytics.event("EnableJavaScript");
       } else {
         $editSVGToggle.removeClass("switch-enabled");
-        //bramble.disableJavaScript();
+        bramble.openSVGasImage();
         //analytics.event("DisableJavaScript");
       }
 
