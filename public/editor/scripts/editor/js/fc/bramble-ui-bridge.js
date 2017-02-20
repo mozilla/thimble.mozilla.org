@@ -43,11 +43,7 @@ define(function(require) {
     el.find("[adapt-order]").addClass("narrow");
 
     for(var i = itemCount; i > 0; i--) {
-      if(hasEnoughRoom(el)) {
-        el.find("[adapt-order="+i+"]").removeClass("narrow");
-      } else {
-        break;
-      }
+      el.find("[adapt-order="+i+"]").removeClass("narrow");
       if(!hasEnoughRoom(el)) {
         el.find("[adapt-order="+i+"]").addClass("narrow");
       }
@@ -69,11 +65,12 @@ define(function(require) {
 
     if(lastEl) {
       var parentLeft = el[0].getBoundingClientRect().left;
-      var lastLeft = lastEl[0].getBoundingClientRect().left - parentLeft;
-      var lastWidth = lastEl[0].getBoundingClientRect().width;
-      var lastRight = lastLeft + lastWidth;
+      var lastElBounds = lastEl[0].getBoundingClientRect();
+      var lastElLeft = lastElBounds.left - parentLeft;
+      var lastElWidth = lastElBounds.width;
+      var lastElRight = lastElLeft + lastElWidth;
 
-      return Math.round(lastRight) <= Math.round(maxRight);
+      return Math.round(lastElRight) <= Math.round(maxRight);
     } else {
       return true;
     }
