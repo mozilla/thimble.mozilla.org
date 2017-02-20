@@ -60,6 +60,16 @@ define(function(require) {
     } else {
         $("#allow-scripts-toggle").removeClass("switch-enabled");
     }
+
+    //set initial UI value to SVG XML UI
+    if(bramble.getOpenSVGasXML()) {
+        $("#edit-SVG-toggle").addClass("switch-enabled");
+        bramble.openSVGasXML();
+    } else {
+        $("#edit-SVG-toggle").removeClass("switch-enabled");
+        bramble.openSVGasImage();
+    }
+
     // Enable/Disable JavaScript in Preview
     $("#allow-scripts-toggle").click(function() {
       // Toggle current value
@@ -88,11 +98,9 @@ define(function(require) {
       if(toggle) {
         $editSVGToggle.addClass("switch-enabled");
         bramble.openSVGasXML();
-        //analytics.event("EnableJavaScript");
       } else {
         $editSVGToggle.removeClass("switch-enabled");
         bramble.openSVGasImage();
-        //analytics.event("DisableJavaScript");
       }
 
       return false;
