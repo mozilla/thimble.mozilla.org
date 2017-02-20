@@ -42,7 +42,7 @@ define(function(require) {
     var itemCount = el.find("[data-adapt-order]").addClass("narrow").length;
 
     for(var i = itemCount; i > 0; i--) {
-      var item = el.find("[data-adapt-order="+i+"]")
+      var item = el.find("[data-adapt-order="+i+"]");
       item.removeClass("narrow");
       if(!hasEnoughRoom(el)) {
         item.addClass("narrow");
