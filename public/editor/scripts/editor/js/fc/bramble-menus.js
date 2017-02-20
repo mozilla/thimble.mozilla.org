@@ -103,6 +103,25 @@ define(function(require) {
       return false;
     });
 
+    //Edit SVG as XML
+    $("edit-SVG-toggle").click(function() {
+      // Toggle current value
+      var $editSVGToggle = $("#edit-SVG-toggle");
+      var toggle = !($editSVGToggle.hasClass("switch-enabled"));
+
+      if(toggle) {
+        $editSVGToggle.addClass("switch-enabled");
+        //bramble.enableJavaScript();
+        //analytics.event("EnableJavaScript");
+      } else {
+        $editSVGToggle.removeClass("switch-enabled");
+        //bramble.disableJavaScript();
+        //analytics.event("DisableJavaScript");
+      }
+
+      return false;
+    });
+
     //set the AutoCloseTags toggle to reflect whether auto-close tags is enabled or disabled
     if(bramble.getAutoCloseTags().whenClosing) {
       $("#auto-tags-toggle").addClass("switch-enabled");
