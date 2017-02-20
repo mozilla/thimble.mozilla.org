@@ -39,13 +39,13 @@ define(function(require) {
   // Checks if there is enough room for all of the elements inside it
   // Adds a 'narrow' class, in priority order, when there isn't.
   function adaptElement(el){
-    var itemCount = el.find("[adapt-order]").length;
-    el.find("[adapt-order]").addClass("narrow");
+    var itemCount = el.find("[data-adapt-order]").addClass("narrow").length;
 
     for(var i = itemCount; i > 0; i--) {
-      el.find("[adapt-order="+i+"]").removeClass("narrow");
+      var item = el.find("[data-adapt-order="+i+"]")
+      item.removeClass("narrow");
       if(!hasEnoughRoom(el)) {
-        el.find("[adapt-order="+i+"]").addClass("narrow");
+        item.addClass("narrow");
       }
     }
   }
