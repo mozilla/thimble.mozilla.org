@@ -211,19 +211,11 @@ body {
     filter: alpha(opacity=45);
     margin-right: 10px;
     .vertical-align;
-
-    &.narrow {
-      display: none;
-    }
   }
 
   #editor-pane-nav-filename {
     margin-right: 10px;
     font-weight: 600;
-
-    &.narrow {
-      display: none;
-    }
   }
 }
 
@@ -261,8 +253,7 @@ body {
   background-color: #2B2B2B;
   border-radius: 25px;
   height: 20px;
-  padding: 5px 10px 5px 10px;
-  display: inline-block;
+  padding: 5px 8px 5px 7px;
   position: relative;
 
   .icon;
@@ -283,16 +274,6 @@ body {
     top: -1px;
     opacity: 0.5;
     filter: alpha(opacity=50);
-  }
-
-  &.narrow {
-    padding: 5px;
-    width: 20px;
-    text-align: center;
-
-    span {
-      display: none;
-    }
   }
 
   &:hover {
@@ -328,7 +309,6 @@ body {
   padding: 5px;
   border-radius: 50%;
   margin-left: 6px;
-  margin-right: 6px;
   position: relative;
   .icon;
 
@@ -360,10 +340,12 @@ body {
 
 
 #editor-pane-nav-options {
-  .icon;
   opacity: 0.5;
   filter: alpha(opacity=50);
   padding: 4px;
+  margin-left: 6px;
+
+  .icon;
 
   img {
       width: 22px;
@@ -590,10 +572,6 @@ body {
     font-weight: bold;
   }
 
-  &.narrow {
-    display: none;
-  }
-
   &.has-toggle {
 
     .preview-pane-nav-title {
@@ -619,12 +597,6 @@ body {
 .refresh-wrapper {
   position: relative;
   vertical-align: middle;
-
-  &.narrow {
-    .toggle-auto-update {
-      display: none;
-    }
-  }
 
 
   #preview-pane-nav-refresh {
@@ -765,11 +737,7 @@ body {
   padding: 5px;
   border-radius: 50%;
   position: relative;
-  margin-right: 6px;
-
-  &.narrow {
-    display: none;
-  }
+  margin-left: 6px;
 
   .icon-wrapper {
     position: absolute;
@@ -808,6 +776,7 @@ body {
   background: #f9f9f9;
   border-radius: 30px;
   height: 30px;
+  margin-left: 6px;
 
   img {
     width: 20px;
@@ -847,7 +816,7 @@ body {
 
 .fullscreen-preview-toggle {
   margin-left: 8px;
-  line-height: 18px;
+  line-height: 19px;
   cursor: pointer;
 
   .disable-fullscreen {
@@ -896,6 +865,7 @@ body {
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  min-height: 1px;
 }
 
 .nav-container {
@@ -905,6 +875,10 @@ body {
   padding-right: 20px;
   padding-left: 20px;
   white-space: nowrap;
+
+  .narrow {
+    display: none
+  }
 
   .flex-vertical-align;
 }

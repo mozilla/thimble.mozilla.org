@@ -441,6 +441,7 @@ define(function(require) {
     });
 
     $("#spinner-container").fadeOut();
+    adaptLayout();
   }
 
   return {
