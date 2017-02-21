@@ -30,9 +30,10 @@
             <a target="_self" href="/{{locale}}/user/{{username}}/{{project.id}}/{{queryString}}"> 
               {{project.title}}
               <span class="project-information"></span>
+              <div class="project-description">{{project.description}}</div>
             </a>
           </td>
-          <td>
+          <td class="project-delete-cell">
             <div class="project-delete" title="{{ gettext("prjListDeleteProjectBtnTitle") }}">
               <div class="icon-garbage-can">
                 <div class="icon-garbage-lid"></div>
