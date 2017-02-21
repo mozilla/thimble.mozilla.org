@@ -21,10 +21,10 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
   var projects = document.querySelectorAll("tr.bramble-user-project");
   var locale = $("html")[0].lang;
   var isLocalStorageAvailable = !!(window.localStorage);
-  var favorites = [];
-  if(isLocalStorageAvailable && localStorage.getItem("project-favorites") !== null){
+  var favorites;
+  if(isLocalStorageAvailable){
     try {
-      favorites = JSON.parse(localStorage.getItem("project-favorites"));
+      favorites = JSON.parse(localStorage.getItem("project-favorites")) || [];
     } catch(e) {
       console.error("failed to get project favorites from localStorage with: ", e);
     }
