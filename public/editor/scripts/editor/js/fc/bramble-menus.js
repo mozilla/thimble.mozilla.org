@@ -79,6 +79,27 @@ define(function(require) {
       return false;
     });
 
+    //set initial Auto Enclose Tags Toggle UI to correspond to the state it's already in
+    if(bramble.getAutoCloseTags()) {
+      $("#auto-tags-toggle").addClass("switch-enabled");
+    } else {
+      $("#auto-tags-toggle").removeClass("switch-enabled");
+    }
+
+    $("#auto-tags-toggle").click(function() {
+      var $autoTagsToggle = $("#auto-tags-toggle");
+      var toggle = !($autoTagsToggle.hasClass("switch-enabled"));
+
+      if (toggle) {
+        $autoTagsToggle.addClass("switch-enabled");
+        bramble.enableAutoCloseTags();
+      } else {
+        $autoTagsToggle.removeClass("switch-enabled");
+        bramble.disableAutoCloseTags();
+      }
+
+      return false;
+    });
 
     // Theme Toggle
     function lightThemeUI() {
