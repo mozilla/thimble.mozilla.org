@@ -73,9 +73,6 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
       setFavoriteDataForProject(projectId, projectSelector, project);
     }
 	  
-    $(projectSelector + " > .project-title").on("click", function() {
-      window.location.href = "/" + locale + "/user/" + username + "/" + project.getAttribute("data-project-id") + queryString;
-    });
     $(projectSelector + " .project-information").text(getElapsedTime(lastEdited));
   });
 
