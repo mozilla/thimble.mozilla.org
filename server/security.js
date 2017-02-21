@@ -48,7 +48,8 @@ let defaultCSPDirectives = {
     "https://netdna.bootstrapcdn.com",
     "https://pontoon.mozilla.org",
     // Inline style for the spinner
-    "'sha256-jxjTomDIR9qe7wntK24mAd+gIoz39DrBll8o6DEBALs='"
+    "'unsafe-inline'"
+  //  "'sha256-jxjTomDIR9qe7wntK24mAd+gIoz39DrBll8o6DEBALs='"
   ]
 };
 
