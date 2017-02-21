@@ -20,7 +20,6 @@ require.config({
 require(["jquery", "constants", "analytics", "moment"], function($, Constants, analytics, moment) {
   var projects = document.querySelectorAll("tr.bramble-user-project");
   var locale = $("html")[0].lang;
-  var queryString = window.location.search;
   var isLocalStorageAvailable = !!(window.localStorage);
   var favorites = [];
   if(isLocalStorageAvailable && localStorage.getItem("project-favorites") !== null){
