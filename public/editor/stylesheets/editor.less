@@ -66,8 +66,8 @@ body {
   float: left;
   overflow: hidden;
 
-  .nav-container {
-    min-width: 150px;
+  .narrow {
+    display: none;
   }
 }
 
@@ -201,18 +201,24 @@ body {
   overflow: hidden;
 
   .nav-container {
-    min-width: 385px;
-    padding-right: 16px;
+    white-space: nowrap;
+  }
+
+  .editor-pane-nav-title {
+    color: white;
+    font-weight: bold;
+    opacity: 0.45;
+    filter: alpha(opacity=45);
+    margin-right: 10px;
+    .vertical-align;
+  }
+
+  #editor-pane-nav-filename {
+    margin-right: 10px;
+    font-weight: 600;
   }
 }
 
-.editor-pane-nav-title {
-  color: white;
-  font-weight: bold;
-  opacity: 0.45;
-  filter: alpha(opacity=45);
-  .vertical-align;
-}
 
 #editor-pane-nav-fileview {
   width: 25px;
@@ -247,9 +253,9 @@ body {
   background-color: #2B2B2B;
   border-radius: 25px;
   height: 20px;
-  padding: 5px 10px 5px 10px;
-  display: inline-block;
+  padding: 5px 8px 5px 7px;
   position: relative;
+
   .icon;
 
   img {
@@ -303,7 +309,6 @@ body {
   padding: 5px;
   border-radius: 50%;
   margin-left: 6px;
-  margin-right: 6px;
   position: relative;
   .icon;
 
@@ -335,10 +340,12 @@ body {
 
 
 #editor-pane-nav-options {
-  .icon;
   opacity: 0.5;
   filter: alpha(opacity=50);
   padding: 4px;
+  margin-left: 6px;
+
+  .icon;
 
   img {
       width: 22px;
@@ -590,7 +597,7 @@ body {
 .refresh-wrapper {
   position: relative;
   vertical-align: middle;
-  min-width: 110px;
+
 
   #preview-pane-nav-refresh {
     z-index: 2;
@@ -713,8 +720,6 @@ body {
   .flex-container;
 
   .nav-container {
-    min-width: 400px;
-    padding: 0 16px 0 20px;
     white-space: nowrap;
   }
 }
@@ -732,7 +737,7 @@ body {
   padding: 5px;
   border-radius: 50%;
   position: relative;
-  margin-right: 10px;
+  margin-left: 6px;
 
   .icon-wrapper {
     position: absolute;
@@ -771,6 +776,7 @@ body {
   background: #f9f9f9;
   border-radius: 30px;
   height: 30px;
+  margin-left: 6px;
 
   img {
     width: 20px;
@@ -810,7 +816,7 @@ body {
 
 .fullscreen-preview-toggle {
   margin-left: 8px;
-  line-height: 18px;
+  line-height: 19px;
   cursor: pointer;
 
   .disable-fullscreen {
@@ -859,6 +865,7 @@ body {
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  min-height: 1px;
 }
 
 .nav-container {
@@ -867,6 +874,11 @@ body {
   box-sizing: border-box;
   padding-right: 20px;
   padding-left: 20px;
+  white-space: nowrap;
+
+  .narrow {
+    display: none
+  }
 
   .flex-vertical-align;
 }
@@ -961,10 +973,6 @@ body {
     display: none !important;
   }
 
-  .refresh-wrapper {
-    min-width: 0;
-  }
-
   .bramble-toolbar {
     position: fixed;
     top: 10px;
@@ -983,11 +991,9 @@ body {
       top: 4px;
       right: 8px;
       box-sizing: border-box;
-      min-width: 0;
       border-radius: 1px;
 
       .nav-container {
-        min-width: 0;
         padding: 0 12px;
 
         .pull-right {
