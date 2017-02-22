@@ -14,20 +14,12 @@ table#project-list {
   border: 0;
   padding: 0;
   border-collapse: collapse;
-  cursor: pointer;
   margin-bottom: 25px;
   -webkit-user-select: none; /* Chrome/Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+ */
   user-select: none;
   position: relative;
-}
-
-tr.project:hover {
-  background-color: rgba(0,0,0,.03);
-}
-tr.project:hover span.project-information {
-  color: #A1A1A1;
 }
 
 tr.project:last-child td {
@@ -55,21 +47,21 @@ td.button-fill {
   width: 40px;
 }
 
-td.project-title {
-  padding-left: 8px;
-}
-
 .project-title a {
-  color: #000;
+  color: rgba(0,0,0,.8);
   text-decoration: none;
+
+  &:hover {
+    font-weight: 600;
+    color: rgba(0,0,0,1);
+  }
 }
 
 .project-information {
   font-size: 0.8em;
-  color: #C6C6C6;
+  color: #BBB;
   margin-left: 5px;
 }
-
 
 .project-delete {
 	float: right;
@@ -77,6 +69,8 @@ td.project-title {
   white-space: nowrap;
   padding-right: 8px;
   opacity: .3;
+  cursor: pointer;
+  font-weight: 600;
 }
 
 .icon-garbage-can {
@@ -117,30 +111,34 @@ td.project-title {
 }
 
 .project-favorite {
-  left: -30px;
-  position: absolute;
-  white-space: nowrap;
+  width: 35px;
 }
 
-.project-favorite:hover .project-favorite-button {
-  background-image: url(/img/icon/star-on.svg);
-  opacity: .7;
+.project-favorite {
+  padding: 0;
+  text-align: left;
 }
 
 .project-favorite-button {
-  float: left;
-  top: 7px;
   width: 30px;
   height: 30px;
-  position: absolute;
+  position: relative;
+  top: -3px;
   background-image: url(/img/icon/star-off.svg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 20px;
+  opacity: .6;
+  display: inline-block;
+
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .project-favorite-selected {
   background-image: url(/img/icon/star-on.svg);
+  opacity: 1;
 }
 
 td.project-remix {
