@@ -46,7 +46,7 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
       $(projectFavoriteButton).toggleClass("project-favorite-selected");
     }
 
-    $(projectSelector + " .project-favorite").on("click", function() {
+    $(projectSelector + " .project-favorite-button").on("click", function() {
       var indexOfProjectInFavorites = favorites.indexOf(projectId);
       var projectFavoriteButton = projectSelector + " .project-favorite-button";
 
@@ -71,7 +71,7 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
     if(isLocalStorageAvailable) {
       setFavoriteDataForProject(projectId, projectSelector, project);
     }
-	  
+
     $(projectSelector + " .project-information").text(getElapsedTime(lastEdited));
   });
 
