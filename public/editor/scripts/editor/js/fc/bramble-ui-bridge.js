@@ -155,8 +155,7 @@ define(function(require) {
     });
 
     // Set initial auto-refresh toggle to last known setting
-    if(bramble.getAutoUpdate() === true) {
-    } else {
+    if(!bramble.getAutoUpdate()){
         $(".refresh-wrapper").removeClass("enabled");
         bramble.disableAutoUpdate();
         analytics.event("disableAutoUpdate");
