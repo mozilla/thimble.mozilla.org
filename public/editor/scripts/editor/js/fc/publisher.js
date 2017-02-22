@@ -119,7 +119,7 @@ define(function(require) {
       publisher.needsUpdate = true;
       callback();
     });
-  };  
+  };
 
   Publisher.prototype.publish = function() {
     var publisher = this;
@@ -191,14 +191,16 @@ define(function(require) {
     var dialog = publisher.dialog;
     var buttons = dialog.buttons;
 
-    var didConfirm = window.confirm("Are you sure you want to unpublish this project? Links that have already been shared will no longer work.");
+    if (publisher.unpublishing) {
+      return;
+    }
+
+    var didConfirm = window.confirm("Are you sure? The current link will stop working and if you publish again, the link will be different.");
 
     if (!didConfirm) {
       return;
     }
-    if (publisher.unpublishing) {
-      return;
-    }
+
     publisher.unpublishing = true;
 
     function setState(done) {

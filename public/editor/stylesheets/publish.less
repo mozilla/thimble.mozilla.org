@@ -156,11 +156,10 @@
   margin-top: 20px;
 
   img {
-    opacity: 0.5;
-    filter: alpha(opacity=50);
-    height: 15px;
-    width: 15px;
+    opacity: 1;
+    height: 16px;
     position: relative;
+    top: 1px;
     left: -2px;
   }
 
@@ -214,12 +213,8 @@
 .red-button {
   background-color: @red;
 
-  &:hover {
-    background-color: darken(@red, 10%);
-  }
-
-  &:active {
-    background-color: @red;
+  &:hover, &:active {
+    opacity: 0.9;
   }
 }
 
