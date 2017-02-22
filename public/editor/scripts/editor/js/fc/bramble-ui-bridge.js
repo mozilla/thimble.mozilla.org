@@ -11,10 +11,69 @@ define(function(require) {
 
   var _escKeyHandler;
 
+  var adapting = false;
+  var adaptTimeoutMS = 200; // How often we adapt editor bar layout
+
   function updateLayout(data) {
     $(".filetree-pane-nav").width(data.sidebarWidth);
     $(".editor-pane-nav").width(data.firstPaneWidth);
     $(".preview-pane-nav").width(data.secondPaneWidth);
+
+    // Only adapt the layout every once in a while
+    if(!adapting) {
+      adapting = true;
+      adaptLayout();
+      setTimeout(function(){
+        adapting = false;
+      },adaptTimeoutMS);
+    }
+  }
+
+  // Adapt each of the pane header elements
+  function adaptLayout(){
+    $(".nav-container").each(function(){
+      adaptElement($(this));
+    });
+  }
+
+  // Checks if there is enough room for all of the elements inside it
+  // Adds a 'narrow' class, in priority order, when there isn't.
+  function adaptElement(el){
+    var itemCount = el.find("[data-adapt-order]").addClass("narrow").length;
+
+    for(var i = itemCount; i > 0; i--) {
+      var item = el.find("[data-adapt-order="+i+"]");
+      item.removeClass("narrow");
+      if(!hasEnoughRoom(el)) {
+        item.addClass("narrow");
+      }
+    }
+  }
+
+  // Checks if the current element has enough room for everything in it
+  // by checking if the last visible element is too far to the right.
+  function hasEnoughRoom(el) {
+    var maxRight = el[0].getBoundingClientRect().width - parseInt(el.css("padding-left"));
+
+    // Finds the last visible first-order child
+    var lastEl = false;
+    el.find("> *").each(function(){
+      if($(this).is(":visible")){
+        lastEl = $(this);
+      }
+    });
+
+    if(lastEl) {
+      var parentLeft = el[0].getBoundingClientRect().left;
+      var lastElBounds = lastEl[0].getBoundingClientRect();
+      var lastElLeft = lastElBounds.left - parentLeft;
+      var lastElWidth = lastElBounds.width;
+      var lastElRight = lastElLeft + lastElWidth;
+
+      return Math.round(lastElRight) <= Math.round(maxRight);
+    } else {
+      return true;
+    }
   }
 
   function init(bramble, csrfToken, appUrl) {
@@ -382,6 +441,7 @@ define(function(require) {
     });
 
     $("#spinner-container").fadeOut();
+    adaptLayout();
   }
 
   return {
