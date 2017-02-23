@@ -62,11 +62,19 @@ define(function(require) {
       this.updateDialog(publishUrl, true);
     }
 
-    bramble.on("fileChange", publisher.showUnpublishedChangesPrompt.bind(publisher));
-    bramble.on("fileDelete", publisher.showUnpublishedChangesPrompt.bind(publisher));
-    bramble.on("fileRename", publisher.showUnpublishedChangesPrompt.bind(publisher));
-    bramble.on("folderRename", publisher.showUnpublishedChangesPrompt.bind(publisher));
-
+    bramble.on("fileChange", function() {
+      publisher.showUnpublishedChangesPrompt();
+    });
+    bramble.on("fileDelete", function() {
+      publisher.showUnpublishedChangesPrompt();
+    });
+    bramble.on("fileRename", function() {
+      publisher.showUnpublishedChangesPrompt();
+    });
+    bramble.on("folderRename", function() {
+      publisher.showUnpublishedChangesPrompt();
+    });
+        
     dialog.buttons.publish.on("click", publisher.handlers.publish);
 
     // Were there any files that were updated and not published?
