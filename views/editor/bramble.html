@@ -36,10 +36,16 @@
             animation: loadingpulse 1s infinite linear;
             -webkit-animation: loadingpulse 1s infinite linear;
         }
-	#spinner-container .loading-message-help-link {
-	   animation: none;
-	   -webkit-animation: none;
-	}
+
+        #spinner-container .loading-message-help-link {
+            animation: none;
+            -webkit-animation: none;
+        }
+
+        #spinner-container .a {
+            color: white;
+            text-decoration: underline;
+        }
 
         #spinner-container .thimble-spinner {
             bottom: 0;
@@ -117,20 +123,15 @@
                 transform: rotateX(-360deg) rotateY(-360deg);
             }
         }
-	
-	a {
-		color: white;
-		text-decoration: underline;
-	}
 
         </style>
 
     <div id="spinner-container">
         <div class="thimble-spinner"></div>
         <div class="loading-message message">
-	{{ gettext("loadingProject") }}
+         {{ gettext("loadingProject") }}
 	<div class="loading-message-help-link">
-    <p>{{ gettext("loadingProjectSupportSuggestion") | safe }}</p>
+            <p>{{ gettext("loadingProjectSupportSuggestion") | safe }}</p>
     	</div>
 	</div>
         <div class="error-message message">
