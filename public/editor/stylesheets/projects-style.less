@@ -1,7 +1,8 @@
 .project-list-wrapper {
-  width: 80%;
+  width: ~"calc(100% - 100px)";
   margin: 35px auto;
   position: relative;
+  max-width: 1024px;
 }
 
 h2 {
@@ -40,42 +41,66 @@ h2 {
   margin-bottom: 25px;
   position: relative;
 
-  td {
-    vertical-align: top;
+  .project {
     border-bottom: 1px solid #DDD;
+    position: relative;
+    padding: 10px 10px 10px 36px;
+    overflow: auto;
+
+    &:last-child {
+      border: none;
+    }
+
+    &:hover {
+      background: rgba(0,0,0,.04);
+    }
+
+    display: flex;
   }
 
-  tr:last-child td {
-    border: none;
-  }
-
-  tr:hover td {
-    background: rgba(0,0,0,.04);
-  }
-
-  .project-title a {
+  .edit-link {
+    flex: 1;
     color: rgba(0,0,0,1);
     text-decoration: none;
     display: block;
     font-weight: 600;
-    padding: 10px 0;
+    padding-right: 20px;
+    min-width: 0;
+  }
+
+  .project-ui {
+    flex-shrink: 1;
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  .published-link  {
+    text-decoration: none;
+    color: #3186c1;
+    display: inline-block;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    @media screen and (max-width: 800px) {
+      display: block;
+    }
   }
 
   .project-information {
     font-size: 0.8em;
     color: rgba(0,0,0,.4);
-    margin-left: 3px;
     font-style: italic;
+    white-space: nowrap;
   }
 
   .project-description {
     font-size: 0.9em;
     color: rgba(0,0,0,.6);
     margin-top: 5px;
-    padding-right: 20px;
     text-overflow: ellipsis;
     overflow: hidden;
-    max-width: 60vw;
     white-space: nowrap;
 
     &:empty {
@@ -84,15 +109,12 @@ h2 {
   }
 
   .project-delete {
-    float: right;
     color: black;
-    white-space: nowrap;
-    padding-right: 8px;
+    margin-left: 12px;
     opacity: .3;
     cursor: pointer;
     font-weight: 600;
-    position: relative;
-    top: 9px;
+    display: inline-block;
   }
 
   .icon-garbage-can {
@@ -106,40 +128,37 @@ h2 {
     background-size: 15px;
     background-position: bottom;
     transform: scale(.95);
-  }
 
-  .icon-garbage-lid {
-    width: 15px;
-    height: 6px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-image: url(/img/icon/garbage-can-top.svg);
-    background-repeat: no-repeat;
-    background-size: 17px;
-    background-position: top;
-    transition: transform .1s ease-out;
+    &:after {
+      content: "";
+      width: 15px;
+      height: 6px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-image: url(/img/icon/garbage-can-top.svg);
+      background-repeat: no-repeat;
+      background-size: 17px;
+      background-position: top;
+      transition: transform .1s ease-out;
+    }
   }
 
   .project-delete:hover {
     opacity: .6;
   }
 
-  .project-delete:hover .icon-garbage-lid {
+  .project-delete:hover :after {
     transform-origin: left;
     -webkit-transform-origin: left;
     transform: rotate(-4deg) translateY(-1px);
     -webkit-transform: rotate(-4deg) translateY(-1px);
   }
 
-  .project-favorite {
-    width: 38px;
-  }
-
   .project-favorite-button {
     width: 31px;
     height: 31px;
-    position: relative;
+    position: absolute;
     top: 4px;
     left: 3px;
     background-image: url(/img/icon/star-off.svg);

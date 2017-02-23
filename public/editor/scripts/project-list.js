@@ -18,7 +18,7 @@ require.config({
 });
 
 require(["jquery", "constants", "analytics", "moment"], function($, Constants, analytics, moment) {
-  var projects = document.querySelectorAll("tr.bramble-user-project");
+  var projects = document.querySelectorAll(".bramble-user-project");
   var locale = $("html")[0].lang;
   var isLocalStorageAvailable = !!(window.localStorage);
   var favorites;
