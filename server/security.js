@@ -9,7 +9,8 @@ let defaultCSPDirectives = {
   defaultSrc: [ "'self'" ],
   connectSrc: [
     "'self'",
-    "https://pontoon.mozilla.org"
+    "https://pontoon.mozilla.org",
+    "https://mozilla.github.io/thimble-homepage-gallery/activities.json"
   ],
   frameSrc: [
     "'self'",
