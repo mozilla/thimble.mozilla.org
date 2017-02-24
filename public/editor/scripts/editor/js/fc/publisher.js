@@ -63,16 +63,16 @@ define(function(require) {
     }
 
     bramble.on("fileChange", function() {
-      publisher.showUnpublishedChangesPrompt();
+      publisher.showUnpublishedChangesPrompt.apply(publisher, arguments);
     });
     bramble.on("fileDelete", function() {
-      publisher.showUnpublishedChangesPrompt();
+      publisher.showUnpublishedChangesPrompt.apply(publisher, arguments);
     });
     bramble.on("fileRename", function() {
-      publisher.showUnpublishedChangesPrompt();
+      publisher.showUnpublishedChangesPrompt.apply(publisher, arguments);
     });
     bramble.on("folderRename", function() {
-      publisher.showUnpublishedChangesPrompt();
+      publisher.showUnpublishedChangesPrompt.apply(publisher, arguments);
     });
         
     dialog.buttons.publish.on("click", publisher.handlers.publish);
