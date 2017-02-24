@@ -33,7 +33,11 @@ body {
   .navbar-logo-container {
     margin-right: 5px;
     position: relative;
-    top: 1px;
+    top: 2px;
+
+    .thimble-logo-full {
+      width: 238px;
+    }
 
     &:hover {
       transform: scale(1.05);
@@ -492,8 +496,7 @@ a.navbar-login:hover {
       margin: 0;
 
       li {
-        display: block;
-        padding: 12px;
+        padding: 0;
 
         &:last-child {
           border-top: 1px solid #e9e9e9;
@@ -506,6 +509,8 @@ a.navbar-login:hover {
         a {
           text-decoration: none;
           color: black;
+          display: block;
+          padding: 12px;
 
           img {
             padding-right: 10px;

@@ -19,9 +19,16 @@ require.config({
 
 require(["jquery", "constants", "analytics", "moment"], function($, Constants, analytics, moment) {
   var projects = document.querySelectorAll("tr.bramble-user-project");
-  var username = encodeURIComponent($("#project-list").attr("data-username"));
   var locale = $("html")[0].lang;
-  var queryString = window.location.search;
+  var isLocalStorageAvailable = !!(window.localStorage);
+  var favorites;
+  if(isLocalStorageAvailable){
+    try {
+      favorites = JSON.parse(localStorage.getItem("project-favorites")) || [];
+    } catch(e) {
+      console.error("failed to get project favorites from localStorage with: ", e);
+    }
+  }
   moment.locale($("meta[name='moment-lang']").attr("content"));
 
   function getElapsedTime(lastEdited) {
@@ -30,15 +37,45 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
     return "{{ momentJSLastEdited | safe }}".replace("<% timeElapsed %>", timeElapsed);
   }
 
+  function setFavoriteDataForProject(projectId, projectSelector, project){
+    var indexOfProjectInFavorites = favorites.indexOf(projectId);
+    var projectFavoriteButton = projectSelector + " .project-favorite-button";
+
+    if(indexOfProjectInFavorites !== -1){
+      favoriteProjectsElementList.push(project);
+      $(projectFavoriteButton).toggleClass("project-favorite-selected");
+    }
+
+    $(projectSelector + " .project-favorite").on("click", function() {
+      var indexOfProjectInFavorites = favorites.indexOf(projectId);
+      var projectFavoriteButton = projectSelector + " .project-favorite-button";
+
+      if(indexOfProjectInFavorites === -1) {
+        favorites.push(projectId);
+      } else {
+        favorites.splice(indexOfProjectInFavorites, 1);
+      }
+
+      localStorage.setItem("project-favorites", JSON.stringify(favorites));
+      $(projectFavoriteButton).toggleClass("project-favorite-selected");
+    });
+  }
+
+  var favoriteProjectsElementList = [];
+
   Array.prototype.forEach.call(projects, function(project) {
     var projectSelector = "#" + project.getAttribute("id");
     var lastEdited = project.getAttribute("data-project-date_updated");
+    var projectId = project.getAttribute("data-project-id");
 
-    $(projectSelector + " > .project-title").on("click", function() {
-      window.location.href = "/" + locale + "/user/" + username + "/" + project.getAttribute("data-project-id") + queryString;
-    });
+    if(isLocalStorageAvailable) {
+      setFavoriteDataForProject(projectId, projectSelector, project);
+    }
+	  
     $(projectSelector + " .project-information").text(getElapsedTime(lastEdited));
   });
+
+  $("#project-list").prepend(favoriteProjectsElementList);
 
   $(".project-delete").click(function() {
     // TODO: we can do better than this, but let's at least make it harder to lose data.

@@ -4,7 +4,7 @@ body {
 }
 
 #container {
-  width: 65%;
+  width: 80%;
   margin: 35px auto;
   position: relative;
 }
@@ -14,20 +14,12 @@ table#project-list {
   border: 0;
   padding: 0;
   border-collapse: collapse;
-  cursor: pointer;
   margin-bottom: 25px;
   -webkit-user-select: none; /* Chrome/Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+ */
   user-select: none;
   position: relative;
-}
-
-tr.project:hover {
-  background-color: rgba(0,0,0,.03);
-}
-tr.project:hover span.project-information {
-  color: #A1A1A1;
 }
 
 tr.project:last-child td {
@@ -55,22 +47,45 @@ td.button-fill {
   width: 40px;
 }
 
-td.project-title {
-  padding-left: 8px;
+.project-title a {
+  color: rgba(0,0,0,.8);
+  text-decoration: none;
+
+  &:hover {
+    font-weight: 600;
+    color: rgba(0,0,0,1);
+  }
 }
+
 .project-information {
   font-size: 0.8em;
-  color: #C6C6C6;
+  color: #BBB;
   margin-left: 5px;
 }
 
+.project-description {
+  font-size: 0.9em;
+  color: rgba(0,0,0,.5);
+  margin-top: 5px;
+  padding-right: 20px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 60vw;
+  white-space: nowrap;
+}
+
+.project-delete-cell {
+  vertical-align: middle;
+}
 
 .project-delete {
-	float: right;
+  float: right;
   color: black;
   white-space: nowrap;
   padding-right: 8px;
   opacity: .3;
+  cursor: pointer;
+  font-weight: 600;
 }
 
 .icon-garbage-can {
@@ -108,6 +123,37 @@ td.project-title {
   -webkit-transform-origin: left;
   transform: rotate(-4deg) translateY(-1px);
   -webkit-transform: rotate(-4deg) translateY(-1px);
+}
+
+.project-favorite {
+  width: 35px;
+}
+
+.project-favorite {
+  padding: 0;
+  text-align: left;
+}
+
+.project-favorite-button {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  top: -3px;
+  background-image: url(/img/icon/star-off.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 20px;
+  opacity: .6;
+  display: inline-block;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.project-favorite-selected {
+  background-image: url(/img/icon/star-on.svg);
+  opacity: 1;
 }
 
 td.project-remix {
