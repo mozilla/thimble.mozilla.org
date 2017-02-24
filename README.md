@@ -202,6 +202,6 @@ Thimble uses the [throng](https://www.npmjs.com/package/throng) module to levera
 Contact Us
 -----------
 
-We're a friendly group, so feel free to chat with us in the "Thimble" channel on Mozilla Chat running on [Mattermost](https://about.mattermost.com). To access Mozilla Chat head to [this link]( http://chat.mozillafoundation.org). Note that you will need to create an account first.
+We're a friendly group, so feel free to chat with us in the "Thimble" channel on Mozilla Chat running on [Mattermost](https://about.mattermost.com). To access Mozilla Chat head to [this link]( http://chat.mozillafoundation.org). Note that you will need to create an account first. If you have signed in already, head [here](https://chat.mozillafoundation.org/mozilla/channels/thimble) to directly visit the Thimble channel.
 
 You can also download a mobile or desktop client for Mattermost [here](https://about.mattermost.com/download/#mattermostApps).
