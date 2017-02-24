@@ -18,7 +18,7 @@ require.config({
 });
 
 require(["jquery", "constants", "analytics", "moment"], function($, Constants, analytics, moment) {
-  document.querySelector("#project-list").style.opacity = 1;
+  document.querySelector("#project-list").classList.add("loaded");
   var projects = document.querySelectorAll(".bramble-user-project");
   var locale = $("html")[0].lang;
   var isLocalStorageAvailable = !!(window.localStorage);

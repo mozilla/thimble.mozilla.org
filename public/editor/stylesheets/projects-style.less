@@ -43,6 +43,10 @@ h2 {
   transition: opacity .15s ease-out;
   opacity: 0;
 
+  &.loaded {
+    opacity: 1;
+  }
+
   .project {
     border-bottom: 1px solid #DDD;
     position: relative;
@@ -151,9 +155,7 @@ h2 {
 
   .project-delete:hover :after {
     transform-origin: left;
-    -webkit-transform-origin: left;
     transform: rotate(-4deg) translateY(-1px);
-    -webkit-transform: rotate(-4deg) translateY(-1px);
   }
 
   .project-favorite-button {
