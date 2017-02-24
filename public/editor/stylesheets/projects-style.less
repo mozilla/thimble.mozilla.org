@@ -50,7 +50,8 @@ h2 {
   .project {
     border-bottom: 1px solid #DDD;
     position: relative;
-    padding: 10px 10px 10px 36px;
+    padding: 0 10px 0 36px;
+    display: flex;
 
     &:last-child {
       border: none;
@@ -59,8 +60,6 @@ h2 {
     &:hover {
       background: rgba(0,0,0,.04);
     }
-
-    display: flex;
   }
 
   .edit-link {
@@ -69,7 +68,7 @@ h2 {
     text-decoration: none;
     display: block;
     font-weight: 600;
-    padding-right: 20px;
+    padding: 10px 20px 10px 0;
     min-width: 0;
   }
 
@@ -77,6 +76,7 @@ h2 {
     flex-shrink: 1;
     white-space: nowrap;
     text-align: right;
+    padding-top: 10px;
   }
 
   .published-link  {
