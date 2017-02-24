@@ -36,7 +36,7 @@ define(function(require) {
 
     // Update the UI with a "Saving..." indicator whenever we sync a file
     syncManager.on("file-sync-start", function() {
-		$("#navbar-save-indicator").removeClass("hide");
+	  $("#navbar-save-indicator").removeClass("hide");
       $("#navbar-save-indicator").text("{{ fileSavingIndicator }}");
     });
     syncManager.on("file-sync-stop", function() {
