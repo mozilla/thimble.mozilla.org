@@ -1,29 +1,8 @@
-body {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1em;
-}
-
-#container {
-  width: 80%;
+.project-list-wrapper {
+  width: ~"calc(100% - 100px)";
   margin: 35px auto;
   position: relative;
-}
-
-table#project-list {
-  width: 100%;
-  border: 0;
-  padding: 0;
-  border-collapse: collapse;
-  margin-bottom: 25px;
-  -webkit-user-select: none; /* Chrome/Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE10+ */
-  user-select: none;
-  position: relative;
-}
-
-tr.project:last-child td {
-  border: none !important;
+  max-width: 1024px;
 }
 
 h2 {
@@ -33,135 +12,6 @@ h2 {
   margin: 0 0 30px 0;
 }
 
-td {
-  padding: 10px 0;
-  vertical-align: bottom;
-  border-bottom: 1px solid #DDD;
-}
-
-td.side-fill {
-  border-bottom: 0;
-  width: 10px;
-}
-td.button-fill {
-  width: 40px;
-}
-
-.project-title a {
-  color: rgba(0,0,0,.8);
-  text-decoration: none;
-
-  &:hover {
-    font-weight: 600;
-    color: rgba(0,0,0,1);
-  }
-}
-
-.project-information {
-  font-size: 0.8em;
-  color: #BBB;
-  margin-left: 5px;
-}
-
-.project-description {
-  font-size: 0.9em;
-  color: rgba(0,0,0,.5);
-  margin-top: 5px;
-  padding-right: 20px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 60vw;
-  white-space: nowrap;
-}
-
-.project-delete-cell {
-  vertical-align: middle;
-}
-
-.project-delete {
-  float: right;
-  color: black;
-  white-space: nowrap;
-  padding-right: 8px;
-  opacity: .3;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.icon-garbage-can {
-  width: 15px;
-  height: 18px;
-  position: relative;
-  top: 3px;
-  display: inline-block;
-  background-image: url(/img/icon/garbage-can-bottom.svg);
-  background-repeat: no-repeat;
-  background-size: 15px;
-  background-position: bottom;
-}
-
-.icon-garbage-lid {
-  width: 15px;
-  height: 6px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-image: url(/img/icon/garbage-can-top.svg);
-  background-repeat: no-repeat;
-  background-size: 17px;
-  background-position: top;
-  transition: transform .1s ease-out;
-  -webkit-transition: -webkit-transform .1s ease-out;
-}
-
-.project-delete:hover {
-  opacity: .6;
-}
-
-.project-delete:hover .icon-garbage-lid {
-  transform-origin: left;
-  -webkit-transform-origin: left;
-  transform: rotate(-4deg) translateY(-1px);
-  -webkit-transform: rotate(-4deg) translateY(-1px);
-}
-
-.project-favorite {
-  width: 35px;
-}
-
-.project-favorite {
-  padding: 0;
-  text-align: left;
-}
-
-.project-favorite-button {
-  width: 30px;
-  height: 30px;
-  position: relative;
-  top: -3px;
-  background-image: url(/img/icon/star-off.svg);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 20px;
-  opacity: .6;
-  display: inline-block;
-
-  &:hover {
-    opacity: 1;
-  }
-}
-
-.project-favorite-selected {
-  background-image: url(/img/icon/star-on.svg);
-  opacity: 1;
-}
-
-td.project-remix {
-  text-align: right;
-  color: #A1A1A1;
-  width: 1%;
-  white-space: nowrap;
-}
 
 .project-button {
   background-color: #2A9961;
@@ -169,53 +19,176 @@ td.project-remix {
   padding: 8px 15px 6px 15px;
   cursor: pointer;
   color: white;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   border-bottom: solid 2px rgba(0,0,0,.3);
   border-radius: 2px;
   position: absolute;
   top: 0;
   right: 0;
+
+  &:hover {
+    background-color: #39AA6D;
+  }
+
+  &:active {
+    background-color: #288952;
+    top: 2px;
+    border: none;
+  }
 }
 
-.project-button:hover {
-  background-color: #39AA6D;
-}
-
-.project-button:active {
-  background-color: #288952;
-  top: 2px;
-  border: none;
-}
-
-/* Modal CSS/HTML borrowed from http://www.the-art-of-web.com/javascript/feedback-modal-window/ */
-#modal_wrapper.overlay:before {
-  content: " ";
+#project-list {
   width: 100%;
-  height: 100%;
-  position: fixed;
-  z-index: 100;
-  top: 0;
-  left: 0;
-  background: #000;
-  background: rgba(0,0,0,0.7);
-}
+  margin-bottom: 25px;
+  position: relative;
+  transition: opacity .15s ease-out;
+  opacity: 0;
 
-#modal_window {
-  display: none;
-  z-index: 200;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  width: 360px;
-  padding: 10px 20px;
-  background: #fff;
-  border: 5px solid #999;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-}
+  &.loaded {
+    opacity: 1;
+  }
 
-#modal_wrapper.overlay #modal_window {
-  display: block;
+  .project {
+    border-bottom: 1px solid #DDD;
+    position: relative;
+    padding: 0 10px 0 36px;
+    display: flex;
+
+    &:last-child {
+      border: none;
+    }
+
+    &:hover {
+      background: rgba(0,0,0,.04);
+    }
+  }
+
+  .edit-link {
+    flex: 1;
+    color: rgba(0,0,0,1);
+    text-decoration: none;
+    display: block;
+    font-weight: 600;
+    padding: 10px 20px 10px 0;
+    min-width: 0;
+  }
+
+  .project-ui {
+    flex-shrink: 1;
+    white-space: nowrap;
+    text-align: right;
+    padding-top: 10px;
+  }
+
+  .published-link  {
+    text-decoration: none;
+    color: #3186c1;
+    display: inline-block;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    @media screen and (max-width: 800px) {
+      display: block;
+    }
+  }
+
+  .project-information {
+    font-size: 0.8em;
+    color: rgba(0,0,0,.4);
+    font-style: italic;
+    white-space: nowrap;
+  }
+
+  .project-description {
+    font-size: 0.9em;
+    color: rgba(0,0,0,.6);
+    margin-top: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .project-delete {
+    color: black;
+    margin-left: 12px;
+    opacity: .3;
+    cursor: pointer;
+    font-weight: 600;
+    display: inline-block;
+  }
+
+  .icon-garbage-can {
+    width: 15px;
+    height: 18px;
+    position: relative;
+    top: 3px;
+    display: inline-block;
+    background-image: url(/img/icon/garbage-can-bottom.svg);
+    background-repeat: no-repeat;
+    background-size: 15px;
+    background-position: bottom;
+    transform: scale(.95);
+
+    &:after {
+      content: "";
+      width: 15px;
+      height: 6px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-image: url(/img/icon/garbage-can-top.svg);
+      background-repeat: no-repeat;
+      background-size: 17px;
+      background-position: top;
+      transition: transform .1s ease-out;
+    }
+  }
+
+  .project-delete:hover {
+    opacity: .6;
+  }
+
+  .project-delete:hover :after {
+    transform-origin: left;
+    transform: rotate(-4deg) translateY(-1px);
+  }
+
+  .project-favorite-button {
+    width: 31px;
+    height: 31px;
+    position: absolute;
+    top: 4px;
+    left: 3px;
+    background-image: url(/img/icon/star-off.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 20px;
+    opacity: .6;
+    display: block;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .project-favorite-selected {
+    background-image: url(/img/icon/star-on.svg);
+    opacity: 1;
+    animation: starpop .3s ease-out;
+  }
+
+  @keyframes starpop {
+    0% {
+      transform: scale(.6) rotate(0);
+    }
+    40% {
+      transform: scale(1.2);
+    }
+  }
 }

@@ -18,7 +18,8 @@ require.config({
 });
 
 require(["jquery", "constants", "analytics", "moment"], function($, Constants, analytics, moment) {
-  var projects = document.querySelectorAll("tr.bramble-user-project");
+  document.querySelector("#project-list").classList.add("loaded");
+  var projects = document.querySelectorAll(".bramble-user-project");
   var locale = $("html")[0].lang;
   var isLocalStorageAvailable = !!(window.localStorage);
   var favorites;
@@ -46,7 +47,7 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
       $(projectFavoriteButton).toggleClass("project-favorite-selected");
     }
 
-    $(projectSelector + " .project-favorite").on("click", function() {
+    $(projectSelector + " .project-favorite-button").on("click", function() {
       var indexOfProjectInFavorites = favorites.indexOf(projectId);
       var projectFavoriteButton = projectSelector + " .project-favorite-button";
 
@@ -71,7 +72,7 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
     if(isLocalStorageAvailable) {
       setFavoriteDataForProject(projectId, projectSelector, project);
     }
-	  
+
     $(projectSelector + " .project-information").text(getElapsedTime(lastEdited));
   });
 
