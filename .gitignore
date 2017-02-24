@@ -10,3 +10,13 @@ public/stylesheets/userbar.css
 dist/
 client/
 mozilla.webmaker.org
+
+# vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+Session.vim
+.netrwhist
+*~
+tags

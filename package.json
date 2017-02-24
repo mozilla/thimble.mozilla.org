@@ -80,6 +80,8 @@
     "test": "grunt",
     "client": "node scripts/watch-client",
     "server": "node app.js",
+    "restart-server": "vagrant ssh -- pm2 restart thimble ; true",
+    "logs": "vagrant ssh -- pm2 logs --format",
     "prestart": "npm run localize",
     "start": "node scripts/start.js",
     "invalidate": "node scripts/invalidate.js",

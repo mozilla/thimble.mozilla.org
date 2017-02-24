@@ -1,0 +1,72 @@
+{
+    "apps": [
+        {
+            "name": "login",
+            "cwd": "/vagrant/services/login.webmaker.org",
+            "script": "./app.js",
+            "merge_logs": true,
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        {
+            "name": "id",
+            "cwd": "/vagrant/services/id.webmaker.org",
+            "script": "./web/index.js",
+            "merge_logs": true,
+            "env": {
+                "NODE_ENV": "development",
+                "POSTGRE_CONNECTION_STRING": "postgres://thimble:thimble@localhost:5432/webmaker_oauth_test",
+                "HOST": "0.0.0.0"
+            }
+        },
+        {
+            "name": "publish",
+            "cwd": "/vagrant/services/publish.webmaker.org",
+            "script": "./server.js",
+            "merge_logs": true,
+            "env": {
+                "NODE_ENV": "development",
+                "DATABASE_URL": "postgres://thimble:thimble@localhost:5432/publish",
+                "S3_EMULATION": true,
+                "PUBLIC_PROJECT_ENDPOINT": "localhost:8001",
+                "API_HOST": "0.0.0.0",
+                "PORT": 2015,
+                "REMIX_SCRIPT": "http://localhost:3500/resources/remix/index.js",
+                "ID_SERVER_CONNECTION_STRING": "http://localhost:1234",
+                "FILE_SIZE_LIMIT": 5242880
+            }
+        },
+        {
+            "name": "localize-client",
+            "script": "scripts/watch-client.js",
+            "merge_logs": true,
+            "cwd": "/vagrant",
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        {
+            "name": "thimble",
+            "script": "app.js",
+            "watch": true,
+            "ignore_watch": [
+                "/vagrant/.git",
+                "/vagrant/node_modules",
+                "/vagrant/services/login.webmaker.org",
+                "/vagrant/services/id.webmaker.org",
+                "/vagrant/services/publish.webmaker.org",
+                "/vagrant/client",
+                "/vagrant/public"
+            ],
+            "watch_options": {
+                "usePolling": true
+            },
+            "merge_logs": true,
+            "cwd": "/vagrant",
+            "env": {
+                "NODE_ENV": "development"
+            }
+        }
+    ]
+}

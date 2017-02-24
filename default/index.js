@@ -129,17 +129,19 @@ function readDirectory(dirName) {
 }
 
 function cacheProjectFiles() {
-  // The folder containing this index.js file also contains
-  // the default content, each in its own folder. We get a directory
-  // listing and remove this index.js file, leaving only the default
-  // content folders to iterate through.
+  // The folder containing this index.js file also contains the default 
+  // content, each in its own folder.
   var projects = doSyncOp(fs.readdirSync.bind(fs, __dirname));
-  projects.splice(projects.indexOf("index.js"), 1);
 
   projects.forEach(function(projectName) {
-    var project = readDirectory(Path.join(__dirname, projectName));
-    _defaultProjectPaths[projectName] = project.paths;
-    _defaultProjects[projectName] = project.contents;
+    var projectDir = Path.join(__dirname, projectName);
+
+    // Cache the folders, exluding this index.js and other miscellaneous files
+    if (fs.statSync(projectDir).isDirectory()) {
+      var project = readDirectory(projectDir);
+      _defaultProjectPaths[projectName] = project.paths;
+      _defaultProjects[projectName] = project.contents;
+    }
   });
 }
 

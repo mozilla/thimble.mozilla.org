@@ -89,17 +89,18 @@
   &.mouse-mode {
 
     width: 400px !important;
-    top: 5px !important;
+    top: 6px !important;
     right: 6px !important;
-    height: 64px !important;
-    background: white !important;
+    height: 75px !important;
+    background: ghostwhite !important;
     padding: 11px 110px 11px 76px !important;
     box-sizing: border-box !important;
     font-family: "Fira Medium", "Helvetica Neue", sans-serif !important;
-    box-shadow: 0 2px 2px rgba(0,0,0,.5) !important;
     max-width: ~"calc(100% - 12px)" !important;
     transition: width ease-out .1s, background ease-out .1s !important;
-
+    border: 5px solid rgba(0,0,0,.15) !important;
+    background-clip: padding-box !important;
+    border-radius: 3px !important;
     .details-bar-remix-button-wrapper {
       padding: 7px 7px 8px 7px !important;
     }
@@ -108,10 +109,12 @@
       position: absolute !important;
       width: 60px !important;
       background: #2E9961 !important;
-      height: 100% !important;
+      height: ~"calc(100% - 10px)" !important;
       top: 0 !important;
       left: 0 !important;
       display: block !important;
+      margin: 5px !important;
+      border-radius: 3px !important;
 
       .icon {
         position: absolute !important;
@@ -149,8 +152,9 @@
       box-shadow: none !important;
       text-align: right !important;
       background: none !important;
+      border: 5px solid rgba(0,0,0,0) !important;
       transition: width cubic-bezier(0.520, -0.580, 0.595, 1.010) .15s, background ease-out .1s .15s !important;
-
+      border: 5px solid rgba(0,0,0,0) !important;
       .details-bar-remix-button-wrapper {
         background: rgba(255,255,255,.2) !important;
         border-radius: 3px !important;
