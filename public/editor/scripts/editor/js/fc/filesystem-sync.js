@@ -38,7 +38,6 @@ define(function(require) {
     syncManager.on("file-sync-start", function() {
 	  $("#navbar-save-indicator").removeClass("hide");
       $("#navbar-save-indicator").text("{{ fileSavingIndicator }}");
-      
     });
     syncManager.on("file-sync-stop", function() {
       $("#navbar-save-indicator").addClass("hide");
