@@ -96,7 +96,7 @@ the tutorial is helpful so you can read a complex set of instructions and follow
 
 ## How do I preview my project?
 
-< a id="preview">Thimble comes with a comes with an editor view in the left window and a preview on the right side. As you  make a change in your editor it will update in the preview. If you ever need to refresh the preview window there is a button next to the word Preview. 
+<a id="preview">Thimble comes with a comes with an editor view in the left window and a preview on the right side. As you  make a change in your editor it will update in the preview. If you ever need to refresh the preview window there is a button next to the word Preview. 
 
 ## How do I see what my project would look like on a mobile device?
 
