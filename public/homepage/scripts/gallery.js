@@ -1,27 +1,17 @@
-// $(document).ready(function(){
-  // gallery.init(activities); // activities is the JSON data for all activities
-// });
-
 define(function() {
 
   var gallery = {
 
     // Initialize the gallery and display activities
     init: function(activities) {
-
       var that = this;
+
       var URL = "https://mozilla.github.io/thimble-homepage-gallery/activities.json";
       $.get(URL).done(function(returnedData) {
         that.start(returnedData);
       }).fail(function(e){
-        console.log("fail");
+        console.log("Unable to load project data");
       });
-
-
-    },
-
-    start : function(activities) {
-      var that = this;
 
       // Add all the click handlers.
       this.galleryEl = $(".gallery");
@@ -36,8 +26,12 @@ define(function() {
       this.galleryEl.on("blur",".search",function(e){ that.updateFocus() });
 
       this.galleryEl.on("click",".search-tags .remove",function(){ that.removeTag($(this).parent()) });
-      this.galleryEl.on("click",".start-over",function(){ that.startOver() });
+      this.galleryEl.on("click",".start-over",function(e){ that.startOver(e) });
 
+      this.galleryHeaderEl = this.galleryEl.find(".gallery-header");
+    },
+
+    start : function(activities) {
       this.activities = activities;
       this.filterActivities();
     },
@@ -142,14 +136,14 @@ define(function() {
       <div class='activity'>
         <a class='thumbnail'></a>
         <div class='details'>
-          <h1 class='title'></h1>
-          <p class='author'>By <a href='#'>Mozilla</a></p>
+          <h1 class='project-title'></h1>
+          <p class='author'>{{ projectBy }} <a href='#'></a></p>
           <p class='description'></p>
           <div class='tags'></div>
         </div>
         <div class='buttons'>
-          <a class="remix">Remix</a>
-          <a class="teaching-kit">Lesson Plan</a>
+          <a class="remix">{{ remix }}</a>
+          <a class="teaching-kit">{{ lessonPlan }}</a>
         </div>
       </div>
     `),
@@ -170,7 +164,7 @@ define(function() {
           var newItem = this.itemTemplate.clone();
           newItem.find(".thumbnail").css("background-image","url("+activity.thumbnail_url+")" );
           newItem.find(".thumbnail").attr("href", activity.url);
-          newItem.find(".title").text(activity.title);
+          newItem.find(".project-title").text(activity.title);
           newItem.find(".author a").text(activity.author);
           newItem.find(".author a").attr("href", activity.author_url);
           newItem.find(".description").text(activity.description);
@@ -246,9 +240,9 @@ define(function() {
       }
 
       if(type == "featured") {
-        $(".popular-tags .tags-title").text("Popular tags");
+        $(".popular-tags .tags-title").text("{{ popularTags }}");
       } else {
-        $(".popular-tags .tags-title").text("Add filter");
+        $(".popular-tags .tags-title").text("{{ addFilter }}");
       }
 
       if(tagNumber > 0) {
@@ -257,7 +251,6 @@ define(function() {
         $(".popular-tags .tags-title").hide();
       }
     },
-
 
     // Handles when any tag is clicked.
     tagClicked : function(term) {
@@ -278,13 +271,11 @@ define(function() {
 
 
     updateFocus: function() {
-
       if($(".search").is(":focus")){
         this.galleryEl.addClass("has-focus");
       } else {
         this.galleryEl.removeClass("has-focus");
       }
-
     },
 
     // Shows and hides the clear button in the search field when appropriate
@@ -300,10 +291,16 @@ define(function() {
       }
 
       if(this.mode == "search") {
-        var string = displaycount + " project" + ( displaycount > 1 ? "s" : "") + " found";
-        this.galleryEl.find(".results-title").text(string);
+        var string = displaycount;
+         if( displaycount == 1) {
+           string = string + " {{ projectSingular }}";
+         } else {
+           string = string + " {{ projectPlural }}";
+         }
+         string = string + " {{ found }}";
+        this.galleryEl.find(".title").text(string);
       } else {
-        this.galleryEl.find(".results-title").text("Featured projects");
+        this.galleryEl.find(".title").text("{{ remixGalleryTitle }}");
       }
 
       var termLength = $(".search").val().length;
@@ -323,10 +320,8 @@ define(function() {
 
       if(displaycount > 0) {
         $(".no-results").hide();
-        this.galleryEl.find(".results-title").show();
       } else {
         $(".no-results").show();
-        this.galleryEl.find(".results-title").hide();
       }
 
       if(displaycount > 1) {
@@ -340,26 +335,24 @@ define(function() {
       } else {
         this.displayTags("search");
       }
-
     },
 
-    startOver : function(){
+    // Reset the search field and tags
+    startOver : function(e){
       $(".search").val("");
       $("[active]").removeAttr("active");
 
       this.searchTags = [];
       $(".search-tags *").remove();
       this.filterActivities();
+      e.preventDefault();
+      return false;
     },
 
 
     // Clears the search field
     clearSearch : function() {
-
-      // Shouldn't redo the search unless there is a change...
-
       $(".search").val("");
-
       this.filterActivities();
       this.updateUI();
     }
