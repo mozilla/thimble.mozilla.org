@@ -4,12 +4,15 @@
     <div class="search-header">
       <h2 class='title'></h2>
 
-      <div class='search-wrapper-outer'>
-        <span class='search-tags'></span>
-        <input class='search' placeholder='{{ gettext("gallerySearchPlaceholder") }}' type='text' />
-        <div class='icon search-icon'></div>
-        <div title='Clear the search term' class='clear icon clear-icon'></div>
+      <div class='search-wrapper'>
+        <div class='search-wrapper-outer'>
+          <span class='search-tags'></span>
+          <input class='search' placeholder='{{ gettext("gallerySearchPlaceholder") }}' type='text' />
+          <div class='icon search-icon'></div>
+          <div title='Clear the search term' class='clear icon clear-icon'></div>
+        </div>
       </div>
+
     </div>
 
     <div class='popular-tags'>
@@ -19,7 +22,8 @@
 
     <div class='activities'><!-- activities are added here--></div>
 
-    <div class='no-results'>
+    <div class='no-results-message'>
+      <h1>{{ gettext("noResultsTitle") }}</h1>
       <p>{{ gettext("noResultsText") | safe }}</p>
     </div>
 

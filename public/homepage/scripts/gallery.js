@@ -1,37 +1,40 @@
-define(function() {
+define(["jquery"], function($) {
 
   var gallery = {
 
-    // Initialize the gallery and display activities
-    init: function(activities) {
-      var that = this;
+    searchSpeedMS : 500,  // How long do we wait after a user types before searching
+    typeInterval : false, // Keeps track of if a user is typing
+    mode : "featured",    // "featured" or "search", affects the layout
+    searchTags : [],      // The selected tags that we're filtering with
+    searchTerms : [],     // Search terms from the input
+    maxDisplayTags : 5,   // Max number of tags to show above results
+    resultsTimeoutMS : 200,  // Visual delay for displaying updated results & tags
 
+    // Fetch external activity data
+    init: function() {
+      var that = this;
       var URL = "https://mozilla.github.io/thimble-homepage-gallery/activities.json";
       $.get(URL).done(function(returnedData) {
-        that.start(returnedData);
+        that.startGallery(returnedData);
       }).fail(function(e){
-        console.log("Unable to load project data");
+        console.log("Unable to load gallery project data from " + URL);
       });
+    },
 
-      // Add all the click handlers.
+    // Populate gallery and add UI event handlers
+    startGallery : function(activities) {
       this.galleryEl = $(".gallery");
+
+      var that = this;
+      this.galleryEl.on("focus", "input",function(){ that.updateUI() });
+      this.galleryEl.on("blur", "input",function(){ that.updateUI() });
 
       this.galleryEl.on("click",".clear",function(){ that.clearSearch() });
       this.galleryEl.on("keydown",".search",function(e){ that.keyPressed(e) });
-
-      this.galleryEl.on("click",".tag",function(){ that.tagClicked($(this).attr("tag")) });
-
-      // Updates the focus styling on the text search field
-      this.galleryEl.on("focus",".search",function(e){ that.updateFocus() });
-      this.galleryEl.on("blur",".search",function(e){ that.updateFocus() });
-
+      this.galleryEl.on("mousedown",".tag",function(){  that.tagClicked($(this).attr("tag")); });
       this.galleryEl.on("click",".search-tags .remove",function(){ that.removeTag($(this).parent()) });
       this.galleryEl.on("click",".start-over",function(e){ that.startOver(e) });
 
-      this.galleryHeaderEl = this.galleryEl.find(".gallery-header");
-    },
-
-    start : function(activities) {
       this.activities = activities;
       this.filterActivities();
     },
@@ -49,21 +52,18 @@ define(function() {
       this.updateUI();
     },
 
-    typeInterval : false, // Keeps track of if a user is typing
-    searchSpeed : 500,    // How long do we wait between keystrokes to search?
-    mode : "featured",    // Featured vs Search, affects the layout
-    searchTags : [],      // The selected tags that we're filtering with
 
     // Fires whenever someone types into the search field
     keyPressed : function(e) {
       clearTimeout(this.typeInterval);
       var that = this;
 
-      // Removes the last tag if there is no search term
-      if($(".search").val().length == 0 && e.keyCode == 8) {
-        var tagNum = $(".search-tags .search-tag").length;
+      // Removes the last-added search tag if a user presses backspace and
+      // there is no search term
+      if(this.galleryEl.find(".search").val().length == 0 && e.keyCode == 8) {
+        var tagNum = this.galleryEl.find(".search-tags .search-tag").length;
         if(tagNum > 0) {
-          this.removeTag($(".search-tag:last-child"));
+          this.removeTag(this.galleryEl.find(".search-tag:last-child"));
           return;
         }
       }
@@ -71,17 +71,16 @@ define(function() {
       this.typeInterval = setTimeout(function(){
         that.updateUI();
         that.filterActivities();
-      }, that.searchSpeed);
+      }, that.searchSpeedMS);
     },
 
 
-    // Determines which activities should have a display: true
+    // Determines which activities should be displayed
     filterActivities : function(){
-
-      if($('.search').val().length > 0 || this.searchTags.length > 0) {
+      if(this.galleryEl.find('input').val().length > 0 || this.searchTags.length > 0) {
         this.mode = "search";
       } else {
-        this.mode = "featured"
+        this.mode = "featured";
       }
 
       // If there is no search term, shows the featured activities only
@@ -95,7 +94,7 @@ define(function() {
       // Checks for the search term in the title, description  and tags
       if(this.mode == "search") {
 
-        var searchTerms = $(".search").val().toLowerCase().split(" ");
+        this.searchTerms = this.galleryEl.find("input").val().toLowerCase().split(" ");
 
         for(var i = 0; i < this.activities.length; i++) {
           var activity = this.activities[i];
@@ -111,23 +110,26 @@ define(function() {
           }
 
           // Check for each of the search terms...
-          for(var j = 0; j < searchTerms.length; j++) {
-            var thisTerm = searchTerms[j];
+          for(var j = 0; j < this.searchTerms.length; j++) {
+            var thisTerm = this.searchTerms[j];
             searchString.indexOf(thisTerm) < 0 ? activity.display = false : null;
           }
         }
       }
 
       var that = this;
-      $(".activities").addClass("fade");
+
+      this.galleryEl.find(".popular-tags, .activities").addClass("fade");
+
+      this.updateUI();
 
       setTimeout(function(){
         that.displayActivities(that.activities);
-        that.updateUI();
-      },150);
+      },this.resultsTimeoutMS);
+
       setTimeout(function(){
-        $(".fade").removeClass("fade");
-      },300);
+        that.galleryEl.find(".fade").removeClass("fade");
+      },this.resultsTimeoutMS * 2);
 
     },
 
@@ -152,7 +154,7 @@ define(function() {
     // Adds all of the items in the activities array
     displayActivities: function(activities){
 
-      $(".activities *").remove();
+      this.galleryEl.find(".activities *").remove();
 
       var resultCount = 0
 
@@ -182,16 +184,16 @@ define(function() {
             newItem.find(".tags").append("<a class='tag' tag='"+activity.tags[j]+"' title='See other projects tagged " + activity.tags[j] + "' >" + activity.tags[j] + "</a> ");
           }
 
-          $(".activities").append(newItem);
+          this.galleryEl.find(".activities").append(newItem);
         }
       }
     },
 
 
-    // Displays the list of tags under the search bar.
+    // Displays the list of tags under the search bar
     displayTags: function(type){
 
-      $(".tag-list .tag").remove();
+      this.galleryEl.find(".tag-list .tag").remove();
 
       var tags = {};
 
@@ -220,7 +222,6 @@ define(function() {
             push = true;
           }
         }
-
         if(push) {
           tagsArray.push([k, tags[k]]);
         }
@@ -230,59 +231,51 @@ define(function() {
         return y[1] - x[1];
       });
 
-      var tagNumber = 5;
+      var maxTags = this.maxDisplayTags;
 
-      tagNumber > tagsArray.length ? tagNumber = tagsArray.length : null;
+      maxTags > tagsArray.length ? maxTags = tagsArray.length : null;
 
-      for(var i = 0; i < tagNumber; i++) {
+      for(var i = 0; i < maxTags; i++) {
         var tag = tagsArray[i];
-        $(".tag-list").append("<a class='tag' tag='"+tag[0]+"' title='Search for projects tagged " + tag[0] + "'>" + tag[0] + " <span class='count'>" + tag[1] + "<span></a>");
+        this.galleryEl.find(".tag-list").append("<a class='tag' tag='"+tag[0]+"' title='Search for projects tagged " + tag[0] + "'>" + tag[0] + " <span class='count'>" + tag[1] + "<span></a>");
       }
+
+      var tagsTitleEl = this.galleryEl.find(".popular-tags .tags-title");
 
       if(type == "featured") {
-        $(".popular-tags .tags-title").text("{{ popularTags }}");
+        tagsTitleEl.text("{{ popularTags }}");
       } else {
-        $(".popular-tags .tags-title").text("{{ addFilter }}");
+        tagsTitleEl.text("{{ addFilter }}");
       }
 
-      if(tagNumber > 0) {
-        $(".popular-tags .tags-title").show();
+      if(maxTags > 0) {
+        tagsTitleEl.show();
       } else {
-        $(".popular-tags .tags-title").hide();
+        tagsTitleEl.hide();
       }
     },
 
-    // Handles when any tag is clicked.
+
+    // Handles when a popular tag, or a tag on an activity is clicked
     tagClicked : function(term) {
 
-      $(".search-tags").append("<span tag='"+term+"'class='search-tag'>" + term + "<a class='remove'></a></span>");
-
-      $(".search-wrapper-outer").addClass("pop");
-      setTimeout(function(){
-        $(".search-wrapper-outer").removeClass("pop");
-      },200)
-
-      this.searchTags.push(term);
-      this.filterActivities();
-      this.updateUI();
-
-      // TODO - add GA tracking event here
-    },
-
-
-    updateFocus: function() {
-      if($(".search").is(":focus")){
-        this.galleryEl.addClass("has-focus");
-      } else {
-        this.galleryEl.removeClass("has-focus");
+      if(this.searchTags.indexOf(term) < 0) {
+        this.galleryEl.find(".search-tags").append("<span tag='"+term+"'class='search-tag'>" + term + "<a class='remove'></a></span>");
+        this.searchTags.push(term);
+        this.filterActivities();
       }
+
+      this.galleryEl.find(".search-wrapper").addClass("pop");
+
+      var that = this;
+      setTimeout(function(){
+        that.galleryEl.find(".search-wrapper").removeClass("pop");
+      },200)
     },
 
-    // Shows and hides the clear button in the search field when appropriate
-    updateUI: function() {
 
-      var displaycount = 0
-
+    updateResultsUI : function() {
+      var displaycount = 0;
       for(var i = 0; i < this.activities.length; i++) {
         var activity = this.activities[i];
         if(activity.display) {
@@ -290,44 +283,10 @@ define(function() {
         }
       }
 
-      if(this.mode == "search") {
-        var string = displaycount;
-         if( displaycount == 1) {
-           string = string + " {{ projectSingular }}";
-         } else {
-           string = string + " {{ projectPlural }}";
-         }
-         string = string + " {{ found }}";
-        this.galleryEl.find(".title").text(string);
-      } else {
-        this.galleryEl.find(".title").text("{{ remixGalleryTitle }}");
-      }
-
-      var termLength = $(".search").val().length;
-
-      if(termLength > 0) {
-        this.galleryEl.addClass("has-term");
-      } else {
-        this.galleryEl.removeClass("has-term");
-      }
-
-      if(this.searchTags.length > 0) {
-        this.galleryEl.addClass("has-tags");
-
-      } else {
-        this.galleryEl.removeClass("has-tags");
-      }
-
-      if(displaycount > 0) {
-        $(".no-results").hide();
-      } else {
-        $(".no-results").show();
-      }
-
       if(displaycount > 1) {
-        $(".popular-tags").css("opacity",1);
+        this.galleryEl.find(".popular-tags").removeClass("hidden");
       } else {
-        $(".popular-tags").css("opacity",0);
+        this.galleryEl.find(".popular-tags").addClass("hidden");
       }
 
       if(this.mode == "featured" || displaycount == 0) {
@@ -337,26 +296,80 @@ define(function() {
       }
     },
 
-    // Reset the search field and tags
-    startOver : function(e){
-      $(".search").val("");
-      $("[active]").removeAttr("active");
+    // Updates the gallery UI depending on the number of results
+    // and state of the search field.
+    updateUI : function() {
+      var displaycount = 0;
 
-      this.searchTags = [];
-      $(".search-tags *").remove();
-      this.filterActivities();
-      e.preventDefault();
-      return false;
+      for(var i = 0; i < this.activities.length; i++) {
+        var activity = this.activities[i];
+        if(activity.display) {
+          displaycount++;
+        }
+      }
+
+      if(displaycount == 0) {
+        this.galleryEl.addClass("no-results-found");
+      } else {
+        this.galleryEl.removeClass("no-results-found");
+      }
+
+      if(this.mode == "search") {
+        var string = displaycount;
+        if(displaycount == 1) {
+         string = string + " {{ projectSingular }}" ;
+        } else {
+         string = string + " {{ projectPlural }}";
+        }
+        string = string + " {{ found }}";
+        this.galleryEl.find(".title").text(string);
+      } else {
+        this.galleryEl.find(".title").text("{{ remixGalleryTitle }}");
+      }
+
+      var termLength = $(".search").val().length;
+      if(termLength > 0) {
+        this.galleryEl.addClass("has-term");
+      } else {
+        this.galleryEl.removeClass("has-term");
+      }
+
+      var active = false;
+
+      if(termLength > 0 ) { active = true; }
+      if(this.galleryEl.find("input").is(":focus")) { active = true; }
+      if(this.searchTags.length > 0) { active = true; }
+
+      if(active) {
+        this.galleryEl.attr("active",true);
+      } else {
+        this.galleryEl.removeAttr("active");
+      }
+
+      var that = this;
+      setTimeout(function(){
+        that.updateResultsUI();
+      },this.resultsTimeoutMS);
+
     },
 
+    // Resets the search field and tags
+    startOver : function(e){
+      this.galleryEl.find(".search").val("");
+      this.searchTags = [];
+      this.searchTerms = [];
+      this.galleryEl.find(".search-tags *").remove();
+      this.filterActivities();
+      e.preventDefault();
+    },
 
     // Clears the search field
     clearSearch : function() {
-      $(".search").val("");
+      this.galleryEl.find(".search").val("");
       this.filterActivities();
       this.updateUI();
     }
   }
 
-    return gallery;
+  return gallery;
 });
