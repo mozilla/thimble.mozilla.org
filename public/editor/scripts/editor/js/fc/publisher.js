@@ -11,6 +11,7 @@ define(function(require) {
   var TEXT_UNPUBLISH = "{{ publishUnpublishBtn }}";
   var TEXT_UNPUBLISHING = "{{ publishUnpublishingIndicator }}";
   var TEXT_UPDATE_PUBLISH = "{{ publishChangesBtn }}";
+  var TEXT_UNPUBLISH_WARNING = "{{ publishUnpublishWarning }}";
 
   function unpublishedChangesPrompt() {
     var dialog = this.dialog;
@@ -74,7 +75,7 @@ define(function(require) {
     bramble.on("folderRename", function() {
       publisher.showUnpublishedChangesPrompt();
     });
-        
+
     dialog.buttons.publish.on("click", publisher.handlers.publish);
 
     // Were there any files that were updated and not published?
@@ -119,7 +120,7 @@ define(function(require) {
       publisher.needsUpdate = true;
       callback();
     });
-  };  
+  };
 
   Publisher.prototype.publish = function() {
     var publisher = this;
@@ -194,6 +195,13 @@ define(function(require) {
     if (publisher.unpublishing) {
       return;
     }
+
+    var didConfirm = window.confirm(TEXT_UNPUBLISH_WARNING);
+
+    if (!didConfirm) {
+      return;
+    }
+
     publisher.unpublishing = true;
 
     function setState(done) {
