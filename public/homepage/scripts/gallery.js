@@ -39,7 +39,6 @@ define(["jquery"], function($) {
       this.filterActivities();
     },
 
-
     // Removes one of the tags that is currently being used as a filter
     removeTag : function(tagEl) {
       var tagName = tagEl.attr("tag");
@@ -51,7 +50,6 @@ define(["jquery"], function($) {
       this.filterActivities();
       this.updateUI();
     },
-
 
     // Fires whenever someone types into the search field
     keyPressed : function(e) {
@@ -117,11 +115,10 @@ define(["jquery"], function($) {
         }
       }
 
-      var that = this;
-
       this.galleryEl.find(".popular-tags, .activities").addClass("fade");
-
       this.updateUI();
+
+      var that = this;
 
       setTimeout(function(){
         that.displayActivities(that.activities);
@@ -130,30 +127,10 @@ define(["jquery"], function($) {
       setTimeout(function(){
         that.galleryEl.find(".fade").removeClass("fade");
       },this.resultsTimeoutMS * 2);
-
     },
 
-    // The template for each item we display for an activity
-    itemTemplate : $(`
-      <div class='activity'>
-        <a class='thumbnail'></a>
-        <div class='details'>
-          <h1 class='project-title'></h1>
-          <p class='author'>{{ projectBy }} <a href='#'></a></p>
-          <p class='description'></p>
-          <div class='tags'></div>
-        </div>
-        <div class='buttons'>
-          <a class="remix">{{ remix }}</a>
-          <a class="teaching-kit">{{ lessonPlan }}</a>
-        </div>
-      </div>
-    `),
-
-
-    // Adds all of the items in the activities array
+    // Adds all of the items that are supposed to be shown to the page
     displayActivities: function(activities){
-
       this.galleryEl.find(".activities *").remove();
 
       var resultCount = 0
@@ -163,7 +140,8 @@ define(["jquery"], function($) {
 
         if(activity.display) {
           resultCount++;
-          var newItem = this.itemTemplate.clone();
+          var newItem = this.galleryEl.find(".activity-template").clone();
+          newItem.removeClass("activity-template");
           newItem.find(".thumbnail").css("background-image","url("+activity.thumbnail_url+")" );
           newItem.find(".thumbnail").attr("href", activity.url);
           newItem.find(".project-title").text(activity.title);
@@ -188,7 +166,6 @@ define(["jquery"], function($) {
         }
       }
     },
-
 
     // Displays the list of tags under the search bar
     displayTags: function(type){
@@ -255,7 +232,6 @@ define(["jquery"], function($) {
       }
     },
 
-
     // Handles when a popular tag, or a tag on an activity is clicked
     tagClicked : function(term) {
 
@@ -273,7 +249,7 @@ define(["jquery"], function($) {
       },200)
     },
 
-
+    // Updates the tags & activities UI
     updateResultsUI : function() {
       var displaycount = 0;
       for(var i = 0; i < this.activities.length; i++) {
@@ -296,8 +272,7 @@ define(["jquery"], function($) {
       }
     },
 
-    // Updates the gallery UI depending on the number of results
-    // and state of the search field.
+    // Updates the search and results title UI
     updateUI : function() {
       var displaycount = 0;
 
