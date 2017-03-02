@@ -80,7 +80,7 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
 
   $(".project-delete").click(function() {
     // TODO: we can do better than this, but let's at least make it harder to lose data.
-    if(!window.confirm("{{ deleteProjectConfirmText }}")) {
+    if(!window.confirm("{{ deleteProjectConfirmationText }}")) {
       return false;
     }
 
