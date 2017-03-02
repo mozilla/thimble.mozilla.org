@@ -59,14 +59,14 @@
                 <li>
                   <a href="{{ logoutURL }}" id="logout-link" target="_self">
                     <img src="/img/icon/sign-out.svg" />
-                    {{ gettext("signOutLink") }}
+                    {{ gettext("signOutLink2") }}
                   </a>
                 </li>
               </ul>
             </div>
         {% else %}
           <div id="navbar-anonymous">
-            {{ gettext("loginPromptHomepage") | instantiate | safe }}
+            {{ gettext("signInPromptHomepage") | instantiate | safe }}
           </div>
         {% endif %}
         </div>
