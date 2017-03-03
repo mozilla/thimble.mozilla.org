@@ -12,18 +12,21 @@ define(["jquery"], function($) {
 
     // Fetch external activity data
     init: function() {
+      this.galleryEl = $(".gallery");
+
       var that = this;
       var URL = "https://mozilla.github.io/thimble-homepage-gallery/activities.json";
       $.get(URL).done(function(returnedData) {
         that.startGallery(returnedData);
       }).fail(function(e){
         console.log("Unable to load gallery project data from " + URL);
+        that.galleryEl.addClass("loading-error");
+        that.galleryEl.find("input").attr("disabled",true);
       });
     },
 
     // Populate gallery and add UI event handlers
     startGallery : function(activities) {
-      this.galleryEl = $(".gallery");
 
       var that = this;
       this.galleryEl.on("focus", "input",function(){ that.updateUI() });
@@ -37,6 +40,10 @@ define(["jquery"], function($) {
 
       this.activities = activities;
       this.filterActivities();
+
+      setTimeout(function(){
+        that.galleryEl.removeClass("loading");
+      }, this.resultsTimeoutMS)
     },
 
     // Removes one of the tags that is currently being used as a filter
@@ -156,7 +163,13 @@ define(["jquery"], function($) {
             remix = "/remix"
           }
           newItem.find(".remix").attr("href", activity.url + remix);
-          newItem.find(".teaching-kit").attr("href", activity.teaching_kit_url);
+          if(activity.teaching_kit_url) {
+            newItem.find(".teaching-kit").attr("href", activity.teaching_kit_url).removeClass("hidden");
+          } else {
+            newItem.find(".teaching-kit").addClass("hidden");
+          }
+
+
 
           for(var j = 0; j < activity.tags.length; j++) {
             newItem.find(".tags").append("<a class='tag' tag='"+activity.tags[j]+"' title='See other projects tagged " + activity.tags[j] + "' >" + activity.tags[j] + "</a> ");
@@ -290,14 +303,7 @@ define(["jquery"], function($) {
       }
 
       if(this.mode == "search") {
-        var string = displaycount;
-        if(displaycount == 1) {
-         string = string + " {{ projectSingular }}" ;
-        } else {
-         string = string + " {{ projectPlural }}";
-        }
-        string = string + " {{ found }}";
-        this.galleryEl.find(".title").text(string);
+        this.galleryEl.find(".title").text("{{ searchResultsTitle }}");
       } else {
         this.galleryEl.find(".title").text("{{ remixGalleryTitle }}");
       }
