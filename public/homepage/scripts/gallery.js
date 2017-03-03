@@ -18,7 +18,7 @@ define(["jquery"], function($) {
       var URL = "https://mozilla.github.io/thimble-homepage-gallery/activities.json";
       $.get(URL).done(function(returnedData) {
         that.startGallery(returnedData);
-      }).fail(function(e){
+      }).fail(function(){
         console.log("Unable to load gallery project data from " + URL);
         that.galleryEl.addClass("loading-error");
         that.galleryEl.find("input").attr("disabled",true);
@@ -29,14 +29,14 @@ define(["jquery"], function($) {
     startGallery : function(activities) {
 
       var that = this;
-      this.galleryEl.on("focus", "input",function(){ that.updateUI() });
-      this.galleryEl.on("blur", "input",function(){ that.updateUI() });
+      this.galleryEl.on("focus", "input",function(){ that.updateUI(); });
+      this.galleryEl.on("blur", "input",function(){ that.updateUI(); });
 
-      this.galleryEl.on("click",".clear",function(){ that.clearSearch() });
-      this.galleryEl.on("keydown",".search",function(e){ that.keyPressed(e) });
+      this.galleryEl.on("click",".clear",function(){ that.clearSearch(); });
+      this.galleryEl.on("keydown",".search",function(e){ that.keyPressed(e); });
       this.galleryEl.on("mousedown",".tag",function(){  that.tagClicked($(this).attr("tag")); });
-      this.galleryEl.on("click",".search-tags .remove",function(){ that.removeTag($(this).parent()) });
-      this.galleryEl.on("click",".start-over",function(e){ that.startOver(e) });
+      this.galleryEl.on("click",".search-tags .remove",function(){ that.removeTag($(this).parent()); });
+      this.galleryEl.on("click",".start-over",function(e){ that.startOver(e); });
 
       this.activities = activities;
       this.filterActivities();
@@ -65,7 +65,7 @@ define(["jquery"], function($) {
 
       // Removes the last-added search tag if a user presses backspace and
       // there is no search term
-      if(this.galleryEl.find(".search").val().length == 0 && e.keyCode == 8) {
+      if(this.galleryEl.find(".search").val().length === 0 && e.keyCode === 8) {
         var tagNum = this.galleryEl.find(".search-tags .search-tag").length;
         if(tagNum > 0) {
           this.removeTag(this.galleryEl.find(".search-tag:last-child"));
@@ -89,7 +89,7 @@ define(["jquery"], function($) {
       }
 
       // If there is no search term, shows the featured activities only
-      if(this.mode == "featured") {
+      if(this.mode === "featured") {
         for(var i = 0; i < this.activities.length; i++) {
           var activity = this.activities[i];
           activity.featured ? activity.display = true : activity.display = false;
@@ -97,7 +97,7 @@ define(["jquery"], function($) {
       }
 
       // Checks for the search term in the title, description  and tags
-      if(this.mode == "search") {
+      if(this.mode === "search") {
 
         this.searchTerms = this.galleryEl.find("input").val().toLowerCase().split(" ");
 
@@ -111,13 +111,17 @@ define(["jquery"], function($) {
           // Check for each of the selected tags...
           for(var j = 0; j < this.searchTags.length; j++) {
             var thisTerm = this.searchTags[j];
-            searchString.indexOf(thisTerm) < 0 ? activity.display = false : null;
+            if(searchString.indexOf(thisTerm) < 0) {
+              activity.display = false;
+            }
           }
 
           // Check for each of the search terms...
           for(var j = 0; j < this.searchTerms.length; j++) {
             var thisTerm = this.searchTerms[j];
-            searchString.indexOf(thisTerm) < 0 ? activity.display = false : null;
+            if(searchString.indexOf(thisTerm) < 0) {
+              activity.display = false;
+            }
           }
         }
       }
@@ -158,7 +162,7 @@ define(["jquery"], function($) {
 
           // Check if activity_url ends with a slash, if it doesn't - add one before adding "remix"
           var remix = "remix";
-          var endsWithSlash = (activity.url.charAt(activity.url.length-1) == "/")
+          var endsWithSlash = (activity.url.charAt(activity.url.length-1) === "/");
           if(!endsWithSlash) {
             remix = "/remix"
           }
@@ -189,7 +193,7 @@ define(["jquery"], function($) {
 
       for(var i = 0; i < this.activities.length; i++) {
         var activity = this.activities[i];
-        if(type == "featured" || activity.display) {
+        if(type === "featured" || activity.display) {
           for(var j = 0; j < activity.tags.length; j++) {
             var tag = activity.tags[j];
             if(!tags[tag]) {
@@ -205,9 +209,7 @@ define(["jquery"], function($) {
 
       for(var k in tags) {
         var push = false;
-
         for(var i = this.searchTags.length; i >= 0; i--) {
-          var searchTerm = this.searchTags[i];
           if(this.searchTags.indexOf(k) < 0) {
             push = true;
           }
@@ -223,7 +225,9 @@ define(["jquery"], function($) {
 
       var maxTags = this.maxDisplayTags;
 
-      maxTags > tagsArray.length ? maxTags = tagsArray.length : null;
+      if(maxTags > tagsArray.length) {
+        maxTags = tagsArray.length
+      }
 
       for(var i = 0; i < maxTags; i++) {
         var tag = tagsArray[i];
@@ -232,7 +236,7 @@ define(["jquery"], function($) {
 
       var tagsTitleEl = this.galleryEl.find(".popular-tags .tags-title");
 
-      if(type == "featured") {
+      if(type === "featured") {
         tagsTitleEl.text("{{ popularTags }}");
       } else {
         tagsTitleEl.text("{{ addFilter }}");
@@ -278,7 +282,7 @@ define(["jquery"], function($) {
         this.galleryEl.find(".popular-tags").addClass("hidden");
       }
 
-      if(this.mode == "featured" || displaycount == 0) {
+      if(this.mode === "featured" || displaycount == 0) {
         this.displayTags("featured");
       } else {
         this.displayTags("search");
@@ -296,13 +300,13 @@ define(["jquery"], function($) {
         }
       }
 
-      if(displaycount == 0) {
+      if(displaycount === 0) {
         this.galleryEl.addClass("no-results-found");
       } else {
         this.galleryEl.removeClass("no-results-found");
       }
 
-      if(this.mode == "search") {
+      if(this.mode === "search") {
         this.galleryEl.find(".title").text("{{ searchResultsTitle }}");
       } else {
         this.galleryEl.find(".title").text("{{ remixGalleryTitle }}");
