@@ -37,11 +37,6 @@
             -webkit-animation: loadingpulse 1s infinite linear;
         }
 
-        #spinner-container .loading-message-help-link {
-            animation: none;
-            -webkit-animation: none;
-        }
-
         #spinner-container a {
             color: white;
             text-decoration: underline;
@@ -74,6 +69,11 @@
 
         #spinner-container.loading-error .thimble-spinner {
             animation: none;
+        }
+        
+        #spinner-container .loading-message-help-link {
+            animation: none;
+            -webkit-animation: none;
         }
 
         @keyframes loadingpulse {
@@ -137,8 +137,8 @@
         <div class="error-message message">
             <p>{{ gettext("errorLoadingProject") | safe }}</p>
             <p>{{ gettext("errorLoadingProjectSuggestion") }}</p>
-        </div>
-    </div>
+       </div>
+     </div>
 
     <div id="browser-support-warning" class="hide">
       <div class="message-box">
