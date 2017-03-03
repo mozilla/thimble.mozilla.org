@@ -43,7 +43,7 @@ define(["jquery"], function($) {
 
       setTimeout(function(){
         that.galleryEl.removeClass("loading");
-      }, this.resultsTimeoutMS)
+      }, this.resultsTimeoutMS);
     },
 
     // Removes one of the tags that is currently being used as a filter
@@ -92,7 +92,11 @@ define(["jquery"], function($) {
       if(this.mode === "featured") {
         for(var i = 0; i < this.activities.length; i++) {
           var activity = this.activities[i];
-          activity.featured ? activity.display = true : activity.display = false;
+          if(activity.featured) {
+            activity.display = true;
+          } else {
+            activity.display = false;
+          }
         }
       }
 
@@ -144,7 +148,7 @@ define(["jquery"], function($) {
     displayActivities: function(activities){
       this.galleryEl.find(".activities *").remove();
 
-      var resultCount = 0
+      var resultCount = 0;
 
       for(var i = 0; i < activities.length; i++) {
         var activity = activities[i];
@@ -164,7 +168,7 @@ define(["jquery"], function($) {
           var remix = "remix";
           var endsWithSlash = (activity.url.charAt(activity.url.length-1) === "/");
           if(!endsWithSlash) {
-            remix = "/remix"
+            remix = "/remix";
           }
           newItem.find(".remix").attr("href", activity.url + remix);
           if(activity.teaching_kit_url) {
@@ -208,14 +212,16 @@ define(["jquery"], function($) {
       var tagsArray = [];
 
       for(var k in tags) {
-        var push = false;
-        for(var i = this.searchTags.length; i >= 0; i--) {
-          if(this.searchTags.indexOf(k) < 0) {
-            push = true;
+        if (tags.hasOwnProperty(k)) {
+          var push = false;
+          for(var i = this.searchTags.length; i >= 0; i--) {
+            if(this.searchTags.indexOf(k) < 0) {
+              push = true;
+            }
           }
-        }
-        if(push) {
-          tagsArray.push([k, tags[k]]);
+          if(push) {
+            tagsArray.push([k, tags[k]]);
+          }
         }
       }
 
@@ -226,7 +232,7 @@ define(["jquery"], function($) {
       var maxTags = this.maxDisplayTags;
 
       if(maxTags > tagsArray.length) {
-        maxTags = tagsArray.length
+        maxTags = tagsArray.length;
       }
 
       for(var i = 0; i < maxTags; i++) {
@@ -282,7 +288,7 @@ define(["jquery"], function($) {
         this.galleryEl.find(".popular-tags").addClass("hidden");
       }
 
-      if(this.mode === "featured" || displaycount == 0) {
+      if(this.mode === "featured" || displaycount === 0) {
         this.displayTags("featured");
       } else {
         this.displayTags("search");
@@ -354,7 +360,7 @@ define(["jquery"], function($) {
       this.filterActivities();
       this.updateUI();
     }
-  }
+  };
 
   return gallery;
 });
