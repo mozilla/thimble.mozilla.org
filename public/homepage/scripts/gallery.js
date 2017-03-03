@@ -269,7 +269,7 @@ define(["jquery"], function($) {
       var that = this;
       setTimeout(function(){
         that.galleryEl.find(".search-wrapper").removeClass("pop");
-      },200)
+      },200);
     },
 
     // Updates the tags & activities UI
