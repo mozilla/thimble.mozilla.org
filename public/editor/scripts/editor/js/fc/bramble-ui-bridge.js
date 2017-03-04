@@ -126,7 +126,7 @@ define(function(require) {
       var projectId = Project.getID();
 
       // TODO: we can do better than this, but let's at least make it harder to lose data.
-      if(!window.confirm("{{ deleteProjectConfirmText }}")) {
+      if(!window.confirm("{{ deleteProjectConfirmationText }}")) {
         return false;
       }
 
@@ -213,6 +213,13 @@ define(function(require) {
 
       _inspectorEnabled = data.enabled;
     });
+
+    // Set initial auto-refresh toggle to last known setting
+    if(!bramble.getAutoUpdate()){
+        $(".refresh-wrapper").removeClass("enabled");
+        bramble.disableAutoUpdate();
+        analytics.event("disableAutoUpdate");
+    }
 
     // Preview auto-refresh toggle
     $(".toggle-auto-update").on("click", function() {
