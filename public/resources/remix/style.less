@@ -176,7 +176,7 @@
   }
 
   &.touch-mode {
-    bottom: 48px !important;
+    bottom: 6px !important;
     top: auto !important;
     right: 6px !important;
     max-width: ~"calc(100% - 12px)" !important;
@@ -270,24 +270,23 @@
         transition: none !important;
       }
     }
+  }
+}
+/* move the remix button to the left side for AFrame projects only*/
+.a-body .details-bar.touch-mode {
+  right: auto !important;
+  left: 6px !important;
     
-    /* move the remix button to the left side for AFrame projects only*/
-    &.a-body {
-      right: auto !important;
-      left: 6px !important;
+  .thimble-button {
+    left: 0px !important;
+  }
+    
+  .details-bar-remix-button-wrapper {
+    margin-right: auto !important;
+    margin-left: 46px !important;
+  }
 
-      .thimble-button {
-        left: 0px !important;
-      }
-      
-      .details-bar-remix-button-wrapper {
-        margin-right: auto !important;
-	margin-left: 46px !important;
-      }
-
-      .close-details-bar {
-        left: 10px !important;
-      }
-    }
+  .close-details-bar {
+    left: 10px !important;
   }
 }
