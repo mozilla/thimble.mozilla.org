@@ -136,7 +136,7 @@ define(function(require) {
         //  Check whether the project is not anonymous		
         if(context.publisher){
           context.publisher.showUnpublishedChangesPrompt();		
-		}
+        }
       });
     });
   }
