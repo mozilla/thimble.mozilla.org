@@ -300,10 +300,10 @@ define(function(require) {
       }
 
       bramble.showTutorial(setTutorialPreview);
-      
+
       if (_isMobileView) {
         //display tutorial always in desktop mode
-        activatePreviewMode("destop");
+        activatePreviewMode("desktop");
       }
     });
 
