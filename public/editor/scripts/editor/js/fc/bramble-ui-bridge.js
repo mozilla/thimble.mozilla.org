@@ -289,8 +289,7 @@ define(function(require) {
 
       bramble.hideTutorial(setNormalPreview);
 
-      if (_isMobileView)
-      {
+      if (_isMobileView) {
         //if mobile view is preserved
         activatePreviewMode("mobile");
       }
@@ -301,8 +300,8 @@ define(function(require) {
       }
 
       bramble.showTutorial(setTutorialPreview);
-      if (_isMobileView)
-      {
+      
+      if (_isMobileView) {
         //display tutorial always in desktop mode
         activatePreviewMode("destop");
       }
