@@ -1,4 +1,5 @@
 define(function(require) {
+  var $ = require("jquery");
   var Constants = require("constants");
   var Remote = require("project/remote");
   var Metadata = require("project/metadata");
@@ -246,12 +247,42 @@ define(function(require) {
 
             // Look for an HTML file to open, ideally index.html
             var indexPos = 0;
+            var foundIndexHTML = false;
             found.forEach(function(path, idx) {
               if(Path.basename(path) === "index.html") {
                 indexPos = idx;
+                foundIndexHTML = true;
               }
             });
 
+            // Create a default index.html file
+            if (!foundIndexHTML) {
+              var fileOptions = {
+                basenamePrefix: "index",
+                ext: ".html"
+              };
+              var location = "/default-files/html.txt";
+              $.get(location).then(function(data) {
+                fileOptions.contents = data;
+                Bramble.once("ready", function(bramble) {
+                  bramble.addNewFile(fileOptions, function(err) {
+                    if (err) {
+                      console.error("[Bramble] Failed to write new file", err);
+                      callback(err);
+                      return;
+                    }
+                    callback();
+                  });
+                });
+              }, function(err) {
+                if (err) {
+                  console.error("Failed to download " + location, err);
+                  callback(err);
+                  return;
+                }
+                callback();
+              });
+            }
             callback(null, found[indexPos]);
           });
         });
