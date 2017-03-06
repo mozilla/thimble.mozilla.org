@@ -14,11 +14,13 @@ let defaultCSPDirectives = {
   ],
   frameSrc: [
     "'self'",
-    "https://docs.google.com"
+    "https://docs.google.com",
+    "blob:"
   ],
   childSrc: [
     "'self'",
-    "https://pontoon.mozilla.org"
+    "https://pontoon.mozilla.org",
+    "blob:"
   ],
   frameAncestors: [
     "https://pontoon.mozilla.org"
