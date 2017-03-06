@@ -47,7 +47,8 @@ module.exports = function( grunt ) {
             "constants": "editor/scripts/constants",
             "EventEmitter": "../node_modules/wolfy87-eventemitter/EventEmitter.min",
             "analytics": "../node_modules/webmaker-analytics/analytics",
-            "moment": "../node_modules/moment/min/moment-with-locales.min"
+            "moment": "../node_modules/moment/min/moment-with-locales.min",
+            "gallery": "homepage/scripts/gallery"
           },
           shim: {
             "jquery": {
