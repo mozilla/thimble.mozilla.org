@@ -7,16 +7,9 @@
   var gaTrackingId = 'UA-68630113-1';
 
   function injectAnalytics() {
-    var analyticsHtml =
-    '\n<script>\n' +
-    '(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\n' +
-    '(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\n' +
-    'm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n' +
-    '})(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');\n' +
-    'ga(\'create\', \'' + gaTrackingId + '\', \'auto\');\n' +
-    'ga(\'send\', \'pageview\');\n' +
-    '</script>\n';
-
+    var analyticsHtml = document.createElement("script");
+    analyticsHtml.type = "text/javascript";
+    analyticsHtml.innerHTML = '(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\n' + '(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\n' + 'm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n' + '})(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');\n' + 'ga(\'create\', \'' + gaTrackingId + '\', \'auto\');\n' + 'ga(\'send\', \'pageview\');\n';
     head.appendChild(analyticsHtml);
   }
 
@@ -27,7 +20,7 @@
     }
 
     var isTouchDevice = 'ontouchstart' in document.documentElement;
-    var detailsBar = document.getElementsByClassName("details-bar");
+    var detailsBar = document.querySelector(".details-bar");
     detailsBar.setAttribute("style", "");
 
     if(isTouchDevice) {
@@ -37,21 +30,25 @@
       detailsBar.classList.add("mouse-mode");
     }
 
-    detailsBar.on("click", ".thimble-button", function(){
+    detailsBar.addEventListener("click", function(event) {
+      if (event.target.className == "thimble-button") {
+        detailsBar.classList.remove("collapsed");
+        return false;
+      }
+    });
+
+    detailsBar.addEventListener("click", function(event) {
+      if (event.target.className == "close-details-bar") {
+        detailsBar.classList.add("collapsed");
+        return false;
+      }
+    });
+
+    document.querySelector(".mouse-mode").addEventListener("mouseenter", function(){
       detailsBar.classList.remove("collapsed");
-      return false;
     });
 
-    detailsBar.on("click", ".close-details-bar", function(){
-      detailsBar.classList.add("collapsed");
-      return false;
-    });
-
-    document.getElementsByClassName("mouse-mode").on("mouseenter",function(){
-      detailsBar.classList.remove("collapsed");
-    });
-
-    document.getElementsByClassName("mouse-mode").on("mouseleave",function(){
+    document.querySelector(".mouse-mode").addEventListener("mouseleave", function(){
       detailsBar.classList.add("collapsed");
     });
   }
@@ -70,7 +67,9 @@
     xmlhttp.onreadystatechange = function(response, textStatus) {
       if (xmlhttp.readyState == XMLHttpRequest.DONE ) {
         if (xmlhttp.status == 200) {
-          document.body.insertBefore(response, document.body.firstChild);
+          var responseTag = document.createElement("span");
+          responseTag.innerHTML = response;
+          document.body.insertBefore(responseTag, document.body.firstChild);
 	    callback(null);
         }
         else if (xmlhttp.status == 400) {
@@ -87,7 +86,7 @@
     var stylesheets =
       "<link href=\"" + metadata.host + "/resources/remix/clean-slate.min.css\" rel=\"stylesheet\">\n" +
       "<link href=\"" + metadata.host + "/resources/remix/style.css\" rel=\"stylesheet\">\n";
-    document.getElementsByTagName("head").appendChild(stylesheets);
+    document.head.appendChild(stylesheets);
   }
 
   function grep(items, callback) {
@@ -124,14 +123,12 @@
   }
 
   function run() {
-    document.onreadystatechange = function () {
-      if (document.readyState === "complete") {
-        var metadata = getMetadata();
-        injectAnalytics();
-        injectStyleSheets(metadata);
-        injectDetailsBar(metadata, setupBar);
-      }
-    };
+    document.addEventListener("DOMContentLoaded", function() {
+      var metadata = getMetadata();
+      injectAnalytics();
+      injectStyleSheets(metadata);
+      injectDetailsBar(metadata, setupBar);
+    });
   }
   
   (function(doc, script) {
