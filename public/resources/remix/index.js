@@ -67,7 +67,7 @@
       updated: metadata.dateUpdated
     };
 
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function(response, textStatus) {
       if (xmlhttp.readyState == XMLHttpRequest.DONE ) {
         if (xmlhttp.status == 200) {
           document.body.insertBefore(response, document.body.firstChild);
