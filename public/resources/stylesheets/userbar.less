@@ -5,7 +5,7 @@ body {
 }
 
 /* Transition time for hover effects */
-@transitionTime: 0.5s;
+@transitionTime: 0.15s;
 
 #webmaker-preview-holder-pane {
   border: 0;
@@ -33,7 +33,11 @@ body {
   .navbar-logo-container {
     margin-right: 5px;
     position: relative;
-    top: 1px;
+    top: 2px;
+
+    .thimble-logo-full {
+      width: 238px;
+    }
 
     &:hover {
       transform: scale(1.05);
@@ -150,7 +154,7 @@ body {
   .nav-link {
     opacity: 0.65;
     color: white;
-    transition: opacity .1s ease-out;
+    .transition;
 
     &:hover {
       opacity: 1;
@@ -178,6 +182,7 @@ body {
     filter: alpha(opacity=90);
     opacity: 0.9;
     box-sizing: border-box;
+    .transition;
 
     .icon;
 
@@ -201,11 +206,28 @@ body {
       top: 2px;
       border: none;
     }
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: -2px;
+    }
+
+    &:active:after {
+      top: -3px;
+      left: 0;
+      right: 0;
+      bottom: 1px;
+    }
   }
 
   #navbar-login {
     padding-right: 0;
     border-right: none;
+    .transition;
 
     &.signed-in {
       border-right: 1px solid #7DAF8F;
@@ -247,6 +269,7 @@ body {
   -ms-transition: @transitionTime;
   -o-transition: @transitionTime;
   transition: @transitionTime;
+  transition-timing-function: ease-out;
 }
 
 .transition-only-opacity {
@@ -262,12 +285,13 @@ a.navbar-login {
   color: white;
   text-decoration: none;
   font-weight: normal;
-  .transition;
 }
 
 a.navbar-login:hover {
+  .transition;
   cursor: pointer;
-  text-decoration: underline;
+  text-decoration: none;
+  border-bottom: 1px solid;
 }
 
 /* Logged in menu */
@@ -342,7 +366,7 @@ a.navbar-login:hover {
     cursor: pointer;
 
     top: 0;
-    transition: opacity .1s ease-out;
+    .transition;
     border-top: 1px solid rgba(0,0,0,0);
 
     &:hover {
@@ -384,7 +408,7 @@ a.navbar-login:hover {
   }
 }
 
-.homepage .dropdown .dropdown-content {
+.dropdown .dropdown-content {
   right: 0 !important;
   left: auto !important;
 }
@@ -476,8 +500,7 @@ a.navbar-login:hover {
       margin: 0;
 
       li {
-        display: block;
-        padding: 12px;
+        padding: 0;
 
         &:last-child {
           border-top: 1px solid #e9e9e9;
@@ -490,6 +513,8 @@ a.navbar-login:hover {
         a {
           text-decoration: none;
           color: black;
+          display: block;
+          padding: 12px;
 
           img {
             padding-right: 10px;

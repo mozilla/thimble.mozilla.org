@@ -132,15 +132,21 @@ define(function(require) {
         }
         editingComplete(context);
         analytics.event("ProjectRenamed");
+
+        //  Check whether the project is not anonymous		
+        if(context.publisher){
+          context.publisher.showUnpublishedChangesPrompt();		
+        }
       });
     });
   }
 
-  function ProjectRenameUtility(appUrl, csrfToken) {
+  function ProjectRenameUtility(appUrl, csrfToken, publisher) {
     var context = this;
 
     this.appUrl = appUrl;
     this.csrfToken = csrfToken;
+    this.publisher = publisher;
     this.container = $("#navbar-project-title");
     this.saveButton = $("#project-rename-save");
     this.renameButton = $("#navbar-rename-project");
@@ -156,8 +162,8 @@ define(function(require) {
     });
   }
 
-  function init(appUrl, csrfToken) {
-    return new ProjectRenameUtility(appUrl, csrfToken);
+  function init(appUrl, csrfToken, publisher) {
+    return new ProjectRenameUtility(appUrl, csrfToken, publisher);
   }
 
   return {

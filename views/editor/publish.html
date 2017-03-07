@@ -12,7 +12,7 @@
   <div id="publish-live" class="hide">
     <div>{{ gettext("publishShareLink") }}</div>
     <div id="publish-link">
-      <a title="{{ gettext("publishShareLinkTitle") }}" href="test"></a>
+      <a id="link-publish-link" title="{{ gettext("publishShareLinkTitle") }}" href="test"></a>
     </div>
 
     <div id="publish-changes" class="hide">
@@ -20,11 +20,8 @@
       <div id="publish-button-update">{{ gettext("publishChangesBtn") }}</div>
     </div>
     <div id="publish-button-unpublish">
-      <svg height="16" width="16" id="unpublish-icon">
-        <circle cx="8" cy="8" r="8" fill="white" />
-        <line x1="11" y1="8" x2="5" y2="8" stroke="#B0B0B0" strokeWeight="1" />
-      </svg>
-      <span>{{ gettext("publishUnpublishBtn") }}</span>
+      <img src="/img/icon/garbage-can-white.svg">
+      <span>{{ gettext("publishDeleteBtn") }}</span>
     </div>
   </div>
 

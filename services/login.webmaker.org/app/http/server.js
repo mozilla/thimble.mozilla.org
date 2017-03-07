@@ -35,9 +35,7 @@ module.exports = function (env) {
       new nunjucks.FileSystemLoader(path.resolve(__dirname, "../../bower_components"))
     ], {
       autoescape: true
-    }),
-    messina,
-    logger;
+    });
 
   var webmakerAuth = new WebmakerAuth({
     loginURL: env.get("APP_HOSTNAME"),
@@ -60,12 +58,7 @@ module.exports = function (env) {
 
     http.disable("x-powered-by");
 
-    if (!!env.get("ENABLE_GELF_LOGS")) {
-      messina = require("messina");
-      logger = messina("login.webmaker.org-" + env.get("NODE_ENV") || "development");
-      logger.init();
-      http.use(logger.middleware());
-    } else if (!env.get("DISABLE_HTTP_LOGGING")) {
+    if (!env.get("DISABLE_HTTP_LOGGING")) {
       http.use(express.logger());
     }
 

@@ -1,6 +1,7 @@
 define(function(require) {
   var $ = require("jquery");
   var Publisher = require("fc/publisher");
+  var ProjectRenameUtility = require("fc/project-rename");
   var KeyHandler = require("fc/bramble-keyhandler");
   var BrambleMenus = require("fc/bramble-menus");
   var Underlay = require("fc/bramble-underlay");
@@ -10,13 +11,72 @@ define(function(require) {
 
   var _escKeyHandler;
 
+  var adapting = false;
+  var adaptTimeoutMS = 200; // How often we adapt editor bar layout
+
   function updateLayout(data) {
     $(".filetree-pane-nav").width(data.sidebarWidth);
     $(".editor-pane-nav").width(data.firstPaneWidth);
     $(".preview-pane-nav").width(data.secondPaneWidth);
+
+    // Only adapt the layout every once in a while
+    if(!adapting) {
+      adapting = true;
+      adaptLayout();
+      setTimeout(function(){
+        adapting = false;
+      },adaptTimeoutMS);
+    }
   }
 
-  function init(bramble) {
+  // Adapt each of the pane header elements
+  function adaptLayout(){
+    $(".nav-container").each(function(){
+      adaptElement($(this));
+    });
+  }
+
+  // Checks if there is enough room for all of the elements inside it
+  // Adds a 'narrow' class, in priority order, when there isn't.
+  function adaptElement(el){
+    var itemCount = el.find("[data-adapt-order]").addClass("narrow").length;
+
+    for(var i = itemCount; i > 0; i--) {
+      var item = el.find("[data-adapt-order="+i+"]");
+      item.removeClass("narrow");
+      if(!hasEnoughRoom(el)) {
+        item.addClass("narrow");
+      }
+    }
+  }
+
+  // Checks if the current element has enough room for everything in it
+  // by checking if the last visible element is too far to the right.
+  function hasEnoughRoom(el) {
+    var maxRight = el[0].getBoundingClientRect().width - parseInt(el.css("padding-left"));
+
+    // Finds the last visible first-order child
+    var lastEl = false;
+    el.find("> *").each(function(){
+      if($(this).is(":visible")){
+        lastEl = $(this);
+      }
+    });
+
+    if(lastEl) {
+      var parentLeft = el[0].getBoundingClientRect().left;
+      var lastElBounds = lastEl[0].getBoundingClientRect();
+      var lastElLeft = lastElBounds.left - parentLeft;
+      var lastElWidth = lastElBounds.width;
+      var lastElRight = lastElLeft + lastElWidth;
+
+      return Math.round(lastElRight) <= Math.round(maxRight);
+    } else {
+      return true;
+    }
+  }
+
+  function init(bramble, csrfToken, appUrl) {
     var publisher;
     var locale = $("html")[0].lang;
 
@@ -66,7 +126,7 @@ define(function(require) {
       var projectId = Project.getID();
 
       // TODO: we can do better than this, but let's at least make it harder to lose data.
-      if(!window.confirm("{{ deleteProjectConfirmText }}")) {
+      if(!window.confirm("{{ deleteProjectConfirmationText }}")) {
         return false;
       }
 
@@ -92,7 +152,7 @@ define(function(require) {
       });
     });
 
-    $("#export-project-zip").click(function() {
+    $("#filetree-pane-nav-export-project-zip").click(function() {
       bramble.export();
       analytics.event("ExportZip");
       return false;
@@ -153,6 +213,13 @@ define(function(require) {
 
       _inspectorEnabled = data.enabled;
     });
+
+    // Set initial auto-refresh toggle to last known setting
+    if(!bramble.getAutoUpdate()){
+        $(".refresh-wrapper").removeClass("enabled");
+        bramble.disableAutoUpdate();
+        analytics.event("disableAutoUpdate");
+    }
 
     // Preview auto-refresh toggle
     $(".toggle-auto-update").on("click", function() {
@@ -333,8 +400,14 @@ define(function(require) {
       $("#navbar-publish-button").click(showPublishDialog);
       $("#publish-button-cancel").click(hidePublishDialog);
 
+      //Publish link
+      $("#link-publish-link").click(hidePublishDialog);
+
       publisher = new Publisher();
       publisher.init(bramble);
+
+      // Initialize the project name UI
+      ProjectRenameUtility.init(appUrl, csrfToken, publisher);
     } else {
       $("#navbar-publish-button").click(showPublishHelper);
     }
@@ -375,6 +448,7 @@ define(function(require) {
     });
 
     $("#spinner-container").fadeOut();
+    adaptLayout();
   }
 
   return {
