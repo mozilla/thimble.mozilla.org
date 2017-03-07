@@ -263,16 +263,11 @@ define(function(require) {
               };
               var location = "/default-files/html.txt";
               $.get(location).then(function(data) {
-                fileOptions.contents = data;
-                Bramble.once("ready", function(bramble) {
-                  bramble.addNewFile(fileOptions, function(err) {
-                    if (err) {
-                      console.error("[Bramble] Failed to write new file", err);
-                      callback(err);
-                      return;
-                    }
-                    callback();
-                  });
+                var file = getRoot() + "/index.html";
+                _fs.writeFile(file, data, function(err) {
+                  if (err) {
+                    return console.error("Cannot write file to project: " + err);
+                  }
                 });
               }, function(err) {
                 if (err) {
