@@ -70,7 +70,7 @@
     xmlhttp.onreadystatechange = function() {
       if (xmlhttp.readyState == XMLHttpRequest.DONE ) {
         if (xmlhttp.status == 200) {
-          body.insertBefore(response, body.firstChild);
+          document.body.insertBefore(response, document.body.firstChild);
 	    callback(null);
         }
         else if (xmlhttp.status == 400) {
@@ -106,7 +106,7 @@
     var metadata = {};
     var metaTags = document.getElementsByTagName("meta");
 
-    var set = grep(metaTags, function(metaTag) {
+    grep(metaTags, function(metaTag) {
       return /^data-remix-.+/.test((metaTag).getAttribute("name"));
     })
     .forEach(function(metaTag) {
@@ -131,7 +131,14 @@
         injectStyleSheets(metadata);
         injectDetailsBar(metadata, setupBar);
       }
-    }
+    };
   }
   
+  (function(doc, script) {
+    script = doc.createElement("script");
+    script.type = "text/javascript";
+    script.onload = run;
+    doc.getElementsByTagName("head")[0].appendChild(script);
+  }(document));
+
 }(document, document.head));
