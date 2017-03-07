@@ -257,10 +257,6 @@ define(function(require) {
 
             // Create a default index.html file
             if (!foundIndexHTML) {
-              var fileOptions = {
-                basenamePrefix: "index",
-                ext: ".html"
-              };
               var location = "/default-files/html.txt";
               $.get(location).then(function(data) {
                 var file = getRoot() + "/index.html";
