@@ -92,7 +92,7 @@
           {% set publishBtnOpenTag = '<span title="{{ publishBtnTitle }}" id="navbar-publish-button"><img src="/img/icon/publish.svg" class="icon-publish">' | instantiate | safe %}
           {% set publishBtnCloseTag = '</span>' | safe %}
           <div id="navbar-anonymous">
-            {{ gettext("loginPromptEditor") | instantiate | safe }}
+            {{ gettext("signInPromptEditor") | instantiate | safe }}
           </div>
         {% endif %}
         </div>

@@ -57,7 +57,8 @@
                 "/vagrant/services/id.webmaker.org",
                 "/vagrant/services/publish.webmaker.org",
                 "/vagrant/client",
-                "/vagrant/public"
+                "/vagrant/public",
+                "/vagrant/views"
             ],
             "watch_options": {
                 "usePolling": true

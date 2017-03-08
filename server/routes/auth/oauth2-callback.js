@@ -145,12 +145,6 @@ module.exports = function(config, req, res, next) {
         );
       }
 
-      // Was this sign-in triggered from the home page?
-      if (req.session.home) {
-        delete req.session.home;
-        return res.redirect(301, path.join("/", locale));
-      }
-
       res.redirect(301, path.join("/", locale, "/editor"));
     });
   });
