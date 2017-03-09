@@ -264,6 +264,7 @@ define(function(require) {
                   if (err) {
                     return console.error("Cannot write file to project: " + err);
                   }
+                  callback();
                 });
               }, function(err) {
                 if (err) {
