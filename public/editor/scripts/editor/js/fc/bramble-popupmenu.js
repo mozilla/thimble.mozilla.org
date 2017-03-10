@@ -15,9 +15,10 @@ define(function(require) {
         // Determine where to horizontally place menu based on button's icon location
         var menuWidth = self._menu$.width();
         var leftOffset = self._button$.offset().left - menuWidth/2 + 11;
-        var arrowOffset = 86;
+        var iconWidth = $("#filetree-pane-nav-add").width();
+        var arrowOffset = menuWidth/2 - iconWidth/2;
         if(leftOffset < 0) {
-          arrowOffset = 86 + leftOffset;
+          arrowOffset = menuWidth/2 - iconWidth/2 + leftOffset;
           leftOffset = 0;
         }
         $("#filetree-pane-nav-arrow-tip").css("left", arrowOffset);
