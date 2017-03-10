@@ -91,6 +91,19 @@ To restart the VM and Thimble again, re-run `vagrant up`.
 
 To see logs for the services running in Vagrant, use `npm run logs`.
 
+### Dealing with missing locale strings
+
+Sometimes the locale strings for Thimble change, which requires relocalizing inside of the Vagrant container. If you content that looks like a locale string key, rather than the content it should be, you can try running the following commands to resynchronise the locale string content:
+
+```
+vagrant ssh
+cd /vagrant
+npm run localize
+npm run localize-client
+```
+
+This will redownload all locale strings and rebuild the client to make use of them.
+
 ## Manual Installation
 You can also setup Thimble and its needed components outside Vagrant and Virtualbox. This might be needed if you want to:
 - Host your own instance of Thimble
