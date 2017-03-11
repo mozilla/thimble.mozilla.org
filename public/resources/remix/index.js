@@ -83,15 +83,15 @@
   }
 
   function injectStyleSheets(metadata) {
-    var stylesheet1 = document.createElement("link");
-    stylesheet1.rel = "stylesheet";
-    stylesheet1.href = "\"" + metadata.host + "/resources/remix/clean-slate.min.css\"";
-    document.head.appendChild(stylesheet1);
+    var stylesheet = document.createElement("link");
+    stylesheet.rel = "stylesheet";
+    stylesheet.href = metadata.host + "/resources/remix/clean-slate.min.css";
+    document.head.appendChild(stylesheet);
 
-    var stylesheet2 = document.createElement("link");
-    stylesheet2.rel = "stylesheet";
-    stylesheet2.href = "\"" + metadata.host + metadata.host + "/resources/remix/style.css\"";
-    document.head.appendChild(stylesheet2);
+    stylesheet = document.createElement("link");
+    stylesheet.rel = "stylesheet";
+    stylesheet.href = metadata.host + "/resources/remix/style.css";
+    document.head.appendChild(stylesheet);
   }
 
   function grep(items, callback) {
