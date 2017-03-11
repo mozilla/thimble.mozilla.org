@@ -55,6 +55,7 @@
 
   function injectDetailsBar(metadata, callback) {
     var xmlhttp = new XMLHttpRequest();
+    xmlhttp.responseType = "text";
     var url = metadata.host + "/projects/remix-bar";
     var data = {
       host: metadata.host,
@@ -64,12 +65,12 @@
       updated: metadata.dateUpdated
     };
 
-    xmlhttp.onreadystatechange = function(response, textStatus) {
+    xmlhttp.onreadystatechange = function() {
       if (xmlhttp.readyState == XMLHttpRequest.DONE ) {
+	  var response = xmlhttp.response;
+	  var textStatus = xmlhttp.statusText;
         if (xmlhttp.status == 200) {
-          var responseTag = document.createElement("span");
-          responseTag.innerHTML = response;
-          document.body.insertBefore(responseTag, document.body.firstChild);
+          document.body.insertBefore(response, document.body.firstChild);
 	    callback(null);
         }
         else if (xmlhttp.status == 400) {
