@@ -83,10 +83,15 @@
   }
 
   function injectStyleSheets(metadata) {
-    var stylesheets =
-      "<link href=\"" + metadata.host + "/resources/remix/clean-slate.min.css\" rel=\"stylesheet\">\n" +
-      "<link href=\"" + metadata.host + "/resources/remix/style.css\" rel=\"stylesheet\">\n";
-    document.head.appendChild(stylesheets);
+    var stylesheet1 = document.createElement("link");
+    stylesheet1.rel = "stylesheet";
+    stylesheet1.href = "\"" + metadata.host + "/resources/remix/clean-slate.min.css\"";
+    document.head.appendChild(stylesheet1);
+
+    var stylesheet2 = document.createElement("link");
+    stylesheet2.rel = "stylesheet";
+    stylesheet2.href = "\"" + metadata.host + metadata.host + "/resources/remix/style.css\"";
+    document.head.appendChild(stylesheet2);
   }
 
   function grep(items, callback) {
@@ -130,12 +135,7 @@
       injectDetailsBar(metadata, setupBar);
     });
   }
-  
-  (function(doc, script) {
-    script = doc.createElement("script");
-    script.type = "text/javascript";
-    script.onload = run;
-    doc.getElementsByTagName("head")[0].appendChild(script);
-  }(document));
+
+  run();  
 
 }(document, document.head));
