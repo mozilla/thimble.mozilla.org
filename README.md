@@ -185,11 +185,10 @@ To publish locally, you'll need to do the following...
 ####Sign In
 
 To publish locally, you'll need an account.
-* Go to [http://localhost:3000/account](http://localhost:3000/account)
-* Click ``Join Webmaker`` and complete the process, you can use a fake email
-* When you've created your account, click ``Set permanent password instead``
-  * This lets you authenticate your account without needing email
-* Go back to Thimble and Log In with your new account
+* Go to [http://localhost:3000](http://localhost:3000)
+* Click ``Create an account`` and complete the process, you can use a fake email
+* When you've created your account, you will automatically be logged in`
+* You will be redirected to thimble main screen, and you can start working!
 
 It's that simple! You are now ready to start using Thimble to its full potential!
 
