@@ -67,14 +67,13 @@
 
     xmlhttp.onreadystatechange = function() {
       if (xmlhttp.readyState == XMLHttpRequest.DONE ) {
-	  var response = xmlhttp.response;
-	  var textStatus = xmlhttp.statusText;
+        var response = xmlhttp.response;
+        var textStatus = xmlhttp.statusText;
         if (xmlhttp.status == 200) {
           document.body.insertBefore(response, document.body.firstChild);
-	    callback(null);
-        }
-        else if (xmlhttp.status == 400) {
-	    callback(textStatus);
+	   callback(null);
+        } else if (xmlhttp.status == 400) {
+	   callback(textStatus);
         }
       }
     };
