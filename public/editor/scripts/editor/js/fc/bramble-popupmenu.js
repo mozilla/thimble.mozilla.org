@@ -62,7 +62,7 @@ define(function(require) {
 
     if ( button === "#navbar-logged-in .dropdown-submenu-toggle" ) {
       
-      self._button$.on("click", function(e) {
+      self._button$.on("mouseover", function(e) {
         e.stopPropagation();
         if(!self.showing) {
           self.show();

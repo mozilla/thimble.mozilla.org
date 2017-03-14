@@ -18,7 +18,6 @@ require.config({
 });
 
 require(["jquery", "constants", "analytics", "moment"], function($, Constants, analytics, moment) {
-  debugger;
   document.querySelector("#project-list").classList.add("loaded");
   var projects = document.querySelectorAll(".bramble-user-project");
   var locale = $("html")[0].lang;
