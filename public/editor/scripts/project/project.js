@@ -255,6 +255,10 @@ define(function(require) {
               }
             });
 
+            if (foundIndexHTML) {
+              callback(null, found[indexPos]);
+            }
+
             // Create a default index.html file
             if (!foundIndexHTML) {
               var location = "/default-files/html.txt";
@@ -262,8 +266,11 @@ define(function(require) {
                 var file = getRoot() + "/index.html";
                 _fs.writeFile(file, data, function(err) {
                   if (err) {
-                    return console.error("Cannot write file to project: " + err);
+                    console.error("Cannot write file to project: " + err);
+                    callback(err);
+                    return;
                   }
+                  callback(null, file);
                 });
               }, function(err) {
                 if (err) {
@@ -274,7 +281,6 @@ define(function(require) {
                 callback();
               });
             }
-            callback(null, found[indexPos]);
           });
         });
       });
