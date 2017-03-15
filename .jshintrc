@@ -56,7 +56,6 @@
     "browser"       : true,
 
     "maxerr"        : 100,
-    "indent"        : 4,
     "globals"       : {
         "require": false,
         "define": false,

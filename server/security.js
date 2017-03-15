@@ -9,15 +9,18 @@ let defaultCSPDirectives = {
   defaultSrc: [ "'self'" ],
   connectSrc: [
     "'self'",
-    "https://pontoon.mozilla.org"
+    "https://pontoon.mozilla.org",
+    "https://mozilla.github.io/thimble-homepage-gallery/activities.json"
   ],
   frameSrc: [
     "'self'",
-    "https://docs.google.com"
+    "https://docs.google.com",
+    "blob:"
   ],
   childSrc: [
     "'self'",
-    "https://pontoon.mozilla.org"
+    "https://pontoon.mozilla.org",
+    "blob:"
   ],
   frameAncestors: [
     "https://pontoon.mozilla.org"
@@ -48,7 +51,8 @@ let defaultCSPDirectives = {
     "https://netdna.bootstrapcdn.com",
     "https://pontoon.mozilla.org",
     // Inline style for the spinner
-    "'sha256-jxjTomDIR9qe7wntK24mAd+gIoz39DrBll8o6DEBALs='"
+    "'unsafe-inline'"
+  //  "'sha256-jxjTomDIR9qe7wntK24mAd+gIoz39DrBll8o6DEBALs='"
   ]
 };
 

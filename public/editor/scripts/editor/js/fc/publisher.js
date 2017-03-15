@@ -8,9 +8,10 @@ define(function(require) {
 
   var TEXT_PUBLISH = "{{ publishBtn }}";
   var TEXT_PUBLISHING = "{{ publishPublishingIndicator }}";
-  var TEXT_UNPUBLISH = "{{ publishUnpublishBtn }}";
+  var TEXT_UNPUBLISH = "{{ publishDeleteBtn }}";
   var TEXT_UNPUBLISHING = "{{ publishUnpublishingIndicator }}";
   var TEXT_UPDATE_PUBLISH = "{{ publishChangesBtn }}";
+  var TEXT_UNPUBLISH_WARNING = "{{ publishDeleteWarning }}";
 
   function unpublishedChangesPrompt() {
     var dialog = this.dialog;
@@ -62,10 +63,18 @@ define(function(require) {
       this.updateDialog(publishUrl, true);
     }
 
-    bramble.on("fileChange", publisher.showUnpublishedChangesPrompt.bind(publisher));
-    bramble.on("fileDelete", publisher.showUnpublishedChangesPrompt.bind(publisher));
-    bramble.on("fileRename", publisher.showUnpublishedChangesPrompt.bind(publisher));
-    bramble.on("folderRename", publisher.showUnpublishedChangesPrompt.bind(publisher));
+    bramble.on("fileChange", function() {
+      publisher.showUnpublishedChangesPrompt();
+    });
+    bramble.on("fileDelete", function() {
+      publisher.showUnpublishedChangesPrompt();
+    });
+    bramble.on("fileRename", function() {
+      publisher.showUnpublishedChangesPrompt();
+    });
+    bramble.on("folderRename", function() {
+      publisher.showUnpublishedChangesPrompt();
+    });
 
     dialog.buttons.publish.on("click", publisher.handlers.publish);
 
@@ -111,7 +120,7 @@ define(function(require) {
       publisher.needsUpdate = true;
       callback();
     });
-  };  
+  };
 
   Publisher.prototype.publish = function() {
     var publisher = this;
@@ -186,6 +195,13 @@ define(function(require) {
     if (publisher.unpublishing) {
       return;
     }
+
+    var didConfirm = window.confirm(TEXT_UNPUBLISH_WARNING);
+
+    if (!didConfirm) {
+      return;
+    }
+
     publisher.unpublishing = true;
 
     function setState(done) {

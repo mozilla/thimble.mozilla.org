@@ -91,6 +91,19 @@ To restart the VM and Thimble again, re-run `vagrant up`.
 
 To see logs for the services running in Vagrant, use `npm run logs`.
 
+### Dealing with missing locale strings
+
+Sometimes the locale strings for Thimble change, which requires relocalizing inside of the Vagrant container. If you content that looks like a locale string key, rather than the content it should be, you can try running the following commands to resynchronise the locale string content:
+
+```
+vagrant ssh
+cd /vagrant
+npm run localize
+npm run localize-client
+```
+
+This will redownload all locale strings and rebuild the client to make use of them.
+
 ## Manual Installation
 You can also setup Thimble and its needed components outside Vagrant and Virtualbox. This might be needed if you want to:
 - Host your own instance of Thimble
@@ -202,6 +215,6 @@ Thimble uses the [throng](https://www.npmjs.com/package/throng) module to levera
 Contact Us
 -----------
 
-We're a friendly group, so feel free to chat with us in the "Thimble" channel on Mozilla Chat running on [Mattermost](https://about.mattermost.com). To access Mozilla Chat head to [this link]( http://chat.mozillafoundation.org). Note that you will need to create an account first.
+We're a friendly group, so feel free to chat with us in the "Thimble" channel on Mozilla Chat running on [Mattermost](https://about.mattermost.com). To access Mozilla Chat head over to [chat.mozillafoundation.org](https://chat.mozillafoundation.org). Note that you will be prompted to create an account if you do not already have one. If you already have an account, and you are already logged in from a previous visit, you can directly access the Thimble channel by clicking on [this link](https://chat.mozillafoundation.org/mozilla/channels/thimble).
 
 You can also download a mobile or desktop client for Mattermost [here](https://about.mattermost.com/download/#mattermostApps).

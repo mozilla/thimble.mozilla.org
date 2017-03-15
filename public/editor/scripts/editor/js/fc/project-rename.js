@@ -133,7 +133,10 @@ define(function(require) {
         editingComplete(context);
         analytics.event("ProjectRenamed");
 
-        context.publisher.showUnpublishedChangesPrompt();
+        //  Check whether the project is not anonymous		
+        if(context.publisher){
+          context.publisher.showUnpublishedChangesPrompt();		
+        }
       });
     });
   }

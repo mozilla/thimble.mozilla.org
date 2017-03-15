@@ -52,7 +52,7 @@ require(["jquery", "bowser"], function($, bowser) {
 
   Bramble.once("error", onError);
 
-  function init(BrambleEditor, Project, SSOOverride) {
+  function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility) {
     var thimbleScript = document.getElementById("thimble-script");
     var appUrl = thimbleScript.getAttribute("data-app-url");
     var projectDetails = thimbleScript.getAttribute("data-project-details");
@@ -66,6 +66,11 @@ require(["jquery", "bowser"], function($, bowser) {
         console.error("[Bramble] Failed to load Project state, with", err);
       }
 
+      // Initialize the name UI for an anonymous project
+      if(!projectDetails.userID){
+        ProjectRenameUtility.init(appUrl, BrambleEditor.csrfToken);
+      }
+     
       // Initialize the login links
       SSOOverride.init();
 
@@ -76,5 +81,5 @@ require(["jquery", "bowser"], function($, bowser) {
     });
   }
 
-  require(["bramble-editor", "project/project", "sso-override"], init);
+  require(["bramble-editor", "project/project", "sso-override", "fc/project-rename"], init);
 });
