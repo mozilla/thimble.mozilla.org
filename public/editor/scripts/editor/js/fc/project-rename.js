@@ -125,7 +125,7 @@ define(function(require) {
       context.saveButton.text("{{ renameProjectSavingIndicator }}");
 
       persist.call(context, context.titleBar.val(), function(err) {
-        if(err) {
+        if (err) {
           console.error("[Bramble] Failed to rename the project with ", err);
           return;
         }
