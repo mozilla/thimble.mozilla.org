@@ -126,7 +126,7 @@ define(function(require) {
 
       persist.call(context, context.titleBar.val(), function(err) {
         if (err) {
-          console.error("[Bramble] Failed to rename the project with ", err);
+          console.error("[Bramble] Failed to rename the project. Error: ", err);
           return;
         }
 
