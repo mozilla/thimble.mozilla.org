@@ -34,7 +34,7 @@
     "cookie-session": "^1.1.0",
     "cookies-js": "~1.2.1",
     "cors": "^2.8.1",
-    "cryptr": "^2.0.0",
+    "cryptr": "^1.0.0",
     "csurf": "^1.9.0",
     "express": "^4.15.2",
     "form-data": "^0.2.0",
@@ -48,11 +48,11 @@
     "grunt-contrib-requirejs": "^1.0.0",
     "grunt-execute": "0.2.2",
     "grunt-git": "^0.3.4",
-    "grunt-lesslint": "^3.2.0",
+    "grunt-lesslint": "^1.1.14",
     "grunt-npm": "git://github.com/sedge/grunt-npm.git#branchcheck",
     "grunt-update-submodules": "^0.4.1",
     "habitat": "3.1.2",
-    "helmet": "3.4.1",
+    "helmet": "2.1.2",
     "jit-grunt": "^0.10.0",
     "jquery": "~3.1.1",
     "less-middleware": "2.2.0",
@@ -73,7 +73,7 @@
     "uuid": "2.0.3",
     "webmaker-analytics": "~0.1.7",
     "webmaker-i18n": "^0.3.31",
-    "wolfy87-eventemitter": "~5.1.0"
+    "wolfy87-eventemitter": "~4.3.0"
   },
   "scripts": {
     "postinstall": "grunt requirejs:dist && npm run localize && npm run localize-client",
