@@ -120,8 +120,7 @@ define(function(require) {
     // Do not apply save if project title remains the same
     if (context.titleBar.val() === Project.getTitle()) {
       editingComplete(context);
-    }
-    else {
+    } else {
       context.saveButton.text("{{ renameProjectSavingIndicator }}");
 
       persist.call(context, context.titleBar.val(), function(err) {
