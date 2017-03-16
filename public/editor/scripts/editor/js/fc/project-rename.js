@@ -118,7 +118,7 @@ define(function(require) {
 
   function save(context) {
     // Do not apply save if project title remains the same
-    if (context.titleBar.val() == Project.getTitle()) {
+    if (context.titleBar.val() === Project.getTitle()) {
       editingComplete(context);
     }
     else {
