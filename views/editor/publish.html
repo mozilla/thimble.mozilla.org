@@ -4,28 +4,29 @@
      data-oauth-username="{{ username }}"
      data-oauth-avatar="{{ avatar }}">
 </div>
-<div id="publish-dialog" class="hide--">
 
+<div id="publish-dialog" class="hide">
   <div class="content">
 
-    <h1>
-      {{ gettext("publishHeader") }}
-    </h1>
+    <h1>{{ gettext("publishHeader") }}</h1>
+
+    <div id="publish-changes" class="hide">
+      <p>{{ gettext("publishChangesPrompt") }}</p>
+      <div id="publish-button-update">{{ gettext("publishChangesBtn") }}</div>
+    </div>
 
     <div id="publish-live" class="hide">
-      <div>{{ gettext("publishShareLink") }}</div>
+      <p>{{ gettext("publishShareLink") }}</p>
       <div id="publish-link">
         <a id="link-publish-link" title="{{ gettext("publishShareLinkTitle") }}" href="test"></a>
       </div>
 
-      <div id="publish-changes" class="hide">
-        <p>{{ gettext("publishChangesPrompt") }}</p>
-        <div id="publish-button-update">{{ gettext("publishChangesBtn") }}</div>
-      </div>
+
       <div id="publish-button-unpublish">
         <img src="/img/icon/garbage-can-white.svg">
         <span>{{ gettext("publishDeleteBtn") }}</span>
       </div>
+
     </div>
 
     <div id="publish-details">
