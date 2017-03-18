@@ -238,14 +238,13 @@ define(function(require) {
             return callback(err);
           }
 
-          // Find an HTML file to open in the project, hopefully /index.html
-          var sh = new _fs.Shell();
-          sh.find(getRoot(), {name: "*.html"}, function(err, found) {
+          // Find the index.html file in the project root to open
+          _fs.readdir(getRoot(), function(err, found) {
             if(err) {
               return callback(err);
             }
 
-            // Look for an HTML file to open, ideally index.html
+            // Try to grab the index.html
             var indexPos = 0;
             var foundIndexHTML = false;
             found.forEach(function(path, idx) {
