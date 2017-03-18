@@ -187,7 +187,7 @@ To publish locally, you'll need to do the following...
 To publish locally, you'll need an account.
 * At the top right corner of the Thimble main page click ``Sign In`` if you have an account or click ``Create an account`` and complete the process, you can use a fake email
 * When you've created your account, you will automatically be logged in
-* You will be redirected to thimble main screen, and you can start working!
+* You will be redirected to the Thimble main page, and you can start working!
 
 It's that simple! You are now ready to start using Thimble to its full potential!
 
