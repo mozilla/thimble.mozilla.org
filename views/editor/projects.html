@@ -38,6 +38,10 @@
         <div class="project-ui">
           {% if project.publish_url %}
           <a class="published-link" target="_blank" href="{{ project.publish_url }}">{{ gettext("publishedLink") }}</a>
+          <a class="project-remix">
+            <div class="icon-remix"></div>
+            {{ gettext("remix") }}
+          </a>
           {% endif %}
           <div class="project-delete" title="{{ gettext("prjListDeleteProjectBtnTitle") }}">
             <div class="icon-garbage-can"></div>
