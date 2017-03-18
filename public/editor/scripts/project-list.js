@@ -78,6 +78,13 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
 
   $("#project-list").prepend(favoriteProjectsElementList);
 
+  $(".project-remix").click(function() {
+    var project = $(this).closest(".project");
+    var publishedUrl = project.attr("data-project-publish_url");
+    var publishedId = publishedUrl.substring(publishedUrl.indexOf( "/", publishedUrl.indexOf("/", 7) + 1) + 1);
+    window.open(publishedId + "/remix", "_self");
+  });
+
   $(".project-delete").click(function() {
     // TODO: we can do better than this, but let's at least make it harder to lose data.
     if(!window.confirm("{{ deleteProjectConfirmationText }}")) {
