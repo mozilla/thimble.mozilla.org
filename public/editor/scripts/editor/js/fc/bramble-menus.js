@@ -64,10 +64,8 @@ define(function(require) {
     //set initial UI value to SVG XML UI
     if(bramble.getOpenSVGasXML()) {
         $("#edit-SVG-toggle").addClass("switch-enabled");
-        bramble.openSVGasXML();
     } else {
         $("#edit-SVG-toggle").removeClass("switch-enabled");
-        bramble.openSVGasImage();
     }
 
     // Enable/Disable JavaScript in Preview
