@@ -12,11 +12,7 @@ let defaultCSPDirectives = {
     "https://pontoon.mozilla.org",
     "https://mozilla.github.io/thimble-homepage-gallery/activities.json"
   ],
-  frameSrc: [
-    "'self'",
-    "https://docs.google.com",
-    "blob:"
-  ],
+
   childSrc: [
     "'self'",
     "https://pontoon.mozilla.org",
