@@ -19,7 +19,7 @@ how it works in [this blog post](http://blog.humphd.org/thimble-and-bramble/).
 
 Thimble requires a modern web browser, and we recommend using Mozilla Firefox or Google Chrome.
 
-#Setup/Installation
+# Setup/Installation
 
 Thimble interacts with the Publish API (source managed in [publish.webmaker.org](https://github.com/mozilla/publish.webmaker.org)) to store users, projects, files and other content as well as publish user projects.
 
