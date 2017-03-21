@@ -78,7 +78,7 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
 
   $("#project-list").prepend(favoriteProjectsElementList);
 
-  $(".project-remix").click(function() {
+  $(".remix-link").click(function() {
     var project = $(this).closest(".project");
     var publishedUrl = project.attr("data-project-publish_url");
     var publishedId = publishedUrl.substring(publishedUrl.indexOf( "/", publishedUrl.indexOf("/", 7) + 1) + 1);
