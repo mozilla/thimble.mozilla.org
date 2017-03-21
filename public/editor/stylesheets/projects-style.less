@@ -93,6 +93,22 @@ h2 {
     }
   }
 
+  .remix-link {
+    text-decoration: none;
+    color: #3186c1;
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 10px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    @media screen and (max-width: 800px) {
+      display: block;
+    }
+  }
+
   .project-information {
     font-size: 0.8em;
     color: rgba(0,0,0,.4);
@@ -181,34 +197,6 @@ h2 {
     background-image: url(/img/icon/star-on.svg);
     opacity: 1;
     animation: starpop .3s ease-out;
-  }
-
-  .project-remix {
-    color: black;
-    margin-left: 10px;
-    margin-right: 10px;
-    opacity: .3;
-    cursor: pointer;
-    font-weight: 600;
-    display: inline-block;
-    text-decoration: none;
-    
-    &:hover {
-      opacity: .6;
-    }
-  }
-
-  .icon-remix{
-    width: 25px;
-    height: 25px;
-    position: relative;
-    top: 5px;
-    left: 7px;
-    background-image: url(/img/icon/remix.svg);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 15px;
-    display: inline-block;
   }
 
   @keyframes starpop {
