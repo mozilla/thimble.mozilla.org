@@ -117,13 +117,14 @@ define(function(require) {
   }
 
   function save(context) {
+    var contextTitle = context.titleBar.val();
     // Do not apply save if project title remains the same
-    if (context.titleBar.val() === Project.getTitle()) {
+    if (contextTitle === Project.getTitle()) {
       editingComplete(context);
     } else {
       context.saveButton.text("{{ renameProjectSavingIndicator }}");
 
-      persist.call(context, context.titleBar.val(), function(err) {
+      persist.call(context, contextTitle, function(err) {
         if (err) {
           console.error("[Bramble] Failed to rename the project. Error: ", err);
           return;
