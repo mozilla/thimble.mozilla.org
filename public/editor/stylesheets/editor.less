@@ -1,6 +1,7 @@
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 1em;
+  font-weight: 400;
   overflow: hidden;
 }
 
@@ -14,14 +15,14 @@ body {
 @transitionTime: 0.15s;
 
 #webmaker-bramble {
-    position: absolute;
-    display: block;
-    top: @brambleTop;
-    left: 0;
-    width: 100%;
-    bottom: 0;
-    border: 0;
-    background-color: #f8f8f8;
+  position: absolute;
+  display: block;
+  top: @brambleTop;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  border: 0;
+  background-color: #f8f8f8;
 }
 
 .bramble-toolbar {
@@ -73,7 +74,7 @@ body {
 
 .filetree-pane-nav-title {
   color: white;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 1em;
   opacity: 0.45;
   filter: alpha(opacity=45);
@@ -208,7 +209,7 @@ body {
 
   .editor-pane-nav-title {
     color: white;
-    font-weight: bold;
+    font-weight: 600;
     opacity: 0.45;
     filter: alpha(opacity=45);
     margin-right: 10px;
@@ -379,16 +380,19 @@ body {
     list-style-type: none;
     margin: 0;
     padding: 0;
+
     li {
-     padding: 20px 100px 20px 20px;
-     position: relative;
+      padding: 20px 100px 20px 20px;
+      position: relative;
+      color: rgba(0,0,0,.6);
     }
+
     li+li {
-     border-top: 1px solid #E5E5E5;
+      border-top: 1px solid #E5E5E5;
     }
   }
-
 }
+
 #editor-pane-nav-options-menu:after {
   content: '';
   position: absolute;
@@ -667,7 +671,7 @@ body {
         background: #EEE;
       }
     }
-    
+
     &:hover {
       color: rgba(0,0,0,.6);
     }
