@@ -239,10 +239,10 @@ define(function(require) {
           }
 
           // Find the index.html file in the project root to open
-          var indexLocation = Path.join(getRoot(),"index.html")
+          var indexLocation = Path.join(getRoot(),"index.html");
           _fs.exists(indexLocation, function(exist) {
             if(exist) {
-              callback(null,indexLocation)
+              callback(null,indexLocation);
               return;
             } else {
               // Create a default index.html file
