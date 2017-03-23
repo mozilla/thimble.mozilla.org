@@ -239,37 +239,23 @@ define(function(require) {
           }
 
           // Find the index.html file in the project root to open
-          _fs.readdir(getRoot(), function(err, found) {
-            if(err) {
-              return callback(err);
-            }
-
-            // Try to grab the index.html
-            var indexPos = 0;
-            var foundIndexHTML = false;
-            found.forEach(function(path, idx) {
-              if(Path.basename(path) === "index.html") {
-                indexPos = idx;
-                foundIndexHTML = true;
-              }
-            });
-
-            if (foundIndexHTML) {
-              callback(null, found[indexPos]);
-            }
-
-            // Create a default index.html file
-            if (!foundIndexHTML) {
+          var indexLocation = Path.join(getRoot(),"index.html")
+          _fs.exists(indexLocation, function(exist) {
+            if(exist) {
+              callback(null,indexLocation)
+              return;
+            } else {
+              // Create a default index.html file
               var location = "/default-files/html.txt";
               $.get(location).then(function(data) {
-                var file = getRoot() + "/index.html";
-                _fs.writeFile(file, data, function(err) {
+                _fs.writeFile(indexLocation, data, function(err) {
                   if (err) {
                     console.error("Cannot write file to project: " + err);
                     callback(err);
                     return;
                   }
-                  callback(null, file);
+                  callback(null, indexLocation);
+                  return;
                 });
               }, function(err) {
                 if (err) {
