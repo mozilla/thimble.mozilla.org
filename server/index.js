@@ -41,7 +41,7 @@ server.locals.node_path = "node_modules";
 /**
  * Templating engine
  */
-templatize(server, [ "views", "node_modules" ]);
+templatize(server, [ "views" ]);
 
 
 /**
