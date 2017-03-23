@@ -126,31 +126,31 @@ The following is an abbreviated guide to getting it all set up. Please see each 
 ### Manually Installing the Parts
 Please note: On Windows, use ``copy`` instead of ``cp``
 
-####Thimble
+#### Thimble
 * Fork and clone https://github.com/mozilla/thimble.mozilla.org
 * Run ``cp env.dist .env`` to create an environment file
 * Run ``npm install`` to install dependencies
 * Run ``npm start`` to start the server
 
-####id.webmaker.org
+#### id.webmaker.org
 * Clone https://github.com/mozilla/id.webmaker.org
 * Run ``cp sample.env .env`` to create an environment file
 * Run ``npm install`` to install dependencies
 * Run ``npm start`` to start the server
 
-####login.webmaker.org
+#### login.webmaker.org
 * Clone https://github.com/mozilla/login.webmaker.org
 * Run ``npm install`` to install dependencies
 * Run ``cp env.sample .env`` to create an environment file
 * Run ``npm start`` the server
 
-####PostgreSQL
+#### PostgreSQL
 * Run ``initdb -D /usr/local/var/postgres`` to initialize PostreSQL
   * If this already exists, run ``rm -rf /usr/local/var/postgres`` to remove it
 * Run ``postgres -D /usr/local/var/postgres`` to start the PostgreSQL server
 * Run ``createdb publish`` to create the Publish database
 
-####publish.webmaker.org
+#### publish.webmaker.org
 * These steps assume you've followed the PostgreSQL steps above, including creating the publish database.
 * Clone https://github.com/mozilla/publish.webmaker.org
 * Run ``npm install`` to install dependencies
@@ -163,7 +163,7 @@ Once everything is ready and running, Thimble will be available at [http://local
 ### Getting Ready to Publish
 To publish locally, you'll need to do the following...
 
-####Teach the ID server about the Publish server
+#### Teach the ID server about the Publish server
 
 * Run ``createdb webmaker_oauth_test`` to create a test database
 * In your id.webmaker.org folder
@@ -182,7 +182,7 @@ To publish locally, you'll need to do the following...
   * Run ``node scripts/test-data.js``
     * You'll see a ``INSERT 0 1`` message if successful
 
-####Sign In
+#### Sign In
 
 To publish locally, you'll need an account.
 * At the top right corner of the Thimble main page click ``Sign In`` if you have an account or click ``Create an account`` and complete the process, you can use a fake email
