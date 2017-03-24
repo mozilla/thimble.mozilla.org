@@ -79,6 +79,24 @@ define(function(require) {
       return false;
     });
 
+    // Enable/Disable Whitespace Indicator
+    $("#allow-whitespace-toggle").click(function() {
+      // Toggle current value
+      var $allowWSToggle = $("#allow-whitespace-toggle");
+      var toggle = !($allowWSToggle.hasClass("switch-enabled"));
+
+      if(toggle) {
+        $allowWSToggle.addClass("switch-enabled");
+        bramble.enableWhiteSpace();
+        analytics.event("EnableWhiteSpaceIndicator");
+      } else {
+        $allowWSToggle.removeClass("switch-enabled");
+        bramble.disableWhiteSpace();
+        analytics.event("DisableWhiteSpaceIndicator");
+      }
+
+      return false;
+    });
 
     // Theme Toggle
     function lightThemeUI() {
