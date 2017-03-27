@@ -1,4 +1,4 @@
-define(function(require) {
+define(function() {
 
     var snippets = {
         html: [{
@@ -59,7 +59,7 @@ define(function(require) {
                 '  ....\n' +
                 '}'
         }]
-    }
+    };
 
     function Snippets() {}
 
@@ -68,4 +68,4 @@ define(function(require) {
     };
 
     return Snippets;
-})
+});
