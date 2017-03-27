@@ -25,7 +25,7 @@ define(function(require) {
         bramble.addCodeSnippet(
           snippet
         );
-      }
+      };
     };
 
     if (snippetsObject.hasOwnProperty(fileType)) {
