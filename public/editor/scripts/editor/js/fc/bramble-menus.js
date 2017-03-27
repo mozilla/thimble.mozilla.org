@@ -16,46 +16,49 @@ define(function(require) {
   }
 
   function setSnippetsMenuData(bramble) {
+    var snippetsObject = snippets.getSnippetObj();
+    snippets.getSnippetObj();
 
-        var snippetsObject = snippets.getSnippetObj();
-        snippets.getSnippetObj();
+    var click = function (div_id) {
+      return function() { 
+        var snippet = snippetsData[$(div_id).attr("data-snippet")];
+        bramble.addCodeSnippet(
+          snippet
+        );
+      }
+    };
 
-        if (snippetsObject.hasOwnProperty(fileType)) {
-            var ul = document.getElementById("editor-pane-nav-snippets-ul");
-            var obj = snippetsObject[fileType];
-            for (var prop in obj) {
-                if (obj.hasOwnProperty(prop)) {
-                    var li = document.createElement("li");
-                    li.appendChild(document.createTextNode(obj[prop].name));
-                    li.setAttribute("title", obj[prop].title);
-                    li.setAttribute("id", obj[prop].id);
-                    li.setAttribute("data-snippet", obj[prop].name);
-                    ul.appendChild(li);
-                    snippetsData[obj[prop].name] = obj[prop].data;
+    if (snippetsObject.hasOwnProperty(fileType)) {
+      var ul = document.getElementById("editor-pane-nav-snippets-ul");
+      var obj = snippetsObject[fileType];
+      for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+          var li = document.createElement("li");
+          li.appendChild(document.createTextNode(obj[prop].name));
+          li.setAttribute("title", obj[prop].title);
+          li.setAttribute("id", obj[prop].id);
+          li.setAttribute("data-snippet", obj[prop].name);
+          ul.appendChild(li);
+          snippetsData[obj[prop].name] = obj[prop].data;
 
-                    $("#" + obj[prop].id).click(function() {
-                        var snippet = snippetsData[$(this).attr("data-snippet")];
-                        bramble.addCodeSnippet(
-                            snippet
-                        );
-                    });
-                }
-            }
+          li.onclick = click("#" + obj[prop].id);
         }
+      }
     }
+  }
 
-    function setupSnippetsMenu(bramble) {
-        // Gear Snippets menu
-        PopupMenu.createWithOffset("#editor-pane-nav-snippets", "#editor-pane-nav-snippets-menu");
-        setSnippetsMenuData(bramble);
-    }
+  function setupSnippetsMenu(bramble) {
+      // Gear Snippets menu
+      PopupMenu.createWithOffset("#editor-pane-nav-snippets", "#editor-pane-nav-snippets-menu");
+      setSnippetsMenuData(bramble);
+  }
 
-    function reloadSnippetsData(bramble, filename) {
-        fileType = filename.substring(filename.lastIndexOf('.') + 1);
-        var ul = document.getElementById("editor-pane-nav-snippets-ul");
-        ul.innerHTML = "";
-        setSnippetsMenuData(bramble);
-    }
+  function reloadSnippetsData(bramble, filename) {
+      fileType = filename.substring(filename.lastIndexOf('.') + 1);
+      var ul = document.getElementById("editor-pane-nav-snippets-ul");
+      ul.innerHTML = "";
+      setSnippetsMenuData(bramble);
+  }
 
   function setupOptionsMenu(bramble) {
     // Gear Options menu
@@ -357,6 +360,7 @@ define(function(require) {
   }
 
   function init(bramble) {
+    setupSnippetsMenu(bramble);
     setupOptionsMenu(bramble);
     setupAddFileMenu(bramble);
     setupUserMenu();
@@ -364,6 +368,7 @@ define(function(require) {
   }
 
   return {
-    init: init
+    init: init,
+    reloadSnippetsData: reloadSnippetsData
   };
 });
