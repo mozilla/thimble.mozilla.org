@@ -332,6 +332,88 @@ body {
 
 }
 
+/* Snippets */
+#editor-pane-nav-snippets {
+  background-color: #2B2B2B;
+  height: 20px;
+  width: 80px;
+  padding: 5px;
+  padding-left: 20px;
+  border-radius: 50%;
+  margin-left: 6px;
+  margin-right: 6px;
+  position: relative;
+  .icon;
+
+  img {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    height: 15px;
+    width: 15px;
+    position: absolute;
+    top: 7px;
+    left: 8px;
+  }
+
+}
+
+#editor-pane-nav-snippets:hover {
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+}
+
+/* ------ EDITOR SNIPPETS MENU - START ------ */
+#editor-pane-nav-snippets-menu {
+  position: absolute;
+  z-index: 151;
+  background-color: white;
+  -webkit-box-shadow: 0 3px 9px rgba(0,0,0,0.24);
+  -moz-box-shadow: 0 3px 9px rgba(0,0,0,0.24);
+  box-shadow: 0 3px 9px rgba(0,0,0,0.24);
+  min-width: 200px;
+  top: 65px;
+  border-radius: 1px;
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    max-height:250px;/* you can change as you need it */
+    overflow:auto;/* to get scroll */
+    li {
+      padding: 12px;
+      display: flex;
+
+      &.hide {
+        display: none;
+      }
+
+      &:hover {
+        background-color: rgba(0,0,0,.05);
+      }
+
+      .icon;
+    }
+
+    .top-border {
+      border-top: 1px solid #E5E5E5;
+    }
+  }
+}
+
+#editor-pane-nav-snippets-menu:after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 0 15px 15px;
+  border-color: #FFFFFF transparent;
+  display: block;
+  width: 0;
+  z-index: 1;
+  top: -15px;
+  left: calc(~"50% + 5px");
+}
+/* ------ EDITOR SNIPPETS MENU - END ------ */
+
 #editor-pane-nav-options.active,
 #editor-pane-nav-options:hover {
   opacity: 0.7;

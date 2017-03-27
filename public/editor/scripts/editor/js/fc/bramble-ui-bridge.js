@@ -439,6 +439,7 @@ define(function(require) {
 
     bramble.on("activeEditorChange", function(data) {
       setNavFilename(data.filename);
+      BrambleMenus.reloadSnippetsData(bramble, data.filename);
     });
 
     $("#spinner-container").fadeOut();

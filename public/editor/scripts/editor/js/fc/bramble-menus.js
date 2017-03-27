@@ -3,6 +3,9 @@ define(function(require) {
   var $ = require("jquery");
   var PopupMenu = require("fc/bramble-popupmenu");
   var analytics = require("analytics");
+  var snippets = require("fc/snippets");
+  var snippetsData = [];
+  var fileType = "html";
 
   function setupUserMenu() {
     PopupMenu.create("#navbar-logged-in .dropdown-toggle", "#navbar-logged-in .dropdown-content");
@@ -11,6 +14,48 @@ define(function(require) {
   function setupLocaleMenu() {
     PopupMenu.create("#navbar-locale .dropdown-toggle", "#navbar-locale .dropdown-content");
   }
+
+  function setSnippetsMenuData(bramble) {
+
+        var snippetsObject = snippets.getSnippetObj();
+        snippets.getSnippetObj();
+
+        if (snippetsObject.hasOwnProperty(fileType)) {
+            var ul = document.getElementById("editor-pane-nav-snippets-ul");
+            var obj = snippetsObject[fileType];
+            for (var prop in obj) {
+                if (obj.hasOwnProperty(prop)) {
+                    var li = document.createElement("li");
+                    li.appendChild(document.createTextNode(obj[prop].name));
+                    li.setAttribute("title", obj[prop].title);
+                    li.setAttribute("id", obj[prop].id);
+                    li.setAttribute("data-snippet", obj[prop].name);
+                    ul.appendChild(li);
+                    snippetsData[obj[prop].name] = obj[prop].data;
+
+                    $("#" + obj[prop].id).click(function() {
+                        var snippet = snippetsData[$(this).attr("data-snippet")];
+                        bramble.addCodeSnippet(
+                            snippet
+                        );
+                    });
+                }
+            }
+        }
+    }
+
+    function setupSnippetsMenu(bramble) {
+        // Gear Snippets menu
+        PopupMenu.createWithOffset("#editor-pane-nav-snippets", "#editor-pane-nav-snippets-menu");
+        setSnippetsMenuData(bramble);
+    }
+
+    function reloadSnippetsData(bramble, filename) {
+        fileType = filename.substring(filename.lastIndexOf('.') + 1);
+        var ul = document.getElementById("editor-pane-nav-snippets-ul");
+        ul.innerHTML = "";
+        setSnippetsMenuData(bramble);
+    }
 
   function setupOptionsMenu(bramble) {
     // Gear Options menu
