@@ -68,22 +68,18 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
     var projectSelector = "#" + project.getAttribute("id");
     var lastEdited = project.getAttribute("data-project-date_updated");
     var projectId = project.getAttribute("data-project-id");
+    var publishedUrl = project.getAttribute("data-project-publish_url");
+    var publishedId = publishedUrl.substring(publishedUrl.indexOf( "/", publishedUrl.indexOf("/", 7) + 1) + 1);
 
     if(isLocalStorageAvailable) {
       setFavoriteDataForProject(projectId, projectSelector, project);
     }
 
+    $(projectSelector + " .remix-link").attr("href", publishedId + "/remix");
     $(projectSelector + " .project-information").text(getElapsedTime(lastEdited));
   });
 
   $("#project-list").prepend(favoriteProjectsElementList);
-
-  $(".remix-link").click(function() {
-    var project = $(this).closest(".project");
-    var publishedUrl = project.attr("data-project-publish_url");
-    var publishedId = publishedUrl.substring(publishedUrl.indexOf( "/", publishedUrl.indexOf("/", 7) + 1) + 1);
-    window.open(publishedId + "/remix", "_self");
-  });
 
   $(".project-delete").click(function() {
     // TODO: we can do better than this, but let's at least make it harder to lose data.
