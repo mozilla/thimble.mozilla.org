@@ -79,23 +79,23 @@ define(function(require) {
       return false;
     });
 
-    //set the AutoCorrect toggle to reflect whether auto-complete is enabled or disabled
-    if(bramble.getAutoCorrect()) {
-        $("#autocorrect-toggle").addClass("switch-enabled");
+    //set the AutoComplete toggle to reflect whether auto-complete is enabled or disabled
+    if(bramble.getAutoComplete()) {
+        $("#autocomplete-toggle").addClass("switch-enabled");
     } else {
-        $("#autocorrect-toggle").removeClass("switch-enabled");
+        $("#autocomplete-toggle").removeClass("switch-enabled");
     }
     // Enable/Disable Autocomplete
-    $("#autocorrect-toggle").click(function() {
+    $("#autocomplete-toggle").click(function() {
       // Toggle current value
-      var $autoCorrectToggle = $("#autocorrect-toggle");
-      var toggle = !($autoCorrectToggle.hasClass("switch-enabled"));
+      var $autoCompleteToggle = $("#autocomplete-toggle");
+      var toggle = !($autoCompleteToggle.hasClass("switch-enabled"));
 
       if(toggle) {
-        $autoCorrectToggle.addClass("switch-enabled");
+        $autoCompleteToggle.addClass("switch-enabled");
         bramble.stopAutoComplete();
       } else {
-        $autoCorrectToggle.removeClass("switch-enabled");
+        $autoCompleteToggle.removeClass("switch-enabled");
         bramble.startAutoComplete();
       }
 
