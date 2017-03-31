@@ -335,53 +335,119 @@ body {
 /* Snippets */
 #editor-pane-nav-snippets {
   background-color: #2B2B2B;
-  height: 20px;
-  width: 80px;
-  padding: 5px;
-  padding-left: 20px;
+  height: 30px;
+  width: 30px;
+  text-align: center;
   border-radius: 50%;
   margin-left: 6px;
-  margin-right: 6px;
   position: relative;
   .icon;
 
   img {
     opacity: 0.5;
-    filter: alpha(opacity=50);
-    height: 15px;
-    width: 15px;
+    height: 20px;
+    width: 20px;
     position: absolute;
-    top: 7px;
-    left: 8px;
+    top: 5px;
+    left: 5px;
   }
 
+  &:hover img {
+    opacity: .7;
+  }
 }
 
-#editor-pane-nav-snippets:hover {
-    opacity: 0.7;
-    filter: alpha(opacity=70);
-}
 
 /* ------ EDITOR SNIPPETS MENU - START ------ */
 #editor-pane-nav-snippets-menu {
   position: absolute;
   z-index: 151;
   background-color: white;
-  -webkit-box-shadow: 0 3px 9px rgba(0,0,0,0.24);
-  -moz-box-shadow: 0 3px 9px rgba(0,0,0,0.24);
   box-shadow: 0 3px 9px rgba(0,0,0,0.24);
-  min-width: 200px;
+  min-width: 400px;
   top: 65px;
-  border-radius: 1px;
+
+  header {
+    overflow: auto;
+    padding: 10px 15px;
+    border-bottom: solid 1px rgba(0,0,0,.15);
+
+    .menu-title {
+      font-size: 1em;
+      font-weight: 600;
+      color: black;
+      margin: 0;
+      float: left;
+      padding: 4px 0;
+    }
+
+    .snippet-types {
+      float: right;
+      position: relative;
+      top: 2px;
+
+      a {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 2px;
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: .85em;
+        color: rgba(0,0,0,.7);
+
+        &:hover {
+          background: rgba(0,0,0,.06);
+          color: rgba(0,0,0,1);
+        }
+
+        &.active {
+          background: rgba(0,0,0,.12);
+          color: rgba(0,0,0,1);
+        }
+      }
+    }
+  }
+
+  .snippet-menu {
+    display: flex;
+  }
+
+  .snippet-preview {
+    background: rgba(0,0,0,.1);
+    padding: 12px 15px 15px 15px;
+    border-left: solid 1px rgba(0,0,0,.15);
+  }
+
+  .snippet-code {
+    margin: 0 0 15px 0;
+    font-family: Consolas, Inconsolata, 'Lucida Console', Courier, monospace, fixed;
+    line-height: 140%;
+  }
+
+  .insert-snippet {
+    background: #2d9961;
+    border-radius: 2px;
+    padding: 8px 10px 9px 10px;
+    cursor: pointer;
+    color: white;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 600;
+
+    &:hover {
+      background: #34b271;
+    }
+  }
+
   ul {
-    list-style-type: none;
+    overflow: auto;
     margin: 0;
     padding: 0;
-    max-height:250px;/* you can change as you need it */
-    overflow:auto;/* to get scroll */
+
     li {
-      padding: 12px;
-      display: flex;
+      padding: 12px 30px 12px 15px;
 
       &.hide {
         display: none;
@@ -400,18 +466,6 @@ body {
   }
 }
 
-#editor-pane-nav-snippets-menu:after {
-  content: '';
-  position: absolute;
-  border-style: solid;
-  border-width: 0 15px 15px;
-  border-color: #FFFFFF transparent;
-  display: block;
-  width: 0;
-  z-index: 1;
-  top: -15px;
-  left: calc(~"50% + 5px");
-}
 /* ------ EDITOR SNIPPETS MENU - END ------ */
 
 #editor-pane-nav-options.active,

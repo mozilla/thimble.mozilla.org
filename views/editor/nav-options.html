@@ -41,26 +41,46 @@
 
       <span data-adapt-order="2" class="editor-pane-nav-title">{{ gettext("navEditor") }}</span>
 
-      <span data-adapt-order="3" id="editor-pane-nav-filename"></span>
+      <span data-adapt-order="4" id="editor-pane-nav-filename"></span>
 
       <div class="flex-container pull-right">
 
-        <div data-adapt-order="5" title="{{ gettext("navUndoTitle") }}" id="editor-pane-nav-undo">
+        <div data-adapt-order="6" title="{{ gettext("navUndoTitle") }}" id="editor-pane-nav-undo">
           <img src="/img/icon/undo.svg">
           <span data-adapt-order="1">{{ gettext("navUndo") }}</span>
         </div>
 
-        <div data-adapt-order="4" title="{{ gettext("navRedoIconTitle") }}" id="editor-pane-nav-redo">
+        <div data-adapt-order="5" title="{{ gettext("navRedoIconTitle") }}" id="editor-pane-nav-redo">
           <img src="/img/icon/redo.svg">
         </div>
 
-        <div title="Snippets" id="editor-pane-nav-snippets">
-			<span>Snippets</span>
+        <div data-adapt-order="3" id="editor-pane-nav-snippets" title="{{ gettext("navInsertSnippet") }}">
+          <img src="/img/icon/snippets.svg">
+        </div>
+        <div id="editor-pane-nav-snippets-menu" class="hide">
+          <header>
+            <h2 class="menu-title">{{ gettext("navInsertSnippet") }}</h2>
+            <div class="snippet-types">
+              <a class="active">HTML</a>
+              <a>CSS</a>
+              <a>JS</a>
+            </div>
+          </header>
+
+          <div class="snippet-menu">
+            <ul id="editor-pane-nav-snippets-ul">
+              <!-- Dynamically added -->
+            </ul>
+
+            <div class="snippet-preview">
+              <pre class="snippet-code">
+for(var i = 0; i < array.lenght; i++;) {
+  console.log(array[i]);
+}</pre>
+              <a class="insert-snippet" href="#">{{ gettext("insertButtonLabel") }}</a>
+            </div>
           </div>
-		  <div id="editor-pane-nav-snippets-menu" class="hide">
-          <ul id="editor-pane-nav-snippets-ul">
-			<!-- Dynamically added -->
-          </ul>
+          <div class="arrow-tip"></div>
         </div>
 
         <div data-adapt-order="6" title="{{ gettext("navEditorOptionsIconTitle") }}" id="editor-pane-nav-options">
