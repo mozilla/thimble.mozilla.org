@@ -439,13 +439,11 @@ define(function(require) {
     });
 
     bramble.on("projectDirty", function(data){
-      console.log("project is Dirty", data);
       $("#navbar-save-indicator").removeClass("hide");
       $("#navbar-save-indicator").text("Saving...");
     });
 
     bramble.on("projectSaved", function(){
-      console.log("project is Saved");
       $("#navbar-save-indicator").addClass("hide");
     });
 
