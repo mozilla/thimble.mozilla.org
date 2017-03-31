@@ -438,7 +438,7 @@ define(function(require) {
       }
     });
 
-    bramble.on("projectDirty", function(data){
+    bramble.on("projectDirty", function(){
       $("#navbar-save-indicator").removeClass("hide");
       $("#navbar-save-indicator").text("Saving...");
     });
