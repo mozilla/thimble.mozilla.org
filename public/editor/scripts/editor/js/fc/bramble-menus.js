@@ -102,7 +102,7 @@ define(function(require) {
       }
       
       return false;
-    }
+    });
                                 
     //set the AutoCloseTags toggle to reflect whether auto-close tags is enabled or disabled
     if(bramble.getAutoCloseTags().whenClosing) {
