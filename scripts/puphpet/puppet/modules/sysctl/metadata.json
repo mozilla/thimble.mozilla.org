@@ -1,0 +1,44 @@
+{
+  "name": "fiddyspence-sysctl",
+  "version": "1.1.0",
+  "author": "Chris Spence",
+  "summary": "sysctl type and provider",
+  "license": "Apache-2.0",
+  "source": "https://github.com/fiddyspence/puppet-sysctl",
+  "project_page": "https://github.com/fiddyspence/puppet-sysctl",
+  "issues_url": "https://github.com/fiddyspence/puppet-sysctl/issues",
+  "tags": [
+    "sysctl",
+    "kernel",
+    "parameters"
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Redhat",
+      "operatingsystemrelease": [
+        "5.0",
+        "6.0",
+        "7.0"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "12.04",
+        "10.04",
+        "14.10"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "5.0",
+        "6.0",
+        "7.0"
+      ]
+    }
+  ],
+  "dependencies": [
+  
+  ]
+}

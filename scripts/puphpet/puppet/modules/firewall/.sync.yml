@@ -1,0 +1,10 @@
+---
+# only run a minimal subset of tests on travis, as many of the tests exercise the kernel, which is the "wrong" one anyways
+.travis.yml:
+  docker_sets:
+  - set: docker/ubuntu-14.04
+    options:
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=@@SET@@ SPEC_OPTS="--tag docker"
+  - set: docker/centos-7
+    options:
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=@@SET@@ SPEC_OPTS=""--tag docker"

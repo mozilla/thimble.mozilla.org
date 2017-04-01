@@ -1,0 +1,4 @@
+fixtures:
+  symlinks:
+    inifile: "#{source_dir}"
+    create_multiple_ini_settings: "#{source_dir}/spec/fixtures/create_multiple_ini_settings"

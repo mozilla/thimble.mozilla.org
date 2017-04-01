@@ -1,0 +1,21 @@
+{
+  "repo" : "distributions",
+  "path" : "/images/Artifactory_120x75.png",
+  "created" : "2015-10-29T23:13:08.174Z",
+  "createdBy" : "freds",
+  "lastModified" : "2015-10-29T23:13:01.000Z",
+  "modifiedBy" : "freds",
+  "lastUpdated" : "2015-10-29T23:13:01.000Z",
+  "downloadUri" : "https://repo.jfrog.org/artifactory/distributions/images/Artifactory_120x75.png",
+  "mimeType" : "application/octet-stream",
+  "size" : "6227",
+  "checksums" : {
+    "sha1" : "a359e93636e81f9dd844b2dfb4b89fa876e5d4fa",
+    "md5" : "00f32568be85929fe95be38f9f5f3519"
+  },
+  "originalChecksums" : {
+    "sha1" : "a359e93636e81f9dd844b2dfb4b89fa876e5d4fa",
+    "md5" : "00f32568be85929fe95be38f9f5f3519"
+  },
+  "uri" : "https://repo.jfrog.org/artifactory/api/storage/distributions/images/Artifactory_120x75.png"
+}

@@ -1,0 +1,40 @@
+language: ruby
+
+rvm:
+  - 1.8.7
+  - 1.9.3
+  - 2.1.0
+
+env:
+  - PUPPET_VERSION="~> 2.7.20"
+  - PUPPET_VERSION="~> 3.1.0"
+  - PUPPET_VERSION="~> 3.2.0"
+  - PUPPET_VERSION="~> 3.4.0"
+  - PUPPET_VERSION="~> 3.6.0"
+  - PUPPET_VERSION="~> 3.7.0"
+  - PUPPET_VERSION="~> 4.3.0"
+
+matrix:
+  allow_failures:
+    - rvm: 1.8.7
+  exclude:
+    - env: PUPPET_VERSION="~> 4.3.0"
+      rvm: 1.8.7
+    - env: PUPPET_VERSION="~> 3.2.0"
+      rvm: 2.1.0
+    - env: PUPPET_VERSION="~> 2.7.20"
+      rvm: 2.1.0
+    - env: PUPPET_VERSION="~> 3.1.0"
+      rvm: 2.1.0
+
+before_install:
+  - gem update bundler
+  - bundle --version
+  - gem update --system 2.1.11
+  - gem --version
+
+script: "rake test"
+
+gemfile: .gemfile
+
+sudo: false

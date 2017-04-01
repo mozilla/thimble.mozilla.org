@@ -1,0 +1,14 @@
+---
+HOSTS:
+  centos-66-x64:
+    roles:
+      - master
+      - database
+      - dashboard
+    platform: el-6-x86_64
+    box: puppetlabs/centos-6.6-64-puppet-enterprise
+    hypervisor: vagrant
+CONFIG:
+  type: pe
+...
+# vim: syntax=yaml

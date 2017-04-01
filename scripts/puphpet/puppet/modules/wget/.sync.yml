@@ -1,0 +1,11 @@
+Rakefile:
+  strict_variables: false
+.gitignore:
+  paths:
+  - Puppetfile.lock
+.travis.yml:
+  # these versions of puppet just can't run the tests
+  exclude_puppet:
+  - 3.3.0
+  - 3.2.0
+  forge_password: "Bhw0Fli+sIxM+yzjBt6iBEfbja1R7CGnmx2wujIFjtcYxU9TvNuo93ps8cte7ebSGWlJ9/QgKcNnGSgVaO7tkUqusIsWPYZRJ2LsEM9U0bDH9i0ns08l6NaOl0nTT3NPdp/wAhN5pYuMFcZg4r0v+ARzo+3x6NtFH1YYwJqmqR4="

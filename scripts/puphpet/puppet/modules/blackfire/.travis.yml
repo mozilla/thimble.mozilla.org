@@ -1,0 +1,51 @@
+sudo: false
+language: ruby
+bundler_args: --no-deployment
+
+before_script:
+  - puppet --version
+
+script:
+  - bundle exec rake validate
+  - bundle exec rake lint
+  - bundle exec rake spec
+
+matrix:
+  fast_finish: true
+  include:
+  - rvm: 2.3.1
+    env: PUPPET_VERSION="~> 4.6"
+  - rvm: 2.3.1
+    env: PUPPET_VERSION="~> 4.5"
+  - rvm: 2.3.0
+    env: PUPPET_VERSION="~> 4.4"
+  - rvm: 2.2.5
+    env: PUPPET_VERSION="~> 4.3"
+  - rvm: 2.1.10
+    env: PUPPET_VERSION="~> 4.2"
+  - rvm: 2.0.0
+    env: PUPPET_VERSION="~> 4.1"
+  - rvm: 2.0.0
+    env: PUPPET_VERSION="~> 4.0"
+  - rvm: 2.0.0
+    env: PUPPET_VERSION="~> 3.8" DEPLOY="yes"
+  - rvm: 1.9.3
+    env: PUPPET_VERSION="~> 3.7"
+  - rvm: 1.9.3
+    env: PUPPET_VERSION="~> 3.4"
+  - rvm: 1.9.3
+    env: PUPPET_VERSION="~> 3.0"
+
+before_deploy:
+  - bundle exec puppet module build
+
+deploy:
+  provider: releases
+  api-key:
+      secure: "cMMxLnCo0XJBJ+e8BCI6EfO+32xAJnjxVPQTtnT62xg85+ESTqCwfrB/nHVFQYfNBvw6BVVi26jpa/PXHC3aL9RlJKZSoLg9TVbQFDOwBHdqpyYcAKUg90pC4WQrnvONO1AaBjFuNosGKHagCBW+mD696T6SsjNsFfW4xgE2JXM="
+  file: "$(ls $TRAVIS_BUILD_DIR/pkg/s12v-blackfire-*.tar.gz | head -n 1)"
+  skip_cleanup: true
+  on:
+    tags: true
+    all_branches: true
+    condition: $DEPLOY = yes

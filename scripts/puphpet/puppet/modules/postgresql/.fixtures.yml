@@ -1,0 +1,10 @@
+fixtures:
+  repositories:
+    apt: 
+      repo: "https://github.com/puppetlabs/puppetlabs-apt.git"
+      branch: "1.8.x"
+    stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
+    firewall: "https://github.com/puppetlabs/puppetlabs-firewall.git"
+    concat: "https://github.com/puppetlabs/puppetlabs-concat.git"
+  symlinks:
+    postgresql: "#{source_dir}"

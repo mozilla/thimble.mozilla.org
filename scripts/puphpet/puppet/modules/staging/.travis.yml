@@ -1,0 +1,44 @@
+---
+sudo: false
+language: ruby
+cache: bundler
+bundler_args: --without system_tests development
+before_install:
+  - bundle -v
+  - rm Gemfile.lock || true
+  - gem update --system
+  - gem update bundler
+  - gem --version
+  - bundle -v
+script:
+  - 'bundle exec rake $CHECK'
+matrix:
+  fast_finish: true
+  include:
+  - rvm: 1.9.3
+    env: PUPPET_VERSION="~> 3.0" STRICT_VARIABLES="yes" CHECK=test
+  - rvm: 1.9.3
+    env: PUPPET_VERSION="~> 3.0" STRICT_VARIABLES="yes" FUTURE_PARSER="yes" CHECK=test
+  - rvm: 2.1
+    env: PUPPET_VERSION="~> 3.0" STRICT_VARIABLES="yes" CHECK=test
+  - rvm: 2.1
+    env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=test
+  - rvm: 2.2
+    env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=test
+  - rvm: 2.3.1
+    env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=rubocop
+  - rvm: 2.3.1
+    env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=test
+notifications:
+  email: false
+deploy:
+  provider: puppetforge
+  user: puppet
+  password:
+    secure: "Gi2pSwUXV0VzdVVfxAW8/9/2/ZYUuOaFxr7klw2lDh1/+pbvINyn3m6121AVY8Z3W3wfJGqnnsIHC/3pS1671xsVES9VPEXqc5v93P+VHmtxEBCFakEBkQ6B+EqCiB5w58L6At+ZM85ejcdTPy3Pg4gNEaJc5rKAHZkq3FMamzA="
+  on:
+    tags: true
+    # all_branches is required to use tags
+    all_branches: true
+    # Only publish if our main Ruby target builds
+    rvm: 2.2

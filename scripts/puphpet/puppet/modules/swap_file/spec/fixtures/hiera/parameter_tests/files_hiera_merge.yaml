@@ -1,0 +1,11 @@
+---
+swap_file::files:
+  'swap1':
+    ensure:       'present'
+    swapfile:     '/mnt/swap.1'
+    swapfilesize: '1 GB'
+  'swap2':
+    ensure:       'present'
+    swapfile:     '/mnt/swap.2'
+    swapfilesize: '2 GB'
+    cmd:          'fallocate'

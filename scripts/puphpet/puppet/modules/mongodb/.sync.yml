@@ -1,0 +1,4 @@
+# the mongodb tests currently do not work on centos 7 or ubuntu 14.04
+---
+.travis.yml:
+  docker_sets: []

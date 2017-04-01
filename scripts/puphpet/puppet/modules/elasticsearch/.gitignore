@@ -1,0 +1,15 @@
+.swp
+spec/fixtures/manifests
+spec/fixtures/modules
+.bundle
+.vendor
+.vagrant
+.ruby-version
+pkg/
+spec/reports/
+spec/logs
+log
+*.lock
+*.rpm
+*.deb
+*.tar.gz

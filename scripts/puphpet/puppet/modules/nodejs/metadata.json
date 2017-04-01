@@ -1,0 +1,54 @@
+{
+  "name": "willdurand-nodejs",
+  "version": "1.9.0",
+  "author": "William Durand",
+  "license": "MIT",
+  "summary": "A module to install Node.js and NPM.",
+  "source": "https://github.com/willdurand/puppet-nodejs",
+  "project_page": "https://github.com/willdurand/puppet-nodejs",
+  "issues_url": "https://github.com/willdurand/puppet-nodejs/issues",
+  "tags": [
+    "node",
+    "nodejs",
+    "npm"
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "5",
+        "6"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "5",
+        "6"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "12.04",
+        "14.04"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">=3.2.1"
+    },
+    {
+      "name": "maestrodev/wget",
+      "version_requirement": ">=1.2.0"
+    }
+  ]
+}

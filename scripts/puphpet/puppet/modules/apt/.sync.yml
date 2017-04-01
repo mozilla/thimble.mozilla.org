@@ -1,0 +1,6 @@
+---
+# override default cells to replace centos-7 with debian-8
+.travis.yml:
+  docker_sets:
+  - set: docker/ubuntu-14.04
+  - set: docker/debian-8

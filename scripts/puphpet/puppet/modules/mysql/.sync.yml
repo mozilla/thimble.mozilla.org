@@ -1,0 +1,24 @@
+---
+Gemfile:
+  optional:
+    ':development, :unit_tests':
+      - gem: rspec-puppet-facts
+.travis.yml:
+  includes:
+  - rvm: 2.3.1
+    env: PUPPET_GEM_VERSION="~> 4.0" STDLIB_LOG_DEPRECATIONS="false"
+    bundler_args: --without system_tests
+  - rvm: 2.1.9
+    env: PUPPET_GEM_VERSION="~> 4.0" STDLIB_LOG_DEPRECATIONS="false"
+    bundler_args: --without system_tests
+  - rvm: 2.1.5
+    env: PUPPET_GEM_VERSION="~> 3.0" FUTURE_PARSER="yes"
+    bundler_args: --without system_tests
+  - rvm: 2.1.5
+    env: PUPPET_GEM_VERSION="~> 3.0"
+    bundler_args: --without system_tests
+  - rvm: 1.9.3
+    env: PUPPET_GEM_VERSION="~> 3.0"
+    bundler_args: --without system_tests
+spec/spec_helper.rb:
+  allow_deprecations: true

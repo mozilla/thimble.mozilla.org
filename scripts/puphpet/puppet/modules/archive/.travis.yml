@@ -1,0 +1,58 @@
+---
+sudo: false
+language: ruby
+cache: bundler
+bundler_args: --without system_tests development
+addons:
+  apt:
+    sources:
+      - augeas
+    packages:
+      - libaugeas-dev
+before_install:
+  - bundle -v
+  - rm Gemfile.lock || true
+  - gem update --system
+  - gem update bundler
+  - gem --version
+  - bundle -v
+script:
+  - 'bundle exec rake $CHECK'
+matrix:
+  fast_finish: true
+  include:
+  - rvm: 1.9.3
+    env: PUPPET_VERSION="~> 3.0" STRICT_VARIABLES="yes" CHECK=test
+  - rvm: 1.9.3
+    env: PUPPET_VERSION="~> 3.0" STRICT_VARIABLES="yes" FUTURE_PARSER="yes" CHECK=test
+  - rvm: 2.1
+    env: PUPPET_VERSION="~> 3.0" STRICT_VARIABLES="yes" CHECK=test
+  - rvm: 2.1
+    env: PUPPET_VERSION="~> 4.0" CHECK=test
+  - rvm: 2.2
+    env: PUPPET_VERSION="~> 4.0" CHECK=test
+  - rvm: 2.3.1
+    env: PUPPET_VERSION="~> 4.0" CHECK=build DEPLOY_TO_FORGE=yes
+  - rvm: 2.3.1
+    env: PUPPET_VERSION="~> 4.0" CHECK=rubocop
+  - rvm: 2.3.1
+    env: PUPPET_VERSION="~> 4.0" CHECK=test
+  - rvm: 2.4.0-preview1
+    env: PUPPET_VERSION="~> 4.0" CHECK=test
+  allow_failures:
+    - rvm: 2.4.0-preview1
+notifications:
+  email: false
+deploy:
+  provider: puppetforge
+  deploy:
+    branch: ha-bug-puppet-forge
+  user: puppet
+  password:
+    secure: "S8pxtUQSCxezeHuMTOa2nmbOC1Ln37evcDBd6rcAPse4DhrwzdJ7Ijme2tE+cPcdyYgO66jL0wWUBNia+10vOoYs1mCMj3mUq2bgySRhML0CQxGIvKYu8R6PbijljSK7LYplD1THQRgFLyHQ+f4Mh7+8yFpjXSmxuAQMdCPfPv8="
+  on:
+    tags: true
+    # all_branches is required to use tags
+    all_branches: true
+    # Only publish the build marked with "DEPLOY_TO_FORGE"
+    condition: "$DEPLOY_TO_FORGE = yes"

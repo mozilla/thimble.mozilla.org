@@ -1,0 +1,15 @@
+HOSTS:
+  debian-7:
+    roles:
+      - master
+      - database
+      - dashboard
+    platform: debian-7-amd64
+    image: debian:7
+    hypervisor: docker
+    docker_cmd: ["/sbin/init"]
+    docker_preserve_image: true
+    docker_image_commands:
+      - apt-get install -yq wget libssl-dev net-tools
+CONFIG:
+  type: foss

@@ -1,0 +1,10 @@
+---
+:backends: yaml
+:yaml:
+    :datadir: /opt/puphpet
+:hierarchy:
+    - config-%{::provisioner_type}
+    - config-custom
+    - config
+:merge_behavior: deeper
+:logger: console

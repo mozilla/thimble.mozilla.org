@@ -1,0 +1,6 @@
+fixtures:
+  repositories:
+    stdlib: "git://github.com/puppetlabs/puppetlabs-stdlib.git"
+    archive: "git://github.com/voxpupuli/puppet-archive.git"
+  symlinks:
+    java: "#{source_dir}"

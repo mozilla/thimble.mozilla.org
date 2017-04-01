@@ -1,0 +1,12 @@
+HOSTS:
+  ubuntu-server-1604-x64:
+    roles:
+      - master
+    platform: ubuntu-16.04-amd64
+    box: s12v/xenial64
+    box_url: https://atlas.hashicorp.com/s12v/boxes/xenial64
+    hypervisor: vagrant
+CONFIG:
+  log_level: verbose
+  type: foss
+  php_cli_package: php-cli

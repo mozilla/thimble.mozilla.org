@@ -1,0 +1,12 @@
+spec/fixtures/modules/*
+spec/fixtures/puppet/common.yaml
+.bundle/
+vendor/
+Gemfile.lock
+pkg/
+modules/
+.vagrant
+.ruby-version
+
+# IDE ignores
+.idea

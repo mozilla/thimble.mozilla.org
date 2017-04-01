@@ -1,0 +1,18 @@
+HOSTS:
+  debian-8:
+    roles:
+      - master
+    platform: debian-8-amd64
+    image: debian:8
+    hypervisor: docker
+    docker_cmd: ["/bin/systemd"]
+    docker_preserve_image: true
+    docker_image_commands:
+      - apt-get install -yq wget net-tools locales apt-transport-https software-properties-common
+      - locale-gen en en_US en_US.UTF-8
+      - dpkg-reconfigure locales
+      - rm /lib/systemd/system/systemd*udev*
+      - rm /lib/systemd/system/getty.target
+CONFIG:
+  type: foss
+  log_level: debug

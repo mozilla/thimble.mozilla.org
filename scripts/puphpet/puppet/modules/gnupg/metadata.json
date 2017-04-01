@@ -1,0 +1,67 @@
+{
+  "name": "golja-gnupg",
+  "version": "1.2.3",
+  "author": "Dejan Golja",
+  "summary": "Manage gnupg package and public keys",
+  "license": "Apache-2.0",
+  "source": "git://github.com/n1tr0g/golja-gnupg.git",
+  "project_page": "https://github.com/n1tr0g/golja-gnupg",
+  "issues_url": "https://github.com/n1tr0g/golja-gnupg/issues",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "SLES",
+      "operatingsystemrelease": [
+        "11",
+        "12"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "10.04",
+        "12.04",
+        "14.04"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">=3.0.0 <4.0.0"
+    },
+    {
+      "name": "pe",
+      "version_requirement": ">=3.0.0 <4.0.0"
+    }
+  ],
+  "tags": [
+    "gnupg",
+    "pgp"
+  ],
+  "dependencies": [
+  
+  ]
+}

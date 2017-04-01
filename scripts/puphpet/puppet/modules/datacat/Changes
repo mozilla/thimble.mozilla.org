@@ -1,0 +1,61 @@
+0.6.2 Sunday 16th August, 2015
+    Corrected `template_body` error message when template is missing
+    (Github #26 - Robin Bowes)
+    Converted Metadata to metadata.json (Github #23 - Bram Vogelaar)
+
+0.6.1 Tuesday 23rd September, 2014
+    Fix usage with the future parser (Github #16 - Oscar Ferrer)
+
+0.6.0 Monday 16th June, 2014
+    Add ensure to the datacat define (Github #13 - Igor Galić)
+
+0.5.0 Saturday 10th May, 2014
+    Add show_diff to the datacat define for parity with the file
+    type in puppet 3.2 and onwards (Github #10 - Sebastian Schmidt)
+
+0.4.3 Saturday 5th April, 2014
+    Change the README.md back to github-flavoured markdown as the forge
+    supports this now (Github #6 - Igor Galić)
+    Fix for compatibilty with puppet 3.5.0 (Github #7 - Daniel Beyer)
+
+0.4.2 Thursday 26th September, 2013
+    Fix for catalog changes in 3.3.0 when using master/agent (Github #4)
+
+0.4.1 Thursday 8th August, 2013
+    Changes `datacat` define to name the wrapped `file` resource with the
+    $title of the resource itself.
+
+0.4.0 Thursday 25th July, 2013
+    Added `source_key` parameter to datacat_collector, to allow bypassing the
+    templating step.
+
+0.3.0 Tuesday 9th July, 2013
+    Add collects parameter to the datacat_collector type, for acts-as
+    relationships.
+
+0.2.1 Monday 8th July, 2013
+    Bugfix - when modifying the datacat_collector map on path the File should
+    still match to $path
+
+0.2.0 Monday 8th July, 2013
+    Allow the target parameter of a datacat_fragment to be an array to target
+    multiple collectors.
+    The datacat_collector wrapped by the datacat type will now be named for the
+    resource rather than the file path.
+
+0.1.0 Friday 5th July, 2013
+    Add a order parameter to the datacat_fragment type for relative ordering
+    of fragment merging.
+    Exposed the datacat_collector type and allow it to be used for updating
+    more than just the file type's content parameter.
+
+0.0.3 Wednesday 26th June, 2013
+    Reworked the behaviour of datacat_collector to only refresh the resource
+    when the output from the template evaluation changes. (Github #3)
+
+0.0.2 Tuesday 16th April, 2013
+    Changed README.md from Github flavored markup to standard markdown to make
+    the forge happier.
+
+0.0.1 Tuesday 16th April, 2013
+    Initial forge release

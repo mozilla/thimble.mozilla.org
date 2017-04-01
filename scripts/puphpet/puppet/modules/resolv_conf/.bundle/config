@@ -1,0 +1,4 @@
+---
+BUNDLE_WITHOUT: system_tests:development
+BUNDLE_PATH: vendor/bundle
+BUNDLE_DISABLE_SHARED_GEMS: true

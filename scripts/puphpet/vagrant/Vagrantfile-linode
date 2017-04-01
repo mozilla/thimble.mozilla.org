@@ -1,0 +1,118 @@
+# -*- mode: ruby -*-
+
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'linode'
+
+provider = data['vm']['provider']['linode']
+machines = !provider['machines'].empty? ? provider['machines'] : { }
+
+machines.each do |i, machine|
+  config.vm.define "#{machine['id']}" do |machine_id|
+    machine_id.vm.box      = 'dummy'
+    machine_id.vm.hostname = "#{machine['hostname']}"
+
+    ssh_username = !data['ssh']['username'].nil? ?
+      data['ssh']['username'] :
+      'root'
+
+    machine_id.ssh.private_key_path = "#{data['ssh']['private_key_path']}"
+    machine_id.ssh.username         = "#{ssh_username}"
+
+    machine_id.vm.provider :linode do |li, override|
+      li.token        = "#{provider['token']}"
+      li.datacenter   = "#{machine['datacenter']}"
+      li.ssh_key_name = "#{provider['ssh_key_name']}"
+      li.distribution = "#{provider['distribution']}"
+      li.plan         = "#{machine['plan']}"
+      li.label        = "#{machine['label']}"
+
+      if machine.include? 'planid'
+        provider.planid = machine['planid']
+      end
+      if machine.include? 'datacenterid'
+        provider.datacenterid = machine['datacenterid']
+      end
+      if machine.include? 'image'
+        provider.image = "#{machine['image']}"
+      end
+      if machine.include? 'imageid'
+        provider.imageid = machine['imageid']
+      end
+      if machine.include? 'kernel'
+        provider.kernel = "#{machine['kernel']}"
+      end
+      if machine.include? 'kernelid'
+        provider.kernelid = machine['kernelid']
+      end
+      if machine.include? 'private_networking'
+        provider.private_networking = machine['private_networking']
+      end
+      if machine.include? 'distributionid'
+        provider.distributionid = machine['distributionid']
+      end
+    end
+
+    data['vm']['synced_folder'].each do |i, folder|
+      if folder['source'] != '' && folder['target'] != ''
+        machine_id.vm.synced_folder "#{folder['source']}", "#{folder['target']}",
+          id: "#{i}"
+      end
+    end
+
+    machine_id.vm.provision 'shell' do |s|
+      s.path = 'puphpet/shell/initial-setup.sh'
+    end
+    machine_id.vm.provision :shell,
+      :inline => 'chmod +x /opt/puphpet/standalone-puppet.sh'
+    machine_id.vm.provision 'shell' do |s|
+      s.path = 'puphpet/shell/install-puppet.sh'
+    end
+    machine_id.vm.provision :shell do |s|
+      s.path = 'puphpet/shell/execute-files.sh'
+      s.args = ['exec-preprovision']
+    end
+
+    machine_id.vm.provision :puppet do |puppet|
+      puppet.facter = {
+        'fqdn'             => "#{machine_id.vm.hostname}",
+        'ssh_username'     => "#{ssh_username}",
+        'provisioner_type' => ENV['VAGRANT_DEFAULT_PROVIDER'],
+      }
+      puppet.manifests_path = "#{data['vm']['provision']['puppet']['manifests_path']}"
+      puppet.manifest_file  = ""
+      puppet.module_path    = data['vm']['provision']['puppet']['module_path']
+
+      if !data['vm']['provision']['puppet']['options'].empty?
+        puppet.options = data['vm']['provision']['puppet']['options']
+      end
+    end
+
+    machine_id.vm.provision :shell do |s|
+      s.path = 'puphpet/shell/execute-files.sh'
+      s.args = ['exec-once', 'exec-always']
+    end
+    machine_id.vm.provision :shell, run: 'always' do |s|
+      s.path = 'puphpet/shell/execute-files.sh'
+      s.args = ['startup-once', 'startup-always']
+    end
+
+    machine_id.vm.provision :shell, privileged: false do |s|
+      s.path = 'puphpet/shell/execute-files.sh'
+      s.args = ['exec-once-unprivileged', 'exec-always-unprivileged']
+    end
+    machine_id.vm.provision :shell, run: 'always', privileged: false do |s|
+      s.path = 'puphpet/shell/execute-files.sh'
+      s.args = ['startup-once-unprivileged', 'startup-always-unprivileged']
+    end
+
+    machine_id.vm.provision :shell, privileged: false do |s|
+      s.path = 'puphpet/shell/important-notices.sh'
+    end
+
+    if !data['ssh']['port'].nil? && data['ssh']['port'].to_bool
+      machine_id.ssh.port = "#{data['ssh']['port']}"
+    end
+    if !data['ssh']['shell'].nil?
+      machine_id.ssh.shell = "#{data['ssh']['shell']}"
+    end
+  end
+end

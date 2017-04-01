@@ -1,0 +1,6 @@
+fixtures:
+  symlinks:
+    nodejs: "#{source_dir}"
+  repositories:
+    stdlib: git://github.com/puppetlabs/puppetlabs-stdlib.git
+    wget: git://github.com/maestrodev/puppet-wget.git

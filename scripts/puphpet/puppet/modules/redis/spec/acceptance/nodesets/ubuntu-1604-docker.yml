@@ -1,0 +1,13 @@
+HOSTS:
+  ubuntu-16-04:
+    platform: ubuntu-16.04-amd64
+    image: ubuntu:16.04
+    hypervisor: docker
+    docker_cmd: '["/sbin/init"]'
+    docker_image_commands:
+      - 'apt-get install -y net-tools wget curl locales apt-transport-https software-properties-common'
+      - 'locale-gen en en_US en_US.UTF-8'
+    docker_preserve_image: true
+CONFIG:
+  type: foss
+  log_level: debug

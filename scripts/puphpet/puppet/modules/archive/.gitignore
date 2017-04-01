@@ -1,0 +1,14 @@
+pkg/
+Gemfile.lock
+Gemfile.local
+vendor/
+.vendor/
+spec/fixtures/manifests/
+spec/fixtures/modules/
+.vagrant/
+.bundle/
+coverage/
+log/
+.idea/
+*.iml
+.*.sw

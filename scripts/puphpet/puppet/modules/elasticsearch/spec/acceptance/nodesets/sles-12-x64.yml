@@ -1,0 +1,19 @@
+HOSTS:
+  sles-12-x64:
+    roles:
+      - master
+      - database
+      - dashboard
+    platform: sles-12-x86_64
+    image: dliappis/sles:12
+    hypervisor: docker
+    docker_cmd: ["/sbin/init"]
+    docker_preserve_image: true
+    docker_image_commands:
+      - rm /etc/zypp/repos.d/devel_languages_python.repo
+      - gem uninstall -x puppet hiera
+      - zypper clean -a
+      - zypper install --force-resolution -y augeas which
+      - ln -s /usr/lib/systemd/system/sshd.service /etc/systemd/system/multi-user.target.wants/sshd.service
+CONFIG:
+  type: foss

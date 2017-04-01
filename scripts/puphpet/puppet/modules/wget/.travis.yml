@@ -1,0 +1,57 @@
+---
+# This file is managed centrally by modulesync
+#   https://github.com/maestrodev/puppet-modulesync
+
+sudo: false
+
+before_install:
+  - rm -f Gemfile.lock
+
+rvm:
+  - "2.0"
+
+env:
+  - PUPPET_VERSION="~> 4.3.0"
+  - PUPPET_VERSION="~> 4.2.0"
+  - PUPPET_VERSION="~> 4.1.0"
+  - PUPPET_VERSION="~> 4.0.0"
+  - PUPPET_VERSION="~> 3.8.0"
+  - PUPPET_VERSION="~> 3.7.0"
+  - PUPPET_VERSION="~> 3.6.0"
+  - PUPPET_VERSION="~> 3.5.0"
+  - PUPPET_VERSION="~> 3.4.0"
+
+matrix:
+  exclude:
+    # No support for Ruby 2.0 before Puppet 3.2
+    - rvm: '2.0'
+      env: PUPPET_VERSION="~> 2.7.0"
+    - rvm: '2.0'
+      env: PUPPET_VERSION="~> 3.0.0"
+    - rvm: '2.0'
+      env: PUPPET_VERSION="~> 3.1.0"
+    # Puppet < 3.5.0 is broken under ruby 2.1 https://tickets.puppetlabs.com/browse/PUP-1243
+    - rvm: '2.1'
+      env: PUPPET_VERSION="~> 2.7.0"
+    - rvm: '2.1'
+      env: PUPPET_VERSION="~> 3.0.0"
+    - rvm: '2.1'
+      env: PUPPET_VERSION="~> 3.1.0"
+    - rvm: '2.1'
+      env: PUPPET_VERSION="~> 3.2.0"
+    - rvm: '2.1'
+      env: PUPPET_VERSION="~> 3.3.0"
+    - rvm: '2.1'
+      env: PUPPET_VERSION="~> 3.4.0"
+
+deploy:
+  provider: puppetforge
+  user: maestrodev
+  password:
+    secure: "Bhw0Fli+sIxM+yzjBt6iBEfbja1R7CGnmx2wujIFjtcYxU9TvNuo93ps8cte7ebSGWlJ9/QgKcNnGSgVaO7tkUqusIsWPYZRJ2LsEM9U0bDH9i0ns08l6NaOl0nTT3NPdp/wAhN5pYuMFcZg4r0v+ARzo+3x6NtFH1YYwJqmqR4="
+  on:
+    tags: true
+    # all_branches is required to use tags
+    all_branches: true
+    # Only publish if our main Ruby target builds
+    condition: "$PUPPET_VERSION = '~> 3.6.0'"
