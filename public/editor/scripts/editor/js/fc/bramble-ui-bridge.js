@@ -365,13 +365,13 @@ define(function(require) {
       publishDialogUnderlay.remove();
       publishDialogUnderlay = null;
 
-      $("#publish-dialog").fadeOut();
+      $("#publish-dialog").hide();
       _escKeyHandler.stop();
       _escKeyHandler = null;
     }
     function showPublishDialog() {
       publishDialogUnderlay = new Underlay("#publish-dialog", hidePublishDialog);
-      $("#publish-dialog").fadeIn();
+      $("#publish-dialog").show();
 
       // Listen for ESC to close
       _escKeyHandler = new KeyHandler.ESC(hidePublishDialog);
