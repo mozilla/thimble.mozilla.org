@@ -54,7 +54,7 @@
     "habitat": "3.1.2",
     "helmet": "2.1.2",
     "jit-grunt": "^0.10.0",
-    "jquery": "~2.1.4",
+    "jquery": "^3.2.1",
     "less-middleware": "2.2.0",
     "memorystream": "^0.3.1",
     "moment": "~2.17.1",
