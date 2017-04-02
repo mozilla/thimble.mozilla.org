@@ -20,3 +20,6 @@ Session.vim
 .netrwhist
 *~
 tags
+VirtualBox-5.0.10-r104061-MultiArch_amd64.msi
+VirtualBox-5.0.10-r104061-MultiArch_x86.msi
+common.cab

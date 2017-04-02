@@ -88,11 +88,11 @@ define(function(require) {
       if(toggle) {
         $allowWSToggle.addClass("switch-enabled");
         bramble.enableWhiteSpace();
-        analytics.event("EnableWhiteSpaceIndicator");
+        analytics.event("EnableWhiteSpace");
       } else {
         $allowWSToggle.removeClass("switch-enabled");
         bramble.disableWhiteSpace();
-        analytics.event("DisableWhiteSpaceIndicator");
+        analytics.event("DisableWhiteSpace");
       }
 
       return false;
