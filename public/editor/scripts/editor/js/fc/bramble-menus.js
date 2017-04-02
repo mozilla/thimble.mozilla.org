@@ -78,6 +78,12 @@ define(function(require) {
 
       return false;
     });
+    //set initial UI value to allow whitespace indicator
+    if(bramble.getAllowWhiteSpace()) {
+      $("#allow-whitespace-toggle").addClass("switch-enabled");
+    } else {
+      $("#allow-whitespace-toggle").removeClass("switch-enabled");
+    }
     // Enable/Disable Whitespace Indicator
     $("#allow-whitespace-toggle").click(function() {
       // Toggle current value
@@ -92,6 +98,10 @@ define(function(require) {
         $allowWSToggle.removeClass("switch-enabled");
         bramble.disableWhiteSpace();
         analytics.event("DisableWhiteSpace");
+      }
+
+      return false;
+    });
     //set the AutoCloseTags toggle to reflect whether auto-close tags is enabled or disabled
     if(bramble.getAutoCloseTags().whenClosing) {
       $("#auto-tags-toggle").addClass("switch-enabled");
