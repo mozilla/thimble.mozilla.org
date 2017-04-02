@@ -48,6 +48,7 @@
       position: relative;
       top: 4px;
       flex: 1;
+      font-weight: 400;
     }
 
     &.loading {
@@ -242,26 +243,13 @@
         font-size: 22px;
         padding: 0;
         margin: 5px 0 2px 0;
+        color: rgba(0,0,0,.7);
+        line-height: 25px;
       }
 
       .author a {
         font-weight: 300;
         position: relative;
-        padding-left: 20px;
-
-        &:before {
-          content: "";
-          position: absolute;
-          left: 0;
-          top: 3px;
-          height: 16px;
-          width: 17px;
-          background-image: ~"url(/img/pencil-icon-blue.svg)";
-          background-image: ~"url(/img/author-icon.svg)";
-          background-size: 16px;
-          background-position: left;
-          background-repeat: no-repeat;
-        }
       }
 
       .description {

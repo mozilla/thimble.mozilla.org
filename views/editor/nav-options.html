@@ -21,6 +21,7 @@
             <li title="{{ gettext("navUploadTitle") }}" id="filetree-pane-nav-add-upload"><span>{{ gettext("navUploadFile") }}</span>
             <li title="{{ gettext("downloadProjectLink") }}" id="filetree-pane-nav-export-project-zip" class="top-border"><span>{{ gettext("downloadProjectLink") }}</span>
           </ul>
+          <div class="arrow-tip"></div>
         </div>
 
         <div title="{{ gettext("navCollapseFileTrayIconTitle") }}" id="filetree-pane-nav-hide">
@@ -95,12 +96,15 @@
             </li>
             <li>
               <span>{{ gettext("navAllowWS") }}</span>
-              <div title="{{ gettext("navAllowWhiteSpaceIndicator") }}" class="switch-toggle switch-enabled" id="allow-whitespace-toggle">
+              <div title="{{ gettext("navAllowWSTitle") }}" class="switch-toggle switch-enabled" id="allow-whitespace-toggle">
+              <span>{{ gettext("navAutoEncloseTags") }}</span>
+              <div title="{{ gettext("navAutoEncloseTagsTitle") }}" class="switch-toggle switch-enabled" id="auto-tags-toggle">
                 <div class="toggle-backing"></div>
                 <div class="toggle-button"></div>
               </div>
             </li>
           </ul>
+          <div class="arrow-tip"></div>
         </div>
       </div>
 

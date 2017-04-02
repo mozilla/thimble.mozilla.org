@@ -78,7 +78,6 @@ define(function(require) {
 
       return false;
     });
-
     // Enable/Disable Whitespace Indicator
     $("#allow-whitespace-toggle").click(function() {
       // Toggle current value
@@ -93,6 +92,23 @@ define(function(require) {
         $allowWSToggle.removeClass("switch-enabled");
         bramble.disableWhiteSpace();
         analytics.event("DisableWhiteSpace");
+    //set the AutoCloseTags toggle to reflect whether auto-close tags is enabled or disabled
+    if(bramble.getAutoCloseTags().whenClosing) {
+      $("#auto-tags-toggle").addClass("switch-enabled");
+    } else {
+      $("#auto-tags-toggle").removeClass("switch-enabled");
+    }
+
+    $("#auto-tags-toggle").click(function() {
+      var $autoTagsToggle = $("#auto-tags-toggle");
+      var autoCloseTagsEnabled = $autoTagsToggle.hasClass("switch-enabled");
+
+      if(autoCloseTagsEnabled) {
+        $autoTagsToggle.removeClass("switch-enabled");
+        bramble.configureAutoCloseTags({ whenOpening: false, whenClosing: false, indentTags: [] });
+      } else {
+        $autoTagsToggle.addClass("switch-enabled");
+        bramble.configureAutoCloseTags({ whenOpening: true, whenClosing: true, indentTags: [] });
       }
 
       return false;

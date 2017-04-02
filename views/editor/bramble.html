@@ -127,17 +127,13 @@
         </style>
 
     <div id="spinner-container">
-      <div class="thimble-spinner"></div>
-      <div class="loading-message message">
-        {{ gettext("loadingProject") }}
-        <div class="loading-message-help-link">
-          <p>{{ gettext("loadingProjectSupportSuggestion") | safe }}</p>
-        </div>
-      </div>
+        <div class="thimble-spinner"></div>
+        <div class="loading-message message">{{ gettext("loadingProject") }}</div>
         <div class="error-message message">
-          <p>{{ gettext("errorLoadingProject") | safe }}</p>
-          <p>{{ gettext("errorLoadingProjectSuggestion") }}</p>
-      </div>
+            <p>{{ gettext("errorLoadingProject") | safe }}</p>
+            <p>{{ gettext("errorLoadingProjectBramble") }}</p>
+            <p>{{ gettext("errorLoadingProjectSuggestion") }}</p>
+        </div>
     </div>
 
     <div id="browser-support-warning" class="hide">
