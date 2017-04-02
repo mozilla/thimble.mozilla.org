@@ -73,7 +73,7 @@
     "uuid": "2.0.3",
     "webmaker-analytics": "~0.1.7",
     "webmaker-i18n": "^0.3.31",
-    "wolfy87-eventemitter": "~4.3.0"
+    "wolfy87-eventemitter": "^5.1.0"
   },
   "scripts": {
     "postinstall": "grunt requirejs:dist && npm run localize && npm run localize-client",
