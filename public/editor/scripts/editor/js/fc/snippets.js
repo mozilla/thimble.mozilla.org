@@ -1,7 +1,7 @@
 define(function() {
 
     var snippets = {
-        html: [{
+        HTML: [{
                 name: "Comment",
                 title: "Add a Comment",
                 id: "snippet-comment",
@@ -34,7 +34,7 @@ define(function() {
                     '</dl>'
             }
         ],
-        css: [{
+        CSS: [{
                 name: "Body Tag",
                 title: "Add a Body Tag",
                 id: "snippet-BodyTag",
@@ -51,7 +51,7 @@ define(function() {
                     '}'
             }
         ],
-        js: [{
+        JS: [{
             name: "Basic Function",
             title: "Add a Basic Function",
             id: "snippet-BasicFunction",

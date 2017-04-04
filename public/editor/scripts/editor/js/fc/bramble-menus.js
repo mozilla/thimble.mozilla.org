@@ -5,7 +5,7 @@ define(function(require) {
   var analytics = require("analytics");
   var snippets = require("fc/snippets");
   var snippetsData = [];
-  var fileType = "html";
+  var fileType = "HTML";
 
   function setupUserMenu() {
     PopupMenu.create("#navbar-logged-in .dropdown-toggle", "#navbar-logged-in .dropdown-content");
@@ -19,18 +19,38 @@ define(function(require) {
     var snippetsObject = snippets.getSnippetObj();
     snippets.getSnippetObj();
 
-    var click = function (div_id) {
+    var hover = function (div_id) {
       return function() { 
         var snippet = snippetsData[$(div_id).attr("data-snippet")];
-        bramble.addCodeSnippet(
-          snippet
+        $(".snippet-preview pre.snippet-code").text(snippet);
+        
+        console.log("Adding OnHover Handler"); 
+        $(".snippet-preview a.insert-snippet:not(.bound)")
+        .addClass('bound')
+        .on(
+          'click',
+          function(){ 
+            var snippet = $(".snippet-preview pre.snippet-code").text();  
+            bramble.addCodeSnippet(
+              snippet
+            ); 
+            return false; 
+          }
         );
       };
-    };
 
+    };
+    
     if (snippetsObject.hasOwnProperty(fileType)) {
       var ul = document.getElementById("editor-pane-nav-snippets-ul");
       var obj = snippetsObject[fileType];
+      $( "#editor-pane-nav-snippets-menu header .snippet-types a" ).each(function() {     
+        if ( $( this ).text() === fileType ) {
+          $( this ).addClass("active");
+        }  else {
+          $( this ).removeClass("active");
+        }
+      });
       for (var prop in obj) {
         if (obj.hasOwnProperty(prop)) {
           var li = document.createElement("li");
@@ -41,20 +61,26 @@ define(function(require) {
           ul.appendChild(li);
           snippetsData[obj[prop].name] = obj[prop].data;
 
-          li.onclick = click("#" + obj[prop].id);
+          $("#" + obj[prop].id).hover(hover("#" + obj[prop].id));
         }
       }
     }
   }
 
   function setupSnippetsMenu(bramble) {
-      // Gear Snippets menu
       PopupMenu.createWithOffset("#editor-pane-nav-snippets", "#editor-pane-nav-snippets-menu");
+
+      $( "#editor-pane-nav-snippets-menu header .snippet-types a" ).each(function() {
+        $( this ).click(function(bramble){
+            reloadSnippetsData(bramble,$(this).text());
+        });
+      });
+
       setSnippetsMenuData(bramble);
   }
 
   function reloadSnippetsData(bramble, filename) {
-      fileType = filename.substring(filename.lastIndexOf('.') + 1);
+      fileType = filename.substring(filename.lastIndexOf('.') + 1).toUpperCase();
       var ul = document.getElementById("editor-pane-nav-snippets-ul");
       ul.innerHTML = "";
       setSnippetsMenuData(bramble);
