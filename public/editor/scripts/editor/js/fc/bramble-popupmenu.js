@@ -37,8 +37,7 @@ define(function(require) {
 
       $(window).off("resize", self.close);
       
-
-      if ( button === "#navbar-logged-in .dropdown-submenu-toggle" ) {
+      if ( button === "#navbar-logged-in .dropdown-content .dropdown-submenu-toggle" ) {
         self._button$.closest(".dropdown-submenu").removeClass("expanded");
       } else {
         self._button$.closest(".dropdown").removeClass("expanded");  
@@ -60,8 +59,7 @@ define(function(require) {
 
     // Toggle the menu on/off when the button is clicked.
 
-    if ( button === "#navbar-logged-in .dropdown-submenu-toggle" ) {
-      
+    if ( button === "#navbar-logged-in .dropdown-content .dropdown-submenu-toggle" ) {
       self._button$.on("mouseover", function(e) {
         e.stopPropagation();
         if(!self.showing) {
@@ -86,7 +84,6 @@ define(function(require) {
     }
   }
   PopupMenu.create = function(button, menu) {
-
     return new PopupMenu(button, menu);
   };
   PopupMenu.createWithOffset = function(button, menu) {
@@ -103,7 +100,7 @@ define(function(require) {
     self._underlay = new Underlay(self._menu$, self.close);
     self._escKeyHandler = new KeyHandler.ESC(self.close);
 
-    if ( self._button$.selector === "#navbar-logged-in .dropdown-submenu-toggle" ) {
+    if ( self._button$.selector === "#navbar-logged-in .dropdown-content .dropdown-submenu-toggle" ) {
       self._button$.closest(".dropdown-submenu").addClass("expanded");
     } else {
       self._button$.closest(".dropdown").addClass("expanded");

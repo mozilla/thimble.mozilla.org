@@ -6,7 +6,7 @@ define(function(require) {
 
   function setupUserMenu() {
     PopupMenu.create("#navbar-logged-in .dropdown-toggle", "#navbar-logged-in .dropdown-content");
-    PopupMenu.create("#navbar-logged-in .dropdown-submenu-toggle", "#navbar-logged-in .dropdown-submenu-content");
+    PopupMenu.create("#navbar-logged-in .dropdown-content .dropdown-submenu-toggle", "#navbar-logged-in .dropdown-content .dropdown-submenu-content");
   }
 
   function setupLocaleMenu() {

@@ -52,7 +52,7 @@
                   </a>
                 </li>
                 <li>
-                  <div class="dropdown-submenu">
+                  <div class="dropdown-submenu ">
                     <div class="dropdown-submenu-toggle">
                       <img src="/img/icon/your-projects.svg" />
                       {{ gettext("yourProjectsLink") }}
@@ -66,9 +66,12 @@
                           {{ [ "data", "project", key ] | join("-") }}="{{ value }}"
                           {% endfor %}
                           >
+                          <a class="project-favorite-button"></a>
                             <a class="edit-link" target="_self" href="/{{locale}}/user/{{username}}/{{project.id}}/{{queryString}}">
                               <span class="project-name">{{project.title}}</span>
-                            </a>
+                              <span class="project-information"></span>
+                               <div class="project-description">{% if project.description %}{{ project.description | trim }}{% endif %}</div>
+                              </a>
                           </li>
                         {% endfor %}
                         <li class="project">
@@ -76,11 +79,10 @@
                             View More
                           </a>
                         </li>
-                        <script src="/scripts/vendor/require.min.js"
-                        data-main="/{{ localeDir }}/editor/scripts/project-list.js">
-                        </script>
-                        <li class="project-list-scroll"></li>
                       </ul>
+                      <script src="/scripts/vendor/require.min.js"
+                          data-main="/{{ localeDir }}/editor/scripts/project-list.js">
+                      </script>
                     </div>
                   </div>
                 </li>
@@ -103,3 +105,4 @@
     </div>
   </nav>
 {% endblock %}
+
