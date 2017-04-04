@@ -22,6 +22,8 @@ define(function(require) {
     self.close = function(e) {
       if(e) {
         e.stopPropagation();
+        self._button$.removeClass('active');
+        $("#editor-pane-nav-options").css("opacity", "0.5");
       }
       if(!self.showing) {
         return;
@@ -48,8 +50,10 @@ define(function(require) {
     // Toggle the menu on/off when the button is clicked.
     self._button$.on("click", function(e) {
       e.stopPropagation();
-
+  
       if(!self.showing) {
+        self._button$.addClass('active');
+        $("#editor-pane-nav-options").css("opacity", "0.7");
         self.show();
       } else {
         self.close();
