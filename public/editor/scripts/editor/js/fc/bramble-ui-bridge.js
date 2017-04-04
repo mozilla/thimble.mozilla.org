@@ -13,6 +13,7 @@ define(function(require) {
 
   var adapting = false;
   var adaptTimeoutMS = 200; // How often we adapt editor bar layout
+  var isMobileView = false; // to check whether mobile view is on/off
 
   function updateLayout(data) {
     $(".filetree-pane-nav").width(data.sidebarWidth);
@@ -287,6 +288,11 @@ define(function(require) {
       }
 
       bramble.hideTutorial(setNormalPreview);
+
+      if (isMobileView) {
+        //if mobile view is preserved
+        activatePreviewMode("mobile");
+      }
     });
     $("#tutorial-title").click(function() {
       if(bramble.getTutorialVisible()) {
@@ -294,6 +300,11 @@ define(function(require) {
       }
 
       bramble.showTutorial(setTutorialPreview);
+
+      if (isMobileView) {
+        //display tutorial always in desktop mode
+        activatePreviewMode("desktop");
+      }
     });
 
     // Programmatic change to tutorial vs. regular preview mode from Bramble
@@ -309,9 +320,11 @@ define(function(require) {
     // Preview Mode Toggle
     $("#preview-pane-nav-desktop").click(function() {
       activatePreviewMode("desktop");
+      isMobileView = false; //change state of mobile view mode
     });
     $("#preview-pane-nav-phone").click(function() {
       activatePreviewMode("mobile");
+      isMobileView = true; //preserve the mobile view mode
     });
 
     function activatePreviewMode(mode) {
