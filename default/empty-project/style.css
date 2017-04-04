@@ -1,3 +1,16 @@
 body {
-  font-family: "Open Sans", sans-serif;
+    background-color: #808080;
+    font-family: 'Dosis', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    padding: 50px 30px 50px 80px;
+    color: #E0FFFF;
+    
+    
 }
+
+p {
+   
+    text-align: center;
+    border: 3px solid white;
+    color: #DCDCDC;
+   }
