@@ -46,7 +46,7 @@ module.exports = function( grunt ) {
             "PathCache": "editor/scripts/path-cache",
             "constants": "editor/scripts/constants",
             "EventEmitter": "../node_modules/wolfy87-eventemitter/EventEmitter.min",
-            "analytics": "../node_modules/webmaker-analytics/analytics",
+            "analytics": "editor/scrips/analytics",
             "moment": "../node_modules/moment/min/moment-with-locales.min",
             "gallery": "homepage/scripts/gallery"
           },
