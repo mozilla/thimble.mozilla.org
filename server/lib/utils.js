@@ -12,7 +12,9 @@ class Utils {
         nodir: true
       }).map(file => path.join(root, file));
     }
-    catch (err) { }
+    catch (err) {
+      console.log("Error in utils.js: " + err);
+    }
   }
 }
 
