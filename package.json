@@ -37,7 +37,7 @@
     "cryptr": "^1.0.0",
     "csurf": "^1.9.0",
     "express": "^4.15.2",
-    "form-data": "^0.2.0",=
+    "form-data": "^0.2.0",
     "fs-writefile-promise": "^2.0.0",
     "glob": "^7.1.1",
     "grunt": "~0.4.1",
