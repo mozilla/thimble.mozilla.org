@@ -136,7 +136,7 @@ define(function(require) {
             return;
           }
           editingComplete(context);
-          analytics.event("ProjectRenamed");
+          analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "Rename Project" });
 
           context.publisher.showUnpublishedChangesPrompt();
         });

@@ -16,7 +16,7 @@ require.config({
     "localized": "/node_modules/webmaker-i18n/localized",
     "uuid": "/node_modules/node-uuid/uuid",
     "cookies": "/node_modules/cookies-js/dist/cookies",
-    "analytics": "/node_modules/webmaker-analytics/analytics",
+    "analytics": "/{{ locale }}/editor/scripts/analytics",
     "gallery": "/{{ locale }}/homepage/scripts/gallery",
     // TODO: we should really put the homepage and editor in the same scope for code sharing
     "fc/bramble-popupmenu": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-popupmenu",
@@ -64,10 +64,10 @@ function setupNewProjectLinks($, analytics) {
     $("#new-project-button-text").text("{{ newProjectInProgressIndicator }}");
 
     if(authenticated) {
-      analytics.event("NewProject", {label: "New authenticated project"});
+      analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "New Authenticated Project" });
       window.location.href = "/" + locale + "/projects/new" + qs;
     } else {
-      analytics.event("NewProject", {label: "New anonymous project"});
+      analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "New Anonymous Project" });
       window.location.href = "/" + locale + "/editor" + queryString;
     }
   }
@@ -95,10 +95,10 @@ function setupAuthentication($, uuid, cookies, analytics) {
       var location = loginUrl;
 
       if (newUser) {
-        analytics.event("SignUp");
+        analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Create Account" });
         location += "?signup=true";
       } else {
-        analytics.event("SignIn");
+        analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Sign In" });
       }
 
       window.location = location;

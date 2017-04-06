@@ -17,7 +17,7 @@ require.config({
     "PathCache": "../../path-cache",
     "constants": "../../constants",
     "EventEmitter": "/node_modules/wolfy87-eventemitter/EventEmitter.min",
-    "analytics": "/node_modules/webmaker-analytics/analytics"
+    "analytics": "../../analytics"
   },
   shim: {
     "jquery": {
@@ -70,7 +70,7 @@ require(["jquery", "bowser"], function($, bowser) {
       if(!projectDetails.userID){
         ProjectRenameUtility.init(appUrl, BrambleEditor.csrfToken);
       }
-     
+
       // Initialize the login links
       SSOOverride.init();
 

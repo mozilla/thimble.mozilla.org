@@ -1,4 +1,4 @@
-define(["jquery"], function($) {
+define(["jquery", "analytics"], function($, analytics) {
 
   var gallery = {
 
@@ -9,6 +9,7 @@ define(["jquery"], function($) {
     searchTerms : [],     // Search terms from the input
     maxDisplayTags : 5,   // Max number of tags to show above results
     resultsTimeoutMS : 200,  // Visual delay for displaying updated results & tags
+    lastSearchString : false,
 
     // Fetch external activity data
     init: function() {
@@ -35,6 +36,10 @@ define(["jquery"], function($) {
       this.galleryEl.on("click",".clear",function(){ that.clearSearch(); });
       this.galleryEl.on("keydown",".search",function(e){ that.keyPressed(e); });
       this.galleryEl.on("mousedown",".tag",function(){  that.tagClicked($(this).attr("tag")); });
+
+      this.galleryEl.on("click",".activity .thumbnail",function(){ that.thumbnailClicked($(this)); });
+      this.galleryEl.on("click",".activity .remix",function(){ that.remixClicked($(this)); });
+
       this.galleryEl.on("click",".search-tags .remove",function(){ that.removeTag($(this).parent()); });
       this.galleryEl.on("click",".start-over",function(e){ that.startOver(e); });
 
@@ -44,6 +49,18 @@ define(["jquery"], function($) {
       setTimeout(function(){
         that.galleryEl.removeClass("loading");
       }, this.resultsTimeoutMS);
+    },
+
+    //When a Project preview gets clicked
+    thumbnailClicked: function(el){
+      var title = el.closest(".activity").find(".title").text();
+      analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Gallery Project Viewed", label : title });
+    },
+
+    //When a Project gets remixed
+    remixClicked: function(el){
+      var title = el.closest(".activity").find(".title").text();
+      analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Gallery Project Remixed", label : title });
     },
 
     // Removes one of the tags that is currently being used as a filter
@@ -78,7 +95,6 @@ define(["jquery"], function($) {
         that.filterActivities();
       }, that.searchSpeedMS);
     },
-
 
     // Determines which activities should be displayed
     filterActivities : function(){
@@ -129,6 +145,13 @@ define(["jquery"], function($) {
           }
         }
       }
+
+      // Send analytics event
+      var searchQuery = this.searchTerms.join(" ");
+      if(searchQuery.length > 0 && searchQuery != this.lastSearchString) {
+        analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Keyword Search", label : searchQuery });
+      }
+      this.lastSearchString = searchQuery;
 
       this.galleryEl.find(".popular-tags, .activities").addClass("fade");
       this.updateUI();
@@ -270,6 +293,8 @@ define(["jquery"], function($) {
       setTimeout(function(){
         that.galleryEl.find(".search-wrapper").removeClass("pop");
       },200);
+
+      analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Gallery Tag Clicked", label : term });
     },
 
     // Updates the tags & activities UI
