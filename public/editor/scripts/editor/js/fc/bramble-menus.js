@@ -79,6 +79,29 @@ define(function(require) {
       return false;
     });
 
+    //set the Autocomplete toggle to reflect whether auto-complete is enabled or disabled
+    if(bramble.getAutocomplete()) {
+        $("#autocomplete-toggle").addClass("switch-enabled");
+    } else {
+        $("#autocomplete-toggle").removeClass("switch-enabled");
+    }
+    // Enable/Disable Autocomplete
+    $("#autocomplete-toggle").click(function() {
+      // Toggle current value
+      var $autocompleteToggle = $("#autocomplete-toggle");
+      var toggle = !($autocompleteToggle.hasClass("switch-enabled"));
+
+      if(toggle) {
+        $autocompleteToggle.addClass("switch-enabled");
+        bramble.disableAutocomplete();
+      } else {
+        $autocompleteToggle.removeClass("switch-enabled");
+        bramble.enableAutocomplete();
+      }
+
+      return false;
+    });
+
     //set the AutoCloseTags toggle to reflect whether auto-close tags is enabled or disabled
     if(bramble.getAutoCloseTags().whenClosing) {
       $("#auto-tags-toggle").addClass("switch-enabled");
