@@ -79,8 +79,8 @@ define(function(require) {
       return false;
     });
 
-    //set the AutoComplete toggle to reflect whether auto-complete is enabled or disabled
-    if(bramble.getAutoComplete()) {
+    //set the Autocomplete toggle to reflect whether auto-complete is enabled or disabled
+    if(bramble.getAutocomplete()) {
         $("#autocomplete-toggle").addClass("switch-enabled");
     } else {
         $("#autocomplete-toggle").removeClass("switch-enabled");
@@ -88,15 +88,15 @@ define(function(require) {
     // Enable/Disable Autocomplete
     $("#autocomplete-toggle").click(function() {
       // Toggle current value
-      var $autoCompleteToggle = $("#autocomplete-toggle");
-      var toggle = !($autoCompleteToggle.hasClass("switch-enabled"));
+      var $autocompleteToggle = $("#autocomplete-toggle");
+      var toggle = !($autocompleteToggle.hasClass("switch-enabled"));
 
       if(toggle) {
-        $autoCompleteToggle.addClass("switch-enabled");
-        bramble.stopAutoComplete();
+        $autocompleteToggle.addClass("switch-enabled");
+        bramble.disableAutocomplete();
       } else {
-        $autoCompleteToggle.removeClass("switch-enabled");
-        bramble.startAutoComplete();
+        $autocompleteToggle.removeClass("switch-enabled");
+        bramble.enableAutocomplete();
       }
 
       return false;
