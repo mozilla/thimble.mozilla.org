@@ -1,5 +1,6 @@
 // Based on https://github.com/mozilla/webmaker-analytics
 // Licensed under the MPL 2.0 License: https://github.com/mozilla/webmaker-analytics/blob/master/LICENSE
+/* global ga */
 
 (function(global, factory) {
   if (typeof define === 'function' && define.amd) {
