@@ -37,8 +37,8 @@ define(["jquery", "analytics"], function($, analytics) {
       this.galleryEl.on("keydown",".search",function(e){ that.keyPressed(e); });
       this.galleryEl.on("mousedown",".tag",function(){  that.tagClicked($(this).attr("tag")); });
 
-      this.galleryEl.on("click",".activity .thumbnail",function(e){ that.thumbnailClicked($(this)); });
-      this.galleryEl.on("click",".activity .remix",function(e){ that.thumbnailClicked($(this)); });
+      this.galleryEl.on("click",".activity .thumbnail",function(){ that.thumbnailClicked($(this)); });
+      this.galleryEl.on("click",".activity .remix",function(){ that.remixClicked($(this)); });
 
       this.galleryEl.on("click",".search-tags .remove",function(){ that.removeTag($(this).parent()); });
       this.galleryEl.on("click",".start-over",function(e){ that.startOver(e); });
@@ -58,7 +58,7 @@ define(["jquery", "analytics"], function($, analytics) {
     },
 
     //When a Project gets remixed
-    thumbnailClicked: function(el){
+    remixClicked: function(el){
       var title = el.closest(".activity").find(".title").text();
       analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Gallery Project Remixed", label : title });
     },

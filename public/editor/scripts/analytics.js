@@ -1,3 +1,6 @@
+// Based on https://github.com/mozilla/webmaker-analytics
+// Licensed under the MPL 2.0 License: https://github.com/mozilla/webmaker-analytics/blob/master/LICENSE
+
 (function(global, factory) {
   if (typeof define === 'function' && define.amd) {
     define(factory);
@@ -87,7 +90,7 @@
       } else {
         if(mightBeEmail(options.label)) {
           warn("`label` arg looks like an email address, redacting.");
-          label = _redacted;
+          options.label = _redacted;
         }
         eventOptions.label = trim(options.label);
       }
