@@ -115,7 +115,7 @@ define(function(require) {
       e.preventDefault();
       e.stopPropagation();
 
-      analytics.event({ category : "Project Actions", action : "New Project", label : "New authenticated project" });
+      analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "New Project", label : "New authenticated project" });
 
       var queryString = window.location.search;
       var cacheBust = "cacheBust=" + Date.now();
@@ -131,7 +131,7 @@ define(function(require) {
       }
 
       // Add label that it happened in the menu?
-      analytics.event({ category : "Project Actions", action : "Delete Project"});
+      analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "Delete Project"});
 
       var request = $.ajax({
         headers: {
@@ -155,7 +155,7 @@ define(function(require) {
 
     $("#filetree-pane-nav-export-project-zip").click(function() {
       bramble.export();
-      analytics.event({ category : "Project Actions", action : "Export ZIP"});
+      analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "Export ZIP"});
       return false;
     });
 
@@ -180,13 +180,13 @@ define(function(require) {
     // Undo
     $("#editor-pane-nav-undo").click(function() {
       bramble.undo();
-      analytics.event({ category : "Editor UI", action : "Undo" });
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Undo" });
     });
 
     // Redo
     $("#editor-pane-nav-redo").click(function() {
       bramble.redo();
-      analytics.event({ category : "Editor UI", action : "Redo" });
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Redo" });
     });
 
     // Inspector
@@ -206,7 +206,7 @@ define(function(require) {
     bramble.on("inspectorChange", function(data) {
       if(data.enabled) {
         $("#preview-pane-nav-inspector").addClass("enabled");
-        analytics.event({ category : "Editor UI", action : "Inspector Enabled" });
+        analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Inspector Enabled" });
       } else {
         $("#preview-pane-nav-inspector").removeClass("enabled");
       }
@@ -227,11 +227,11 @@ define(function(require) {
       if(enabled) {
         refreshWrapper.removeClass("enabled");
         bramble.disableAutoUpdate();
-        analytics.event({ category : "Editor UI", action : "Auto Update Toggle", label: "Disabled" });
+        analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Auto Update Toggle", label: "Disabled" });
       } else {
         refreshWrapper.addClass("enabled");
         bramble.enableAutoUpdate();
-        analytics.event({ category : "Editor UI", action : "Auto Update Toggle", label: "Enabled" });
+        analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Auto Update Toggle", label: "Enabled" });
       }
     });
 
@@ -240,7 +240,7 @@ define(function(require) {
       var el = $(this);
       el.removeClass("spin").width(el.width()).addClass("spin");
       bramble.refreshPreview();
-      analytics.event({ category : "Editor UI", action : "Refresh Preview"});
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Refresh Preview"});
     });
 
     // Preview vs. Tutorial preview mode. First check to see if there
@@ -276,7 +276,7 @@ define(function(require) {
       }
 
       bramble.hideTutorial(setNormalPreview);
-      analytics.event({ category : "Editor UI", action : "Tutorial Toggle", label: "Disabled" });
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Tutorial Toggle", label: "Disabled" });
     });
 
     $("#tutorial-title").click(function() {
@@ -285,7 +285,7 @@ define(function(require) {
       }
 
       bramble.showTutorial(setTutorialPreview);
-      analytics.event({ category : "Editor UI", action : "Tutorial Toggle", label: "Enabled" });
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Tutorial Toggle", label: "Enabled" });
     });
 
     // Programmatic change to tutorial vs. regular preview mode from Bramble
@@ -301,11 +301,11 @@ define(function(require) {
     // Preview Mode Toggle
     $("#preview-pane-nav-desktop").click(function() {
       activatePreviewMode("desktop");
-      analytics.event({ category : "EditorUI", action : "Preview Mode Toggle", label : "Desktop" });
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Preview Mode Toggle", label : "Desktop" });
     });
     $("#preview-pane-nav-phone").click(function() {
       activatePreviewMode("mobile");
-      analytics.event({ category : "EditorUI", action : "Preview Mode Toggle", label : "Mobile" });
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Preview Mode Toggle", label : "Mobile" });
     });
 
     function activatePreviewMode(mode) {
@@ -330,12 +330,12 @@ define(function(require) {
 
     $(".fullscreen-preview-toggle .enable-fullscreen").click(function() {
       enableFullscreenPreview();
-      analytics.event({ category : "EditorUI", action : "Fullscreen Preview Toggle", label : "Enabled"});
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Fullscreen Preview Toggle", label : "Enabled"});
     });
 
     $(".fullscreen-preview-toggle .disable-fullscreen").click(function() {
       disableFullscreenPreview();
-      analytics.event({ category : "EditorUI", action : "Fullscreen Preview Toggle", label : "Disabled"});
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Fullscreen Preview Toggle", label : "Disabled"});
     });
 
     function enableFullscreenPreview(){
@@ -375,7 +375,7 @@ define(function(require) {
         }
       });
 
-      analytics.event({ category : "Editor UI", action : "Publish Dialog Opened"});
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Publish Dialog Opened"});
     }
 
     function showPublishHelper() {
@@ -422,12 +422,12 @@ define(function(require) {
         $("#editor-pane-nav-options-menu").hide();
         $("#editor-pane-nav-fileview").css("display", "none");
         $(".filetree-pane-nav").css("display", "block");
-        analytics.event({ category : "EditorUI", action : "Toggle File View", label : "Show" });
+        analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Toggle File View", label : "Show" });
       } else {
         $("#editor-pane-nav-options-menu").hide();
         $("#editor-pane-nav-fileview").css("display", "block");
         $(".filetree-pane-nav").css("display", "none");
-        analytics.event({ category : "EditorUI", action : "Toggle File View", label : "Hide" });
+        analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Toggle File View", label : "Hide" });
       }
     });
 

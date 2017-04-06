@@ -54,13 +54,13 @@ define(["jquery", "analytics"], function($, analytics) {
     //When a Project preview gets clicked
     thumbnailClicked: function(el){
       var title = el.closest(".activity").find(".title").text();
-      analytics.event({ category : "Homepage", action : "Gallery Project Viewed", label : title });
+      analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Gallery Project Viewed", label : title });
     },
 
     //When a Project gets remixed
     thumbnailClicked: function(el){
       var title = el.closest(".activity").find(".title").text();
-      analytics.event({ category : "Homepage", action : "Gallery Project Remixed", label : title });
+      analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Gallery Project Remixed", label : title });
     },
 
     // Removes one of the tags that is currently being used as a filter
@@ -149,7 +149,7 @@ define(["jquery", "analytics"], function($, analytics) {
       // Send analytics event
       var searchQuery = this.searchTerms.join(" ");
       if(searchQuery.length > 0 && searchQuery != this.lastSearchString) {
-        analytics.event({ category : "Homepage", action : "Keyword Search", label : searchQuery });
+        analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Keyword Search", label : searchQuery });
       }
       this.lastSearchString = searchQuery;
 
@@ -294,7 +294,7 @@ define(["jquery", "analytics"], function($, analytics) {
         that.galleryEl.find(".search-wrapper").removeClass("pop");
       },200);
 
-      analytics.event({ category : "Homepage", action : "Gallery Tag Clicked", label : term });
+      analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Gallery Tag Clicked", label : term });
     },
 
     // Updates the tags & activities UI

@@ -9,10 +9,11 @@
   }
 }(this, function() {
 
-  // Make sure _gaq is on the global so we don't die trying to access it
-  if(!this._gaq) {
-    this._gaq = [];
-  }
+  // Strings for event category names
+  var eventCategories = {};
+  eventCategories.EDITOR_UI = "Editor UI";
+  eventCategories.HOMEPAGE = "Homepage";
+  eventCategories.PROJECT_ACTIONS = "Project Actions";
 
   var _redacted = "REDACTED (Potential Email Address)";
 
@@ -182,6 +183,7 @@
 
   return {
     event: event,
+    eventCategories: eventCategories,
     virtualPageview: virtualPageview
   };
 

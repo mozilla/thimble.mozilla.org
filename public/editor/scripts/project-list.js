@@ -92,7 +92,7 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
     var projectElementId = project.attr("id");
     $("#" + projectElementId + " > .project-title").off("click");
 
-    analytics.event({ category : "Project Actions", action : "Delete Project" });
+    analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "Delete Project" });
 
     var request = $.ajax({
       headers: {
@@ -141,7 +141,7 @@ function setupNewProjectLinks($, analytics) {
 
     $(e.target).text("{{ newProjectInProgressIndicator }}");
 
-    analytics.event({ category : "Project Actions", action : "New Authenticated Project" });
+    analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "New Authenticated Project" });
     window.location.href = "/" + locale + "/projects/new" + qs;
   }
 

@@ -64,10 +64,10 @@ function setupNewProjectLinks($, analytics) {
     $("#new-project-button-text").text("{{ newProjectInProgressIndicator }}");
 
     if(authenticated) {
-      analytics.event({ category : "Homepage", action : "New Authenticated Project" });
+      analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "New Authenticated Project" });
       window.location.href = "/" + locale + "/projects/new" + qs;
     } else {
-      analytics.event({ category : "Homepage", action : "New Anonymous Project" });
+      analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "New Anonymous Project" });
       window.location.href = "/" + locale + "/editor" + queryString;
     }
   }
@@ -95,10 +95,10 @@ function setupAuthentication($, uuid, cookies, analytics) {
       var location = loginUrl;
 
       if (newUser) {
-        analytics.event({ category : "Homepage", action : "Create Account" });
+        analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Create Account" });
         location += "?signup=true";
       } else {
-        analytics.event({ category : "Homepage", action : "Sign In" });
+        analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Sign In" });
       }
 
       window.location = location;
