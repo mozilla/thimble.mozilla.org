@@ -144,7 +144,7 @@
       }
 
       ga('send', fieldObject);
-    };
+    }
   }
 
   // Use a consistent prefix and check if arg starts with a forward slash
