@@ -66,11 +66,8 @@
                           {{ [ "data", "project", key ] | join("-") }}="{{ value }}"
                           {% endfor %}
                           >
-                          <a class="project-favorite-button"></a>
                             <a class="edit-link" target="_self" href="/{{locale}}/user/{{username}}/{{project.id}}/{{queryString}}">
                               <span class="project-name">{{project.title}}</span>
-                              <span class="project-information"></span>
-                               <div class="project-description">{% if project.description %}{{ project.description | trim }}{% endif %}</div>
                               </a>
                           </li>
                         {% endfor %}
