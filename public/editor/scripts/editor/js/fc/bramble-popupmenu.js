@@ -23,7 +23,6 @@ define(function(require) {
       if(e) {
         e.stopPropagation();
         self._button$.removeClass('active');
-        $("#editor-pane-nav-options").css("opacity", "0.5");
       }
       if(!self.showing) {
         return;
@@ -53,7 +52,6 @@ define(function(require) {
   
       if(!self.showing) {
         self._button$.addClass('active');
-        $("#editor-pane-nav-options").css("opacity", "0.7");
         self.show();
       } else {
         self.close();
