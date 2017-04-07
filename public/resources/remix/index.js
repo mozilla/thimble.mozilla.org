@@ -13,21 +13,16 @@
   }
 
   function setupBar(err) {
-    if(err) {
+    if (err) {
       console.log("[Thimble Error] Unable to inject Remix UI. Error was: `" + err + "`");
       return;
     }
 
-    var isTouchDevice = 'ontouchstart' in document.documentElement;
     var detailsBar = document.querySelector(".details-bar");
     
     if (detailsBar) {
       detailsBar.setAttribute("style", "");
-      if (isTouchDevice) {
-        detailsBar.classList.add("touch-mode");
-      } else {
-        detailsBar.classList.add("mouse-mode");
-      }
+      detailsBar.classList.add("mouse-mode");
 
       detailsBar.addEventListener("click", function(event) {
         if (event.target.classList.contains("thimble-button")) {
@@ -70,15 +65,20 @@
         var response = xmlhttp.response;
         var textStatus = xmlhttp.statusText;
         if (xmlhttp.status === 200) {
-          document.body.insertBefore(response, document.body.firstChild);
-	   callback(null);
+          var fragmentBody = document.createElement("body");
+          var docFragment = document.createDocumentFragment();
+          docFragment.appendChild(fragmentBody);
+          fragmentBody.innerHTML = response;
+          var remixBar = fragmentBody.querySelector("div");
+          document.body.appendChild(remixBar);
+          callback(null);
         } else if (xmlhttp.status >= 400) {
-	   callback(textStatus);
+          callback(textStatus);
         }
       }
     };
 
-    xmlhttp.open("POST", url, true);
+    xmlhttp.open("GET", url, true);
     xmlhttp.send(data);
   }
 
