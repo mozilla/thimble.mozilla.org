@@ -81,8 +81,10 @@ define(function(require) {
     //set initial UI value to allow whitespace indicator
     if(bramble.getAllowWhiteSpace()) {
       $("#allow-whitespace-toggle").addClass("switch-enabled");
+      //bramble.enableWhiteSpace();
     } else {
       $("#allow-whitespace-toggle").removeClass("switch-enabled");
+      //bramble.disableWhiteSpace();
     }
     // Enable/Disable Whitespace Indicator
     $("#allow-whitespace-toggle").click(function() {
