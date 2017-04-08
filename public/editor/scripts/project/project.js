@@ -18,6 +18,8 @@ define(function(require) {
   var _remixId;
   var _description;
 
+  var DEFAULT_INDEX_HTML_URL = "/default-files/html.txt";
+
   function getAnonymousId() {
     return _anonymousId;
   }
@@ -246,8 +248,7 @@ define(function(require) {
               return;
             }
             // Create a default index.html file
-            var location = "/default-files/html.txt";
-            $.get(location).then(function(data) {
+            $.get(DEFAULT_INDEX_HTML_URL).then(function(data) {
               _fs.writeFile(indexLocation, data, function(err) {
                 if (err) {
                   console.error("Cannot write file to project: " + err);
@@ -255,11 +256,10 @@ define(function(require) {
                   return;
                 }
                 callback(null, indexLocation);
-                return;
               });
             }, function(err) {
               if (err) {
-                console.error("Failed to download " + location, err);
+                console.error("Failed to download " + DEFAULT_INDEX_HTML_URL, err);
                 callback(err);
                 return;
               }
