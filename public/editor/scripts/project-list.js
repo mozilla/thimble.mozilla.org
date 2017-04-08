@@ -81,44 +81,88 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
 
   $("#project-list").prepend(favoriteProjectsElementList);
 
+  var projectsToDelete = [];
+
   $(".project-delete").click(function() {
-    // TODO: we can do better than this, but let's at least make it harder to lose data.
-    if(!window.confirm("{{ deleteProjectConfirmationText }}")) {
-      return false;
+    if($(".delete-button").length === 0){
+      var deleteBtn = document.createElement("div");
+      deleteBtn.appendChild(document.createTextNode("Delete Projects"));
+      deleteBtn.className = "delete-button";
+      deleteBtn.onclick = function() {
+        // TODO: we can do better than this, but let's at least make it harder to lose data.
+        if(!window.confirm("{{ deleteProjectConfirmationText }}")) {
+          return false;
+        }
+        
+        Array.prototype.forEach.call(projectsToDelete, function(project){
+          var projectId = project.attr("data-project-id");
+          var projectElementId = project.attr("id");
+          $("#" + projectElementId + " > .project-title").off("click");
+
+          analytics.event("DeleteProject");
+
+          var request = $.ajax({
+            headers: {
+              "X-Csrf-Token": $("meta[name='csrf-token']").attr("content")
+            },
+            type: "DELETE",
+            url: "/" + locale + "/projects/" + projectId,
+            timeout: Constants.AJAX_DEFAULT_TIMEOUT_MS
+          });
+          request.done(function() {
+            if(request.status !== 204) {
+              console.error("[Thimble error] sending delete request for project ", projectId, request.status);
+            }
+          });
+          request.fail(function(jqXHR, status, err) {
+            err = err || new Error("unknown network error");
+            console.error(err);
+          });
+
+          project.hide({
+            duration: 250,
+            easing: "linear",
+            done: function() {
+              project.remove();
+            }
+          });
+        });
+        projectsToDelete = [];
+        $(".delete-button").remove();
+      };
+      var listWrapper = document.getElementsByClassName("project-list-wrapper");
+      listWrapper[0].appendChild(deleteBtn);
     }
 
     var project = $(this).closest(".project");
-    var projectId = project.attr("data-project-id");
-    var projectElementId = project.attr("id");
-    $("#" + projectElementId + " > .project-title").off("click");
-
-    analytics.event("DeleteProject");
-
-    var request = $.ajax({
-      headers: {
-        "X-Csrf-Token": $("meta[name='csrf-token']").attr("content")
-      },
-      type: "DELETE",
-      url: "/" + locale + "/projects/" + projectId,
-      timeout: Constants.AJAX_DEFAULT_TIMEOUT_MS
-    });
-    request.done(function() {
-      if(request.status !== 204) {
-        console.error("[Thimble error] sending delete request for project ", projectId, request.status);
+    var projectSelector = "#" + project.attr("id");
+    var deleteIndex = projectsToDelete.findIndex(function(x) {return x.attr("id") === project.attr("id")});
+    var disabledLink = {"cursor":"default", "text-decoration":"none"}
+    var enabledLink = {"cursor":"pointer", "text-decoration":"underline"}
+    
+    if(deleteIndex === -1) {
+      projectsToDelete.push(project);
+      $(projectSelector + " .edit-link").bind("click", false).css({"cursor":"default"});
+      if($(projectSelector + " .published-link").length !== 0) {
+        $(projectSelector + " .published-link").bind("click", false).css(disabledLink);
+        $(projectSelector + " .remix-link").bind("click", false).css(disabledLink);
       }
-    });
-    request.fail(function(jqXHR, status, err) {
-      err = err || new Error("unknown network error");
-      console.error(err);
-    });
-
-    project.hide({
-      duration: 250,
-      easing: "linear",
-      done: function() {
-        project.remove();
+      project.css("background", "rgba(255,0,0,.08)");
+      $(this).closest(".project-delete").html("Cancel");
+    } else {
+      projectsToDelete.splice(deleteIndex, 1);
+      $(projectSelector + " .edit-link").unbind("click", false).css({"cursor":"pointer"});
+      if($(projectSelector + " .published-link").length !== 0) {
+        $(projectSelector + " .published-link").unbind("click", false).css(enabledLink);
+        $(projectSelector + " .remix-link").unbind("click", false).css(enabledLink);
       }
-    });
+      project.css("background", "");
+      $(this).closest(".project-delete").html("<div class='icon-garbage-can'></div> {{prjListDeleteProjectBtn}}");
+      if(projectsToDelete.length === 0) {
+        $(".delete-button").remove();
+      }
+    }
+
   });
 });
 
