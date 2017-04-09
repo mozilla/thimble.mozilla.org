@@ -46,8 +46,8 @@ module.exports = function middlewareConstructor() {
       return function(req, res, next) {
         req.errorMessageKey = typeof errorMessageKey === "function" ? errorMessageKey(req) : errorMessageKey;
         next();
-       };
-     },
+      };
+    },
 
     /**
      * Check whether the requesting user has been authenticated.
