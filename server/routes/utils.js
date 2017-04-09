@@ -152,7 +152,7 @@ function updateProject(config, user, data, callback) {
 
   var project;
   try {
-   project = JSON.parse(JSON.stringify(data));
+    project = JSON.parse(JSON.stringify(data));
   } catch(e) {
     callback({
       message: "Project sent by calling function was in an invalid format. Failed to run `JSON.parse`",
