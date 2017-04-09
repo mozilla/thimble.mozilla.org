@@ -70,7 +70,7 @@ module.exports = function(config, req, res, next) {
 
     //Sort projects in ascending order by last updated
     projects.sort(function(project1, project2) {
-        return new Date(project2.date_updated).getTime() - new Date(project1.date_updated).getTime();
+      return new Date(project2.date_updated).getTime() - new Date(project1.date_updated).getTime();
     });
 
     var options = {
