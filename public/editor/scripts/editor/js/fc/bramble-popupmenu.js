@@ -29,6 +29,7 @@ define(function(require) {
     self.close = function(e) {
       if(e) {
         e.stopPropagation();
+        self._button$.removeClass('active');
       }
       if(!self.showing) {
         return;
@@ -57,6 +58,7 @@ define(function(require) {
       e.stopPropagation();
 
       if(!self.showing) {
+        self._button$.addClass('active');
         self.show();
       } else {
         self.close();
