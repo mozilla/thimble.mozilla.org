@@ -49,7 +49,7 @@ define(function(require) {
     // Toggle the menu on/off when the button is clicked.
     self._button$.on("click", function(e) {
       e.stopPropagation();
-  
+
       if(!self.showing) {
         self._button$.addClass('active');
         self.show();
