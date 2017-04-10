@@ -29,6 +29,7 @@ define(function(require) {
     self.close = function(e) {
       if(e) {
         e.stopPropagation();
+        $('#editor-pane-nav-options').css('opacity', '.5');
       }
       if(!self.showing) {
         return;
@@ -58,6 +59,7 @@ define(function(require) {
 
       if(!self.showing) {
         self.show();
+        $('#editor-pane-nav-options').css('opacity', '.7');
       } else {
         self.close();
       }
