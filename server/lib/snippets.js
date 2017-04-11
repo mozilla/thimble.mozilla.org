@@ -1,7 +1,5 @@
 "use strict";
 
-const Nunjucks = require("nunjucks");
-
 class Snippets {
     static getSnippets() {
         const snippets = {
