@@ -1,0 +1,35 @@
+var querystring = require("querystring");
+var nunjucks = require("nunjucks");
+
+var env = require("../../lib/environment");
+
+function urlLocalizer(locale, remixUrl) {
+  return nunjucks.renderString(remixUrl, { locale: locale });
+}
+
+module.exports = function(config, req, res) {
+  var locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
+  var localize = urlLocalizer.bind(null, locale);
+  var qs = querystring.stringify(req.query);
+  if(qs !== "") {
+    qs = "?" + qs;
+  }
+
+  var options = {
+    loginURL: config.appURL + "/" + locale + "/login",
+    editorHOST: config.editorHOST,
+    editorURL: config.editorURL,
+    URL_PATHNAME: "/" + qs,
+    languages: req.app.locals.languages
+  };
+
+  options.pagetype = "features";
+
+  if (req.user) {
+    options.username = req.user.username;
+    options.avatar = req.user.avatar;
+    options.logoutURL = config.logoutURL;
+  }
+
+  res.render("homepage/index.html", options);
+};
