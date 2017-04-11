@@ -286,7 +286,15 @@ define(function(require) {
       }
 
       bramble.showTutorial(setTutorialPreview);
+<<<<<<< HEAD
       analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Tutorial Toggle", label: "Enabled" });
+=======
+
+      if (_isMobileView) {
+        //display tutorial always in desktop mode
+        activatePreviewMode("desktop");
+      }
+>>>>>>> b02da0e... Fix: 1637 Always display a Tutorial in Desktop mode
     });
 
     // Programmatic change to tutorial vs. regular preview mode from Bramble
