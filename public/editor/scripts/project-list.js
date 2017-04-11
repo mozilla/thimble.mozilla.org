@@ -136,9 +136,9 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
 
     var project = $(this).closest(".project");
     var projectSelector = "#" + project.attr("id");
-    var deleteIndex = projectsToDelete.findIndex(function(x) {return x.attr("id") === project.attr("id")});
-    var disabledLink = {"cursor":"default", "text-decoration":"none"}
-    var enabledLink = {"cursor":"pointer", "text-decoration":"underline"}
+    var deleteIndex = projectsToDelete.findIndex(function(x) {return x.attr("id") === project.attr("id");});
+    var disabledLink = {"cursor":"default", "text-decoration":"none"};
+    var enabledLink = {"cursor":"pointer", "text-decoration":"underline"};
     
     if(deleteIndex === -1) {
       projectsToDelete.push(project);
