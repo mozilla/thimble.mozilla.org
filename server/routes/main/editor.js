@@ -7,6 +7,8 @@ var defaultProjectNameKey = require("../../../constants").DEFAULT_PROJECT_NAME_K
 var utils = require("../utils");
 var HttpError = require("../../lib/http-error");
 
+var snippets = require("../../lib/snippets");
+
 function getProjectMetadata(config, req, callback) {
   var project = req.project;
   var remixId = req.params.remixId;
@@ -98,6 +100,8 @@ module.exports = function(config, req, res, next) {
     }
 
     options.projectMetadata = encodeURIComponent(JSON.stringify(projectMetadata));
+
+    options.snippets = snippets.getSnippets();
 
     res.render("editor/index.html", options);
   });

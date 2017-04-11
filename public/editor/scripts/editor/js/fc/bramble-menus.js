@@ -3,8 +3,6 @@ define(function(require) {
   var $ = require("jquery");
   var PopupMenu = require("fc/bramble-popupmenu");
   var analytics = require("analytics");
-  var snippets = require("fc/snippets");
-  var snippetsData = [];
   var fileType = "HTML";
 
   function setupUserMenu() {
@@ -15,75 +13,73 @@ define(function(require) {
     PopupMenu.create("#navbar-locale .dropdown-toggle", "#navbar-locale .dropdown-content");
   }
 
-  function setSnippetsMenuData(bramble) {
-    var snippetsObject = snippets.getSnippetObj();
-    snippets.getSnippetObj();
-
-    var hover = function (div_id) {
-      return function() { 
-        var snippet = snippetsData[$(div_id).attr("data-snippet")];
-        $(".snippet-preview pre.snippet-code").text(snippet);
-        
-        console.log("Adding OnHover Handler"); 
-        $(".snippet-preview a.insert-snippet:not(.bound)")
-        .addClass('bound')
-        .on(
-          'click',
-          function(){ 
-            var snippet = $(".snippet-preview pre.snippet-code").text();  
-            bramble.addCodeSnippet(
-              snippet
-            ); 
-            return false; 
-          }
-        );
-      };
-
-    };
-    
-    if (snippetsObject.hasOwnProperty(fileType)) {
-      var ul = document.getElementById("editor-pane-nav-snippets-ul");
-      var obj = snippetsObject[fileType];
-      $( "#editor-pane-nav-snippets-menu header .snippet-types a" ).each(function() {     
-        if ( $( this ).text() === fileType ) {
-          $( this ).addClass("active");
-        }  else {
-          $( this ).removeClass("active");
-        }
+  function setupSnippetsMenu(bramble) {
+    PopupMenu.createWithOffset("#editor-pane-nav-snippets", "#editor-pane-nav-snippets-menu");
+    $( "#editor-pane-nav-snippets-menu header .snippet-types a" ).each(function() {
+      $( this ).click(function(bramble){
+        reloadSnippetsData(bramble, $(this).text());
       });
-      for (var prop in obj) {
-        if (obj.hasOwnProperty(prop)) {
-          var li = document.createElement("li");
-          li.appendChild(document.createTextNode(obj[prop].name));
-          li.setAttribute("title", obj[prop].title);
-          li.setAttribute("id", obj[prop].id);
-          li.setAttribute("data-snippet", obj[prop].name);
-          ul.appendChild(li);
-          snippetsData[obj[prop].name] = obj[prop].data;
+    });
 
-          $("#" + obj[prop].id).hover(hover("#" + obj[prop].id));
-        }
-      }
-    }
+    setSnippetsMenuData(bramble);
   }
 
-  function setupSnippetsMenu(bramble) {
-      PopupMenu.createWithOffset("#editor-pane-nav-snippets", "#editor-pane-nav-snippets-menu");
+  function setSnippetsMenuData(bramble) {
+    var hover = function (snippet) {
+      return function() { 
 
-      $( "#editor-pane-nav-snippets-menu header .snippet-types a" ).each(function() {
-        $( this ).click(function(bramble){
-            reloadSnippetsData(bramble,$(this).text());
+        $( ".snippet-preview pre.snippet-code" ).each(function() {     
+          $( this ).removeClass("hide");
+          if ( $( this ).attr("id") !== snippet ) {
+            $( this ).addClass("hide");
+          }
         });
-      });
+        $(snippet).removeClass("hide");
+        $(".snippet-preview a.insert-snippet:not(.bound)")
+          .addClass('bound')
+          .on(
+            'click',
+            function() { 
+              var snippet;
+              $( ".snippet-preview pre.snippet-code" ).each(function() {     
+                if ( !$( this ).hasClass("hide")) {
+                  snippet = $( this ).text();
+                }
+              });
+              bramble.addCodeSnippet(
+                snippet
+              ); 
+              return false; 
+            }
+          );
+      };
+    };
 
-      setSnippetsMenuData(bramble);
+    $( "#editor-pane-nav-snippets-ul li" ).each(function() {     
+      $( this ).hover(hover("preview-"+$(this).attr("id")));
+    });
+
+    /*$( "#editor-pane-nav-snippets-ul" ).on("hover", "li", function(e){
+      var target = e.target;
+      hover(target.attr("id"));
+    })*/
   }
 
   function reloadSnippetsData(bramble, filename) {
-      fileType = filename.substring(filename.lastIndexOf('.') + 1).toUpperCase();
-      var ul = document.getElementById("editor-pane-nav-snippets-ul");
-      ul.innerHTML = "";
-      setSnippetsMenuData(bramble);
+    fileType = filename.substring(filename.lastIndexOf('.') + 1).toUpperCase();
+    $( "#editor-pane-nav-snippets-menu header .snippet-types a" ).each(function() {     
+      $( this ).removeClass("active");
+      if ( $( this ).text() === fileType ) {
+        $( this ).addClass("active");
+      }
+    });
+    $( "#editor-pane-nav-snippets-ul li" ).each(function() {     
+      $( this ).addClass("hide");
+      if ( $( this ).attr("data-type") === fileType ) {
+        $( this ).removeClass("hide");
+      }
+    });
+    setSnippetsMenuData(bramble);
   }
 
   function setupOptionsMenu(bramble) {

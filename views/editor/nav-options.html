@@ -69,15 +69,29 @@
 
           <div class="snippet-menu">
             <ul id="editor-pane-nav-snippets-ul">
-              <!-- Dynamically added -->
+              <!-- Dynamically added  style="display:none;"-->
+                {% for snippet in snippets.HTML %}
+                    <li  data-type="HTML" id="{{snippet.id}}" title="{{snippet.title}}">{{snippet.name}}</li>
+                {% endfor %}
+                {% for snippet in snippets.CSS %}
+                    <li data-type="CSS" class="hide" id="{{snippet.id}}" title="{{snippet.title}}">{{snippet.name}}</li>
+                {% endfor %}
+                {% for snippet in snippets.JS %}
+                    <li data-type="JS" class="hide" id="{{snippet.id}}" title="{{snippet.title}}">{{snippet.name}}</li>
+                {% endfor %}
             </ul>
 
             <div class="snippet-preview">
-              <pre class="snippet-code">
-for(var i = 0; i < array.lenght; i++;) {
-  console.log(array[i]);
-}</pre>
-              <a class="insert-snippet" href="#">{{ gettext("insertButtonLabel") }}</a>
+              {% for snippet in snippets.HTML %}
+                  <pre class="snippet-code hide" id="preview-{{snippet.id}}">{{snippet.data}}</pre>
+              {% endfor %}
+              {% for snippet in snippets.CSS %}
+                  <pre class="snippet-code hide" id="preview-{{snippet.id}}">{{snippet.data}}</pre>
+              {% endfor %}
+              {% for snippet in snippets.JS %}
+                  <pre class="snippet-code hide" id="preview-{{snippet.id}}">{{snippet.data}}</pre>
+              {% endfor %}
+              <a class="insert-snippet" data-snippet-id="" href="#">{{ gettext("insertButtonLabel") }}</a>
             </div>
           </div>
           <div class="arrow-tip"></div>
