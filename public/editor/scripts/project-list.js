@@ -68,11 +68,14 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
     var projectSelector = "#" + project.getAttribute("id");
     var lastEdited = project.getAttribute("data-project-date_updated");
     var projectId = project.getAttribute("data-project-id");
+    var publishedUrl = project.getAttribute("data-project-publish_url");
+    var publishedId = publishedUrl.substring(publishedUrl.indexOf( "/", publishedUrl.indexOf("/", 7) + 1) + 1);
 
     if(isLocalStorageAvailable) {
       setFavoriteDataForProject(projectId, projectSelector, project);
     }
 
+    $(projectSelector + " .remix-link").attr("href", publishedId + "/remix");
     $(projectSelector + " .project-information").text(getElapsedTime(lastEdited));
   });
 
@@ -89,7 +92,7 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
     var projectElementId = project.attr("id");
     $("#" + projectElementId + " > .project-title").off("click");
 
-    analytics.event("DeleteProject");
+    analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "Delete Project" });
 
     var request = $.ajax({
       headers: {
@@ -138,7 +141,7 @@ function setupNewProjectLinks($, analytics) {
 
     $(e.target).text("{{ newProjectInProgressIndicator }}");
 
-    analytics.event("NewProject", {label: "New authenticated project"});
+    analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "New Authenticated Project" });
     window.location.href = "/" + locale + "/projects/new" + qs;
   }
 

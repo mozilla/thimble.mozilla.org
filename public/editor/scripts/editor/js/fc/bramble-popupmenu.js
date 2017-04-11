@@ -15,6 +15,13 @@ define(function(require) {
         // Determine where to horizontally place menu based on button's icon location
         var menuWidth = self._menu$.width();
         var leftOffset = self._button$.offset().left - menuWidth/2 + 11;
+        var iconWidth = self._button$.width();
+        var arrowOffset = menuWidth/2 - iconWidth/2;
+        if(leftOffset < 0) {
+          arrowOffset = menuWidth/2 - iconWidth/2 + leftOffset;
+          leftOffset = 0;
+        }
+        self._menu$.find(".arrow-tip").css("left", arrowOffset);
         self._menu$.css("left", leftOffset);
       };
     }
@@ -22,6 +29,7 @@ define(function(require) {
     self.close = function(e) {
       if(e) {
         e.stopPropagation();
+        self._button$.removeClass('active');
       }
       if(!self.showing) {
         return;
@@ -50,6 +58,7 @@ define(function(require) {
       e.stopPropagation();
 
       if(!self.showing) {
+        self._button$.addClass('active');
         self.show();
       } else {
         self.close();

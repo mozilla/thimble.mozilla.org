@@ -117,25 +117,31 @@ define(function(require) {
   }
 
   function save(context) {
-    context.saveButton.text("{{ renameProjectSavingIndicator }}");
+    var contextTitle = context.titleBar.val();
+    // Do not apply save if project title remains the same
+    if (contextTitle === Project.getTitle()) {
+      editingComplete(context);
+    } else {
+      context.saveButton.text("{{ renameProjectSavingIndicator }}");
 
-    persist.call(context, context.titleBar.val(), function(err) {
-      if(err) {
-        console.error("[Bramble] Failed to rename the project with ", err);
-        return;
-      }
-
-      Project.setTitle(context.titleBar.val(), function(err) {
+      persist.call(context, contextTitle, function(err) {
         if (err) {
-          console.error("[Bramble] Failed to update the project internally: ", err);
+          console.error("[Bramble] Failed to rename the project. Error: ", err);
           return;
         }
-        editingComplete(context);
-        analytics.event("ProjectRenamed");
 
-        context.publisher.showUnpublishedChangesPrompt();
+        Project.setTitle(contextTitle, function(err) {
+          if (err) {
+            console.error("[Bramble] Failed to update the project internally: ", err);
+            return;
+          }
+          editingComplete(context);
+          analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "Rename Project" });
+
+          context.publisher.showUnpublishedChangesPrompt();
+        });
       });
-    });
+    }
   }
 
   function ProjectRenameUtility(appUrl, csrfToken, publisher) {
