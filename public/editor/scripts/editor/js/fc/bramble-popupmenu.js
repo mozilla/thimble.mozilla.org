@@ -36,11 +36,11 @@ define(function(require) {
       }
 
       $(window).off("resize", self.close);
-      
+
       if ( button === "#navbar-logged-in .dropdown-content .dropdown-submenu-toggle" ) {
         self._button$.closest(".dropdown-submenu").removeClass("expanded");
       } else {
-        self._button$.closest(".dropdown").removeClass("expanded");  
+        self._button$.closest(".dropdown").removeClass("expanded");
       }
       self._menu$.hide();
 
@@ -70,7 +70,7 @@ define(function(require) {
       });
 
     } else {
-      
+
       self._button$.on("click", function(e) {
         e.stopPropagation();
 
@@ -111,6 +111,6 @@ define(function(require) {
 
     self.showing = true;
   };
-  
+
   return PopupMenu;
 });

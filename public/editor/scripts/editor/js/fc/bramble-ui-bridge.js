@@ -13,7 +13,7 @@ define(function(require) {
 
   var adapting = false;
   var adaptTimeoutMS = 200; // How often we adapt editor bar layout
-  var isMobileView = false; // to check whether mobile view is on/off
+  var _isMobileView = false; // to check wheather mobile view is on/off
 
   function updateLayout(data) {
     $(".filetree-pane-nav").width(data.sidebarWidth);
