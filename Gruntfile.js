@@ -89,6 +89,8 @@ module.exports = function( grunt ) {
           "font-sizes": false,
           "ids": false,
           "important": false,
+          "known-properties": false,
+          "order-alphabetical": false,
           "outline-none": false,
           "overqualified-elements": false,
           "qualified-headings": false,
