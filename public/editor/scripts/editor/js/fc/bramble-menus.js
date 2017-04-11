@@ -94,10 +94,10 @@ define(function(require) {
 
       if(toggle) {
         $autocompleteToggle.addClass("switch-enabled");
-        bramble.disableAutocomplete();
+        bramble.enableAutocomplete();
       } else {
         $autocompleteToggle.removeClass("switch-enabled");
-        bramble.enableAutocomplete();
+        bramble.disableAutocomplete();
       }
 
       return false;
