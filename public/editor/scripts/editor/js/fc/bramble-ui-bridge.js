@@ -13,7 +13,7 @@ define(function(require) {
 
   var adapting = false;
   var adaptTimeoutMS = 200; // How often we adapt editor bar layout
-  var _isMobileView = false; // to check wheather mobile view is on/off
+  var isMobileView = false; // to check whether mobile view is on/off
 
   function updateLayout(data) {
     $(".filetree-pane-nav").width(data.sidebarWidth);
@@ -286,15 +286,7 @@ define(function(require) {
       }
 
       bramble.showTutorial(setTutorialPreview);
-<<<<<<< HEAD
       analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Tutorial Toggle", label: "Enabled" });
-=======
-
-      if (_isMobileView) {
-        //display tutorial always in desktop mode
-        activatePreviewMode("desktop");
-      }
->>>>>>> b02da0e... Fix: 1637 Always display a Tutorial in Desktop mode
     });
 
     // Programmatic change to tutorial vs. regular preview mode from Bramble
