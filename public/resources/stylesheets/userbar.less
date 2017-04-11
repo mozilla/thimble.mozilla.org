@@ -481,7 +481,6 @@ a.navbar-login:hover {
       border: solid 1px rgba(255,255,255,.2);
     }
   }
-
   .dropdown-content {
     ul {
       list-style-type: none;
@@ -514,6 +513,61 @@ a.navbar-login:hover {
             top: 2px;
           }
         }
+      } 
+    }
+  }
+  .dropdown-submenu {
+    
+    background-color : white;
+
+    .dropdown-submenu-toggle {
+      padding: 5px 5px 10px 12px;
+
+      img{
+        padding-right: 10px;
+        width: 16px;
+        height: 16px;
+        opacity: .6;
+        position: relative;
+        top: 2px;
+      }
+    }
+    .dropdown-submenu-content {
+      ul {
+        list-style-type:none;
+        z-index:999;
+        min-width:182px;
+        position:absolute;
+        top:40px;
+        right: 185px;
+        display: none;
+
+        li {
+          padding: 0;
+
+          &:last-child {
+            border-top: 1px solid #e9e9e9;
+          }
+
+          &:hover {
+            background-color: rgba(0,0,0,.05);
+          }
+
+          a {
+            text-decoration: none;
+            color: black;
+            display: block;
+            padding: 12px;
+          }
+        }
+      }
+    }
+
+    &.expanded {
+      z-index: 999;
+
+      ul{
+        display: block;
       }
     }
   }

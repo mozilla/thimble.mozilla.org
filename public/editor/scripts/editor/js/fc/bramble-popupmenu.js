@@ -36,8 +36,13 @@ define(function(require) {
       }
 
       $(window).off("resize", self.close);
-      self._button$.closest(".dropdown").removeClass("expanded");
+      
 
+      if ( button === "#navbar-logged-in .dropdown-submenu-toggle" ) {
+        self._button$.closest(".dropdown-submenu").removeClass("expanded");
+      } else {
+        self._button$.closest(".dropdown").removeClass("expanded");  
+      }
       self._menu$.hide();
 
       if(self._underlay) {
@@ -54,18 +59,34 @@ define(function(require) {
     };
 
     // Toggle the menu on/off when the button is clicked.
-    self._button$.on("click", function(e) {
-      e.stopPropagation();
 
-      if(!self.showing) {
-        self._button$.addClass('active');
-        self.show();
-      } else {
-        self.close();
-      }
-    });
+    if ( button === "#navbar-logged-in .dropdown-submenu-toggle" ) {
+      
+      self._button$.on("click", function(e) {
+        e.stopPropagation();
+        if(!self.showing) {
+          self.show();
+        } else {
+          self.close();
+        }
+      });
+
+    } else {
+      
+      self._button$.on("click", function(e) {
+        e.stopPropagation();
+
+        if(!self.showing) {
+          self.show();
+        } else {
+          self.close();
+        }
+      });
+
+    }
   }
   PopupMenu.create = function(button, menu) {
+
     return new PopupMenu(button, menu);
   };
   PopupMenu.createWithOffset = function(button, menu) {
@@ -81,12 +102,18 @@ define(function(require) {
     self._menu$.show();
     self._underlay = new Underlay(self._menu$, self.close);
     self._escKeyHandler = new KeyHandler.ESC(self.close);
-    self._button$.closest(".dropdown").addClass("expanded");
+
+    if ( self._button$.selector === "#navbar-logged-in .dropdown-submenu-toggle" ) {
+      self._button$.closest(".dropdown-submenu").addClass("expanded");
+    } else {
+      self._button$.closest(".dropdown").addClass("expanded");
+    }
+
     // Close on resize
     $(window).on("resize", self.close);
 
     self.showing = true;
   };
-
+  
   return PopupMenu;
 });
