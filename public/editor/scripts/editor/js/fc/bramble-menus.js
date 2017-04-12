@@ -164,6 +164,29 @@ define(function(require) {
       return false;
     });
 
+    //set initial UI value to allow whitespace indicator
+    if(bramble.getAllowWhiteSpace()) {
+      $("#allow-whitespace-toggle").addClass("switch-enabled");
+    } else {
+      $("#allow-whitespace-toggle").removeClass("switch-enabled");
+    }
+    // Enable/Disable Whitespace Indicator
+    $("#allow-whitespace-toggle").click(function() {
+      // Toggle current value
+      var $allowWhitespaceToggle = $("#allow-whitespace-toggle");
+      var toggle = !($allowWhitespaceToggle.hasClass("switch-enabled"));
+
+      if(toggle) {
+        $allowWhitespaceToggle.addClass("switch-enabled");
+        bramble.enableWhiteSpace();
+      } else {
+        $allowWhitespaceToggle.removeClass("switch-enabled");
+        bramble.disableWhiteSpace();
+      }
+
+      return false;
+    });
+    
     //set the Autocomplete toggle to reflect whether auto-complete is enabled or disabled
     if(bramble.getAutocomplete()) {
         $("#autocomplete-toggle").addClass("switch-enabled");
