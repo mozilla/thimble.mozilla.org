@@ -8,6 +8,10 @@ module.exports = function( grunt ) {
     gitadd: 'grunt-git'
   });
 
+  var swPrecache = require('sw-precache');
+  var Path = require('path');
+  var fs = require('fs');
+
   grunt.initConfig({
     pkg: grunt.file.readJSON( "package.json" ),
 
@@ -131,7 +135,107 @@ module.exports = function( grunt ) {
           ]
         }
       }
+    },
+    swPrecache: {
+      dist: {
+        rootDir: 'dist'
+      }
     }
+  });
+
+  grunt.registerMultiTask('swPrecache', function() {
+    var done = this.async();
+    var rootDir = this.data.rootDir;
+    rootDir = "get rid of this later";
+
+    // We need the full list of locales so we can create runtime caching rules for each
+    fs.readdir('locales', function(err, locales) {
+      if(err) {
+        grunt.fail.warn(err);
+        return done();
+      }
+
+      locales = locales.map(function(locale) {
+        // en_US to en-US
+        return locale.replace('_', '-');
+      });
+
+      // /\/(en-US|pt-BR|es|...)\//
+      var localesPattern = new RegExp('\/(' + locales.join('|') + ')\/');
+
+      writeServiceWorker(getConfig(localesPattern));
+    });
+
+    function getConfig(localesPattern) {
+      return {
+        cacheId: 'thimble',
+        logger: grunt.log.writeln,
+        staticFileGlobs: [
+          'dist/editor/stylesheets/*.css',
+          'dist/resources/stylesheets/*.css',
+          'dist/homepage/stylesheets/*.css'
+        ],
+        runtimeCaching: [
+          // TODO: we should be bundling all this vs. loading separate
+          {
+            urlPattern: /\/node_modules\//,
+            handler: 'fastest'
+          },
+          {
+            urlPattern: /\/scripts\/vendor\//,
+            handler: 'fastest'
+          },
+
+          // TODO: move these to staticFileGlobs--need to figure out runtime path vs. build path issue
+          {
+            urlPattern: /\/img\//,
+            handler: 'fastest'
+          },
+          {
+            urlPattern: /https:\/\/thimble.mozilla.org\/img\//,
+            handler: 'fastest'
+          },
+
+          // Localization requires runtime caching of rewritten, locale-prefixed URLs
+          {
+            urlPattern: localesPattern,
+            handler: 'fastest'
+          },
+
+          // Various external deps we need
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/css/,
+            handler: 'fastest'
+          },
+          {
+            urlPattern: /^https:\/\/fonts\.gstatic\.com\//,
+            handler: 'fastest'
+          },
+          {
+            urlPattern: /^https:\/\/mozilla.github.io\/thimble-homepage-gallery\/activities.json/,
+            handler: 'fastest'
+          },
+          {
+            urlPattern: /^https:\/\/pontoon.mozilla.org\/pontoon.js/,
+            handler: 'fastest'
+          }
+        ],
+
+        navigateFallback: '/',
+
+        ignoreUrlParametersMatching: [/./]
+      };
+    }
+
+    function writeServiceWorker(config) {
+      swPrecache.write(Path.join(rootDir, 'thimble-sw.js'), config, function(err) {
+        if(err) {
+          grunt.fail.warn(err);
+        }
+        done();
+      });
+    }
+
   });
 
   grunt.registerTask("test", [ "jshint:server", "jshint:frontend", "lesslint" ]);

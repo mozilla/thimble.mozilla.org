@@ -96,6 +96,7 @@ if(!!env.get("FORCE_SSL")) {
  */
 Utils.getFileList(path.join(root, "public"), "!(*.js)")
 .forEach(file => server.use(express.static(file, maxCacheAge)));
+server.use("/thimble-sw.js", express.static(path.join(root, "public/thimble-sw.js"), maxCacheAge));
 server.use(express.static(cssAssets, maxCacheAge));
 server.use(express.static(path.join(root, "public/resources"), maxCacheAge));
 server.use("/node_modules", express.static(path.join(root, server.locals.node_path), maxCacheAge));
@@ -111,7 +112,7 @@ server.use("/resources/remix", express.static(path.join(root, "public/resources/
  * L10N
  */
 localize(server, Object.assign(env.get("L10N"), {
-   excludeLocaleInUrl: [ "/projects/remix-bar" ]
+   excludeLocaleInUrl: [ "/projects/remix-bar", "/thimble-sw.js" ]
 }));
 
 
