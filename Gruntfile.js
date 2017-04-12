@@ -171,9 +171,11 @@ module.exports = function( grunt ) {
         cacheId: 'thimble',
         logger: grunt.log.writeln,
         staticFileGlobs: [
+          /*
           'dist/editor/stylesheets/*.css',
           'dist/resources/stylesheets/*.css',
           'dist/homepage/stylesheets/*.css'
+          */
         ],
         runtimeCaching: [
           // TODO: we should be bundling all this vs. loading separate
@@ -228,7 +230,7 @@ module.exports = function( grunt ) {
     }
 
     function writeServiceWorker(config) {
-      swPrecache.write(Path.join(rootDir, 'thimble-sw.js'), config, function(err) {
+      swPrecache.write(Path.join(/*rootDir*/'public', 'thimble-sw.js'), config, function(err) {
         if(err) {
           grunt.fail.warn(err);
         }
