@@ -15,6 +15,10 @@ define(["jquery", "analytics"], function($, analytics) {
     init: function() {
       this.galleryEl = $(".gallery");
 
+      if(this.galleryEl.length == 0) {
+        return;
+      }
+
       var that = this;
       var URL = "https://mozilla.github.io/thimble-homepage-gallery/activities.json";
       $.get(URL).done(function(returnedData) {

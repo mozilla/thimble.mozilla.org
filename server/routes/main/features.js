@@ -20,10 +20,9 @@ module.exports = function(config, req, res) {
     editorHOST: config.editorHOST,
     editorURL: config.editorURL,
     URL_PATHNAME: "/" + qs,
-    languages: req.app.locals.languages
+    languages: req.app.locals.languages,
+    pageName: "features"
   };
-
-  options.pagetype = "features";
 
   if (req.user) {
     options.username = req.user.username;
@@ -31,5 +30,5 @@ module.exports = function(config, req, res) {
     options.logoutURL = config.logoutURL;
   }
 
-  res.render("homepage/index.html", options);
+  res.render("homepage/features.html", options);
 };

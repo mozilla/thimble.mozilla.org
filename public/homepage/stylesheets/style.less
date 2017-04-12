@@ -23,33 +23,33 @@ body, html {
 }
 
 header {
-    padding: 20px;
-    overflow: auto;
+  padding: 20px;
+  overflow: auto;
 
-    .branding {
-        float: left;
-        color: white;
+  .branding {
+    float: left;
+    color: white;
 
-        img {
-            position: relative;
-            top: 2px;
-        }
+    img {
+        position: relative;
+        top: 2px;
     }
+  }
 
-    .account-actions {
-        float: right;
-        color: rgba(255,255,255,.7);
-        font-size: 15px;
+  .account-actions {
+    float: right;
+    color: rgba(255,255,255,.7);
+    font-size: 15px;
 
-        a {
-            color: white;
-            text-decoration: none;
+    a {
+      color: white;
+      text-decoration: none;
 
-            &:hover {
-                text-decoration: underline;
-            }
-        }
+      &:hover {
+          text-decoration: underline;
+      }
     }
+  }
 }
 
 /* User bar overrides for homepage */
@@ -203,7 +203,15 @@ footer {
 }
 
 .homepage-section {
-    background: -webkit-linear-gradient(-70deg, #166f41, rgb(75, 199, 113));
+  background: linear-gradient(160deg, #166f41, rgb(75, 199, 113));
+
+}
+
+
+.content-wrapper {
+  width: 964px;
+  margin: 0 auto;
+  position: relative;
 }
 
 .main-cta {
@@ -469,5 +477,57 @@ footer {
   }
   100% {
     .transform(scaleX(1) translateY(-150%));
+  }
+}
+
+
+.page-heading {
+
+  padding: 60px 0;
+  margin-bottom: 20px;
+
+  h1 {
+    color: white;
+    padding: 0;
+    font-weight: normal;
+    font-size: 37px;
+    line-height: 42px;
+    margin: 0 0 15px 0;
+  }
+
+  p {
+    color: white;
+  }
+}
+
+.page-content {
+  margin: 60px 0 60px 0;
+  min-height: 400px;
+}
+
+.feature-list {
+  overflow: auto;
+
+  .feature {
+    overflow: auto;
+    margin-bottom: 40px;
+    padding-bottom: 5px;
+    width: 50%;
+    float: left;
+    box-sizing: border-box;
+    padding: 0 40px;
+
+    .feature-name {
+      margin: 0 0 15px 0;
+      line-height: 30px;
+    }
+
+    .feature-image {
+      width:100%;
+      background: #ddd;
+      margin: 0 0 30px 0;
+      box-shadow: 5px 5px 0px rgba(0,0,0,.1);
+    }
+
   }
 }
