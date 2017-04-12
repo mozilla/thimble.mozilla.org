@@ -2,7 +2,7 @@ require.config({
   waitSeconds: 120,
   paths: {
     "jquery": "/node_modules/jquery/dist/jquery.min",
-    "analytics": "/node_modules/webmaker-analytics/analytics",
+    "analytics": "/{{ locale }}/editor/scripts/analytics",
     "uuid": "/node_modules/node-uuid/uuid",
     "cookies": "/node_modules/cookies-js/dist/cookies",
     "moment": "/node_modules/moment/min/moment-with-locales.min",
