@@ -54,20 +54,8 @@ require(["jquery", "bowser", "fc/offline"], function($, bowser, Offline) {
 
   // Initialize offline/online handling
   Offline.init(Bramble);
-  Offline.on("online", function() {
-    console.log("Offline: online event")
-  });
-  Offline.on("offline", function() {
-    console.log("Offline: offline event")
-  });
-  Offline.on('offlineReady', function() {
-    console.log("Offline: offlineReady event")
-  });
-  Offline.on('updatesAvailable', function() {
-    console.log("Offline: upddatesAvailable event")
-  });
 
-  function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility, Offline) {
+  function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility) {
     var thimbleScript = document.getElementById("thimble-script");
     var appUrl = thimbleScript.getAttribute("data-app-url");
     var projectDetails = thimbleScript.getAttribute("data-project-details");

@@ -3,7 +3,6 @@
  * The events we trigger include:
  *
  * - `updatesAvailable`: one of Thimble and/or Brackets has updates in the cache, user should reload
- * - `offlineReady`: one of Thimble and/or Brackets has cached its content
  * - `online`: the browser has re-established a network connection
  * - `offline`: the browser has lost its network connection
  *
@@ -34,9 +33,6 @@ define(function(require) {
             if (window.navigator.serviceWorker.controller) {
               // Cache has been updated
               Offline.trigger("updatesAvailable");
-            } else {
-              // Cache has been filled
-              Offline.trigger("offlineReady");
             }
             break;
           case 'redundant':
@@ -57,10 +53,10 @@ define(function(require) {
     // Listen for sw events from Bramble, and consolidate with our own.
     Bramble.on("updatesAvailable", function() {
       Offline.trigger("updatesAvailable");
-    })
+    });
     Bramble.on("offlineReady", function() {
       Offline.trigger("offlineReady");
-    })
+    });
 
     // Listen for online/offline events from the browser
     window.addEventListener("offline", function() {
@@ -69,11 +65,11 @@ define(function(require) {
     window.addEventListener("online", function() {
       Offline.trigger("online");
     });
-  }
+  };
 
   Offline.isOnline = function() {
     return navigator.onLine;
-  }
+  };
 
   return Offline;
 });
