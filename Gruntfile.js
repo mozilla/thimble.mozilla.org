@@ -146,7 +146,6 @@ module.exports = function( grunt ) {
   grunt.registerMultiTask('swPrecache', function() {
     var done = this.async();
     var rootDir = this.data.rootDir;
-    rootDir = "get rid of this later";
 
     // We need the full list of locales so we can create runtime caching rules for each
     fs.readdir('locales', function(err, locales) {
@@ -171,7 +170,7 @@ module.exports = function( grunt ) {
         cacheId: 'thimble',
         logger: grunt.log.writeln,
         staticFileGlobs: [
-          /*
+          /* TODO: we need to not localize these asset dirs so we can statically cache
           'dist/editor/stylesheets/*.css',
           'dist/resources/stylesheets/*.css',
           'dist/homepage/stylesheets/*.css'
@@ -223,14 +222,12 @@ module.exports = function( grunt ) {
           }
         ],
 
-        navigateFallback: '/',
-
         ignoreUrlParametersMatching: [/./]
       };
     }
 
     function writeServiceWorker(config) {
-      swPrecache.write(Path.join(/*rootDir*/'public', 'thimble-sw.js'), config, function(err) {
+      swPrecache.write(Path.join(rootDir, 'thimble-sw.js'), config, function(err) {
         if(err) {
           grunt.fail.warn(err);
         }
@@ -241,6 +238,6 @@ module.exports = function( grunt ) {
   });
 
   grunt.registerTask("test", [ "jshint:server", "jshint:frontend", "lesslint" ]);
-  grunt.registerTask("build", [ "test", "requirejs:dist" ]);
+  grunt.registerTask("build", [ "test", "requirejs:dist", "swPrecache" ]);
   grunt.registerTask("default", [ "test" ]);
 };
