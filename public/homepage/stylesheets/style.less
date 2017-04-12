@@ -505,8 +505,15 @@ footer {
   min-height: 400px;
 }
 
+.page-heading h1 em {
+  border-bottom: solid 2px rgba(255,255,255,.6);
+  padding-bottom: -2px;
+
+}
+
 .feature-list {
   overflow: auto;
+  margin-right: -60px;
 
   .feature {
     overflow: auto;
@@ -515,7 +522,11 @@ footer {
     width: 50%;
     float: left;
     box-sizing: border-box;
-    padding: 0 40px;
+    padding-right: 60px;
+
+    .feature-description {
+      color: rgba(0,0,0,.65);
+    }
 
     .feature-name {
       margin: 0 0 15px 0;
@@ -524,7 +535,6 @@ footer {
 
     .feature-image {
       width:100%;
-
       margin: 0 0 30px 0;
       box-shadow: 5px 5px 0px rgba(0,0,0,.1);
 
@@ -533,6 +543,5 @@ footer {
         border-radius: 4px;
       }
     }
-
   }
 }
