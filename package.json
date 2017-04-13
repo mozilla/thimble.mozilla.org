@@ -39,7 +39,7 @@
     "express": "^4.15.2",
     "form-data": "^0.2.0",
     "fs-writefile-promise": "^2.0.0",
-    "glob": "^6.0.4",
+    "glob": "^7.1.1",
     "grunt": "~0.4.1",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-csslint": "^2.0.0",
