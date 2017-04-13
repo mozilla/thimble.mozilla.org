@@ -1,21 +1,12 @@
+body {
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1em;
+  font-weight: 400;
+}
+
 @import "variables.less";
 
-@font-face {
-  font-family: "Fira Medium";
-  src: url("https://code.cdn.mozilla.net/fonts/woff/FiraSans-Regular.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Fira Regular";
-  src: url("https://code.cdn.mozilla.net/fonts/woff/FiraSans-Light.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-
 body, html {
-  font-family: "Fira Regular";
   padding: 0;
   margin: 0;
 }
@@ -94,7 +85,6 @@ header {
 
 footer {
   background: @lightgreen;
-  margin-top: 80px;
 
   .content-wrapper {
     padding: 40px 0 40px 0;
@@ -113,10 +103,11 @@ footer {
     justify-content: center;
     padding: 0;
 
+
     li {
-      line-height: 15px;
+      flex: 1;
       padding: 0;
-      margin: 0 15px;
+      margin: 0 5px;
     }
 
     li a {
@@ -130,8 +121,8 @@ footer {
       display: block;
       width: 20px;
       height: 20px;
-      top: -4px;
-      left: -2px;
+      top: 1px;
+      left: 0;
       background-repeat: no-repeat;
       background-position: center;
     }
@@ -154,12 +145,12 @@ footer {
 
     .terms .icon {
       background-image: ~"url(/img/footer-icon-terms.svg)";
-      top: -5px;
+      top: 0;
     }
 
     .privacy .icon {
       background-image: ~"url(/img/footer-icon-privacy.svg)";
-      top: -5px;
+      top: 0;
     }
   }
 
@@ -180,7 +171,7 @@ footer {
     width: 610px;
     margin: 0 auto;
     position: relative;
-    border-radius: 4px;
+    border-radius: 2px;
     line-height: 22px;
 
     .mozilla-logo {
@@ -218,7 +209,6 @@ footer {
   background-size: 200px;
   padding: 30px 0;
 
-
   .content-wrapper {
     width: 964px;
     margin: 0 auto;
@@ -227,7 +217,7 @@ footer {
 
   .left-side {
     width: 45%;
-    padding: 40px 0 80px 0;
+    padding: 35px 0 80px 0;
   }
 
   h1 {
@@ -235,13 +225,14 @@ footer {
     padding: 0;
     font-weight: normal;
     font-size: 37px;
-    line-height: 37px;
+    line-height: 42px;
     margin: 0 0 15px 0;
   }
 
   p {
     color: rgba(255,255,255,.9);
     margin: 0 0 45px 0;
+    line-height: 140%;
 
     a {
       color: white;
@@ -273,7 +264,7 @@ footer {
 
   .button {
     background-color: white;
-    padding: 11px 21px 10px 45px;
+    padding: 10px 21px 11px 45px;
     line-height: 28px;
     display: inline-block;
     color: @lightgreen;
@@ -282,6 +273,7 @@ footer {
     position: relative;
     text-decoration: none;
     font-size: 18px;
+    font-weight: 400;
     background-position:  13px center;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -326,7 +318,6 @@ footer {
     padding: 25px 0 35px 0;
 
     h1 {
-      font-family: "Fira Medium";
       font-size: 40px;
       margin-bottom: 5px;
     }
@@ -334,225 +325,6 @@ footer {
     p {
       font-size: 30px;
       line-height: 120%;
-    }
-  }
-}
-
-.remix-projects {
-  .content-wrapper {
-    width: 964px;
-    margin: 0 auto;
-  }
-
-  .projects-heading {
-    text-align: center;
-    color: #545454;
-    font-size: 30px;
-    margin: 37px 0 27px 0;
-    padding: 0;
-  }
-
-  .remixable-projects {
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-
-    -webkit-flex-wrap: nowrap;
-    -ms-flex-wrap: nowrap;
-    flex-wrap: nowrap;
-
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-
-    -webkit-align-content: flex-start;
-    -ms-flex-line-pack: start;
-    align-content: flex-start;
-
-    -webkit-align-items: flex-start;
-    -ms-flex-align: start;
-    align-items: flex-start;
-
-    &:first-of-type {
-      padding-bottom: 45px;
-      margin-bottom: 40px;
-      border-bottom: solid 2px #EEE;
-    }
-
-    .project {
-      -webkit-flex: 1 1 auto;
-      -ms-flex: 1 1 auto;
-      flex: 1 1 auto;
-      -webkit-align-self: stretch;
-      -ms-flex-item-align: stretch;
-      align-self: stretch;
-      margin-right: 75px;
-
-      .title {
-        margin: 0 0 12px 0;
-        font-size: 22px;
-        color: #545454;
-        text-align: center;
-        white-space: nowrap;
-      }
-
-      &:last-child {
-        margin: 0;
-      }
-
-      .thumbnail {
-        width: 271px;
-        height: 278px;
-        position: relative;
-        margin: 0 0 20px 0 ;
-        .transition(all .1s ease-out);
-
-        &:hover {
-          opacity: .90;
-          .transform(translateY(-3px));
-        }
-
-        .image {
-          width: 271px;
-          display: block;
-          height: 278px;
-          z-index: 2;
-          position: relative;
-          border-radius: 3px;
-        }
-
-        &:before {
-          content: "";
-          position: absolute;
-          bottom: 0;
-          left: 10px;
-          width: ~"calc(100% - 20px)";
-          height: 40px;
-          box-shadow: 0 2px 15px rgba(0,0,0,.2);
-          border-radius: 40%;
-          z-index: 1;
-        }
-      }
-
-      .description {
-        color: #999;
-        font-size: 15px;
-        line-height: 19px;
-        margin: 0 0 15px 0;
-      }
-
-      .or-wrapper {
-        position: relative;
-        height: 30px;
-        margin-top: 14px;
-
-        hr {
-          border: none;
-          height: 0;
-          border-bottom: solid 2px #E9E9E9;
-          position: absolute;
-          top: 10px;
-          width: 100%;
-        }
-
-        .or {
-          position: absolute;
-          left: ~"calc(50% - 18px)";
-          width: 36px;
-          background: white;
-          color: #C9C9C9;
-          text-transform: uppercase;
-          top: 8px;
-          font-size: 15px;
-          font-weight: bold;
-          text-align: center;
-          font-family: "Fira Medium";
-        }
-      }
-
-      &.keep-calm .image {
-        background: ~"url(/img/thumbnail-keep-calm.png)"  #8B0208;
-      }
-
-      &.postcard .image {
-        background: ~"url(/img/thumbnail-postcard.png)" #FED831;
-      }
-
-      &.comic-strip .image {
-        background: ~"url(/img/thumbnail-comic-strip.png)" #EFEFEF;
-      }
-
-      &.my-six-word-summer .image {
-        background: ~"url(/img/thumbnail-my-six-word-summer.png)" #29B7FD;
-      }
-
-      &.homework-excuse-generator .image {
-        background: ~"url(/img/thumbnail-homework-excuse-generator.png)" #E0CAAD;
-      }
-
-      &.three-things-i-heart .image {
-        background: ~"url(/img/thumbnail-three-things-i-heart.png)" #E0CAAD;
-      }
-
-      .remix-button {
-        display: block;
-        cursor: pointer;
-        background: @lightgreen;
-        padding: 10px 0 8px 0;
-        border-radius: 3px;
-        box-shadow: 0 2px 0 #417C53;
-        font-size: 18px;
-        color: white;
-        text-align: center;
-        text-decoration: none;
-
-        &:hover {
-          background: #51B56B;
-        }
-
-        &:active {
-          position: relative;
-          top: 2px;
-          box-shadow: none;
-          background: #3F9956;
-        }
-      }
-    }
-  }
-
-  .teach {
-    h3 {
-      font-family: "Fira Medium";
-      padding: 0;
-      margin: 15px 0 12px 0;
-      font-size: 15px;
-      color: #777;
-    }
-
-    ul {
-      margin: 0 0 12px 0;
-      padding: 0 0 0 18px;
-
-      li {
-        font-size: 15px;
-        color: #999;
-        line-height: 19px;
-      }
-    }
-
-    a {
-      font-size: 15px;
-      font-family: "Fira Medium";
-      color: @lightgreen;
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
     }
   }
 }

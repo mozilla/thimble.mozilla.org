@@ -1,0 +1,62 @@
+<div class="gallery-wrapper">
+  <div class='gallery loading'>
+
+    <div class="search-header">
+      <h2 class='title'>
+        {{ gettext("remixGalleryTitle") }}
+      </h2>
+
+      <div class='search-wrapper'>
+        <div class='search-wrapper-outer'>
+          <span class='search-tags'></span>
+          <input class='search' placeholder='{{ gettext("gallerySearchPlaceholder") }}' type='text' />
+          <div class='icon search-icon'></div>
+          <div title='{{ gettext("clearSearchTerm") }}' class='clear icon clear-icon'></div>
+        </div>
+      </div>
+    </div>
+
+    <div class='popular-tags'>
+      <span class='tags-title'></span>
+      <span class='tag-list'></span>
+    </div>
+
+    <div class='loading-status'>
+      <span class='in-progress'>{{ gettext("projectLoadingInProgress") }}</span>
+      <span class='failure'>{{ gettext("projectLoadingError") | safe }}</span>
+    </div>
+
+    <div class='activities'>
+      <!-- Placeholder activity cards until real projects load -->
+      <div class='activity'></div>
+      <div class='activity'></div>
+      <div class='activity'></div>
+      <div class='activity'></div>
+      <div class='activity'></div>
+      <div class='activity'></div>
+    </div>
+
+    <div class='no-results-message'>
+      <h1>{{ gettext("noResultsTitle") }}</h1>
+      <p>{{ gettext("noResultsText") | safe }}</p>
+    </div>
+
+    <!-- Activity template cloned by gallery.js -->
+    <div class='activity activity-template'>
+      <a class='thumbnail'></a>
+      <div class='details'>
+        <h1 class='project-title'></h1>
+        <p class='author'>{{ gettext("byAuthor") }} <a href='#'></a></p>
+        <p class='description'></p>
+        <div class='tags'></div>
+      </div>
+      <div class='buttons'>
+        <a class="remix">{{ gettext("remix") }}</a>
+        <a class="teaching-kit">{{ gettext("lessonPlan") }}</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+

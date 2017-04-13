@@ -16,7 +16,8 @@ require.config({
     "localized": "/node_modules/webmaker-i18n/localized",
     "uuid": "/node_modules/node-uuid/uuid",
     "cookies": "/node_modules/cookies-js/dist/cookies",
-    "analytics": "/node_modules/webmaker-analytics/analytics",
+    "analytics": "/{{ locale }}/editor/scripts/analytics",
+    "gallery": "/{{ locale }}/homepage/scripts/gallery",
     // TODO: we should really put the homepage and editor in the same scope for code sharing
     "fc/bramble-popupmenu": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-popupmenu",
     "fc/bramble-keyhandler": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-keyhandler",
@@ -63,10 +64,10 @@ function setupNewProjectLinks($, analytics) {
     $("#new-project-button-text").text("{{ newProjectInProgressIndicator }}");
 
     if(authenticated) {
-      analytics.event("NewProject", {label: "New authenticated project"});
+      analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "New Authenticated Project" });
       window.location.href = "/" + locale + "/projects/new" + qs;
     } else {
-      analytics.event("NewProject", {label: "New anonymous project"});
+      analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "New Anonymous Project" });
       window.location.href = "/" + locale + "/editor" + queryString;
     }
   }
@@ -94,10 +95,10 @@ function setupAuthentication($, uuid, cookies, analytics) {
       var location = loginUrl;
 
       if (newUser) {
-        analytics.event("SignUp");
+        analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Create Account" });
         location += "?signup=true";
       } else {
-        analytics.event("SignIn");
+        analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Sign In" });
       }
 
       window.location = location;
@@ -115,12 +116,13 @@ function setupAuthentication($, uuid, cookies, analytics) {
 // flow. If more needs to be added, the logic should be factored out into
 // separate modules, each of which would be initialized here.
 // See: public/editor/scripts/main.js
-function init($, uuid, cookies, PopupMenu, analytics) {
+function init($, uuid, cookies, PopupMenu, analytics, gallery) {
   PopupMenu.create("#navbar-logged-in .dropdown-toggle", "#navbar-logged-in .dropdown-content");
   PopupMenu.create("#navbar-locale .dropdown-toggle", "#navbar-locale .dropdown-content");
   setupAuthentication($, uuid, cookies, analytics);
   setupNewProjectLinks($, analytics);
+  gallery.init();
   preloadBramble($);
 }
 
-require(['jquery', 'uuid', 'cookies', 'fc/bramble-popupmenu', 'analytics'], init);
+require(['jquery', 'uuid', 'cookies', 'fc/bramble-popupmenu', 'analytics', 'gallery'], init);

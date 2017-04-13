@@ -1,11 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,600);
-
-body {
-  margin: 0;
-}
-
 /* Transition time for hover effects */
-@transitionTime: 0.5s;
+@transitionTime: 0.15s;
 
 #webmaker-preview-holder-pane {
   border: 0;
@@ -20,15 +14,10 @@ body {
 }
 
 .navbar-thimble {
+  color: rgba(255,255,255,.65);
   background-color: #2D9961;
   width: 100%;
   height: 60px;
-  border: 0;
-  color: #B9D6C3;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1em;
-  font-weight: lighter;
-  font-weight: 300;
 
   .navbar-logo-container {
     margin-right: 5px;
@@ -154,7 +143,7 @@ body {
   .nav-link {
     opacity: 0.65;
     color: white;
-    transition: opacity .1s ease-out;
+    .transition;
 
     &:hover {
       opacity: 1;
@@ -178,19 +167,20 @@ body {
     border-bottom: 2px solid #B9D6C3;
     border-radius: 2px;
     position: relative;
+    font-weight:400;
     top: 0;
     filter: alpha(opacity=90);
     opacity: 0.9;
     box-sizing: border-box;
-
+    .transition;
     .icon;
 
     img.icon-publish {
-      width: 16px;
+      width: 15px;
       vertical-align: middle;
       position: relative;
       top: -2px;
-      margin-right: 4px;
+      margin-right: 6px;
     }
 
     &:hover {
@@ -226,6 +216,7 @@ body {
   #navbar-login {
     padding-right: 0;
     border-right: none;
+    .transition;
 
     &.signed-in {
       border-right: 1px solid #7DAF8F;
@@ -267,6 +258,7 @@ body {
   -ms-transition: @transitionTime;
   -o-transition: @transitionTime;
   transition: @transitionTime;
+  transition-timing-function: ease-out;
 }
 
 .transition-only-opacity {
@@ -282,12 +274,13 @@ a.navbar-login {
   color: white;
   text-decoration: none;
   font-weight: normal;
-  .transition;
 }
 
 a.navbar-login:hover {
+  .transition;
   cursor: pointer;
-  text-decoration: underline;
+  text-decoration: none;
+  border-bottom: 1px solid;
 }
 
 /* Logged in menu */
@@ -362,7 +355,7 @@ a.navbar-login:hover {
     cursor: pointer;
 
     top: 0;
-    transition: opacity .1s ease-out;
+    .transition;
     border-top: 1px solid rgba(0,0,0,0);
 
     &:hover {
@@ -375,6 +368,8 @@ a.navbar-login:hover {
       position: relative;
       top: -2px;
       margin: 0 0 0 3px;
+      width: 10px;
+
     }
   }
 
@@ -393,8 +388,6 @@ a.navbar-login:hover {
     min-width: 185px;
     top: 43px;
     left: 0;
-    -webkit-box-shadow: 0 3px 9px rgba(0,0,0,0.24);
-    -moz-box-shadow: 0 3px 9px rgba(0,0,0,0.24);
     box-shadow: 0 3px 9px rgba(0,0,0,0.24);
 
     p {
@@ -404,7 +397,7 @@ a.navbar-login:hover {
   }
 }
 
-.homepage .dropdown .dropdown-content {
+.dropdown .dropdown-content {
   right: 0 !important;
   left: auto !important;
 }
@@ -431,7 +424,7 @@ a.navbar-login:hover {
 
     a {
       text-decoration: none;
-      color: black;
+      color: rgba(0,0,0,.6);
       display: block;
       padding: 11px 12px 11px 28px;
       -webkit-column-break-inside: avoid;
@@ -508,7 +501,7 @@ a.navbar-login:hover {
 
         a {
           text-decoration: none;
-          color: black;
+          color: rgba(0,0,0,.6);
           display: block;
           padding: 12px;
 

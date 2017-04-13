@@ -10,40 +10,46 @@
   {% include '../homepage/userbar.html' %}
 
   <div class="project-list-wrapper">
-    <div id="container">
-      <h2>{{ gettext("yourProjectsLink") }}</h2>
 
-      <a href="/{{ locale }}/projects/new" id="project-0">
-        <div title="{{ gettext("prjListNewProjectBtnTitle") }}" class="project-button">{{ gettext("prjListNewProjectBtn") }}</div>
-      </a>
+    <h2>{{ gettext("yourProjectsLink") }}</h2>
 
-      <table id="project-list" data-username="{{ username }}">
+    <a href="/{{ locale }}/projects/new" id="project-0">
+      <div title="{{ gettext("prjListNewProjectBtnTitle") }}" class="project-button">{{ gettext("prjListNewProjectBtn") }}</div>
+    </a>
 
-      {% for project in projects %}
-        <tr class="project bramble-user-project"
-            id="{{ [ 'project', project.id ] | join('-') }}"
-        {% for key, value in project %}
-          {{ [ "data", "project", key ] | join("-") }}="{{ value }}"
-        {% endfor %}
-        >
-          <td class="project-title">
-            <a target="_self" href="/{{locale}}/user/{{username}}/{{project.id}}/{{queryString}}"> 
-              {{project.title}}
-              <span class="project-information"></span>
-            </a>
-          </td>
-          <td>
-            <div class="project-delete" title="{{ gettext("prjListDeleteProjectBtnTitle") }}">
-              <div class="icon-garbage-can">
-                <div class="icon-garbage-lid"></div>
-              </div>
-              {{ gettext("prjListDeleteProjectBtn") }}
-            </div>
-          </td>
-        </tr>
+    <div id="project-list" data-username="{{ username }}">
+
+    {% for project in projects %}
+      <div class="project bramble-user-project"
+          id="{{ [ 'project', project.id ] | join('-') }}"
+      {% for key, value in project %}
+        {{ [ "data", "project", key ] | join("-") }}="{{ value }}"
       {% endfor %}
+      >
 
-      </table>
+        <a class="project-favorite-button"></a>
+
+        <a class="edit-link" target="_self" href="/{{locale}}/user/{{username}}/{{project.id}}/{{queryString}}">
+          <span class="project-name">{{project.title}}</span>
+          <span class="project-information"></span>
+          <div class="project-description">{% if project.description %}{{ project.description | trim }}{% endif %}</div>
+        </a>
+
+        <div class="project-ui">
+          {% if project.publish_url %}
+          <a class="published-link" target="_blank" href="{{ project.publish_url }}">{{ gettext("publishedLink") }}</a>
+          <a class="remix-link">{{ gettext("remix") }}</a>
+          {% endif %}
+          <div class="project-delete" title="{{ gettext("prjListDeleteProjectBtnTitle") }}">
+            <div class="icon-garbage-can"></div>
+            {{ gettext("prjListDeleteProjectBtn") }}
+          </div>
+        </div>
+
+      </div>
+    {% endfor %}
+
+    </div>
 
     <script src="/scripts/vendor/require.min.js"
             data-main="/{{ localeDir }}/editor/scripts/project-list.js">

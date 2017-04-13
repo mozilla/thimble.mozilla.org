@@ -2,7 +2,7 @@ require.config({
   waitSeconds: 120,
   paths: {
     "jquery": "/node_modules/jquery/dist/jquery.min",
-    "analytics": "/node_modules/webmaker-analytics/analytics",
+    "analytics": "/{{ locale }}/editor/scripts/analytics",
     "uuid": "/node_modules/node-uuid/uuid",
     "cookies": "/node_modules/cookies-js/dist/cookies",
     "moment": "/node_modules/moment/min/moment-with-locales.min",
@@ -18,8 +18,18 @@ require.config({
 });
 
 require(["jquery", "constants", "analytics", "moment"], function($, Constants, analytics, moment) {
-  var projects = document.querySelectorAll("tr.bramble-user-project");
+  document.querySelector("#project-list").classList.add("loaded");
+  var projects = document.querySelectorAll(".bramble-user-project");
   var locale = $("html")[0].lang;
+  var isLocalStorageAvailable = !!(window.localStorage);
+  var favorites;
+  if(isLocalStorageAvailable){
+    try {
+      favorites = JSON.parse(localStorage.getItem("project-favorites")) || [];
+    } catch(e) {
+      console.error("failed to get project favorites from localStorage with: ", e);
+    }
+  }
   moment.locale($("meta[name='moment-lang']").attr("content"));
 
   function getElapsedTime(lastEdited) {
@@ -28,16 +38,52 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
     return "{{ momentJSLastEdited | safe }}".replace("<% timeElapsed %>", timeElapsed);
   }
 
+  function setFavoriteDataForProject(projectId, projectSelector, project){
+    var indexOfProjectInFavorites = favorites.indexOf(projectId);
+    var projectFavoriteButton = projectSelector + " .project-favorite-button";
+
+    if(indexOfProjectInFavorites !== -1){
+      favoriteProjectsElementList.push(project);
+      $(projectFavoriteButton).toggleClass("project-favorite-selected");
+    }
+
+    $(projectSelector + " .project-favorite-button").on("click", function() {
+      var indexOfProjectInFavorites = favorites.indexOf(projectId);
+      var projectFavoriteButton = projectSelector + " .project-favorite-button";
+
+      if(indexOfProjectInFavorites === -1) {
+        favorites.push(projectId);
+      } else {
+        favorites.splice(indexOfProjectInFavorites, 1);
+      }
+
+      localStorage.setItem("project-favorites", JSON.stringify(favorites));
+      $(projectFavoriteButton).toggleClass("project-favorite-selected");
+    });
+  }
+
+  var favoriteProjectsElementList = [];
+
   Array.prototype.forEach.call(projects, function(project) {
     var projectSelector = "#" + project.getAttribute("id");
     var lastEdited = project.getAttribute("data-project-date_updated");
+    var projectId = project.getAttribute("data-project-id");
+    var publishedUrl = project.getAttribute("data-project-publish_url");
+    var publishedId = publishedUrl.substring(publishedUrl.indexOf( "/", publishedUrl.indexOf("/", 7) + 1) + 1);
 
+    if(isLocalStorageAvailable) {
+      setFavoriteDataForProject(projectId, projectSelector, project);
+    }
+
+    $(projectSelector + " .remix-link").attr("href", publishedId + "/remix");
     $(projectSelector + " .project-information").text(getElapsedTime(lastEdited));
   });
 
+  $("#project-list").prepend(favoriteProjectsElementList);
+
   $(".project-delete").click(function() {
     // TODO: we can do better than this, but let's at least make it harder to lose data.
-    if(!window.confirm("{{ deleteProjectConfirmText }}")) {
+    if(!window.confirm("{{ deleteProjectConfirmationText }}")) {
       return false;
     }
 
@@ -46,7 +92,7 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
     var projectElementId = project.attr("id");
     $("#" + projectElementId + " > .project-title").off("click");
 
-    analytics.event("DeleteProject");
+    analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "Delete Project" });
 
     var request = $.ajax({
       headers: {
@@ -95,7 +141,7 @@ function setupNewProjectLinks($, analytics) {
 
     $(e.target).text("{{ newProjectInProgressIndicator }}");
 
-    analytics.event("NewProject", {label: "New authenticated project"});
+    analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "New Authenticated Project" });
     window.location.href = "/" + locale + "/projects/new" + qs;
   }
 
