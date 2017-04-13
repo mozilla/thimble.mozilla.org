@@ -289,6 +289,8 @@ footer {
     box-sizing: border-box;
     outline: solid 3px transparent;
 
+
+
     &:active {
       position: relative;
       top: 2px;
@@ -501,8 +503,8 @@ footer {
 }
 
 .page-content {
-  margin: 45px 0 60px 0;
-  min-height: 400px;
+  margin: 45px 0 65px 0;
+  overflow: auto;
 }
 
 .page-heading h1 em {
@@ -590,42 +592,219 @@ footer {
   background: yellow;
 }
 
+.grey {
+  background: #eee;
+  margin-bottom: 60px;
+}
+
+.page-content p {
+  margin-top: 0;
+}
 
 .contributor-list {
   overflow: auto;
-  padding-bottom: 10px;
+  position: relative;
+  width: 964px;
 
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-height: 100vw;
+}
+
+.grey {
+  padding: 40px 0;
+
+  h2 {
+    margin: 0 0 5px 0;
+    padding: 0;
+    font-size: 30px;
+    font-weight: 400;
+  }
+
+  h2 + p {
+    margin-bottom: 40px;
+    margin: 0 0 40px 0;
+  }
 }
 
 .contributor {
-  background: rgba(56,152,194,0.2);
+
+  background: white;
   padding: 20px;
-  width: ~"calc(50% - 30px)";
-  float: left;
-  padding: 20px;
+  width: ~"calc(50% - 20px)";
+  // width: ~"calc(50% - 100px)";
+  // width: 400px;
+  // float: left;
+  padding: 20px 25px;
   margin-right: 30px;
+  margin-bottom: 30px;
   box-sizing: border-box;
   position: relative;
-  // box-shadow: 8px 8px 0 rgba(0,0,0,.1);
+  display: inline-block;
+  box-shadow: 7px 7px 0 rgba(0,0,0,.1);
+  vertical-align: top;
 
   h3 {
-    margin: 0 0 10px 0;
+    margin: 3px 0 3px 0;
   }
 
   .quote {
-    font-size: 18px;
+    font-size: 16px;
     font-style: italic;
+    line-height: 150%;
+    opacity: .5;
+  }
+
+
+  a[href*='github'] {
+    background-image: ~"url(/img/icon/github-blue.svg)";
+    background-position: 0px 3px;
+    padding-left: 22px;
+    background-size: 18px;
+    background-repeat: no-repeat;
+    color: #2281bc;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  ul {
+    padding-left: 20px;
+    font-size: .9em;
+    margin-top: 25px;
+
+    li {
+      padding-bottom: 3px;
+    }
   }
 
   .contributor-photo {
     width: 100px;
     background: white;
-    height: 100px;
     border-radius: 50%;
-    border: solid 1px #DDD;
-    top: 10px;
-    right: 10px;
+    height: 100px;
+    height: 65px;
+    width: 65px;
+    top: 15px;
+    right: 15px;
     position: absolute;
+  }
+}
 
+
+.content-wrapper {
+  position: relative;
+
+  .main-cta {
+    position: relative;
+    font-size: 22px;
+    color: white;
+    background: transparent;
+    padding: 15px 20px 16px 20px;
+
+    border: solid 2px white;
+    text-decoration: none;
+    font-weight: 600;
+    // top: 12px;
+    // right: 40px;
+    border-radius: 2px;
+    display: inline-block;
+
+    margin-top: 20px;
+    box-shadow: 7px 7px 0px rgba(0,0,0,.12);
+    margin-right: 12px;
+
+
+    &.repo {
+      background: ~"url(/img/icon/github-white.svg)" left no-repeat;
+      background-size: 32px;
+      background-position: 16px 15px;
+      padding: 15px 20px 16px 60px;
+    }
+
+    &:hover {
+      background-color: rgba(255,255,255,.1);
+    }
+
+  }
+}
+
+
+.good-bug-count {
+  position: absolute;
+  top: -20px;
+  right: -18px;
+  color: white;
+  background-color: #ce59a3;
+  padding: 8px 0;
+  width: 40px;
+  display: none;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 50%;
+  background: #e04a27;
+  animation: popa .2s ease-out;
+}
+
+@keyframes popa {
+  0%    { transform: scale(.4) translateY(5px);   }
+  40%   { transform: scale(1.2) translateY(0);  }
+  100%  { transform: scale(1);    }
+}
+
+.get-involved {
+  a {
+    color: @link-blue;
+  }
+
+  p {
+    line-height: 150%;
+    color: rgba(0,0,0,.7);
+  }
+
+  ul li {
+    padding: 3px 0;
+  }
+
+  .indent {
+    position: relative;
+    left: 15px;
+  }
+
+  h2 {
+
+    font-size: 30px;
+    text-align: center;
+    text-align: left;
+    clear: both;
+  }
+}
+
+.right-box {
+  background: blue;
+  float: right;
+  width: 300px;
+  padding: 20px;
+  margin-left: 40px;
+  background: rgba(56,152,194,0.2);
+
+  h2 {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    font-size: 20px;
+    font-style: italic;
+  }
+
+  ul {
+    padding-left: 22px;
+  }
+
+  li {
+    padding: 5px 0;
   }
 }
