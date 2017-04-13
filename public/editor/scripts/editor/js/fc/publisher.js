@@ -15,7 +15,7 @@ define(function(require) {
   function unpublishedChangesPrompt() {
     var dialog = this.dialog;
     var publish = this.handlers.publish;
-    dialog.published.changed.removeClass("hide");
+    dialog.published.changed.removeClass("hide");``
     dialog.buttons.update
       .off("click", publish)
       .on("click", publish);
@@ -29,7 +29,8 @@ define(function(require) {
         publish: $("#publish-button-publish"),
         update: $("#publish-button-update"),
         unpublish: $("#publish-button-unpublish"),
-        parent: $("#publish-buttons")
+        parent: $("#publish-buttons"),
+        index_message: $("#no-index")
       },
       description: $("#publish-details > textarea.publish-description"),
       published: {
@@ -120,6 +121,11 @@ define(function(require) {
     if (publisher.publishing) {
       return;
     }
+
+    if(!bramble.hasIndexFile()){
+        console.log("NO INDEX FILE FOUND!");
+    }
+
     publisher.publishing = true;
 
     function setState(done) {
