@@ -5,6 +5,7 @@ define(function(require) {
   var SyncState = require("fc/sync-state");
 
   var host;
+  var bramble_;
 
   var TEXT_PUBLISH = "{{ publishBtn }}";
   var TEXT_PUBLISHING = "{{ publishPublishingIndicator }}";
@@ -16,7 +17,7 @@ define(function(require) {
   function unpublishedChangesPrompt() {
     var dialog = this.dialog;
     var publish = this.handlers.publish;
-    dialog.published.changed.removeClass("hide");``
+    dialog.published.changed.removeClass("hide");
     dialog.buttons.update
       .off("click", publish)
       .on("click", publish);
@@ -77,6 +78,8 @@ define(function(require) {
       publisher.showUnpublishedChangesPrompt();
     });
 
+    bramble_ = bramble;
+
     dialog.buttons.publish.on("click", publisher.handlers.publish);
 
     // Were there any files that were updated and not published?
@@ -131,8 +134,12 @@ define(function(require) {
       return;
     }
 
-    if(!bramble.hasIndexFile()){
-        console.log("NO INDEX FILE FOUND!");
+    if(!bramble_.hasIndexFile()){
+        dialog.buttons.index_message.css("display","block");
+        return;
+    }
+    else{
+        dialog.buttons.index_message.css("display","none");
     }
 
     publisher.publishing = true;
