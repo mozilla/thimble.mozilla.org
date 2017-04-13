@@ -506,15 +506,17 @@ footer {
 }
 
 .page-heading h1 em {
-  border-bottom: solid 2px rgba(255,255,255,.6);
-  padding-bottom: -2px;
 }
 
 .callout {
   font-size: 18px;
   margin-bottom: 60px;
-  // background: rgba(56,152,194,0.2);
-  // padding: 25px 80px 30px 25px;
+  line-height: 150%;
+
+  em {
+    font-weight: 600;
+    text-decoration: underline;
+  }
 }
 
 .feature-list {
@@ -527,6 +529,7 @@ footer {
     padding-bottom: 5px;
     width: 50%;
     float: left;
+    min-height: 450px;
     box-sizing: border-box;
     padding-right: 60px;
 
@@ -543,11 +546,31 @@ footer {
       width:100%;
       margin: 0 0 30px 0;
       box-shadow: 5px 5px 0px rgba(0,0,0,.1);
-
-      &.light-bg {
-        // border: solid 1px rgba(0,0,0,.2);
-        // border-radius: 4px;
-      }
     }
   }
+}
+
+.feature.wide {
+  width: 100%;
+  border: solid 2px #DDD;
+  padding-top: 40px;
+  padding-bottom: 20px;
+  border-width: 2px 0 2px 0;
+  min-height: auto;
+
+  ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    overflow: hidden;
+  }
+
+  .feature-image {
+    width: ~"calc(50% - 30px)";
+    margin-right: 60px;
+    float: left;
+  }
+}
+
+.note {
+  background: yellow;
 }
