@@ -5,7 +5,6 @@ define(function(require) {
   var SyncState = require("fc/sync-state");
 
   var host;
-  var bramble_;
 
   var TEXT_PUBLISH = "{{ publishBtn }}";
   var TEXT_PUBLISHING = "{{ publishPublishingIndicator }}";
@@ -52,7 +51,7 @@ define(function(require) {
     publisher.isProjectPublic = true;
     publisher.needsUpdate = false;
     publisher.handlers = {
-      publish: publisher.publish.bind(publisher),
+      publish: publisher.publish.bind(publisher, bramble),
       unpublish: publisher.unpublish.bind(publisher),
       unpublishedChangesPrompt: unpublishedChangesPrompt.bind(publisher)
     };
@@ -77,8 +76,6 @@ define(function(require) {
     bramble.on("folderRename", function() {
       publisher.showUnpublishedChangesPrompt();
     });
-
-    bramble_ = bramble;
 
     dialog.buttons.publish.on("click", publisher.handlers.publish);
 
@@ -126,7 +123,7 @@ define(function(require) {
     });
   };
 
-  Publisher.prototype.publish = function() {
+  Publisher.prototype.publish = function(bramble) {
     var publisher = this;
     var dialog = publisher.dialog;
 
@@ -134,11 +131,10 @@ define(function(require) {
       return;
     }
 
-    if(!bramble_.hasIndexFile()){
+    if(!bramble.hasIndexFile()){
         dialog.buttons.index_message.css("display","block");
         return;
-    }
-    else{
+    } else {
         dialog.buttons.index_message.css("display","none");
     }
 
