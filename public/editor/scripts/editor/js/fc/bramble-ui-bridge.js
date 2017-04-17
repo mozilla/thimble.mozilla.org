@@ -290,7 +290,7 @@ define(function(require) {
 
     // Programmatic change to tutorial vs. regular preview mode from Bramble
     bramble.on("tutorialVisibilityChange", function(data) {
-      if(data.visibility) {
+      if(data.visible) {
         setTutorialPreview();
       } else {
         setNormalPreview();
