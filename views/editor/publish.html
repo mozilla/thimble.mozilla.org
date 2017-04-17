@@ -7,9 +7,11 @@
 
 <div id="publish-dialog" class="hide">
   <div class="content">
-
-    <h1>{{ gettext("publishHeader") }}</h1>
-
+    {% if project.publish_url %}
+      <h1>{{ gettext("publishHeader") }}</h1>
+    {% else %}
+      <h1>{{ gettext("projectLive") }}</h1>
+    {% endif %}
     <div id="publish-changes" class="hide">
       <p>{{ gettext("publishChangesPrompt") }}</p>
       <div id="publish-button-update">{{ gettext("publishChangesBtn") }}</div>
