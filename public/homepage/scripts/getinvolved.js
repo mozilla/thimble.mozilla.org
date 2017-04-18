@@ -2,10 +2,11 @@ define(["jquery"], function($) {
 
   var issues = {
     init: function(){
+      return;
 
       this.issueCountEl = $(".good-bug-count");
 
-      if(this.issueCountEl.length == 0) {
+      if(this.issueCountEl.length === 0) {
         return;
       }
 

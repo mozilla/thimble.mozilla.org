@@ -15,7 +15,7 @@ define(["jquery", "analytics"], function($, analytics) {
     init: function() {
       this.galleryEl = $(".gallery");
 
-      if(this.galleryEl.length == 0) {
+      if(this.galleryEl.length === 0) {
         return;
       }
 

@@ -48,7 +48,8 @@ module.exports = function( grunt ) {
             "EventEmitter": "../node_modules/wolfy87-eventemitter/EventEmitter.min",
             "analytics": "editor/scripts/analytics",
             "moment": "../node_modules/moment/min/moment-with-locales.min",
-            "gallery": "homepage/scripts/gallery"
+            "gallery": "homepage/scripts/gallery",
+            "getinvolved": "homepage/scripts/getinvolved",
           },
           shim: {
             "jquery": {

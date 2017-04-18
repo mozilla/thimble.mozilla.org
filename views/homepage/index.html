@@ -1,7 +1,7 @@
 {% extends "./base.html" %}
 
 {% block pagetitle %}
-  <div>I am the index!</div>
+  {{ gettext("thimbleHeading") | safe }}
 {% endblock %}
 
 {% block top %}
@@ -13,7 +13,7 @@
           {{ gettext("thimbleDescription") | instantiate | safe }}
         </p>
         <div class="new-project-button-wrapper">
-          <a id="new-project-button" href="/{{ locale }}/projects/new" title="{{ gettext("newProjectBtnTitle") }}" class="button">
+          <a id="new-project-button" class="feature-button" href="/{{ locale }}/projects/new" title="{{ gettext("newProjectBtnTitle") }}" class="button">
             <div class="pencil-animation">
               <div class="line-wrapper">
                 <div class="line line-one"></div>
@@ -28,7 +28,7 @@
       </div>
 
       <div class="video">
-        <iframe width="504" height="284" src="https://www.youtube.com/embed/JecFOjD9I3k" frameborder="0" allowfullscreen></iframe>
+        <iframe width="504" height="284" src="https://www.youtube.com/embed/JecFOjD9I3k?rel=0&showinfo=0" frameborder="0" allowfullscreen></iframe>
       </div>
     </div>
   </section>

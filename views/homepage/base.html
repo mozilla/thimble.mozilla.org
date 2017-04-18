@@ -28,7 +28,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
 
-    <title>{{ gettext("thimbleHeading") | safe }}</title>
+    <title>{% block pagetitle %}{% endblock %}</title>
 
     {% if GA_ACCOUNT %}
     <script id="google-analytics-js" src="/{{ localeDir }}/homepage/scripts/google-analytics.js"

@@ -1,26 +1,32 @@
 {% extends "./base.html" %}
 
+{% block pagetitle %}
+  {{ gettext("pageTitleFeatures") | safe }}
+{% endblock %}
+
 {% block top %}
   <div class="page-heading">
     <div class="content-wrapper">
-      <h1>Awesome features make learning<br/> <em>and</em> teaching coding easy &amp; fun</h1>.
+      <h1>Awesome features make learning<br/> <em>and</em> teaching coding easy &amp; fun</h1>
     </div>
   </div>
 {% endblock %}
 
 {% block content %}
+
   <div class="page-content">
     <div class="content-wrapper">
 
       <div class="callout">
         <p>
           Thimble is a full-featured code editor that runs right in the browser.
-          It's designed to help new coders create their own sites and projects using HTML, CSS &amp; Javascript.
+          It's designed to help new coders create their own sites and web-based projects using HTML, CSS &amp; Javascript.
           Everything you need is at your fingertips, allowing you (or your classroom) to get up and running as quickly as
           possible.
         </p>
+
         <p>
-          It's a code editor, web server, web browser &amp; deveveloper tools all in one&mdash;and it's <em>free!</em>
+          It's a code editor, web server, web browser &amp; developer tools all in one&mdash;and it's <em>free!</em>
         </p>
 
       </div>
@@ -59,8 +65,6 @@
           </ul>
 
         </div>
-
-
 
         <div class="feature">
           <img class="feature-image" src="/img/features/theme.gif"></img>

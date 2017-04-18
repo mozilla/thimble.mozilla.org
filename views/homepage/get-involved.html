@@ -1,7 +1,7 @@
 {% extends "./base.html" %}
 
 {% block pagetitle %}
-<div>  Thimble dimble rimble.</div>
+  {{ gettext("pageTitleGetInvolved") | safe }}
 {% endblock %}
 
 {% block top %}
@@ -9,13 +9,12 @@
     <div class="content-wrapper">
       <h1>
         Curious about open source? <br/>
-        <em>Help us build &amp; improve Thimble!</em>
+        Help us build &amp; improve Thimble!
       </h1>
 
-      <a class="main-cta repo" href="https://github.com/mozilla/thimble.mozilla.org/">File a bug!</a>
-      <!-- <a class="main-cta repo" href="https://github.com/mozilla/thimble.mozilla.org/">Our Repo</a> -->
-      <a class="main-cta list" href="https://github.com/mozilla/thimble.mozilla.org/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+First+Bug%22">
-        See a list of bugs to work on
+      <a class="feature-button repo" href="https://github.com/mozilla/thimble.mozilla.org/">File an issue</a>
+      <a class="feature-button list" href="https://github.com/mozilla/thimble.mozilla.org/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+First+Bug%22">
+        Find an issue to work on
         <div class="good-bug-count"></div>
       </a>
     </div>
@@ -29,39 +28,43 @@
       <div class="right-box">
         <h2>Why Contribute?</h2>
         <ul>
-          <li>Your work impacts users all over the world</li>
-          <li>Gain valuable experience and mentorship</li>
-          <li>Support mozilla's mission of an open internet for all</li>
+          <li>Your work impacts users all over the world.</li>
+          <li>Gain valuable experience and mentorship.</li>
+          <li>Support mozilla's mission of an open internet for all.</li>
           <li>If feels good!</li>
         </ul>
       </div>
 
       <p>
-        Thimble is an open source project created by the <a href="#">Mozilla Foundation</a> in parnership with <a href="http://cdot.senecacollege.ca/">CDOT at Seneca College</a>. It was created to help
-        people learn to create their own web projects using HTML, CSS &amp; Javascript.
+        Thimble is an open source project created by the <a href="#">Mozilla Foundation</a> in parnership with <a href="http://cdot.senecacollege.ca/">CDOT at Seneca College</a>
+        to help people learn HTML, CSS &amp; Javascript by creating their own web-based projects.
       </p>
 
-      <!-- <p>If you are curious about getting into Open Source contribution,</p> -->
+      <div class="two-col">
+        <div>
+          <h3>On Github</h3>
 
-      <h3>On Github</h3>
-      <ul>
-        <li><a href="https://github.com/mozilla/brackets/">Thimble</a> - the UI around the editor</li>
-        <li class="indent"><a href="https://github.com/mozilla/thimble.mozilla.org/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+First+Bug%22">Good First Bugs</a></li>
-        <li><a href="https://github.com/mozilla/brackets/">Brackets</a> - the actual code editor</li>
-        <li class="indent"><a href="https://github.com/mozilla/brackets/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+First+Bug%22">Good First Bugs</a></li>
-        <li><a href="https://github.com/mozilla/thimble.mozilla.org/blob/master/CONTRIBUTING.md">Contributor Guidlines</a></li>
-      </ul>
-
-      <h3>Get in Touch</h3>
-      <ul>
-        <li><a href="https://github.com/mozilla/brackets/">Chat with us on Mattermost</a></li>
-        <li><a href="mailto:thimble@mozillafoundation.org">Email us</a></li>
-      </ul>
+          <ul class="link-list">
+            <li><a href="https://github.com/mozilla/brackets/">Thimble</a> - the UI around the editor</li>
+            <li class="indent"><a href="https://github.com/mozilla/thimble.mozilla.org/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+First+Bug%22">Good First Bugs</a></li>
+            <li><a href="https://github.com/mozilla/brackets/">Brackets</a> - the actual code editor</li>
+            <li class="indent"><a href="https://github.com/mozilla/brackets/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+First+Bug%22">Good First Bugs</a></li>
+            <li><a href="https://github.com/mozilla/thimble.mozilla.org/blob/master/CONTRIBUTING.md">Contributing Guidelines</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Get in Touch</h3>
+          <ul class="link-list">
+            <li><a href="https://chat.mozillafoundation.org/mozilla/channels/thimble">Thimble Chat Channel</a></li>
+            <li><a href="mailto:thimble@mozillafoundation.org">Email us</a></li>
+          </ul>
+        </div>
+      </div>
 
     </div>
   </div>
 
-    <div class="grey">
+    <div class="featured-contributors">
       <div class="content-wrapper get-involved">
 
       <h2>Featured Contributors</h2>
@@ -71,15 +74,7 @@
 
     <div class="contributor-list">
 
-        <div class="contributor">
-          <img class="contributor-photo" src="https://avatars1.githubusercontent.com/u/1103528?v=3&s=460" />
-          <h3>Simon de Almeida</h3>
-          <a href="https://github.com/simon66">simon66</a>
-          <ul>
-            <li>Added localization strings to make Thimble work in different languages.</li>
-          </ul>
-          <p class="quote">"I had a lot of fun contributing!</p>
-        </div>
+      <div class="left-col">
 
         <div class="contributor">
           <h3>Jerry Goguette</h3>
@@ -93,35 +88,47 @@
         </div>
 
         <div class="contributor">
-          <img class="contributor-photo" src="https://avatars1.githubusercontent.com/u/1103528?v=3&s=460" />
-          <h3>Simon de Almeida</h3>
-          <a href="https://github.com/simon66">simon66</a>
+          <h3>Ray Gervais</h3>
+          <a href="https://github.com/raygervais">raygervais</a>
+          <img class="contributor-photo" src="https://avatars1.githubusercontent.com/u/14265337?v=3&s=460" />
           <ul>
-            <li>Added localization strings to make Thimble work in different languages.</li>
+            <li>Added a JavaScript console to help learners to debug their code and find errors.</li>
+            <li>Improved the usability of Thimble menus.</li>
           </ul>
-          <p class="quote">"I had a lot of fun contributing!</p>
+          <p class="quote">
+            "Contributing to Thimble enabled me to learn about modern JavaScript web applications,
+            an experience which has already helped further my career to new heights and possibilities.
+            Open Source has changed the world, and with it, I believe we can do anthying."
+          </p>
+        </div>
+
+      </div>
+
+      <div class="left-col">
+
+        <div class="contributor">
+          <img class="contributor-photo" src="https://avatars1.githubusercontent.com/u/25106861?v=3&s=400" />
+          <h3>Brian Yang</h3>
+          <a href="https://github.com/peiying16">peiying16</a>
+          <ul>
+            <li>Added support for file icons in.</li>
+            <li>Fixed but related to JavaScript settings.</li>
+            <li>Support for editing SVG files right in the editor.</li>
+          </ul>
+          <p class="quote">"I love Thimble, and I love fixing bug with Thimble team."</p>
         </div>
 
         <div class="contributor">
-          <h3>Jerry Goguette</h3>
-          <a href="https://github.com/twigz20">twigz20</a>
-          <img class="contributor-photo" src="https://avatars2.githubusercontent.com/u/10361408?v=3&s=460" />
+          <img class="contributor-photo" src="https://avatars0.githubusercontent.com/u/3598286?v=3&s=200" />
+          <h3>Theo Dule</h3>
+          <a href="https://github.com/th30">th30</a>
           <ul>
-            <li>Added a code snippets menu to make coding easier</li>
-            <li>Fixed JavaScript auto toggle bugs</li>
+            <li>Updated menu transition effects</li>
+            <li>Made sure files are properly highlighted in the editor</li>
           </ul>
-          <p class="quote">"When first starting on Thimble I had little to no experience/knowledge of Javascript. It took me a while to get my bearings. As I started working on this project I had many hurdles to cross. But with the help of the core team I was able to slowly cross those hurdles. I still have lots to learn, but I'm happy with the progress so far!"</p>
+          <p class="quote">"Working with thimble proved to be challenging and explosive way to get into open source. It really made me collaborate and work with some amazing individuals, which always made you feel like your mistakes are merely opportunities to further improve your releases. Persistence is key, and always turn feedback into a lesson opportunity!"</p>
         </div>
 
-        <div class="contributor">
-          <img class="contributor-photo" src="https://avatars1.githubusercontent.com/u/1103528?v=3&s=460" />
-          <h3>Simon de Almeida</h3>
-          <a href="https://github.com/simon66">simon66</a>
-          <ul>
-            <li>Added localization strings to make Thimble work in different languages.</li>
-          </ul>
-          <p class="quote">"I had a lot of fun contributing!</p>
-        </div>
       </div>
 
 

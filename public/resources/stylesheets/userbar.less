@@ -161,9 +161,10 @@
   }
 
   .nav-chunk {
-    padding: 0 15px;
-    .flex-vertical-align;
+    margin-left: 5px;
     height: 62px;
+
+    .flex-vertical-align;
   }
 
   .nav-link {
@@ -174,6 +175,10 @@
     &:hover {
       opacity: 1;
     }
+  }
+
+  #navbar-help {
+    margin-right: 15px;
   }
 
   #navbar-help:hover {
@@ -194,6 +199,7 @@
     border-radius: 2px;
     position: relative;
     font-weight:400;
+    margin-right: 15px;
     top: 0;
     filter: alpha(opacity=90);
     opacity: 0.9;
@@ -245,7 +251,6 @@
     .transition;
 
     &.signed-in {
-      border-right: 1px solid #7DAF8F;
       padding-right: 15px;
     }
   }
