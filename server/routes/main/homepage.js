@@ -1,9 +1,4 @@
 var querystring = require("querystring");
-var nunjucks = require("nunjucks");
-
-function urlLocalizer(locale, remixUrl) {
-  return nunjucks.renderString(remixUrl, { locale: locale });
-}
 
 module.exports = function(config, req, res) {
   var locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
