@@ -19,31 +19,25 @@ then
   # Get the last (current) commit's author
   COMMIT_AUTHOR="$(git show --format=\"%cn\" --no-patch $TRAVIS_COMMIT)"
 
-  # Exit if the commit's author is not Pontoon
-  if [ "$COMMIT_AUTHOR" == "\"Mozilla Pontoon\"" ]
+  # Get the list of file changes
+  CHANGE_SET="$(git diff-tree --name-only --no-commit-id -r $TRAVIS_COMMIT)"
+  
+  # Exit if there are no relevant string changes
+  if [[ "$CHANGE_SET" = *"editor.properties"* ]]
   then
-    # Get the list of file changes
-    CHANGE_SET="$(git diff-tree --name-only --no-commit-id -r $TRAVIS_COMMIT)"
-
-    # Exit if there are no relevant string changes
-    if [[ "$CHANGE_SET" = *"editor.properties"* ]]
-    then
-      # Trigger travis build on brackets
-      # This uses an api token I generated once by running:
-      # `travis login && travis token` and then
-      # `travis encrypt <my_token>`
-      curl -s -X POST \
-        -H "Content-Type: application/json" \
-        -H "Accept: application/json" \
-        -H "Travis-API-Version: 3" \
-        -H "Authorization: token $TRAVIS_API_TOKEN" \
-        -d "$body" \
-        https://api.travis-ci.org/repo/mozilla%2Fbrackets/requests
-    else
-      echo "$SKIP No new changes to Brackets' strings"
-    fi
+    # Trigger travis build on brackets
+    # This uses an api token I generated once by running:
+    # `travis login && travis token` and then
+    # `travis encrypt <my_token>`
+    curl -s -X POST \
+      -H "Content-Type: application/json" \
+      -H "Accept: application/json" \
+      -H "Travis-API-Version: 3" \
+      -H "Authorization: token $TRAVIS_API_TOKEN" \
+      -d "$body" \
+      https://api.travis-ci.org/repo/mozilla%2Fbrackets/requests
   else
-    echo "$SKIP No new commits by Mozilla Pontoon"
+    echo "$SKIP No new changes to Brackets' strings"
   fi
 else
   echo "$SKIP Current branch isn't master"

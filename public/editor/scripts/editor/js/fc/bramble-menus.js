@@ -61,6 +61,14 @@ define(function(require) {
     } else {
         $("#allow-scripts-toggle").removeClass("switch-enabled");
     }
+
+    //set initial UI value to SVG XML UI
+    if(bramble.getOpenSVGasXML()) {
+        $("#edit-SVG-toggle").addClass("switch-enabled");
+    } else {
+        $("#edit-SVG-toggle").removeClass("switch-enabled");
+    }
+
     // Enable/Disable JavaScript in Preview
     $("#allow-scripts-toggle").click(function() {
       // Toggle current value
@@ -98,6 +106,23 @@ define(function(require) {
       } else {
         $autocompleteToggle.removeClass("switch-enabled");
         bramble.disableAutocomplete();
+      }
+
+      return false;
+    });
+
+    //Edit SVG as XML
+    $("#edit-SVG-toggle").click(function() {
+      // Toggle current value
+      var $editSVGToggle = $("#edit-SVG-toggle");
+      var toggle = !($editSVGToggle.hasClass("switch-enabled"));
+
+      if(toggle) {
+        $editSVGToggle.addClass("switch-enabled");
+        bramble.openSVGasXML();
+      } else {
+        $editSVGToggle.removeClass("switch-enabled");
+        bramble.openSVGasImage();
       }
 
       return false;
