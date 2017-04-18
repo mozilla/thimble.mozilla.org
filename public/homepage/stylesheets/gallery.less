@@ -227,11 +227,50 @@
         background-size: cover;
         background-repeat: no-repeat;
         display: block;
-        border-bottom: solid 1px rgba(0,0,0,.05);
+        // border-bottom: solid 1px rgba(0,0,0,.05);
         transition: opacity .15s ease-out;
+        position: relative;
+
+        .thumbnail-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+          background: rgba(0,0,0,.9);
+          background: rgba(11,43,27,.95);
+          background-image: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: opacity .15s ease-out;
+
+          a {
+            color: white;
+            border: solid 1px white;
+            padding: 9px 26px;
+            border-radius: 2px;
+            cursor: pointer;
+            text-decoration: none;
+            transform: translateY(10px);
+            transition: transform ease-out .2s;
+
+            &:hover {
+              background: rgba(255,255,255,.1);
+            }
+          }
+        }
 
         &:hover {
-          opacity: .8;
+          .thumbnail-overlay {
+            opacity: 1;
+
+            a {
+              transform: translateY(0);
+            }
+          }
+
         }
       }
 

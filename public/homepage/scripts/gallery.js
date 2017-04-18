@@ -41,7 +41,7 @@ define(["jquery", "analytics"], function($, analytics) {
       this.galleryEl.on("keydown",".search",function(e){ that.keyPressed(e); });
       this.galleryEl.on("mousedown",".tag",function(){  that.tagClicked($(this).attr("tag")); });
 
-      this.galleryEl.on("click",".activity .thumbnail",function(){ that.thumbnailClicked($(this)); });
+      this.galleryEl.on("click",".activity .view-project",function(){ that.thumbnailClicked($(this)); });
       this.galleryEl.on("click",".activity .remix",function(){ that.remixClicked($(this)); });
 
       this.galleryEl.on("click",".search-tags .remove",function(){ that.removeTag($(this).parent()); });
@@ -185,7 +185,7 @@ define(["jquery", "analytics"], function($, analytics) {
           var newItem = this.galleryEl.find(".activity-template").clone();
           newItem.removeClass("activity-template");
           newItem.find(".thumbnail").css("background-image","url("+activity.thumbnail_url+")" );
-          newItem.find(".thumbnail").attr("href", activity.url);
+          newItem.find(".view-project").attr("href", activity.url);
           newItem.find(".project-title").text(activity.title);
           newItem.find(".author a").text(activity.author);
           newItem.find(".author a").attr("href", activity.author_url);
