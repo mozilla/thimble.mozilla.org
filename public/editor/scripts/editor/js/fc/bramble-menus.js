@@ -25,44 +25,49 @@ define(function(require) {
   }
 
   function setSnippetsMenuData(bramble) {
-    var hover = function (snippet) {
-      return function() { 
-
-        $( ".snippet-preview pre.snippet-code" ).each(function() {     
-          $( this ).removeClass("hide");
-          if ( $( this ).attr("id") !== snippet ) {
-            $( this ).addClass("hide");
-          }
-        });
-        $(snippet).removeClass("hide");
-        $(".snippet-preview a.insert-snippet:not(.bound)")
+    var addCodeSnippet = function() {
+      $(".snippet-preview a.insert-snippet:not(.bound)")
           .addClass('bound')
           .on(
             'click',
             function() { 
-              var snippet;
-              $( ".snippet-preview pre.snippet-code" ).each(function() {     
-                if ( !$( this ).hasClass("hide")) {
-                  snippet = $( this ).text();
-                }
-              });
+              var snippetID = "#" +
+                $(".snippet-preview a.insert-snippet").attr("data-snippet-id");
+              var snippet = $(snippetID).text();
               bramble.addCodeSnippet(
                 snippet
               ); 
               return false; 
             }
           );
+    }
+    var click = function (id) {
+      return function() { 
+        $( ".snippet-preview pre.snippet-code" ).each(function() {     
+          $( this ).removeClass("hide");
+          if ( $( this ).attr("id") !== id ) {
+            $( this ).addClass("hide");
+            $(".snippet-preview a.insert-snippet").attr("data-snippet-id", id );
+          }
+        });
+        $(id).removeClass("hide");
+        addCodeSnippet();
       };
     };
 
+    $( ".snippet-preview pre.snippet-code" ).each(function() { 
+         $( this ).addClass("hide");
+    });
+    var firstSnippetID = ".snippet-preview pre." + fileType;
+    var firstSnippet = $(firstSnippetID).first();
+    firstSnippet.removeClass("hide");
+    $(".snippet-preview a.insert-snippet").attr("data-snippet-id", firstSnippet.attr("id") );
+    addCodeSnippet();
+
     $( "#editor-pane-nav-snippets-ul li" ).each(function() {     
-      $( this ).hover(hover("preview-"+$(this).attr("id")));
+      $( this ).click(click("preview-"+$(this).attr("id")));
     });
 
-    /*$( "#editor-pane-nav-snippets-ul" ).on("hover", "li", function(e){
-      var target = e.target;
-      hover(target.attr("id"));
-    })*/
   }
 
   function reloadSnippetsData(bramble, filename) {
@@ -79,6 +84,7 @@ define(function(require) {
         $( this ).removeClass("hide");
       }
     });
+
     setSnippetsMenuData(bramble);
   }
 
