@@ -31,7 +31,7 @@ define(function(require) {
         update: $("#publish-button-update"),
         unpublish: $("#publish-button-unpublish"),
         parent: $("#publish-buttons"),
-        index_message: $("#no-index")
+        indexMessage: $("#no-index")
       },
       description: $("#publish-details > textarea.publish-description"),
       published: {
@@ -132,11 +132,11 @@ define(function(require) {
     }
 
     if(!bramble.hasIndexFile()){
-        dialog.buttons.index_message.css("display","block");
+        dialog.buttons.indexMessage.css("display","block");
         return;
-    } else {
-        dialog.buttons.index_message.css("display","none");
     }
+    
+    dialog.buttons.indexMessage.css("display","none");
 
     publisher.publishing = true;
 
