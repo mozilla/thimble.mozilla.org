@@ -83,13 +83,13 @@
 
             <div class="snippet-preview">
               {% for snippet in snippets.HTML %}
-                  <pre class="snippet-code hide" id="preview-{{snippet.id}}">{{snippet.data}}</pre>
+                  <pre class="snippet-code hide HTML" id="preview-{{snippet.id}}">{{snippet.data}}</pre>
               {% endfor %}
               {% for snippet in snippets.CSS %}
-                  <pre class="snippet-code hide" id="preview-{{snippet.id}}">{{snippet.data}}</pre>
+                  <pre class="snippet-code hide CSS" id="preview-{{snippet.id}}">{{snippet.data}}</pre>
               {% endfor %}
               {% for snippet in snippets.JS %}
-                  <pre class="snippet-code hide" id="preview-{{snippet.id}}">{{snippet.data}}</pre>
+                  <pre class="snippet-code hide JS" id="preview-{{snippet.id}}">{{snippet.data}}</pre>
               {% endfor %}
               <a class="insert-snippet" data-snippet-id="" href="#">{{ gettext("insertButtonLabel") }}</a>
             </div>
