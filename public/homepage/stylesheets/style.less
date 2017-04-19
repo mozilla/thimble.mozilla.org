@@ -263,12 +263,18 @@ body, html {
     font-weight: 600;
   }
 
-  strong.good-bug {
+  .good-bug {
     background: #0e8a16;
     color: white;
-    font-size: .85em;
-    padding: 1px 5px;
+    font-size: .8em;
+    padding: 0px 5px 1px 5px;
     border-radius: 2px;
+    text-decoration: none;
+
+    &:hover {
+     text-decoration: none;
+     opacity: .8;
+    }
   }
 
   ul {
@@ -482,5 +488,20 @@ footer {
         }
       }
     }
+  }
+}
+
+
+.blue-button {
+  border: solid 2px @link-blue;
+  padding: 8px 16px;
+  border-radius: 2px;
+  display: inline-block;
+  font-weight: 600;
+
+  &:hover {
+    text-decoration: none !important;
+    background: rgba(56,152,194,1);
+    color: white;
   }
 }
