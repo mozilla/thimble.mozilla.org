@@ -40,7 +40,7 @@ define(function(require) {
               return false; 
             }
           );
-    }
+    };
     var click = function (id) {
       return function() { 
         $( ".snippet-preview pre.snippet-code" ).each(function() {     
