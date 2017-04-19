@@ -24,15 +24,19 @@ apt-get update -y
 apt-get install -y gcc-4.8 g++-4.8
 update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.8
 # ---
+# -- Installing Yarn
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+#--
 apt-get install -y git # For id.webmaker.org
-npm install -g http-server --loglevel=error # For hosting published projects
-npm install -g node-gyp --loglevel=error # For bcrypt
+yarn global add http-server --loglevel=error # For hosting published projects
+yarn global add node-gyp --loglevel=error # For bcrypt
 # We install the following dependencies globally since we disable .bin dependency links for npm install using --no-bin-links (due to Windows being unable to create symlinks) hence not allowing npm scripts to use the compiled dependencies directly
-npm install -g node-pre-gyp --loglevel=error # For login.webmaker.org sqlite3
-npm install -g autoless@0.1.7 webpack@1.7.3 --loglevel=error # For id.webmaker.org
-npm install -g knex@">=0.8.6 <0.9.0" --loglevel=error # For publish.webmaker.org
-npm install -g pm2 --loglevel=error # For running Thimble, see scripts/start-services.sh
-npm install -g grunt-cli --loglevel=error # For Thimble's npm postinstall script
+yarn global add node-pre-gyp --loglevel=error # For login.webmaker.org sqlite3
+yarn global add autoless@0.1.7 webpack@1.7.3 --loglevel=error # For id.webmaker.org
+yarn global add knex@">=0.8.6 <0.9.0" --loglevel=error # For publish.webmaker.org
+yarn global add pm2 --loglevel=error # For running Thimble, see scripts/start-services.sh
+yarn global add grunt-cli --loglevel=error # For Thimble's npm postinstall script
 # ---
 
 cd /vagrant
@@ -83,7 +87,7 @@ cd services
 echo "Setting up login.webmaker.org"
 cd login.webmaker.org
 cp env.sample .env
-sudo npm install --no-bin-links --loglevel=error # sudo needed for bcrypt permissions
+sudo yarn install --no-bin-links --loglevel=error # sudo needed for bcrypt permissions
 cd ..
 # ---
 
@@ -91,7 +95,7 @@ cd ..
 echo "Setting up id.webmaker.org"
 cd id.webmaker.org
 cp sample.env .env
-npm install --no-bin-links --unsafe-perm --loglevel=error # --unsafe-perm needed to run with root privileges to avoid getting the error "cannot run in wd" thrown by one of the dependencies
+yarn install --no-bin-links --unsafe-perm --loglevel=error # --unsafe-perm needed to run with root privileges to avoid getting the error "cannot run in wd" thrown by one of the dependencies
 su postgres -c "node scripts/create-tables.js"
 su postgres -c "psql -d webmaker_oauth_test -f ../../scripts/sql/oauth-setup.sql"
 cd ..
@@ -100,8 +104,8 @@ cd ..
 # --- publish.webmaker.org setup and database setup ---
 echo "Setting up publish.webmaker.org"
 cd publish.webmaker.org
-npm run env
-npm install --no-bin-links --loglevel=error
+yarn run env
+yarn install --no-bin-links --loglevel=error
 eval "DATABASE_URL=postgres://$DB_USERNAME:$DB_PASSWORD@localhost:5432/publish npm run migrate"
 cd ..
 mkdir -p /tmp/mox/test # Serve published projects from here
@@ -111,5 +115,5 @@ chown -R vagrant:vagrant /tmp/mox/test # Let vagrant write to this dir
 # --- thimble setup ---
 cd "$ROOT"
 cp env.dist .env
-npm install --no-bin-links --unsafe-perm --loglevel=error
+yarn install --no-bin-links --unsafe-perm --loglevel=error
 # ---
