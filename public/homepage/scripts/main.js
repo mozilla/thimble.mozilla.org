@@ -32,7 +32,7 @@ require.config({
 
 // While the user is reading this page, start to cache Bramble's biggest files
 function preloadBramble($) {
-//Using prefetch for easier cacheing and preloading
+//Using prefetch for easier cacheing and preloading of resources
   <link rel="prefetch" href="/dist/styles/brackets.min.css">
   <link rel="prefetch" href="/dist/bramble.js">
   <link rel="prefetch" href="/dist/main.js">
