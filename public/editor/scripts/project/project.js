@@ -259,7 +259,6 @@ define(function(require) {
               });
             }, function(err) {
               if (err) {
-                console.error("Failed to download " + DEFAULT_INDEX_HTML_URL, err);
                 callback(err);
                 return;
               }
