@@ -32,17 +32,11 @@ require.config({
 
 // While the user is reading this page, start to cache Bramble's biggest files
 function preloadBramble($) {
-  var brambleHost = $("meta[name='bramble-host']").attr("content");
-  brambleHost = brambleHost.replace(/\/$/, "");
-  [
-    brambleHost + "/dist/styles/brackets.min.css",
-    brambleHost + "/dist/bramble.js",
-    brambleHost + "/dist/main.js",
-    brambleHost + "/dist/thirdparty/thirdparty.min.js"
-  ].forEach(function(url) {
-    // Load and cache files as plain text (don't parse) and ignore results.
-    $.ajax({url: url, dataType: "text"});
-  });
+//Using prefetch for easier cacheing and preloading
+  <link rel="prefetch" href="/dist/styles/brackets.min.css">
+  <link rel="prefetch" href="/dist/bramble.js">
+  <link rel="prefetch" href="/dist/main.js">
+  <link rel="prefetch" href="/dist/thirdparty/thirdparty.min.js">
 }
 
 function setupNewProjectLinks($, analytics) {
