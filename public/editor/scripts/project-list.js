@@ -83,86 +83,120 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
 
   var projectsToDelete = [];
 
-  $(".project-delete").click(function() {
-    if($(".delete-button").length === 0){
-      var deleteBtn = document.createElement("div");
-      deleteBtn.appendChild(document.createTextNode("Delete Projects"));
-      deleteBtn.className = "delete-button";
-      deleteBtn.onclick = function() {
-        // TODO: we can do better than this, but let's at least make it harder to lose data.
-        if(!window.confirm("{{ deleteProjectConfirmationText }}")) {
-          return false;
-        }
+  function deleteProject(project){
+    var projectId = project.attr("data-project-id");
+    var projectElementId = project.attr("id");
+    $("#" + projectElementId + " > .project-title").off("click");
+
+    analytics.event("DeleteProject");
+
+    deleteProjectFromDB(projectId, project);
+  }
+
+  function deleteProjectFromDB(projectId, project) {
+    var request = $.ajax({
+      headers: {
+        "X-Csrf-Token": $("meta[name='csrf-token']").attr("content")
+      },
+      type: "DELETE",
+      url: "/" + locale + "/projects/" + projectId,
+      timeout: Constants.AJAX_DEFAULT_TIMEOUT_MS
+    });
+    request.done(function(){
+      onDeleteSuccess(project, projectId, request.status);
+    });
+    request.fail(function(jqXHR, status, err){
+      onDeleteError(err);
+    });
+  }
+
+  function onDeleteSuccess(project, projectId, status) {
+    if(status !== 204) {
+      console.error("[Thimble error] sending delete request for project ", projectId, status);
+    }
+
+    project.hide({
+      duration: 250,
+      easing: "linear",
+      done: function() {
+        project.remove();
+      }
+    });
+  }
+
+  function onDeleteError(err) {
+    err = err || new Error("unknown network error");
+    console.error(err);
+  }
+
+  $(".delete-button").click(function() {
+    // TODO: we can do better than this, but let's at least make it harder to lose data.
+    if(!window.confirm("{{ deleteProjectConfirmationText }}")) {
+      return false;
+    }
         
-        Array.prototype.forEach.call(projectsToDelete, function(project){
-          var projectId = project.attr("data-project-id");
-          var projectElementId = project.attr("id");
-          $("#" + projectElementId + " > .project-title").off("click");
+    while(projectsToDelete.length > 0) {
+      deleteProject($(projectsToDelete.shift()));
+    }
 
-          analytics.event("DeleteProject");
+    $(".delete-button").toggle();
+  });
 
-          var request = $.ajax({
-            headers: {
-              "X-Csrf-Token": $("meta[name='csrf-token']").attr("content")
-            },
-            type: "DELETE",
-            url: "/" + locale + "/projects/" + projectId,
-            timeout: Constants.AJAX_DEFAULT_TIMEOUT_MS
-          });
-          request.done(function() {
-            if(request.status !== 204) {
-              console.error("[Thimble error] sending delete request for project ", projectId, request.status);
-            }
-          });
-          request.fail(function(jqXHR, status, err) {
-            err = err || new Error("unknown network error");
-            console.error(err);
-          });
+  function findProject(project){
+    for(var i = 0; i < projectsToDelete.length; i++){
+      if(projectsToDelete[i].attr("id") === project.attr("id")) {
+        return i;
+      }
+    }
+    return -1;
+  }
 
-          project.hide({
-            duration: 250,
-            easing: "linear",
-            done: function() {
-              project.remove();
-            }
-          });
-        });
-        projectsToDelete = [];
-        $(".delete-button").remove();
-      };
-      var listWrapper = document.getElementsByClassName("project-list-wrapper");
-      listWrapper[0].appendChild(deleteBtn);
+  $(".project-delete").click(function() {
+    if($(".delete-button").css("display") === "none") {
+      $(".delete-button").toggle();
     }
 
     var project = $(this).closest(".project");
     var projectSelector = "#" + project.attr("id");
-    var deleteIndex = projectsToDelete.findIndex(function(x) {return x.attr("id") === project.attr("id");});
+    var deleteIndex = findProject(project);
     var disabledLink = {"cursor":"default", "text-decoration":"none"};
     var enabledLink = {"cursor":"pointer", "text-decoration":"underline"};
     
     if(deleteIndex === -1) {
       projectsToDelete.push(project);
-      $(projectSelector + " .edit-link").bind("click", false).css({"cursor":"default"});
+      $(projectSelector + " .edit-link").on("click", function(link) {
+        link.preventDefault();
+      }).css({"cursor":"default"});
+
       if($(projectSelector + " .published-link").length !== 0) {
-        $(projectSelector + " .published-link").bind("click", false).css(disabledLink);
-        $(projectSelector + " .remix-link").bind("click", false).css(disabledLink);
+        $(projectSelector + " .published-link").on("click", function(link) {
+          link.preventDefault();
+        }).css(disabledLink);
+        $(projectSelector + " .remix-link").on("click", function(link) {
+          link.preventDefault();
+        }).css(disabledLink);
       }
+
       project.css("background", "rgba(255,0,0,.08)");
-      $(this).closest(".project-delete").html("Cancel");
+      $(projectSelector + " .project-delete").text("Cancel");
     } else {
       projectsToDelete.splice(deleteIndex, 1);
-      $(projectSelector + " .edit-link").unbind("click", false).css({"cursor":"pointer"});
+      $(projectSelector + " .edit-link").off("click").css({"cursor":"pointer"});
+
       if($(projectSelector + " .published-link").length !== 0) {
-        $(projectSelector + " .published-link").unbind("click", false).css(enabledLink);
-        $(projectSelector + " .remix-link").unbind("click", false).css(enabledLink);
+        $(projectSelector + " .published-link").off("click").css(enabledLink);
+        $(projectSelector + " .remix-link").off("click").css(enabledLink);
       }
+
       project.css("background", "");
-      $(this).closest(".project-delete").html("<div class='icon-garbage-can'></div> {{prjListDeleteProjectBtn}}");
+      $(projectSelector + " .project-delete").html("<div class='icon-garbage-can'></div>");
+      $(projectSelector + " .project-delete").append(document.createTextNode(" {{prjListDeleteProjectBtn}}"));
+
+
       if(projectsToDelete.length === 0) {
-        $(".delete-button").remove();
+        $(".delete-button").toggle();
       }
     }
-
   });
 });
 
