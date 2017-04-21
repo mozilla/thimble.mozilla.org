@@ -103,6 +103,14 @@ h2 {
     min-width: 0;
   }
 
+  .pending-delete {
+    background: rgba(255,0,0,.08);
+
+    &:hover {
+      background: rgba(255,0,0,.1)
+    }
+  }
+
   .project-ui {
     flex-shrink: 1;
     white-space: nowrap;
@@ -136,6 +144,14 @@ h2 {
 
     @media screen and (max-width: 800px) {
       display: block;
+    }
+  }
+
+  .disabled-link {
+    cursor: default;
+
+    &:hover {
+      text-decoration: none;
     }
   }
 
