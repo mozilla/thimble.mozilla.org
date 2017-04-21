@@ -34,7 +34,6 @@ module.exports = function(config, req, res, next) {
       }
 
       var failure = false;
-
       if(err) {
         res.status(500);
         failure = {
