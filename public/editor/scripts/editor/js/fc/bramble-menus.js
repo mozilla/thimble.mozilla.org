@@ -15,8 +15,8 @@ define(function(require) {
 
   function setupSnippetsMenu(bramble) {
     PopupMenu.createWithOffset("#editor-pane-nav-snippets", "#editor-pane-nav-snippets-menu");
-    $( "#editor-pane-nav-snippets-menu header .snippet-types a" ).each(function() {
-      $( this ).click(function(bramble){
+    $("#editor-pane-nav-snippets-menu header .snippet-types a").each(function() {
+      $(this).click(function(bramble) {
         reloadSnippetsData(bramble, $(this).text());
       });
     });
@@ -27,61 +27,73 @@ define(function(require) {
   function setSnippetsMenuData(bramble) {
     var addCodeSnippet = function() {
       $(".snippet-preview a.insert-snippet:not(.bound)")
-          .addClass('bound')
-          .on(
-            'click',
-            function() { 
-              var snippetID = "#" +
-                $(".snippet-preview a.insert-snippet").attr("data-snippet-id");
-              var snippet = $(snippetID).text();
-              bramble.addCodeSnippet(
-                snippet
-              ); 
-              return false; 
-            }
-          );
+        .addClass('bound')
+        .on(
+          'click',
+          function() {
+            var snippetID = "#" +
+              $(".snippet-preview a.insert-snippet").attr("data-snippet-id");
+            var snippet = $(snippetID).text();
+            bramble.addCodeSnippet(
+              snippet
+            );
+            return false;
+          }
+        );
     };
-    var click = function (id) {
-      return function() { 
-        $( ".snippet-preview pre.snippet-code" ).each(function() {     
-          $( this ).removeClass("hide");
-          if ( $( this ).attr("id") !== id ) {
-            $( this ).addClass("hide");
-            $(".snippet-preview a.insert-snippet").attr("data-snippet-id", id );
+    var click = function(id) {
+      return function() {
+        $(".snippet-preview pre.snippet-code").each(function() {
+          $(this).removeClass("hide");
+          if ($(this).attr("id") !== id) {
+            $(this).addClass("hide");
+            $(".snippet-preview a.insert-snippet").attr("data-snippet-id", id);
           }
         });
+
+        var selectedLi = "#" + id.substring(id.indexOf('-') + 1);
+        addRemoveSelectedSnippet(selectedLi);
+
         $(id).removeClass("hide");
         addCodeSnippet();
       };
     };
 
-    $( ".snippet-preview pre.snippet-code" ).each(function() { 
-         $( this ).addClass("hide");
+    var addRemoveSelectedSnippet = function(id) {
+      var $SelectedElement = $('.selected');
+      $SelectedElement.first().removeClass("selected");
+      $(id).addClass("selected");
+    }
+
+    $(".snippet-preview pre.snippet-code").each(function() {
+      $(this).addClass("hide");
     });
     var firstSnippetID = ".snippet-preview pre." + fileType;
     var firstSnippet = $(firstSnippetID).first();
     firstSnippet.removeClass("hide");
-    $(".snippet-preview a.insert-snippet").attr("data-snippet-id", firstSnippet.attr("id") );
+    $(".snippet-preview a.insert-snippet").attr("data-snippet-id", firstSnippet.attr("id"));
     addCodeSnippet();
+    var selectedLi = "#" + firstSnippet.attr("id").substring(firstSnippet.attr("id").indexOf('-') + 1);
+    addRemoveSelectedSnippet(selectedLi);
 
-    $( "#editor-pane-nav-snippets-ul li" ).each(function() {     
-      $( this ).click(click("preview-"+$(this).attr("id")));
+    $("#editor-pane-nav-snippets-ul li").each(function() {
+      $(this).click(click("preview-" + $(this).attr("id")));
     });
 
   }
 
   function reloadSnippetsData(bramble, filename) {
     fileType = filename.substring(filename.lastIndexOf('.') + 1).toUpperCase();
-    $( "#editor-pane-nav-snippets-menu header .snippet-types a" ).each(function() {     
-      $( this ).removeClass("active");
-      if ( $( this ).text() === fileType ) {
-        $( this ).addClass("active");
+    $("#editor-pane-nav-snippets-menu header .snippet-types a").each(function() {
+      $(this).removeClass("active");
+      if ($(this).text() === fileType) {
+        $(this).addClass("active");
       }
     });
-    $( "#editor-pane-nav-snippets-ul li" ).each(function() {     
-      $( this ).addClass("hide");
-      if ( $( this ).attr("data-type") === fileType ) {
-        $( this ).removeClass("hide");
+    $("#editor-pane-nav-snippets-ul li").each(function() {
+      $(this).addClass("hide");
+      if ($(this).attr("data-type") === fileType) {
+        $(this).removeClass("hide");
       }
     });
 
