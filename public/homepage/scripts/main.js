@@ -1,5 +1,3 @@
-/* global requirejs */
-
 require.config({
   waitSeconds: 120,
   baseUrl: "/{{ locale }}/homepage/scripts",
