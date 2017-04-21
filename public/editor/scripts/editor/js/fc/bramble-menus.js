@@ -63,7 +63,7 @@ define(function(require) {
       var $SelectedElement = $('.selected');
       $SelectedElement.first().removeClass("selected");
       $(id).addClass("selected");
-    }
+    };
 
     $(".snippet-preview pre.snippet-code").each(function() {
       $(this).addClass("hide");
