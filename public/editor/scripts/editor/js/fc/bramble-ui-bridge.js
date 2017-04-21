@@ -192,10 +192,11 @@ define(function(require) {
       var data = bramble.getLayout();
 
       if(isSidebarVisible) {
-        $(".editor-pane-nav").width(data.firstPaneWidth +"px");
+        var total = data.firstPaneWidth + data.secondPaneWidth +data.sidebarWidth;
+        $(".editor-pane-nav").width((total-data.secondPaneWidth-data.sidebarWidth) +"px");
         $(".preview-pane-nav").width(data.secondPaneWidth+ "px");
       } else {
-        $(".editor-pane-nav").width(data.firstPaneWidth + data.sidebarWidth+"px");
+        $(".editor-pane-nav").width(data.firstPaneWidth - data.secondPaneWidth+"px");
         $(".preview-pane-nav").width(data.secondPaneWidth+ "px");
       }
       $("#editor-pane-nav-preview").css("display", "none");
@@ -207,9 +208,8 @@ define(function(require) {
       bramble.hidePreview();
       var data = bramble.getLayout();
       if(isSidebarVisible) {
-        // Total width of window
-        var total = data.firstPaneWidth + data.secondPaneWidth;
-        $(".editor-pane-nav").width(total + "px");
+        var total = data.firstPaneWidth +data.secondPaneWidth;
+        $(".editor-pane-nav").width(total+"px");
         $(".preview-pane-nav").width("0px");
       } else {
         // Total width of window
