@@ -1,3 +1,5 @@
+@import "colors.less";
+
 .project-list-wrapper {
   width: ~"calc(100% - 100px)";
   margin: 35px auto;
@@ -36,7 +38,7 @@ h2 {
 }
 
 .delete-button {
-  background-color: #2A9961;
+  background-color: @red;
   display: none;
   padding: 8px 15px 6px 15px;
   cursor: pointer;
@@ -46,13 +48,20 @@ h2 {
   position: absolute;
   top: 0;
   right: 200px;
+  padding-left: 33px;
+
+  img {
+    height: 18px;
+    position: absolute;
+    top: 9px;
+    left: 11px;
+  }
 
   &:hover {
-    background-color: #39AA6D;
+    opacity: 0.9;
   }
 
   &:active {
-    background-color: #288952;
     top: 2px;
     border: none;
   }
