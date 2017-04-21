@@ -2,7 +2,7 @@ require.config({
   waitSeconds: 120,
   paths: {
     "jquery": "/node_modules/jquery/dist/jquery.min",
-    "analytics": "/node_modules/webmaker-analytics/analytics",
+    "analytics": "/{{ locale }}/editor/scripts/analytics",
     "uuid": "/node_modules/node-uuid/uuid",
     "cookies": "/node_modules/cookies-js/dist/cookies",
     "moment": "/node_modules/moment/min/moment-with-locales.min",
@@ -88,8 +88,8 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
     var projectElementId = project.attr("id");
     $("#" + projectElementId + " > .project-title").off("click");
 
-    analytics.event("DeleteProject");
-
+    analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "Delete Project" });
+ 
     deleteProjectFromDB(projectId, project);
   }
 
@@ -159,36 +159,34 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
     var project = $(this).closest(".project");
     var projectSelector = "#" + project.attr("id");
     var deleteIndex = findProject(project);
-    var disabledLink = {"cursor":"default", "text-decoration":"none"};
-    var enabledLink = {"cursor":"pointer", "text-decoration":"underline"};
     
     if(deleteIndex === -1) {
       projectsToDelete.push(project);
       $(projectSelector + " .edit-link").on("click", function(link) {
         link.preventDefault();
-      }).css({"cursor":"default"});
+      }).toggleClass("disabled-link");
 
       if($(projectSelector + " .published-link").length !== 0) {
         $(projectSelector + " .published-link").on("click", function(link) {
           link.preventDefault();
-        }).css(disabledLink);
+        }).toggleClass("disabled-link");
         $(projectSelector + " .remix-link").on("click", function(link) {
           link.preventDefault();
-        }).css(disabledLink);
+        }).toggleClass("disabled-link");
       }
 
-      project.css("background", "rgba(255,0,0,.08)");
+      project.toggleClass("pending-delete");
       $(projectSelector + " .project-delete").text("Cancel");
     } else {
       projectsToDelete.splice(deleteIndex, 1);
-      $(projectSelector + " .edit-link").off("click").css({"cursor":"pointer"});
+      $(projectSelector + " .edit-link").off("click").toggleClass("disabled-link");
 
       if($(projectSelector + " .published-link").length !== 0) {
-        $(projectSelector + " .published-link").off("click").css(enabledLink);
-        $(projectSelector + " .remix-link").off("click").css(enabledLink);
+        $(projectSelector + " .published-link").off("click").toggleClass("disabled-link");
+        $(projectSelector + " .remix-link").off("click").toggleClass("disabled-link");
       }
 
-      project.css("background", "");
+      project.toggleClass("pending-delete");
       $(projectSelector + " .project-delete").html("<div class='icon-garbage-can'></div>");
       $(projectSelector + " .project-delete").append(document.createTextNode(" {{prjListDeleteProjectBtn}}"));
 
