@@ -366,6 +366,8 @@ body {
   box-shadow: 0 3px 9px rgba(0,0,0,0.24);
   min-width: 400px;
   top: 65px;
+  max-height: 70vh;
+  overflow: auto;
 
   header {
     overflow: auto;
@@ -418,6 +420,7 @@ body {
     background: rgba(0,0,0,.1);
     padding: 12px 15px 15px 15px;
     border-left: solid 1px rgba(0,0,0,.15);
+    flex: 1;
   }
 
   .snippet-code {
@@ -426,7 +429,7 @@ body {
     line-height: 140%;
 
     &.hide {
-        display: none;
+      display: none;
     }
   }
 
@@ -459,6 +462,10 @@ body {
 
       &:hover {
         background-color: rgba(0,0,0,.05);
+      }
+
+      &.selected {
+        background-color: rgba(0,0,0,.1);
       }
 
       .icon;
