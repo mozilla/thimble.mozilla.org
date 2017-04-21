@@ -78,7 +78,24 @@ define(function(require) {
 
       return false;
     });
+  $("#allow-lint-toggle").click(function() {
+    // Toggle current value
+     var $allowWSToggle = $("#allow-lint-toggle");
+     var toggle = !($allowWSToggle.hasClass("switch-enabled"));
+ 
+       if(toggle) {
+         $allowWSToggle.addClass("switch-enabled");
+         bramble.enablelint();
+         analytics.event("EnableLintIndicator");
+       } else {
+         $allowWSToggle.removeClass("switch-enabled");
+         bramble.disablelint();
+         analytics.event("DisablelintIndicator");
+       }
+ 
+       return false;
 
+  });
 
     // Theme Toggle
     function lightThemeUI() {
