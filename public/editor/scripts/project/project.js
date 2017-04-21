@@ -257,13 +257,7 @@ define(function(require) {
                 }
                 callback(null, indexLocation);
               });
-            }, function(err) {
-              if (err) {
-                callback(err);
-                return;
-              }
-              callback();
-            });
+            }, callback);
           });
         });
       });
