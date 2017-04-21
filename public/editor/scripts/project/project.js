@@ -244,15 +244,21 @@ define(function(require) {
               return callback(err);
             }
 
-            // Look for an HTML file to open, ideally index.html
-            var indexPos = 0;
+            // Look for an HTML file to open
+            // Preferably `tutorial.html` (if available) or `index.html`
+            // Otherwise the first html file available
+            var indexPos = 0, tutorialPos = -1;
             found.forEach(function(path, idx) {
-              if(Path.basename(path) === "index.html") {
+              if(Path.basename(path) === "tutorial.html") {
+                tutorialPos = idx;
+              }
+
+              if (Path.basename(path) === "index.html") {
                 indexPos = idx;
               }
             });
 
-            callback(null, found[indexPos]);
+            callback(null, found[tutorialPos >= 0 ? tutorialPos : indexPos]);
           });
         });
       });
