@@ -14,16 +14,22 @@ define(function(require) {
   var adapting = false;
   var adaptTimeoutMS = 200; // How often we adapt editor bar layout
   var isSidebarVisible = false;
+  var adaptTimeout;
 
   function updateLayout(data) {
     $(".filetree-pane-nav").width(data.sidebarWidth);
     $(".editor-pane-nav").width(data.firstPaneWidth);
     $(".preview-pane-nav").width(data.secondPaneWidth);
 
-    // Only adapt the layout every once in a while
+    window.clearTimeout(adaptTimeout);
+    adaptTimeout = setTimeout(function(){
+      adaptLayout();
+    },adaptTimeoutMS);
+
     if(!adapting) {
       adapting = true;
       adaptLayout();
+      window.clearTimeout(adaptTimeout);
       setTimeout(function(){
         adapting = false;
       },adaptTimeoutMS);
