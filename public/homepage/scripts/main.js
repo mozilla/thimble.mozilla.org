@@ -107,7 +107,6 @@ function init($, uuid, cookies, PopupMenu, analytics, gallery) {
   setupAuthentication($, uuid, cookies, analytics);
   setupNewProjectLinks($, analytics);
   gallery.init();
-  preloadBramble($);
 }
 
 require(['jquery', 'uuid', 'cookies', 'fc/bramble-popupmenu', 'analytics', 'gallery'], init);
