@@ -112,10 +112,10 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
       console.error(err);
     });
 
-    project.hide({
-      duration: 250,
+    project.fadeOut({
+      duration: "slow",
       easing: "linear",
-      done: function() {
+      complete: function(){
         project.remove();
       }
     });
