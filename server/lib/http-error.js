@@ -63,7 +63,6 @@ class HttpError {
 
     error.userMessage = request.gettext(userMessageKey, locale);
     error.locale = localeInfo && localeInfo.lang;
-      response.render("error.html", { status: 500 });
     return error;
   }
 }
