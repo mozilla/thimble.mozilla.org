@@ -112,10 +112,8 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
       console.error(err);
     });
 
-    project.fadeOut({
-      duration: "slow",
-      easing: "linear",
-      complete: function(){
+    project.slideToggle( {
+      complete: function() {
         project.remove();
       }
     });
