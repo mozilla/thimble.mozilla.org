@@ -14,90 +14,74 @@ define(function(require) {
   }
 
   function setupSnippetsMenu(bramble) {
-    PopupMenu.createWithOffset("#editor-pane-nav-snippets", "#editor-pane-nav-snippets-menu");
-    $("#editor-pane-nav-snippets-menu header .snippet-types a").each(function() {
-      $(this).click(function(bramble) {
-        reloadSnippetsData(bramble, $(this).text());
-      });
-    });
+    var menu = PopupMenu.createWithOffset("#editor-pane-nav-snippets", ".snippets-menu-container");
 
-    setSnippetsMenuData(bramble);
-  }
+    function dataTypeSelector(elementSelector, dataType) {
+      return elementSelector + "[data-type='" + dataType + "']";
+    }
 
-  function setSnippetsMenuData(bramble) {
-    var addCodeSnippet = function() {
-      $(".snippet-preview a.insert-snippet:not(.bound)")
-        .addClass('bound')
-        .on(
-          'click',
-          function() {
-            var snippetID = "#" +
-              $(".snippet-preview a.insert-snippet").attr("data-snippet-id");
-            var snippet = $(snippetID).text();
-            bramble.addCodeSnippet(
-              snippet
-            );
-            return false;
-          }
-        );
-    };
-    var click = function(id) {
-      return function() {
-        $(".snippet-preview pre.snippet-code").each(function() {
-          $(this).removeClass("hide");
-          if ($(this).attr("id") !== id) {
-            $(this).addClass("hide");
-            $(".snippet-preview a.insert-snippet").attr("data-snippet-id", id);
-          }
-        });
+    function snippetIDSelector(elementSelector, snippetID) {
+      return elementSelector + "[data-snippet-id='" + snippetID + "']";
+    }
 
-        var selectedLi = "#" + id.substring(id.indexOf('-') + 1);
-        addRemoveSelectedSnippet(selectedLi);
+    $("div.snippets-menu .snippets-categories span").click(function() {
+      var $snippetCategory = $(this);
+      var $previousSnippetCategory = $snippetCategory.parent().children(".active");
 
-        $(id).removeClass("hide");
-        addCodeSnippet();
-      };
-    };
-
-    var addRemoveSelectedSnippet = function(id) {
-      var $SelectedElement = $('.selected');
-      $SelectedElement.first().removeClass("selected");
-      $(id).addClass("selected");
-    };
-
-    $(".snippet-preview pre.snippet-code").each(function() {
-      $(this).addClass("hide");
-    });
-    var firstSnippetID = ".snippet-preview pre." + fileType;
-    var firstSnippet = $(firstSnippetID).first();
-    firstSnippet.removeClass("hide");
-    $(".snippet-preview a.insert-snippet").attr("data-snippet-id", firstSnippet.attr("id"));
-    addCodeSnippet();
-    var selectedLi = "#" + firstSnippet.attr("id").substring(firstSnippet.attr("id").indexOf('-') + 1);
-    addRemoveSelectedSnippet(selectedLi);
-
-    $("#editor-pane-nav-snippets-ul li").each(function() {
-      $(this).click(click("preview-" + $(this).attr("id")));
-    });
-
-  }
-
-  function reloadSnippetsData(bramble, filename) {
-    fileType = filename.substring(filename.lastIndexOf('.') + 1).toUpperCase();
-    $("#editor-pane-nav-snippets-menu header .snippet-types a").each(function() {
-      $(this).removeClass("active");
-      if ($(this).text() === fileType) {
-        $(this).addClass("active");
+      if($snippetCategory.is($previousSnippetCategory)) {
+        return false;
       }
-    });
-    $("#editor-pane-nav-snippets-ul li").each(function() {
-      $(this).addClass("hide");
-      if ($(this).attr("data-type") === fileType) {
-        $(this).removeClass("hide");
-      }
+
+      // Current/previous snippet data types
+      var dataType = $snippetCategory.text();
+      var previousDataType = $previousSnippetCategory.text();
+
+      // Current/previously selected snippets
+      var snippetID = $(dataTypeSelector("ul.snippets-list li.selected", dataType)).attr("data-snippet-id");
+      var previousSnippetID = $(dataTypeSelector("ul.snippets-list li.selected", previousDataType)).attr("data-snippet-id");
+
+      /*
+        - Hide the snippet list items for the previous data type
+        - Show the snippet list items for the current data type
+        - Hide the snippet preview for the previously selected snippet
+        - Show the snippet preview for the currently selected snippet
+      */
+      $("div.snippets")
+      .find(
+        dataTypeSelector("li", dataType) + ", " +
+        dataTypeSelector("li", previousDataType) + ", " +
+        snippetIDSelector("div.snippets-preview", snippetID) + ", " +
+        snippetIDSelector("div.snippets-preview", previousSnippetID)
+      )
+      .toggleClass("hide");
+
+      $snippetCategory.toggleClass("active");
+      $previousSnippetCategory.toggleClass("active");
+
+      return false;
     });
 
-    setSnippetsMenuData(bramble);
+    $("ul.snippets-list > li").click(function() {
+      var $selectedSnippet = $(this);
+      var $previousSnippet = $(dataTypeSelector("ul.snippets-list li.selected", $selectedSnippet.attr("data-type")));
+
+      var $selectedSnippetCode = $(snippetIDSelector(".snippets-preview", $selectedSnippet.attr("data-snippet-id")));
+      var $previousSnippetCode = $(snippetIDSelector(".snippets-preview", $previousSnippet.attr("data-snippet-id")));
+
+      $selectedSnippet.toggleClass("selected");
+      $previousSnippet.toggleClass("selected");
+      $selectedSnippetCode.toggleClass("hide");
+      $previousSnippetCode.toggleClass("hide");
+
+      return false;
+    });
+
+    $("div.snippets-preview > button").click(function() {
+      bramble.addCodeSnippet($(this).siblings("pre").text());
+      menu.close();
+
+      return false;
+    });
   }
 
   function setupOptionsMenu(bramble) {
@@ -399,6 +383,10 @@ define(function(require) {
     });
   }
 
+  function refreshSnippets(type) {
+    $("div.snippets-menu .snippets-categories span[data-type='" + type + "']").click();
+  }
+
   function init(bramble) {
     setupSnippetsMenu(bramble);
     setupOptionsMenu(bramble);
@@ -409,6 +397,6 @@ define(function(require) {
 
   return {
     init: init,
-    reloadSnippetsData: reloadSnippetsData
+    refreshSnippets: refreshSnippets
   };
 });
