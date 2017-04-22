@@ -1,0 +1,329 @@
+<html>
+  <head>
+    <!-- Edit the title here-->
+    <title>Creating Starting Kit Tutorial</title>
+  </head>
+
+  <body>
+    <div class="tutorial">
+      <h1>Creating Starting Kit Tutorial</h1>
+      <p>I just create a Starting Kit, and I believe a good tutorial will help a lot of people to create more Starting Kit much easier.
+      </p>
+
+      <ol class="steps">
+        <!-- Step 1-->
+        <li>
+          <h6>Create a new project and Publish it</h6>
+          <p>
+            You first have to complete a project and publish it on thimble.
+          </p>
+          <p class="tip">
+            <strong>All Starting Kits</strong> are projects that is published by someone.
+          </p>
+          <p>
+            For example: <a href="https://thimbleprojects.org/mozillalearning/220073">Keep Calm Poster</a>
+          </p>
+          <p class="tip">
+            Tip: Projects on the homepage are hosted on thimbleprojects.org/mozillalearning, <strong>BUT we do NOT</strong> have to do that.
+          </p>
+          <p>
+            Just host the page on your account and <strong>DO NOT Delete</strong> it.
+          </p>
+        </li>
+
+        <!-- Step 2-->
+        <li>
+          <h6>Add tutorial.html</h6>
+          <p>
+            Add a tutorial.html directly into the file tree of your project.
+          </p>
+          <p>
+            <strong>Thimble will automatically add the "TUTORIAL" button for you between the "PREVIEW" button and the reload button.</strong>
+          </p>
+          <p>
+            Don't forgot to update your published project.
+          </p>
+          <p class = "tip">
+            The template "tutorial.html" is given in the same folder as this file. :)
+          </p>
+        </li>
+
+        <!-- Step 3 -->
+        <li>
+          <h6>Create a Teaching Kit and Publish it.</h6>
+          <p>
+            This one is opectional.(because I saw a lot of people didn't do that...)
+          <p>
+          <p>
+            However, if you want your Starting Kit show up on the homepage, <strong>you need a Teaching Kit.</strong>
+          </p>
+          <p>
+            I friendly modify the current two Teaching Kits. You can simply remix and publish it. :)
+          </p>
+          <p>
+            Teaching Kit should published as a different project.
+          </p>
+          <p class="tip">
+            Templates: <a href="http://thimble.mozilla.org/projects/256800/remix">Template 1</a>, <a href="http://thimble.mozilla.org/projects/256809/remix">Template 2</a>
+          </p>
+        </li>
+
+        <!-- Step 4 -->
+        <li>
+          <h6>Add Image.</h6>
+          <p>
+            Every Starting Kit has a cover image.
+          </p>
+          <p>
+            The size of image should be: <strong>271 * 278 !</strong>
+          </p>
+          <p>
+            There are two ways to add image:
+          </p>
+          <ol>
+            <li>
+              Add the image directly into the file tree of your project. (please name it as: thumbnail.???)
+            </li>
+            <li>
+              Add the image under <code>public\resources\img</code>. (and name it as: thumbnail-&lt;project name&gt;.???)
+            </li>
+          </ol>
+        </li>
+        
+        <!-- Step 5 -->
+        <li>
+          <h6>Create a pull request. Ask admin to change <a href="https://mozilla.github.io/thimble-homepage-gallery/activities.json">this file</a></h6>
+          <p>
+            This file: "https://mozilla.github.io/thimble-homepage-gallery/activities.json" is the file that store the location Info of all Starting Kits.
+          </p>
+          <p>
+            The format of new Starting Kit is:
+          </p>
+          <p>
+            <code>
+              ,
+            </code>
+          </p>
+          <p>
+            <code>
+              {
+            </code>
+          </p>
+          <p>
+            <code>
+              "title" : "Name of your Starting Kit",
+            </code>
+          </p>
+          <p>
+            <code>
+              "url" : "https://thimbleprojects.org/mozillalearning/your-project-id/",
+            </code>
+          </p>
+          <ol>
+            <li>
+              <code>"thumbnail_url" : "https://thimbleprojects.org/mozillalearning/your-project-id/img-name",</code>
+            </li>
+            <li>
+              <code>"thumbnail_url" : "https://thimble.mozilla.org/img/img-name",</code>
+            </li>
+          </ol>
+          <p>
+            <code>
+              "description" : "Desc of you project",
+            </code>
+          </p>
+          <p>
+            <code>
+              "tags" : ["tag1", "tag2", "tag3"],
+            </code>
+          </p>
+          <p>
+            <code>
+              "author" : "mozilla",
+            </code>
+          </p>
+          <p>
+            <code>
+              "author_url" : "http://learning.mozilla.org"
+            </code>
+          </p>
+          <p>
+            <code>
+              }
+            </code>
+          </p>
+          <p class="tip">
+            thumbnail_url depend on which way you host your cover img.
+          </p>
+        </li>
+
+      </ol>
+
+      <!-- Adding "tutorial.html" in thimble, 
+           thimble will add the tutorial page for you automatically-->
+      <p>
+        Great job, you finished the tutorial! You can make your own tutorials for others to follow
+        by adding a <code>tutorial.html</code> page to any Thimble project.
+      </p>
+
+    </div>
+  </body>
+  
+  <head>
+    <style>
+      body {
+        background-color: #EAEAEA;
+        color: white;
+        font-family: "Helvetica Neue", Helvetica, sans-serif;
+        padding: 20px;
+      }
+
+      .tutorial {
+        font-size: 16px;
+        padding: 35px;
+        color: #333;
+        background: #FFEC8D;
+        box-shadow: 0 1px 4px rgba(0,0,0,.2);
+      }
+
+      h1 {
+        font-size: 2.2em;
+        font-weight: normal;
+        margin: 0 0 15px 0;
+        padding: 0 0 5px 0;
+        border-bottom: solid 2px #C9B45B;
+      }
+
+      h1,h2,h3,h4,h5,h6 {
+        font-weight: normal;
+        color: rgba(0,0,0,.8);
+      }
+
+      h2 {
+        font-size: 2em;
+        margin: 35px 0 5px 0;
+      }
+
+      h3 {
+        font-size: 1.8em;
+        margin: 30px 0 5px 0;
+      }
+
+      h4 {
+        font-size: 1.5em;
+        margin: 25px 0 5px 0;
+      }
+
+      h5 {
+        font-size: 1.2em;
+        margin: 20px 0 5px 0;
+        font-weight: bold
+      }
+
+      h6 {
+        font-size: 1em;
+        font-weight: bold;
+        margin: 20px 0 5px 0;
+      }
+
+
+      code {
+        background: rgba(0,0,0,.1);
+        font-family: monospace;
+        padding: 1px 3px;
+        margin: 0 1px;
+      }
+
+      /* Steps list */
+
+      ol.steps {
+        list-style-type: none;
+        counter-reset: step-counter;
+        padding-left: 60px;
+        margin: 30px 0 30px 0;
+      }
+
+      ol.steps > li {
+        position: relative;
+        margin: 0 0 35px 0;
+        min-height: 50px;
+      }
+
+      ol.steps > li h6 {
+        font-size: 1.5em;
+        font-weight: normal;
+        color: rgba(0,0,0,.6);
+      }
+
+      ol.steps > li p {
+        line-height: 140%;
+      }
+
+      ol.steps > li:before {
+        content: counter(step-counter);
+        counter-increment: step-counter;
+        position: absolute;
+        left: -60px;
+        font-size: 16px;
+        border: solid 2px rgba(0,0,0,.4);
+        border-radius: 50%;
+        padding: 10px 15px;
+        opacity: .5;
+        top: 2px;
+      }
+
+
+      a {
+        color: #357548;
+      }
+
+      a:hover {
+        color: #246036;
+      }
+
+      p, li {
+        color: rgba(0,0,0,.6);
+      }
+
+      p {
+        line-height: 125%;
+      }
+
+      .tip {
+        background: rgba(0,0,0,.1);
+        padding: 10px 14px;
+        border-radius: 2px;
+      }
+
+      hr {
+        border: none;
+        border-bottom: solid 2px #C9B45B;
+        margin: 25px 0;
+      }
+
+      p, ol, ul {
+        margin: 10px 0 20px 0;
+      }
+
+      li {
+        margin: 0 0 10px 0;
+      }
+
+      img {
+        display: block;
+        margin: 5px 0 10px;
+        border: solid 5px white;
+        box-shadow: 0px 2px 3px rgba(0,0,0,.2);
+      }
+
+      .code {
+        background: #222;
+        padding: 10px 12px;
+        display: block;
+        font-size: 14px;
+        color: rgba(255,255,255,.8);
+        border-radius: 2px;
+      }
+    </style>
+  </head>
+</html>
