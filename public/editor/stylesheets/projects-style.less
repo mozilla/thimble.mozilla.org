@@ -16,15 +16,12 @@ h2 {
 
 .project-button {
   background-color: #2A9961;
-  display: inline-block;
   padding: 8px 15px 6px 15px;
   cursor: pointer;
   color: white;
   border-bottom: solid 2px rgba(0,0,0,.3);
   border-radius: 2px;
-  position: absolute;
-  top: 0;
-  right: 0;
+  float: right;
 
   &:hover {
     background-color: #39AA6D;
@@ -32,7 +29,7 @@ h2 {
 
   &:active {
     background-color: #288952;
-    top: 2px;
+    margin-top: 2px;
     border: none;
   }
 }
@@ -45,16 +42,13 @@ h2 {
   color: white;
   border-bottom: solid 2px rgba(0,0,0,.3);
   border-radius: 2px;
-  position: absolute;
-  top: 0;
-  right: 200px;
-  padding-left: 33px;
+  float: right;
+  margin-right: 25px;
 
   img {
     height: 18px;
-    position: absolute;
-    top: 9px;
-    left: 11px;
+    position: relative;
+    top: 2px;
   }
 
   &:hover {
@@ -62,7 +56,7 @@ h2 {
   }
 
   &:active {
-    top: 2px;
+    margin-top: 2px;
     border: none;
   }
 }
