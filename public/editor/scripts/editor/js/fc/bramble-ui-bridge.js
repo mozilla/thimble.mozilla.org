@@ -219,10 +219,9 @@ define(function(require) {
     bramble.on("touchEmulatorChange", function(data) {
       if(data.enabled) {
         $("#preview-pane-nav-touch-emulator").addClass("enabled");
-        analytics.event("TouchEmulatorEnabled");
+        analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "TouchEmulator Enabled" });
       } else {
         $("#preview-pane-nav-touch-emulator").removeClass("enabled");
-        analytics.event("TouchEmulatorDisabled");
       }
       
       _touchEmulatorEnabled = data.enabled;
