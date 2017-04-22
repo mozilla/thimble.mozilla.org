@@ -188,12 +188,15 @@ define(["jquery", "analytics"], function($, analytics) {
           newItem.find(".description").text(activity.description);
 
           // Check if activity_url ends with a slash, if it doesn't - add one before adding "remix"
-          var remix = "remix";
+          /*var remix = "remix";
           var endsWithSlash = (activity.url.charAt(activity.url.length-1) === "/");
           if(!endsWithSlash) {
             remix = "/remix";
           }
           newItem.find(".remix").attr("href", activity.url + remix);
+          */
+          //WIP: see the discussion on: https://github.com/mozilla/thimble.mozilla.org/issues/2012
+          newItem.find(".remix").attr("href", "https://thimble.mozilla.org/projects/" + (activity.url).match(/\d+/)[0] + "/remix");
           if(activity.teaching_kit_url) {
             newItem.find(".teaching-kit").attr("href", activity.teaching_kit_url).removeClass("hidden");
           } else {
