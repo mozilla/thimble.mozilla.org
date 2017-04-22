@@ -121,18 +121,6 @@
     cursor: pointer;
   }
 
-  #navbar-help {
-    opacity: 0.65;
-    filter: alpha(opacity=65);
-    .icon;
-    color: white;
-    img.icon-question-mark {
-      vertical-align: middle;
-      position: relative;
-      top: -2px;
-    }
-  }
-
   .nav-chunk {
     border-right: 1px solid #7DAF8F;
     padding: 0 15px;
@@ -148,11 +136,6 @@
     &:hover {
       opacity: 1;
     }
-  }
-
-  #navbar-help:hover {
-    opacity: 1;
-    filter: alpha(opacity=100);
   }
 
   #navbar-publish {
@@ -400,6 +383,35 @@ a.navbar-login:hover {
 .dropdown .dropdown-content {
   right: 0 !important;
   left: auto !important;
+}
+
+// Help Dropdown Menu
+#navbar-help {
+
+  .dropdown-content {
+    left: 0;
+    right: auto;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 12px 0;
+    padding: 0 14px;
+
+    a {
+      text-decoration: none;
+      color: rgba(0,0,0,.6);
+      display: block;
+      padding: 11px 12px;
+      width: 100%;
+      box-sizing: border-box;
+
+      &:hover {
+        background-color: rgba(0,0,0,.05);
+      }
+    }
+
+  }
 }
 
 // Locale Dropdown Menu
