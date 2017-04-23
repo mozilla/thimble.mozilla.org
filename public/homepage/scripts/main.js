@@ -1,4 +1,4 @@
-/* global requirejs */
+// global requirejs 
 
 require.config({
   waitSeconds: 120,
