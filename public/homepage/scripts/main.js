@@ -30,15 +30,6 @@ require.config({
   }
 });
 
-// While the user is reading this page, start to cache Bramble's biggest files
-function preloadBramble($) {
-//Using prefetch for easier cacheing and preloading of resources
-  <link rel="prefetch" href="/dist/styles/brackets.min.css">
-  <link rel="prefetch" href="/dist/bramble.js">
-  <link rel="prefetch" href="/dist/main.js">
-  <link rel="prefetch" href="/dist/thirdparty/thirdparty.min.js">
-}
-
 function setupNewProjectLinks($, analytics) {
   var authenticated = $("#navbar-login").hasClass("signed-in");
   var newProjectButton = $("#new-project-button");
@@ -116,7 +107,6 @@ function init($, uuid, cookies, PopupMenu, analytics, gallery) {
   setupAuthentication($, uuid, cookies, analytics);
   setupNewProjectLinks($, analytics);
   gallery.init();
-  preloadBramble($);
 }
 
 require(['jquery', 'uuid', 'cookies', 'fc/bramble-popupmenu', 'analytics', 'gallery'], init);
