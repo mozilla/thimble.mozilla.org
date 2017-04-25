@@ -101,7 +101,7 @@ module.exports = function(config, req, res, next) {
 
     options.projectMetadata = encodeURIComponent(JSON.stringify(projectMetadata));
 
-    options.snippets = snippets.getSnippets();
+    options.snippets = snippets;
 
     res.render("editor/index.html", options);
   });
