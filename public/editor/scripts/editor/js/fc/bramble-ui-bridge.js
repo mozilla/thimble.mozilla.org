@@ -440,7 +440,6 @@ define(function(require) {
 
     bramble.on("projectDirty", function(){
       $("#navbar-dirt-file").addClass("hide");
-      
       $("#navbar-save-indicator").removeClass("hide");
     });
 
