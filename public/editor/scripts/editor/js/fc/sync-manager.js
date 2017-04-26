@@ -169,7 +169,7 @@ define(function(require) {
       if(err) {
         // Deal with case of local file vanishing before we get a chance to sync (#2018).
         if(err.code === "ENOENT") {
-          logger("SyncManager", "local file missing for sync update operation, skipping: ", currentPath);
+          logger("SyncManager", "local file missing for sync update operation, skipping: ", path);
           return callback();
         }
         return callback(err);
