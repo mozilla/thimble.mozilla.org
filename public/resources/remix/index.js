@@ -14,43 +14,44 @@
 
   function setupBar(err) {
     if (err) {
-      console.log("[Thimble Error] Unable to inject Remix UI. Error was: `" + err + "`");
+      console.log("[Thimble Error] Unable to inject Remix UI. Error was: ", err);
       return;
     }
 
     var detailsBar = document.querySelector(".details-bar");
     
-    if (detailsBar) {
-      detailsBar.setAttribute("style", "");
-      detailsBar.classList.add("mouse-mode");
-
-      detailsBar.addEventListener("click", function(event) {
-        if (event.target.classList.contains("thimble-button")) {
-          detailsBar.classList.remove("collapsed");
-          event.stopPropagation();
-        }
-      });
-
-      detailsBar.addEventListener("click", function(event) {
-        if (event.target.classList.contains("close-details-bar")) {
-          detailsBar.classList.add("collapsed");
-          event.stopPropagation();
-        }
-      });
-
-      document.querySelector(".mouse-mode").addEventListener("mouseenter", function(){
-        detailsBar.classList.remove("collapsed");
-      });
-
-      document.querySelector(".mouse-mode").addEventListener("mouseleave", function(){
-        detailsBar.classList.add("collapsed");
-      });
+    if (!detailsBar) {
+      return;
     }
+
+    detailsBar.setAttribute("style", "");
+    detailsBar.classList.add("mouse-mode");
+
+    detailsBar.addEventListener("click", function(event) {
+      if (event.target.classList.contains("thimble-button")) {
+        detailsBar.classList.remove("collapsed");
+        event.stopPropagation();
+      }
+    });
+
+    detailsBar.addEventListener("click", function(event) {
+      if (event.target.classList.contains("close-details-bar")) {
+        detailsBar.classList.add("collapsed");
+        event.stopPropagation();
+      }
+    });
+
+    document.querySelector(".mouse-mode").addEventListener("mouseenter", function(){
+      detailsBar.classList.remove("collapsed");
+    });
+
+    document.querySelector(".mouse-mode").addEventListener("mouseleave", function(){
+      detailsBar.classList.add("collapsed");
+    });
   }
 
   function injectDetailsBar(metadata, callback) {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.responseType = "text";
+    var request = new XMLHttpRequest();
     var url = metadata.host + "/projects/remix-bar";
     var data = {
       host: metadata.host,
@@ -60,26 +61,23 @@
       updated: metadata.dateUpdated
     };
 
-    xmlhttp.onreadystatechange = function() {
-      if (xmlhttp.readyState === XMLHttpRequest.DONE ) {
-        var response = xmlhttp.response;
-        var textStatus = xmlhttp.statusText;
-        if (xmlhttp.status === 200) {
-          var fragmentBody = document.createElement("body");
-          var docFragment = document.createDocumentFragment();
-          docFragment.appendChild(fragmentBody);
-          fragmentBody.innerHTML = response;
-          var remixBar = fragmentBody.querySelector("div");
-          document.body.appendChild(remixBar);
-          callback(null);
-        } else if (xmlhttp.status >= 400) {
-          callback(textStatus);
+    request.onreadystatechange = function() {
+      if (request.readyState === XMLHttpRequest.DONE ) {
+        var response = request.response;
+        if (request.status !== 200) {
+          return callback({ status: request.status, response: response });
         }
+        document.querySelector("body").insertAdjacentHTML("afterbegin", response);
+        callback(null);
       }
     };
 
-    xmlhttp.open("GET", url, true);
-    xmlhttp.send(data);
+    var querystring = Object.keys(data).map(function(key) {
+      return encodeURIComponent(key) + "=" + encodeURIComponent(data[key]);
+    }).join("&");
+    url = url +  "?" +querystring;
+    request.open("GET", url);
+    request.send(data);
   }
 
   function injectStyleSheets(metadata) {
@@ -94,13 +92,10 @@
     document.head.appendChild(stylesheet);
   }
 
-  var hasDataRemixAttribute = function(element) {
+  function hasDataRemixAttribute(element) {
     var name = element.getAttribute("name");
-    if (!name) {
-      return false;
-    }
-    return name.startsWith("data-remix-");
-  };
+    return /^data-remix-.+/.test(name);
+  }
 
   function getMetadata() {
     var metadata = {};
