@@ -62,40 +62,40 @@
             <header>
               <h2 class="snippets-menu-title">{{ gettext("snippetMenuTitle") }}</h2>
               <div class="snippets-categories">
-                <span data-type="HTML" class="active">HTML</span>
-                <span data-type="CSS">CSS</span>
-                <span data-type="JS">JS</span>
+                <span data-type="html" class="active">HTML</span>
+                <span data-type="css">CSS</span>
+                <span data-type="js">JS</span>
               </div>
             </header>
 
             <div class="snippets">
               <ul class="snippets-list">
               {% for snippet in snippets.HTML %}
-                <li data-type="HTML" data-snippet-id="{{snippet.id}}" title="{{ gettext(snippet.title) }}" {{ 'class=selected' if loop.first }}>{{ gettext(snippet.name) }}</li>
+                <li data-type="html" data-snippet-id="{{snippet.id}}" title="{{ gettext(snippet.title) }}" {{ 'class=selected' if loop.first }}>{{ gettext(snippet.name) }}</li>
               {% endfor %}
               {% for snippet in snippets.CSS %}
-                <li data-type="CSS" data-snippet-id="{{snippet.id}}" class="hide{{ ' selected' if loop.first }}" title="{{ gettext(snippet.title) }}">{{ gettext(snippet.name) }}</li>
+                <li data-type="css" data-snippet-id="{{snippet.id}}" class="hide{{ ' selected' if loop.first }}" title="{{ gettext(snippet.title) }}">{{ gettext(snippet.name) }}</li>
               {% endfor %}
               {% for snippet in snippets.JS %}
-                <li data-type="JS" data-snippet-id="{{snippet.id}}" class="hide{{ ' selected' if loop.first }}" title="{{ gettext(snippet.title) }}">{{ gettext(snippet.name) }}</li>
+                <li data-type="js" data-snippet-id="{{snippet.id}}" class="hide{{ ' selected' if loop.first }}" title="{{ gettext(snippet.title) }}">{{ gettext(snippet.name) }}</li>
               {% endfor %}
               </ul>
 
               <div class="snippets-preview-pane">
               {% for snippet in snippets.HTML %}
-                <div data-type="HTML" data-snippet-id="{{snippet.id}}" class="{{ 'hide ' if not loop.first }}snippets-preview">
+                <div data-type="html" data-snippet-id="{{snippet.id}}" class="{{ 'hide ' if not loop.first }}snippets-preview">
                   <pre>{{ gettext(snippet.data.value) if snippet.data.l10n else snippet.data.value }}</pre>
                   <button>{{ gettext("snippetButtonLabel") }}</button>
                 </div>
               {% endfor %}
               {% for snippet in snippets.CSS %}
-                <div data-type="CSS" data-snippet-id="{{snippet.id}}" class="hide snippets-preview">
+                <div data-type="css" data-snippet-id="{{snippet.id}}" class="hide snippets-preview">
                   <pre>{{ gettext(snippet.data.value) if snippet.data.l10n else snippet.data.value }}</pre>
                   <button>{{ gettext("snippetButtonLabel") }}</button>
                 </div>
               {% endfor %}
               {% for snippet in snippets.JS %}
-                <div data-type="JS" data-snippet-id="{{snippet.id}}" class="hide snippets-preview">
+                <div data-type="js" data-snippet-id="{{snippet.id}}" class="hide snippets-preview">
                   <pre>{{ gettext(snippet.data.value) if snippet.data.l10n else snippet.data.value }}</pre>
                   <button>{{ gettext("snippetButtonLabel") }}</button>
                 </div>

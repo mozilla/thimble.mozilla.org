@@ -20,7 +20,7 @@
                              Defaults to false.
 */
 
-const HTML = [{
+const html = [{
   id: "snippet-htmlComment",
   name: "snippetHTMLComment",
   title: "snippetHTMLCommentTitle",
@@ -137,7 +137,7 @@ const HTML = [{
   }
 }];
 
-const CSS = [{
+const css = [{
   id: "snippet-cssComment",
   name: "snippetCSSComment",
   title: "snippetCSSCommentTitle",
@@ -238,7 +238,7 @@ const CSS = [{
   }
 }];
 
-const JS = [{
+const js = [{
   id: "snippet-emptyFunction",
   name: "snippetJSFunction",
   title: "snippetJSFunctionTitle",
@@ -306,7 +306,7 @@ const JS = [{
 }];
 
 module.exports = {
-  HTML,
-  CSS,
-  JS
+  html,
+  css,
+  js
 };

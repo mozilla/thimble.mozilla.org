@@ -3,7 +3,6 @@ define(function(require) {
   var $ = require("jquery");
   var PopupMenu = require("fc/bramble-popupmenu");
   var analytics = require("analytics");
-  var fileType = "HTML";
 
   function setupUserMenu() {
     PopupMenu.create("#navbar-logged-in .dropdown-toggle", "#navbar-logged-in .dropdown-content");
