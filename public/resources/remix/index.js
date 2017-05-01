@@ -75,9 +75,9 @@
     var querystring = Object.keys(data).map(function(key) {
       return encodeURIComponent(key) + "=" + encodeURIComponent(data[key]);
     }).join("&");
-    url = url +  "?" +querystring;
+    url = url + "?" + querystring;
     request.open("GET", url);
-    request.send(data);
+    request.send();
   }
 
   function injectStyleSheets(metadata) {
@@ -100,7 +100,7 @@
   function getMetadata() {
     var metadata = {};
     var metaElements = document.getElementsByTagName("meta");
-    var remixElements = Array.from(metaElements).filter(hasDataRemixAttribute);
+    var remixElements = Array.prototype.filter.call(metaElements, hasDataRemixAttribute);
 
     remixElements.forEach(function(metaElement) {
       var key = metaElement.getAttribute("name").replace("data-remix-", "");
