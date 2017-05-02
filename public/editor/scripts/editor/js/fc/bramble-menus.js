@@ -23,6 +23,7 @@ define(function(require) {
       return elementSelector + "[data-snippet-id='" + snippetID + "']";
     }
 
+    // Clicks on the Snippet Categories (HTML/CSS/JS)
     $("div.snippets-menu .snippets-categories span").click(function() {
       var $snippetCategory = $(this);
       var $previousSnippetCategory = $snippetCategory.parent().children(".active");
@@ -32,8 +33,8 @@ define(function(require) {
       }
 
       // Current/previous snippet data types
-      var dataType = $snippetCategory.text();
-      var previousDataType = $previousSnippetCategory.text();
+      var dataType = $snippetCategory.attr("data-type");
+      var previousDataType = $previousSnippetCategory.attr("data-type");
 
       // Current/previously selected snippets
       var snippetID = $(dataTypeSelector("ul.snippets-list li.selected", dataType)).attr("data-snippet-id");

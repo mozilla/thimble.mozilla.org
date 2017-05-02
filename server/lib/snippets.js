@@ -11,13 +11,18 @@
                 the `title` attribute and shown on hover.
     - `data`  : An object containing the code to be added into the editor.
                 It contains the following key/value pairs
-                  - `value` - [LOCALIZABLE] If the code contains strings that
-                              need to be translated, it must be a localization
-                              key. Otherwise, it is a string containing the
-                              code that will be inserted into the editor.
+                  - `value` - The code snippet that will be inserted into the
+                              editor. If the code contains strings that
+                              need to be translated, it must use localization
+                              keys for those strings inside the actual code
+                              snippet with `gettext`,
+                              for e.g. `{{ gettext("localizationKey") }}`,
+                              vs. using the strings directly. Also, if you do
+                              use localization keys in the code, make sure you
+                              set the property below to `true`.
                   - `l10n` - [optional] Set it to true if the `value`
-                             property of this object is a localization key.
-                             Defaults to false.
+                             property of this object contains localization
+                             keys. Defaults to false.
 */
 
 const html = [{
@@ -25,7 +30,7 @@ const html = [{
   name: "snippetHTMLComment",
   title: "snippetHTMLCommentTitle",
   data: {
-    value: "snippetHTMLCommentData",
+    value: '<!-- {{ gettext("snippetHTMLCommentData") }} -->\n',
     l10n: true
   }
 }, {
@@ -83,7 +88,13 @@ const html = [{
   name: "snippetHTMLForm",
   title: "snippetHTMLFormTitle",
   data: {
-    value: "snippetHTMLFormData",
+    value: '<form action="" method="get">\n' +
+           '  <label for="first-name">{{ gettext("snippetHTMLFormFirstNameLabel") }}</label>\n' +
+           '  <input id="first-name" type="text" name="firstname"><br>\n' +
+           '  <label for="last-name">{{ gettext("snippetHTMLFormLastNameLabel") }}</label>\n' +
+           '  <input id="last-name" type="text" name="lastname"><br>\n' +
+           '  <input type="submit" value="{{ gettext("snippetHTMLFormSubmit") }}">\n' +
+           '</form>\n',
     l10n: true
   }
 }, {
@@ -91,8 +102,7 @@ const html = [{
   name: "snippetHTMLScript",
   title: "snippetHTMLScriptTitle",
   data: {
-    value: "snippetHTMLScriptData",
-    l10n: true
+    value: '<script src="script-1.js"></script>\n'
   }
 }, {
   id: "snippet-internal-stylesheet",
@@ -109,15 +119,18 @@ const html = [{
   name: "snippetHTMLExternalStylesheet",
   title: "snippetHTMLExternalStylesheetTitle",
   data: {
-    value: "snippetHTMLExternalStylesheetData",
-    l10n: true
+    value: '<link href="style.css" rel="stylesheet">\n'
   }
 }, {
   id: "snippet-video",
   name: "snippetHTMLVideo",
   title: "snippetHTMLVideoTitle",
   data: {
-    value: "snippetHTMLVideoData",
+    value: '<video width="320" height="240" controls>\n' +
+           '  <source src="video.mp4" type="video/mp4">\n' +
+           '  <source src="video.ogg" type="video/ogg">\n' +
+           '  {{ gettext("snippetHTMLVideoData") }}\n' +
+           '</video>\n',
     l10n: true
   }
 }, {
@@ -125,7 +138,11 @@ const html = [{
   name: "snippetHTMLAudio",
   title: "snippetHTMLAudioTitle",
   data: {
-    value: "snippetHTMLAudioData",
+    value: '<audio controls>\n' +
+           '  <source src="audio.ogg" type="audio/ogg">\n' +
+           '  <source src="audio.mp3" type="audio/mpeg">\n' +
+           '  {{ gettext("snippetHTMLAudioData") }}\n' +
+           '</audio>\n',
     l10n: true
   }
 }, {
@@ -142,7 +159,7 @@ const css = [{
   name: "snippetCSSComment",
   title: "snippetCSSCommentTitle",
   data: {
-    value: "snippetCSSCommentData",
+    value: '/* {{ gettext("snippetCSSCommentData") }} */\n',
     l10n: true
   }
 }, {
@@ -168,7 +185,16 @@ const css = [{
   name: "snippetCSSKeyframe",
   title: "snippetCSSKeyframeTitle",
   data: {
-    value: "snippetCSSKeyframeData",
+    value: '/* {{ gettext("snippetCSSKeyframeAnimationComment") }} */\n' +
+           '@keyframes identifier {\n' +
+           '  from {background-color: red;}\n' +
+           '  to {background-color: yellow;}\n' +
+           '}\n\n' +
+           '/* {{ gettext("snippetCSSKeyframeAnimationTargetComment") }} */\n' +
+           'div {\n' +
+           '  animation-name: identifier;\n' +
+           '  animation-duration: 4s;\n' +
+           '}\n',
     l10n: true
   }
 }, {
@@ -176,7 +202,22 @@ const css = [{
   name: "snippetCSSAnchorStyle",
   title: "snippetCSSAnchorStyleTitle",
   data: {
-    value: "snippetCSSAnchorStyleData",
+    value: '/* {{ gettext("snippetCSSAnchorStyleUnvisitedLinkComment") }} */\n' +
+           'a:link {\n' +
+           '  color: red;\n' +
+           '}\n' +
+           '/* {{ gettext("snippetCSSAnchorStyleVisitedLinkComment") }} */\n' +
+           'a:visited {\n' +
+           '  color: green;\n' +
+           '}\n' +
+           '/* {{ gettext("snippetCSSAnchorStyleMouseOverLinkComment") }} */\n' +
+           'a:hover {\n' +
+           '  color: hotpink;\n' +
+           '}\n' +
+           '/* {{ gettext("snippetCSSAnchorStyleSelectedLinkComment") }} */\n' +
+           'a:active {\n' +
+           '  color: blue;\n' +
+           '}\n',
     l10n: true
   }
 }, {
@@ -202,7 +243,15 @@ const css = [{
   name: "snippetCSSMediaQuery",
   title: "snippetCSSMediaQueryTitle",
   data: {
-    value: "snippetCSSMediaQueryData",
+    value: '@media screen and (min-width: 769px) {\n' +
+           ' /* {{ gettext("snippetCSSMediaQueryData") }} */\n' +
+           '}\n' +
+           '@media screen and (min-device-width: 481px) and (max-device-width: 768px) {\n' +
+           '  /* {{ gettext("snippetCSSMediaQueryData") }} */\n' +
+           '}\n' +
+           '@media only screen and (max-device-width: 480px) {\n' +
+           '  /* {{ gettext("snippetCSSMediaQueryData") }} */\n' +
+           '}\n',
     l10n: true
   }
 }, {
@@ -243,7 +292,9 @@ const js = [{
   name: "snippetJSFunction",
   title: "snippetJSFunctionTitle",
   data: {
-    value: "snippetJSFunctionData",
+    value: 'function functionName() {\n' +
+           ' // {{ gettext("snippetJSFunctionData") }}\n' +
+           '}\n',
     l10n: true
   }
 }, {
@@ -251,7 +302,9 @@ const js = [{
   name: "snippetJSForLoop",
   title: "snippetJSForLoopTitle",
   data: {
-    value: "snippetJSForLoopData",
+    value: 'for (var i = 0; i < array.length; i++) {\n' +
+           ' // {{ gettext("snippetJSLoopData") }}\n' +
+           '}\n',
     l10n: true
   }
 }, {
@@ -259,7 +312,9 @@ const js = [{
     name: "snippetJSWhileLoop",
     title: "snippetJSWhileLoopTitle",
     data: {
-      value: "snippetJSWhileLoopData",
+      value: 'while (condition) {\n' +
+             ' // {{ gettext("snippetJSLoopData") }}\n' +
+             '}\n',
       l10n: true
     }
 }, {
@@ -267,7 +322,16 @@ const js = [{
   name: "snippetJSSwitchCase",
   title: "snippetJSSwitchCaseTitle",
   data: {
-    value: "snippetJSSwitchCaseData",
+    value: 'switch(variableName) {\n' +
+           '  case "match1":\n' +
+           '    // {{ gettext("snippetJSConditionalComment") }}\n' +
+           '    break;\n' +
+           '  case "match2":\n' +
+           '    // {{ gettext("snippetJSConditionalComment") }}\n' +
+           '    break;\n' +
+           '  default:\n' +
+           '    // {{ gettext("snippetJSConditionalDefaultComment") }}\n' +
+           '}\n',
     l10n: true
   }
 }, {
@@ -275,7 +339,13 @@ const js = [{
   name: "snippetJSIfElse",
   title: "snippetJSIfElseTitle",
   data: {
-    value: "snippetJSIfElseData",
+    value: 'if (condition1) {\n' +
+           '   // {{ gettext("snippetJSConditionalComment") }}\n' +
+           '} else if (condition2) {\n' +
+           '   // {{ gettext("snippetJSConditionalComment") }}\n' +
+           '} else {\n' +
+           '   // {{ gettext("snippetJSConditionalDefaultComment") }}\n' +
+           '}\n',
     l10n: true
   }
 }, {
@@ -283,7 +353,7 @@ const js = [{
   name: "snippetJSComment",
   title: "snippetJSCommentTitle",
   data: {
-    value: "snippetJSCommentData",
+    value: '/* {{ gettext("snippetJSCommentData") }} */\n',
     l10n: true
   }
 }, {
