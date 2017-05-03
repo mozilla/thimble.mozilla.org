@@ -167,6 +167,11 @@ define(function(require) {
 
     fs.readFile(path, function(err, data) {
       if(err) {
+        // Deal with case of local file vanishing before we get a chance to sync (#2018).
+        if(err.code === "ENOENT") {
+          logger("SyncManager", "local file missing for sync update operation, skipping: ", path);
+          return callback();
+        }
         return callback(err);
       }
 
@@ -281,7 +286,7 @@ define(function(require) {
 
     self.setSyncing(true);
 
-    function finalizeOperation(ajaxError) {
+    function finalizeOperation(operationErr) {
       Project.getSyncQueue(function(err, syncQueue) {
         if(err) {
           self.emitErrorEvent(err);
@@ -312,7 +317,7 @@ define(function(require) {
               // If the last operation errored, apply a backoff delay.
               delay = (self.backoff && self.backoff.next()) || AJAX_DEFAULT_DELAY_MS;
 
-              logger("SyncManager", "finished current operation (" + (ajaxError ? "failed" : "success") + "), will run next in " + delay + "ms. " + self.getPendingCount() + " operation(s) remain.");
+              logger("SyncManager", "finished current operation (" + (operationErr ? "failed" : "success") + "), will run next in " + delay + "ms. " + self.getPendingCount() + " operation(s) remain.");
               setTimeout(self.runNextOperation.bind(self), delay);
             } else {
               self.setSyncing(false);
@@ -339,8 +344,10 @@ define(function(require) {
 
         // If the network operation errored, put this file operation back in the pending list
         // and create a backoff delay object.  If it worked, remove a previous backoff delay (if any).
-        if(ajaxError) {
-          logger("SyncManager", "error syncing file, requeuing operation", ajaxError);
+        // Deal with any cases where the local file has vanished, and we should give up instead.
+        if(operationErr) {
+          logger("SyncManager", "error syncing file: ", operationErr,
+                 "Requeuing operation: ", currentOperation, " for path", currentPath);
           self.trigger("file-sync-error");
           queueOperation();
 

@@ -112,10 +112,8 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
       console.error(err);
     });
 
-    project.hide({
-      duration: 250,
-      easing: "linear",
-      done: function() {
+    project.slideToggle( {
+      complete: function() {
         project.remove();
       }
     });
