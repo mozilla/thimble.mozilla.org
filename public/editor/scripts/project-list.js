@@ -23,6 +23,7 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
   var locale = $("html")[0].lang;
   var isLocalStorageAvailable = !!(window.localStorage);
   var favorites;
+  var $projectsToDelete = [];
   if(isLocalStorageAvailable){
     try {
       favorites = JSON.parse(localStorage.getItem("project-favorites")) || [];
@@ -81,19 +82,11 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
 
   $("#project-list").prepend(favoriteProjectsElementList);
 
-  var projectsToDelete = [];
-
-  function deleteProject(project){
-    var projectId = project.attr("data-project-id");
-    var projectElementId = project.attr("id");
-    $("#" + projectElementId + " > .project-title").off("click");
+  function deleteProject($project) {
+    var projectId = $project.attr("data-project-id");
 
     analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "Delete Project" });
- 
-    deleteProjectFromDB(projectId, project);
-  }
 
-  function deleteProjectFromDB(projectId, project) {
     var request = $.ajax({
       headers: {
         "X-Csrf-Token": $("meta[name='csrf-token']").attr("content")
@@ -103,28 +96,21 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
       timeout: Constants.AJAX_DEFAULT_TIMEOUT_MS
     });
     request.done(function(){
-      onDeleteSuccess(project, projectId, request.status);
+      if(request.status !== 204) {
+        console.error("[Thimble error] Failed to delete project ", projectId, " with status: ", request.status);
+      }
+
+      $project.hide({
+        duration: 250,
+        easing: "linear",
+        done: function() {
+          $project.remove();
+        }
+      });
     });
     request.fail(function(jqXHR, status, err){
-      onDeleteError(err);
+      console.error("Failed to delete project with: ", err);
     });
-  }
-
-  function onDeleteSuccess(project, projectId, status) {
-    if(status !== 204) {
-      console.error("[Thimble error] sending delete request for project ", projectId, status);
-    }
-
-    project.slideToggle( {
-      complete: function() {
-        project.remove();
-      }
-    });
-  }
-
-  function onDeleteError(err) {
-    err = err || new Error("unknown network error");
-    console.error(err);
   }
 
   $(".delete-button").click(function() {
@@ -132,67 +118,43 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
     if(!window.confirm("{{ deleteProjectConfirmationText }}")) {
       return false;
     }
-        
-    while(projectsToDelete.length > 0) {
-      deleteProject($(projectsToDelete.shift()));
-    }
 
-    $(".delete-button").toggle();
+    $projectsToDelete.forEach(deleteProject);
+    $projectsToDelete = [];
+
+    $(".delete-button").hide();
+
+    return false;
   });
 
-  function findProject(project){
-    for(var i = 0; i < projectsToDelete.length; i++){
-      if(projectsToDelete[i].attr("id") === project.attr("id")) {
-        return i;
-      }
-    }
-    return -1;
-  }
+  $(".project-delete, .project-delete-cancel").click(function() {
+    var $project = $(this).closest(".project");
 
-  $(".project-delete").click(function() {
-    if($(".delete-button").css("display") === "none") {
-      $(".delete-button").toggle();
-    }
-
-    var project = $(this).closest(".project");
-    var projectSelector = "#" + project.attr("id");
-    var deleteIndex = findProject(project);
-    
-    if(deleteIndex === -1) {
-      projectsToDelete.push(project);
-      $(projectSelector + " .edit-link").on("click", function(link) {
-        link.preventDefault();
-      }).toggleClass("disabled-link");
-
-      if($(projectSelector + " .published-link").length !== 0) {
-        $(projectSelector + " .published-link").on("click", function(link) {
-          link.preventDefault();
-        }).toggleClass("disabled-link");
-        $(projectSelector + " .remix-link").on("click", function(link) {
-          link.preventDefault();
-        }).toggleClass("disabled-link");
-      }
-
-      project.toggleClass("pending-delete");
-      $(projectSelector + " .project-delete").text("Cancel");
+    if($project.hasClass("pending-delete")) {
+      $projectsToDelete.splice($projectsToDelete.indexOf($project), 1);
     } else {
-      projectsToDelete.splice(deleteIndex, 1);
-      $(projectSelector + " .edit-link").off("click").toggleClass("disabled-link");
-
-      if($(projectSelector + " .published-link").length !== 0) {
-        $(projectSelector + " .published-link").off("click").toggleClass("disabled-link");
-        $(projectSelector + " .remix-link").off("click").toggleClass("disabled-link");
-      }
-
-      project.toggleClass("pending-delete");
-      $(projectSelector + " .project-delete").html("<div class='icon-garbage-can'></div>");
-      $(projectSelector + " .project-delete").append(document.createTextNode(" {{prjListDeleteProjectBtn}}"));
-
-
-      if(projectsToDelete.length === 0) {
-        $(".delete-button").toggle();
-      }
+      $projectsToDelete.push($project);
     }
+
+    $project.find(
+      "a.edit-link, " +
+      "a.project-favorite-button, " +
+      "a.remix-link"
+    ).toggleClass("disabled-link");
+
+    $project.toggleClass("pending-delete");
+    $project.find(
+      "div.project-delete, " +
+      "div.project-delete-cancel"
+    ).toggleClass("hide");
+
+    if($projectsToDelete.length === 0) {
+      $(".delete-button").hide();
+    } else {
+      $(".delete-button").show();
+    }
+
+    return false;
   });
 });
 
