@@ -115,10 +115,8 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
       console.error("[Thimble error] sending delete request for project ", projectId, status);
     }
 
-    project.hide({
-      duration: 250,
-      easing: "linear",
-      done: function() {
+    project.slideToggle( {
+      complete: function() {
         project.remove();
       }
     });
