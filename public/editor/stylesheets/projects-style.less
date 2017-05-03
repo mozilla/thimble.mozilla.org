@@ -143,6 +143,7 @@ h2 {
 
   .disabled-link {
     cursor: default;
+    pointer-events: none;
 
     &:hover {
       text-decoration: none;
@@ -171,13 +172,17 @@ h2 {
     }
   }
 
-  .project-delete {
+  .project-delete, .project-delete-cancel {
     color: black;
     margin-left: 12px;
     opacity: .3;
     cursor: pointer;
     font-weight: 600;
     display: inline-block;
+  }
+
+  .project-delete.hide, .project-delete-cancel.hide {
+    display: none;
   }
 
   .icon-garbage-can {
@@ -207,11 +212,11 @@ h2 {
     }
   }
 
-  .project-delete:hover {
+  .project-delete:hover, .project-delete-cancel:hover {
     opacity: .6;
   }
 
-  .project-delete:hover :after {
+  .project-delete:hover ::after, .project-delete-cancel:hover ::after {
     transform-origin: left;
     transform: rotate(-4deg) translateY(-1px);
   }
