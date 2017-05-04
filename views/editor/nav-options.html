@@ -70,33 +70,33 @@
 
             <div class="snippets">
               <ul class="snippets-list">
-              {% for snippet in snippets.HTML %}
+              {% for snippet in snippets.html %}
                 <li data-type="html" data-snippet-id="{{snippet.id}}" title="{{ gettext(snippet.title) }}" {{ 'class=selected' if loop.first }}>{{ gettext(snippet.name) }}</li>
               {% endfor %}
-              {% for snippet in snippets.CSS %}
+              {% for snippet in snippets.css %}
                 <li data-type="css" data-snippet-id="{{snippet.id}}" class="hide{{ ' selected' if loop.first }}" title="{{ gettext(snippet.title) }}">{{ gettext(snippet.name) }}</li>
               {% endfor %}
-              {% for snippet in snippets.JS %}
+              {% for snippet in snippets.js %}
                 <li data-type="js" data-snippet-id="{{snippet.id}}" class="hide{{ ' selected' if loop.first }}" title="{{ gettext(snippet.title) }}">{{ gettext(snippet.name) }}</li>
               {% endfor %}
               </ul>
 
               <div class="snippets-preview-pane">
-              {% for snippet in snippets.HTML %}
+              {% for snippet in snippets.html %}
                 <div data-type="html" data-snippet-id="{{snippet.id}}" class="{{ 'hide ' if not loop.first }}snippets-preview">
-                  <pre>{{ gettext(snippet.data.value) if snippet.data.l10n else snippet.data.value }}</pre>
+                  <pre>{{ snippet.data.value | instantiate if snippet.data.l10n else snippet.data.value }}</pre>
                   <button>{{ gettext("snippetButtonLabel") }}</button>
                 </div>
               {% endfor %}
-              {% for snippet in snippets.CSS %}
+              {% for snippet in snippets.css %}
                 <div data-type="css" data-snippet-id="{{snippet.id}}" class="hide snippets-preview">
-                  <pre>{{ gettext(snippet.data.value) if snippet.data.l10n else snippet.data.value }}</pre>
+                  <pre>{{ snippet.data.value | instantiate if snippet.data.l10n else snippet.data.value }}</pre>
                   <button>{{ gettext("snippetButtonLabel") }}</button>
                 </div>
               {% endfor %}
-              {% for snippet in snippets.JS %}
+              {% for snippet in snippets.js %}
                 <div data-type="js" data-snippet-id="{{snippet.id}}" class="hide snippets-preview">
-                  <pre>{{ gettext(snippet.data.value) if snippet.data.l10n else snippet.data.value }}</pre>
+                  <pre>{{ snippet.data.value | instantiate if snippet.data.l10n else snippet.data.value }}</pre>
                   <button>{{ gettext("snippetButtonLabel") }}</button>
                 </div>
               {% endfor %}

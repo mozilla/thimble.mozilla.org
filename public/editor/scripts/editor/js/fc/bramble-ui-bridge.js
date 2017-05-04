@@ -440,7 +440,7 @@ define(function(require) {
 
     bramble.on("activeEditorChange", function(data) {
       setNavFilename(data.filename);
-      BrambleMenus.refreshSnippets(Path.extname(data.filename).substr(1).toUpperCase());
+      BrambleMenus.refreshSnippets(Path.extname(data.filename).substr(1).toLowerCase());
     });
 
     $("#spinner-container").fadeOut();

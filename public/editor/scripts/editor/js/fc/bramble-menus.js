@@ -23,6 +23,7 @@ define(function(require) {
       return elementSelector + "[data-snippet-id='" + snippetID + "']";
     }
 
+    // Clicks on the Snippet Categories (HTML/CSS/JS)
     $("div.snippets-menu .snippets-categories span").click(function() {
       var $snippetCategory = $(this);
       var $previousSnippetCategory = $snippetCategory.parent().children(".active");
@@ -32,12 +33,12 @@ define(function(require) {
       }
 
       // Current/previous snippet data types
-      var dataType = $snippetCategory.text();
-      var previousDataType = $previousSnippetCategory.text();
+      var dataType = $snippetCategory.data("type");
+      var previousDataType = $previousSnippetCategory.data("type");
 
       // Current/previously selected snippets
-      var snippetID = $(dataTypeSelector("ul.snippets-list li.selected", dataType)).attr("data-snippet-id");
-      var previousSnippetID = $(dataTypeSelector("ul.snippets-list li.selected", previousDataType)).attr("data-snippet-id");
+      var snippetID = $(dataTypeSelector("ul.snippets-list li.selected", dataType)).data("snippet-id");
+      var previousSnippetID = $(dataTypeSelector("ul.snippets-list li.selected", previousDataType)).data("snippet-id");
 
       /*
         - Hide the snippet list items for the previous data type
@@ -62,10 +63,10 @@ define(function(require) {
 
     $("ul.snippets-list > li").click(function() {
       var $selectedSnippet = $(this);
-      var $previousSnippet = $(dataTypeSelector("ul.snippets-list li.selected", $selectedSnippet.attr("data-type")));
+      var $previousSnippet = $(dataTypeSelector("ul.snippets-list li.selected", $selectedSnippet.data("type")));
 
-      var $selectedSnippetCode = $(snippetIDSelector(".snippets-preview", $selectedSnippet.attr("data-snippet-id")));
-      var $previousSnippetCode = $(snippetIDSelector(".snippets-preview", $previousSnippet.attr("data-snippet-id")));
+      var $selectedSnippetCode = $(snippetIDSelector(".snippets-preview", $selectedSnippet.data("snippet-id")));
+      var $previousSnippetCode = $(snippetIDSelector(".snippets-preview", $previousSnippet.data("snippet-id")));
 
       $selectedSnippet.toggleClass("selected");
       $previousSnippet.toggleClass("selected");
@@ -76,6 +77,10 @@ define(function(require) {
     });
 
     $("div.snippets-preview > button").click(function() {
+      var snippetID = $(this).parent().data("snippet-id") || false;
+      if(snippetID){
+        analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Insert Snippet", label : snippetID });
+      }
       bramble.addCodeSnippet($(this).siblings("pre").text());
       menu.close();
 
