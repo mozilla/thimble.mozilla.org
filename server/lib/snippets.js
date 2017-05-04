@@ -30,7 +30,7 @@ const html = [{
   name: "snippetHTMLComment",
   title: "snippetHTMLCommentTitle",
   data: {
-    value: `<!-- {{ gettext("snippetHTMLCommentData") }} -->`,
+    value: `<!-- {{ gettext("snippetCommentData") }} -->`,
     l10n: true
   }
 }, {
@@ -147,7 +147,7 @@ const css = [{
   name: "snippetCSSComment",
   title: "snippetCSSCommentTitle",
   data: {
-    value: '/* {{ gettext("snippetCSSCommentData") }} */\n',
+    value: '/* {{ gettext("snippetCommentData") }} */\n',
     l10n: true
   }
 }, {
@@ -290,7 +290,7 @@ const js = [{
    name: "snippetJSComment",
    title: "snippetJSCommentTitle",
    data: {
-     value: '// {{ gettext("snippetJSCommentData") }}\n',
+     value: '// {{ gettext("snippetCommentData") }}\n',
      l10n: true
    }
 },{
