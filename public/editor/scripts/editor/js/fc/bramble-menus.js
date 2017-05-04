@@ -77,6 +77,10 @@ define(function(require) {
     });
 
     $("div.snippets-preview > button").click(function() {
+      var snippetID = $(this).parent().data("snippet-id") || false;
+      if(snippetID){
+        analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Insert Snippet", label : snippetID });
+      }
       bramble.addCodeSnippet($(this).siblings("pre").text());
       menu.close();
 

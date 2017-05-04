@@ -14,8 +14,8 @@ define(function(require) {
       self.applyOffset = function() {
         // Determine where to horizontally place menu based on button's icon location
         var menuWidth = self._menu$.width();
-        var leftOffset = self._button$.offset().left - menuWidth/2 + 11;
         var iconWidth = self._button$.width();
+        var leftOffset = self._button$.offset().left - menuWidth/2 + iconWidth/2;
         var arrowOffset = menuWidth/2 - iconWidth/2;
         if(leftOffset < 0) {
           arrowOffset = menuWidth/2 - iconWidth/2 + leftOffset;

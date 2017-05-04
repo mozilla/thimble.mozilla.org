@@ -30,7 +30,7 @@ const html = [{
   name: "snippetHTMLComment",
   title: "snippetHTMLCommentTitle",
   data: {
-    value: '<!-- {{ gettext("snippetHTMLCommentData") }} -->\n',
+    value: `<!-- {{ gettext("snippetHTMLCommentData") }} -->`,
     l10n: true
   }
 }, {
@@ -38,63 +38,62 @@ const html = [{
   name: "snippetHTMLTable",
   title: "snippetHTMLTableTitle",
   data: {
-    value: '<table>\n' +
-           '  <tr>\n' +
-           '    <th></th>\n' +
-           '    <th></th>\n' +
-           '  </tr>\n' +
-           '  <tr>\n' +
-           '    <td></td>\n' +
-           '    <td></td>\n' +
-           '  </tr>\n' +
-           '</table>\n'
-  }
-}, {
-  id: "snippet-definitionList",
-  name: "snippetHTMLDefinitionList",
-  title: "snippetHTMLDefinitionListTitle",
-  data: {
-    value: '<dl>\n' +
-           '  <dt></dt>\n' +
-           '  <dd></dd>\n' +
-           '  <dt></dt>\n' +
-           '  <dd></dd>\n' +
-           '</dl>\n'
+    value:
+`<table>
+  <tr>
+    <th>{{ gettext("snippetHTMLTableHeading") }}</th>
+    <th>{{ gettext("snippetHTMLTableHeading") }}</th>
+  </tr>
+  <tr>
+    <td>{{ gettext("snippetHTMLTableValue") }}</td>
+    <td>{{ gettext("snippetHTMLTableValue") }}</td>
+  </tr>
+</table>
+`,
+    l10n: true
   }
 }, {
   id: "snippet-orderedList",
   name: "snippetHTMLOrderedList",
   title: "snippetHTMLOrderedListTitle",
   data: {
-    value: '<ol>\n' +
-           '  <li></li>\n' +
-           '  <li></li>\n' +
-           '  <li></li>\n' +
-           '</ol>\n'
+    value:
+`<ol>
+  <li>{{ gettext("snippetHTMLItem1") }}</li>
+  <li>{{ gettext("snippetHTMLItem2") }}</li>
+  <li>{{ gettext("snippetHTMLItem3") }}</li>
+</ol>
+`,
+    l10n: true
   }
 }, {
   id: "snippet-unorderedList",
   name: "snippetHTMLUnorderedList",
   title: "snippetHTMLUnorderedListTitle",
   data: {
-    value: '<ul>\n' +
-           '  <li></li>\n' +
-           '  <li></li>\n' +
-           '  <li></li>\n' +
-           '</ul>\n'
+    value:
+`<ul>
+  <li>{{ gettext("snippetHTMLItem1") }}</li>
+  <li>{{ gettext("snippetHTMLItem2") }}</li>
+  <li>{{ gettext("snippetHTMLItem3") }}</li>
+</ul>
+`,
+    l10n: true
   }
 }, {
   id: "snippet-form",
   name: "snippetHTMLForm",
   title: "snippetHTMLFormTitle",
   data: {
-    value: '<form action="" method="get">\n' +
-           '  <label for="first-name">{{ gettext("snippetHTMLFormFirstNameLabel") }}</label>\n' +
-           '  <input id="first-name" type="text" name="firstname"><br>\n' +
-           '  <label for="last-name">{{ gettext("snippetHTMLFormLastNameLabel") }}</label>\n' +
-           '  <input id="last-name" type="text" name="lastname"><br>\n' +
-           '  <input type="submit" value="{{ gettext("snippetHTMLFormSubmit") }}">\n' +
-           '</form>\n',
+    value:
+`<form action="" method="get">
+  <label for="first-name">{{ gettext("snippetHTMLFormFirstNameLabel") }}</label>
+  <input id="first-name" type="text" name="firstname"><br>
+  <label for="last-name">{{ gettext("snippetHTMLFormLastNameLabel") }}</label>
+  <input id="last-name" type="text" name="lastname"><br>
+  <input type="submit" value="{{ gettext("snippetHTMLFormSubmit") }}">
+</form>
+`,
     l10n: true
   }
 }, {
@@ -102,35 +101,30 @@ const html = [{
   name: "snippetHTMLScript",
   title: "snippetHTMLScriptTitle",
   data: {
-    value: '<script src="script-1.js"></script>\n'
-  }
-}, {
-  id: "snippet-internal-stylesheet",
-  name: "snippetHTMLInternalStylesheet",
-  title: "snippetHTMLInternalStylesheetTitle",
-  data: {
-    value: '<style>\n' +
-           '  h1 {color:red;}\n' +
-           '  p {color:blue;}\n' +
-           '</style>\n'
+    value: '<script src="script.js"></script>'
   }
 }, {
   id: "snippet-external-stylesheet",
   name: "snippetHTMLExternalStylesheet",
   title: "snippetHTMLExternalStylesheetTitle",
   data: {
-    value: '<link href="style.css" rel="stylesheet">\n'
+    value:
+`<!-- {{ gettext("snippetHTMLExternalStylesheetComment") | safe }} -->
+<link href="style.css" rel="stylesheet">
+`,
+    l10n: true
   }
 }, {
   id: "snippet-video",
   name: "snippetHTMLVideo",
   title: "snippetHTMLVideoTitle",
   data: {
-    value: '<video width="320" height="240" controls>\n' +
-           '  <source src="video.mp4" type="video/mp4">\n' +
-           '  <source src="video.ogg" type="video/ogg">\n' +
-           '  {{ gettext("snippetHTMLVideoData") }}\n' +
-           '</video>\n',
+    value:
+`<video width="320" height="240" controls>
+  <source src="video.mp4" type="video/mp4">
+  {{ gettext("snippetHTMLVideoData") }}
+</video>
+`,
     l10n: true
   }
 }, {
@@ -138,19 +132,13 @@ const html = [{
   name: "snippetHTMLAudio",
   title: "snippetHTMLAudioTitle",
   data: {
-    value: '<audio controls>\n' +
-           '  <source src="audio.ogg" type="audio/ogg">\n' +
-           '  <source src="audio.mp3" type="audio/mpeg">\n' +
-           '  {{ gettext("snippetHTMLAudioData") }}\n' +
-           '</audio>\n',
+    value:
+`<audio controls>
+  <source src="audio.mp3" type="audio/mpeg">
+  {{ gettext("snippetHTMLAudioData") }}
+</audio>
+`,
     l10n: true
-  }
-}, {
-  id: "snippet-mmt",
-  name: "snippetHTMLMetaMobile",
-  title: "snippetHTMLMetaMobileTitle",
-  data: {
-    value: '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
   }
 }];
 
@@ -163,38 +151,59 @@ const css = [{
     l10n: true
   }
 }, {
-  id: "snippet-bodyTag",
-  name: "snippetCSSBodyStyle",
-  title: "snippetCSSBodyStyleTitle",
+  id: "snippet-tagNameSelector",
+  name: "snippetCSSTagNameSelector",
+  title: "snippetCSSTagNameSelectorTitle",
   data: {
-    value: 'body {\n' +
-           '  background-color: lightblue;\n' +
-           '}\n'
+    value:
+`p {
+  font-size: 20px;
+}
+`
   }
 }, {
-  id: "snippet-paragraphTag",
-  name: "snippetCSSParagraphStyle",
-  title: "snippetCSSParagraphStyleTitle",
+  id: "snippet-classSelector",
+  name: "snippetCSSClassSelector",
+  title: "snippetCSSClassSelectorTitle",
   data: {
-    value: 'p {\n' +
-           '  font-size: 20px;\n' +
-           '}\n'
+    value:
+`.className {
+  background-color: green;
+}
+`
+  }
+}, {
+  id: "snippet-idSelector",
+  name: "snippetCSSIDSelector",
+  title: "snippetCSSIDSelectorTitle",
+  data: {
+    value:
+`#idName {
+  background-color: green;
+}
+`
   }
 }, {
   id: "snippet-kfa",
   name: "snippetCSSKeyframe",
   title: "snippetCSSKeyframeTitle",
   data: {
-    value: '/* {{ gettext("snippetCSSKeyframeAnimationComment") }} */\n' +
-           '@keyframes identifier {\n' +
-           '  from {background-color: red;}\n' +
-           '  to {background-color: yellow;}\n' +
-           '}\n\n' +
-           '/* {{ gettext("snippetCSSKeyframeAnimationTargetComment") }} */\n' +
-           'div {\n' +
-           '  animation-name: identifier;\n' +
-           '  animation-duration: 4s;\n' +
-           '}\n',
+    value:
+`/* {{ gettext("snippetCSSKeyframeAnimationTargetComment") }} */
+.animated {
+  animation-name: animationName;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-out;
+}
+
+/* {{ gettext("snippetCSSKeyframeAnimationComment") }} */
+@keyframes animationName {
+  0%   { background-color: red;    }
+  50%  { background-color: orange; }
+  100% { background-color: yellow; }
+}
+`,
     l10n: true
   }
 }, {
@@ -202,56 +211,48 @@ const css = [{
   name: "snippetCSSAnchorStyle",
   title: "snippetCSSAnchorStyleTitle",
   data: {
-    value: '/* {{ gettext("snippetCSSAnchorStyleUnvisitedLinkComment") }} */\n' +
-           'a:link {\n' +
-           '  color: red;\n' +
-           '}\n' +
-           '/* {{ gettext("snippetCSSAnchorStyleVisitedLinkComment") }} */\n' +
-           'a:visited {\n' +
-           '  color: green;\n' +
-           '}\n' +
-           '/* {{ gettext("snippetCSSAnchorStyleMouseOverLinkComment") }} */\n' +
-           'a:hover {\n' +
-           '  color: hotpink;\n' +
-           '}\n' +
-           '/* {{ gettext("snippetCSSAnchorStyleSelectedLinkComment") }} */\n' +
-           'a:active {\n' +
-           '  color: blue;\n' +
-           '}\n',
+    value:
+`/* {{ gettext("snippetCSSAnchorStyleUnvisitedLinkComment") }} */
+a:link {
+  color: RoyalBlue;
+  text-decoration: none;
+}
+
+/* {{ gettext("snippetCSSAnchorStyleVisitedLinkComment") }} */
+a:visited {
+  color: Orchid;
+}
+
+/* {{ gettext("snippetCSSAnchorStyleActiveLinkComment") }} */
+a:active {
+  color: OrangeRed;
+}
+
+/* {{ gettext("snippetCSSAnchorStyleHoverLinkComment") }} */
+a:hover {
+  text-decoration: underline;
+}
+`,
     l10n: true
-  }
-}, {
-  id: "snippet-classSelector",
-  name: "snippetCSSClassSelector",
-  title: "snippetCSSClassSelectorTitle",
-  data: {
-    value: '.className {\n' +
-           '  background-color: green;\n' +
-           '}\n'
-  }
-}, {
-  id: "snippet-idSelector",
-  name: "snippetCSSIDSelector",
-  title: "snippetCSSIDSelectorTitle",
-  data: {
-    value: '#idName {\n' +
-           '  background-color: green;\n' +
-           '}\n'
   }
 }, {
   id: "snippet-mediaQueries",
   name: "snippetCSSMediaQuery",
   title: "snippetCSSMediaQueryTitle",
   data: {
-    value: '@media screen and (min-width: 769px) {\n' +
-           ' /* {{ gettext("snippetCSSMediaQueryData") }} */\n' +
-           '}\n' +
-           '@media screen and (min-device-width: 481px) and (max-device-width: 768px) {\n' +
-           '  /* {{ gettext("snippetCSSMediaQueryData") }} */\n' +
-           '}\n' +
-           '@media only screen and (max-device-width: 480px) {\n' +
-           '  /* {{ gettext("snippetCSSMediaQueryData") }} */\n' +
-           '}\n',
+    value:
+`@media screen and (max-width: 320px) {
+  /* {{ gettext("snippetCSSMediaQueryNarrow") }} */
+}
+
+@media screen and (min-width: 321px) and (max-width: 768px) {
+  /* {{ gettext("snippetCSSMediaQueryMedium") }} */
+}
+
+@media screen and (min-width: 769px) {
+ /* {{ gettext("snippetCSSMediaQueryWide") }} */
+}
+`,
     l10n: true
   }
 }, {
@@ -259,101 +260,52 @@ const css = [{
   name: "snippetCSSFont",
   title: "snippetCSSFontTitle",
   data: {
-    value: '@font-face {\n' +
-           '  font-family: myFirstFont;\n' +
-           '  src: url(sansation_bold.woff);\n' +
-           '  font-weight: bold;\n' +
-           '}\n'
+    value:
+`@font-face {
+  font-family: myFirstFont;
+  src: url(sansation_bold.woff);
+  font-weight: bold;
+}
+`
   }
 }, {
-  id: "snippet-beforeSelector",
-  name: "snippetCSSBeforePseudo",
-  title: "snippetCSSBeforePseudoTitle",
+  id: "snippet-pseudoElement",
+  name: "snippetCSSPseudo",
+  title: "snippetCSSPseudoTitle",
   data: {
-    value: '::before {\n' +
-           '  content: "«";\n' +
-           '  color: blue;\n' +
-           '}\n'
-  }
-}, {
-  id: "snippet-afterSelector",
-  name: "snippetCSSAfterPseudo",
-  title: "snippetCSSAfterPseudoTitle",
-  data: {
-    value: '::after {\n' +
-           '  content: "»";\n' +
-           '  color: red;\n' +
-           '}\n'
+    value:
+`/* {{ gettext("snippetCSSPseudoComment") | safe }} */
+
+.arrow::before {
+  content: "→";
+  background: DodgerBlue;
+  color: white;
+}
+`,
+    l10n: true
   }
 }];
 
 const js = [{
+   id: "snippet-jsComment",
+   name: "snippetJSComment",
+   title: "snippetJSCommentTitle",
+   data: {
+     value: '// {{ gettext("snippetJSCommentData") }}\n',
+     l10n: true
+   }
+},{
   id: "snippet-emptyFunction",
   name: "snippetJSFunction",
   title: "snippetJSFunctionTitle",
   data: {
-    value: 'function functionName() {\n' +
-           ' // {{ gettext("snippetJSFunctionData") }}\n' +
-           '}\n',
-    l10n: true
-  }
-}, {
-  id: "snippet-forLoop",
-  name: "snippetJSForLoop",
-  title: "snippetJSForLoopTitle",
-  data: {
-    value: 'for (var i = 0; i < array.length; i++) {\n' +
-           ' // {{ gettext("snippetJSLoopData") }}\n' +
-           '}\n',
-    l10n: true
-  }
-}, {
-    id: "snippet-whileLoop",
-    name: "snippetJSWhileLoop",
-    title: "snippetJSWhileLoopTitle",
-    data: {
-      value: 'while (condition) {\n' +
-             ' // {{ gettext("snippetJSLoopData") }}\n' +
-             '}\n',
-      l10n: true
-    }
-}, {
-  id: "snippet-switch",
-  name: "snippetJSSwitchCase",
-  title: "snippetJSSwitchCaseTitle",
-  data: {
-    value: 'switch(variableName) {\n' +
-           '  case "match1":\n' +
-           '    // {{ gettext("snippetJSConditionalComment") }}\n' +
-           '    break;\n' +
-           '  case "match2":\n' +
-           '    // {{ gettext("snippetJSConditionalComment") }}\n' +
-           '    break;\n' +
-           '  default:\n' +
-           '    // {{ gettext("snippetJSConditionalDefaultComment") }}\n' +
-           '}\n',
-    l10n: true
-  }
-}, {
-  id: "snippet-ifElse",
-  name: "snippetJSIfElse",
-  title: "snippetJSIfElseTitle",
-  data: {
-    value: 'if (condition1) {\n' +
-           '   // {{ gettext("snippetJSConditionalComment") }}\n' +
-           '} else if (condition2) {\n' +
-           '   // {{ gettext("snippetJSConditionalComment") }}\n' +
-           '} else {\n' +
-           '   // {{ gettext("snippetJSConditionalDefaultComment") }}\n' +
-           '}\n',
-    l10n: true
-  }
-}, {
-  id: "snippet-jsComment",
-  name: "snippetJSComment",
-  title: "snippetJSCommentTitle",
-  data: {
-    value: '/* {{ gettext("snippetJSCommentData") }} */\n',
+    value:
+`function sayHello(name) {
+  console.log("Hello " + name);
+}
+
+sayHello("Dave");
+`,
     l10n: true
   }
 }, {
@@ -361,17 +313,116 @@ const js = [{
   name: "snippetJSArray",
   title: "snippetJSArrayTitle",
   data: {
-    value: 'var arrayName = ["item1", "item2", ...];\n'
+    value: 'var names = ["Dave", "Gideon", "Sabrina"];\n'
   }
 }, {
   id: "snippet-object",
   name: "snippetJSObject",
   title: "snippetJSObjectTitle",
   data: {
-    value: 'var objectName = {\n' +
-           '  keyName1: "value1",\n' +
-           '  keyName2: "value2"\n' +
-           '};\n'
+    value:
+`var person = {
+  name: "Gideon",
+  skills: ["JS", "HTML"]
+};
+`},
+}, {
+  id: "snippet-forLoop",
+  name: "snippetJSForLoop",
+  title: "snippetJSForLoopTitle",
+  data: {
+    value:
+`var names = ["Dave", "Gideon", "Sabrina"];
+
+for (var i = 0; i < names.length; i++) {
+  var name = names[i];
+  console.log(name);
+}
+`,
+    l10n: true
+  }
+}, {
+    id: "snippet-whileLoop",
+    name: "snippetJSWhileLoop",
+    title: "snippetJSWhileLoopTitle",
+    data: {
+      value:
+`var count = 5;
+
+while (count > 0) {
+  console.log(count);
+  count = count - 1;
+}
+`,
+      l10n: true
+  }
+}, {
+  id: "snippet-ifElse",
+  name: "snippetJSIfElse",
+  title: "snippetJSIfElseTitle",
+  data: {
+    value:
+`var name = "Gideon";
+
+if (name == "Gideon") {
+  console.log("Hi Gideon!");
+} else if (name == "Sabrina") {
+  console.log("Hi Sabrina!");
+} else {
+  console.log("Hello, stranger!");
+}
+`,
+    l10n: true
+  }
+}, {
+  id: "snippet-switch",
+  name: "snippetJSSwitchCase",
+  title: "snippetJSSwitchCaseTitle",
+  data: {
+    value:
+`var name = "Gideon";
+
+switch(name) {
+  case "Gideon":
+    console.log("Hello Gideon!");
+    break;
+  case "Sabrina":
+    console.log("Hello Sabrina!");
+    break;
+  default:
+    // {{ gettext("snippetJSConditionalDefaultComment") }}
+    console.log("Hello Stranger!");
+}
+  `,
+    l10n: true
+  }
+}, {
+  id: "snippet-clickhandler",
+  name: "snippetJSClickHandler",
+  title: "snippetJSClickHandlerTitle",
+  data: {
+    value:
+`// {{ gettext("snippetJSClickHandlerComment") | safe }}
+var element = document.querySelector('#button');
+
+element.addEventListener("click",function(){
+  console.log("Click!");
+});
+`,
+    l10n: true
+  }
+}, {
+  id: "snippet-changestyle",
+  name: "snippetJSChangeStyle",
+  title: "snippetJSChangeStyleTitle",
+  data: {
+    value:
+`// {{ gettext("snippetJSChangeStyleComment") | safe }}
+var element = document.querySelector('#alert');
+
+element.style.background = "OrangeRed";
+`,
+    l10n: true
   }
 }];
 
