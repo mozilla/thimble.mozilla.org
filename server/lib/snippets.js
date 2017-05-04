@@ -275,7 +275,6 @@ a:hover {
   data: {
     value:
 `/* {{ gettext("snippetCSSPseudoComment") | safe }} */
-
 .arrow::before {
   content: "→";
   background: DodgerBlue;
@@ -301,10 +300,10 @@ const js = [{
   data: {
     value:
 `function sayHello(name) {
-  console.log("Hello " + name);
+  console.log({{ gettext("snippetJSLogHello") | safe }});
 }
 
-sayHello("Dave");
+sayHello("{{ gettext("snippetJSPersonName1") }}");
 `,
     l10n: true
   }
@@ -313,7 +312,8 @@ sayHello("Dave");
   name: "snippetJSArray",
   title: "snippetJSArrayTitle",
   data: {
-    value: 'var names = ["Dave", "Gideon", "Sabrina"];\n'
+    value: 'var names = ["{{ gettext("snippetJSPersonName1") }}", "{{ gettext("snippetJSPersonName2") }}", "{{ gettext("snippetJSPersonName3") }}"];\n',
+    l10n: true
   }
 }, {
   id: "snippet-object",
@@ -322,20 +322,23 @@ sayHello("Dave");
   data: {
     value:
 `var person = {
-  name: "Gideon",
+  name: "{{ gettext("snippetJSPersonName2") }}",
   skills: ["JS", "HTML"]
 };
-`},
+`,
+    l10n: true
+  },
 }, {
   id: "snippet-forLoop",
   name: "snippetJSForLoop",
   title: "snippetJSForLoopTitle",
   data: {
     value:
-`var names = ["Dave", "Gideon", "Sabrina"];
+`var names = ["{{ gettext("snippetJSPersonName1") }}", "{{ gettext("snippetJSPersonName2") }}", "{{ gettext("snippetJSPersonName3") }}"];
+var name;
 
 for (var i = 0; i < names.length; i++) {
-  var name = names[i];
+  name = names[i];
   console.log(name);
 }
 `,
@@ -353,8 +356,7 @@ while (count > 0) {
   console.log(count);
   count = count - 1;
 }
-`,
-      l10n: true
+`
   }
 }, {
   id: "snippet-ifElse",
@@ -362,14 +364,14 @@ while (count > 0) {
   title: "snippetJSIfElseTitle",
   data: {
     value:
-`var name = "Gideon";
+`var name = "{{ gettext("snippetJSPersonName2") }}";
 
-if (name == "Gideon") {
-  console.log("Hi Gideon!");
-} else if (name == "Sabrina") {
-  console.log("Hi Sabrina!");
+if (name === "{{ gettext("snippetJSPersonName2") }}") {
+  console.log({{ gettext("snippetJSLogHello") | safe }});
+} else if (name === "{{ gettext("snippetJSPersonName3") }}") {
+  console.log({{ gettext("snippetJSLogHello") | safe }});
 } else {
-  console.log("Hello, stranger!");
+  console.log("{{ gettext("snippetJSLogHelloStranger") }}");
 }
 `,
     l10n: true
@@ -380,18 +382,18 @@ if (name == "Gideon") {
   title: "snippetJSSwitchCaseTitle",
   data: {
     value:
-`var name = "Gideon";
+`var name = "{{ gettext("snippetJSPersonName2") }}";
 
 switch(name) {
-  case "Gideon":
-    console.log("Hello Gideon!");
+  case "{{ gettext("snippetJSPersonName2") }}":
+    console.log({{ gettext("snippetJSLogHello") | safe }});
     break;
-  case "Sabrina":
-    console.log("Hello Sabrina!");
+  case "{{ gettext("snippetJSPersonName3") }}":
+    console.log({{ gettext("snippetJSLogHello") | safe }});
     break;
   default:
     // {{ gettext("snippetJSConditionalDefaultComment") }}
-    console.log("Hello Stranger!");
+    console.log("{{ gettext("snippetJSLogHelloStranger") }}");
 }
   `,
     l10n: true
@@ -405,8 +407,8 @@ switch(name) {
 `// {{ gettext("snippetJSClickHandlerComment") | safe }}
 var element = document.querySelector('#button');
 
-element.addEventListener("click",function(){
-  console.log("Click!");
+element.addEventListener("click", function() {
+  console.log("{{ gettext("Click!") }}");
 });
 `,
     l10n: true
