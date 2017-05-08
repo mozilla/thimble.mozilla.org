@@ -1,0 +1,49 @@
+// See "/style-guide" for color reference:
+
+@yellow: #ffcd36;
+@lightyellow: #fff2cc;
+@darkyellow: #eab514;
+@orange: #ee8950;
+@darkgreen: #328f70;
+@blue: #27aae1;
+@red: #c13832;
+@green: #3fb58e;
+@grey: #4d4e53;
+@lightgrey: #e3eaee;
+@midgrey: #ddd;
+@white: #fff;
+@black: #000;
+@navy: #013E5F;
+
+@buttonGreen: #2A9961;
+@buttonGreenHover: #39AA6D;
+@buttonGreenActive: #288952;
+
+.greenButton {
+  background: @buttonGreen;
+  border: none;
+  border-bottom: solid 2px rgba(0,0,0,0.3);
+  border-radius: 2px;
+  padding: 8px 15px 8px 15px;
+  cursor: pointer;
+  color: white;
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 600;
+  outline: none;
+
+  &:hover {
+    background: @buttonGreenHover;
+  }
+
+  &:active {
+    background: @buttonGreenActive;
+    border: none;
+    position: relative;
+    top: 2px;
+  }
+}
+
+.menu-shadow {
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
