@@ -36,6 +36,10 @@ body {
   background: #EAEAEA;
 }
 
+.has-alert-bar .bramble-toolbar {
+  top: 100px;
+}
+
 .editor-nav {
   position: absolute;
   display: block;
@@ -1061,6 +1065,45 @@ body {
 
 .hide {
   display: none;
+}
+
+.top-alert-bar {
+  background: #176DB3;
+  text-align: center;
+  font-size: 15px;
+  padding: 7px 15px;
+  font-weight: 400;
+  color: rgba(255,255,255,.7);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  strong {
+    font-weight: 600;
+    color: white;
+  }
+
+  button {
+    outline: none;
+    border: none;
+    border-radius: 1px;
+    color: #176DB3;
+    background: white;
+    padding: 3px 8px;
+    margin-left: 15px;
+
+    &:hover {
+      opacity: .8;
+    }
+
+    &:active {
+      opacity: 1;
+    }
+  }
+}
+
+.has-alert-bar #webmaker-bramble {
+  top: 160px;
 }
 
 #browser-support-warning {

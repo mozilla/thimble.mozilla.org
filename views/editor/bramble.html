@@ -70,7 +70,7 @@
         #spinner-container.loading-error .thimble-spinner {
             animation: none;
         }
-        
+
         #spinner-container .loading-message-help-link {
             animation: none;
             -webkit-animation: none;
@@ -134,16 +134,6 @@
             <p>{{ gettext("errorLoadingProjectBramble") }}</p>
             <p>{{ gettext("errorLoadingProjectSuggestion") }}</p>
         </div>
-    </div>
-
-    <div id="browser-support-warning" class="hide">
-      <div class="message-box">
-        <h1>{{ gettext("errorUnsupportedBrowser") }}</h1>
-        <p>
-          {{ gettext("errorUnsupportedBrowserSuggestion") | instantiate | safe }}
-        </p>
-        <div title="{{ gettext("errorUnsupportedBrowserIgnoreTitle") }}" class="let-me-in">{{ gettext("errorUnsupportedBrowserIgnore") }}</div>
-      </div>
     </div>
 
     <div class="bramble-toolbar">

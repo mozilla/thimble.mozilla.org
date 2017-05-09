@@ -38,6 +38,19 @@ require(["jquery", "bowser"], function($, bowser) {
     });
   }
 
+  Bramble.once("updatesAvailable", function() {
+    showRefreshAlert();
+  });
+
+  function showRefreshAlert(){
+    console.log("Thimble has updates - please refresh your browser to get the latest changes.");
+    $("body").addClass("has-alert-bar");
+    $("#serviceworker-warning").removeClass("hide");
+    $("#serviceworker-warning button").on("click",function(){
+      window.location.reload();
+    });
+  }
+
   function onError(err) {
     console.error("[Bramble Error]", err);
     $("#spinner-container").addClass("loading-error");
