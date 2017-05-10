@@ -7,7 +7,7 @@
 {% block top %}
 <div class="page-heading">
   <div class="content-wrapper">
-    <h1>Awesome features make learning<br/> <em>and</em> teaching coding easy &amp; fun</h1>
+    <h1>{{ gettext("featuresHeader") | safe }}</h1>
   </div>
 </div>
 {% endblock %}
@@ -23,16 +23,9 @@
     </div> -->
 
     <div class="callout">
-      <p>
-        Thimble is a full-featured code editor that runs right in the browser.
-        It's designed to help new coders create their own sites and web-based projects using HTML, CSS &amp; JavaScript.
-        Everything you need is at your fingertips, allowing you (or your classroom) to get up and running as quickly as
-        possible.
-      </p>
+      <p>{{ gettext("featuresCallout") | safe }}</p>
 
-      <p>
-        It's a code editor, web server, web browser &amp; developer tools all in one&mdash;and it's <em>free!</em>
-      </p>
+      <p>{{ gettext("featuresCalloutDesc") | safe }}</p>
 
     </div>
 
@@ -40,35 +33,33 @@
 
       <div class="feature">
         <video src="/img/features/live-preview.mp4" autoplay loop></video>
-        <h2 class="feature-name">Instantly see your changes</h2>
+        <h2 class="feature-name">{{ gettext("livePreviewFeatureTitle") | safe }}</h2>
         <p class="feature-description">
-          See your changes instantly as you edit your project files. There's no need to refresh
-          the preview. Makes learning about CSS really easy!
+          {{ gettext("livePreviewFeatureDesc") }}
         </p>
       </div>
 
       <div class="feature">
         <video src="/img/features/remix.mp4" autoplay loop></video>
-        <h2 class="feature-name">Remix any Thimble project</h2>
+        <h2 class="feature-name">{{ gettext("remixFeatureTitle") }}</h2>
         <p class="feature-description">
-          Like a Thimble project that you see? Remixing allows you to make your very own version of that project.
-          You can also send your project to friends or students&mdash;what they can come up with?
+          {{ gettext("remixFeatureDesc") | safe }}
         </p>
       </div>
 
       <div class="feature">
         <video src="/img/features/snippets.mp4" autoplay loop></video>
-        <h2 class="feature-name">Handy Code Snippets</h2>
-        <p class="feature-description">
-          We've got you covered with a handy list of HTML, CSS &amp; JavaScript snippets that you can include in your project.
+        <h2 class="feature-name">{{ gettext("snippetsFeatureTitle") }}</h2>
+        <p class="feature-descrsiption">
+          {{ gettext("snippetsFeatureDesc") | safe }}
         </p>
       </div>
 
       <div class="feature">
         <video src="/img/features/console.mp4" autoplay loop></video>
-        <h2 class="feature-name">Built-in JavasScript Console</h2>
+        <h2 class="feature-name">{{ gettext("consoleFeatureTitle") }}</h2>
         <p class="feature-description">
-          Working on some JavaScript? Thimble's built-in console makes it easier than ever to debug your code.
+          {{ gettext("consoleFeatureTitle") }}
         </p>
       </div>
 
@@ -76,7 +67,7 @@
         <video src="/img/features/file-tree.mp4" autoplay loop></video>
         <h2 class="feature-name">Add and manage files</h2>
         <p class="feature-description">
-          Thimble is works like a real web project, you can create, raname, delete
+          Thimble works like a real web project, you can create, raname, delete
           and even upload your own files including folders. Makes it easy to work
           with your own images and photos. Or to open your old projects.
         </p>
@@ -121,7 +112,7 @@
         <p class="feature-description">
           Write CSS styles for your elements without switching away from the HTML
           page that you are editing. Put the text cursor on any element tag and hit
-          <span class='key'>Cmd/Ctrl</span> + <span class="key">E</span> to start writing CSS styles.
+          <span class="key">Cmd/Ctrl</span> + <span class="key">E</span> to start writing CSS styles.
         </p>
       </div>
 
@@ -139,7 +130,7 @@
         <h2 class="feature-name">Pick colors right in the editor</h2>
         <p class="feature-description">
           Put the text cursor on any color value in a CSS file and press
-          <span class='key'>Cmd/Ctrl</span> + <span class="key">E</span> to open the colorpicker.
+          <span class="key">Cmd/Ctrl</span> + <span class="key">E</span> to open the colorpicker.
         </p>
 
       </div>
