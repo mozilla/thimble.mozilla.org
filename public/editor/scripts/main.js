@@ -52,6 +52,10 @@ require(["jquery", "bowser"], function($, bowser) {
 
   Bramble.once("error", onError);
 
+  $("button.refresh-browser").on("click",function(){
+    window.location.reload();
+  });
+
   Bramble.once("updatesAvailable", function() {
     showRefreshAlert();
   });
@@ -60,9 +64,6 @@ require(["jquery", "bowser"], function($, bowser) {
     console.log("Thimble has updates - please refresh your browser to get the latest changes.");
     $("body").addClass("has-alert-bar");
     $("#serviceworker-warning").removeClass("hide");
-    $("#serviceworker-warning button").on("click",function(){
-      window.location.reload();
-    });
   }
 
   function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility) {
