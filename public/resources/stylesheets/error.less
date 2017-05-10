@@ -1,5 +1,6 @@
 .centered-message {
   text-align: center;
+  padding-top: 40px;
 
   h1 {
     margin: 15px auto 30px auto;
@@ -17,6 +18,7 @@
     font-size: 1.8em;
     line-height: 1.3em;
     position: relative;
+    font-weight: 400;
 
     &:after {
       content: "";
@@ -33,6 +35,10 @@
 
   .contact-icons {
     margin: 55px 0 35px 0;
+
+    p {
+      margin: 0 0 20px 0;
+    }
 
     a {
       display: inline-block;
@@ -98,8 +104,45 @@
       padding: 15px;
       line-height: 18px;
     }
+  }
+}
 
+
+.reload-message {
+  margin-bottom: 50px;
+  max-width: 500px;
+  margin: 0 auto 50px auto;
+
+  h1 {
+    margin-bottom: 15px;
   }
 
+  p {
+    font-size: 18px;
+  }
 
+  .action-button {
+    color: white;
+    border: solid 2px white;
+    font-family: inherit;
+    padding: 10px 20px;
+    font-size: 18px;
+    background: transparent;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .action-button:hover {
+    background: rgba(255,255,255,.2);
+  }
+
+  .action-button:active {
+    background: white;
+    color: #47AD66;
+  }
+}
+
+.main-cta {
+  background-image: none;
 }
