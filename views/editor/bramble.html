@@ -21,7 +21,7 @@
 
         #spinner-container h2 {
             color: white;
-            font-size: 18px;
+            font-size: 20px;
             margin: 0 0 5px 0;
         }
 
@@ -37,10 +37,6 @@
 
         #spinner-container.loading-error .error-message {
             display: block;
-        }
-
-        #spinner-container .loading-message {
-            animation: loadingpulse 1s infinite linear;
         }
 
         #spinner-container a {
@@ -105,21 +101,6 @@
           color: black;
         }
 
-        @keyframes loadingpulse {
-            0% {
-                transform: scale(1);
-                opacity: .4;
-            }
-            50% {
-                transform: scale(1.02);
-                opacity: .6;
-            }
-            100% {
-                transform: scale(1);
-                opacity: .4;
-            }
-        }
-
         @keyframes spinner {
             0% {
                 transform: rotateX(0deg) rotateY(0deg);
@@ -138,11 +119,48 @@
             }
         }
 
+        #spinner-container .taking-too-long {
+          max-height: 0;
+          opacity: 0;
+          overflow: hidden;
+          padding-top: 30px;
+          transition: max-height 1s ease-out 0s, opacity 1s ease-out .25s;
+          margin: 0 auto;
+        }
+
+        #spinner-container .taking-too-long p {
+            margin: 0 0 10px 0;
+        }
+
+        #spinner-container .taking-too-long p.email-us {
+            margin: 50px 0 0 0;
+        }
+
+
+        #spinner-container .taking-too-long.visible {
+          max-height: 400px;
+          opacity: 1;
+        }
+
         </style>
 
     <div id="spinner-container">
         <div class="thimble-spinner"></div>
-        <div class="loading-message message">{{ gettext("loadingProject") }}</div>
+        <div class="loading-message message">
+            <h2>{{ gettext("loadingProject") }}</h2>
+            <div class="taking-too-long">
+                <p>
+                  {{ gettext("projectNotLoadingMessage") | safe }}
+                </p>
+                <p>
+                  <button class="refresh-browser">{{ gettext("tryAgainButtonLabel") }}</button>
+                </p>
+                <p class="email-us">
+                  {{ gettext("emailForHelp") | safe }}
+                </p>
+            </div>
+        </div>
+
         <div class="error-message message">
             <h2>
               {{ gettext("somethingWentWrong") }}
