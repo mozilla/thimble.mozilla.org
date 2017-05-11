@@ -151,11 +151,9 @@
 
       <div class="feature">
         <video src="/img/features/take-a-selfie.mp4" autoplay loop></video>
-        <h2 class="feature-name">Take a Selfie</h2>
+        <h2 class="feature-name">{{ gettext("takeASelfieFeatureTitle") }}</h2>
         <p class="feature-description">
-          You can add your mugshot to any page your're working on using Thimble's selfie tool.
-          It uses your laptop's webcam. Just start typing <span class='key'>&lt;img src=</span>
-          tag to your HTML page and you'll see a prompt.
+          {{ gettext("takeASelfieFeatureDesc") | safe }}
         </p>
       </div>
 
