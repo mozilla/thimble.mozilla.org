@@ -9,6 +9,8 @@ let defaultCSPDirectives = {
   defaultSrc: [ "'self'" ],
   connectSrc: [
     "'self'",
+    "https://fonts.googleapis.com",
+    "https://fonts.gstatic.com",
     "https://pontoon.mozilla.org",
     "https://mozilla.github.io/thimble-homepage-gallery/activities.json"
   ],

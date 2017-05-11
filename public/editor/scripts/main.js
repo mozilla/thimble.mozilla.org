@@ -26,7 +26,7 @@ require.config({
   }
 });
 
-require(["jquery", "bowser"], function($, bowser) {
+require(["jquery", "bowser", "fc/offline"], function($, bowser, Offline) {
   // Warn users of unsupported browsers that they can try something newer,
   // specifically anything before IE 11 or Safari 8.
   if((bowser.msie && bowser.version < 11) || (bowser.safari && bowser.version < 8)) {
@@ -51,6 +51,9 @@ require(["jquery", "bowser"], function($, bowser) {
   }
 
   Bramble.once("error", onError);
+
+  // Initialize offline/online handling
+  Offline.init(Bramble);
 
   function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility) {
     var thimbleScript = document.getElementById("thimble-script");
