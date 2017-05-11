@@ -64,8 +64,8 @@ require(["jquery", "bowser", "analytics"], function($, bowser, analytics) {
   }
 
   $("button.refresh-browser").on("click",function(){
-    window.location.reload(true);
     analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Refresh button clicked" });
+    window.location.reload(true);
   });
 
   Bramble.once("updatesAvailable", function() {
