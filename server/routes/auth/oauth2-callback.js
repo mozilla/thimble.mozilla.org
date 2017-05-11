@@ -8,8 +8,14 @@ var HttpError = require("../../lib/http-error");
 module.exports = function(config, req, res, next) {
   var oauth = config.oauth;
   var cryptr = config.cryptr;
-  var locale = req.session.locale;
   var authURL = `${oauth.authorization_url}/login/oauth/access_token`;
+  var locale = req.session.locale;
+  if(!locale) {
+    // This can happen when we try to logout again when we are already
+    // logged out (i.e. the session doesn't exist and hence req.session.locale
+    // is undefined)
+    locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
+  }
 
   res.set("Cache-Control", "no-cache");
 
