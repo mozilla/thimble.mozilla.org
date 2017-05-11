@@ -8,14 +8,13 @@
   <div class="page-heading">
     <div class="content-wrapper">
       <h1>
-        Curious about Open Source? <br/>
-        Help us build &amp; improve Thimble!
+        {{ gettext("getInvolvedHeader") | safe }}
       </h1>
 
-      <a class="feature-button repo" href="https://github.com/mozilla/thimble.mozilla.org/issues/new">File an issue</a>
+      <a class="feature-button repo" href="https://github.com/mozilla/thimble.mozilla.org/issues/new">{{ gettext("fileAnIssueBtn") }}</a>
       <a class="feature-button list" href="https://github.com/mozilla/thimble.mozilla.org/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+First+Bug%22">
         <!-- Find an issue to work on -->
-        Find a "Good First Bug" to work on
+        {{ gettext("goodFirstBugBtn") }}
         <div class="good-bug-count"></div>
       </a>
     </div>
@@ -27,52 +26,45 @@
     <div class="content-wrapper">
 
       <div class="right-box">
-        <h2>Why Contribute?</h2>
+        <h2>{{ gettext("whyContributeTitle") }}</h2>
         <ul>
-          <li>Your work impacts users all over the world</li>
-          <li>Gain valuable experience and mentorship</li>
-          <li>Support mozilla's mission of an open internet for all</li>
-          <li>If feels good!</li>
+          <li>{{ gettext("contributeReason1") }}</li>
+          <li>{{ gettext("contributeReason2") }}</li>
+          <li>{{ gettext("contributeReason3") }}</li>
+          <li>{{ gettext("contributeReason4") }}</li>
         </ul>
       </div>
 
       <div class="left-side">
-
         <p>
-          Thimble is an <a href="https://en.wikipedia.org/wiki/Open-source_software">Open Source</a> project created by the
-          <a href="#">Mozilla Foundation</a> in parnership with
-          <a href="http://cdot.senecacollege.ca/">CDOT at Seneca College</a>. Since the beginning, contributors
-          form all ove the world have played an important role in making it a success.
-
-          It's truly an international project,
-          it has been <strong>localized in 33 languages</strong> (with over 100 in progress) and used by <strong>learners in over 200 countries</strong>.
-
+          {{ gettext("getInvolvedDescription1") | safe }}
+          <br/>
+          {{ gettext("getInvolvedDescription2") | safe }}
         </p>
 
-        <h3>No contribution is too small</h3>
+        <h3>{{ gettext("noContributionTooSmallTitle") }}</h3>
 
         <p>
-          Contributions of all skills and backgrounds are welcome. You don't need to be an expert programmer, in fact, over
-          half of our contributors identify themselves as students. You can start small, file an issue to...
+          {{ gettext("noContributionTooSmallDesc") }}
         </p>
 
         <ul>
-          <li>Report bug, problem or typo</li>
-          <li>Request a change, new feature or strater project</li>
-          <li>Leave feedback</li>
+          <li>{{ gettext("noContributionTooSmallReason1") }}</li>
+          <li>{{ gettext("noContributionTooSmallReason2") }}</li>
+          <li>{{ gettext("noContributionTooSmallReason3") }}</li>
         </ul>
 
         <p>
-          <a class="blue-button" href="https://github.com/mozilla/thimble.mozilla.org/issues/new">Go on, File an Issue!</a>
+          <a class="blue-button" href="https://github.com/mozilla/thimble.mozilla.org/issues/new">{{ gettext("goFileAnIssueBtn") }}</a>
         </p>
 
         <p>
-          If you're feeling adventurous, then check out our Github repositories below.
+          {{ gettext("feelingAdventurous") }}
         </p>
 
         <div class="two-col">
           <div>
-            <h3>On Github</h3>
+            <h3>On GitHub</h3>
             <ul class="link-list">
               <li>
                 <a href="https://github.com/mozilla/thimble.mozilla.org/">Thimble</a> -
@@ -109,7 +101,7 @@
 
       <p>
         Over <strong>350 contributors</strong> from more than <strong>30 countries</strong> have been involved in the Thimble project.
-        Here are some of the many generous folks have contributed their time &amp; energy to make Thimble better!
+        Here are some of the many generous folks that have contributed their time &amp; energy to make Thimble better!
       </p>
 
       <div class="contributor-list">
@@ -123,7 +115,7 @@
               <li>Added a code snippets menu to make coding easier</li>
               <li>Fixed JavaScript auto toggle bugs</li>
             </ul>
-            <p class="quote">"When first starting on Thimble I had little to no experience/knowledge of Javascript. It took me a while to get my bearings. As I started working on this project I had many hurdles to cross. But with the help of the core team I was able to slowly cross those hurdles. I still have lots to learn, but I'm happy with the progress so far!"</p>
+            <p class="quote">“When first starting on Thimble I had little to no experience/knowledge of JavaScript. It took me a while to get my bearings. As I started working on this project I had many hurdles to cross. But with the help of the core team I was able to slowly cross those hurdles. I still have lots to learn, but I'm happy with the progress so far!”</p>
           </div>
 
           <div class="contributor">
@@ -134,7 +126,7 @@
               <li>Added extra padding to the Editor to improve legibility</li>
             </ul>
             <p class="quote">
-              "We all need people who will give us feedback. That's how we improve. Working with thimble was the most encouraging experience for me in opensource world and it gave me a chance to work with most friendly and supporting team."
+              “We all need people who will give us feedback. That's how we improve. Working with Thimble was the most encouraging experience for me in opensource world and it gave me a chance to work with most friendly and supporting team.”
             </p>
           </div>
 
@@ -147,9 +139,9 @@
               <li>Improved the usability of Thimble menus</li>
             </ul>
             <p class="quote">
-              "Contributing to Thimble enabled me to learn about modern JavaScript web applications,
+              “Contributing to Thimble enabled me to learn about modern JavaScript web applications,
               an experience which has already helped further my career to new heights and possibilities.
-              Open Source has changed the world, and with it, I believe we can do anything."
+              Open Source has changed the world, and with it, I believe we can do anything.”
             </p>
           </div>
 
@@ -163,10 +155,10 @@
               <li>Researched tech approaches to collaborative editing</li>
             </ul>
             <p class="quote">
-              Working on Thimble has been a great experience.
+              “Working on Thimble has been a great experience.
               The code is very well written and the mentors are really supportive.
               It is one of the best projects to work in if you want to start working on open source and
-              contributing has taught me a lot about open source best practices.
+              contributing has taught me a lot about open source best practices.”
             </p>
           </div>
 
@@ -179,7 +171,7 @@
               <li>Made auto closing tags an optional setting</li>
               <li>Fixed a longstanding usability bug with the Publish button</li>
             </ul>
-            <p class="quote">"Jumping into Thimble the first time around was daunting. But then I started to contribute, and it became satisfying. I learned a lot about what I usually sidelined&mdash;web development. In Open Source development, I never felt alone. Bring all these talented minds together, and something as great as Thimble can happen."</p>
+            <p class="quote">“Jumping into Thimble the first time around was daunting. But then I started to contribute, and it became satisfying. I learned a lot about what I usually sidelined &mdash; web development. In Open Source development, I never felt alone. Bring all these talented minds together, and something as great as Thimble can happen.”</p>
           </div>
 
         </div> <!-- end left-col -->
@@ -195,7 +187,7 @@
               <li>Fixed but related to JavaScript settings</li>
               <li>Support for editing SVG files right in the editor</li>
             </ul>
-            <p class="quote">"I love Thimble, and I love fixing bug with Thimble team."</p>
+            <p class="quote">“I love Thimble, and I love fixing bug with Thimble team.”</p>
           </div>
 
           <div class="contributor">
@@ -206,7 +198,7 @@
               <li>Updated menu transition effects</li>
               <li>Made sure files are properly highlighted in the editor</li>
             </ul>
-            <p class="quote">"Working with thimble proved to be challenging and explosive way to get into open source. It really made me collaborate and work with some amazing individuals, which always made you feel like your mistakes are merely opportunities to further improve your releases. Persistence is key, and always turn feedback into a lesson opportunity!"</p>
+            <p class="quote">“Working with thimble proved to be challenging and explosive way to get into open source. It really made me collaborate and work with some amazing individuals, which always made you feel like your mistakes are merely opportunities to further improve your releases. Persistence is key, and always turn feedback into a lesson opportunity!”</p>
           </div>
 
 
@@ -219,7 +211,7 @@
               <li>Added several UI improvements and fixed front-end styling and functionality bugs</li>
               <li>Updated node dependencies in the Thimble project</li>
             </ul>
-            <p class="quote">"For me, working on Thimble is not just about gaining valuable programming experience but more importantly a feeling of accomplishment and contributing to a product that is used by people all around the world. Realizing that millions of people benefit from the code I write is what drove me to apply to work on Thimble. The other important factor is the friendly and supportive community within the project which is another reason that makes my open source development experience with Thimble fascinating."</p>
+            <p class="quote">“For me, working on Thimble is not just about gaining valuable programming experience but more importantly a feeling of accomplishment and contributing to a product that is used by people all around the world. Realizing that millions of people benefit from the code I write is what drove me to apply to work on Thimble. The other important factor is the friendly and supportive community within the project which is another reason that makes my open source development experience with Thimble fascinating.”</p>
           </div>
 
           <div class="contributor">
@@ -227,10 +219,10 @@
             <h3>Tim Moy</h3>
             <a href="https://github.com/timmoy">timmoy</a>
             <ul>
-              <li>Fixed a bug related to the auto-refresh setting on the preview panel&mdash;it now remembers the setting when the browser is refreshed</li>
+              <li>Fixed a bug related to the auto-refresh setting on the preview panel &mdash; it now remembers the setting when the browser is refreshed</li>
               <li>Added a feature that lets you add filters to images in a project</li>
             </ul>
-            <p class="quote">"Prior to Thimble, I worked with relatively small programs that I coded myself or in a small group. Working on code that spans hundreds (probably thousands!) of files being worked on by over 300 people definitely opened up my mind in what "working with others" could mean. I found that there is definitely a learning curve to get used to the environment, but there's always friendly faces that will help you get started as well as with troubles you may have along the way. Just after a few months, I'm able to contribute to the community more than I imagined before. Imagine the possibilities that we can all achieve together as open source continues to grow!"</p>
+            <p class="quote">“Prior to Thimble, I worked with relatively small programs that I coded myself or in a small group. Working on code that spans hundreds (probably thousands!) of files being worked on by over 300 people definitely opened up my mind in what “working with others” could mean. I found that there is definitely a learning curve to get used to the environment, but there's always friendly faces that will help you get started as well as with troubles you may have along the way. Just after a few months, I'm able to contribute to the community more than I imagined before. Imagine the possibilities that we can all achieve together as open source continues to grow!”</p>
           </div>
 
         </div> <!-- end right col -->
