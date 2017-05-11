@@ -64,27 +64,27 @@
 
         <div class="two-col">
           <div>
-            <h3>On GitHub</h3>
+            <h3>{{ gettext("onGithub") }}</h3>
             <ul class="link-list">
               <li>
                 <a href="https://github.com/mozilla/thimble.mozilla.org/">Thimble</a> -
-                <a class="good-bug" href="https://github.com/mozilla/thimble.mozilla.org/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+First+Bug%22">Good First Bugs</a>
+                <a class="good-bug" href="https://github.com/mozilla/thimble.mozilla.org/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+First+Bug%22">{{ gettext("goodFirstBugsBadge") }}</a>
               </li>
               <li>
                 <a href="https://github.com/mozilla/brackets/">Brackets</a> -
-                <a class="good-bug" href="https://github.com/mozilla/brackets/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+First+Bug%22">Good First Bugs</a>
+                <a class="good-bug" href="https://github.com/mozilla/brackets/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+First+Bug%22">{{ gettext("goodFirstBugsBadge") }}</a>
               </li>
               <li>
-                <a href="https://github.com/mozilla/thimble.mozilla.org/blob/master/CONTRIBUTING.md">Contributing Guidelines</a>
+                <a href="https://github.com/mozilla/thimble.mozilla.org/blob/master/CONTRIBUTING.md">{{ gettext("contributingGuidelines") }}</a>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3>Get in Touch</h3>
+            <h3>{{ gettext("getInTouch") }}</h3>
             <ul class="link-list">
-              <li><a href="https://chat.mozillafoundation.org/mozilla/channels/thimble">Thimble Chat Channel</a></li>
-              <li><a href="mailto:thimble@mozillafoundation.org">Email us</a></li>
+              <li><a href="https://chat.mozillafoundation.org/mozilla/channels/thimble">{{ gettext("getInTouchChat") }}</a></li>
+              <li><a href="mailto:thimble@mozillafoundation.org">{{ gettext("getInTouchEmail") }}</a></li>
             </ul>
           </div>
         </div>
@@ -97,11 +97,10 @@
   <div class="featured-contributors">
     <div class="content-wrapper">
 
-      <h2>Featured Contributors</h2>
+      <h2>{{ gettext("featuredContributors") }}</h2>
 
       <p>
-        Over <strong>350 contributors</strong> from more than <strong>30 countries</strong> have been involved in the Thimble project.
-        Here are some of the many generous folks that have contributed their time &amp; energy to make Thimble better!
+        {{ gettext("featuredContributorsDesc") | safe }}
       </p>
 
       <div class="contributor-list">
@@ -112,10 +111,10 @@
             <a href="https://github.com/twigz20">twigz20</a>
             <img class="contributor-photo" src="https://avatars2.githubusercontent.com/u/10361408?v=3&s=460" />
             <ul>
-              <li>Added a code snippets menu to make coding easier</li>
-              <li>Fixed JavaScript auto toggle bugs</li>
+              <li>{{ gettext("twigz20Contrib1") }}</li>
+              <li>{{ gettext("twigz20Contrib2") }}</li>
             </ul>
-            <p class="quote">“When first starting on Thimble I had little to no experience/knowledge of JavaScript. It took me a while to get my bearings. As I started working on this project I had many hurdles to cross. But with the help of the core team I was able to slowly cross those hurdles. I still have lots to learn, but I'm happy with the progress so far!”</p>
+            <p class="quote">{{ gettext("twigz20Quote") }}</p>
           </div>
 
           <div class="contributor">
@@ -123,10 +122,10 @@
             <a href="https://github.com/sanariaz154">sanariaz154</a>
             <img class="contributor-photo" src="https://avatars0.githubusercontent.com/u/15836339" />
             <ul>
-              <li>Added extra padding to the Editor to improve legibility</li>
+              <li>{{ gettext("sanariaz154Contrib1") }}</li>
             </ul>
             <p class="quote">
-              “We all need people who will give us feedback. That's how we improve. Working with Thimble was the most encouraging experience for me in opensource world and it gave me a chance to work with most friendly and supporting team.”
+              {{ gettext("sanariaz154Quote") }}
             </p>
           </div>
 
@@ -135,13 +134,11 @@
             <a href="https://github.com/raygervais">raygervais</a>
             <img class="contributor-photo" src="https://avatars1.githubusercontent.com/u/14265337?v=3&s=460" />
             <ul>
-              <li>Added a JavaScript console to help learners to debug their code and find errors</li>
-              <li>Improved the usability of Thimble menus</li>
+              <li>{{ gettext("raygervaisContrib1") }}</li>
+              <li>{{ gettext("raygervaisContrib2") }}</li>
             </ul>
             <p class="quote">
-              “Contributing to Thimble enabled me to learn about modern JavaScript web applications,
-              an experience which has already helped further my career to new heights and possibilities.
-              Open Source has changed the world, and with it, I believe we can do anything.”
+              {{ gettext("raygervaisQuote") }}
             </p>
           </div>
 
@@ -150,15 +147,12 @@
             <a href="https://github.com/hkirat">hkirat</a>
             <img class="contributor-photo" src="https://avatars0.githubusercontent.com/u/8079861" />
             <ul>
-              <li>Created a custom UI to edit parameters for A-frame tags</li>
-              <li>Made code completion an optional setting</li>
-              <li>Researched tech approaches to collaborative editing</li>
+              <li>{{ gettext("hkiratContrib1") }}</li>
+              <li>{{ gettext("hkiratContrib2") }}</li>
+              <li>{{ gettext("hkiratContrib3") }}</li>
             </ul>
             <p class="quote">
-              “Working on Thimble has been a great experience.
-              The code is very well written and the mentors are really supportive.
-              It is one of the best projects to work in if you want to start working on open source and
-              contributing has taught me a lot about open source best practices.”
+              {{ gettext("hkiratQuote") }}
             </p>
           </div>
 
@@ -167,11 +161,11 @@
             <h3>Christopher Singh</h3>
             <a href="https://github.com/cgsingh">cgsingh</a>
             <ul>
-              <li>Added descriptions to projects page</li>
-              <li>Made auto closing tags an optional setting</li>
-              <li>Fixed a longstanding usability bug with the Publish button</li>
+              <li>{{ gettext("cgsinghContrib1") }}</li>
+              <li>{{ gettext("cgsinghContrib2") }}</li>
+              <li>{{ gettext("cgsinghContrib3") }}</li>
             </ul>
-            <p class="quote">“Jumping into Thimble the first time around was daunting. But then I started to contribute, and it became satisfying. I learned a lot about what I usually sidelined &mdash; web development. In Open Source development, I never felt alone. Bring all these talented minds together, and something as great as Thimble can happen.”</p>
+            <p class="quote">{{ gettext("cgsinghQuote") }}</p>
           </div>
 
         </div> <!-- end left-col -->
@@ -183,11 +177,11 @@
             <h3>Brian Yang</h3>
             <a href="https://github.com/peiying16">peiying16</a>
             <ul>
-              <li>Added support for file icons in</li>
-              <li>Fixed but related to JavaScript settings</li>
-              <li>Support for editing SVG files right in the editor</li>
+              <li>{{ gettext("peiying16Contrib1") }}</li>
+              <li>{{ gettext("peiying16Contrib2") }}</li>
+              <li>{{ gettext("peiying16Contrib3") }}</li>
             </ul>
-            <p class="quote">“I love Thimble, and I love fixing bug with Thimble team.”</p>
+            <p class="quote">{{ gettext("peiying16Quote") }}</p>
           </div>
 
           <div class="contributor">
@@ -195,10 +189,10 @@
             <h3>Theo Dule</h3>
             <a href="https://github.com/th30">th30</a>
             <ul>
-              <li>Updated menu transition effects</li>
-              <li>Made sure files are properly highlighted in the editor</li>
+              <li>{{ gettext("th30Contrib1") }}</li>
+              <li>{{ gettext("th30Contrib2") }}</li>
             </ul>
-            <p class="quote">“Working with thimble proved to be challenging and explosive way to get into open source. It really made me collaborate and work with some amazing individuals, which always made you feel like your mistakes are merely opportunities to further improve your releases. Persistence is key, and always turn feedback into a lesson opportunity!”</p>
+            <p class="quote">{{ gettext("th30Quote") }}</p>
           </div>
 
 
@@ -207,11 +201,11 @@
             <h3>Oleg Mytryniuk</h3>
             <a href="https://github.com/omytryniuk">omytryniuk</a>
             <ul>
-              <li>Improved the built-in image viewer UI</li>
-              <li>Added several UI improvements and fixed front-end styling and functionality bugs</li>
-              <li>Updated node dependencies in the Thimble project</li>
+              <li>{{ gettext("omytryniukContrib1") }}</li>
+              <li>{{ gettext("omytryniukContrib2") }}</li>
+              <li>{{ gettext("omytryniukContrib3") }}</li>
             </ul>
-            <p class="quote">“For me, working on Thimble is not just about gaining valuable programming experience but more importantly a feeling of accomplishment and contributing to a product that is used by people all around the world. Realizing that millions of people benefit from the code I write is what drove me to apply to work on Thimble. The other important factor is the friendly and supportive community within the project which is another reason that makes my open source development experience with Thimble fascinating.”</p>
+            <p class="quote">{{ gettext("omytryniukQuote") }}</p>
           </div>
 
           <div class="contributor">
@@ -219,10 +213,10 @@
             <h3>Tim Moy</h3>
             <a href="https://github.com/timmoy">timmoy</a>
             <ul>
-              <li>Fixed a bug related to the auto-refresh setting on the preview panel &mdash; it now remembers the setting when the browser is refreshed</li>
-              <li>Added a feature that lets you add filters to images in a project</li>
+              <li>{{ gettext("timmoyContrib1") | safe }}</li>
+              <li>{{ gettext("timmoyContrib2") }}</li>
             </ul>
-            <p class="quote">“Prior to Thimble, I worked with relatively small programs that I coded myself or in a small group. Working on code that spans hundreds (probably thousands!) of files being worked on by over 300 people definitely opened up my mind in what “working with others” could mean. I found that there is definitely a learning curve to get used to the environment, but there's always friendly faces that will help you get started as well as with troubles you may have along the way. Just after a few months, I'm able to contribute to the community more than I imagined before. Imagine the possibilities that we can all achieve together as open source continues to grow!”</p>
+            <p class="quote">{{ gettext("timmoyQuote") }}</p>
           </div>
 
         </div> <!-- end right col -->
