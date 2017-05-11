@@ -26,7 +26,7 @@ require.config({
   }
 });
 
-require(["jquery", "bowser"], function($, bowser) {
+require(["jquery", "bowser", "analytics"], function($, bowser, analytics) {
   // Warn users of unsupported browsers that they can try something newer,
   // specifically anything before IE 11 or Safari 8.
   if((bowser.msie && bowser.version < 11) || (bowser.safari && bowser.version < 8)) {
@@ -51,6 +51,33 @@ require(["jquery", "bowser"], function($, bowser) {
   }
 
   Bramble.once("error", onError);
+
+  var errorMessageTimeoutMS = 15000;
+
+  setTimeout(function(){
+    showLoadingErrorMessage();
+  }, errorMessageTimeoutMS);
+
+  function showLoadingErrorMessage(){
+    $("#spinner-container .taking-too-long").addClass("visible");
+    analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Not loading message shown" });
+  }
+
+  $("button.refresh-browser").on("click",function(){
+    analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Refresh button clicked" });
+    window.location.reload(true);
+  });
+
+  Bramble.once("updatesAvailable", function() {
+    showRefreshAlert();
+  });
+
+  function showRefreshAlert(){
+    console.log("Thimble has updates - please refresh your browser to get the latest changes.");
+    analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Updates available UI shown" });
+    $("body").addClass("has-alert-bar");
+    $("#serviceworker-warning").removeClass("hide");
+  }
 
   function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility) {
     var thimbleScript = document.getElementById("thimble-script");

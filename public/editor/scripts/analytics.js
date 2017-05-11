@@ -18,6 +18,7 @@
   eventCategories.EDITOR_UI = "Editor UI";
   eventCategories.HOMEPAGE = "Homepage";
   eventCategories.PROJECT_ACTIONS = "Project Actions";
+  eventCategories.TROUBLESHOOTING = "Troubleshooting";
 
   var _redacted = "REDACTED (Potential Email Address)";
 

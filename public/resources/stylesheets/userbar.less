@@ -163,7 +163,6 @@
   .nav-chunk {
     margin-left: 5px;
     height: 62px;
-
     .flex-vertical-align;
   }
 
@@ -256,7 +255,6 @@
   }
 
   #navbar-locale {
-    height: 62px;
     .flex-vertical-align;
   }
 
@@ -416,6 +414,8 @@ a.navbar-login:hover {
     text-align: left;
     color: black;
     position: absolute;
+    overflow: auto;
+    max-height: ~"calc(100vh - 85px)";
     min-width: 185px;
     top: 43px;
     left: 0;

@@ -1,3 +1,9 @@
+@import "variables.less";
+
+body {
+  overflow: auto;
+}
+
 .project-list-wrapper {
   width: ~"calc(100% - 100px)";
   margin: 50px auto;
@@ -14,15 +20,12 @@ h2 {
 
 .project-button {
   background-color: #2A9961;
-  display: inline-block;
   padding: 8px 15px 6px 15px;
   cursor: pointer;
   color: white;
   border-bottom: solid 2px rgba(0,0,0,.3);
   border-radius: 2px;
-  position: absolute;
-  top: 0;
-  right: 0;
+  float: right;
 
   &:hover {
     background-color: #39AA6D;
@@ -30,7 +33,34 @@ h2 {
 
   &:active {
     background-color: #288952;
+    margin-top: 2px;
+    border: none;
+  }
+}
+
+.delete-button {
+  background-color: @red;
+  display: none;
+  padding: 8px 15px 6px 15px;
+  cursor: pointer;
+  color: white;
+  border-bottom: solid 2px rgba(0,0,0,.3);
+  border-radius: 2px;
+  float: right;
+  margin-right: 25px;
+
+  img {
+    height: 18px;
+    position: relative;
     top: 2px;
+  }
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    margin-top: 2px;
     border: none;
   }
 }
@@ -71,6 +101,14 @@ h2 {
     min-width: 0;
   }
 
+  .pending-delete {
+    background: rgba(255,0,0,.08);
+
+    &:hover {
+      background: rgba(255,0,0,.1)
+    }
+  }
+
   .project-ui {
     flex-shrink: 1;
     white-space: nowrap;
@@ -107,6 +145,15 @@ h2 {
     }
   }
 
+  .disabled-link {
+    cursor: default;
+    pointer-events: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
   .project-information {
     font-size: 0.8em;
     color: rgba(0,0,0,.4);
@@ -129,13 +176,17 @@ h2 {
     }
   }
 
-  .project-delete {
+  .project-delete, .project-delete-cancel {
     color: black;
     margin-left: 12px;
     opacity: .3;
     cursor: pointer;
     font-weight: 600;
     display: inline-block;
+  }
+
+  .project-delete.hide, .project-delete-cancel.hide {
+    display: none;
   }
 
   .icon-garbage-can {
@@ -165,11 +216,11 @@ h2 {
     }
   }
 
-  .project-delete:hover {
+  .project-delete:hover, .project-delete-cancel:hover {
     opacity: .6;
   }
 
-  .project-delete:hover :after {
+  .project-delete:hover ::after, .project-delete-cancel:hover ::after {
     transform-origin: left;
     transform: rotate(-4deg) translateY(-1px);
   }

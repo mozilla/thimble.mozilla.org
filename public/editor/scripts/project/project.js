@@ -1,4 +1,5 @@
 define(function(require) {
+  var $ = require("jquery");
   var Constants = require("constants");
   var Remote = require("project/remote");
   var Metadata = require("project/metadata");
@@ -16,6 +17,8 @@ define(function(require) {
   var _anonymousId;
   var _remixId;
   var _description;
+
+  var DEFAULT_INDEX_HTML_URL = "/default-files/html.txt";
 
   function getAnonymousId() {
     return _anonymousId;
@@ -237,22 +240,24 @@ define(function(require) {
             return callback(err);
           }
 
-          // Find an HTML file to open in the project, hopefully /index.html
-          var sh = new _fs.Shell();
-          sh.find(getRoot(), {name: "*.html"}, function(err, found) {
-            if(err) {
-              return callback(err);
+          // Find the index.html file in the project root to open
+          var indexLocation = Path.join(getRoot(), "index.html");
+          _fs.exists(indexLocation, function(exists) {
+            if(exists) {
+              callback(null, indexLocation);
+              return;
             }
-
-            // Look for an HTML file to open, ideally index.html
-            var indexPos = 0;
-            found.forEach(function(path, idx) {
-              if(Path.basename(path) === "index.html") {
-                indexPos = idx;
-              }
-            });
-
-            callback(null, found[indexPos]);
+            // Create a default index.html file
+            $.get(DEFAULT_INDEX_HTML_URL).then(function(data) {
+              _fs.writeFile(indexLocation, data, function(err) {
+                if (err) {
+                  console.error("Cannot write file to project: " + err);
+                  callback(err);
+                  return;
+                }
+                callback(null, indexLocation);
+              });
+            }, callback);
           });
         });
       });

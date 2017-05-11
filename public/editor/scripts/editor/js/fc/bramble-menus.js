@@ -12,6 +12,82 @@ define(function(require) {
     PopupMenu.create("#navbar-locale .dropdown-toggle", "#navbar-locale .dropdown-content");
   }
 
+  function setupSnippetsMenu(bramble) {
+    var menu = PopupMenu.createWithOffset("#editor-pane-nav-snippets", ".snippets-menu-container");
+
+    function dataTypeSelector(elementSelector, dataType) {
+      return elementSelector + "[data-type='" + dataType + "']";
+    }
+
+    function snippetIDSelector(elementSelector, snippetID) {
+      return elementSelector + "[data-snippet-id='" + snippetID + "']";
+    }
+
+    // Clicks on the Snippet Categories (HTML/CSS/JS)
+    $("div.snippets-menu .snippets-categories span").click(function() {
+      var $snippetCategory = $(this);
+      var $previousSnippetCategory = $snippetCategory.parent().children(".active");
+
+      if($snippetCategory.is($previousSnippetCategory)) {
+        return false;
+      }
+
+      // Current/previous snippet data types
+      var dataType = $snippetCategory.data("type");
+      var previousDataType = $previousSnippetCategory.data("type");
+
+      // Current/previously selected snippets
+      var snippetID = $(dataTypeSelector("ul.snippets-list li.selected", dataType)).data("snippet-id");
+      var previousSnippetID = $(dataTypeSelector("ul.snippets-list li.selected", previousDataType)).data("snippet-id");
+
+      /*
+        - Hide the snippet list items for the previous data type
+        - Show the snippet list items for the current data type
+        - Hide the snippet preview for the previously selected snippet
+        - Show the snippet preview for the currently selected snippet
+      */
+      $("div.snippets")
+      .find(
+        dataTypeSelector("li", dataType) + ", " +
+        dataTypeSelector("li", previousDataType) + ", " +
+        snippetIDSelector("div.snippets-preview", snippetID) + ", " +
+        snippetIDSelector("div.snippets-preview", previousSnippetID)
+      )
+      .toggleClass("hide");
+
+      $snippetCategory.toggleClass("active");
+      $previousSnippetCategory.toggleClass("active");
+
+      return false;
+    });
+
+    $("ul.snippets-list > li").click(function() {
+      var $selectedSnippet = $(this);
+      var $previousSnippet = $(dataTypeSelector("ul.snippets-list li.selected", $selectedSnippet.data("type")));
+
+      var $selectedSnippetCode = $(snippetIDSelector(".snippets-preview", $selectedSnippet.data("snippet-id")));
+      var $previousSnippetCode = $(snippetIDSelector(".snippets-preview", $previousSnippet.data("snippet-id")));
+
+      $selectedSnippet.toggleClass("selected");
+      $previousSnippet.toggleClass("selected");
+      $selectedSnippetCode.toggleClass("hide");
+      $previousSnippetCode.toggleClass("hide");
+
+      return false;
+    });
+
+    $("div.snippets-preview > button").click(function() {
+      var snippetID = $(this).parent().data("snippet-id") || false;
+      if(snippetID){
+        analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Insert Snippet", label : snippetID });
+      }
+      bramble.addCodeSnippet($(this).siblings("pre").text());
+      menu.close();
+
+      return false;
+    });
+  }
+
   function setupOptionsMenu(bramble) {
     // Gear Options menu
     PopupMenu.createWithOffset("#editor-pane-nav-options", "#editor-pane-nav-options-menu");
@@ -61,6 +137,14 @@ define(function(require) {
     } else {
         $("#allow-scripts-toggle").removeClass("switch-enabled");
     }
+
+    //set initial UI value to SVG XML UI
+    if(bramble.getOpenSVGasXML()) {
+        $("#edit-SVG-toggle").addClass("switch-enabled");
+    } else {
+        $("#edit-SVG-toggle").removeClass("switch-enabled");
+    }
+
     // Enable/Disable JavaScript in Preview
     $("#allow-scripts-toggle").click(function() {
       // Toggle current value
@@ -80,6 +164,29 @@ define(function(require) {
       return false;
     });
 
+    //set initial UI value to allow whitespace indicator
+    if(bramble.getAllowWhiteSpace()) {
+      $("#allow-whitespace-toggle").addClass("switch-enabled");
+    } else {
+      $("#allow-whitespace-toggle").removeClass("switch-enabled");
+    }
+    // Enable/Disable Whitespace Indicator
+    $("#allow-whitespace-toggle").click(function() {
+      // Toggle current value
+      var $allowWhitespaceToggle = $("#allow-whitespace-toggle");
+      var toggle = !($allowWhitespaceToggle.hasClass("switch-enabled"));
+
+      if(toggle) {
+        $allowWhitespaceToggle.addClass("switch-enabled");
+        bramble.enableWhiteSpace();
+      } else {
+        $allowWhitespaceToggle.removeClass("switch-enabled");
+        bramble.disableWhiteSpace();
+      }
+
+      return false;
+    });
+    
     //set the Autocomplete toggle to reflect whether auto-complete is enabled or disabled
     if(bramble.getAutocomplete()) {
         $("#autocomplete-toggle").addClass("switch-enabled");
@@ -94,10 +201,27 @@ define(function(require) {
 
       if(toggle) {
         $autocompleteToggle.addClass("switch-enabled");
-        bramble.disableAutocomplete();
+        bramble.enableAutocomplete();
       } else {
         $autocompleteToggle.removeClass("switch-enabled");
-        bramble.enableAutocomplete();
+        bramble.disableAutocomplete();
+      }
+
+      return false;
+    });
+
+    //Edit SVG as XML
+    $("#edit-SVG-toggle").click(function() {
+      // Toggle current value
+      var $editSVGToggle = $("#edit-SVG-toggle");
+      var toggle = !($editSVGToggle.hasClass("switch-enabled"));
+
+      if(toggle) {
+        $editSVGToggle.addClass("switch-enabled");
+        bramble.openSVGasXML();
+      } else {
+        $editSVGToggle.removeClass("switch-enabled");
+        bramble.openSVGasImage();
       }
 
       return false;
@@ -286,7 +410,12 @@ define(function(require) {
     });
   }
 
+  function refreshSnippets(type) {
+    $("div.snippets-menu .snippets-categories span[data-type='" + type + "']").click();
+  }
+
   function init(bramble) {
+    setupSnippetsMenu(bramble);
     setupOptionsMenu(bramble);
     setupAddFileMenu(bramble);
     setupUserMenu();
@@ -294,6 +423,7 @@ define(function(require) {
   }
 
   return {
-    init: init
+    init: init,
+    refreshSnippets: refreshSnippets
   };
 });
