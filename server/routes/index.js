@@ -1,4 +1,5 @@
 var config = require("./config");
+var Middleware = require("../lib/middleware");
 
 // Content-fetching function used for generating the output
 // on http://[...]/data routes via the index.rawData function.
@@ -15,7 +16,9 @@ function getPageData(req) {
 
 module.exports = function() {
   return {
-    init: function(app, middleware) {
+    init: function(app) {
+      var middleware = Middleware(config);
+
       [
         require("./auth"),
         require("./main"),

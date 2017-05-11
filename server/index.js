@@ -14,7 +14,6 @@ let Request = require("./request");
 let Security = require("./security");
 let localize = require("./localize");
 let HttpError = require("./lib/http-error.js");
-let middleware = require("./lib/middleware")();
 let routes = require("./routes")();
 let Utils = require("./lib/utils");
 
@@ -118,7 +117,7 @@ localize(server, Object.assign(env.get("L10N"), {
 /**
  * API routes
  */
-routes.init(server, middleware);
+routes.init(server);
 
 
 /*
