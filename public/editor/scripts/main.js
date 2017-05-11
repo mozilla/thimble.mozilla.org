@@ -53,7 +53,7 @@ require(["jquery", "bowser"], function($, bowser) {
   Bramble.once("error", onError);
 
   $("button.refresh-browser").on("click",function(){
-    window.location.reload();
+    window.location.reload(true);
   });
 
   Bramble.once("updatesAvailable", function() {
