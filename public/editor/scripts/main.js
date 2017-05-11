@@ -52,6 +52,16 @@ require(["jquery", "bowser"], function($, bowser) {
 
   Bramble.once("error", onError);
 
+  var errorMessageTimeoutMS = 10000;
+
+  setTimeout(function(){
+    showLoadingErrorMessage();
+  }, errorMessageTimeoutMS);
+
+  function showLoadingErrorMessage(){
+    $("#spinner-container .taking-too-long").addClass("visible");
+  }
+
   $("button.refresh-browser").on("click",function(){
     window.location.reload(true);
   });
