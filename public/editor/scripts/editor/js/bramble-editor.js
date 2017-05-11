@@ -14,7 +14,13 @@ define(function(require) {
       // Start loading the Bramble editor resources
       Bramble.load("#webmaker-bramble",{
         url: options.editorUrl,
-        hideUntilReady: true
+        hideUntilReady: true,
+        extensions: {
+          enable: [
+            // Watch and warn users on rename or delete of index.html
+            'bramble-watch-index.html'
+          ]
+        }
       });
 
       // Start loading the project files
