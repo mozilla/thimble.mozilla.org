@@ -42,25 +42,24 @@
           {{ gettext("getInvolvedDescription2") | safe }}
         </p>
 
-        <h3>No contribution is too small</h3>
+        <h3>{{ gettext("noContributionTooSmallTitle") }}</h3>
 
         <p>
-          Contributions of all skills and backgrounds are welcome. You don't need to be an expert programmer, in fact, over
-          half of our contributors identify themselves as students. You can start small, file an issue to…
+          {{ gettext("noContributionTooSmallDesc") }}
         </p>
 
         <ul>
-          <li>Report bug, problem or typo</li>
-          <li>Request a change, new feature or starter project</li>
-          <li>Leave feedback</li>
+          <li>{{ gettext("noContributionTooSmallReason1") }}</li>
+          <li>{{ gettext("noContributionTooSmallReason2") }}</li>
+          <li>{{ gettext("noContributionTooSmallReason3") }}</li>
         </ul>
 
         <p>
-          <a class="blue-button" href="https://github.com/mozilla/thimble.mozilla.org/issues/new">Go on, File an Issue!</a>
+          <a class="blue-button" href="https://github.com/mozilla/thimble.mozilla.org/issues/new">{{ gettext("goFileAnIssueBtn") }}</a>
         </p>
 
         <p>
-          If you're feeling adventurous, then check out our GitHub repositories below.
+          {{ gettext("feelingAdventurous") }}
         </p>
 
         <div class="two-col">
@@ -220,7 +219,7 @@
             <h3>Tim Moy</h3>
             <a href="https://github.com/timmoy">timmoy</a>
             <ul>
-              <li>Fixed a bug related to the auto-refresh setting on the preview panel&mdash;it now remembers the setting when the browser is refreshed</li>
+              <li>Fixed a bug related to the auto-refresh setting on the preview panel &mdash; it now remembers the setting when the browser is refreshed</li>
               <li>Added a feature that lets you add filters to images in a project</li>
             </ul>
             <p class="quote">“Prior to Thimble, I worked with relatively small programs that I coded myself or in a small group. Working on code that spans hundreds (probably thousands!) of files being worked on by over 300 people definitely opened up my mind in what “working with others” could mean. I found that there is definitely a learning curve to get used to the environment, but there's always friendly faces that will help you get started as well as with troubles you may have along the way. Just after a few months, I'm able to contribute to the community more than I imagined before. Imagine the possibilities that we can all achieve together as open source continues to grow!”</p>
