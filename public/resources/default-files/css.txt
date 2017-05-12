@@ -1,19 +1,32 @@
-/***************************
-This is a Cascading Style Sheet (CSS), which describes rules for styling HTML markup (and this is a comment, which you can delete).
+/*
+This is a Cascading Style Sheet (CSS).
+It describes rules for styling your HTML markup.
 
-To use this file, link it to your markup by placing a <link> in the <head> of your HTML file:
+To use this file, place the following <link> tag anywhere in the <head> of your HTML file, making sure that the filename after "href" matches the name of your file....
 
-  <head>
-    <link rel="stylesheet" href="style.css">
+    <head>
+        <link rel="stylesheet" href="style.css">
+    </head>
 
-replacing "style.css" with the name of this CSS file.
+Learn more about CSS at https://developer.mozilla.org/en-US/docs/Web/Guide/CSS
 
-Learn more about CSS at
+When you're done, you can delete all of this grey text, it's just a comment.
+*/
 
-https://developer.mozilla.org/en-US/docs/Web/Guide/CSS
-***************************/
+/* Fonts from Google Fonts - more at https://fonts.google.com */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+@import url('https://fonts.googleapis.com/css?family=Merriweather:400,700');
 
 body {
+  background-color: white;
   font-family: "Open Sans", sans-serif;
-  background-color: skyblue;
+  padding: 5px 25px;
+  font-size: 18px;
+  margin: 0;
+  color: #444;
+}
+
+h1 {
+  font-family: "Merriweather", serif;
+  font-size: 32px;
 }
