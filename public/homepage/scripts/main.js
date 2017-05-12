@@ -30,21 +30,6 @@ require.config({
   }
 });
 
-// While the user is reading this page, start to cache Bramble's biggest files
-function preloadBramble($) {
-  var brambleHost = $("meta[name='bramble-host']").attr("content");
-  brambleHost = brambleHost.replace(/\/$/, "");
-  [
-    brambleHost + "/dist/styles/brackets.min.css",
-    brambleHost + "/dist/bramble.js",
-    brambleHost + "/dist/main.js",
-    brambleHost + "/dist/thirdparty/thirdparty.min.js"
-  ].forEach(function(url) {
-    // Load and cache files as plain text (don't parse) and ignore results.
-    $.ajax({url: url, dataType: "text"});
-  });
-}
-
 function setupNewProjectLinks($, analytics) {
   var authenticated = $("#navbar-login").hasClass("signed-in");
   var newProjectButton = $("#new-project-button");
@@ -122,7 +107,6 @@ function init($, uuid, cookies, PopupMenu, analytics, gallery) {
   setupAuthentication($, uuid, cookies, analytics);
   setupNewProjectLinks($, analytics);
   gallery.init();
-  preloadBramble($);
 }
 
 require(['jquery', 'uuid', 'cookies', 'fc/bramble-popupmenu', 'analytics', 'gallery'], init);
