@@ -16,7 +16,7 @@ let upload = multer({
 });
 const publishHost = env.get("PUBLISH_HOSTNAME");
 
-module.exports = function middlewareConstructor() {
+module.exports = function middlewareConstructor(config) {
   let cryptr = new Cryptr(env.get("SESSION_SECRET"));
 
   return {
@@ -51,14 +51,21 @@ module.exports = function middlewareConstructor() {
 
     /**
      * Check whether the requesting user has been authenticated.
+     * If not, render an error page asking them to explicitly
+     * sign out and sign in again (to bust browser cache).
      */
     checkForAuth(req, res, next) {
       if(req.session.user) {
         return next();
       }
 
-      let locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
-      res.redirect(301, `/${locale}`);
+      res.set({
+        "Cache-Control": "no-cache, no-store, must-revalidate"
+      });
+
+      res.render("sign-out.html", {
+        logoutURL: config.logoutURL
+      });
     },
 
     /**
