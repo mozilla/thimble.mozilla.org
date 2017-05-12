@@ -37,7 +37,10 @@
 
       <div class="left-side">
         <p>
-          {{ gettext("getInvolvedDescription1") | safe }}
+          {% set wikipediaOpenSourceURL = gettext("wikipediaOpenSourceURL") %}
+          {% set mozillaFoundationURL = gettext("mozillaFoundationURL") %}
+          {% set cdotURL = gettext("cdotURL") %}
+          {{ gettext("getInvolvedDescription1") | instantiate | safe }}
           <br/>
           {{ gettext("getInvolvedDescription2") | safe }}
         </p>
