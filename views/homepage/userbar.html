@@ -7,6 +7,12 @@
           <img src="/img/thimble-logo.svg" class="thimble-logo-full">
         </a>
       </div>
+      <div class="main-nav">
+
+        <a href="/" class="{% if pageName == 'home' %}selected{% endif %}">{{ gettext("userbarGetStarted") }}</a>
+        <a href="/features" class="{% if pageName == 'features' %}selected{% endif %}">{{ gettext("userbarCoolFeatures") }}</a>
+        <a href="/get-involved" class="{% if pageName == 'get-involved' %}selected{% endif %}">{{ gettext("userbarGetInvolved") }}</a>
+      </div>
     </div>
 
     <div id="navbar-right" class="container-flex">

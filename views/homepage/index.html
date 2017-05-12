@@ -1,83 +1,39 @@
-{% set locale = localeInfo.lang %}
-{% set localeDir = localeInfo.locale %}
-<!DOCTYPE html>
-<html lang="{{ locale }}" dir="{{ localeInfo.direction }}">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta name="bramble-host" content="{{editorHOST}}">
+{% extends "./base.html" %}
 
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@mozlearn">
-    <meta name="twitter:creator" content="@mozlearn">
-    <meta name="twitter:title" content="{{ gettext("thimbleHeading") | striptags }}">
-    <meta name="twitter:description" content="{{ gettext("thimbleDescription") | striptags }}">
-    <meta name="twitter:image" content="{{ APP_HOSTNAME }}/img/social.png">
+{% block pagetitle %}
+  {{ gettext("thimbleHeading") | safe }}
+{% endblock %}
 
-    <meta property="og:url" content="{{ APP_HOSTNAME }}/{{ locale }}/">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="{{ gettext("thimbleHeading") | striptags }}">
-    <meta property="og:description" content="{{ gettext("thimbleDescription") | striptags }}">
-    <meta property="og:image" content="{{ APP_HOSTNAME }}/img/social.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-
-    <link rel="stylesheet" href="/resources/stylesheets/userbar.css">
-    <link rel="stylesheet" href="/homepage/stylesheets/style.css">
-    <link rel="stylesheet" href="/homepage/stylesheets/gallery.css">
-
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
-
-    <title>{{ gettext("thimbleHeading") | safe }}</title>
-
-    {% if GA_ACCOUNT %}
-    <script id="google-analytics-js" src="/{{ localeDir }}/homepage/scripts/google-analytics.js"
-            data-ga-account="{{ GA_ACCOUNT }}"
-            data-ga-domain="{{ GA_DOMAIN }}"
-            async>
-    </script>
-    {% endif %}
-  </head>
-
-  <body class="homepage">
-    {% include './userbar.html' %}
-
-    <script src="https://pontoon.mozilla.org/pontoon.js"></script>
-
-    <script id="homepage-script"
-        src="/scripts/vendor/require.min.js"
-        data-main="/{{ localeDir }}/homepage/scripts/main.js">
-    </script>
-
-    <section class="main-cta">
-      <div class="content-wrapper">
-        <div class="left-side">
-          <h1>{{ gettext("thimbleTagLine") | safe }}</h1>
-          <p>
-            {{ gettext("thimbleDescription") | instantiate | safe }}
-          </p>
-          <div class="new-project-button-wrapper">
-            <a id="new-project-button" href="/{{ locale }}/projects/new" title="{{ gettext("newProjectBtnTitle") }}" class="button">
-              <div class="pencil-animation">
-                <div class="line-wrapper">
-                  <div class="line line-one"></div>
-                  <div class="line line-two"></div>
-                  <div class="line line-three"></div>
-                </div>
-                <div class="pencil"></div>
+{% block top %}
+  <section class="get-started-feature">
+    <div class="content-wrapper">
+      <div class="left-side">
+        <h1>{{ gettext("thimbleTagLine") | safe }}</h1>
+        <p>
+          {{ gettext("thimbleDescription") | instantiate | safe }}
+        </p>
+        <div class="new-project-button-wrapper">
+          <a id="new-project-button" class="feature-button" href="/{{ locale }}/projects/new" title="{{ gettext("newProjectBtnTitle") }}" class="button">
+            <div class="pencil-animation">
+              <div class="line-wrapper">
+                <div class="line line-one"></div>
+                <div class="line line-two"></div>
+                <div class="line line-three"></div>
               </div>
-              <span id="new-project-button-text">{{ gettext("newProjectBtn") }}</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="video">
-          <iframe width="504" height="284" src="https://www.youtube.com/embed/JecFOjD9I3k" frameborder="0" allowfullscreen></iframe>
+              <div class="pencil"></div>
+            </div>
+            <span id="new-project-button-text">{{ gettext("newProjectBtn") }}</span>
+          </a>
         </div>
       </div>
-    </section>
 
-    {% include '../gallery.html' %}
-    {% include '../footer.html' %}
-  </body>
-</html>
+      <div class="video">
+        <iframe width="504" height="284" src="https://www.youtube.com/embed/JecFOjD9I3k?rel=0&showinfo=0" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block content %}
+  {% include '../gallery.html' %}
+{% endblock %}

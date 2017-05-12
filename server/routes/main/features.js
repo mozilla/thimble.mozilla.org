@@ -13,7 +13,7 @@ module.exports = function(config, req, res) {
     editorURL: config.editorURL,
     URL_PATHNAME: "/" + qs,
     languages: req.app.locals.languages,
-    pageName: "home"
+    pageName: "features"
   };
 
   if (req.user) {
@@ -22,5 +22,5 @@ module.exports = function(config, req, res) {
     options.logoutURL = config.logoutURL;
   }
 
-  res.render("homepage/index.html", options);
+  res.render("homepage/features.html", options);
 };

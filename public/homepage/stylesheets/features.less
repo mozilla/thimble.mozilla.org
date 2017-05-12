@@ -1,0 +1,95 @@
+// Styles for the Features Page
+
+
+// Larger text for empasized body copy
+
+.callout {
+  font-size: 18px;
+  margin-bottom: 60px;
+  line-height: 150%;
+
+  em {
+    font-weight: 600;
+    text-decoration: underline;
+  }
+}
+
+// List of features
+
+.feature-list {
+  overflow: auto;
+  margin-right: -60px;
+
+  .key {
+    background: #333;
+    background: rgba(0,0,0,.15);
+    color: rgba(0,0,0,.5);
+    padding: 0px 6px;
+    border-radius: 2px;
+    font-weight: 600;
+  }
+
+  .feature {
+    overflow: auto;
+    margin-bottom: 40px;
+    padding-bottom: 5px;
+    width: 50%;
+    float: left;
+    min-height: 450px;
+    box-sizing: border-box;
+    padding-right: 60px;
+
+    .feature-description {
+      color: rgba(0,0,0,.65);
+      line-height: 150%;
+
+      strong {
+        color: rgba(0,0,0,1);
+      }
+    }
+
+    .feature-name {
+      margin: 0 0 12px 0;
+      line-height: 30px;
+      font-size: 22px;
+    }
+
+    .feature-image {
+      width: 100%;
+      margin: 0 0 30px 0;
+      box-shadow: 7px 7px 0px rgba(0,0,0,.15);
+    }
+
+    video {
+      width: 100%;
+      margin: 0 0 30px 0;
+      box-shadow: 7px 7px 0px rgba(0,0,0,.15);
+      background: rgba(0,0,0,.15);
+    }
+  }
+
+  .feature.wide {
+    width: 100%;
+    border: solid 2px #DDD;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    border-width: 2px 0;
+    min-height: 0;
+
+    ul {
+      list-style-type: disc;
+      padding-left: 20px;
+      overflow: hidden;
+    }
+
+    h2 {
+      clear: none;
+    }
+
+    video {
+      width: ~"calc(50% - 30px)";
+      margin-right: 60px;
+      float: left;
+    }
+  }
+}
