@@ -1,5 +1,5 @@
 /*
-This is JavaScript (JS) file.
+This is a JavaScript (JS) file.
 JavaScript is the programming language that powers the web.
 
 To use this file, place the following <script> tag just before the closing </body> tag in your HTML file, making sure that the filename after "src" matches the name of your file...
