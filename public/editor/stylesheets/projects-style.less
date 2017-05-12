@@ -18,42 +18,15 @@ h2 {
   margin: 0 0 30px 0;
 }
 
-.project-button {
-  background-color: #2A9961;
-  padding: 8px 15px 6px 15px;
+
+.shared-button-styles {
   cursor: pointer;
   color: white;
   border-bottom: solid 2px rgba(0,0,0,.3);
   border-radius: 2px;
+  padding: 8px 15px 8px 15px;
+  position: relative;
   float: right;
-
-  &:hover {
-    background-color: #39AA6D;
-  }
-
-  &:active {
-    background-color: #288952;
-    margin-top: 2px;
-    border: none;
-  }
-}
-
-.delete-button {
-  background-color: @red;
-  display: none;
-  padding: 8px 15px 6px 15px;
-  cursor: pointer;
-  color: white;
-  border-bottom: solid 2px rgba(0,0,0,.3);
-  border-radius: 2px;
-  float: right;
-  margin-right: 25px;
-
-  img {
-    height: 18px;
-    position: relative;
-    top: 2px;
-  }
 
   &:hover {
     opacity: 0.9;
@@ -62,6 +35,29 @@ h2 {
   &:active {
     margin-top: 2px;
     border: none;
+  }
+}
+
+.project-button {
+  background-color: #2A9961;
+
+  .shared-button-styles;
+}
+
+.delete-button {
+  background-color: @red;
+  display: none;
+  margin-right: 10px;
+
+  .shared-button-styles;
+
+  padding-left: 36px;
+
+  img {
+    height: 19px;
+    position: absolute;
+    top: 9px;
+    left: 12px;
   }
 }
 
