@@ -438,6 +438,16 @@ define(function(require) {
       }
     });
 
+    bramble.on("projectDirty", function(){
+      $("#navbar-dirt-file").addClass("hide");
+      $("#navbar-save-indicator").removeClass("hide");
+    });
+
+    bramble.on("projectSaved", function(){
+      $("#navbar-save-indicator").addClass("hide");
+      $("#navbar-dirt-file").removeClass("hide");
+    });
+
     bramble.on("activeEditorChange", function(data) {
       setNavFilename(data.filename);
       BrambleMenus.refreshSnippets(Path.extname(data.filename).substr(1).toLowerCase());
