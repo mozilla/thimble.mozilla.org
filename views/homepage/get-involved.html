@@ -37,9 +37,8 @@
 
       <div class="left-side">
         <p>
-          {% set wikipediaOpenSourceURL = gettext("wikipediaOpenSourceURL") %}
-          {% set mozillaFoundationURL = gettext("mozillaFoundationURL") %}
-          {% set cdotURL = gettext("cdotURL") %}
+          {% set mozillaFoundationURL = "https://www.mozilla.org/foundation/" %}
+          {% set cdotURL = "https://cdot.senecacollege.ca/" %}
           {{ gettext("getInvolvedDescription1") | instantiate | safe }}
           <br/>
           {{ gettext("getInvolvedDescription2") | safe }}
