@@ -10,7 +10,7 @@ define(["jquery"], function($) {
 
       var URL = "https://api.github.com/repos/mozilla/thimble.mozilla.org/issues?labels=good%20first%20bug";
 
-      var that =  this;
+      var that = this;
       $.ajax({
         url: URL,
         complete: function(xhr) {
