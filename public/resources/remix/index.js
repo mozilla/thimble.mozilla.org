@@ -25,7 +25,48 @@
     }
 
     detailsBar.setAttribute("style", "");
-    detailsBar.classList.add("mouse-mode");
+
+    var isTouchDevice = 'ontouchstart' in document.documentElement;
+
+    if (isTouchDevice) {
+
+      detailsBar.classList.add("touch-mode");
+
+      var remixButton;
+      ["touchstart","mouseenter"].forEach(function(e){
+
+        document.querySelector(".touch-mode").addEventListener(e, function(event){
+          detailsBar.classList.remove("collapsed");
+          if (e === "touchstart") {
+            var touch = event.touches[0];
+            remixButton = document.elementFromPoint(touch.pageX,touch.pageY);
+          }
+        });
+      });
+
+      document.body.addEventListener("changedTouches", function(event){
+        var touch = event.touches[0];
+        if (document.elementFromPoint(touch.pageX,touch.pageY) !== remixButton) {
+          detailsBar.classList.add("collapsed");
+        }
+      });
+
+      document.querySelector(".touch-mode").addEventListener("mouseleave", function(){
+        detailsBar.classList.add("collapsed");
+      });
+
+    } else {
+
+      detailsBar.classList.add("mouse-mode");
+
+      document.querySelector(".mouse-mode").addEventListener("mouseenter", function(){
+        detailsBar.classList.remove("collapsed");
+      });
+
+      document.querySelector(".mouse-mode").addEventListener("mouseleave", function(){
+        detailsBar.classList.add("collapsed");
+      });
+    }
 
     detailsBar.querySelector(".details-bar-remix-button").addEventListener("click",function(){
       var projectMetaEl = document.head.querySelector("[name=data-remix-projectId]");
@@ -54,14 +95,6 @@
         detailsBar.classList.add("collapsed");
         event.stopPropagation();
       }
-    });
-
-    document.querySelector(".mouse-mode").addEventListener("mouseenter", function(){
-      detailsBar.classList.remove("collapsed");
-    });
-
-    document.querySelector(".mouse-mode").addEventListener("mouseleave", function(){
-      detailsBar.classList.add("collapsed");
     });
   }
 
