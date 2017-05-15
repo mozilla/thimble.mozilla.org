@@ -38,6 +38,11 @@ require(["jquery", "bowser", "analytics"], function($, bowser, analytics) {
     });
   }
 
+  $("button.refresh-browser").on("click",function(){
+    analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Refresh button clicked" });
+    window.location.reload(true);
+  });
+
   function onError(err) {
     console.error("[Bramble Error]", err);
     $("#spinner-container").addClass("loading-error");
@@ -62,11 +67,6 @@ require(["jquery", "bowser", "analytics"], function($, bowser, analytics) {
     $("#spinner-container .taking-too-long").addClass("visible");
     analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Not loading message shown" });
   }
-
-  $("button.refresh-browser").on("click",function(){
-    analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Refresh button clicked" });
-    window.location.reload(true);
-  });
 
   Bramble.once("updatesAvailable", function() {
     showRefreshAlert();
