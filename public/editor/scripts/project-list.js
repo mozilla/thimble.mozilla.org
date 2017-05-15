@@ -69,7 +69,6 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
     var projectSelector = "#" + project.getAttribute("id");
     var lastEdited = project.getAttribute("data-project-date_updated");
     var projectId = project.getAttribute("data-project-id");
-    var publishedUrl = project.getAttribute("data-project-publish_url");
 
     if(isLocalStorageAvailable) {
       setFavoriteDataForProject(projectId, projectSelector, project);
