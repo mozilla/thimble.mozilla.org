@@ -10,6 +10,7 @@ require.config({
     "bowser": "/scripts/vendor/bowser",
     "sso-override": "../../sso-override",
     "logger": "../../logger",
+    "BrambleShim": "../../bramble-shim",
     "jquery": "/node_modules/jquery/dist/jquery.min",
     "localized": "/node_modules/webmaker-i18n/localized",
     "uuid": "/node_modules/node-uuid/uuid",
