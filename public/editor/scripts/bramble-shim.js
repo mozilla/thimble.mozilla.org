@@ -83,7 +83,7 @@ define(function() {
     bramble.openSVGasImage         = bramble.openSVGasImage         || arg0WithCallback;
     bramble.configureAutoCloseTags = bramble.configureAutoCloseTags || arg1WithCallback;
     bramble.addCodeSnippet         = bramble.addCodeSnippet         || arg1WithCallback;
-  };
+  }
 
   return {
     shimAPI: shimAPI
