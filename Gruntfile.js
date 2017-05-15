@@ -39,6 +39,7 @@ module.exports = function( grunt ) {
             "bramble-editor": "editor/scripts/editor/js/bramble-editor",
             "sso-override": "editor/scripts/sso-override",
             "logger": "editor/scripts/logger",
+            "BrambleShim": "editor/scripts/bramble-shim",
             "jquery": "../node_modules/jquery/dist/jquery.min",
             "localized": "../node_modules/webmaker-i18n/localized",
             "uuid": "../node_modules/node-uuid/uuid",
