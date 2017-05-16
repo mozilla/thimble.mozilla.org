@@ -26,6 +26,7 @@ let cssAssets = path.join(require("os").tmpDir(), "mozilla.webmaker.org");
 let editor = url.parse(env.get("BRAMBLE_URI"));
 let editorHost = `${editor.protocol}//${editor.host}`;
 let maxCacheAge = { maxAge: "1d" };
+let maxAge1Week = 7 * 24 * 3600000;
 let homepageVideoLink = "https://www.youtube.com/embed/JecFOjD9I3k";
 
 /*
@@ -42,7 +43,6 @@ server.locals.node_path = "node_modules";
  */
 templatize(server, [ "views" ]);
 
-
 /**
  * Request/Response configuration
  */
@@ -57,7 +57,7 @@ requests.disableHeaders([ "x-powered-by" ])
   key: "mozillaThimble",
   secret: env.get("SESSION_SECRET"),
   cookie: {
-    expires: false,
+    maxAge: maxAge1Week,
     secure: env.get("FORCE_SSL")
   },
   proxy: true

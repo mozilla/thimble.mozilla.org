@@ -29,6 +29,11 @@ class HttpError {
         response.send(`${userFriendlyError.statusMessage}: ${userFriendlyError.message}`);
       },
       html() {
+        // If we get a 500, clear cookies so that we don't wedge user's browser
+        // with corrupt/expired cookie info, and for them to clear via browser.
+        if(statusCode === 500) {
+          request.session = null;
+        }
         response.render("error.html", userFriendlyError);
       },
       json() {
