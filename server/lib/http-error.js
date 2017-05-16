@@ -21,7 +21,8 @@ class HttpError {
     const userFriendlyError = {
       statusMessage,
       status: statusCode,
-      message: error.userMessage || error
+      message: error.userMessage || error,
+      localeInfo
     };
 
     response.format({
