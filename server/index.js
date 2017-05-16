@@ -56,8 +56,8 @@ requests.disableHeaders([ "x-powered-by" ])
 .sessions({
   key: "mozillaThimble",
   secret: env.get("SESSION_SECRET"),
+  maxAge: maxAge1Week,
   cookie: {
-    maxAge: maxAge1Week,
     secure: env.get("FORCE_SSL")
   },
   proxy: true
