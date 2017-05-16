@@ -42,8 +42,6 @@
           </p>
         {% endif %}
 
-        {{ jam }} {{ status }}
-
         <div class="contact-icons">
           <a title="{{ gettext("contactEmail") }}" class="email" href="mailto:thimble@mozillafoundation.org">
             <span class="icon"></span>
@@ -69,6 +67,10 @@
       </div>
     </section>
 
+      <script id="homepage-script"
+          src="/scripts/vendor/require.min.js"
+          data-main="/{{ localeInfo.locale }}/error/scripts/main.js">
+      </script>
 
     {% include 'footer.html' %}
   </body>

@@ -20,9 +20,9 @@ class HttpError {
 
     const userFriendlyError = {
       statusMessage,
-      jam: "AAAAAAAAAA",
       status: statusCode,
-      message: error.userMessage || error
+      message: error.userMessage || error,
+      localeInfo: localeInfo
     };
 
     response.format({
