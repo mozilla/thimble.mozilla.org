@@ -1,9 +1,25 @@
-.centered-message {
+.error-page {
+  background: #47AD66;
+}
+
+.error-page .centered-message {
   text-align: center;
   padding-top: 40px;
+  margin-bottom: 60px;
 
   h1 {
-    margin: 15px auto 30px auto;
+    margin: 15px auto 10px auto;
+    color: white;
+    font-size: 1.6em;
+  }
+
+  p {
+    color: rgba(255,255,255,.6);
+
+  }
+
+  .button-wrapper {
+    margin: 25px 0 40px 0;
   }
 
   img.spilled-thimble {
@@ -13,28 +29,16 @@
 
   h2 {
     color: rgba(255,255,255,.6);
-    max-width: 60%;
+    max-width: 50%;
     margin: 0 auto;
-    font-size: 1.8em;
+    font-size: 1.6em;
     line-height: 1.3em;
     position: relative;
     font-weight: 400;
-
-    &:after {
-      content: "";
-      position: absolute;
-      bottom: -120px;
-      height: 150px;
-      width: 150px;
-      right: 10px;
-      background-image: ~"url(/img/sketchy-arrow.png)";
-      background-repeat: no-repeat;
-      background-size: 100%;
-    }
   }
 
   .contact-icons {
-    margin: 55px 0 35px 0;
+    margin: 25px 0 35px 0;
 
     p {
       margin: 0 0 20px 0;
@@ -145,4 +149,26 @@
 
 .main-cta {
   background-image: none;
+}
+
+.action-button {
+  color: white;
+  border: solid 2px white;
+  font-family: inherit;
+  padding: 10px 20px;
+  font-size: 18px;
+  background: transparent;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 1.4em;
+  text-decoration: none;
+}
+
+.action-button:hover {
+  background: rgba(255,255,255,.2);
+}
+
+.action-button:active {
+  background: white;
+  color: #47AD66;
 }

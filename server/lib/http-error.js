@@ -20,6 +20,7 @@ class HttpError {
 
     const userFriendlyError = {
       statusMessage,
+      jam: "AAAAAAAAAA",
       status: statusCode,
       message: error.userMessage || error
     };

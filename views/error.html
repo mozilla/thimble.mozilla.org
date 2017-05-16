@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="/homepage/stylesheets/style.css">
     <link rel="stylesheet" href="/resources/stylesheets/error.css">
   </head>
-  <body class="homepage">
-
+  <body class="error-page">
     <nav class="navbar-thimble container-flex">
       <div id="navbar-left" class="container-flex">
         <div class="navbar-logo-container">
@@ -31,9 +30,19 @@
           <img class="spilled-thimble" src="/img/spilled-thimble.png" />
           <h1>{{ gettext("errorSomethingWentWrong") }}</h1>
           <h2>
-            {{ gettext("errorSomethingWentWrongDetails") }}
+            {{ gettext("errorNotSureWhatWrong") }}
           </h2>
+          <p class="button-wrapper">
+            <button class="try-again action-button">
+              {{ gettext("tryAgainButtonLabel") }}
+            </button>
+          </p>
+          <p>
+            {{ gettext("errorKeepSeingPage") }}
+          </p>
         {% endif %}
+
+        {{ jam }} {{ status }}
 
         <div class="contact-icons">
           <a title="{{ gettext("contactEmail") }}" class="email" href="mailto:thimble@mozillafoundation.org">
