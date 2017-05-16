@@ -22,7 +22,7 @@ class HttpError {
       statusMessage,
       status: statusCode,
       message: error.userMessage || error,
-      localeInfo: localeInfo
+      localeInfo
     };
 
     response.format({

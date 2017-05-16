@@ -38,7 +38,7 @@
             </button>
           </p>
           <p>
-            {{ gettext("errorKeepSeingPage") }}
+            {{ gettext("errorKeepSeeingPage") }}
           </p>
         {% endif %}
 
@@ -67,10 +67,7 @@
       </div>
     </section>
 
-      <script id="homepage-script"
-          src="/scripts/vendor/require.min.js"
-          data-main="/{{ localeInfo.locale }}/error/scripts/main.js">
-      </script>
+    <script src="/{{ localeInfo.locale }}/error/scripts/main.js"></script>
 
     {% include 'footer.html' %}
   </body>
