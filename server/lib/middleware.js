@@ -23,7 +23,7 @@ module.exports = function middlewareConstructor(config) {
   // Set up a token decryptor using the default cryptr 2.0.0 algorithm.
   let cryptr = new Cryptr(env.get("SESSION_SECRET"));
   
-  // Set up a fallback decryptor that matches the crtypr 1.0.0 algorithm
+  // Set up a fallback decryptor that matches the cryptr 1.0.0 algorithm
   // https://github.com/MauriceButler/cryptr/compare/fabae97a61119d69f03fc189f7c95dda826c96b7...master#diff-168726dbe96b3ce427e7fedce31bb0bcR9
   let cryptrFallback = new Cryptr(env.get("SESSION_SECRET"), "aes256");
 
