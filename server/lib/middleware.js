@@ -20,8 +20,12 @@ const publishHost = env.get("PUBLISH_HOSTNAME");
 const ASSERT_TOKEN = env.get("ASSERT_TOKEN");
 
 module.exports = function middlewareConstructor(config) {
+  // Set up a token decryptor using the default cryptr 2.0.0 algorithm.
   let cryptr = new Cryptr(env.get("SESSION_SECRET"));
-  let cryptrFallback = new Cryptr(env.get("SESSION_SECRET"), "aes-256");
+  
+  // Set up a fallback decryptor that matches the crtypr 1.0.0 algorithm
+  // https://github.com/MauriceButler/cryptr/compare/fabae97a61119d69f03fc189f7c95dda826c96b7...master#diff-168726dbe96b3ce427e7fedce31bb0bcR9
+  let cryptrFallback = new Cryptr(env.get("SESSION_SECRET"), "aes256");
 
   return {
     /**
@@ -110,12 +114,14 @@ module.exports = function middlewareConstructor(config) {
           }
           
           return true;
-        }
+        };
 
         if (!assert(token)) {
-          console.log("ASSERT_TOKEN FAILED: retrying decryption using eas-256 rather than eas-256-ctr");
+          console.log("ASSERT_TOKEN FAILED: retrying decryption using aes-256 rather than aes-256-ctr");
           token = req.user.token = cryptrFallback.decrypt(req.session.token);
-          assert(token);
+          if (!assert(token)) {
+            return next(new Error("Session token cannot be decrypted"));
+          }
         }
       }
 
