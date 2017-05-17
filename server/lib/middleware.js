@@ -21,6 +21,7 @@ const ASSERT_TOKEN = env.get("ASSERT_TOKEN");
 
 module.exports = function middlewareConstructor(config) {
   let cryptr = new Cryptr(env.get("SESSION_SECRET"));
+  let cryptrFallback = new Cryptr(env.get("SESSION_SECRET"), "aes-256");
 
   return {
     /**
@@ -85,19 +86,35 @@ module.exports = function middlewareConstructor(config) {
       let token = req.user.token = cryptr.decrypt(req.session.token);
 
       if(ASSERT_TOKEN) {
-        // We expect a 64 character HEX string for the token, for example:
-        // '16d4c4d2fa4d6e4aa6b1b5c6a115ad44fd271dd98204f2008bf5efbba5a56dec'
-        let tokenType = typeof token;
-        if(!token) {
-          console.log("ASSERT_TOKEN FAILED: Expected token to exist");
-        } else {
+        /**
+         * Assert whether or not this token is correct or rather broken.
+         * We expect a 64 character HEX string for the token, for example:
+         * '16d4c4d2fa4d6e4aa6b1b5c6a115ad44fd271dd98204f2008bf5efbba5a56dec'
+         */
+        let assert = function(token) {
+          if(!token) {
+            console.log("ASSERT_TOKEN FAILED: Expected token to exist");
+            return false;
+          }
+
+          let tokenType = typeof token;
+          
           if(tokenType !== "string") {
             console.log("ASSERT_TOKEN FAILED: Expected token type to be String, instead got: " + tokenType);
-          } else {
-            if(!/^[a-z0-9]{64}$/.test(token)) {
-              console.log("ASSERT_TOKEN FAILED: Expected token to only have chars a-z, 0-9. Also got: '" +  token.replace(/[a-z0-9]/g, ' ') + "'");
-            }
+            return false;
           }
+          
+          if(!/^[a-z0-9]{64}$/.test(token)) {
+            console.log("ASSERT_TOKEN FAILED: Expected token to only have chars a-z, 0-9. Also got: '" +  token.replace(/[a-z0-9]/g, ' ') + "'");
+            return false;
+          }
+          
+          return true;
+        }
+
+        if (!assert(token)) {
+          token = req.user.token = cryptrFallback.decrypt(req.session.token);
+          assert(token);
         }
       }
 
