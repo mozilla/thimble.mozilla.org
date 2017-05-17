@@ -23,6 +23,9 @@ define(["jquery"], function($) {
       var issueCount = data.length;
 
       if(issueCount > 1) {
+        if(issueCount >= 30) {
+          issueCount = "30+";
+        }
         this.issueCountEl.text(issueCount);
         this.issueCountEl.show();
       }
