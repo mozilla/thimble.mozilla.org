@@ -122,7 +122,7 @@ module.exports = function middlewareConstructor(config) {
           token = req.user.token = cryptrFallback.decrypt(req.session.token);
 
           if (!assert(token)) {
-            reurn next(new Error("Session token cannot be decrypted. Please sign out and sign in again."));
+            reurn next("Session token cannot be decrypted. Please sign out and sign in again.");
           }
         }
       }
