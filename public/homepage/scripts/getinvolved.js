@@ -24,7 +24,7 @@ define(["jquery"], function($) {
 
       if(issueCount > 1) {
         if(issueCount >= 30) {
-          issueCount = issueCount + "+";
+          issueCount = "30+";
         }
         this.issueCountEl.text(issueCount);
         this.issueCountEl.show();
