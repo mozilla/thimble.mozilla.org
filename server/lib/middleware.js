@@ -85,16 +85,18 @@ module.exports = function middlewareConstructor(config) {
       let token = req.user.token = cryptr.decrypt(req.session.token);
 
       if(ASSERT_TOKEN) {
-        // We expect a token of the form '16d4c4d2fa4d6e4aa6b1b5c6a115ad44fd271dd98204f2008bf5efbba5a56dec'
+        // We expect a 64 character HEX string for the token, for example:
+        // '16d4c4d2fa4d6e4aa6b1b5c6a115ad44fd271dd98204f2008bf5efbba5a56dec'
         let tokenType = typeof token;
         if(!token) {
           console.log("ASSERT_TOKEN FAILED: Expected token to exist");
         } else {
           if(tokenType !== "string") {
             console.log("ASSERT_TOKEN FAILED: Expected token type to be String, instead got: " + tokenType);
-          }
-          if(!/^[a-z0-9]+$/.test(token)) {
-            console.log("ASSERT_TOKEN FAILED: Expected token to only have chars a-z, 0-9. Also got: '" +  token.replace(/[a-z0-9]/g, ' ') + "'");
+          } else {
+            if(!/^[a-z0-9]{64}$/.test(token)) {
+              console.log("ASSERT_TOKEN FAILED: Expected token to only have chars a-z, 0-9. Also got: '" +  token.replace(/[a-z0-9]/g, ' ') + "'");
+            }
           }
         }
       }
