@@ -57,13 +57,13 @@ define(["jquery", "analytics"], function($, analytics) {
 
     //When a Project preview gets clicked
     thumbnailClicked: function(el){
-      var title = el.closest(".activity").find(".title").text();
+      var title = el.closest(".activity").find(".project-title").text();
       analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Gallery Project Viewed", label : title });
     },
 
     //When a Project gets remixed
     remixClicked: function(el){
-      var title = el.closest(".activity").find(".title").text();
+      var title = el.closest(".activity").find(".project-title").text();
       analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Gallery Project Remixed", label : title });
     },
 
@@ -197,8 +197,6 @@ define(["jquery", "analytics"], function($, analytics) {
           } else {
             newItem.find(".teaching-kit").addClass("hidden");
           }
-
-
 
           for(var j = 0; j < activity.tags.length; j++) {
             newItem.find(".tags").append("<a class='tag' tag='"+activity.tags[j]+"' title='See other projects tagged " + activity.tags[j] + "' >" + activity.tags[j] + "</a> ");
