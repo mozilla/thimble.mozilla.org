@@ -113,6 +113,7 @@ module.exports = function middlewareConstructor(config) {
         }
 
         if (!assert(token)) {
+          console.log("ASSERT_TOKEN FAILED: retrying decryption using eas-256 rather than eas-256-ctr");
           token = req.user.token = cryptrFallback.decrypt(req.session.token);
           assert(token);
         }
