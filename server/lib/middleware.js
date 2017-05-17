@@ -120,7 +120,9 @@ module.exports = function middlewareConstructor(config) {
           console.log("ASSERT_TOKEN FAILED: retrying decryption using aes-256 rather than aes-256-ctr");
           token = req.user.token = cryptrFallback.decrypt(req.session.token);
           if (!assert(token)) {
-            return next(new Error("Session token cannot be decrypted"));
+            let errMsg = "Session token cannot be decrypted. Please sign out and sign in again.";
+            let formatted = HttpError.format(errMsg, request);
+            return next(formatted);
           }
         }
       }
