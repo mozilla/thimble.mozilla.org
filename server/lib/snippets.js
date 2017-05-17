@@ -109,7 +109,7 @@ const html = [{
   title: "snippetHTMLExternalStylesheetTitle",
   data: {
     value:
-`<!-- {{ gettext("snippetHTMLExternalStylesheetComment") | safe }} -->
+`<!-- {{ gettext("snippetHTMLExternalStyleSheetComment") | safe }} -->
 <link href="style.css" rel="stylesheet">
 `,
     l10n: true
