@@ -87,9 +87,16 @@ module.exports = function middlewareConstructor(config) {
       if(ASSERT_TOKEN) {
         // We expect a token of the form '16d4c4d2fa4d6e4aa6b1b5c6a115ad44fd271dd98204f2008bf5efbba5a56dec'
         let tokenType = typeof token;
-        console.assert(token, "Expected token to exist");
-        console.assert(tokenType === "string", "Expected token type to be String, got %s", tokenType);
-        console.assert(/^[a-z0-9]+$/.test(token), "Expected token to only have chars a-z, 0-9. Also got %s", token.replace(/[a-z0-9]/g, ' '));
+        if(!token) {
+          console.log("ASSERT_TOKEN FAILED: Expected token to exist");
+        } else {
+          if(tokenType !== "string") {
+            console.log("ASSERT_TOKEN FAILED: Expected token type to be String, instead got: " + tokenType);
+          }
+          if(!/^[a-z0-9]+$/.test(token)) {
+            console.log("ASSERT_TOKEN FAILED: Expected token to only have chars a-z, 0-9. Also got: '" +  token.replace(/[a-z0-9]/g, ' ') + "'");
+          }
+        }
       }
 
       next();
