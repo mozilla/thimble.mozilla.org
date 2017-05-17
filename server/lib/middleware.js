@@ -16,6 +16,9 @@ let upload = multer({
 });
 const publishHost = env.get("PUBLISH_HOSTNAME");
 
+// Debug info flag for https://github.com/mozilla/thimble.mozilla.org/issues/2161
+const ASSERT_TOKEN = env.get("ASSERT_TOKEN");
+
 module.exports = function middlewareConstructor(config) {
   let cryptr = new Cryptr(env.get("SESSION_SECRET"));
 
@@ -79,7 +82,15 @@ module.exports = function middlewareConstructor(config) {
 
       // Decrypt oauth token
       req.user = req.session.user;
-      req.user.token = cryptr.decrypt(req.session.token);
+      let token = req.user.token = cryptr.decrypt(req.session.token);
+
+      if(ASSERT_TOKEN) {
+        // We expect a token of the form '16d4c4d2fa4d6e4aa6b1b5c6a115ad44fd271dd98204f2008bf5efbba5a56dec'
+        let tokenType = typeof token;
+        console.assert(token, "Expected token to exist");
+        console.assert(tokenType === "string", "Expected token type to be String, got %s", tokenType);
+        console.assert(/^[a-z0-9]+$/.test(token), "Expected token to only have chars a-z, 0-9. Also got %s", token.replace(/[a-z0-9]/g, ' '));
+      }
 
       next();
     },
