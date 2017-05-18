@@ -51,6 +51,7 @@ module.exports = function( grunt ) {
             "moment": "../node_modules/moment/min/moment-with-locales.min",
             "gallery": "homepage/scripts/gallery",
             "getinvolved": "homepage/scripts/getinvolved",
+            "features": "homepage/scripts/features",
           },
           shim: {
             "jquery": {
