@@ -315,6 +315,7 @@ define(function(require) {
     var $addJs = $("#filetree-pane-nav-add-js");
     var $addUpload = $("#filetree-pane-nav-add-upload");
     var $addTutorial = $("#filetree-pane-nav-add-tutorial");
+    var $downloadZip = $("#filetree-pane-nav-export-project-zip");
 
     // Add File button and popup menu
     var menu = PopupMenu.createWithOffset("#filetree-pane-nav-add", "#filetree-pane-nav-add-menu");
@@ -394,6 +395,13 @@ define(function(require) {
       menu.close();
       bramble.showUploadFilesDialog();
       analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Upload File Dialog Shown"});
+    });
+
+    $downloadZip.click(function() {
+      menu.close();
+      bramble.export();
+      analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "Export ZIP"});
+      return false;
     });
 
     // We hide the add tutorial button if a tutorial exists
