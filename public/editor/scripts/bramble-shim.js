@@ -73,6 +73,7 @@ define(function() {
   function shimAPI(bramble) {
     // New API Getters
     bramble.getAutocomplete        = bramble.getAutocomplete        || defaultTrue;
+    bramble.getAutoCloseTags       = bramble.getAutoCloseTags       || getAutoCloseTagsDefault;
     bramble.getAllowJavaScript     = bramble.getAllowJavaScript     || defaultTrue;
     bramble.getAllowWhiteSpace     = bramble.getAllowWhiteSpace     || defaultFalse;
     bramble.getAutoUpdate          = bramble.getAutoUpdate          || defaultTrue;
@@ -90,12 +91,6 @@ define(function() {
     bramble.openSVGasImage         = bramble.openSVGasImage         || arg0WithCallback;
     bramble.configureAutoCloseTags = bramble.configureAutoCloseTags || arg1WithCallback;
     bramble.addCodeSnippet         = bramble.addCodeSnippet         || arg1WithCallback;
-
-    // bramble.getAutoCloseTags is different, since return type changed too (boolean to object)
-    if (bramble.getAutoCloseTags && typeof bramble.getAutoCloseTags !== "object") {
-      bramble.getAutoCloseTags = getAutoCloseTagsDefault;
-    }
-
   }
 
   return {
