@@ -160,7 +160,7 @@ define(function(require) {
       });
     });
 
-    $("#filetree-pane-nav-export-project-zip").click(function() {
+    $("#export-project-zip").click(function() {
       bramble.export();
       analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "Export ZIP"});
       return false;
