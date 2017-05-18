@@ -10,7 +10,7 @@ class HttpError {
     const statusCode = response.statusCode || 500;
     let statusMessage = statusCode;
     const statusMessageKey = HttpError.getStatusMessageKey(statusCode);
-
+      response.render("error.html", { status: response.statusCode });
     if(statusMessageKey) {
       statusMessage = Nunjucks.renderString(
         request.gettext(statusMessageKey, locale),
@@ -69,7 +69,6 @@ class HttpError {
 
     error.userMessage = request.gettext(userMessageKey, locale);
     error.locale = localeInfo && localeInfo.lang;
-
     return error;
   }
 }

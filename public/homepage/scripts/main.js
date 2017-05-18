@@ -16,7 +16,7 @@ require.config({
     "localized": "/node_modules/webmaker-i18n/localized",
     "uuid": "/node_modules/node-uuid/uuid",
     "cookies": "/node_modules/cookies-js/dist/cookies",
-    "analytics": "/{{ locale }}/editor/scripts/analytics",
+    "analytics": "/node_modules/webmaker-analytics/analytics",
     "gallery": "/{{ locale }}/homepage/scripts/gallery",
     "getinvolved": "/{{ locale }}/homepage/scripts/getinvolved",
     // TODO: we should really put the homepage and editor in the same scope for code sharing
@@ -65,10 +65,10 @@ function setupNewProjectLinks($, analytics) {
     $("#new-project-button-text").text("{{ newProjectInProgressIndicator }}");
 
     if(authenticated) {
-      analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "New Authenticated Project" });
+      analytics.event("NewProject", {label: "New authenticated project"});
       window.location.href = "/" + locale + "/projects/new" + qs;
     } else {
-      analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "New Anonymous Project" });
+      analytics.event("NewProject", {label: "New anonymous project"});
       window.location.href = "/" + locale + "/editor" + queryString;
     }
   }
@@ -96,10 +96,10 @@ function setupAuthentication($, uuid, cookies, analytics) {
       var location = loginUrl;
 
       if (newUser) {
-        analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Create Account" });
+        analytics.event("SignUp");
         location += "?signup=true";
       } else {
-        analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Sign In" });
+        analytics.event("SignIn");
       }
 
       window.location = location;
