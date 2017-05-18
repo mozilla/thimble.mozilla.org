@@ -49,6 +49,14 @@ define(function() {
     return 0;
   }
 
+  function getAutoCloseTagsDefault() {
+    return {
+      whenClosing: true,
+      whenOpening: true,
+      indentTags: []
+    };
+  }
+
   function noop() {}
 
   function arg0WithCallback(callback) {
@@ -65,7 +73,7 @@ define(function() {
   function shimAPI(bramble) {
     // New API Getters
     bramble.getAutocomplete        = bramble.getAutocomplete        || defaultTrue;
-    bramble.getAutoCloseTags       = bramble.getAutoCloseTags       || defaultTrue;
+    bramble.getAutoCloseTags       = bramble.getAutoCloseTags       || getAutoCloseTagsDefault;
     bramble.getAllowJavaScript     = bramble.getAllowJavaScript     || defaultTrue;
     bramble.getAllowWhiteSpace     = bramble.getAllowWhiteSpace     || defaultFalse;
     bramble.getAutoUpdate          = bramble.getAutoUpdate          || defaultTrue;
