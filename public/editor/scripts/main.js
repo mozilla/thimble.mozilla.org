@@ -47,7 +47,10 @@ require(["jquery", "bowser", "analytics"], function($, bowser, analytics) {
   function onError(err) {
     console.error("[Bramble Error]", err);
     $("#spinner-container").addClass("loading-error");
-    analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Editor loading error (Black Screen)" });
+    if(!err) {
+      err = "Error not defined";
+    }
+    analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Editor loading error (Black Screen)", label : err.toString() });
   }
 
   // If Bramble fails to load (some browser loading issues cause it to fail),
