@@ -1,33 +1,23 @@
 define(["jquery"], function($) {
-
   var features = {
     init: function(){
-      this.feature = $(".feature");
+      this.featureEls = $(".video-wrapper");
+      var that = this;
 
-      var touch = "ontouchstart" in document;
-      if (touch){
-          var videoDiv;
-          this.feature.bind('touchstart',function(event){
-             $('video').get(0).pause();
-             $('video', this).get(0).play();
-             var touch = event.touches[0];
-             videoDiv = document.elementFromPoint(touch.pageX,touch.pageY);
-          });
-          this.feature.bind('changedTouches',function(event){
-             var touch = event.touches[0];
-             if (document.elementFromPoint(touch.pageX,touch.pageY) !== videoDiv) {
-                $('video', this).get(0).pause();
-              }
-          });
-       }
-      
-      this.feature.mouseenter(function(){
-        $('video', this).get(0).play(); 
-      });
+      if ("ontouchstart" in document){
+        var videoDiv;
+        this.featureEls.bind('touchstart',function(event){
+          that.startVideo(event.currentTarget)
+        });
+      }
 
-      this.feature.mouseleave(function(){
-        $('video', this).get(0).pause(); 
+      this.featureEls.mouseenter(function(){
+        that.startVideo($(this).get(0));
       });
+    },
+    startVideo : function(videoEl){
+      $(".video-wrapper:not(.paused)").addClass("paused").find("video").get(0).pause();
+      $(videoEl).removeClass("paused").find("video").get(0).play();
     }
   };
 
