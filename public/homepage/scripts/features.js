@@ -5,7 +5,6 @@ define(["jquery"], function($) {
       var that = this;
 
       if ("ontouchstart" in document){
-        var videoDiv;
         this.featureEls.bind('touchstart',function(event){
           that.startVideo(event.currentTarget)
         });
