@@ -47,6 +47,10 @@ require(["jquery", "bowser", "analytics"], function($, bowser, analytics) {
   function onError(err) {
     console.error("[Bramble Error]", err);
     $("#spinner-container").addClass("loading-error");
+    if(!err) {
+      err = "Error not defined";
+    }
+    analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Editor loading error (Black Screen)", label : err.toString() });
   }
 
   // If Bramble fails to load (some browser loading issues cause it to fail),
@@ -66,7 +70,7 @@ require(["jquery", "bowser", "analytics"], function($, bowser, analytics) {
 
   function showLoadingErrorMessage(){
     $("#spinner-container .taking-too-long").addClass("visible");
-    analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Not loading message shown" });
+    analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Project loading slowly (Green screen)" });
   }
 
   Bramble.once("updatesAvailable", function() {
