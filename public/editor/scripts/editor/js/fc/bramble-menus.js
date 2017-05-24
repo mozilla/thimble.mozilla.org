@@ -315,6 +315,7 @@ define(function(require) {
     var $addCss = $("#filetree-pane-nav-add-css");
     var $addJs = $("#filetree-pane-nav-add-js");
     var $addUpload = $("#filetree-pane-nav-add-upload");
+    var $addFolder = $("#filetree-pane-nav-add-folder");
     var $addTutorial = $("#filetree-pane-nav-add-tutorial");
     var $downloadZip = $("#filetree-pane-nav-export-project-zip");
 
@@ -390,6 +391,12 @@ define(function(require) {
         }
         analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Add File", label : "Tutorial" });
       });
+    });
+
+    $addFolder.click(function() {
+      menu.close();
+      bramble.addNewFolder();
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Add New Folder"});
     });
 
     $addUpload.click(function() {
