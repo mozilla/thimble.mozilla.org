@@ -20,6 +20,11 @@
   eventCategories.PROJECT_ACTIONS = "Project Actions";
   eventCategories.TROUBLESHOOTING = "Troubleshooting";
 
+  // Strings for timing category names
+  var timingCategories = {};
+  timingCategories.BRAMBLE = "Bramble";
+  timingCategories.THIMBLE = "Thimble";
+
   var _redacted = "REDACTED (Potential Email Address)";
 
   /**
@@ -65,14 +70,71 @@
     console.warn("[analytics] " + msg);
   }
 
-  // This receives the event action, then passes it on to sendEvent to send out
+  // Exception Tracking: https://developers.google.com/analytics/devguides/collection/analyticsjs/exceptions
+  function exception(error, fatal) {
+    var eventOptions = {
+      "hitType": "exception"
+    };
+
+    if(!error) {
+      warn("Expected `error` arg.");
+      return;
+    }
+    eventOptions.exDescription = error.message ? error.message : error;
+    eventOptions.exFatal = fatal === true;
+
+    gaSend(eventOptions);
+  }
+
+  // User Timings: https://developers.google.com/analytics/devguides/collection/analyticsjs/user-timings
+  function timing(options) {
+    options = options || {};
+    var eventOptions = {
+      "hitType": "timing"
+    };
+
+    // Timing Category
+    eventOptions.timingCategory = options.category || "Uncategorized";
+
+    // Timing Var
+    if(!options.var) {
+      warn("Expected `var` arg.");
+      return;
+    }
+    eventOptions.timingVar = options.var;
+
+    // Timing Value
+    if(options.value || options.value === 0) {
+      if(typeof value !== "number") {
+        warn("Expected `value` arg to be a Number.");
+        return;
+      }
+      // Force value to int
+      eventOptions.timingValue = options.value|0;
+    } else {
+      // If now value is given, assume we want to try to measure time since page load
+      if(window.performance) {
+        eventOptions.timingValue = Math.round(window.performance.now());
+      } else {
+        warn("Expected `value` arg to be a Number.");
+        return;
+      }
+    }
+
+    if(options.label) {
+      eventOptions.timingLabel = trim(options.label);
+    }
+  }
+
+  // Event Tracking: https://developers.google.com/analytics/devguides/collection/analyticsjs/events
   function event(options) {
     options = options || {};
-
-    var eventOptions = {};
+    var eventOptions = {
+      "hitType": "event"
+    };
 
     // Event Category
-    eventOptions.category = options.category || "Uncategorized";
+    eventOptions.eventCategory = options.category || "Uncategorized";
 
     // Event Action
     if(!options.action) {
@@ -83,7 +145,7 @@
       warn("`action` arg looks like an email address, redacting.");
       options.action = _redacted;
     }
-    eventOptions.action = toTitleCase(options.action);
+    eventOptions.eventAction = toTitleCase(options.action);
 
     // Event Label
     if(options.label) {
@@ -94,7 +156,7 @@
           warn("`label` arg looks like an email address, redacting.");
           options.label = _redacted;
         }
-        eventOptions.label = trim(options.label);
+        eventOptions.eventLabel = trim(options.label);
       }
     }
 
@@ -104,7 +166,7 @@
         warn("Expected `value` arg to be a Number.");
       } else {
         // Force value to int
-        eventOptions.value = options.value|0;
+        eventOptions.eventValue = options.value|0;
       }
     }
 
@@ -118,34 +180,12 @@
       }
     }
 
-    sendEvent(eventOptions);
+    gaSend(eventOptions);
   }
 
-  function sendEvent(options) {
-
+  function gaSend(eventOptions) {
     if(typeof ga === "function") {
-      // Transform the argument array to match the expected call signature for ga(), see:
-      // https://developers.google.com/analytics/devguides/collection/analyticsjs/events#overview
-
-      // Required Event Field
-      var fieldObject = {
-        'hitType': 'event',
-        'eventCategory': options.category,
-        'eventAction': options.action
-      };
-
-      // Optional Event Fields
-      if(options.label) {
-        fieldObject['eventLabel'] = options.label;
-      }
-      if(options.label || options.label === 0) {
-        fieldObject['eventValue'] = options.value;
-      }
-      if(options.nonInteraction === true) {
-        fieldObject['nonInteraction'] = 1;
-      }
-
-      ga('send', fieldObject);
+      ga('send', eventOptions);
     }
   }
 
@@ -181,14 +221,16 @@
         'hitType': 'pageview',
         'page': options.virtualPagePath
       };
-      ga('send', fieldObject);
+      gaSend(fieldObject);
     }
   }
 
-
   return {
     event: event,
+    exception: exception,
+    timing: timing,
     eventCategories: eventCategories,
+    timingCategories: timingCategories,
     virtualPageview: virtualPageview
   };
 

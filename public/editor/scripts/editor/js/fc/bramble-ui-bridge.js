@@ -444,6 +444,8 @@ define(function(require) {
     });
 
     $("#spinner-container").fadeOut();
+    analytics.timing({ category: analytics.timingCategories.THIMBLE, var: "Editor UI Usable" });
+
     adaptLayout();
   }
 

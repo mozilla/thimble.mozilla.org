@@ -47,10 +47,8 @@ require(["jquery", "bowser", "analytics"], function($, bowser, analytics) {
   function onError(err) {
     console.error("[Bramble Error]", err);
     $("#spinner-container").addClass("loading-error");
-    if(!err) {
-      err = "Error not defined";
-    }
-    analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Editor loading error (Black Screen)", label : err.toString() });
+    analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Editor loading error (Black Screen)" });
+    analytics.exception(err, true);
   }
 
   // If Bramble fails to load (some browser loading issues cause it to fail),
@@ -96,6 +94,7 @@ require(["jquery", "bowser", "analytics"], function($, bowser, analytics) {
     Project.init(projectDetails, appUrl, function(err) {
       if (err) {
         console.error("[Bramble] Failed to load Project state, with", err);
+        analytics.exception(err, true);
       }
 
       // Initialize the name UI for an anonymous project
