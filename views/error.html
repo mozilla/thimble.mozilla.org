@@ -1,5 +1,7 @@
+{% set locale = localeInfo.lang %}
+{% set localeDir = localeInfo.locale %}
 <!DOCTYPE html>
-<html lang="{{ localeInfo.lang }}" dir="{{ localeInfo.direction }}">
+<html lang="{{ locale }}" dir="{{ localeInfo.direction }}">
   <head>
     <meta charset="utf-8">
     <title>{{ gettext("errorSomethingWentWrong") }}</title>
@@ -67,7 +69,7 @@
       </div>
     </section>
 
-    <script src="/{{ localeInfo.locale }}/error/scripts/main.js"></script>
+    <script src="/{{ localeDir }}/error/scripts/main.js"></script>
 
     {% include 'footer.html' %}
   </body>
