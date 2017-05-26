@@ -62,11 +62,11 @@ require(["jquery", "bowser", "analytics"], function($, bowser, analytics) {
 
   Bramble.once("error", onError);
 
-  var errorMessageTimeoutMS = 15000;
+  var slowLoadingTimeoutMS = 15000;
 
-  setTimeout(function(){
+  var slowLoadingTimeout = setTimeout(function(){
     showLoadingErrorMessage();
-  }, errorMessageTimeoutMS);
+  }, slowLoadingTimeoutMS);
 
   function showLoadingErrorMessage(){
     $("#spinner-container .taking-too-long").addClass("visible");
@@ -89,6 +89,7 @@ require(["jquery", "bowser", "analytics"], function($, bowser, analytics) {
     var appUrl = thimbleScript.getAttribute("data-app-url");
     var projectDetails = thimbleScript.getAttribute("data-project-details");
     var editorUrl = thimbleScript.getAttribute("data-editor-url");
+    clearTimeout(slowLoadingTimeout);
 
     // Unpack projectDetails details
     projectDetails = JSON.parse(decodeURIComponent(projectDetails));
