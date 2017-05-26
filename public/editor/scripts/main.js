@@ -62,7 +62,7 @@ require(["jquery", "bowser", "analytics"], function($, bowser, analytics) {
 
   Bramble.once("error", onError);
 
-  var slowLoadingTimeoutMS = 15000;
+  var slowLoadingTimeoutMS = 10000;
 
   var slowLoadingTimeout = setTimeout(function(){
     showLoadingErrorMessage();
