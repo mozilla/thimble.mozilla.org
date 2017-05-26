@@ -8,6 +8,7 @@ define(function(require) {
   var FileSystemSync = require("fc/filesystem-sync");
   var Project = require("project/project");
   var analytics = require("analytics");
+  var Startup = require("fc/startup");
   var Path = Bramble.Filer.Path;
 
   var _escKeyHandler;
@@ -443,9 +444,7 @@ define(function(require) {
       BrambleMenus.refreshSnippets(Path.extname(data.filename).substr(1).toLowerCase());
     });
 
-    $("#spinner-container").fadeOut();
-    analytics.timing({ category: analytics.timingCategories.THIMBLE, var: "Editor UI Usable" });
-
+    Startup.finish();
     adaptLayout();
   }
 

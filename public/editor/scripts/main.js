@@ -27,62 +27,9 @@ require.config({
   }
 });
 
-require(["jquery", "bowser", "analytics"], function($, bowser, analytics) {
-  // Warn users of unsupported browsers that they can try something newer,
-  // specifically anything before IE 11 or Safari 8.
-  if((bowser.msie && bowser.version < 11) || (bowser.safari && bowser.version < 8)) {
-    $("#browser-support-warning").removeClass("hide");
+require(["fc/startup"], function(Startup) {
 
-    $(".let-me-in").on("click", function() {
-      $("#browser-support-warning").fadeOut();
-      return false;
-    });
-  }
-
-  $("button.refresh-browser").on("click",function(){
-    analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Refresh button clicked" });
-    window.location.reload(true);
-  });
-
-  function onError(err) {
-    console.error("[Bramble Error]", err);
-    $("#spinner-container").addClass("loading-error");
-    analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Editor loading error (Black Screen)" });
-    analytics.exception(err, true);
-  }
-
-  // If Bramble fails to load (some browser loading issues cause it to fail),
-  // error out now, since we won't get to Bramble.on('error', ...)
-  if(!window.Bramble) {
-    onError(new Error("Unable to load Bramble editor in this browser"));
-    return;
-  }
-
-  Bramble.once("error", onError);
-
-  var errorMessageTimeoutMS = 15000;
-
-  setTimeout(function(){
-    showLoadingErrorMessage();
-  }, errorMessageTimeoutMS);
-
-  function showLoadingErrorMessage(){
-    $("#spinner-container .taking-too-long").addClass("visible");
-    analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Project loading slowly (Green screen)" });
-  }
-
-  Bramble.once("updatesAvailable", function() {
-    showRefreshAlert();
-  });
-
-  function showRefreshAlert(){
-    console.log("Thimble has updates - please refresh your browser to get the latest changes.");
-    analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Updates available UI shown" });
-    $("body").addClass("has-alert-bar");
-    $("#serviceworker-warning").removeClass("hide");
-  }
-
-  function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility) {
+  function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility, analytics) {
     var thimbleScript = document.getElementById("thimble-script");
     var appUrl = thimbleScript.getAttribute("data-app-url");
     var projectDetails = thimbleScript.getAttribute("data-project-details");
@@ -112,5 +59,7 @@ require(["jquery", "bowser", "analytics"], function($, bowser, analytics) {
     });
   }
 
-  require(["bramble-editor", "project/project", "sso-override", "fc/project-rename"], init);
+  Startup.init(function start() {
+    require(["bramble-editor", "project/project", "sso-override", "fc/project-rename", "analytics"], init);
+  });
 });

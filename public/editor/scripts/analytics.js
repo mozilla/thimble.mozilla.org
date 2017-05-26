@@ -72,36 +72,35 @@
 
   // Exception Tracking: https://developers.google.com/analytics/devguides/collection/analyticsjs/exceptions
   function exception(error, fatal) {
-    var eventOptions = {
-      "hitType": "exception"
-    };
+    var eventOptions = {};
 
     if(!error) {
       warn("Expected `error` arg.");
       return;
     }
-    eventOptions.exDescription = error.message ? error.message : error;
-    eventOptions.exFatal = fatal === true;
+    eventOptions["exDescription"] = error.message ? error.message : error;
+    if(fatal === true) {
+      eventOptions["exFatal"] = true;
+    }
 
-    gaSend(eventOptions);
+    // https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#exception
+    gaSend("exception", eventOptions);
   }
 
   // User Timings: https://developers.google.com/analytics/devguides/collection/analyticsjs/user-timings
   function timing(options) {
     options = options || {};
-    var eventOptions = {
-      "hitType": "timing"
-    };
+    var eventOptions = {};
 
     // Timing Category
-    eventOptions.timingCategory = options.category || "Uncategorized";
+    eventOptions["timingCategory"] = options.category || "Uncategorized";
 
     // Timing Var
     if(!options.var) {
       warn("Expected `var` arg.");
       return;
     }
-    eventOptions.timingVar = options.var;
+    eventOptions["timingVar"] = options.var;
 
     // Timing Value
     if(options.value || options.value === 0) {
@@ -110,11 +109,11 @@
         return;
       }
       // Force value to int
-      eventOptions.timingValue = options.value|0;
+      eventOptions["timingValue"] = options.value|0;
     } else {
       // If now value is given, assume we want to try to measure time since page load
       if(window.performance) {
-        eventOptions.timingValue = Math.round(window.performance.now());
+        eventOptions["timingValue"] = Math.round(window.performance.now());
       } else {
         warn("Expected `value` arg to be a Number.");
         return;
@@ -122,19 +121,20 @@
     }
 
     if(options.label) {
-      eventOptions.timingLabel = trim(options.label);
+      eventOptions["timingLabel"] = trim(options.label);
     }
+
+    // https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#timing
+    gaSend("timing", eventOptions);
   }
 
   // Event Tracking: https://developers.google.com/analytics/devguides/collection/analyticsjs/events
   function event(options) {
     options = options || {};
-    var eventOptions = {
-      "hitType": "event"
-    };
+    var eventOptions = {};
 
     // Event Category
-    eventOptions.eventCategory = options.category || "Uncategorized";
+    eventOptions["eventCategory"] = options.category || "Uncategorized";
 
     // Event Action
     if(!options.action) {
@@ -145,7 +145,7 @@
       warn("`action` arg looks like an email address, redacting.");
       options.action = _redacted;
     }
-    eventOptions.eventAction = toTitleCase(options.action);
+    eventOptions["eventAction"] = toTitleCase(options.action);
 
     // Event Label
     if(options.label) {
@@ -156,7 +156,7 @@
           warn("`label` arg looks like an email address, redacting.");
           options.label = _redacted;
         }
-        eventOptions.eventLabel = trim(options.label);
+        eventOptions["eventLabel"] = trim(options.label);
       }
     }
 
@@ -166,7 +166,7 @@
         warn("Expected `value` arg to be a Number.");
       } else {
         // Force value to int
-        eventOptions.eventValue = options.value|0;
+        eventOptions["eventValue"] = options.value|0;
       }
     }
 
@@ -176,16 +176,17 @@
       if(typeof options.nonInteraction !== "boolean") {
         warn("Expected `noninteraction` arg to be a Boolean.");
       } else {
-        eventOptions.nonInteraction = options.nonInteraction === true;
+        eventOptions["nonInteraction"] = options.nonInteraction === true;
       }
     }
 
-    gaSend(eventOptions);
+    // https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#events
+    gaSend("event", eventOptions);
   }
 
-  function gaSend(eventOptions) {
+  function gaSend(hitType, eventOptions) {
     if(typeof ga === "function") {
-      ga('send', eventOptions);
+      ga("send", hitType, eventOptions);
     }
   }
 
@@ -218,10 +219,9 @@
       // Transform the argument array to match the expected call signature for ga():
       // https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference
       var fieldObject = {
-        'hitType': 'pageview',
         'page': options.virtualPagePath
       };
-      gaSend(fieldObject);
+      gaSend("pageview", fieldObject);
     }
   }
 
