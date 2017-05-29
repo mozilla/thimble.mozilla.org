@@ -6,6 +6,18 @@ module.exports = {
       middleware.setUserIfTokenExists,
       require("./homepage").bind(app, config));
 
+    // Features page
+    app.get("/features",
+      middleware.clearRedirects,
+      middleware.setUserIfTokenExists,
+      require("./features").bind(app, config));
+
+    // Get Involved page
+    app.get("/get-involved",
+      middleware.clearRedirects,
+      middleware.setUserIfTokenExists,
+      require("./get-involved").bind(app, config));
+
     // Entry point to the editor for all users
     app.get("/editor",
       middleware.setErrorMessage("errorMigratingProject"),

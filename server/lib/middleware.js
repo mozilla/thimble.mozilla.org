@@ -16,8 +16,16 @@ let upload = multer({
 });
 const publishHost = env.get("PUBLISH_HOSTNAME");
 
-module.exports = function middlewareConstructor() {
+// Debug info flag for https://github.com/mozilla/thimble.mozilla.org/issues/2161
+const ASSERT_TOKEN = env.get("ASSERT_TOKEN");
+
+module.exports = function middlewareConstructor(config) {
+  // Set up a token decryptor using the default cryptr 2.0.0 algorithm.
   let cryptr = new Cryptr(env.get("SESSION_SECRET"));
+  
+  // Set up a fallback decryptor that matches the cryptr 1.0.0 algorithm
+  // https://github.com/MauriceButler/cryptr/compare/fabae97a61119d69f03fc189f7c95dda826c96b7...master#diff-168726dbe96b3ce427e7fedce31bb0bcR9
+  let cryptrFallback = new Cryptr(env.get("SESSION_SECRET"), "aes256");
 
   return {
     /**
@@ -51,14 +59,21 @@ module.exports = function middlewareConstructor() {
 
     /**
      * Check whether the requesting user has been authenticated.
+     * If not, render an error page asking them to explicitly
+     * sign out and sign in again (to bust browser cache).
      */
     checkForAuth(req, res, next) {
       if(req.session.user) {
         return next();
       }
 
-      let locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
-      res.redirect(301, `/${locale}`);
+      res.set({
+        "Cache-Control": "no-cache, no-store, must-revalidate"
+      });
+
+      res.render("sign-out.html", {
+        logoutURL: config.logoutURL
+      });
     },
 
     /**
@@ -72,7 +87,45 @@ module.exports = function middlewareConstructor() {
 
       // Decrypt oauth token
       req.user = req.session.user;
-      req.user.token = cryptr.decrypt(req.session.token);
+      let token = req.user.token = cryptr.decrypt(req.session.token);
+
+      if(ASSERT_TOKEN) {
+        /**
+         * Assert whether or not this token is correct or rather broken.
+         * We expect a 64 character HEX string for the token, for example:
+         * '16d4c4d2fa4d6e4aa6b1b5c6a115ad44fd271dd98204f2008bf5efbba5a56dec'
+         */
+        let assert = function(token) {
+          if(!token) {
+            console.log("ASSERT_TOKEN FAILED: Expected token to exist");
+            return false;
+          }
+
+          let tokenType = typeof token;
+          
+          if(tokenType !== "string") {
+            console.log("ASSERT_TOKEN FAILED: Expected token type to be String, instead got: " + tokenType);
+            return false;
+          }
+          
+          if(!/^[a-z0-9]{64}$/.test(token)) {
+            console.log("ASSERT_TOKEN FAILED: Expected token to only have chars a-z, 0-9. Also got: '" +  token.replace(/[a-z0-9]/g, ' ') + "'");
+            return false;
+          }
+          
+          return true;
+        };
+
+        if (!assert(token)) {
+          console.log("ASSERT_TOKEN FAILED: retrying decryption using aes-256 rather than aes-256-ctr");
+          
+          token = req.user.token = cryptrFallback.decrypt(req.session.token);
+
+          if (!assert(token)) {
+            return next("Session token cannot be decrypted. Please sign out and sign in again.");
+          }
+        }
+      }
 
       next();
     },

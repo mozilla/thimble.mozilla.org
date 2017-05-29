@@ -69,6 +69,7 @@ define(function(require) {
         })
       };
 
+      titleBar.select();
       saveButton.on("click", saveClicked);
     }
   }

@@ -13,15 +13,22 @@
             z-index: 999;
             background: #0b4326;
             opacity: .9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        #spinner-container h2 {
+            color: white;
+            font-size: 20px;
+            margin: 0 0 5px 0;
         }
 
         #spinner-container .message {
-            top: calc(50% + 40px);
             width: 100%;
-            position: fixed;
             text-align: center;
-            color: white;
-            opacity: .6;
+            color: rgba(255,255,255,.6);
         }
 
         #spinner-container .error-message {
@@ -32,24 +39,12 @@
             display: block;
         }
 
-        #spinner-container .loading-message {
-            animation: loadingpulse 1s infinite linear;
-            -webkit-animation: loadingpulse 1s infinite linear;
-        }
-
         #spinner-container a {
             color: white;
             text-decoration: underline;
         }
 
         #spinner-container .thimble-spinner {
-            bottom: 0;
-            top: 0;
-            left: 0;
-            right: 0;
-            margin: auto;
-            position: fixed;
-            max-width: 50%;
             width: 50px;
             height: 50px;
             background: url(/img/thimble-icon.svg);
@@ -57,6 +52,7 @@
             background-size: 100%;
             animation: spinner 2s infinite ease-in-out;
             outline: 1px solid transparent;
+            margin: 0 auto 15px auto;
         }
 
         #spinner-container.loading-error {
@@ -70,40 +66,39 @@
         #spinner-container.loading-error .thimble-spinner {
             animation: none;
         }
-        
+
         #spinner-container .loading-message-help-link {
             animation: none;
-            -webkit-animation: none;
         }
 
-        @keyframes loadingpulse {
-            0% {
-                transform: scale(1);
-                opacity: .4;
-            }
-            50% {
-                transform: scale(1.02);
-                opacity: .6;
-            }
-            100% {
-                transform: scale(1);
-                opacity: .4;
-            }
+        #spinner-container button {
+          background: white;
+          color: black;
+          margin: 0 auto;
+          opacity: 1;
+          border: none;
+          margin: 15px auto 0 auto;
+          display: block;
+          outline: none;
+          padding: 8px 14px;
+          border-radius: 2px;
+          cursor: pointer;
+          border: solid 2px white;
+          background: transparent;
+          color: white;
         }
 
-        @-webkit-keyframes loadingpulse {
-            0% {
-                -webkit-transform: scale(1);
-                opacity: .4;
-            }
-            50% {
-                -webkit-transform: scale(1.02);
-                opacity: .6;
-            }
-            100% {
-                -webkit-transform: scale(1);
-                opacity: .4;
-            }
+        #spinner-container .reload-message {
+          margin-bottom: 30px;
+        }
+
+        #spinner-container button:hover {
+          background: rgba(255,255,255,.2);
+        }
+
+        #spinner-container button:active {
+          background: white;
+          color: black;
         }
 
         @keyframes spinner {
@@ -124,26 +119,58 @@
             }
         }
 
+        #spinner-container .taking-too-long {
+          max-height: 0;
+          opacity: 0;
+          overflow: hidden;
+          padding-top: 30px;
+          transition: max-height 1s ease-out 0s, opacity 1s ease-out .25s;
+          margin: 0 auto;
+        }
+
+        #spinner-container .taking-too-long p {
+            margin: 0 0 10px 0;
+        }
+
+        #spinner-container .taking-too-long p.email-us {
+            margin: 50px 0 0 0;
+        }
+
+
+        #spinner-container .taking-too-long.visible {
+          max-height: 400px;
+          opacity: 1;
+        }
+
         </style>
 
     <div id="spinner-container">
         <div class="thimble-spinner"></div>
-        <div class="loading-message message">{{ gettext("loadingProject") }}</div>
+        <div class="loading-message message">
+            <h2>{{ gettext("loadingProject") }}</h2>
+            <div class="taking-too-long">
+                <p>
+                  {{ gettext("projectNotLoadingMessage") | safe }}
+                </p>
+                <p>
+                  <button class="refresh-browser">{{ gettext("tryAgainButtonLabel") }}</button>
+                </p>
+                <p class="email-us">
+                  {{ gettext("emailForHelp") | safe }}
+                </p>
+            </div>
+        </div>
+
         <div class="error-message message">
-            <p>{{ gettext("errorLoadingProject") | safe }}</p>
+            <h2>
+              {{ gettext("somethingWentWrong") }}
+            </h2>
+            <p class="reload-message">
+              {{ gettext("reloadThimbleMessage") | safe }}
+            </p>
             <p>{{ gettext("errorLoadingProjectBramble") }}</p>
             <p>{{ gettext("errorLoadingProjectSuggestion") }}</p>
         </div>
-    </div>
-
-    <div id="browser-support-warning" class="hide">
-      <div class="message-box">
-        <h1>{{ gettext("errorUnsupportedBrowser") }}</h1>
-        <p>
-          {{ gettext("errorUnsupportedBrowserSuggestion") | instantiate | safe }}
-        </p>
-        <div title="{{ gettext("errorUnsupportedBrowserIgnoreTitle") }}" class="let-me-in">{{ gettext("errorUnsupportedBrowserIgnore") }}</div>
-      </div>
     </div>
 
     <div class="bramble-toolbar">

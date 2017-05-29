@@ -1,0 +1,229 @@
+{% extends "./base.html" %}
+
+{% block pagetitle %}
+  {{ gettext("pageTitleGetInvolved") | safe }}
+{% endblock %}
+
+{% block top %}
+  <div class="page-heading">
+    <div class="content-wrapper">
+      <h1>
+        {{ gettext("getInvolvedHeader") | safe }}
+      </h1>
+
+      <a class="feature-button repo" href="https://github.com/mozilla/thimble.mozilla.org/issues/new">{{ gettext("fileAnIssueBtn") }}</a>
+      <a class="feature-button list" href="https://github.com/mozilla/thimble.mozilla.org/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+First+Bug%22">
+        <!-- Find an issue to work on -->
+        {{ gettext("goodFirstBugBtn") }}
+        <div class="good-bug-count"></div>
+      </a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="page-content">
+    <div class="content-wrapper">
+
+      <div class="right-box">
+        <h2>{{ gettext("whyContributeTitle") }}</h2>
+        <ul>
+          <li>{{ gettext("contributeReason1") }}</li>
+          <li>{{ gettext("contributeReason2") }}</li>
+          <li>{{ gettext("contributeReason3") }}</li>
+          <li>{{ gettext("contributeReason4") }}</li>
+        </ul>
+      </div>
+
+      <div class="left-side">
+        <p>
+          {% set mozillaFoundationURL = "https://www.mozilla.org/foundation/" %}
+          {% set cdotURL = "https://cdot.senecacollege.ca/" %}
+          {{ gettext("getInvolvedDescription1") | instantiate | safe }}
+          <br/>
+          {{ gettext("getInvolvedDescription2") | safe }}
+        </p>
+
+        <h3>{{ gettext("noContributionTooSmallTitle") }}</h3>
+
+        <p>
+          {{ gettext("noContributionTooSmallDesc") }}
+        </p>
+
+        <ul>
+          <li>{{ gettext("noContributionTooSmallReason1") }}</li>
+          <li>{{ gettext("noContributionTooSmallReason2") }}</li>
+          <li>{{ gettext("noContributionTooSmallReason3") }}</li>
+        </ul>
+
+        <p>
+          <a class="blue-button" href="https://github.com/mozilla/thimble.mozilla.org/issues/new">{{ gettext("goFileAnIssueBtn") }}</a>
+        </p>
+
+        <p>
+          {{ gettext("feelingAdventurous") }}
+        </p>
+
+        <div class="two-col">
+          <div>
+            <h3>{{ gettext("onGithub") }}</h3>
+            <ul class="link-list">
+              <li>
+                <a href="https://github.com/mozilla/thimble.mozilla.org/">Thimble</a> -
+                <a class="good-bug" href="https://github.com/mozilla/thimble.mozilla.org/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+First+Bug%22">{{ gettext("goodFirstBugsBadge") }}</a>
+              </li>
+              <li>
+                <a href="https://github.com/mozilla/brackets/">Brackets</a> -
+                <a class="good-bug" href="https://github.com/mozilla/brackets/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+First+Bug%22">{{ gettext("goodFirstBugsBadge") }}</a>
+              </li>
+              <li>
+                <a href="https://github.com/mozilla/thimble.mozilla.org/blob/master/CONTRIBUTING.md">{{ gettext("contributingGuidelines") }}</a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3>{{ gettext("getInTouch") }}</h3>
+            <ul class="link-list">
+              <li><a href="https://chat.mozillafoundation.org/mozilla/channels/thimble">{{ gettext("getInTouchChat") }}</a></li>
+              <li><a href="mailto:thimble@mozillafoundation.org">{{ gettext("getInTouchEmail") }}</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div> <!-- left-side -->
+
+    </div>
+  </div>
+
+  <div class="featured-contributors">
+    <div class="content-wrapper">
+
+      <h2>{{ gettext("featuredContributors") }}</h2>
+
+      <p>
+        {{ gettext("featuredContributorsDesc") | safe }}
+      </p>
+
+      <div class="contributor-list">
+        <div class="column left-col">
+
+          <div class="contributor">
+            <h3>Jerry Goguette</h3>
+            <a href="https://github.com/twigz20">twigz20</a>
+            <img class="contributor-photo" src="https://avatars2.githubusercontent.com/u/10361408?v=3&s=460" />
+            <ul>
+              <li>{{ gettext("twigz20Contrib1") }}</li>
+              <li>{{ gettext("twigz20Contrib2") }}</li>
+            </ul>
+            <p class="quote">{{ gettext("twigz20Quote") }}</p>
+          </div>
+
+          <div class="contributor">
+            <h3>Sana Riaz</h3>
+            <a href="https://github.com/sanariaz154">sanariaz154</a>
+            <img class="contributor-photo" src="https://avatars0.githubusercontent.com/u/15836339" />
+            <ul>
+              <li>{{ gettext("sanariaz154Contrib1") }}</li>
+            </ul>
+            <p class="quote">
+              {{ gettext("sanariaz154Quote") }}
+            </p>
+          </div>
+
+          <div class="contributor">
+            <h3>Ray Gervais</h3>
+            <a href="https://github.com/raygervais">raygervais</a>
+            <img class="contributor-photo" src="https://avatars1.githubusercontent.com/u/14265337?v=3&s=460" />
+            <ul>
+              <li>{{ gettext("raygervaisContrib1") }}</li>
+              <li>{{ gettext("raygervaisContrib2") }}</li>
+            </ul>
+            <p class="quote">
+              {{ gettext("raygervaisQuote") }}
+            </p>
+          </div>
+
+          <div class="contributor">
+            <h3>Harkirat Singh</h3>
+            <a href="https://github.com/hkirat">hkirat</a>
+            <img class="contributor-photo" src="https://avatars0.githubusercontent.com/u/8079861" />
+            <ul>
+              <li>{{ gettext("hkiratContrib1") }}</li>
+              <li>{{ gettext("hkiratContrib2") }}</li>
+              <li>{{ gettext("hkiratContrib3") }}</li>
+            </ul>
+            <p class="quote">
+              {{ gettext("hkiratQuote") }}
+            </p>
+          </div>
+
+          <div class="contributor">
+            <img class="contributor-photo" src="https://avatars1.githubusercontent.com/u/14262279" />
+            <h3>Christopher Singh</h3>
+            <a href="https://github.com/cgsingh">cgsingh</a>
+            <ul>
+              <li>{{ gettext("cgsinghContrib1") }}</li>
+              <li>{{ gettext("cgsinghContrib2") }}</li>
+              <li>{{ gettext("cgsinghContrib3") }}</li>
+            </ul>
+            <p class="quote">{{ gettext("cgsinghQuote") | safe }}</p>
+          </div>
+
+        </div> <!-- end left-col -->
+
+        <div class="column right-col">
+
+          <div class="contributor">
+            <img class="contributor-photo" src="https://avatars1.githubusercontent.com/u/25106861?v=3&s=400" />
+            <h3>Brian Yang</h3>
+            <a href="https://github.com/peiying16">peiying16</a>
+            <ul>
+              <li>{{ gettext("peiying16Contrib1") }}</li>
+              <li>{{ gettext("peiying16Contrib2") }}</li>
+              <li>{{ gettext("peiying16Contrib3") }}</li>
+            </ul>
+            <p class="quote">{{ gettext("peiying16Quote") }}</p>
+          </div>
+
+          <div class="contributor">
+            <img class="contributor-photo" src="https://avatars0.githubusercontent.com/u/3598286?v=3&s=200" />
+            <h3>Theo Dule</h3>
+            <a href="https://github.com/th30">th30</a>
+            <ul>
+              <li>{{ gettext("th30Contrib1") }}</li>
+              <li>{{ gettext("th30Contrib2") }}</li>
+            </ul>
+            <p class="quote">{{ gettext("th30Quote") }}</p>
+          </div>
+
+          <div class="contributor">
+            <img class="contributor-photo" src="https://avatars1.githubusercontent.com/u/13225708" />
+            <h3>Oleg Mytryniuk</h3>
+            <a href="https://github.com/omytryniuk">omytryniuk</a>
+            <ul>
+              <li>{{ gettext("omytryniukContrib1") }}</li>
+              <li>{{ gettext("omytryniukContrib2") }}</li>
+              <li>{{ gettext("omytryniukContrib3") }}</li>
+            </ul>
+            <p class="quote">{{ gettext("omytryniukQuote") }}</p>
+          </div>
+
+          <div class="contributor">
+            <img class="contributor-photo" src="https://avatars3.githubusercontent.com/u/16708173?v=3&s=460" />
+            <h3>Tim Moy</h3>
+            <a href="https://github.com/timmoy">timmoy</a>
+            <ul>
+              <li>{{ gettext("timmoyContrib1") | safe }}</li>
+              <li>{{ gettext("timmoyContrib2") }}</li>
+            </ul>
+            <p class="quote">{{ gettext("timmoyQuote") }}</p>
+          </div>
+
+        </div> <!-- end right col -->
+      </div>
+
+    </div>
+  </div>
+
+{% endblock %}

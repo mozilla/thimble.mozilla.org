@@ -18,6 +18,7 @@ require.config({
     "cookies": "/node_modules/cookies-js/dist/cookies",
     "analytics": "/{{ locale }}/editor/scripts/analytics",
     "gallery": "/{{ locale }}/homepage/scripts/gallery",
+    "getinvolved": "/{{ locale }}/homepage/scripts/getinvolved",
     // TODO: we should really put the homepage and editor in the same scope for code sharing
     "fc/bramble-popupmenu": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-popupmenu",
     "fc/bramble-keyhandler": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-keyhandler",
@@ -116,13 +117,14 @@ function setupAuthentication($, uuid, cookies, analytics) {
 // flow. If more needs to be added, the logic should be factored out into
 // separate modules, each of which would be initialized here.
 // See: public/editor/scripts/main.js
-function init($, uuid, cookies, PopupMenu, analytics, gallery) {
+function init($, uuid, cookies, PopupMenu, analytics, gallery, getinvolved) {
   PopupMenu.create("#navbar-logged-in .dropdown-toggle", "#navbar-logged-in .dropdown-content");
   PopupMenu.create("#navbar-locale .dropdown-toggle", "#navbar-locale .dropdown-content");
   setupAuthentication($, uuid, cookies, analytics);
   setupNewProjectLinks($, analytics);
   gallery.init();
+  getinvolved.init();
   preloadBramble($);
 }
 
-require(['jquery', 'uuid', 'cookies', 'fc/bramble-popupmenu', 'analytics', 'gallery'], init);
+require(['jquery', 'uuid', 'cookies', 'fc/bramble-popupmenu', 'analytics', 'gallery', 'getinvolved'], init);

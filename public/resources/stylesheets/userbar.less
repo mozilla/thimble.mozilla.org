@@ -5,6 +5,34 @@
   border: 0;
 }
 
+.main-nav {
+  margin-left: 16px;
+  position: relative;
+  top: 5px;
+
+  a  {
+    display: inline-block;
+    font-size: 16px;
+    padding-bottom: 4px;
+    font-weight: 600;
+    text-decoration: none;
+    color: white;
+    margin: 0 20px;
+    opacity: .6;
+    border-bottom: solid 2px transparent;
+
+    &:hover {
+      border-bottom: solid 2px rgba(255,255,255,.5);
+    }
+
+    &.selected {
+      opacity: 1;
+      border-bottom: solid 2px white;
+    }
+  }
+
+}
+
 .container-flex {
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -15,17 +43,16 @@
 
 .navbar-thimble {
   color: rgba(255,255,255,.65);
-  background-color: #2D9961;
   width: 100%;
   height: 60px;
 
   .navbar-logo-container {
-    margin-right: 5px;
     position: relative;
-    top: 2px;
+    top: 17px;
+    left: -3px;
 
     .thimble-logo-full {
-      width: 238px;
+      width: 115px;
     }
 
     &:hover {
@@ -134,10 +161,9 @@
   }
 
   .nav-chunk {
-    border-right: 1px solid #7DAF8F;
-    padding: 0 15px;
-    .flex-vertical-align;
+    margin-left: 5px;
     height: 62px;
+    .flex-vertical-align;
   }
 
   .nav-link {
@@ -148,6 +174,10 @@
     &:hover {
       opacity: 1;
     }
+  }
+
+  #navbar-help {
+    margin-right: 15px;
   }
 
   #navbar-help:hover {
@@ -168,6 +198,7 @@
     border-radius: 2px;
     position: relative;
     font-weight:400;
+    margin-right: 15px;
     top: 0;
     filter: alpha(opacity=90);
     opacity: 0.9;
@@ -219,13 +250,11 @@
     .transition;
 
     &.signed-in {
-      border-right: 1px solid #7DAF8F;
       padding-right: 15px;
     }
   }
 
   #navbar-locale {
-    height: 62px;
     .flex-vertical-align;
   }
 
