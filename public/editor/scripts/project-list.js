@@ -173,6 +173,7 @@ function setupNewProjectLinks($, analytics) {
     var qs = queryString === "" ? "?" + cacheBust : queryString + "&" + cacheBust;
 
     $(e.target).text("{{ newProjectInProgressIndicator }}");
+    $(e.target).addClass("disabled");
 
     analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "New Authenticated Project" });
     window.location.href = "/" + locale + "/projects/new" + qs;
