@@ -1,5 +1,7 @@
+{% set locale = localeInfo.lang %}
+{% set localeDir = localeInfo.locale %}
 <!DOCTYPE html>
-<html lang="{{ localeInfo.lang }}" dir="{{ localeInfo.direction }}">
+<html lang="{{ locale }}" dir="{{ localeInfo.direction }}">
   <head>
     <meta charset="utf-8">
     <title>{{ gettext("errorSomethingWentWrong") }}</title>
@@ -7,8 +9,7 @@
     <link rel="stylesheet" href="/homepage/stylesheets/style.css">
     <link rel="stylesheet" href="/resources/stylesheets/error.css">
   </head>
-  <body class="homepage">
-
+  <body class="error-page">
     <nav class="navbar-thimble container-flex">
       <div id="navbar-left" class="container-flex">
         <div class="navbar-logo-container">
@@ -31,8 +32,16 @@
           <img class="spilled-thimble" src="/img/spilled-thimble.png" />
           <h1>{{ gettext("errorSomethingWentWrong") }}</h1>
           <h2>
-            {{ gettext("errorSomethingWentWrongDetails") }}
+            {{ gettext("errorNotSureWhatWrong") }}
           </h2>
+          <p class="button-wrapper">
+            <button class="try-again action-button">
+              {{ gettext("tryAgainButtonLabel") }}
+            </button>
+          </p>
+          <p>
+            {{ gettext("errorKeepSeeingPage") }}
+          </p>
         {% endif %}
 
         <div class="contact-icons">
@@ -60,7 +69,8 @@
       </div>
     </section>
 
-    {% include 'remix-projects.html' %}
+    <script src="/{{ localeDir }}/error/scripts/main.js"></script>
+
     {% include 'footer.html' %}
   </body>
 </html>

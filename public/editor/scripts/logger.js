@@ -26,6 +26,7 @@ define(function() {
       return log;
     }
 
+    console.info("[Thimble] to see detailed logging info in the console, reload with ?logging=1 on the URL.");
     return noop;
   }(window.location.search));
 });

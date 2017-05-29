@@ -38,7 +38,7 @@ module.exports = function(config, req, res, next) {
 
     if(response.statusCode === 404) {
       // If there aren't any projects for this user, create one with a redirect
-      res.redirect(301, "/" + locale + "/projects/new" + qs);
+      res.redirect(307, "/" + locale + "/projects/new" + qs);
       return;
     }
 

@@ -1,105 +1,158 @@
-.centered-message {
-  text-align: center;
+.error-page {
+  background: #47AD66;
 
-  h1 {
-    margin: 15px auto 30px auto;
+  .main-cta {
+    background-image: none;
   }
 
-  img.spilled-thimble {
-    width: 290px;
-    display: inline-block;
-  }
+  .centered-message {
+    text-align: center;
+    padding-top: 40px;
+    margin-bottom: 60px;
 
-  h2 {
-    color: rgba(255,255,255,.6);
-    max-width: 60%;
-    margin: 0 auto;
-    font-size: 1.8em;
-    line-height: 1.3em;
-    position: relative;
-
-    &:after {
-      content: "";
-      position: absolute;
-      bottom: -120px;
-      height: 150px;
-      width: 150px;
-      right: 10px;
-      background-image: ~"url(/img/sketchy-arrow.png)";
-      background-repeat: no-repeat;
-      background-size: 100%;
+    h1 {
+      margin: 15px auto 10px auto;
+      color: white;
+      font-size: 1.6em;
     }
-  }
 
-  .contact-icons {
-    margin: 55px 0 35px 0;
+    p {
+      color: rgba(255,255,255,.6);
 
-    a {
+    }
+
+    .button-wrapper {
+      margin: 25px 0 40px 0;
+    }
+
+    img.spilled-thimble {
+      width: 290px;
       display: inline-block;
-      opacity: .8;
-      margin: 0 12px;
-      transition: transform .2s ease-out, opacity .2s ease-out;
+    }
 
-      &:hover {
-        opacity: 1;
-        transform: scale(1.04);
+    h2 {
+      color: rgba(255,255,255,.6);
+      max-width: 50%;
+      margin: 0 auto;
+      font-size: 1.6em;
+      line-height: 1.3em;
+      position: relative;
+      font-weight: 400;
+    }
+
+    .contact-icons {
+      margin: 25px 0 35px 0;
+
+      p {
+        margin: 0 0 20px 0;
+      }
+
+      a {
+        display: inline-block;
+        opacity: .8;
+        margin: 0 12px;
+        transition: transform .2s ease-out, opacity .2s ease-out;
+
+        &:hover {
+          opacity: 1;
+          transform: scale(1.04);
+        }
+      }
+
+      .icon {
+        display: inline-block;
+        width: 52px;
+        height: 52px;
+        background-position: center;
+        background-size: 100%;
+        background-repeat: no-repeat;
       }
     }
 
-    .icon {
+    .email .icon {
+      background-image: ~"url(/img/footer-icon-email.svg)";
+    }
+
+    .twitter .icon {
+      background-image: ~"url(/img/footer-icon-twitter.svg)";
+    }
+
+    .github .icon {
+      background-image: ~"url(/img/footer-icon-github.svg)";
+    }
+
+    .error-details-wrapper {
+      margin: 30px auto 40px auto;
+      border: solid 4px rgba(0,0,0,.3);
+      border-radius: 3px;
       display: inline-block;
-      width: 52px;
-      height: 52px;
-      background-position: center;
-      background-size: 100%;
-      background-repeat: no-repeat;
+      min-width: 35%;
+    }
+
+    .error-details {
+      background: #222222;
+      text-align: center;
+
+      *  {
+        font-size: 14px;
+        color: rgba(255,255,255,.7);
+      }
+
+      h1 {
+        font-weight:800;
+        padding: 15px;
+        margin: 0;
+        color: rgba(255,255,255,.8);
+        border-bottom: solid 1px rgba(255,255,255,.2);
+        line-height: 16px;
+      }
+
+      .details {
+        padding: 15px;
+        line-height: 18px;
+      }
+    }
+
+    .action-button {
+      color: white;
+      border: solid 2px white;
+      font-family: inherit;
+      padding: 10px 20px 13px 20px;
+      font-size: 22px;
+      background: transparent;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .action-button:hover {
+      background: rgba(255,255,255,.2);
+    }
+
+    .action-button:active {
+      outline: none !important;
+      box-shadow: none;
+      background: white;
+      color: #47AD66;
+    }
+
+    .action-button:focus {
+      outline: none;
+      box-shadow: none;
     }
   }
 
-  .email .icon {
-    background-image: ~"url(/img/footer-icon-email.svg)";
-  }
-
-  .twitter .icon {
-    background-image: ~"url(/img/footer-icon-twitter.svg)";
-  }
-
-  .github .icon {
-    background-image: ~"url(/img/footer-icon-github.svg)";
-  }
-
-  .error-details-wrapper {
-    margin: 30px auto 40px auto;
-    border: solid 4px rgba(0,0,0,.3);
-    border-radius: 3px;
-    display: inline-block;
-    min-width: 35%;
-  }
-
-  .error-details {
-    background: #222222;
-    text-align: center;
-
-    *  {
-      font-size: 14px;
-      color: rgba(255,255,255,.7);
-    }
+  .reload-message {
+    margin-bottom: 50px;
+    max-width: 500px;
+    margin: 0 auto 50px auto;
 
     h1 {
-      font-weight:800;
-      padding: 15px;
-      margin: 0;
-      color: rgba(255,255,255,.8);
-      border-bottom: solid 1px rgba(255,255,255,.2);
-      line-height: 16px;
+      margin-bottom: 15px;
     }
 
-    .details {
-      padding: 15px;
-      line-height: 18px;
+    p {
+      font-size: 18px;
     }
-
   }
-
-
 }

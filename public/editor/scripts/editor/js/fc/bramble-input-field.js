@@ -120,6 +120,10 @@ define(function(require) {
     this._element.removeClass.apply(this._element, arguments);
   };
 
+  InputField.prototype.select = function() {
+    this._element.select();
+  };
+
   // Polyfill: Allow listeners to listen for events triggered by
   // the input field
   InputField.prototype.on = function(eventName, listener) {

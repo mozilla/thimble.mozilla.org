@@ -43,7 +43,11 @@
 
     <!-- Activity template cloned by gallery.js -->
     <div class='activity activity-template'>
-      <a class='thumbnail'></a>
+      <div class='thumbnail'>
+        <div class='thumbnail-overlay'>
+          <a class='view-project'>{{ gettext("viewProject") }} </a>
+        </div>
+      </div>
       <div class='details'>
         <h1 class='project-title'></h1>
         <p class='author'>{{ gettext("byAuthor") }} <a href='#'></a></p>
@@ -55,6 +59,10 @@
         <a class="teaching-kit">{{ gettext("lessonPlan") }}</a>
       </div>
     </div>
+
+    <p class="contribute-activity">
+      {{ gettext("submitProject") | safe }}
+    </p>
 
   </div>
 </div>

@@ -1,0 +1,17 @@
+{% block warnings %}
+
+<div id="browser-support-warning" class="hide">
+  <div class="message-box">
+    <h1>{{ gettext("errorUnsupportedBrowser") }}</h1>
+    <p>
+      {{ gettext("errorUnsupportedBrowserSuggestion1") | safe }}
+    </p>
+    <div title="{{ gettext("errorUnsupportedBrowserIgnoreTitle") }}" class="let-me-in">{{ gettext("errorUnsupportedBrowserIgnore") }}</div>
+  </div>
+</div>
+
+<div class="top-alert-bar hide" id="serviceworker-warning">
+  {{ gettext("refreshForUpdates") | safe }}
+</div>
+
+{% endblock %}
