@@ -17,6 +17,12 @@ define(function(require) {
   var adaptTimeout;
 
   function updateLayout(data) {
+    // If we are in fullscreen mode, we skip all this updating.
+    var isFullscreen = $("body").hasClass("fullscreen-preview");
+    if(isFullscreen) {
+      return;
+    }
+
     $(".filetree-pane-nav").width(data.sidebarWidth);
     $(".editor-pane-nav").width(data.firstPaneWidth);
     $(".preview-pane-nav").width(data.secondPaneWidth);
