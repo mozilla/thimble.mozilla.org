@@ -36,15 +36,17 @@ h2 {
     border: none;
     opacity: .5;
   }
+
+  &.disabled {
+    color: rgba(0,0,0,.4);
+    background: rgba(0, 0, 0, .2) !important;
+    border-bottom: solid 2px transparent !important;
+    cursor: progress;
+  }
 }
 
-.disabled {
-  color: gray;
-  background: rgba(0, 0, 0, .2) !important;
-  border-bottom: solid 2px rgba(0, 0, 0, .2);
-
 .project-button {
-  background-color: #2A9961;
+  background-color: @buttonGreen;
 
   .shared-button-styles;
 }
@@ -53,10 +55,9 @@ h2 {
   background-color: @red;
   display: none;
   margin-right: 10px;
+  padding-left: 36px;
 
   .shared-button-styles;
-
-  padding-left: 36px;
 
   img {
     height: 19px;
