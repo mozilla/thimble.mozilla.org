@@ -27,7 +27,7 @@
     detailsBar.setAttribute("style", "");
     detailsBar.classList.add("mouse-mode");
 
-    detailsBar.querySelector(".details-bar-remix-button").addEventListener("click",function(event){
+    detailsBar.querySelector(".details-bar-remix-button").addEventListener("click",function(){
       var projectMetaEl = document.head.querySelector("[name=data-remix-projectId]");
       if(projectMetaEl) {
         var projectID = projectMetaEl.getAttribute("content") || false;
