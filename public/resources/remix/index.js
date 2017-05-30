@@ -30,7 +30,7 @@
     detailsBar.querySelector(".details-bar-remix-button").addEventListener("click",function(event){
       var projectMetaEl = document.head.querySelector("[name=data-remix-projectId]");
       if(projectMetaEl) {
-        var projectID = getAttribute("content") || false;
+        var projectID = projectMetaEl.getAttribute("content") || false;
         if(projectID) {
           ga('send', {
             hitType: 'event',
