@@ -19,13 +19,28 @@
     }
 
     var detailsBar = document.querySelector(".details-bar");
-    
+
     if (!detailsBar) {
       return;
     }
 
     detailsBar.setAttribute("style", "");
     detailsBar.classList.add("mouse-mode");
+
+    detailsBar.querySelector(".details-bar-remix-button").addEventListener("click",function(event){
+      var projectMetaEl = document.head.querySelector("[name=data-remix-projectId]");
+      if(projectMetaEl) {
+        var projectID = getAttribute("content") || false;
+        if(projectID) {
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'Remix Bar',
+            eventAction: 'Project Remixed',
+            eventLabel: parseInt(projectID)
+          });
+        }
+      }
+    });
 
     detailsBar.addEventListener("click", function(event) {
       if (event.target.classList.contains("thimble-button")) {
