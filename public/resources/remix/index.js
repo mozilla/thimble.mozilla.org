@@ -4,7 +4,7 @@
  */
 (function(document, head) {
 
-  var gaTrackingId = 'UA-68630113-1';
+  var gaTrackingId = "UA-68630113-1";
 
   function injectAnalytics() {
     var analytics = document.createElement("script");
@@ -31,11 +31,11 @@
       var projectMetaEl = document.head.querySelector("[name=data-remix-projectId]");
       if(projectMetaEl) {
         var projectID = projectMetaEl.getAttribute("content") || false;
-        if(projectID) {
-          ga('send', {
-            hitType: 'event',
-            eventCategory: 'Remix Bar',
-            eventAction: 'Project Remixed',
+        if(projectID && typeof ga === "function") {
+          ga("send", {
+            hitType: "event",
+            eventCategory: "Remix Bar",
+            eventAction: "Project Remixed",
             eventLabel: parseInt(projectID)
           });
         }
