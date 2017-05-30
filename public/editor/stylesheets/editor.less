@@ -28,6 +28,7 @@ body {
 // Logo position overrides
 .navbar-thimble {
   background: #2D9961;
+  position: relative;
 
   .navbar-logo-container.small-logo {
     top: 2px ;
@@ -1244,4 +1245,30 @@ body {
       display: none;
     }
   }
+}
+
+body.modal-open .dialog-overlay {
+  display: block;
+  z-index: 99;
+
+  animation: showModalBackdrop .1s ease-out;
+
+  @keyframes showModalBackdrop {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: .8;
+    }
+  }
+}
+
+.dialog-overlay {
+  position: absolute;
+  display: none;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,.8);
 }
