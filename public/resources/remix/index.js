@@ -31,7 +31,7 @@
       var projectMetaEl = document.head.querySelector("[name=data-remix-projectId]");
       if(projectMetaEl) {
         var projectID = projectMetaEl.getAttribute("content") || false;
-        if(projectID && typeof ga === "function") {
+        if(projectID && typeof window.ga === "function") {
           window.ga("send", {
             hitType: "event",
             eventCategory: "Remix Bar",
