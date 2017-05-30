@@ -32,7 +32,7 @@
       if(projectMetaEl) {
         var projectID = projectMetaEl.getAttribute("content") || false;
         if(projectID && typeof ga === "function") {
-          ga("send", {
+          window.ga("send", {
             hitType: "event",
             eventCategory: "Remix Bar",
             eventAction: "Project Remixed",
