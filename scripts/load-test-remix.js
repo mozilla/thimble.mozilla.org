@@ -17,50 +17,50 @@ let program = require("commander");
 let prettyBytes = require("pretty-bytes");
 let prettyMs = require("pretty-ms");
 let request = require("request").defaults({
-    headers: {
-        "User-Agent": "Thimble Load Test"
-    },
-    time: true
+  headers: {
+    "User-Agent": "Thimble Load Test"
+  },
+  time: true
 });
 
 program
-    .option("-u, --url [url]", "Host URL", "https://bramble.mofostaging.net")
-    .option("-i, --id <n>", "Remix Project ID")
-    .parse(process.argv);
+  .description("A utility to simulate what Thimble does when a project is remixed")
+  .option("-u, --url [url]", "Host URL", "https://bramble.mofostaging.net")
+  .option("-i, --id <n>", "Remix Project ID")
+  .parse(process.argv);
 
 if(!program.url || !program.id) {
-    program.help();
-    process.exit(1);
-    return;
+  program.help();
+  return;
 }
 
 let host = program.url.replace(/\/$/, "");
-let id = program.id
+let id = program.id;
 let totalTimeMS = 0;
 
 console.log("Running load test for host=%s and id=%s", host, id);
 
 /**
  * 1) Load project tarball
- * GET arraybuffer {host}/projects/{remixID or ID}/files/data?cacheBust={Date.now()}
+ * GET arraybuffer {host}/projects/{id}/files/data?cacheBust={Date.now()}
  */
 function step1() {
-    console.log("Step 1: Loading project tarball");
-    console.log("  Started");
+  console.log("Step 1: Loading project tarball");
+  console.log("  Started");
 
-    request.get({
-        encoding: null,
-        url: host + "/projects/" + id + "/files/data?cacheBust=" + Date.now()
-    }, function(error, response, body) {
-        if(error || response.statusCode !== 200) {
-            console.log("  Failed. Got status code %s and error %s.", response.statusCode, error);
-            process.exit(1);
-        } else {
-            totalTimeMS += response.elapsedTime;
-            console.log("  Completed. Loaded %s in %s.", prettyBytes(body.length), prettyMs(response.elapsedTime));
-            step2();
-        }
-    });
+  request.get({
+    encoding: null,
+    url: host + "/projects/" + id + "/files/data?cacheBust=" + Date.now()
+  }, function(error, response, body) {
+    if(error || response.statusCode !== 200) {
+      console.log("  Failed. Got status code %s and error %s.", response.statusCode, error);
+      process.exit(1);
+    } else {
+      totalTimeMS += response.elapsedTime;
+      console.log("  Completed. Loaded %s in %s.", prettyBytes(body.length), prettyMs(response.elapsedTime));
+      step2();
+    }
+  });
 }
 
 /**
@@ -68,22 +68,22 @@ function step1() {
  * GET JSON {host}/projects/{id}/files/meta?cacheBust={Date.now()}
  */
 function step2() {
-    console.log("Step 2: Loading project metadata");
-    console.log("  Started");
+  console.log("Step 2: Loading project metadata");
+  console.log("  Started");
 
-    request.get({
-        encoding: null,
-        url: host + "/projects/" + id + "/files/meta?cacheBust=" + Date.now()
-    }, function(error, response, body) {
-        if(error || response.statusCode !== 200) {
-            console.log("  Failed. Got status code %s and error %s.", response.statusCode, error);
-            process.exit(1);
-        } else {
-            totalTimeMS += response.elapsedTime;
-            console.log("  Completed. Loaded %s in %s.", prettyBytes(body.length), prettyMs(response.elapsedTime));
-            step3();
-        }
-    });
+  request.get({
+    encoding: null,
+    url: host + "/projects/" + id + "/files/meta?cacheBust=" + Date.now()
+  }, function(error, response, body) {
+    if(error || response.statusCode !== 200) {
+      console.log("  Failed. Got status code %s and error %s.", response.statusCode, error);
+      process.exit(1);
+    } else {
+      totalTimeMS += response.elapsedTime;
+      console.log("  Completed. Loaded %s in %s.", prettyBytes(body.length), prettyMs(response.elapsedTime));
+      step3();
+    }
+  });
 }
 
 /**
@@ -91,24 +91,24 @@ function step2() {
  * GET {host}/default-files/html.txt
  */
 function step3() {
-    console.log("Step 3: Loading default HTML file");
-    console.log("  Started");
+  console.log("Step 3: Loading default HTML file");
+  console.log("  Started");
 
-    request.get({
-        encoding: null,
-        url: host + "/default-files/html.txt"
-    }, function(error, response, body) {
-        if(error || response.statusCode !== 200) {
-            console.log("  Failed. Got status code %s and error %s.", response.statusCode, error);
-            process.exit(1);
-        } else {
-            totalTimeMS += response.elapsedTime;
-            console.log("  Completed. Loaded %s in %s.", prettyBytes(body.length), prettyMs(response.elapsedTime));
+  request.get({
+    encoding: null,
+    url: host + "/default-files/html.txt"
+  }, function(error, response, body) {
+    if(error || response.statusCode !== 200) {
+      console.log("  Failed. Got status code %s and error %s.", response.statusCode, error);
+      process.exit(1);
+    } else {
+      totalTimeMS += response.elapsedTime;
+      console.log("  Completed. Loaded %s in %s.", prettyBytes(body.length), prettyMs(response.elapsedTime));
 
-            console.log("Finished all steps in %s.", prettyMs(totalTimeMS));
-            process.exit(0);
-        }
-    });
+      console.log("Finished all steps in %s.", prettyMs(totalTimeMS));
+      process.exit(0);
+    }
+  });
 }
 
 step1();
