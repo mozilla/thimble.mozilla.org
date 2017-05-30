@@ -12,7 +12,8 @@
             bottom: 0;
             z-index: 999;
             background: #0b4326;
-            opacity: .9;
+            opacity: 1;
+            background: rgba(11,67,38,.9);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -142,9 +143,33 @@
           opacity: 1;
         }
 
+        #spinner-container .important-notice {
+          position: absolute;
+          top: 20px;
+          background: black;
+          color: rgba(255,255,255,.6);
+          padding: 20px 20px 12px 20px;
+          max-width: 80%;
+          font-size: 15px;
+        }
+
+        #spinner-container .important-notice h2 {
+          color: rgba(255,255,255,.9);
+          font-size: 18px;
+        }
+
         </style>
 
     <div id="spinner-container">
+
+        <div class="important-notice">
+          <h2>We are having some problems right now.</h2>
+          <p>
+            If you are reading this, there is a chance that your project will load very slowly or not at all.
+            We are aware of the issue and are working to fix it as fast as we can.
+          </p>
+          <p>If possible, give the editor extra time to load, or try again in a few minutes.</p>
+        </div>
         <div class="thimble-spinner"></div>
         <div class="loading-message message">
             <h2>{{ gettext("loadingProject") }}</h2>
