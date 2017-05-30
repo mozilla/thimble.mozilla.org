@@ -104,7 +104,7 @@
 
     // Timing Value
     if(options.value || options.value === 0) {
-      if(typeof value !== "number") {
+      if(typeof options.value !== "number") {
         warn("Expected `value` arg to be a Number.");
         return;
       }
@@ -115,7 +115,7 @@
       if(window.performance) {
         eventOptions["timingValue"] = Math.round(window.performance.now());
       } else {
-        warn("Expected `value` arg to be a Number.");
+        warn("Browser doesn't support window.performance, expected explicit `value` arg to be a Number.");
         return;
       }
     }
