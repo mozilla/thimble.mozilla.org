@@ -86,5 +86,11 @@
     "invalidate": "node scripts/invalidate.js",
     "localize": "node scripts/properties2json.js",
     "localize-client": "node scripts/localize-client.js"
+  },
+  "devDependencies": {
+    "commander": "^2.9.0",
+    "pretty-bytes": "^4.0.2",
+    "pretty-ms": "^2.1.0",
+    "request": "^2.80.0"
   }
 }
