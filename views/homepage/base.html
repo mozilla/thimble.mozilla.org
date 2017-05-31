@@ -5,7 +5,13 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta name="bramble-host" content="{{editorHOST}}">
+
+    <!-- Start prefetching the largest of the editor resources -->
+    <link rel="prefetch" href="{{ editorHOST }}/dist/index.html">
+    <link rel="prefetch" href="{{ editorHOST }}/dist/bramble.js">
+    <link rel="prefetch" href="{{ editorHOST }}/dist/styles/brackets.min.css">
+    <link rel="prefetch" href="{{ editorHOST }}/dist/thirdparty/thirdparty.min.js">
+    <link rel="prefetch" href="{{ editorHOST }}/dist/main.js">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@mozlearn">
