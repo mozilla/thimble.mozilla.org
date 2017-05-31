@@ -4,7 +4,7 @@
  */
 (function(document, head) {
 
-  var gaTrackingId = 'UA-68630113-1';
+  var gaTrackingId = "UA-68630113-1";
 
   function injectAnalytics() {
     var analytics = document.createElement("script");
@@ -19,13 +19,28 @@
     }
 
     var detailsBar = document.querySelector(".details-bar");
-    
+
     if (!detailsBar) {
       return;
     }
 
     detailsBar.setAttribute("style", "");
     detailsBar.classList.add("mouse-mode");
+
+    detailsBar.querySelector(".details-bar-remix-button").addEventListener("click",function(){
+      var projectMetaEl = document.head.querySelector("[name=data-remix-projectId]");
+      if(projectMetaEl) {
+        var projectID = projectMetaEl.getAttribute("content") || false;
+        if(projectID && typeof window.ga === "function") {
+          window.ga("send", {
+            hitType: "event",
+            eventCategory: "Remix Bar",
+            eventAction: "Project Remixed",
+            eventLabel: parseInt(projectID)
+          });
+        }
+      }
+    });
 
     detailsBar.addEventListener("click", function(event) {
       if (event.target.classList.contains("thimble-button")) {
