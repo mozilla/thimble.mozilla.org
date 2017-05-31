@@ -369,6 +369,7 @@ define(function(require) {
       publishDialogUnderlay.remove();
       publishDialogUnderlay = null;
 
+      $("#no-index").css("display", "none");
       $("#publish-dialog").hide();
       _escKeyHandler.stop();
       _escKeyHandler = null;
