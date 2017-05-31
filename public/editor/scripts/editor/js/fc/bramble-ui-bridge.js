@@ -430,6 +430,14 @@ define(function(require) {
     // Hook up event listeners
     bramble.on("layout", updateLayout);
 
+    bramble.on("dialogOpened", function(){
+      $("body").addClass("modal-open");
+    });
+
+    bramble.on("dialogClosed", function(){
+      $("body").removeClass("modal-open");
+    });
+
     bramble.on("sidebarChange", function(data) {
       // Open/close filetree nav during hidden double click
       if(data.visible) {
