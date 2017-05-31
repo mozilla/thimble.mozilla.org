@@ -39,6 +39,7 @@ module.exports = function( grunt ) {
             "bramble-editor": "editor/scripts/editor/js/bramble-editor",
             "sso-override": "editor/scripts/sso-override",
             "logger": "editor/scripts/logger",
+            "BrambleShim": "editor/scripts/bramble-shim",
             "jquery": "../node_modules/jquery/dist/jquery.min",
             "localized": "../node_modules/webmaker-i18n/localized",
             "uuid": "../node_modules/node-uuid/uuid",
@@ -48,7 +49,8 @@ module.exports = function( grunt ) {
             "EventEmitter": "../node_modules/wolfy87-eventemitter/EventEmitter.min",
             "analytics": "editor/scripts/analytics",
             "moment": "../node_modules/moment/min/moment-with-locales.min",
-            "gallery": "homepage/scripts/gallery"
+            "gallery": "homepage/scripts/gallery",
+            "getinvolved": "homepage/scripts/getinvolved",
           },
           shim: {
             "jquery": {

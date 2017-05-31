@@ -3,8 +3,8 @@
   <nav class="navbar-thimble container-flex">
 
     <div id="navbar-left" class="container-flex">
-      <div class="navbar-logo-container">
-        <a href="/{{ locale }}" class="logo">
+      <div class="navbar-logo-container small-logo">
+        <a href="/{{ locale }}" class="logo" title="{{ gettext("backToHomepage") }}">
           <img src="/img/thimble-icon.svg" class="thimble-logo">
         </a>
       </div>
@@ -89,6 +89,12 @@
                   </a>
                 </li>
                 <li>
+                  <a href="#" id="export-project-zip" target="_self">
+                    <img src="/img/icon/download-cloud.svg">
+                    {{ gettext("downloadProjectLink") }}
+                  </a>
+                </li>
+                <li>
                   <a href="{{ logoutURL }}" id="logout-link" target="_self">
                     <img src="/img/icon/sign-out.svg" />
                     {{ gettext("signOutLink") }}
@@ -114,6 +120,6 @@
       </div>
     {% endif %}
     </div>
-
+    <div class="dialog-overlay"></div>
   </nav>
 {% endblock %}

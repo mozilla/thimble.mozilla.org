@@ -2,7 +2,9 @@ define(function(require) {
   var $ = require("jquery"),
       BrambleUIBridge = require("fc/bramble-ui-bridge"),
       FileSystemSync = require("fc/filesystem-sync"),
-      Project = require("project/project");
+      Project = require("project/project"),
+      BrambleShim = require("BrambleShim"),
+      analytics = require("analytics");
 
   var csrfToken = $("meta[name='csrf-token']").attr("content");
 
@@ -22,6 +24,8 @@ define(function(require) {
         if(err) {
           console.error("[Thimble Error]", err);
           $("#spinner-container").addClass("loading-error");
+          analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Project loading error (Green screen)" });
+          analytics.exception(err, true);
           return;
         }
 
@@ -31,6 +35,12 @@ define(function(require) {
       });
 
       Bramble.once("ready", function(bramble) {
+        analytics.timing({ category: analytics.timingCategories.BRAMBLE, var: "ready Event"});
+
+        // Make sure we don't crash trying to access new APIs not in Bramble's API
+        // before we update the Service Worker cached version we're using.
+        BrambleShim.shimAPI(bramble);
+
         // For debugging, attach to window.
         window.bramble = bramble;
         BrambleUIBridge.init(bramble, csrfToken, options.appUrl);

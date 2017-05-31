@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="{{ localeInfo.lang }}" dir="{{ localeInfo.direction }}">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ gettext("pleaseSignOut") }}</title>
+    <link rel="stylesheet" href="/resources/stylesheets/userbar.css">
+    <link rel="stylesheet" href="/homepage/stylesheets/style.css">
+    <link rel="stylesheet" href="/resources/stylesheets/error.css">
+  </head>
+  <body class="homepage">
+
+    <nav class="navbar-thimble container-flex">
+      <div id="navbar-left" class="container-flex">
+        <div class="navbar-logo-container">
+          <a href="/{{ locale }}" class="logo">
+            <img src="/img/thimble-logo.svg" class="thimble-logo-full">
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <section class="main-cta">
+      <div class="content-wrapper centered-message">
+
+        <img class="spilled-thimble" src="/img/spilled-thimble.png" />
+
+        <div class="reload-message">
+          <h1>{{ gettext("pleaseSignOut") }}</h1>
+          <p>{{ gettext("pleaseSignOutMessage") }}</p>
+          <a href="{{ logoutURL }}" class="action-button" target="_self">{{ gettext("signOutButtonLabel") }}</a>
+        </div>
+
+        <div class="contact-icons">
+          <p>{{ gettext("letUsKnowMessage") }}</p>
+          <a title="{{ gettext("contactEmail") }}" class="email" href="mailto:thimble@mozillafoundation.org">
+            <span class="icon"></span>
+          </a>
+          <a title="{{ gettext("contactTwitterTitle") }}" class="twitter" href="https://twitter.com/mozlearn">
+            <span class="icon"></span>
+          </a>
+          <a title="{{ gettext("contributeTitle") }}" class="github" href="https://github.com/mozilla/thimble.mozilla.org">
+            <span class="icon"></span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    {% include 'footer.html' %}
+  </body>
+</html>

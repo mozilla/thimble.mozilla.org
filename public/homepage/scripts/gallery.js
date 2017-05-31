@@ -15,6 +15,10 @@ define(["jquery", "analytics"], function($, analytics) {
     init: function() {
       this.galleryEl = $(".gallery");
 
+      if(this.galleryEl.length === 0) {
+        return;
+      }
+
       var that = this;
       var URL = "https://mozilla.github.io/thimble-homepage-gallery/activities.json";
       $.get(URL).done(function(returnedData) {
@@ -37,7 +41,7 @@ define(["jquery", "analytics"], function($, analytics) {
       this.galleryEl.on("keydown",".search",function(e){ that.keyPressed(e); });
       this.galleryEl.on("mousedown",".tag",function(){  that.tagClicked($(this).attr("tag")); });
 
-      this.galleryEl.on("click",".activity .thumbnail",function(){ that.thumbnailClicked($(this)); });
+      this.galleryEl.on("click",".activity .view-project",function(){ that.thumbnailClicked($(this)); });
       this.galleryEl.on("click",".activity .remix",function(){ that.remixClicked($(this)); });
 
       this.galleryEl.on("click",".search-tags .remove",function(){ that.removeTag($(this).parent()); });
@@ -53,13 +57,13 @@ define(["jquery", "analytics"], function($, analytics) {
 
     //When a Project preview gets clicked
     thumbnailClicked: function(el){
-      var title = el.closest(".activity").find(".title").text();
+      var title = el.closest(".activity").find(".project-title").text();
       analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Gallery Project Viewed", label : title });
     },
 
     //When a Project gets remixed
     remixClicked: function(el){
-      var title = el.closest(".activity").find(".title").text();
+      var title = el.closest(".activity").find(".project-title").text();
       analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Gallery Project Remixed", label : title });
     },
 
@@ -181,26 +185,18 @@ define(["jquery", "analytics"], function($, analytics) {
           var newItem = this.galleryEl.find(".activity-template").clone();
           newItem.removeClass("activity-template");
           newItem.find(".thumbnail").css("background-image","url("+activity.thumbnail_url+")" );
-          newItem.find(".thumbnail").attr("href", activity.url);
+          newItem.find(".view-project").attr("href", activity.url);
           newItem.find(".project-title").text(activity.title);
           newItem.find(".author a").text(activity.author);
           newItem.find(".author a").attr("href", activity.author_url);
           newItem.find(".description").text(activity.description);
 
-          // Check if activity_url ends with a slash, if it doesn't - add one before adding "remix"
-          var remix = "remix";
-          var endsWithSlash = (activity.url.charAt(activity.url.length-1) === "/");
-          if(!endsWithSlash) {
-            remix = "/remix";
-          }
-          newItem.find(".remix").attr("href", activity.url + remix);
+          newItem.find(".remix").attr("href", "/projects/" + activity.project_id + "/remix");
           if(activity.teaching_kit_url) {
             newItem.find(".teaching-kit").attr("href", activity.teaching_kit_url).removeClass("hidden");
           } else {
             newItem.find(".teaching-kit").addClass("hidden");
           }
-
-
 
           for(var j = 0; j < activity.tags.length; j++) {
             newItem.find(".tags").append("<a class='tag' tag='"+activity.tags[j]+"' title='See other projects tagged " + activity.tags[j] + "' >" + activity.tags[j] + "</a> ");

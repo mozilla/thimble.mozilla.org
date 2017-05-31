@@ -8,21 +8,35 @@ define(function(require) {
   var FileSystemSync = require("fc/filesystem-sync");
   var Project = require("project/project");
   var analytics = require("analytics");
+  var Startup = require("fc/startup");
+  var Path = Bramble.Filer.Path;
 
   var _escKeyHandler;
 
   var adapting = false;
   var adaptTimeoutMS = 200; // How often we adapt editor bar layout
+  var adaptTimeout;
 
   function updateLayout(data) {
+    // If we are in fullscreen mode, we skip all this updating.
+    var isFullscreen = $("body").hasClass("fullscreen-preview");
+    if(isFullscreen) {
+      return;
+    }
+
     $(".filetree-pane-nav").width(data.sidebarWidth);
     $(".editor-pane-nav").width(data.firstPaneWidth);
     $(".preview-pane-nav").width(data.secondPaneWidth);
 
-    // Only adapt the layout every once in a while
+    window.clearTimeout(adaptTimeout);
+    adaptTimeout = setTimeout(function(){
+      adaptLayout();
+    },adaptTimeoutMS);
+
     if(!adapting) {
       adapting = true;
       adaptLayout();
+      window.clearTimeout(adaptTimeout);
       setTimeout(function(){
         adapting = false;
       },adaptTimeoutMS);
@@ -150,7 +164,7 @@ define(function(require) {
       });
     });
 
-    $("#filetree-pane-nav-export-project-zip").click(function() {
+    $("#export-project-zip").click(function() {
       bramble.export();
       analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "Export ZIP"});
       return false;
@@ -413,6 +427,14 @@ define(function(require) {
     // Hook up event listeners
     bramble.on("layout", updateLayout);
 
+    bramble.on("dialogOpened", function(){
+      $("body").addClass("modal-open");
+    });
+
+    bramble.on("dialogClosed", function(){
+      $("body").removeClass("modal-open");
+    });
+
     bramble.on("sidebarChange", function(data) {
       // Open/close filetree nav during hidden double click
       if(data.visible) {
@@ -430,9 +452,10 @@ define(function(require) {
 
     bramble.on("activeEditorChange", function(data) {
       setNavFilename(data.filename);
+      BrambleMenus.refreshSnippets(Path.extname(data.filename).substr(1).toLowerCase());
     });
 
-    $("#spinner-container").fadeOut();
+    Startup.finish();
     adaptLayout();
   }
 
