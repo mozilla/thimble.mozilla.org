@@ -370,6 +370,8 @@ define(function(require) {
       publishDialogUnderlay = null;
 
       $("#publish-dialog").hide();
+      $("#publish-dialog").removeClass("cannot-publish");
+
       _escKeyHandler.stop();
       _escKeyHandler = null;
     }

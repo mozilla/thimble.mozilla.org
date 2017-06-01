@@ -30,7 +30,8 @@ define(function(require) {
         publish: $("#publish-button-publish"),
         update: $("#publish-button-update"),
         unpublish: $("#publish-button-unpublish"),
-        parent: $("#publish-buttons")
+        parent: $("#publish-buttons"),
+        indexMessage: $("#no-index")
       },
       description: $("#publish-details > textarea.publish-description"),
       published: {
@@ -39,6 +40,7 @@ define(function(require) {
         container: $("#publish-live")
       }
     };
+    this.dialogEl = $("#publish-dialog");
     this.button = $("#navbar-publish-button");
   }
 
@@ -50,7 +52,7 @@ define(function(require) {
     publisher.isProjectPublic = true;
     publisher.needsUpdate = false;
     publisher.handlers = {
-      publish: publisher.publish.bind(publisher),
+      publish: publisher.publish.bind(publisher, bramble),
       unpublish: publisher.unpublish.bind(publisher),
       unpublishedChangesPrompt: unpublishedChangesPrompt.bind(publisher)
     };
@@ -122,13 +124,25 @@ define(function(require) {
     });
   };
 
-  Publisher.prototype.publish = function() {
+  Publisher.prototype.publish = function(bramble) {
     var publisher = this;
     var dialog = publisher.dialog;
 
     if (publisher.publishing) {
       return;
     }
+
+    if(!bramble.hasIndexFile()){
+      // This width hack lets us apply the class again in a way that
+      // re-triggers the animation.
+      if(publisher.dialogEl.hasClass("cannot-publish")) {
+        publisher.dialogEl.removeClass("cannot-publish");
+        publisher.dialogEl.width(publisher.dialogEl.width());
+      }
+      publisher.dialogEl.addClass("cannot-publish");
+      return;
+    }
+
     publisher.publishing = true;
 
     function setState(done) {
