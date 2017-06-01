@@ -131,11 +131,13 @@ define(function(require) {
     });
     // Set initial UI value to match editor value
     setWordWrapUI(bramble.getWordWrap());
-    //set initial UI value to allow javascript UI
+    //set initial UI value to allow javascript UI 
     if(bramble.getAllowJavaScript()) {
         $("#allow-scripts-toggle").addClass("switch-enabled");
+        bramble.enableJavaScript();
     } else {
         $("#allow-scripts-toggle").removeClass("switch-enabled");
+        bramble.disableJavaScript();
     }
 
     //set initial UI value to SVG XML UI
