@@ -24,7 +24,11 @@
     <div class="feature-list">
 
       <div class="feature">
-        <video src="/img/features/live-preview.mp4" autoplay loop></video>
+        <div class="video-wrapper">
+          <video src="/img/features/live-preview.mp4" loop autoplay></video>
+          <div class="video-overlay"></div>
+          <div class="video-indicator"></div>
+        </div>
         <h2 class="feature-name">{{ gettext("livePreviewFeatureTitle") | safe }}</h2>
         <p class="feature-description">
           {{ gettext("livePreviewFeatureDesc") | safe }}
@@ -32,7 +36,11 @@
       </div>
 
       <div class="feature">
-        <video src="/img/features/remix.mp4" autoplay loop></video>
+        <div class="video-wrapper paused">
+          <video src="/img/features/remix.mp4" loop></video>
+          <div class="video-overlay"></div>
+          <div class="video-indicator"></div>
+        </div>
         <h2 class="feature-name">{{ gettext("remixFeatureTitle") }}</h2>
         <p class="feature-description">
           {{ gettext("remixFeatureDesc") | safe }}
@@ -40,7 +48,11 @@
       </div>
 
       <div class="feature">
-        <video src="/img/features/snippets.mp4" autoplay loop></video>
+        <div class="video-wrapper paused">
+          <video src="/img/features/snippets.mp4" loop></video>
+          <div class="video-overlay"></div>
+          <div class="video-indicator"></div>
+        </div>
         <h2 class="feature-name">{{ gettext("snippetsFeatureTitle") }}</h2>
         <p class="feature-description">
           {{ gettext("snippetsFeatureDesc") | safe }}
@@ -48,7 +60,12 @@
       </div>
 
       <div class="feature">
-        <video src="/img/features/console.mp4" autoplay loop></video>
+        <div class="video-wrapper paused">
+          <video src="/img/features/console.mp4" loop></video>
+          <div class="video-overlay"></div>
+          <div class="video-indicator"></div>
+        </div>
+
         <h2 class="feature-name">{{ gettext("consoleFeatureTitle") }}</h2>
         <p class="feature-description">
           {{ gettext("consoleFeatureDesc") }}
@@ -56,7 +73,12 @@
       </div>
 
       <div class="feature wide">
-        <video src="/img/features/file-tree.mp4" autoplay loop></video>
+        <div class="video-wrapper paused">
+          <video src="/img/features/file-tree.mp4" loop></video>
+          <div class="video-overlay"></div>
+          <div class="video-indicator"></div>
+        </div>
+
         <h2 class="feature-name">{{ gettext("fileTreeFeatureTitle") }}</h2>
         <p class="feature-description">
           {{ gettext("fileTreeFeatureDesc") }}
@@ -65,11 +87,16 @@
           <li>{{ gettext("fileTreeFeatureDescHighlight1") | safe }}</li>
           <li>{{ gettext("fileTreeFeatureDescHighlight2") | safe }}</li>
         </ul>
-
       </div>
 
       <div class="feature">
-        <video src="/img/features/theme.mp4" autoplay loop></video>
+        <div class="video-wrapper paused">
+        <video src="/img/features/theme.mp4" loop></video>
+          <div class="video-overlay"></div>
+          <div class="video-indicator"></div>
+        </div>
+
+
         <h2 class="feature-name">{{ gettext("themeFeatureTitle") }}</h2>
         <p class="feature-description">
           {{ gettext("themeFeatureDesc") }}
@@ -77,7 +104,11 @@
       </div>
 
       <div class="feature">
-        <video src="/img/features/tutorial.mp4" autoplay loop></video>
+        <div class="video-wrapper paused">
+          <video src="/img/features/tutorial.mp4" loop></video>
+          <div class="video-overlay"></div>
+          <div class="video-indicator"></div>
+        </div>
         <h2 class="feature-name">{{ gettext("tutorialFeatureTitle") | safe }}</h2>
         <p class="feature-description">
           {{ gettext("tutorialFeatureDesc") }}
@@ -85,7 +116,11 @@
       </div>
 
       <div class="feature">
-        <video src="/img/features/autocomplete.mp4" autoplay loop></video>
+        <div class="video-wrapper paused">
+          <video src="/img/features/autocomplete.mp4" loop></video>
+          <div class="video-overlay"></div>
+          <div class="video-indicator"></div>
+        </div>
         <h2 class="feature-name">{{ gettext("autocompleteFeatureTitle") }}</h2>
         <p class="feature-description">
           {{ gettext("autocompleteFeatureDesc") | safe }}
@@ -93,7 +128,11 @@
       </div>
 
       <div class="feature">
-        <video src="/img/features/inline-css.mp4" autoplay loop></video>
+        <div class="video-wrapper paused">
+          <video src="/img/features/inline-css.mp4" loop></video>
+          <div class="video-overlay"></div>
+          <div class="video-indicator"></div>
+        </div>
         <h2 class="feature-name">{{ gettext("inlineCSSFeatureTitle") }}</h2>
         <p class="feature-description">
           {{ gettext("inlineCSSFeatureDesc") | safe }}
@@ -101,7 +140,11 @@
       </div>
 
       <div class="feature">
-        <video src="/img/features/publishing.mp4" autoplay loop></video>
+        <div class="video-wrapper paused">
+          <video src="/img/features/publishing.mp4" loop></video>
+          <div class="video-overlay"></div>
+          <div class="video-indicator"></div>
+        </div>
         <h2 class="feature-name">{{ gettext("publishingFeatureTitle") }}</h2>
         <p class="feature-description">
           {{ gettext("publishingFeatureDesc") }}
@@ -109,16 +152,23 @@
       </div>
 
       <div class="feature">
-        <video src="/img/features/colorpicker2.mp4" autoplay loop></video>
+        <div class="video-wrapper paused">
+          <video src="/img/features/colorpicker2.mp4" loop></video>
+          <div class="video-overlay"></div>
+          <div class="video-indicator"></div>
+        </div>
         <h2 class="feature-name">{{ gettext("colorpickerFeatureTitle") }}</h2>
         <p class="feature-description">
           {{ gettext("colorpickerFeatureDesc") | safe }}
         </p>
-
       </div>
 
       <div class="feature">
-        <video src="/img/features/preview-modes.mp4" autoplay loop></video>
+        <div class="video-wrapper paused">
+          <video src="/img/features/preview-modes.mp4" loop></video>
+          <div class="video-overlay"></div>
+          <div class="video-indicator"></div>
+        </div>
         <h2 class="feature-name">{{ gettext("previewModesFeatureTitle") }}</h2>
         <p class="feature-description">
           {{ gettext("previewModesFeatureDesc") | safe }}
@@ -126,7 +176,12 @@
       </div>
 
       <div class="feature">
-        <video src="/img/features/inspector.mp4" autoplay loop></video>
+        <div class="video-wrapper paused">
+          <video src="/img/features/inspector.mp4" loop></video>
+          <div class="video-overlay"></div>
+          <div class="video-indicator"></div>
+        </div>
+
         <h2 class="feature-name">{{ gettext("inspectorFeatureTitle") }}</h2>
         <p class="feature-description">
           {{ gettext("inspectorFeatureDesc") | safe }}
@@ -134,7 +189,11 @@
       </div>
 
       <div class="feature">
-        <video src="/img/features/image-filters.mp4" autoplay loop></video>
+        <div class="video-wrapper paused">
+          <video src="/img/features/image-filters.mp4" loop></video>
+          <div class="video-overlay"></div>
+          <div class="video-indicator"></div>
+        </div>
         <h2 class="feature-name">{{ gettext("imageFiltersFeatureTitle") }}</h2>
         <p class="feature-description">
           {{ gettext("imageFiltersFeatureDesc") }}
@@ -142,13 +201,16 @@
       </div>
 
       <div class="feature">
-        <video src="/img/features/take-a-selfie.mp4" autoplay loop></video>
+        <div class="video-wrapper paused">
+          <video src="/img/features/take-a-selfie.mp4" loop></video>
+          <div class="video-overlay"></div>
+          <div class="video-indicator"></div>
+        </div>
         <h2 class="feature-name">{{ gettext("takeASelfieFeatureTitle") }}</h2>
         <p class="feature-description">
           {{ gettext("takeASelfieFeatureDesc") | safe }}
         </p>
       </div>
-
 
     </div>
   </div>
