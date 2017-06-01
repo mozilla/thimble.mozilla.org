@@ -40,6 +40,7 @@ define(function(require) {
         container: $("#publish-live")
       }
     };
+    this.dialogEl = $("#publish-dialog");
     this.button = $("#navbar-publish-button");
   }
 
@@ -132,11 +133,15 @@ define(function(require) {
     }
 
     if(!bramble.hasIndexFile()){
-        dialog.buttons.indexMessage.css("display","block");
-        return;
+      // This width hack lets us apply the class again in a way that
+      // re-triggers the animation.
+      if(publisher.dialogEl.hasClass("cannot-publish")) {
+        publisher.dialogEl.removeClass("cannot-publish");
+        publisher.dialogEl.width(publisher.dialogEl.width());
+      }
+      publisher.dialogEl.addClass("cannot-publish");
+      return;
     }
-    
-    dialog.buttons.indexMessage.css("display","none");
 
     publisher.publishing = true;
 

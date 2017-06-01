@@ -21,12 +21,10 @@
         <a id="link-publish-link" title="{{ gettext("publishShareLinkTitle") }}" href="test"></a>
       </div>
 
-
       <div id="publish-button-unpublish">
         <img src="/img/icon/garbage-can-white.svg">
         <span>{{ gettext("publishDeleteBtn") }}</span>
       </div>
-
     </div>
 
     <div id="publish-details">
@@ -37,9 +35,9 @@
   </div>
 
   <div id="publish-buttons">
-    <div id="no-index"> {{ gettext("noIndexFound") | safe }} </div>
-    <div id="publish-button-publish">{{ gettext("publishBtn") }}</div>
+    <div id="no-index">{{ gettext("noIndexFound") | safe }}</div>
     <div id="publish-button-cancel">{{ gettext("publishCancelBtn") }}</div>
+    <div id="publish-button-publish">{{ gettext("publishBtn") }}</div>
   </div>
 </div>
 {% endblock %}

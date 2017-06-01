@@ -369,8 +369,9 @@ define(function(require) {
       publishDialogUnderlay.remove();
       publishDialogUnderlay = null;
 
-      $("#no-index").css("display", "none");
       $("#publish-dialog").hide();
+      $("#publish-dialog").removeClass("cannot-publish");
+
       _escKeyHandler.stop();
       _escKeyHandler = null;
     }
