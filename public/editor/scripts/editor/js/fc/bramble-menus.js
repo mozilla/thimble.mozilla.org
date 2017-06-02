@@ -12,6 +12,11 @@ define(function(require) {
     PopupMenu.create("#navbar-locale .dropdown-toggle", "#navbar-locale .dropdown-content");
   }
 
+
+  function setupHelpMenu() {
+    PopupMenu.create("#navbar-help .dropdown-toggle", "#navbar-help .dropdown-content");
+  }
+
   function setupSnippetsMenu(bramble) {
     var menu = PopupMenu.createWithOffset("#editor-pane-nav-snippets", ".snippets-menu-container");
 
@@ -436,6 +441,7 @@ define(function(require) {
     setupAddFileMenu(bramble);
     setupUserMenu();
     setupLocaleMenu();
+    setupHelpMenu();
   }
 
   return {
