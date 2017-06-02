@@ -152,13 +152,26 @@ define(function(require) {
     });
   }
 
+  function load(config, callback) {
+    // Support loading projects as a single tarball or as a set of individual files.
+    // Default to loading a tarball.
+    var loadProjectAsFiles = window.location.search.indexOf("loadfiles=1") > -1
+
+    if(loadProjectAsFiles) {
+      console.log("[Thimble] Overriding project tarball load strategy, load project files instead.");
+      loadFiles(config, callback);
+    } else {
+      loadTarball(config, callback);
+    }
+  }
+
   function loadProject(config, callback) {
     if (config.user) {
       if (config.anonymousId) {
         return upgradeAnonymousProject(config, callback);
       }
 
-      return loadTarball(config, callback);
+      return load(config, callback);
     }
 
     // First, check if this anonymous project already exists by checking the
@@ -175,7 +188,7 @@ define(function(require) {
             return callback(err);
           }
 
-          loadTarball(config, callback);
+          load(config, callback);
         });
       } else {
         callback();
