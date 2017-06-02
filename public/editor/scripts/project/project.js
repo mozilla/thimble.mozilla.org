@@ -185,7 +185,8 @@ define(function(require) {
     // Step 1: download the project's metadata
     Metadata.download({
       host: _host,
-      id: _id
+      id: _id,
+      user: _user
     }, function(err, data) {
       if(err) {
         return callback(err);
