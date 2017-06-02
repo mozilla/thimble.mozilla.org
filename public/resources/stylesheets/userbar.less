@@ -386,7 +386,6 @@ a.navbar-login:hover {
       top: -2px;
       margin: 0 0 0 3px;
       width: 10px;
-
     }
   }
 
@@ -406,8 +405,27 @@ a.navbar-login:hover {
     max-height: ~"calc(100vh - 85px)";
     min-width: 185px;
     top: 43px;
-    left: 0;
+    right: 0;
     box-shadow: 0 3px 9px rgba(0,0,0,0.24);
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+
+      a {
+        text-decoration: none;
+        color: rgba(0,0,0,.6);
+        display: block;
+        padding: 11px 12px;
+        width: 100%;
+        box-sizing: border-box;
+
+        &:hover {
+          background-color: rgba(0,0,0,.05);
+        }
+      }
+    }
 
     p {
       margin: 0;
@@ -416,50 +434,10 @@ a.navbar-login:hover {
   }
 }
 
-.dropdown .dropdown-content {
-  right: 0 !important;
-  left: auto !important;
-}
-
-// Help Dropdown Menu
-#navbar-help {
-
-  .dropdown-content {
-    left: 0;
-    right: auto;
-  }
-
-  ul {
-    list-style-type: none;
-    margin: 12px 0;
-    padding: 0 14px;
-
-    a {
-      text-decoration: none;
-      color: rgba(0,0,0,.6);
-      display: block;
-      padding: 11px 12px;
-      width: 100%;
-      box-sizing: border-box;
-
-      &:hover {
-        background-color: rgba(0,0,0,.05);
-      }
-    }
-
-  }
-}
 
 // Locale Dropdown Menu
 #navbar-locale {
-
-  .dropdown-content {
-    left: 0;
-    right: auto;
-  }
-
   ul {
-    list-style-type: none;
     margin: 12px 0;
     padding: 0 14px;
 
@@ -471,15 +449,10 @@ a.navbar-login:hover {
             column-gap: 10px;
 
     a {
-      text-decoration: none;
-      color: rgba(0,0,0,.6);
-      display: block;
       padding: 11px 12px 11px 28px;
       -webkit-column-break-inside: avoid;
               column-break-inside: avoid;
       display: table; // This one simple hack for Firefox
-      width: 100%;
-      box-sizing: border-box;
 
       &.selected {
         background-image: ~"url(/img/icon/checkmark-black.svg)";
@@ -492,30 +465,13 @@ a.navbar-login:hover {
         background-color: rgba(0,0,0,.05);
       }
     }
-
   }
-
-  // We're going to disable this for now until we figure out where to link the "Add new language" anchor in the language picker to
-  // .bottom-message {
-  //   border-top: solid 1px #DDD;
-  //   padding: 14px 14px 16px 14px;
-
-  //   a {
-  //     color: #2C76BE;
-  //     text-decoration: none;
-
-  //     &:hover {
-  //       text-decoration: underline;
-  //     }
-  //   }
-  // }
 }
 
 
 // User menu dropdown
 
-#navbar-logged-in.dropdown  {
-
+#navbar-logged-in  {
   .dropdown-toggle {
     padding-left: 45px;
 
@@ -531,36 +487,19 @@ a.navbar-login:hover {
   }
 
   .dropdown-content {
-    ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
+    li {
+      &:last-child {
+        border-top: 1px solid #e9e9e9;
+      }
 
-      li {
-        padding: 0;
-
-        &:last-child {
-          border-top: 1px solid #e9e9e9;
-        }
-
-        &:hover {
-          background-color: rgba(0,0,0,.05);
-        }
-
-        a {
-          text-decoration: none;
-          color: rgba(0,0,0,.6);
-          display: block;
-          padding: 12px;
-
-          img {
-            padding-right: 10px;
-            width: 16px;
-            height: 16px;
-            opacity: .6;
-            position: relative;
-            top: 2px;
-          }
+      a {
+        img {
+          padding-right: 10px;
+          width: 16px;
+          height: 16px;
+          opacity: .6;
+          position: relative;
+          top: 2px;
         }
       }
     }
