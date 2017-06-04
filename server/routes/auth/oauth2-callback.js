@@ -1,8 +1,6 @@
 "use strict";
 
 var request = require("request");
-var path = require("path");
-
 var HttpError = require("../../lib/http-error");
 
 module.exports = function(config, req, res, next) {
@@ -21,7 +19,7 @@ module.exports = function(config, req, res, next) {
 
   if (req.query.logout) {
     req.session = null;
-    return res.redirect(307, path.join("/", locale));
+    return res.redirect(307, "/" + locale);
   }
 
   if (!req.query.code) {
@@ -151,7 +149,7 @@ module.exports = function(config, req, res, next) {
         );
       }
 
-      res.redirect(301, path.join("/", locale, "/editor"));
+      res.redirect(307, "/" + locale + "/editor");
     });
   });
 };
