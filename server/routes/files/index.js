@@ -7,9 +7,16 @@ module.exports = {
       middleware.setUserIfTokenExists,
       read.data.bind(app, config));
 
+    // Get the file data for a given file id
+    app.get("/projects/files/:id",
+      middleware.setErrorMessage("errorGettingProjectFiles"),
+      middleware.setUserIfTokenExists,
+      read.file.bind(app, config));
+
     // Get all file metadata for a project
     app.get("/projects/:projectId?/files/meta",
       middleware.setErrorMessage("errorGettingProjectFiles"),
+      middleware.checkForAuth,
       middleware.setUserIfTokenExists,
       read.metadata.bind(app, config));
 

@@ -105,7 +105,7 @@ define(function(require) {
     }
 
     var root = config.root;
-    var url = config.host + "/project/file/";
+    var url = config.host + "/projects/file/";
 
     $.when.apply($, config.data.map(function(fileInfo) {
       var deferred = $.Deferred();
