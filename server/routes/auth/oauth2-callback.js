@@ -149,7 +149,7 @@ module.exports = function(config, req, res, next) {
         );
       }
 
-      res.redirect(301, "/" + locale + "/editor");
+      res.redirect(307, "/" + locale + "/editor");
     });
   });
 };
