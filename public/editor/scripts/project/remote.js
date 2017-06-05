@@ -22,7 +22,6 @@ define(function(require) {
   function installTarball(config, tarball, callback) {
     var untarWorker;
     var pending = null;
-    var sh = new fs.Shell();
     var root = config.root;
     var pendingOperations = config.syncQueue.pending;
 
@@ -197,7 +196,7 @@ define(function(require) {
   function load(config, callback) {
     // Support loading projects as a single tarball or as a set of individual files.
     // Default to loading a tarball.
-    var loadProjectAsFiles = window.location.search.indexOf("loadfiles=1") > -1
+    var loadProjectAsFiles = window.location.search.indexOf("loadfiles=1") > -1;
 
     if(loadProjectAsFiles) {
       console.log("[Thimble] Overriding project tarball load strategy, load project files instead.");
