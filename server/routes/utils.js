@@ -292,6 +292,44 @@ function getProjectFileTar(config, user, projectId) {
   });
 }
 
+function getProjectFile(config, user, fileId, callback) {
+  var url = config.publishURL + "/files/" + fileId;
+
+  return request.get({
+    json: true,
+    url: url,
+    headers: {
+      "Authorization": "token " + user.token
+    }
+  }, function(err, response, body) {
+    if(err) {
+      callback({
+        message: "Failed to send request to " + url,
+        context: err
+      }, 500);
+      return;
+    }
+
+    if(response.statusCode !== 200) {
+      callback({
+        message: "Request to " + url + " returned a status of " + response.statusCode,
+        context: response.body
+      }, response.statusCode);
+      return;
+    }
+
+    try {
+      callback(null, new Buffer(body.buffer.data));
+    } catch(e) {
+      callback({
+        message: `Project data received by the publish server for ${url} was in an invalid format.`,
+        context: e.message,
+        stack: e.stack
+      }, 500);
+    }
+  });
+}
+
 function getRemixedProjectFileMetadata(config, projectId, callback) {
   var publishURL = config.publishURL + "/publishedProjects/" + projectId + "/publishedFiles/meta";
 
@@ -341,6 +379,7 @@ module.exports = {
   getRemixedProject: getRemixedProject,
   getProjectFileMetadata: getProjectFileMetadata,
   getProjectFileTar: getProjectFileTar,
+  getProjectFile: getProjectFile,
   getRemixedProjectFileMetadata: getRemixedProjectFileMetadata,
   getRemixedProjectFileTar: getRemixedProjectFileTar
 };

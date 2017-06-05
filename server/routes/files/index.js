@@ -8,8 +8,9 @@ module.exports = {
       read.data.bind(app, config));
 
     // Get the file data for a given file id
-    app.get("/projects/files/:id",
+    app.get("/files/:fileId",
       middleware.setErrorMessage("errorGettingProjectFiles"),
+      middleware.checkForAuth,
       middleware.setUserIfTokenExists,
       read.file.bind(app, config));
 
