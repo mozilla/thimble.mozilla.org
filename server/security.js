@@ -6,7 +6,10 @@ let csurf = require("csurf");
 const ONE_YEAR = 31536000000;
 
 let defaultCSPDirectives = {
-  defaultSrc: [ "'self'" ],
+  defaultSrc: [
+    "'self'",
+    "https://mozillathimblelivepreview.net"
+  ],
   connectSrc: [
     "'self'",
     "https://pontoon.mozilla.org",
