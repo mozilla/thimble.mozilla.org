@@ -80,6 +80,7 @@ secure.xss()
 .csrf()
 .xframe()
 .csp({
+  defaultSrc: [ editorHost ],
   frameSrc: [ editorHost, homepageVideoLink ],
   childSrc: [ editorHost, homepageVideoLink ],
   scriptSrc: [ editorHost ],
