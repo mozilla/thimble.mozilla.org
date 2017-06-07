@@ -1,0 +1,9 @@
+.project
+spec/fixtures
+.rspec_system
+pkg/*
+log/*
+.DS_Store
+Gemfile.lock
+junit/*
+.vagrant/

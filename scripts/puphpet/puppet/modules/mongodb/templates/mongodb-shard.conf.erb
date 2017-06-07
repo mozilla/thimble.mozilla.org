@@ -1,0 +1,21 @@
+<% if @configdb -%>
+configdb = <%= Array(@configdb).join(',') %>
+<% end -%>
+<% if @bind_ip -%>
+bind_ip = <%= @bind_ip %>
+<% end -%>
+<% if @port -%>
+port = <%= @port %>
+<% end -%>
+<% if @fork -%>
+fork = <%= @fork %>
+<% end -%>
+<% if @pidfilepath -%>
+pidfilepath = <%= @pidfilepath %>
+<% end -%>
+<% if @logpath -%>
+logpath = <%= @logpath %>
+<% end -%>
+<% if @unixsocketprefix -%>
+unixSocketPrefix = <%= @unixsocketprefix %>
+<% end -%>

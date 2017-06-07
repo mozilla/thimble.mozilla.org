@@ -1,0 +1,5 @@
+---
+swap_file::files:
+  'resource_name':
+    ensure:   'present'
+    swapfile: '/mnt/swap'

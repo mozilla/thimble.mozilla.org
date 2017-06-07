@@ -1,0 +1,16 @@
+HOSTS:
+  debian-7:
+    roles:
+      - master
+    platform: debian-7-amd64
+    image: debian:7
+    hypervisor: docker
+    docker_cmd: ["/sbin/init"]
+    docker_preserve_image: true
+    docker_image_commands:
+      - apt-get install -yq wget libssl-dev net-tools locales apt-transport-https software-properties-common
+      - locale-gen en en_US en_US.UTF-8
+      - dpkg-reconfigure locales
+CONFIG:
+  type: foss
+  log_level: debug

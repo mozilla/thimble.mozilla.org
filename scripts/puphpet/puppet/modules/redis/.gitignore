@@ -1,0 +1,11 @@
+*.swp
+.DS_Store
+.vagrant/
+.yardoc
+Gemfile.lock
+doc
+log/
+pkg
+spec/fixtures/manifests/
+spec/fixtures/modules/
+.bundle/

@@ -1,25 +1,29 @@
-VAGRANTFILE_API_VERSION = "2"
+# -*- mode: ruby -*-
 
-Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/trusty64"
-  config.vm.network :forwarded_port, host: 3500, guest: 3500 # Thimble
-  config.vm.network :forwarded_port, host: 2015, guest: 2015 # publish.webmaker.org
-  config.vm.network :forwarded_port, host: 8001, guest: 8001 # Published projects
-  config.vm.network :forwarded_port, host: 1234, guest: 1234 # id.webmaker.org
-  config.vm.network :forwarded_port, host: 3000, guest: 3000 # login.webmaker.org
+dir = File.dirname(File.expand_path(__FILE__))
 
-  # Testing seems to indicate that 1 cpu and 1.5G of RAM are sufficient to run the
-  # VM, but users are encouraged to test this and make adjustments below (or file PRs)
-  # if you find the VM lagging or unresponsive.
-  config.vm.provider "virtualbox" do |v|
-    v.memory = 1536
-    v.cpus = 1
-    v.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/vagrant", "1"]
-  end
+require 'yaml'
+require "#{dir}/scripts/puphpet/ruby/deep_merge.rb"
+require "#{dir}/scripts/puphpet/ruby/to_bool.rb"
+require "#{dir}/scripts/puphpet/ruby/puppet.rb"
 
-  # One-time provisioning of OS, services, and node deps
-  config.vm.provision :shell, path: "scripts/setup-services.sh"
+configValues = YAML.load_file("#{dir}/scripts/puphpet/config.yaml")
 
-  # Always provision Thimble and necessary node apps
-  config.vm.provision :shell, path: "scripts/start-services.sh", :run => "always", privileged: false
+provider = ENV['VAGRANT_DEFAULT_PROVIDER'] ? ENV['VAGRANT_DEFAULT_PROVIDER'] : 'local'
+if File.file?("#{dir}/scripts/puphpet/config-#{provider}.yaml")
+  custom = YAML.load_file("#{dir}/puphpet/config-#{provider}.yaml")
+  configValues.deep_merge!(custom)
+end
+
+if File.file?("#{dir}/scripts/puphpet/config-custom.yaml")
+  custom = YAML.load_file("#{dir}/scripts/puphpet/config-custom.yaml")
+  configValues.deep_merge!(custom)
+end
+
+data = configValues['vagrantfile']
+
+Vagrant.require_version '>= 1.8.1'
+
+Vagrant.configure('2') do |config|
+  eval File.read("#{dir}/scripts/puphpet/vagrant/Vagrantfile-#{data['target']}")
 end

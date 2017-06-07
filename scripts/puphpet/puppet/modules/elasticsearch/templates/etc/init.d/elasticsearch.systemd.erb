@@ -1,0 +1,24 @@
+[Unit]
+Description=Starts and stops a single elasticsearch instance on this system
+Documentation=http://www.elasticsearch.org
+
+[Service]
+Type=forking
+EnvironmentFile=<%= @defaults_location %>/elasticsearch-<%= @name %>
+User=<%= @user %>
+Group=<%= @group %>
+PIDFile=<%= @pid_dir %>/elasticsearch-<%= @name %>.pid
+ExecStart=/usr/share/elasticsearch/bin/elasticsearch -d -p <%= @pid_dir %>/elasticsearch-<%= @name %>.pid -Des.default.path.home=${ES_HOME} -Des.default.path.logs=${LOG_DIR} -Des.default.path.data=${DATA_DIR} -Des.default.path.work=${WORK_DIR} -Des.default.path.conf=${CONF_DIR}
+# See MAX_OPEN_FILES in sysconfig
+LimitNOFILE=<%= @nofile %>
+# See MAX_LOCKED_MEMORY in sysconfig, use "infinity" when MAX_LOCKED_MEMORY=unlimited and using bootstrap.mlockall: true
+<% if @memlock == 'unlimited' %>
+LimitMEMLOCK=infinity
+<% elsif @memlock %>
+LimitMEMLOCK=<%= @memlock %>
+<% end %>
+# Shutdown delay in seconds, before process is tried to be killed with KILL (if configured)
+TimeoutStopSec=20
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,9 @@
+files/server_test.crt
+files/server_test.pem
+pkg/
+.librarian/
+.tmp/
+pkg/
+Gemfile.lock
+spec/fixtures/
+/metadata.json

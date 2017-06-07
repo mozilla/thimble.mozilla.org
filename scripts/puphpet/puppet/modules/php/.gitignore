@@ -1,0 +1,12 @@
+/.gradle
+/.rvmrc
+build
+pkg/
+Session.vim
+spec/fixtures
+.*.sw[a-z]
+*.un~
+.gemfile.lock
+.bundle
+vendor
+

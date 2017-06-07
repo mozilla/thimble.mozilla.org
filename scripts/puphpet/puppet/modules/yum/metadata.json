@@ -1,0 +1,21 @@
+{
+  "name": "example42-yum",
+  "version": "2.1.26",
+  "summary": "Puppet module for yum",
+  "author": "Alessandro Franceschi",
+  "description": "This module installs and manages yum and several different yum repos",
+  "dependencies": [
+    {
+      "name": "example42/puppi",
+      "version_requirement": ">=2.0.0"
+    }
+  ],
+  "types": [
+
+  ],
+  "checksums": {
+  },
+  "source": "https://github.com/example42/puppet-yum",
+  "project_page": "http://www.example42.com",
+  "license": "Apache2"
+}

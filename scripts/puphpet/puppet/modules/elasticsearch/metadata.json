@@ -1,0 +1,103 @@
+{
+  "name": "elasticsearch-elasticsearch",
+  "version": "0.13.2",
+  "source": "https://github.com/elastic/puppet-elasticsearch",
+  "author": "elasticsearch",
+  "license": "Apache-2.0",
+  "summary": "Module for managing and configuring Elasticsearch nodes",
+  "description": "Module for managing and configuring Elasticsearch nodes",
+  "project_page": "https://github.com/elastic/puppet-elasticsearch",
+  "issues_url": "https://github.com/elastic/puppet-elasticsearch/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 3.2.0 < 5.0.0"
+    },
+    {
+      "name": "puppetlabs/apt",
+      "version_requirement": ">= 1.4.0 < 3.0.0"
+    },
+    {
+      "name": "ceritsc/yum",
+      "version_requirement": ">= 0.9.6 < 1.0.0"
+    },
+    {
+      "name": "richardc/datacat",
+      "version_requirement": ">= 0.6.2 < 1.0.0"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "OracleLinux",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Scientific",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "6",
+        "7",
+        "8"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "10.04",
+        "12.04",
+        "14.04"
+      ]
+    },
+    {
+      "operatingsystem": "OpenSuSE",
+      "operatingsystemrelease": [
+        "12",
+        "13"
+      ]
+    },
+    {
+      "operatingsystem": "SLES",
+      "operatingsystemrelease": [
+        "12.0",
+        "12.1"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": ">= 3.3.2"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": ">=3.2.0 <5.0.0"
+    }
+  ]
+}

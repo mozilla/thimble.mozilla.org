@@ -1,0 +1,13 @@
+---
+swap_file::files_hiera_merge: false
+swap_file::files:
+  'from_fqdn':
+    ensure:       'present'
+    swapfile:     '/mnt/swap.fqdn'
+    swapfilesize: '2 GB'
+    cmd:          'fallocate'
+
+# Because files_hiera_merge is set to false, this will create only the swapfiles specified in the most specific hiera level.
+
+# This will:
+# - create a file '/mnt/swap.fqdn' using /usr/bin/fallocate with size set to '2 GB' and creates mount for it.

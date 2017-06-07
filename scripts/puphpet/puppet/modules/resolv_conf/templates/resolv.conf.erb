@@ -1,0 +1,18 @@
+# File managed by puppet
+
+<%- if @domainname_real -%>
+domain <%= @domainname_real %>
+<%- end -%>
+<% if !@searchpath.empty? -%>
+<% if @searchpath.kind_of? Array -%>
+search <%= @searchpath.join(" ") %>
+<% else -%>
+search <%= @searchpath %>
+<% end -%>
+<% end -%>
+<% @nameservers.each do |ns| -%>
+nameserver <%= ns %>
+<% end -%>
+<% if @options && !@options.empty? -%>
+options <%= @options.join(" ") %>
+<% end -%>

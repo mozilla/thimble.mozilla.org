@@ -1,0 +1,29 @@
+{
+  "name": "keen99-beanstalkd",
+  "version": "1.0.2",
+  "author": "keen99",
+  "summary": "Puppet module for managing beanstalkd, a simple and fast work queue",
+  "license": "Apache License, Version 2.0",
+  "source": "https://github.com/keen99/puppet-beanstalkd.git",
+  "project_page": "https://github.com/keen99/puppet-beanstalkd",
+  "issues_url": "https://github.com/keen99/puppet-beanstalkd/issues",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Debian"
+    },
+    {
+      "operatingsystem": "Ubuntu"
+    },
+    {
+      "operatingsystem": "RedHat"
+    },
+    {
+      "operatingsystem": "CentOS"
+    }
+  ],
+  "description": "Manage beanstalkd on Linux",
+  "types": [
+  ],
+  "dependencies": [
+  ]
+}

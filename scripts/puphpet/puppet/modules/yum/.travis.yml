@@ -1,0 +1,44 @@
+language: ruby
+rvm:
+  - 1.8.7
+  - 1.9.3
+  - 2.1.4
+env:
+  - PUPPET_VERSION="~> 2.6.0"
+  - PUPPET_VERSION="~> 2.7.0"
+  - PUPPET_VERSION="~> 3.0.0"
+  - PUPPET_VERSION="~> 3.1.0"
+  - PUPPET_VERSION="~> 3.6.0"
+  - PUPPET_VERSION="~> 3.8.0"
+  - PUPPET_VERSION="~> 4.2"
+script:
+  - "bundle exec rake lint spec SPEC_OPTS='--format documentation'"
+matrix:
+  exclude:
+    - rvm: 1.8.7
+      env: PUPPET_VERSION="~> 4.2"
+    - rvm: 1.9.3
+      env: PUPPET_VERSION="~> 2.6.0"
+      gemfile: .gemfile
+    - rvm: 2.1.4
+      env: PUPPET_VERSION="~> 2.6.0"
+    - rvm: 2.1.4
+      env: PUPPET_VERSION="~> 2.7.0"
+    - rvm: 2.1.4
+      env: PUPPET_VERSION="~> 3.0.0"
+    - rvm: 2.1.4
+      env: PUPPET_VERSION="~> 3.1.0"
+  allow_failures:
+    - rvm: 1.8.7
+      env: PUPPET_VERSION="~> 2.6.0"
+    - rvm: 1.8.7
+      env: PUPPET_VERSION="~> 2.7.0"
+    - rvm: 1.9.3
+      env: PUPPET_VERSION="~> 2.7.0"
+
+
+gemfile: .gemfile
+sudo: false
+notifications:
+  email:
+    - al@example42.com

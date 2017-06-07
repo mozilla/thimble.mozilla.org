@@ -1,0 +1,19 @@
+HOSTS:
+  oracle-7-x64:
+    roles:
+      - master
+      - database
+      - dashboard
+    platform: el-7-x86_64
+    image: oraclelinux:7
+    hypervisor: docker
+    docker_cmd: ["/sbin/init"]
+    docker_preserve_image: true
+    docker_image_commands:
+      - yum install -y wget which cronie
+      - mkdir -p /etc/selinux/targeted/contexts/
+      - echo '<busconfig><selinux></selinux></busconfig>' > /etc/selinux/targeted/contexts/dbus_contexts
+      - rm /lib/systemd/system/systemd*udev*
+      - rm /lib/systemd/system/getty.target
+CONFIG:
+  type: foss

@@ -1,0 +1,7 @@
+# hostgroups.cfg.erb
+<% @data.keys.sort.each do |hostgroup| %>
+define hostgroup {
+    name <%= hostgroup %>
+    members <%= @data[hostgroup].sort.join(',') %>
+}
+<% end %>

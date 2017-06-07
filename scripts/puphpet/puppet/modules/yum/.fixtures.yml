@@ -1,0 +1,10 @@
+fixtures:
+  repositories:
+    "puppi": "https://github.com/example42/puppi.git"
+    "monitor": "https://github.com/example42/puppet-monitor.git"
+    "firewall": "https://github.com/example42/puppet-firewall.git"
+    "iptables": "https://github.com/example42/puppet-iptables.git"
+    "concat": "https://github.com/example42/puppet-concat.git"
+  symlinks:
+    "yum": "#{source_dir}"
+

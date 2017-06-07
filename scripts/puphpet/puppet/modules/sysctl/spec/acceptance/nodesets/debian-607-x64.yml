@@ -1,0 +1,10 @@
+HOSTS:
+  debian-607-x64:
+    roles:
+      - master
+    platform: debian-6-amd64
+    box : osx-yosemite-0.2.0
+    box_url : http://files.dryga.com/boxes/osx-yosemite-0.2.0.box
+    hypervisor : vagrant
+CONFIG:
+  type: git

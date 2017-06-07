@@ -1,0 +1,3 @@
+<% if (defined? @set) && @set.count > 0 -%>
+    set<% @set.each do |s| -%> <%= s %><% end -%>;
+<% end -%>

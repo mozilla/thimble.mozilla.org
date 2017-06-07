@@ -1,0 +1,17 @@
+HOSTS:
+  debian-8:
+    roles:
+      - master
+      - database
+      - dashboard
+    platform: debian-8-amd64
+    image: debian:8
+    hypervisor: docker
+    docker_cmd: ["/bin/systemd"]
+    docker_preserve_image: true
+    docker_image_commands:
+      - apt-get install -yq wget net-tools
+      - rm /lib/systemd/system/systemd*udev*
+      - rm /lib/systemd/system/getty.target
+CONFIG:
+  type: foss

@@ -1,0 +1,7 @@
+1.1.0
+
+Acceptance tests!
+
+0.4.1
+
+Working on 2.x and 3.x, but using contributed custom method for demuxing stderr from the commands method

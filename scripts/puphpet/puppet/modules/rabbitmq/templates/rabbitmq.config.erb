@@ -1,0 +1,163 @@
+% This file managed by Puppet
+% Template Path: <%= @module_name %>/templates/rabbitmq.config
+[
+<%- if @ssl and @ssl_versions -%>
+  {ssl, [{versions, [<%= @ssl_versions.sort.map { |v| "'#{v}'" }.join(', ') %>]}]},
+<%- end -%>
+  {rabbit, [
+<%- if @heartbeat -%>
+    {heartbeat, <%=@heartbeat%>},
+<% end -%>
+<% if @auth_backends -%>
+    {auth_backends, [<%= @auth_backends.map { |v| "#{v}" }.join(', ') %>]},
+<% elsif @ldap_auth -%>
+    {auth_backends, [rabbit_auth_backend_internal, rabbit_auth_backend_ldap]},
+<% end -%>
+<% if @config_cluster -%>
+    {cluster_nodes, {[<%= @cluster_nodes.map { |n| "\'rabbit@#{n}\'" }.join(', ') %>], <%= @cluster_node_type %>}},
+    {cluster_partition_handling, <%= @cluster_partition_handling %>},
+<% end -%>
+    {tcp_listen_options,
+         [binary,
+         <%- if @tcp_keepalive -%>
+         {keepalive,     true},
+         <%- end -%>
+         {packet,        raw},
+         {reuseaddr,     true},
+         <%- if @tcp_backlog -%>
+         {backlog,       <%= @tcp_backlog %>},
+         <%- end -%>
+         <%- if @tcp_sndbuf -%>
+         {sndbuf,       <%= @tcp_sndbuf %>},
+         <%- end -%>
+         <%- if @tcp_recbuf -%>
+         {recbuf,       <%= @tcp_recbuf %>},
+         <%- end -%>
+         {nodelay,       true},
+         {linger,        {true, 0}},
+         {exit_on_close, false}]
+    },
+<%- if @collect_statistics_interval -%>
+    {collect_statistics_interval, <%= @collect_statistics_interval %>},
+<%- end -%>
+<%- if @ssl_only -%>
+    {tcp_listeners, []},
+<%- elsif @interface != 'UNSET' -%>
+    {tcp_listeners, [{"<%= @interface%>", <%= @port %>}]},
+<%- end -%>
+<%- if @ssl -%>
+  <%- if @ssl_interface != 'UNSET' -%>
+    {ssl_listeners, [{"<%= @ssl_interface%>", <%= @ssl_port %>}]},
+  <%- else -%>
+    {ssl_listeners, [<%= @ssl_port %>]},
+  <%- end -%>
+    {ssl_options, [
+                   <%- if @ssl_cacert != 'UNSET' -%>
+                   {cacertfile,"<%= @ssl_cacert %>"},
+                   <%- end -%>
+                   {certfile,"<%= @ssl_cert %>"},
+                   {keyfile,"<%= @ssl_key %>"},
+                   {verify,<%= @ssl_verify %>},
+                   {fail_if_no_peer_cert,<%= @ssl_fail_if_no_peer_cert %>}
+                   <%- if @ssl_versions -%>
+                   ,{versions, [<%= @ssl_versions.sort.map { |v| "'#{v}'" }.join(', ') %>]}
+                   <%- end -%>
+                   <%- if @ssl_ciphers and @ssl_ciphers.size > 0 -%>
+                   ,{ciphers,[
+                     <%= @ssl_ciphers.sort.map{|k| "{#{k}}"}.join(",\n                     ") %>
+                   ]}
+                   <%- end -%>
+                  ]},
+<%- end -%>
+<% if @config_variables -%>
+<%- @config_variables.keys.sort.each do |key| -%>
+    {<%= key %>, <%= @config_variables[key] %>},
+<%- end -%>
+<%- end -%>
+    {default_user, <<"<%= @default_user %>">>},
+    {default_pass, <<"<%= @default_pass %>">>}
+  ]}<% if @config_kernel_variables -%>,
+  {kernel, [
+    <%= @config_kernel_variables.sort.map{|k,v| "{#{k}, #{v}}"}.join(",\n    ") %>
+  ]}
+<%- end -%>
+<%- if @admin_enable or !@config_management_variables.empty? -%>,
+  {rabbitmq_management, [
+    <%- if !@config_management_variables.empty? -%>
+    <%= @config_management_variables.sort.map{|k,v| "{#{k}, #{v}}"}.join(",\n    ") %>
+    <%- end -%>
+<%- if @admin_enable -%>
+<%- if  !@config_management_variables.empty? -%>,<%-end-%>
+    {listener, [
+<%- if @ssl && @management_ssl -%>
+      {port, <%= @ssl_management_port %>},
+      {ssl, true},
+      {ssl_opts, [<%- if @ssl_cacert != 'UNSET' %>
+                  {cacertfile, "<%= @ssl_cacert %>"},
+                  <%- end -%>
+
+                  {certfile, "<%= @ssl_cert %>"},
+                  {keyfile, "<%= @ssl_key %>"}
+                   <%- if @ssl_versions -%>
+                     ,{versions, [<%= @ssl_versions.sort.map { |v| "'#{v}'" }.join(', ') %>]}
+                   <%- end -%>
+                  <%- if @ssl_ciphers and @ssl_ciphers.size > 0 -%>
+                  ,{ciphers,[
+                      <%= @ssl_ciphers.sort.map{|k| "{#{k}}"}.join(",\n                      ") %>
+                  ]}
+                  <%- end -%>
+                 ]}
+<%- else -%>
+      {port, <%= @management_port %>}
+<%- end -%>
+<%- if @node_ip_address != 'UNSET' -%>
+      ,{ip, "<%= @node_ip_address %>"}
+<%- end -%>
+    ]}
+<%- end -%>
+  ]}
+<%- end -%>
+<% if @config_stomp -%>,
+% Configure the Stomp Plugin listening port
+  {rabbitmq_stomp, [
+  <%- if @stomp_ssl_only -%>
+    {tcp_listeners, []}
+  <%- else -%>
+    {tcp_listeners, [<%= @stomp_port %>]}
+  <%- end -%>
+  <%- if @ssl && @ssl_stomp_port -%>
+    ,
+    {ssl_listeners, [<%= @ssl_stomp_port %>]}
+  <%- end -%>
+  ]}
+<% end -%>
+<%- if @ldap_auth -%>,
+% Configure the LDAP authentication plugin
+  {rabbitmq_auth_backend_ldap, [
+    {other_bind, <%= @ldap_other_bind %>},
+    {servers, ["<%= @ldap_server %>"]},
+    {user_dn_pattern, "<%= @ldap_user_dn_pattern %>"},
+    {use_ssl, <%= @ldap_use_ssl %>},
+    {port, <%= @ldap_port %>},
+<% if @ldap_config_variables -%>
+<%- @ldap_config_variables.keys.sort.each do |key| -%>
+    {<%= key %>, <%= @ldap_config_variables[key] %>},
+<%- end -%>
+<%- end -%>
+    {log, <%= @ldap_log %>}
+  ]}
+<%- end -%>
+<%- if @config_shovel and not @config_shovel_statics.empty? -%>,
+  {rabbitmq_shovel,
+    [{shovels,[
+      <%= @config_shovel_statics.sort.map{|k,v| "{#{k},[#{v}]}"}.join(",\n      ") %>
+    ]}]}
+<%- end -%>
+<%- if @config_additional_variables and not @config_additional_variables.empty? -%>,
+% Additional config
+<%- @config_additional_variables.keys.sort.each do |key| -%>
+  {<%= key %>, <%= @config_additional_variables[key] %>}<%- if key != @config_additional_variables.keys.sort.last %>,<% end %>
+<%- end -%>
+<%- end -%>
+].
+% EOF

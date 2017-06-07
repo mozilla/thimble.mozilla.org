@@ -1,0 +1,23 @@
+<% if @sentinel_bind -%>
+bind <%= @sentinel_bind %>
+<% end -%>
+port <%= @sentinel_port %>
+dir <%= @working_dir %>
+<% if @daemonize -%>daemonize yes<% else -%>daemonize no<% end %>
+pidfile <%= @pid_file %>
+
+sentinel monitor <%= @master_name %> <%= @redis_host %> <%= @redis_port %> <%= @quorum %>
+sentinel down-after-milliseconds <%= @master_name %> <%= @down_after %>
+sentinel parallel-syncs <%= @master_name %> <%= @parallel_sync %>
+sentinel failover-timeout <%= @master_name %> <%= @failover_timeout %>
+<% if @auth_pass -%>
+sentinel auth-pass <%= @master_name %> <%= @auth_pass %>
+<% end -%>
+<% if @notification_script -%>
+sentinel notification-script <%= @master_name %> <%= @notification_script %>
+<% end -%>
+<% if @client_reconfig_script -%>
+sentinel client-reconfig-script <%= @master_name %> <%= @client_reconfig_script %>
+<% end -%>
+
+logfile <%= @log_file %>

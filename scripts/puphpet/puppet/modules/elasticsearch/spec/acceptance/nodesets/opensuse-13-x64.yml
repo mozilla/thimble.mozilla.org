@@ -1,0 +1,21 @@
+HOSTS:
+  opensuse-13-x64:
+    roles:
+      - master
+      - database
+      - dashboard
+    platform: sles-13-x86_64
+    image: opensuse:13.2
+    hypervisor: docker
+    docker_cmd: ["/bin/systemd"]
+    docker_preserve_image: true
+    docker_image_commands:
+      - zypper install -y dbus-1 rubygems which augeas augeas-lenses wget
+      - zypper install -y -t pattern devel_basis || true
+      - mkdir -p /etc/selinux/targeted/contexts/
+      - echo '<busconfig><selinux></selinux></busconfig>' > /etc/selinux/targeted/contexts/dbus_contexts
+      - mkdir /etc/systemd/system/sshd.service.d/
+      - echo -e "[Service]\nExecStart=\nExecStart=/usr/bin/sshd -D"
+      - ln -s /usr/lib/systemd/system/sshd.service /etc/systemd/system/multi-user.target.wants/sshd.service
+CONFIG:
+  type: foss

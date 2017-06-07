@@ -1,0 +1,147 @@
+#mongodb.conf - generated from Puppet
+
+#System Log
+
+<% if @logpath -%>
+systemLog.path: <%= @logpath %>
+systemLog.destination: file
+<% if @logappend -%>
+systemLog.logAppend: <%= @logappend %>
+<% end -%>
+<% elsif @syslog -%>
+systemLog.destination: syslog
+<% end -%>
+<% if @verbose -%>
+systemLog.quiet: false
+<% else -%>
+systemLog.quiet: true
+<% end -%>
+<% if @verbositylevel == "v" -%>
+systemLog.verbosity: 1
+<% elsif @verbositylevel == "vv" -%>
+systemLog.verbosity: 2
+<% elsif @verbositylevel == "vvv" -%>
+systemLog.verbosity: 3
+<% elsif @verbositylevel == "vvvv" -%>
+systemLog.verbosity: 4
+<% elsif @verbositylevel == "vvvvv" -%>
+systemLog.verbosity: 5
+<% end -%>
+
+#Process Management
+<% if @fork or @pidfilepath -%>
+processManagement:
+  <%- if @fork -%>
+  fork: <%= @fork %>
+  <%- end -%>
+  <%- if @pidfilepath -%>
+  pidFilePath: <%= @pidfilepath %>
+  <%- end -%>
+<% end -%>
+
+#Storage
+storage.dbPath: <%= @dbpath %>
+<% if @nojournal -%>
+storage.journal.enabled: false
+<% elsif @journal -%>
+storage.journal.enabled: true
+<% end -%>
+<% if @noprealloc -%>
+storage.preallocDataFiles: <%= !@noprealloc %>
+<% end -%>
+<% if @nssize -%>
+storage.nsSize: <%= @nssize %>
+<% end -%>
+<% if @directoryperdb -%>
+storage.directoryPerDB: <%= @directoryperdb %>
+<% end -%>
+<% if @smallfiles -%>
+storage.smallFiles: <%= @smallfiles %>
+<% end -%>
+<% if @quota -%>
+storage.quota.enforced: <%= @quota %>
+<% if @quotafiles -%>
+storage.quota.maxFilesPerDB: <%= @quotafiles %>
+<% end -%>
+<% end -%>
+<% if @storage_engine_internal -%>
+storage.engine: <%= @storage_engine_internal %>
+<% end -%>
+
+
+#Security
+<% if @auth -%>
+security.authorization: enabled
+<% else -%>
+security.authorization: disabled
+<% end -%>
+<% if @keyfile -%>
+security.keyFile: <%= @keyfile %>
+<% end -%>
+<% if @noscripting -%>
+security.javascriptEnabled: <%= @noscripting %>
+<% end -%>
+
+
+#Net
+<% if @ipv6 -%>
+net.ipv6=<%= @ipv6 %>
+<% end -%>
+<% if @bind_ip -%>
+net.bindIp:  <%= Array(@bind_ip).join(',') %>
+<% end -%>
+<% if @port -%>
+net.port: <%= @port %>
+<% end -%>
+<% if @objcheck -%>
+net.wireObjectCheck: <%= @objcheck %>
+<% end -%>
+<% if @rest -%>
+net.http.RESTInterfaceEnabled: true
+<% end -%>
+<% if @maxconns -%>
+net.maxIncomingConnections: <%= @maxconns %>
+<% end -%>
+<% if ! @nohttpinterface.nil? -%>
+net.http.enabled: <%= ! @nohttpinterface %>
+<% end -%>
+<% if @ssl -%>
+net.ssl.mode: requireSSL
+net.ssl.PEMKeyFile: <%= @ssl_key %>
+<% if @ssl_ca -%>
+net.ssl.CAFile: <%= @ssl_ca %>
+<% end -%>
+<% end -%>
+
+#Replication
+<% if @replset -%>
+replication.replSetName: <%= @replset %>
+<% end -%>
+<% if @oplog_size -%>
+replication.oplogSizeMB: <%= @oplog_size %>
+<% end -%>
+
+#Sharding
+<% if @configsvr -%>
+sharding.clusterRole: configsvr
+<% end -%>
+<% if @shardsvr -%>
+sharding.clusterRole: shardsvr
+<% end -%>
+
+#Operation Profiling
+<% if @profile == "0" -%>
+operationProfiling.mode: off
+<% elsif @profile == "1" -%>
+operationProfiling.mode: slowOp
+<% elsif @profile == "2" -%>
+operationProfiling.mode: all
+<% end -%>
+<% if @slowms -%>
+operationProfiling.slowOpThresholdMs: <%= @slowms %>
+<% end -%>
+
+
+<% if @set_parameter -%>
+setParameter: <%= @set_parameter %>
+<% end -%>

@@ -1,0 +1,47 @@
+sudo: required
+services:
+- docker
+cache:
+  bundler: true
+  directories:
+  - spec/fixtures/artifacts
+  - spec/fixtures/modules
+  - .vendor
+language: ruby
+env:
+  global:
+  - TEST_SUITE=acceptance
+  - BUNDLE_PATH=.vendor
+  matrix:
+  - TEST_SUITE=intake
+  - TEST_SUITE=integration
+  - DISTRO=centos-6-x64
+  - DISTRO=centos-6-x64 PE=true
+  - DISTRO=centos-6-x64 PE=true PE_VER=2016.1.1
+  - DISTRO=centos-7-x64
+  - DISTRO=centos-7-x64 PE=true
+  - DISTRO=centos-7-x64 PE=true PE_VER=2016.1.1
+  - DISTRO=debian-7-x64
+  - DISTRO=debian-7-x64 PE=true
+    # No 2016.x release for debian 7
+  - DISTRO=debian-8-x64
+  - DISTRO=ubuntu-server-1204-x64
+  - DISTRO=ubuntu-server-1204-x64 PE=true
+  - DISTRO=ubuntu-server-1204-x64 PE=true PE_VER=2016.1.1
+  - DISTRO=ubuntu-server-1404-x64
+  - DISTRO=ubuntu-server-1404-x64 PE=true
+  - DISTRO=ubuntu-server-1404-x64 PE=true PE_VER=2016.1.1
+  - DISTRO=opensuse-13-x64
+  - DISTRO=sles-12-x64
+  - DISTRO=sles-12-x64 PE=true
+  - DISTRO=oracle-6-x64
+  - DISTRO=oracle-7-x64
+matrix:
+  allow_failures:
+  - env: DISTRO=sles-12-x64
+  fast_finish: true
+script:
+- make test-$TEST_SUITE
+notifications:
+  slack:
+    secure: T1FO+ttrJNH+bXmNR6349qcttG68Qr1xmMqVVRnUr7+129GQO5174Z8MFC8ck0qOCZGHO7GCNO5seNFflrjF/5EKbdkmVnqhf9gVa9kN7I4psMzxJX9bp29xJA6m3wA4VqCosDKVFSfilDZujAblWT+KDHZLjP8sEWEnHPvCjf69S2XDQEWUoxZan5V9IJQas4XR+hMdIZTA3ChVrEyqRfeehAZImbAr/LH8zChZaTdHZQY7p2rN3+qVNi3+GISV9fNPpOCynnX/ACbdUaRt3+1etxGGaQMPzGmTejN3VlMw4OZRXImb6HQ2rXE+fNCASXiKiwylxTbriQsS0dFv4skxH03YlYM8pqaBpeIOwzf4n45tTzdAQZJMC5cOb+RvwS7qkAwuaVlVxiiA+MWRG/UcFpWS+iNn4KEKxbpBjYP8X1JIP9DlHLME7DNMM2pePv9X6ZjY6eDhVM1gbKi77dXOo5y2Sp0ru8QkLpIKFVXS01O+x7oDHHv2Osvih0jNMgM66Byso3KJYJ6EJ0D2/3Q9ZNpVM4CMuIY5pBQfXf691zqkBHI6JUnU6VMw97cH0k6Gq0ypZoW5trXdnRC5aEg4jKKid84zKmAeTpj/iMuagyb/a5msJstIVboynRtfDHR0J8WWhfSU2wzqKAb6L66iyRe62Fe8OGzLhk2+KNU=

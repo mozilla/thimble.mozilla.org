@@ -1,0 +1,55 @@
+{
+  "name": "garethr-erlang",
+  "version": "0.3.0",
+  "author": "Gareth Rushgrove",
+  "summary": "Install one of the official erlang packages",
+  "license": "Apache-2.0",
+  "source": "https://github.com/garethr/puppet-erlang",
+  "project_page": "https://github.com/garethr/puppet-erlang",
+  "issues_url": "https://github.com/garethr/puppet-erlang",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "5",
+        "6"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "5",
+        "6"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "12.04",
+        "14.04"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": "3.x"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": "3.x"
+    }
+  ],
+  "dependencies": [
+    { "name": "puppetlabs/stdlib", "version_requirement": ">=2.0.0 <5.0.0" },
+    { "name": "puppetlabs/apt", "version_requirement": ">=2.1.0" },
+    { "name": "stahnma/epel", "version_requirement": ">=1.0.0 <2.0.0" }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "example42-php",
+  "version": "2.0.25",
+  "summary": "Puppet module for php",
+  "author": "Alessandro Franceschi",
+  "description": "This module installs and manages php. Check README.rdoc for details. Puppi is required for some common functions: you can install them without using the whole module. Monitor and firewall dependencies are needed only if the relevant features are enabled",
+  "dependencies": [
+    {
+      "name": "example42/puppi",
+      "version_requirement": ">= 2.0.0"
+    }
+  ],
+  "types": [
+
+  ],
+  "checksums": {
+  },
+  "source": "https://github.com/example42/puppet-php",
+  "project_page": "http://www.example42.com",
+  "license": "Apache2"
+}

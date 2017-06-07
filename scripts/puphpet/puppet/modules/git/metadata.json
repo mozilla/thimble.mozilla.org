@@ -1,0 +1,56 @@
+{
+  "name": "puppetlabs-git",
+  "version": "0.5.0",
+  "author": "Puppet Labs",
+  "summary": "Module for installing Git or Gitosis.",
+  "license": "Apache-2.0",
+  "source": "https://github.com/puppetlabs/puppetlabs-git",
+  "project_page": "https://github.com/puppetlabs/puppetlabs-git",
+  "issues_url": "https://tickets.puppetlabs.com/browse/MODULES",
+  "dependencies": [
+    {"name":"puppetlabs/stdlib","version_requirement":">= 3.2.0"}
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "10.04",
+        "12.04",
+        "14.04"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": "3.x"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": "3.x"
+    }
+  ]
+}

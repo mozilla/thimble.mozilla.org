@@ -1,0 +1,7 @@
+fixtures:
+  repositories:
+    stdlib: 'https://github.com/puppetlabs/puppetlabs-stdlib.git'
+    pe_gem: 'https://github.com/puppetlabs/puppetlabs-pe_gem.git'
+    yardoc: 'https://github.com/Sharpie/puppet-puppet_yardoc.git'
+  symlinks:
+    archive: "#{source_dir}"

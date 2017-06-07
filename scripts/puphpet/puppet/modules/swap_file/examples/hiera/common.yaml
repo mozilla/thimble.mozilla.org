@@ -1,0 +1,12 @@
+---
+classes:
+  - swap_file
+
+swap_file::files:
+  'from_common':
+    ensure:   'present'
+    swapfile: '/mnt/swap.common'
+
+# This will:
+# - call the class swap_file
+# - create a file '/mnt/swap.common' using /bin/dd with the default size taken from the $::memorysizeinbytes and create a mount for it.

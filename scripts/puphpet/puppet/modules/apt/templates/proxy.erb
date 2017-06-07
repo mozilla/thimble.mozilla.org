@@ -1,0 +1,4 @@
+Acquire::http::proxy "http://<%= @_proxy['host'] %>:<%= @_proxy['port'] %>/";
+<%- if @_proxy['https'] %>
+Acquire::https::proxy "https://<%= @_proxy['host'] %>:<%= @_proxy['port'] %>/";
+<%- end -%>

@@ -1,0 +1,16 @@
+HOSTS:
+  centos-6-x64:
+    roles:
+      - master
+      - database
+      - dashboard
+    platform: el-6-x86_64
+    image: oraclelinux:6
+    hypervisor: docker
+    docker_cmd: ["/sbin/init"]
+    docker_preserve_image: true
+    docker_image_commands:
+      - yum install -y wget
+      - rm /etc/init/tty.conf
+CONFIG:
+  type: foss

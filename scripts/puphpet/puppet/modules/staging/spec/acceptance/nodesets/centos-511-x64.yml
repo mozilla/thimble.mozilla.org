@@ -1,0 +1,12 @@
+---
+HOSTS:
+  centos-511-x64:
+    roles:
+      - master
+    platform: el-5-x86_64
+    box: puppetlabs/centos-5.11-64-nocm
+    hypervisor: vagrant
+CONFIG:
+  type: foss
+...
+# vim: syntax=yaml

@@ -1,0 +1,11 @@
+---
+.travis.yml:
+  secure: "S8pxtUQSCxezeHuMTOa2nmbOC1Ln37evcDBd6rcAPse4DhrwzdJ7Ijme2tE+cPcdyYgO66jL0wWUBNia+10vOoYs1mCMj3mUq2bgySRhML0CQxGIvKYu8R6PbijljSK7LYplD1THQRgFLyHQ+f4Mh7+8yFpjXSmxuAQMdCPfPv8="
+  addons:
+    apt:
+      sources:
+        - augeas
+      packages:
+        - libaugeas-dev
+spec/spec_helper.rb:
+  unmanaged: true

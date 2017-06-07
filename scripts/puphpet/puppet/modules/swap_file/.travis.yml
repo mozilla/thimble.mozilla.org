@@ -1,0 +1,18 @@
+---
+sudo: false
+language: ruby
+bundler_args: --without system_tests development
+script: "bundle exec metadata-json-lint metadata.json && bundle exec rake validate && bundle exec rake lint && bundle exec rake spec SPEC_OPTS='--format documentation'"
+rvm:
+  - 2.0.0
+  - 2.1.0
+env:
+  matrix:
+    - PUPPET_GEM_VERSION="~> 3.8.0"
+    - PUPPET_GEM_VERSION="~> 3" FUTURE_PARSER="yes"
+    - PUPPET_GEM_VERSION="~> 4.0.0"
+    - PUPPET_GEM_VERSION="~> 4.1.0"
+    - PUPPET_GEM_VERSION="~> 4.2.0"
+    - PUPPET_GEM_VERSION="~> 4.3.0"
+    - PUPPET_GEM_VERSION="~> 4"
+    - PUPPET_GEM_VERSION="~> 4" STRICT_VARIABLES="yes"

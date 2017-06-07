@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# This file is managed via PUPPET
+
+daemon="/usr/local/elasticsearch/bin/elasticsearch"
+daemon_flags="-d -Des.default.path.conf=/etc/elasticsearch/<%= @name %> -p <%= @pid_dir %>/elasticsearch-<%= @name %>.pid"
+daemon_user="_elasticsearch"
+
+. /etc/rc.d/rc.subr
+
+pexp="$(/usr/local/bin/javaPathHelper -c elasticsearch) .*org.elasticsearch.bootstrap.Elasticsearch.*"
+
+rc_reload=NO
+
+rc_start() {
+	${rcexec} \
+		"ES_INCLUDE=\"/etc/elasticsearch/elasticsearch.in.sh\" \
+		"CONF_DIR=\"/etc/elasticsearch\"" \
+		JAVA_HOME=\"$(/usr/local/bin/javaPathHelper -h elasticsearch)\" \
+		${daemon} ${daemon_flags}"
+}
+
+rc_pre() {
+	install -d -o _elasticsearch /var/run/elasticsearch/
+}
+
+rc_cmd $1

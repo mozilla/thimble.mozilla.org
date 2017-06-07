@@ -1,0 +1,18 @@
+HOSTS:
+  sles-11-x64:
+    roles:
+      - master
+      - database
+      - dashboard
+    platform: sles-11-x64
+    image: dliappis/sles:11sp4
+    hypervisor: docker
+    docker_cmd: ["/sbin/init"]
+    docker_preserve_image: true
+    docker_image_commands:
+      - gem uninstall puppet hiera
+      - zypper install -y augeas augeas-lenses pkgconfig
+      - mkdir -p /etc/puppetlabs/code /etc/puppet/modules
+      - ln -sf /etc/puppet/modules /etc/puppetlabs/code/modules
+CONFIG:
+  type: foss
