@@ -287,8 +287,8 @@ define(function(require) {
 
     // Expose the published state with the updated link
     published.link
-      .attr("href", publishUrl)
-      .text(publishUrl);
+      .attr("href", "https://" + publishUrl)
+      .text("https://" + publishUrl);
     published.changed.addClass("hide");
 
     // Re-attach the unpublish handler and remove
