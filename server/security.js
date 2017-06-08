@@ -13,11 +13,7 @@ let defaultCSPDirectives = {
     "https://mozilla.github.io/thimble-homepage-gallery/activities.json",
     "https://api.github.com/repos/mozilla/thimble.mozilla.org/issues"
   ],
-  frameSrc: [
-    "'self'",
-    "https://docs.google.com",
-    "blob:"
-  ],
+
   childSrc: [
     "'self'",
     "https://pontoon.mozilla.org",
