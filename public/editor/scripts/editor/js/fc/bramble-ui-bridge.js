@@ -121,9 +121,6 @@ define(function(require) {
 
     // *******EVENTS
     // User bar menu help
-    $("#navbar-help").click(function() {
-      window.open("https://github.com/mozilla/thimble.mozilla.org/wiki/Using-Thimble-FAQ");
-    });
 
     $("#new-project-link").click(function(e) {
       e.preventDefault();

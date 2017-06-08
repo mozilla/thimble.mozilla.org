@@ -22,10 +22,19 @@
     <div id="navbar-right" class="container-flex">
       {% set publishBtnTitle = gettext("publishBtnTitle") %}
 
-      <div class="nav-chunk">
-        <div title="{{ gettext("helpIconTitle") }}" id="navbar-help" class="nav-link">
-          <img src="/img/icon/question-mark.svg" class="icon-question-mark">
-          {{ gettext("help") }}
+      <div title="{{ gettext("helpIconTitle") }}" id="navbar-help" class="nav-chunk">
+        <div class="dropdown">
+          <div  class="dropdown-toggle">
+            {{ gettext("help") }}
+            <img class="icon-arrow-down" src="/img/icon/dropdown-arrow.svg">
+          </div>
+          <div class="dropdown-content">
+            <ul>
+              <li><a href="https://github.com/mozilla/thimble.mozilla.org/wiki/Thimble-Troubleshooting">{{ gettext("helpTroubleshooting") }}</a></li>
+              <li><a href="https://github.com/mozilla/thimble.mozilla.org/wiki/Using-Thimble-FAQ">{{ gettext("helpFAQ") }}</a></li>
+              <li><a href="https://github.com/mozilla/thimble.mozilla.org/wiki/About-Thimble">{{ gettext("helpFeatures") }}</a></li>
+            </ul>
+          </div>
         </div>
       </div>
 
