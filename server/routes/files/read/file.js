@@ -5,9 +5,9 @@ module.exports = function(config, req, res, next) {
   var fileId = req.params.fileId;
   var user = req.user;
 
-  utils.getProjectFile(config, user, fileId, function(err, buffer) {
+  utils.getProjectFile(config, user, fileId, function(err, status, buffer) {
     if(err) {
-      res.status(500);
+      res.status(status);
       next(HttpError.format(err, req));
       return;
     }

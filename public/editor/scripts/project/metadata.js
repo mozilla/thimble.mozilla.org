@@ -286,7 +286,7 @@ define(function(require) {
 
   function install(config, callback) {
     if(!config.user) {
-      loadAnonymous(config, callback);
+      return loadAnonymous(config, callback);
     }
 
     setMetadata(config, callback);

@@ -319,7 +319,7 @@ function getProjectFile(config, user, fileId, callback) {
     }
 
     try {
-      callback(null, new Buffer(body.buffer.data));
+      callback(null, 200, new Buffer(body.buffer.data));
     } catch(e) {
       callback({
         message: `Project data received by the publish server for ${url} was in an invalid format.`,
