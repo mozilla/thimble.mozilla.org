@@ -2,6 +2,7 @@
 
 const Hoek = require(`hoek`);
 const Url = require(`url`);
+const jsdom = require(`jsdom`);
 
 const REMIX_SCRIPT = process.env.REMIX_SCRIPT;
 
@@ -9,6 +10,7 @@ Hoek.assert(REMIX_SCRIPT, `Must define location of the remix script`);
 
 const remixUrl = Url.parse(REMIX_SCRIPT);
 const slashes = remixUrl.slashes ? `//` : ``;
+const { JSDOM } = jsdom;
 
 function injectMetadata(html, metadata) {
   let metaTags = ``;
@@ -22,10 +24,27 @@ function injectMetadata(html, metadata) {
 }
 
 function injectRemixScript(html) {
-  return html.replace(
-    /<\/head/,
-    `<script src="${REMIX_SCRIPT}" type="text/javascript"></script>\n$&`
-  );
+  // Check if <head> tag exists
+  var retInject = ``;
+  const dom = new JSDOM(html);
+
+  // If they exist, inject remix script before closing </head> tag
+  if (dom.window.document.querySelector(`head`)) {
+    console.info(`has head tags`);
+    retInject = html.replace(
+      /<\/head/,
+      `  <script src="${REMIX_SCRIPT}" type="text/javascript"></script>\n  $&`);
+    console.info(retInject);
+  // If they don't exist, add empty <head><\/head> tags and inject remix script
+  } else {
+    console.info(`missing head tags`);
+    retInject = html.replace(
+      /<html>/,
+      `<html>\n  <head>\n    <title>Untitled<\/title>\n    <script src="${REMIX_SCRIPT}" type="text/javascript"></script>\n  <\/head>`);
+    console.info(retInject);
+  }
+
+  return retInject;
 }
 
 // Inject the Remix script into the given HTML string
