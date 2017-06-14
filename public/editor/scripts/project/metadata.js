@@ -238,7 +238,11 @@ define(function(require) {
 
   // Downloads project metadata (project id, file paths + publish ids).
   function download(config, callback) {
-    if(!config.user) {
+    if(!config.user || config.update) {
+      // There is no metadata to fetch from the server if this project is:
+      // 1. anonymous, or
+      // 2. being upgraded from an anonymous to a persisted project (we push
+      //    metadata to the server instead of downloading it)
       return callback(null, null);
     }
 

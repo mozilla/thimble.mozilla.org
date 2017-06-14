@@ -186,7 +186,8 @@ define(function(require) {
     Metadata.download({
       host: _host,
       id: _id,
-      user: _user
+      user: _user,
+      update: isUpdate
     }, function(err, data) {
       if(err) {
         return callback(err);
@@ -218,7 +219,7 @@ define(function(require) {
           });
         }
 
-        // Step 2: If this was a project upgrade (from anonymous to authenticated),
+        // Step 3: If this was a project upgrade (from anonymous to authenticated),
         // update the project metadata on the server
         Metadata.update({
           host: _host,
@@ -236,7 +237,7 @@ define(function(require) {
             return callback(err);
           }
 
-          // Step 3: install the project's metadata (project + file IDs on publish) and
+          // Step 4: install the project's metadata (project + file IDs on publish) and
           // install into an xattrib on the project root.
           Metadata.install({
             root: getRoot(),
