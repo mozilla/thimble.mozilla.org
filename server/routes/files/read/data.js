@@ -1,16 +1,5 @@
 var utils = require("../../utils");
 
-function sendResponse(res, tarStream) {
-  // NOTE: this should be `application/x-tar`, but IE won't decompress the
-  // stream if we use that.  With `application/octet-stream` it works everywhere.
-  res.type("application/octet-stream");
-  tarStream
-  .on("error", function(err) {
-    console.error("Failed to stream tar with: ", err);
-  })
-  .pipe(res);
-}
-
 module.exports = function(config, req, res) {
   var projectId = req.params.projectId;
   var user = req.user;
@@ -24,5 +13,5 @@ module.exports = function(config, req, res) {
     return;
   }
 
-  sendResponse(res, utils.getProjectFileTar(config, user, projectId));
+  utils.sendResponseStream(res, utils.getProjectFileTar(config, user, projectId));
 };
