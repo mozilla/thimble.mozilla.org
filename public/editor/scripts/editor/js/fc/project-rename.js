@@ -139,7 +139,9 @@ define(function(require) {
           editingComplete(context);
           analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "Rename Project" });
 
-          context.publisher.showUnpublishedChangesPrompt();
+          if(context.publisher) {
+            context.publisher.showUnpublishedChangesPrompt();
+          }
         });
       });
     }
