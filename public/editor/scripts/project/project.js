@@ -17,6 +17,7 @@ define(function(require) {
   var _anonymousId;
   var _remixId;
   var _description;
+  var _projectLoadStrategy;
 
   var DEFAULT_INDEX_HTML_URL = "/default-files/html.txt";
 
@@ -147,6 +148,7 @@ define(function(require) {
     _publishUrl = projectDetails.publishUrl;
     _fs = Bramble.getFileSystem();
     _description = projectDetails.description;
+    _projectLoadStrategy = projectDetails.projectLoadStrategy;
 
     var metadataLocation = _user && _anonymousId ? Path.join(Constants.ANONYMOUS_USER_FOLDER, _anonymousId.toString()) : getRoot();
 
@@ -203,7 +205,8 @@ define(function(require) {
         remixId: _remixId,
         anonymousId: _anonymousId,
         syncQueue: syncQueue,
-        data: data
+        data: data,
+        projectLoadStrategy: _projectLoadStrategy
       }, function(err, pathUpdatesCache) {
         if(err) {
           // If we have paths to sync in the SyncQueue, ignore this error and keep going

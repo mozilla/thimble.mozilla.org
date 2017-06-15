@@ -238,7 +238,7 @@ console.log("config.data", config.data);
 
   // Downloads project metadata (project id, file paths + publish ids).
   function download(config, callback) {
-    if(config.update) {
+    if(!config.user || config.update) {
       // There is no metadata to fetch from the server if this project is
       // being upgraded from an anonymous to a persisted project (we push
       // metadata to the server instead of downloading it)
