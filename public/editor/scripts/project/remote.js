@@ -229,7 +229,8 @@ define(function(require) {
             return callback(err);
           }
 
-          load(config, callback);
+          // Prefer loading as tarball if this is the default project, even if loadfiles=1.
+          loadTarball(config, callback);
         });
       } else {
         callback();
