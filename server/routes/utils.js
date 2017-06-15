@@ -292,7 +292,7 @@ function getProjectFileTar(config, user, projectId) {
   });
 }
 
-function getProjectFile(config, user, fileId, callback) {
+function getProjectFile(config, user, fileId) {
   var url = config.publishURL + "/files/" + fileId;
 
   return request.get({

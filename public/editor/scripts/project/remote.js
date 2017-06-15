@@ -195,11 +195,9 @@ define(function(require) {
 
   function load(config, callback) {
     // Support loading projects as a single tarball or as a set of individual files.
+    // Change the value via .env on the server and the PROJECT_LOAD_STRATEGY variable.
     // Default to loading a tarball.
-    var loadProjectAsFiles = window.location.search.indexOf("loadfiles=1") > -1;
-
-    if(loadProjectAsFiles) {
-      console.log("[Thimble] Overriding project tarball load strategy, load project files instead.");
+    if(config.projectLoadStrategy === "files") {
       loadFiles(config, callback);
     } else {
       loadTarball(config, callback);

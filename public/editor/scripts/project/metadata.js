@@ -226,7 +226,7 @@ define(function(require) {
       // [{ id: 1, path: "/index.html", project_id: 3 }, ... ]
       if (config.data) {
         project.id = config.id;
-
+console.log("config.data", config.data);
         config.data.forEach(function(info) {
           project.paths[info.path] = info.id;
         });

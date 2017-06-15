@@ -9,7 +9,7 @@ module.exports = function(config, req, res) {
   // being remixed and the `projectId` corresponds to a published
   // project
   if(!user && projectId) {
-    sendResponse(res, utils.getRemixedProjectFileTar(config, projectId));
+    utils.sendResponseStream(res, utils.getRemixedProjectFileTar(config, projectId));
     return;
   }
 
