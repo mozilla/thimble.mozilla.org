@@ -236,7 +236,15 @@ define(function(require) {
     });
   }
 
-  function fetchMetadata(config, callback) {
+  // Downloads project metadata (project id, file paths + publish ids).
+  function download(config, callback) {
+    if(!config.user || config.update) {
+      // There is no metadata to fetch from the server if this project is
+      // being upgraded from an anonymous to a persisted project (we push
+      // metadata to the server instead of downloading it)
+      return callback(null, null);
+    }
+
     var url = config.host + "/projects";
     if (config.id) {
       url += "/" + config.id;
@@ -279,24 +287,12 @@ define(function(require) {
     });
   }
 
-  function load(config, callback) {
-    if (config.user) {
-      if (config.update) {
-        return setMetadata(config, callback);
-      }
-
-      return fetchMetadata(config, function(err, data) {
-        setMetadata({
-          data: data,
-          id: config.id,
-          root: config.root,
-          user: config.user,
-          title: config.title
-        }, callback);
-      });
+  function install(config, callback) {
+    if(!config.user) {
+      return loadAnonymous(config, callback);
     }
 
-    loadAnonymous(config, callback);
+    setMetadata(config, callback);
   }
 
   function update(config, callback) {
@@ -325,7 +321,8 @@ define(function(require) {
   }
 
   return {
-    load: load,
+    download: download,
+    install: install,
     update: update,
     getFileID: getFileID,
     setFileID: setFileID,

@@ -6,7 +6,6 @@ var querystring = require("querystring");
 var defaultProjectNameKey = require("../../../constants").DEFAULT_PROJECT_NAME_KEY;
 var utils = require("../utils");
 var HttpError = require("../../lib/http-error");
-
 var snippets = require("../../lib/snippets");
 
 function getProjectMetadata(config, req, callback) {
@@ -26,7 +25,8 @@ function getProjectMetadata(config, req, callback) {
       dateUpdated: project.date_updated,
       tags: project.tags,
       description: project.description,
-      publishUrl: project.publish_url
+      publishUrl: project.publish_url,
+      projectLoadStrategy: config.projectLoadStrategy
     });
     return;
   }

@@ -17,6 +17,7 @@ define(function(require) {
   var _anonymousId;
   var _remixId;
   var _description;
+  var _projectLoadStrategy;
 
   var DEFAULT_INDEX_HTML_URL = "/default-files/html.txt";
 
@@ -147,6 +148,7 @@ define(function(require) {
     _publishUrl = projectDetails.publishUrl;
     _fs = Bramble.getFileSystem();
     _description = projectDetails.description;
+    _projectLoadStrategy = projectDetails.projectLoadStrategy;
 
     var metadataLocation = _user && _anonymousId ? Path.join(Constants.ANONYMOUS_USER_FOLDER, _anonymousId.toString()) : getRoot();
 
@@ -179,85 +181,98 @@ define(function(require) {
 
   // Set all necesary data for this project, based on makeDetails rendered into page.
   function _load(csrfToken, syncQueue, callback) {
-    // Step 1: download the project's contents (files + metadata) or upload an
-    // anonymous project's content if this is an upgrade, and install into the root
-    Remote.loadProject({
-      root: getRoot(),
+    var now = (new Date()).toISOString();
+    var isUpdate = !!_user && !!_anonymousId;
+
+    // Step 1: download the project's metadata
+    Metadata.download({
       host: _host,
-      user: _user,
       id: _id,
-      remixId: _remixId,
-      anonymousId: _anonymousId,
-      syncQueue: syncQueue
-    }, function(err, pathUpdatesCache) {
+      user: _user,
+      update: isUpdate
+    }, function(err, data) {
       if(err) {
-        // If we have paths to sync in the SyncQueue, ignore this error and keep going
-        if(!Object.keys(syncQueue.pending).length) {
-          return callback(err);
-        }
+        return callback(err);
       }
 
-      // If there are cached paths that need to be updated, queue those now
-      if(pathUpdatesCache && pathUpdatesCache.length) {
-        pathUpdatesCache.forEach(function(path) {
-          queueFileUpdate(path);
-        });
-      }
-
-      var now = (new Date()).toISOString();
-      var isUpdate = !!_user && !!_anonymousId;
-
-      // Step 2: If this was a project upgrade (from anonymous to authenticated),
-      // update the project metadata on the server
-      Metadata.update({
+      // Step 2: download the project's contents (files) or upload an
+      // anonymous project's content if this is an upgrade, and install into the root
+      Remote.loadProject({
+        root: getRoot(),
         host: _host,
-        update: isUpdate,
+        user: _user,
         id: _id,
-        csrfToken: csrfToken,
-        data: {
-          title: _title,
-          description: _description,
-          dateCreated: now,
-          dateUpdated: now
-        }
-      }, function(err) {
+        remixId: _remixId,
+        anonymousId: _anonymousId,
+        syncQueue: syncQueue,
+        data: data,
+        projectLoadStrategy: _projectLoadStrategy
+      }, function(err, pathUpdatesCache) {
         if(err) {
-          return callback(err);
+          // If we have paths to sync in the SyncQueue, ignore this error and keep going
+          if(!Object.keys(syncQueue.pending).length) {
+            return callback(err);
+          }
         }
 
-        // Step 3: download the project's metadata (project + file IDs on publish) and
-        // install into an xattrib on the project root.
-        Metadata.load({
-          root: getRoot(),
+        // If there are cached paths that need to be updated, queue those now
+        if(pathUpdatesCache && pathUpdatesCache.length) {
+          pathUpdatesCache.forEach(function(path) {
+            queueFileUpdate(path);
+          });
+        }
+
+        // Step 3: If this was a project upgrade (from anonymous to authenticated),
+        // update the project metadata on the server
+        Metadata.update({
           host: _host,
-          user: _user,
-          remixId: _remixId,
-          id: _id,
-          title: _title,
           update: isUpdate,
+          id: _id,
+          csrfToken: csrfToken,
+          data: {
+            title: _title,
+            description: _description,
+            dateCreated: now,
+            dateUpdated: now
+          }
         }, function(err) {
           if(err) {
             return callback(err);
           }
 
-          // Find the index.html file in the project root to open
-          var indexLocation = Path.join(getRoot(), "index.html");
-          _fs.exists(indexLocation, function(exists) {
-            if(exists) {
-              callback(null, indexLocation);
-              return;
+          // Step 4: install the project's metadata (project + file IDs on publish) and
+          // install into an xattrib on the project root.
+          Metadata.install({
+            root: getRoot(),
+            title: _title,
+            id: _id,
+            data: data,
+            user: _user,
+            update: isUpdate
+          }, function(err) {
+            if(err) {
+              return callback(err);
             }
-            // Create a default index.html file
-            $.get(DEFAULT_INDEX_HTML_URL).then(function(data) {
-              _fs.writeFile(indexLocation, data, function(err) {
-                if (err) {
-                  console.error("Cannot write file to project: " + err);
-                  callback(err);
-                  return;
-                }
+
+            // Find the index.html file in the project root to open
+            var indexLocation = Path.join(getRoot(), "index.html");
+            _fs.exists(indexLocation, function(exists) {
+              if(exists) {
                 callback(null, indexLocation);
-              });
-            }, callback);
+                return;
+              }
+              // Create a default index.html file
+              $.get(DEFAULT_INDEX_HTML_URL).then(function(data) {
+                _fs.writeFile(indexLocation, data, function(err) {
+                  if (err) {
+                    console.error("Cannot write file to project: " + err);
+                    callback(err);
+                    return;
+                  }
+                  callback(null, indexLocation);
+                });
+              }, callback);
+            });
           });
         });
       });

@@ -292,6 +292,17 @@ function getProjectFileTar(config, user, projectId) {
   });
 }
 
+function getProjectFile(config, user, fileId) {
+  var url = config.publishURL + "/files/" + fileId;
+
+  return request.get({
+    url: url,
+    headers: {
+      "Authorization": "token " + user.token
+    }
+  });
+}
+
 function getRemixedProjectFileMetadata(config, projectId, callback) {
   var publishURL = config.publishURL + "/publishedProjects/" + projectId + "/publishedFiles/meta";
 
@@ -334,6 +345,17 @@ function getRemixedProjectFileTar(config, projectId) {
   return request.get({ uri: publishURL });
 }
 
+function sendResponseStream(res, binaryStream) {
+  // NOTE: this should be `application/x-tar`, but IE won't decompress the
+  // stream if we use that.  With `application/octet-stream` it works everywhere.
+  res.type("application/octet-stream");
+  binaryStream
+  .on("error", function(err) {
+    console.error("Failed to stream binary data with: ", err);
+  })
+  .pipe(res);
+}
+
 module.exports = {
   createProject: createProject,
   persistProjectFiles: persistProjectFiles,
@@ -341,6 +363,8 @@ module.exports = {
   getRemixedProject: getRemixedProject,
   getProjectFileMetadata: getProjectFileMetadata,
   getProjectFileTar: getProjectFileTar,
+  getProjectFile: getProjectFile,
   getRemixedProjectFileMetadata: getRemixedProjectFileMetadata,
-  getRemixedProjectFileTar: getRemixedProjectFileTar
+  getRemixedProjectFileTar: getRemixedProjectFileTar,
+  sendResponseStream
 };
