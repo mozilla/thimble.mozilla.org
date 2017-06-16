@@ -186,7 +186,7 @@ define(["jquery", "analytics"], function($, analytics) {
           newItem.removeClass("activity-template");
           newItem.find(".thumbnail").css("background-image","url("+activity.thumbnail_url+")" );
           newItem.find(".view-project").attr("href", activity.url);
-          newItem.find(".project-title").text(activity.title);
+          newItem.find(".project-title").text(activity.title).attr("href", activity.url);
           newItem.find(".author a").text(activity.author);
           newItem.find(".author a").attr("href", activity.author_url);
           newItem.find(".description").text(activity.description);
