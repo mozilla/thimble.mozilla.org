@@ -6,12 +6,7 @@ var querystring = require("querystring");
 var defaultProjectNameKey = require("../../../constants").DEFAULT_PROJECT_NAME_KEY;
 var utils = require("../utils");
 var HttpError = require("../../lib/http-error");
-var env = require("../../lib/environment");
 var snippets = require("../../lib/snippets");
-
-// One of "tarball" or "files" to specify how projects should get loaded.
-// If not specified, the client code will default to "tarball".
-var projectLoadStrategy = env.get("PROJECT_LOAD_STRATEGY");
 
 function getProjectMetadata(config, req, callback) {
   var project = req.project;
@@ -31,7 +26,7 @@ function getProjectMetadata(config, req, callback) {
       tags: project.tags,
       description: project.description,
       publishUrl: project.publish_url,
-      projectLoadStrategy: projectLoadStrategy
+      projectLoadStrategy: config.projectLoadStrategy
     });
     return;
   }

@@ -25,5 +25,7 @@ module.exports = {
   editorHOST: editorHOST,
   editorURL: env.get("NODE_ENV") === "development" ? env.get("BRAMBLE_URI") + "/src" : env.get("BRAMBLE_URI") + "/dist",
   cryptr: new Cryptr(env.get("SESSION_SECRET")),
-  DEFAULT_PROJECT_TITLE: env.get("DEFAULT_PROJECT_TITLE")
+  DEFAULT_PROJECT_TITLE: env.get("DEFAULT_PROJECT_TITLE"),
+  // One of "tarball" (default) or "files" to specify how projects should get loaded.
+  projectLoadStrategy: env.get("PROJECT_LOAD_STRATEGY") === "files" ? "files" : "tarball"
 };
