@@ -116,7 +116,7 @@ define(function(require) {
       var pendingOperations = config.syncQueue.pending;
 
       if(shouldSkipPath(pendingOperations, path)) {
-        return deferred.promise().resolve();
+        return deferred.resolve().promise();
       }
 
       // jQuery doesn't seem to support getting the arraybuffer type
