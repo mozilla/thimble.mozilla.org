@@ -5,6 +5,14 @@ define(function(require) {
   var Buffer = Bramble.Filer.Buffer;
   var fs = Bramble.getFileSystem();
 
+  // If there are pending operations to be run in the SyncQueue for a
+  // given path in the project (e.g., user deleted a file locally, but closed
+  // before the change could be synced to the server), we can safely ignore
+  // this path, since we'll just be modifying the file anyway.
+  function shouldSkipPath(pending, path) {
+    return pending[path];
+  }
+
   function installFile(path, data, callback) {
     var sh = new fs.Shell();
     var basedir = Path.dirname(path);
@@ -25,14 +33,10 @@ define(function(require) {
     var root = config.root;
     var pendingOperations = config.syncQueue.pending;
 
-    // If there are pending operations to be run in the SyncQueue for a
-    // given path in the project (e.g., user deleted a file locally, but closed
-    // before the change could be synced to the server), we can safely ignore
-    // the initial extract, since we'll just be modifying the file anyway.
     function maybeExtract(path, data, callback) {
       path = Path.join(root, path);
 
-      if(pendingOperations[path]) {
+      if(shouldSkipPath(pendingOperations, path)) {
         callback();
         return;
       }
@@ -108,6 +112,12 @@ define(function(require) {
 
     $.when.apply($, config.data.map(function(fileInfo) {
       var deferred = $.Deferred();
+      var path = Path.join(root, fileInfo.path);
+      var pendingOperations = config.syncQueue.pending;
+
+      if(shouldSkipPath(pendingOperations, path)) {
+        return deferred.promise().resolve();
+      }
 
       // jQuery doesn't seem to support getting the arraybuffer type
       var xhr = new XMLHttpRequest();
@@ -118,10 +128,6 @@ define(function(require) {
           return deferred.reject();
         }
 
-        // TODO: install to filesystem.
-        //installTarball(config, this.response, callback);
-
-        var path = Path.join(root, fileInfo.path);
         installFile(path, this.response, function(err) {
           if(err) {
             return deferred.reject();
