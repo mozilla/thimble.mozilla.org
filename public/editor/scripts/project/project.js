@@ -83,7 +83,7 @@ define(function(require) {
 
   // From /index.html to /7/projects/5/index.html to
   function addRoot(path) {
-    Path.join(getRoot(), path);
+    return Path.join(getRoot(), path);
   }
 
   // Look up the publish.webmaker.org file id for this path
@@ -261,14 +261,22 @@ define(function(require) {
                 callback(null, indexLocation);
                 return;
               }
+
               // Create a default index.html file
               $.get(DEFAULT_INDEX_HTML_URL).then(function(data) {
                 _fs.writeFile(indexLocation, data, function(err) {
                   if (err) {
-                    console.error("Cannot write file to project: " + err);
+                    console.error("Cannot write file to project: ", err);
                     callback(err);
                     return;
                   }
+
+                  if(_user) {
+                    // Make sure we will sync the index.html file we have
+                    // created.
+                    queueFileUpdate(addRoot("index.html"));
+                  }
+
                   callback(null, indexLocation);
                 });
               }, callback);
