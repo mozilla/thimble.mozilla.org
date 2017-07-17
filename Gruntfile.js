@@ -75,7 +75,8 @@ module.exports = function( grunt ) {
         "./public/homepage/stylesheets/*.css",
         "./public/resources/remix/*.less",
         "./public/resources/tutorial/*.less",
-        "./public/resources/tutorial/*.css"
+        "./public/resources/tutorial/*.css",
+        "!./public/editor/stylesheets/normalize.less"
       ],
       options: {
         csslint: {
@@ -92,6 +93,7 @@ module.exports = function( grunt ) {
           "font-sizes": false,
           "ids": false,
           "important": false,
+          "order-alphabetical": false,
           "outline-none": false,
           "overqualified-elements": false,
           "qualified-headings": false,

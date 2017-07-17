@@ -48,7 +48,7 @@
     "grunt-contrib-requirejs": "^1.0.0",
     "grunt-execute": "0.2.2",
     "grunt-git": "^0.3.4",
-    "grunt-lesslint": "^1.1.14",
+    "grunt-lesslint": "^4.0.0",
     "grunt-npm": "git://github.com/sedge/grunt-npm.git#branchcheck",
     "grunt-update-submodules": "^0.4.1",
     "habitat": "3.1.2",
