@@ -65,7 +65,7 @@
     "nunjucks": "^2.3.0",
     "properties-parser": "0.3.1",
     "q-io": "1.13.2",
-    "request": "2.80.0",
+    "request": "^2.80.0",
     "serve-favicon": "^2.4.1",
     "tar-stream": "^1.5.2",
     "throng": "^4.0.0",
@@ -86,5 +86,10 @@
     "invalidate": "node scripts/invalidate.js",
     "localize": "node scripts/properties2json.js",
     "localize-client": "node scripts/localize-client.js"
+  },
+  "devDependencies": {
+    "commander": "^2.9.0",
+    "pretty-bytes": "^4.0.2",
+    "pretty-ms": "^2.1.0"
   }
 }
