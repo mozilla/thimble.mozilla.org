@@ -1,29 +1,16 @@
-/* global require */
-require.config({
-  waitSeconds: 120,
-  baseUrl: "/{{ locale }}/homepage/scripts",
-  paths: {
-    "jquery": "/node_modules/jquery/dist/jquery.min",
-    "localized": "/node_modules/webmaker-i18n/localized",
-    "uuid": "/node_modules/node-uuid/uuid",
-    "cookies": "/node_modules/cookies-js/dist/cookies",
-    "analytics": "/{{ locale }}/editor/scripts/analytics",
-    "gallery": "/{{ locale }}/homepage/scripts/gallery",
-    "features": "/{{ locale }}/homepage/scripts/features",
-    "getinvolved": "/{{ locale }}/homepage/scripts/getinvolved",
-    // TODO: we should really put the homepage and editor in the same scope for code sharing
-    "fc/bramble-popupmenu": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-popupmenu",
-    "fc/bramble-keyhandler": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-keyhandler",
-    "fc/bramble-underlay": "/{{ locale }}/editor/scripts/editor/js/fc/bramble-underlay"
-  },
-  shim: {
-    "jquery": {
-      exports: "$"
-    }
-  }
-});
+/* globals $: true */
 
-function setupNewProjectLinks($, analytics) {
+var $ = require("jquery");
+var uuid = require("uuid");
+var cookies = require("cookies-js");
+
+var features = require("./features");
+var gallery = require("./gallery");
+var getinvolved = require("./getinvolved");
+var analytics = require("../../editor/scripts/analytics");
+var PopupMenu = require("../../lib/popupmenu");
+
+function setupNewProjectLinks() {
   var authenticated = $("#navbar-login").hasClass("signed-in");
   var newProjectButton = $("#new-project-button");
   var locale = $("html")[0].lang;
@@ -57,7 +44,7 @@ function setupNewProjectLinks($, analytics) {
   newProjectButton.one("click", newProjectClickHandler);
 }
 
-function setupAuthentication($, uuid, cookies, analytics) {
+function setupAuthentication() {
   var joinEl = $('#signup-link');
   var loginEl = $('#login-link');
   var loginUrl = loginEl.attr("data-loginUrl");
@@ -94,14 +81,12 @@ function setupAuthentication($, uuid, cookies, analytics) {
 // flow. If more needs to be added, the logic should be factored out into
 // separate modules, each of which would be initialized here.
 // See: public/editor/scripts/main.js
-function init($, uuid, cookies, PopupMenu, analytics, gallery, getinvolved,features) {
+$(function init() {
   PopupMenu.create("#navbar-logged-in .dropdown-toggle", "#navbar-logged-in .dropdown-content");
   PopupMenu.create("#navbar-locale .dropdown-toggle", "#navbar-locale .dropdown-content");
-  setupAuthentication($, uuid, cookies, analytics);
-  setupNewProjectLinks($, analytics);
+  setupAuthentication();
+  setupNewProjectLinks();
   gallery.init();
   features.init();
   getinvolved.init();
-}
-
-require(['jquery', 'uuid', 'cookies', 'fc/bramble-popupmenu', 'analytics', 'gallery', 'getinvolved','features'], init);
+});
