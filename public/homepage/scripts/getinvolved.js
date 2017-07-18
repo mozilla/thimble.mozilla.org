@@ -1,36 +1,35 @@
-define(["jquery"], function($) {
+/* globals $: true */
 
-  var issues = {
-    init: function(){
-      this.issueCountEl = $(".good-bug-count");
+var $ = require("jquery");
 
-      if(this.issueCountEl.length === 0) {
-        return;
-      }
+module.exports = {
+  init: function(){
+    this.issueCountEl = $(".good-bug-count");
 
-      var URL = "https://api.github.com/repos/mozilla/thimble.mozilla.org/issues?labels=good%20first%20bug";
-
-      var that = this;
-      $.ajax({
-        url: URL,
-        complete: function(xhr) {
-          that.updateCount(xhr.responseJSON);
-        }
-      });
-
-    },
-    updateCount: function(data){
-      var issueCount = data.length;
-
-      if(issueCount > 1) {
-        if(issueCount >= 30) {
-          issueCount = "30+";
-        }
-        this.issueCountEl.text(issueCount);
-        this.issueCountEl.show();
-      }
+    if(this.issueCountEl.length === 0) {
+      return;
     }
-  };
 
-  return issues;
-});
+    var URL = "https://api.github.com/repos/mozilla/thimble.mozilla.org/issues?labels=good%20first%20bug";
+
+    var that = this;
+    $.ajax({
+      url: URL,
+      complete: function(xhr) {
+        that.updateCount(xhr.responseJSON);
+      }
+    });
+
+  },
+  updateCount: function(data){
+    var issueCount = data.length;
+
+    if(issueCount > 1) {
+      if(issueCount >= 30) {
+        issueCount = "30+";
+      }
+      this.issueCountEl.text(issueCount);
+      this.issueCountEl.show();
+    }
+  }
+};
