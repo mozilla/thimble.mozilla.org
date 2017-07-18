@@ -3,7 +3,7 @@
 let runAll = require("npm-run-all");
 let env = require("../server/lib/environment");
 
-let tasks = [ "localize-client" ];
+let tasks = [ "localize-client:webpack" ];
 let options = {
   stdout: process.stdout,
   stderr: process.stderr

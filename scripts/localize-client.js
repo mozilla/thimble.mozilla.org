@@ -18,9 +18,7 @@ let strings = {
 };
 strings.en_US.locale = "en_US";
 
-function makeLocalizedCopy(locale, srcPath, template) {
-  let destPath = path.join(dest, locale, path.relative(src, srcPath));
-
+function makeLocalizedCopy(locale, srcPath, destPath, template) {
   return fs.makeTree(path.dirname(destPath))
   .then(() => {
     return new Promise((resolve, reject) => {
@@ -37,7 +35,7 @@ function makeLocalizedCopy(locale, srcPath, template) {
   });
 }
 
-function localizeFile(filePath) {
+function localizeFile(filePath, filePathRelToSrc) {
   let isJS = path.extname(filePath) === ".js";
   if(!isJS) {
     return Promise.resolve();
@@ -45,11 +43,17 @@ function localizeFile(filePath) {
 
   let template = nunjucks.configure(filePath, { noCache: true });
 
-  return Promise.all(locales.map(locale => makeLocalizedCopy(locale, filePath, template)));
+  return Promise.all(locales.map(locale => {
+    let destPath = path.join(dest, locale, filePathRelToSrc);
+
+    return makeLocalizedCopy(locale, filePath, destPath, template);
+  }));
 }
 
-function localizeClientFiles() {
-  return fs.listTree(src)
+function localizeClientFiles(srcPath, ignoreL10nForDir) {
+  srcPath = srcPath || src;
+
+  return fs.listTree(srcPath, ignoreL10nForDir)
   .then(nodePaths => Promise.all(nodePaths.map(nodePath => {
     return fs.stat(nodePath)
     .then(stats => {
@@ -57,7 +61,7 @@ function localizeClientFiles() {
         return;
       }
 
-      return localizeFile(nodePath);
+      return localizeFile(nodePath, path.relative(srcPath, nodePath));
     });
   })));
 }
@@ -98,19 +102,24 @@ function readLocaleStrings(localeList) {
   });
 }
 
-if(require.main === module) {
-  getListLocales(localeDir)
+function runAll(ignoreL10nForDir) {
+  return getListLocales(localeDir)
   .then(readLocaleStrings)
   .then(cleanupOldClient)
   .then(createClientLocaleDirectories)
-  .then(localizeClientFiles)
+  .then(() => localizeClientFiles(src, ignoreL10nForDir))
   .then(() => console.log("Successfully localized the client at: ", dest))
   .catch((err) => console.error("Failed to generate localized client with: ", err));
+}
+
+if(require.main === module) {
+  return runAll();
 }
 
 module.exports = {
   readLocaleStrings,
   localizeClientFiles,
   localizeFile,
-  makeLocalizedCopy
+  makeLocalizedCopy,
+  runAll
 };
