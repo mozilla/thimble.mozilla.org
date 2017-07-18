@@ -124,6 +124,7 @@ module.exports = function( grunt ) {
           src: [
             "public/editor/**/*.js",
             "public/homepage/**/*.js",
+            "public/lib/**/*.js",
             "public/resources/remix/index.js",
             "!public/homepage/scripts/google-analytics.js",
             "!public/editor/scripts/google-analytics.js"

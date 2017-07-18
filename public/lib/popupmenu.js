@@ -1,3 +1,5 @@
+/* globals $: true */
+
 var $ = require("jquery");
 var KeyHandler = require("./keyhandler");
 var Underlay = require("./underlay");
