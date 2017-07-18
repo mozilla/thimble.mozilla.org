@@ -23,9 +23,10 @@ module.exports = function( grunt ) {
             name: "editor/scripts/main"
           }, {
             name: "editor/scripts/project-list"
+          }, {
+            name: "homepage/scripts/main"
           }],
           findNestedDependencies: true,
-          fileExclusionRegExp: /^homepage/,
           optimizeCss: "none",
           removeCombined: true,
           paths: {
@@ -47,7 +48,10 @@ module.exports = function( grunt ) {
             "constants": "editor/scripts/constants",
             "EventEmitter": "../node_modules/wolfy87-eventemitter/EventEmitter.min",
             "analytics": "editor/scripts/analytics",
-            "moment": "../node_modules/moment/min/moment-with-locales.min"
+            "moment": "../node_modules/moment/min/moment-with-locales.min",
+            "gallery": "homepage/scripts/gallery",
+            "getinvolved": "homepage/scripts/getinvolved",
+            "features": "homepage/scripts/features",
           },
           shim: {
             "jquery": {
@@ -124,7 +128,6 @@ module.exports = function( grunt ) {
           src: [
             "public/editor/**/*.js",
             "public/homepage/**/*.js",
-            "public/lib/**/*.js",
             "public/resources/remix/index.js",
             "!public/homepage/scripts/google-analytics.js",
             "!public/editor/scripts/google-analytics.js"
