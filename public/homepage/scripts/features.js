@@ -1,3 +1,5 @@
+/* globals $: true */
+
 var $ = require("jquery");
 
 module.exports = {

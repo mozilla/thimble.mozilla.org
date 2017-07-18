@@ -1,3 +1,5 @@
+/* globals $: true */
+
 var $ = require("jquery");
 
 // Manage a transparent div to capture mouse clicks over the iframe

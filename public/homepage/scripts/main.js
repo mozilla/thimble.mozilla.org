@@ -1,3 +1,5 @@
+/* globals $: true */
+
 var $ = require("jquery");
 var uuid = require("uuid");
 var cookies = require("cookies-js");
