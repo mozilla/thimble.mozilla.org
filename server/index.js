@@ -32,7 +32,7 @@ let homepageVideoLink = "https://www.youtube.com/embed/JecFOjD9I3k";
 /*
  * Local server variables
  */
- server.locals.APP_HOSTNAME = env.get("APP_HOSTNAME");
+server.locals.APP_HOSTNAME = env.get("APP_HOSTNAME");
 server.locals.GA_ACCOUNT = env.get("GA_ACCOUNT");
 server.locals.GA_DOMAIN = env.get("GA_DOMAIN");
 server.locals.node_path = "node_modules";
@@ -111,7 +111,7 @@ server.use("/resources/remix", express.static(path.join(root, "public/resources/
  * L10N
  */
 localize(server, Object.assign(env.get("L10N"), {
-   excludeLocaleInUrl: [ "/projects/remix-bar" ]
+  excludeLocaleInUrl: [ "/projects/remix-bar" ]
 }));
 
 
@@ -130,4 +130,4 @@ server.use(HttpError.notFound);
 /*
  * export the server object
  */
- module.exports = server;
+module.exports = server;

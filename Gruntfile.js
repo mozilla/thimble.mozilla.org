@@ -134,10 +134,21 @@ module.exports = function( grunt ) {
           ]
         }
       }
+    },
+    eslint: {
+      src: [
+        "public/homepage/**/*.js",
+        "public/resources/remix/index.js",
+        "!public/homepage/scripts/google-analytics.js",
+        "!public/editor/scripts/google-analytics.js",
+        "server/**/*.js",
+        "scripts/*.js",
+        "*.js"
+      ]
     }
   });
 
-  grunt.registerTask("test", [ "jshint:server", "jshint:frontend", "lesslint" ]);
+  grunt.registerTask("test", [ "jshint:server", "jshint:frontend", "lesslint", "eslint" ]);
   grunt.registerTask("build", [ "test", "requirejs:dist" ]);
   grunt.registerTask("default", [ "test" ]);
 };

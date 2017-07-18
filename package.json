@@ -46,6 +46,7 @@
     "grunt-contrib-jshint": "^0.11.2",
     "grunt-contrib-less": "^1.4.0",
     "grunt-contrib-requirejs": "^1.0.0",
+    "grunt-eslint": "^19.0.0",
     "grunt-execute": "0.2.2",
     "grunt-git": "^0.3.4",
     "grunt-lesslint": "^1.1.14",
