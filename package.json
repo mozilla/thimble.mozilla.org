@@ -72,19 +72,22 @@
     "time-grunt": "^1.4.0",
     "uuid": "2.0.3",
     "webmaker-i18n": "^0.3.32",
+    "webpack": "^3.2.0",
     "wolfy87-eventemitter": "^5.1.0"
   },
   "scripts": {
-    "postinstall": "grunt requirejs:dist && npm run localize && npm run localize-client",
+    "postinstall": "grunt requirejs:dist && webpack && npm run localize && npm run localize-client:webpack",
     "test": "grunt",
+    "build": "webpack",
     "client": "node scripts/watch-client",
     "server": "node app.js",
     "restart-server": "vagrant ssh -- pm2 restart thimble ; true",
     "logs": "vagrant ssh -- pm2 logs --format",
-    "prestart": "npm run localize",
+    "prestart": "npm run build && npm run localize",
     "start": "node scripts/start.js",
     "invalidate": "node scripts/invalidate.js",
     "localize": "node scripts/properties2json.js",
-    "localize-client": "node scripts/localize-client.js"
+    "localize-client": "node scripts/localize-client.js",
+    "localize-client:webpack": "node scripts/localize-client-webpack.js"
   }
 }
