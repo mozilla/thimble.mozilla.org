@@ -15,6 +15,7 @@ define(function(require) {
 
   var adapting = false;
   var adaptTimeoutMS = 200; // How often we adapt editor bar layout
+  var isSidebarVisible = false;
   var adaptTimeout;
 
   function updateLayout(data) {
@@ -116,6 +117,7 @@ define(function(require) {
         $("#editor-pane-nav-options-menu").hide();
         $("#editor-pane-nav-fileview").hide();
         $(".filetree-pane-nav").css("display", "block");
+        isSidebarVisible = true;
       }
     }
 
@@ -176,6 +178,7 @@ define(function(require) {
       bramble.showSidebar();
       $("#editor-pane-nav-fileview").css("display", "none");
       $(".filetree-pane-nav").css("display", "block");
+      isSidebarVisible = true;
     });
 
     $("#filetree-pane-nav-hide").click(function() {
@@ -183,6 +186,43 @@ define(function(require) {
       bramble.hideSidebar();
       $("#editor-pane-nav-fileview").css("display", "block");
       $(".filetree-pane-nav").css("display", "none");
+      isSidebarVisible = false;
+    });
+
+    // Preview show/hide
+    $("#editor-pane-nav-preview").click(function() {
+      $("#editor-pane-nav-options-menu").hide();
+      bramble.showPreview();
+      var data = bramble.getLayout();
+
+      if(isSidebarVisible) {
+        var total = data.firstPaneWidth + data.secondPaneWidth +data.sidebarWidth;
+        $(".editor-pane-nav").width((total-data.secondPaneWidth-data.sidebarWidth) +"px");
+        $(".preview-pane-nav").width(data.secondPaneWidth+ "px");
+      } else {
+        $(".editor-pane-nav").width(data.firstPaneWidth - data.secondPaneWidth+"px");
+        $(".preview-pane-nav").width(data.secondPaneWidth+ "px");
+      }
+      $("#editor-pane-nav-preview").css("display", "none");
+      $(".preview-pane-nav-hide").css("display", "block");
+    });
+
+    $("#preview-pane-nav-hide").click(function() {
+      $("#editor-pane-nav-options-menu").hide();
+      bramble.hidePreview();
+      var data = bramble.getLayout();
+      if(isSidebarVisible) {
+        var total = data.firstPaneWidth +data.secondPaneWidth;
+        $(".editor-pane-nav").width(total+"px");
+        $(".preview-pane-nav").width("0px");
+      } else {
+        // Total width of window
+        var total = data.firstPaneWidth + data.sidebarWidth+data.secondPaneWidth;
+        $(".editor-pane-nav").width(total + "px");
+        $(".preview-pane-nav").width("0px");
+      }
+      $("#editor-pane-nav-preview").css("display", "block");
+      $(".preview-pane-nav-hide").css("display", "none");
     });
 
     // Setup Add File and Gear Options menus
