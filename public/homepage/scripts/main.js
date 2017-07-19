@@ -97,6 +97,7 @@ function setupAuthentication($, uuid, cookies, analytics) {
 function init($, uuid, cookies, PopupMenu, analytics, gallery, getinvolved,features) {
   PopupMenu.create("#navbar-logged-in .dropdown-toggle", "#navbar-logged-in .dropdown-content");
   PopupMenu.create("#navbar-locale .dropdown-toggle", "#navbar-locale .dropdown-content");
+  PopupMenu.create("#navbar-logged-in .dropdown-content .dropdown-submenu-toggle", "#navbar-logged-in .dropdown-content .dropdown-submenu-content");
   setupAuthentication($, uuid, cookies, analytics);
   setupNewProjectLinks($, analytics);
   gallery.init();

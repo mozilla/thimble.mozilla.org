@@ -1,3 +1,4 @@
+
 {% block userbar %}
   <!-- Thimble user bar for homepage and project list -->
   <nav class="navbar-thimble container-flex">
@@ -57,10 +58,36 @@
                   </a>
                 </li>
                 <li>
-                  <a href="/{{ locale }}/projects/{{ queryString }}" target="_self">
-                    <img src="/img/icon/your-projects.svg" />
-                    {{ gettext("yourProjectsLink") }}
-                  </a>
+                  <div class="dropdown-submenu ">
+                    <div class="dropdown-submenu-toggle">
+                      <img src="/img/icon/your-projects.svg" />
+                      {{ gettext("yourProjectsLink") }}
+                    </div>
+                    <div class="dropdown-submenu-content">
+                      <ul  id="project-list" data-username="{{ username }}"  class="dropdown-submenu">
+                        {% for project in projects %}
+                          <li class="project bramble-user-project"
+                          id="{{ [ 'project', project.id ] | join('-') }}"
+                          {% for key, value in project %}
+                          {{ [ "data", "project", key ] | join("-") }}="{{ value }}"
+                          {% endfor %}
+                          >
+                            <a class="edit-link" target="_self" href="/{{locale}}/user/{{username}}/{{project.id}}/{{queryString}}">
+                              <span class="project-name">{{project.title}}</span>
+                              </a>
+                          </li>
+                        {% endfor %}
+                        <li class="project">
+                          <a href="/{{ locale }}/projects/{{ queryString }}" target="_self">
+                            View More
+                          </a>
+                        </li>
+                      </ul>
+                      <script src="/scripts/vendor/require.min.js"
+                          data-main="/{{ localeDir }}/editor/scripts/project-list.js">
+                      </script>
+                    </div>
+                  </div>
                 </li>
                 <li>
                   <a href="{{ logoutURL }}" id="logout-link" target="_self">
@@ -80,3 +107,4 @@
     </div>
   </nav>
 {% endblock %}
+

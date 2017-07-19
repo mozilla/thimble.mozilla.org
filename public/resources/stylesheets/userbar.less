@@ -485,7 +485,6 @@ a.navbar-login:hover {
       border: solid 1px rgba(255,255,255,.2);
     }
   }
-
   .dropdown-content {
     li {
       &:last-child {
@@ -500,6 +499,34 @@ a.navbar-login:hover {
           opacity: .6;
           position: relative;
           top: 2px;
+        }
+      }
+    }
+    .dropdown-submenu {
+      background-color: white;
+
+      .dropdown-submenu-toggle {
+        padding: 5px 5px 10px 12px;
+      }
+
+      .dropdown-submenu-content {
+       ul {
+          z-index:999;
+          min-width: 182px;
+          position: absolute;
+          top: 40px;
+          right: 185px;
+          display: none;
+        }
+      }
+
+      &.expanded {
+        z-index: 999;
+
+        .dropdown-submenu-content{
+          ul{
+            display: block;
+          }
         }
       }
     }
