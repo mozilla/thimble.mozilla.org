@@ -1,4 +1,4 @@
-define(["jquery"], function($) {
+define(["jquery", "analytics"], function($, analytics) {
 
   var gallery = {
 
@@ -9,10 +9,15 @@ define(["jquery"], function($) {
     searchTerms : [],     // Search terms from the input
     maxDisplayTags : 5,   // Max number of tags to show above results
     resultsTimeoutMS : 200,  // Visual delay for displaying updated results & tags
+    lastSearchString : false,
 
     // Fetch external activity data
     init: function() {
       this.galleryEl = $(".gallery");
+
+      if(this.galleryEl.length === 0) {
+        return;
+      }
 
       var that = this;
       var URL = "https://mozilla.github.io/thimble-homepage-gallery/activities.json";
@@ -35,6 +40,10 @@ define(["jquery"], function($) {
       this.galleryEl.on("click",".clear",function(){ that.clearSearch(); });
       this.galleryEl.on("keydown",".search",function(e){ that.keyPressed(e); });
       this.galleryEl.on("mousedown",".tag",function(){  that.tagClicked($(this).attr("tag")); });
+
+      this.galleryEl.on("click",".activity .view-project",function(){ that.thumbnailClicked($(this)); });
+      this.galleryEl.on("click",".activity .remix",function(){ that.remixClicked($(this)); });
+
       this.galleryEl.on("click",".search-tags .remove",function(){ that.removeTag($(this).parent()); });
       this.galleryEl.on("click",".start-over",function(e){ that.startOver(e); });
 
@@ -44,6 +53,18 @@ define(["jquery"], function($) {
       setTimeout(function(){
         that.galleryEl.removeClass("loading");
       }, this.resultsTimeoutMS);
+    },
+
+    //When a Project preview gets clicked
+    thumbnailClicked: function(el){
+      var title = el.closest(".activity").find(".project-title").text();
+      analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Gallery Project Viewed", label : title });
+    },
+
+    //When a Project gets remixed
+    remixClicked: function(el){
+      var title = el.closest(".activity").find(".project-title").text();
+      analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Gallery Project Remixed", label : title });
     },
 
     // Removes one of the tags that is currently being used as a filter
@@ -78,7 +99,6 @@ define(["jquery"], function($) {
         that.filterActivities();
       }, that.searchSpeedMS);
     },
-
 
     // Determines which activities should be displayed
     filterActivities : function(){
@@ -130,6 +150,13 @@ define(["jquery"], function($) {
         }
       }
 
+      // Send analytics event
+      var searchQuery = this.searchTerms.join(" ");
+      if(searchQuery.length > 0 && searchQuery != this.lastSearchString) {
+        analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Keyword Search", label : searchQuery });
+      }
+      this.lastSearchString = searchQuery;
+
       this.galleryEl.find(".popular-tags, .activities").addClass("fade");
       this.updateUI();
 
@@ -158,26 +185,18 @@ define(["jquery"], function($) {
           var newItem = this.galleryEl.find(".activity-template").clone();
           newItem.removeClass("activity-template");
           newItem.find(".thumbnail").css("background-image","url("+activity.thumbnail_url+")" );
-          newItem.find(".thumbnail").attr("href", activity.url);
-          newItem.find(".project-title").text(activity.title);
+          newItem.find(".view-project").attr("href", activity.url);
+          newItem.find(".project-title").text(activity.title).attr("href", activity.url);
           newItem.find(".author a").text(activity.author);
           newItem.find(".author a").attr("href", activity.author_url);
           newItem.find(".description").text(activity.description);
 
-          // Check if activity_url ends with a slash, if it doesn't - add one before adding "remix"
-          var remix = "remix";
-          var endsWithSlash = (activity.url.charAt(activity.url.length-1) === "/");
-          if(!endsWithSlash) {
-            remix = "/remix";
-          }
-          newItem.find(".remix").attr("href", activity.url + remix);
+          newItem.find(".remix").attr("href", "/projects/" + activity.project_id + "/remix");
           if(activity.teaching_kit_url) {
             newItem.find(".teaching-kit").attr("href", activity.teaching_kit_url).removeClass("hidden");
           } else {
             newItem.find(".teaching-kit").addClass("hidden");
           }
-
-
 
           for(var j = 0; j < activity.tags.length; j++) {
             newItem.find(".tags").append("<a class='tag' tag='"+activity.tags[j]+"' title='See other projects tagged " + activity.tags[j] + "' >" + activity.tags[j] + "</a> ");
@@ -270,6 +289,8 @@ define(["jquery"], function($) {
       setTimeout(function(){
         that.galleryEl.find(".search-wrapper").removeClass("pop");
       },200);
+
+      analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Gallery Tag Clicked", label : term });
     },
 
     // Updates the tags & activities UI

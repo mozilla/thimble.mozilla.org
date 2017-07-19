@@ -1,0 +1,144 @@
+// Animated Pencil button on the Homepage
+
+.feature-button:hover {
+  .line {
+    animation: line  3s linear infinite 0s;
+  }
+  .line-two {
+    animation: line 3s linear infinite 1s;
+  }
+  .line-three {
+    animation: line 3s linear infinite 2s;
+  }
+  .pencil {
+    animation: pencil 1s linear infinite 0s;
+  }
+}
+
+.pencil-animation {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 14px;
+  top: 16px;
+
+  .pencil {
+    width: 90%;
+    height: 90%;
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    background: ~"url(/img/pencil-icon.svg)";
+    background-size: 100%;
+  }
+
+  .line-wrapper {
+    width: 90%;
+    height: 90%;
+    position: absolute;
+    overflow: hidden;
+  }
+
+  .line {
+    height: 100%;
+    width: 96%;
+    position: absolute;
+    transform-origin: left;
+    -webkit-transform-origin: left;
+    transform: scaleX(0);
+
+    &:after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 13%;
+      background: white;
+      bottom: 0;
+    }
+  }
+}
+
+@keyframes pencil {
+  0% {
+    transform: translateX(0);
+  }
+  13.5%{
+    transform: translateX(90%);
+  }
+  40% {
+    transform: translateX(90%);
+  }
+  60% {
+    transform: translateX(50%) translateY(-30%);
+  }
+  80% {
+    transform: translateX(0);
+  }
+}
+
+@-webkit-keyframes pencil {
+  0% {
+    transform: translateX(0);
+  }
+  13.5%{
+    transform: translateX(90%);
+  }
+  40% {
+    transform: translateX(90%);
+  }
+  60% {
+    transform: translateX(50%) translateY(-30%);
+  }
+  80% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes line {
+  5.5% {
+    transform: scaleX(1);
+  }
+  20% {
+    transform: scaleX(1);
+  }
+  33% {
+    transform: scaleX(1) translateY(-43.5%);
+  }
+  53% {
+    transform: scaleX(1) translateY(-43.5%);
+  }
+  66% {
+    transform: scaleX(1) translateY(-87%);
+  }
+  87% {
+    transform: scaleX(1) translateY(-87%);
+  }
+  100% {
+    transform: scaleX(1) translateY(-150%);
+  }
+}
+
+@-webkit-keyframes line {
+  5.5% {
+    transform: scaleX(1);
+  }
+  20% {
+    transform: scaleX(1);
+  }
+  33% {
+    transform: scaleX(1) translateY(-43.5%);
+  }
+  53% {
+    transform: scaleX(1) translateY(-43.5%);
+  }
+  66% {
+    transform: scaleX(1) translateY(-87%);
+  }
+  87% {
+    transform: scaleX(1) translateY(-87%);
+  }
+  100% {
+    transform: scaleX(1) translateY(-150%);
+  }
+}
+

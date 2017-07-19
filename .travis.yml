@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- '4.6'
+- '4'
 sudo: false
 env:
   global:
@@ -12,11 +12,3 @@ cache:
   - node_modules
 after_script:
 - bash ./scripts/localize-brackets.sh
-deploy:
-  provider: heroku
-  api_key:
-    secure: fBMXtEXYNL6m8gjBmx+ic86qX7iG6TI58lCoRy+N10nuDFTvGp4mRI9BH2HAY4c4JhZyfRFHKGH9RCRcmmmGVx2AogWDfRn4QxKZ9x90zRk9A8xE/I+NHsV6SjgmuAgejLgPqheU9HzLE7TEX/DRFEBJnIbnwI/EPec1FN4tD+A=
-  app: bramble-staging
-  on:
-    repo: mozilla/thimble.mozilla.org
-    branch: master

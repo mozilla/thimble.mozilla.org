@@ -8,21 +8,35 @@ define(function(require) {
   var FileSystemSync = require("fc/filesystem-sync");
   var Project = require("project/project");
   var analytics = require("analytics");
+  var Startup = require("fc/startup");
+  var Path = Bramble.Filer.Path;
 
   var _escKeyHandler;
 
   var adapting = false;
   var adaptTimeoutMS = 200; // How often we adapt editor bar layout
+  var adaptTimeout;
 
   function updateLayout(data) {
+    // If we are in fullscreen mode, we skip all this updating.
+    var isFullscreen = $("body").hasClass("fullscreen-preview");
+    if(isFullscreen) {
+      return;
+    }
+
     $(".filetree-pane-nav").width(data.sidebarWidth);
     $(".editor-pane-nav").width(data.firstPaneWidth);
     $(".preview-pane-nav").width(data.secondPaneWidth);
 
-    // Only adapt the layout every once in a while
+    window.clearTimeout(adaptTimeout);
+    adaptTimeout = setTimeout(function(){
+      adaptLayout();
+    },adaptTimeoutMS);
+
     if(!adapting) {
       adapting = true;
       adaptLayout();
+      window.clearTimeout(adaptTimeout);
       setTimeout(function(){
         adapting = false;
       },adaptTimeoutMS);
@@ -107,15 +121,12 @@ define(function(require) {
 
     // *******EVENTS
     // User bar menu help
-    $("#navbar-help").click(function() {
-      window.open("https://github.com/mozilla/thimble.mozilla.org/wiki/Using-Thimble-FAQ");
-    });
 
     $("#new-project-link").click(function(e) {
       e.preventDefault();
       e.stopPropagation();
 
-      analytics.event("NewProject", {label: "New authenticated project"});
+      analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "New Project", label : "New authenticated project" });
 
       var queryString = window.location.search;
       var cacheBust = "cacheBust=" + Date.now();
@@ -130,7 +141,8 @@ define(function(require) {
         return false;
       }
 
-      analytics.event("DeleteProject");
+      // Add label that it happened in the menu?
+      analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "Delete Project"});
 
       var request = $.ajax({
         headers: {
@@ -152,9 +164,9 @@ define(function(require) {
       });
     });
 
-    $("#filetree-pane-nav-export-project-zip").click(function() {
+    $("#export-project-zip").click(function() {
       bramble.export();
-      analytics.event("ExportZip");
+      analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "Export ZIP"});
       return false;
     });
 
@@ -179,13 +191,13 @@ define(function(require) {
     // Undo
     $("#editor-pane-nav-undo").click(function() {
       bramble.undo();
-      analytics.event("Undo");
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Undo" });
     });
 
     // Redo
     $("#editor-pane-nav-redo").click(function() {
       bramble.redo();
-      analytics.event("Redo");
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Redo" });
     });
 
     // Inspector
@@ -205,10 +217,9 @@ define(function(require) {
     bramble.on("inspectorChange", function(data) {
       if(data.enabled) {
         $("#preview-pane-nav-inspector").addClass("enabled");
-        analytics.event("InspectorEnabled");
+        analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Inspector Enabled" });
       } else {
         $("#preview-pane-nav-inspector").removeClass("enabled");
-        analytics.event("InspectorDisabled");
       }
 
       _inspectorEnabled = data.enabled;
@@ -218,7 +229,6 @@ define(function(require) {
     if(!bramble.getAutoUpdate()){
         $(".refresh-wrapper").removeClass("enabled");
         bramble.disableAutoUpdate();
-        analytics.event("disableAutoUpdate");
     }
 
     // Preview auto-refresh toggle
@@ -228,11 +238,11 @@ define(function(require) {
       if(enabled) {
         refreshWrapper.removeClass("enabled");
         bramble.disableAutoUpdate();
-        analytics.event("disableAutoUpdate");
+        analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Auto Update Toggle", label: "Disabled" });
       } else {
         refreshWrapper.addClass("enabled");
         bramble.enableAutoUpdate();
-        analytics.event("enableAutoUpdate");
+        analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Auto Update Toggle", label: "Enabled" });
       }
     });
 
@@ -241,13 +251,7 @@ define(function(require) {
       var el = $(this);
       el.removeClass("spin").width(el.width()).addClass("spin");
       bramble.refreshPreview();
-      analytics.event("RefreshPreview");
-    });
-
-    // Refresh Preview
-    $("#preview-pane-nav-refresh").click(function() {
-      bramble.refreshPreview();
-      analytics.event("RefreshPreview");
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Refresh Preview"});
     });
 
     // Preview vs. Tutorial preview mode. First check to see if there
@@ -269,15 +273,11 @@ define(function(require) {
     function setNormalPreview() {
       $("#tutorial-title").removeClass("preview-title-highlighted");
       $("#preview-title").addClass("preview-title-highlighted");
-
-      analytics.event("NormalPreview", {label: "User switched to normal preview mode vs. tutorial"});
     }
 
     function setTutorialPreview() {
       $("#preview-title").removeClass("preview-title-highlighted");
       $("#tutorial-title").addClass("preview-title-highlighted");
-
-      analytics.event("TutorialPreview", {label: "User switched to tutorial mode vs. preview"});
     }
 
     // User change to tutorial vs. regular preview mode
@@ -287,13 +287,16 @@ define(function(require) {
       }
 
       bramble.hideTutorial(setNormalPreview);
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Tutorial Toggle", label: "Disabled" });
     });
+
     $("#tutorial-title").click(function() {
       if(bramble.getTutorialVisible()) {
         return;
       }
 
       bramble.showTutorial(setTutorialPreview);
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Tutorial Toggle", label: "Enabled" });
     });
 
     // Programmatic change to tutorial vs. regular preview mode from Bramble
@@ -309,9 +312,11 @@ define(function(require) {
     // Preview Mode Toggle
     $("#preview-pane-nav-desktop").click(function() {
       activatePreviewMode("desktop");
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Preview Mode Toggle", label : "Desktop" });
     });
     $("#preview-pane-nav-phone").click(function() {
       activatePreviewMode("mobile");
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Preview Mode Toggle", label : "Mobile" });
     });
 
     function activatePreviewMode(mode) {
@@ -323,8 +328,6 @@ define(function(require) {
 
         $("#preview-pane-nav-desktop").removeClass("viewmode-active");
         $("#preview-pane-nav-desktop").addClass("viewmode-inactive");
-
-        analytics.event("MobilePreview");
       } else if (mode === "desktop") {
         bramble.useDesktopPreview();
 
@@ -333,22 +336,21 @@ define(function(require) {
 
         $("#preview-pane-nav-phone").removeClass("viewmode-active");
         $("#preview-pane-nav-phone").addClass("viewmode-inactive");
-
-        analytics.event("DesktopPreview");
       }
     }
 
     $(".fullscreen-preview-toggle .enable-fullscreen").click(function() {
       enableFullscreenPreview();
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Fullscreen Preview Toggle", label : "Enabled"});
     });
 
     $(".fullscreen-preview-toggle .disable-fullscreen").click(function() {
       disableFullscreenPreview();
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Fullscreen Preview Toggle", label : "Disabled"});
     });
 
     function enableFullscreenPreview(){
       $("body").addClass("fullscreen-preview");
-      analytics.event("FullscreenPreviewOn");
       // In case it's on, turn off the inspector
       bramble.disableInspector();
       bramble.enableFullscreenPreview();
@@ -356,7 +358,6 @@ define(function(require) {
 
     function disableFullscreenPreview(){
       $("body").removeClass("fullscreen-preview");
-      analytics.event("FullscreenPreviewOff");
       bramble.disableFullscreenPreview();
     }
 
@@ -366,6 +367,8 @@ define(function(require) {
       publishDialogUnderlay = null;
 
       $("#publish-dialog").hide();
+      $("#publish-dialog").removeClass("cannot-publish");
+
       _escKeyHandler.stop();
       _escKeyHandler = null;
     }
@@ -385,7 +388,7 @@ define(function(require) {
         }
       });
 
-      analytics.event("Publish");
+      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Publish Dialog Opened"});
     }
 
     function showPublishHelper() {
@@ -426,28 +429,35 @@ define(function(require) {
     // Hook up event listeners
     bramble.on("layout", updateLayout);
 
+    bramble.on("dialogOpened", function(){
+      $("body").addClass("modal-open");
+    });
+
+    bramble.on("dialogClosed", function(){
+      $("body").removeClass("modal-open");
+    });
+
     bramble.on("sidebarChange", function(data) {
       // Open/close filetree nav during hidden double click
       if(data.visible) {
         $("#editor-pane-nav-options-menu").hide();
         $("#editor-pane-nav-fileview").css("display", "none");
         $(".filetree-pane-nav").css("display", "block");
-
-        analytics.event("ShowSidebar");
+        analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Toggle File View", label : "Show" });
       } else {
         $("#editor-pane-nav-options-menu").hide();
         $("#editor-pane-nav-fileview").css("display", "block");
         $(".filetree-pane-nav").css("display", "none");
-
-        analytics.event("HideSidebar");
+        analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Toggle File View", label : "Hide" });
       }
     });
 
     bramble.on("activeEditorChange", function(data) {
       setNavFilename(data.filename);
+      BrambleMenus.refreshSnippets(Path.extname(data.filename).substr(1).toLowerCase());
     });
 
-    $("#spinner-container").fadeOut();
+    Startup.finish();
     adaptLayout();
   }
 

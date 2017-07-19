@@ -69,6 +69,7 @@ define(function(require) {
         })
       };
 
+      titleBar.select();
       saveButton.on("click", saveClicked);
     }
   }
@@ -136,9 +137,11 @@ define(function(require) {
             return;
           }
           editingComplete(context);
-          analytics.event("ProjectRenamed");
+          analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "Rename Project" });
 
-          context.publisher.showUnpublishedChangesPrompt();
+          if(context.publisher) {
+            context.publisher.showUnpublishedChangesPrompt();
+          }
         });
       });
     }

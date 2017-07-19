@@ -10,7 +10,8 @@ let defaultCSPDirectives = {
   connectSrc: [
     "'self'",
     "https://pontoon.mozilla.org",
-    "https://mozilla.github.io/thimble-homepage-gallery/activities.json"
+    "https://mozilla.github.io/thimble-homepage-gallery/activities.json",
+    "https://api.github.com/repos/mozilla/thimble.mozilla.org/issues"
   ],
   frameSrc: [
     "'self'",
@@ -51,8 +52,7 @@ let defaultCSPDirectives = {
     "https://netdna.bootstrapcdn.com",
     "https://pontoon.mozilla.org",
     // Inline style for the spinner
-    "'unsafe-inline'"
-  //  "'sha256-jxjTomDIR9qe7wntK24mAd+gIoz39DrBll8o6DEBALs='"
+    "'sha256-AnlD8XRHNPxhNZ/6MucKFJr9yYGQtn8bmvveYkBg7a4='"
   ]
 };
 

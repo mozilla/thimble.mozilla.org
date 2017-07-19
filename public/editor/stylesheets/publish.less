@@ -1,4 +1,4 @@
-@import "colors.less";
+@import "variables.less";
 
 .disabled {
   border-color: #A9A9A9 !important;
@@ -39,6 +39,33 @@
   top: 68px;
   transform-origin: top right;
 
+  &.cannot-publish {
+    animation: dialogShake .1s 3;
+  }
+
+  @keyframes dialogShake {
+    0%   {
+      transform: translateX(0);
+      animation-timing-function: ease-in;
+    }
+    25% {
+      transform: translateX(-4px);
+      animation-timing-function: ease-out;
+    }
+    50% {
+      transform: translateX(0);
+      animation-timing-function: ease-in;
+    }
+    75% {
+      transform: translateX(4px);
+      animation-timing-function: ease-in;
+    }
+    100% {
+      transform: translateX(0);
+      animation-timing-function: ease-out;
+    }
+  }
+
   .menu-appear;
 
   .content {
@@ -61,17 +88,17 @@
     background: rgba(49, 134, 193,.1);
     border: solid 1px rgba(49, 134, 193,.2);
     border-radius: 2px;
-    padding: 12px 12px 10px 12px;
+    padding: 10px 12px 5px 12px;
     margin-bottom: 12px;
 
     a {
       overflow: hidden;
       text-overflow: ellipsis;
       display: inline-block;
-      line-height: 1em;
       color: #3186c1;
       text-decoration: none;
       font-weight: 600;
+      max-width: 100%;
 
       &:hover {
         text-decoration: underline;
@@ -79,22 +106,48 @@
     }
   }
 
+  &.cannot-publish {
+    #publish-buttons #no-index {
+      display: block;
+    }
+    #publish-buttons {
+      background: #ffde8b;
+    }
+  }
+
   #publish-buttons {
     border-top: 1px solid #DDD;
     padding: 15px 20px;
     background: rgba(0,0,0,.05);
-    overflow: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    &.hide {
+      display: none;
+    }
 
     #publish-button-publish {
-      float: right;
       margin-left: 10px;
       .publish-button;
       .green-button;
     }
 
+    #no-index{
+      color: #5a4944;
+      position: relative;
+      font-size: .9em;
+      padding-right: 10px;
+      display: none;
+
+      a {
+        color: inherit;
+        font-weight: 600;
+      }
+    }
+
     #publish-button-cancel {
       background-color: #B0B0B0;
-      float: right;
       .publish-button;
       .grey-button;
 
@@ -157,7 +210,7 @@
     .publish-button;
 
     &:active {
-        margin-bottom: 5px;
+        margin-bottom: 2px;
     }
   }
 }

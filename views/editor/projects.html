@@ -11,11 +11,16 @@
 
   <div class="project-list-wrapper">
 
-    <h2>{{ gettext("yourProjectsLink") }}</h2>
-
     <a href="/{{ locale }}/projects/new" id="project-0">
       <div title="{{ gettext("prjListNewProjectBtnTitle") }}" class="project-button">{{ gettext("prjListNewProjectBtn") }}</div>
     </a>
+
+    <div class="delete-button">
+      <img src="/img/icon/garbage-can-white.svg">
+      {{ gettext("deleteProjects") }}
+    </div>
+
+    <h2>{{ gettext("yourProjectsLink") }}</h2>
 
     <div id="project-list" data-username="{{ username }}">
 
@@ -38,12 +43,13 @@
         <div class="project-ui">
           {% if project.publish_url %}
           <a class="published-link" target="_blank" href="{{ project.publish_url }}">{{ gettext("publishedLink") }}</a>
-          <a class="remix-link">{{ gettext("remix") }}</a>
+          <a class="remix-link" href="/projects/{{ project.published_id }}/remix">{{ gettext("remix") }}</a>
           {% endif %}
           <div class="project-delete" title="{{ gettext("prjListDeleteProjectBtnTitle") }}">
             <div class="icon-garbage-can"></div>
             {{ gettext("prjListDeleteProjectBtn") }}
           </div>
+          <div class="project-delete-cancel hide" title="{{ gettext("prjListCancelDeleteProjectBtnTitle") }}">{{ gettext("prjListCancelDeleteProjectBtn") }}</div>
         </div>
 
       </div>

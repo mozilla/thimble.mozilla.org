@@ -17,7 +17,8 @@
             <li title="{{ gettext("navHTMLTitle") }}" id="filetree-pane-nav-add-html"><span>{{ gettext("navHTMLFile") }}</span>
             <li title="{{ gettext("navCSSTitle") }}" id="filetree-pane-nav-add-css"><span>{{ gettext("navCSSFile") }}</span>
             <li title="{{ gettext("navJavascriptTitle") }}" id="filetree-pane-nav-add-js"><span>{{ gettext("navJavascriptFile") }}</span>
-            <li title="{{ gettext("navTutorial") }}" id="filetree-pane-nav-add-tutorial"><span>{{ gettext("navTutorialFile") }}</span>
+            <li title="{{ gettext("navTutorialTitle") }}" id="filetree-pane-nav-add-tutorial"><span>{{ gettext("navTutorialFile") }}</span>
+            <li title="{{ gettext("navAddFolderTitle") }}" id="filetree-pane-nav-add-folder"><span>{{ gettext("navAddFolder") }}</span>
             <li title="{{ gettext("navUploadTitle") }}" id="filetree-pane-nav-add-upload"><span>{{ gettext("navUploadFile") }}</span>
             <li title="{{ gettext("downloadProjectLink") }}" id="filetree-pane-nav-export-project-zip" class="top-border"><span>{{ gettext("downloadProjectLink") }}</span>
           </ul>
@@ -41,17 +42,69 @@
 
       <span data-adapt-order="2" class="editor-pane-nav-title">{{ gettext("navEditor") }}</span>
 
-      <span data-adapt-order="3" id="editor-pane-nav-filename"></span>
+      <span data-adapt-order="4" id="editor-pane-nav-filename"></span>
 
       <div class="flex-container pull-right">
 
-        <div data-adapt-order="5" title="{{ gettext("navUndoTitle") }}" id="editor-pane-nav-undo">
+        <div data-adapt-order="6" title="{{ gettext("navUndoTitle") }}" id="editor-pane-nav-undo">
           <img src="/img/icon/undo.svg">
           <span data-adapt-order="1">{{ gettext("navUndo") }}</span>
         </div>
 
-        <div data-adapt-order="4" title="{{ gettext("navRedoIconTitle") }}" id="editor-pane-nav-redo">
+        <div data-adapt-order="5" title="{{ gettext("navRedoIconTitle") }}" id="editor-pane-nav-redo">
           <img src="/img/icon/redo.svg">
+        </div>
+
+        <div data-adapt-order="3" id="editor-pane-nav-snippets" title="{{ gettext("navInsertSnippetIconTitle") }}">
+          <img src="/img/icon/snippets.svg">
+        </div>
+        <div class="snippets-menu-container hide">
+          <div class="snippets-menu">
+            <header>
+              <h2 class="snippets-menu-title">{{ gettext("snippetMenuTitle") }}</h2>
+              <div class="snippets-categories">
+                <span data-type="html" class="active">HTML</span>
+                <span data-type="css">CSS</span>
+                <span data-type="js">JS</span>
+              </div>
+            </header>
+
+            <div class="snippets">
+              <ul class="snippets-list">
+              {% for snippet in snippets.html %}
+                <li data-type="html" data-snippet-id="{{snippet.id}}" title="{{ gettext(snippet.title) }}" {{ 'class=selected' if loop.first }}>{{ gettext(snippet.name) }}</li>
+              {% endfor %}
+              {% for snippet in snippets.css %}
+                <li data-type="css" data-snippet-id="{{snippet.id}}" class="hide{{ ' selected' if loop.first }}" title="{{ gettext(snippet.title) }}">{{ gettext(snippet.name) }}</li>
+              {% endfor %}
+              {% for snippet in snippets.js %}
+                <li data-type="js" data-snippet-id="{{snippet.id}}" class="hide{{ ' selected' if loop.first }}" title="{{ gettext(snippet.title) }}">{{ gettext(snippet.name) }}</li>
+              {% endfor %}
+              </ul>
+
+              <div class="snippets-preview-pane">
+              {% for snippet in snippets.html %}
+                <div data-type="html" data-snippet-id="{{snippet.id}}" class="{{ 'hide ' if not loop.first }}snippets-preview">
+                  <pre>{{ snippet.data.value | instantiate if snippet.data.l10n else snippet.data.value }}</pre>
+                  <button>{{ gettext("snippetButtonLabel") }}</button>
+                </div>
+              {% endfor %}
+              {% for snippet in snippets.css %}
+                <div data-type="css" data-snippet-id="{{snippet.id}}" class="hide snippets-preview">
+                  <pre>{{ snippet.data.value | instantiate if snippet.data.l10n else snippet.data.value }}</pre>
+                  <button>{{ gettext("snippetButtonLabel") }}</button>
+                </div>
+              {% endfor %}
+              {% for snippet in snippets.js %}
+                <div data-type="js" data-snippet-id="{{snippet.id}}" class="hide snippets-preview">
+                  <pre>{{ snippet.data.value | instantiate if snippet.data.l10n else snippet.data.value }}</pre>
+                  <button>{{ gettext("snippetButtonLabel") }}</button>
+                </div>
+              {% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="arrow-tip"></div>
         </div>
 
         <div data-adapt-order="6" title="{{ gettext("navEditorOptionsIconTitle") }}" id="editor-pane-nav-options">
@@ -95,8 +148,29 @@
               </div>
             </li>
             <li>
+              <span>{{ gettext("navAllowWS") }}</span>
+              <div title="{{ gettext("navAllowWSTitle") }}" class="switch-toggle switch-enabled" id="allow-whitespace-toggle">
+                <div class="toggle-backing"></div>
+                <div class="toggle-button"></div>
+              </div>
+            </li>
+            <li>
               <span>{{ gettext("navAutoEncloseTags") }}</span>
               <div title="{{ gettext("navAutoEncloseTagsTitle") }}" class="switch-toggle switch-enabled" id="auto-tags-toggle">
+                <div class="toggle-backing"></div>
+                <div class="toggle-button"></div>
+              </div>
+            </li>
+            <li>
+              <span>{{ gettext("navAutoComplete") }}</span>
+              <div title="{{ gettext("navAutoCompleteTitle") }}" class="switch-toggle switch-enabled" id="autocomplete-toggle">
+                <div class="toggle-backing"></div>
+                <div class="toggle-button"></div>
+              </div>
+            </li>
+            <li>
+              <span>{{ gettext("navXMLSVG") }}</span>
+              <div title="{{ gettext("navXMLSVGTitle") }}" class="switch-toggle switch-enabled" id="edit-SVG-toggle">
                 <div class="toggle-backing"></div>
                 <div class="toggle-button"></div>
               </div>

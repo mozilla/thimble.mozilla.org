@@ -1,6 +1,12 @@
+@import "variables.less";
+
+body {
+  overflow: auto;
+}
+
 .project-list-wrapper {
   width: ~"calc(100% - 100px)";
-  margin: 35px auto;
+  margin: 50px auto;
   position: relative;
   max-width: 1024px;
 }
@@ -12,26 +18,53 @@ h2 {
   margin: 0 0 30px 0;
 }
 
-.project-button {
-  background-color: #2A9961;
-  display: inline-block;
-  padding: 8px 15px 6px 15px;
+.shared-button-styles {
   cursor: pointer;
   color: white;
   border-bottom: solid 2px rgba(0,0,0,.3);
   border-radius: 2px;
-  position: absolute;
-  top: 0;
-  right: 0;
+  padding: 8px 15px 8px 15px;
+  position: relative;
+  float: right;
 
   &:hover {
-    background-color: #39AA6D;
+    opacity: 0.9;
   }
 
   &:active {
-    background-color: #288952;
-    top: 2px;
+    margin-top: 2px;
     border: none;
+    opacity: .5;
+  }
+
+  &.disabled {
+    color: rgba(0,0,0,.4);
+    background: rgba(0, 0, 0, .2) !important;
+    border-bottom: solid 2px transparent !important;
+    cursor: progress;
+  }
+}
+
+.project-button {
+  background-color: @buttonGreen;
+
+  .shared-button-styles;
+}
+
+.delete-button {
+
+  .shared-button-styles;
+
+  background-color: @red;
+  display: none;
+  margin-right: 10px;
+  padding-left: 36px;
+
+  img {
+    height: 19px;
+    position: absolute;
+    top: 9px;
+    left: 12px;
   }
 }
 
@@ -71,6 +104,14 @@ h2 {
     min-width: 0;
   }
 
+  .pending-delete {
+    background: rgba(255,0,0,.08);
+
+    &:hover {
+      background: rgba(255,0,0,.1)
+    }
+  }
+
   .project-ui {
     flex-shrink: 1;
     white-space: nowrap;
@@ -107,6 +148,15 @@ h2 {
     }
   }
 
+  .disabled-link {
+    cursor: default;
+    pointer-events: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
   .project-information {
     font-size: 0.8em;
     color: rgba(0,0,0,.4);
@@ -129,13 +179,17 @@ h2 {
     }
   }
 
-  .project-delete {
+  .project-delete, .project-delete-cancel {
     color: black;
     margin-left: 12px;
     opacity: .3;
     cursor: pointer;
     font-weight: 600;
     display: inline-block;
+  }
+
+  .project-delete.hide, .project-delete-cancel.hide {
+    display: none;
   }
 
   .icon-garbage-can {
@@ -165,11 +219,11 @@ h2 {
     }
   }
 
-  .project-delete:hover {
+  .project-delete:hover, .project-delete-cancel:hover {
     opacity: .6;
   }
 
-  .project-delete:hover :after {
+  .project-delete:hover ::after, .project-delete-cancel:hover ::after {
     transform-origin: left;
     transform: rotate(-4deg) translateY(-1px);
   }

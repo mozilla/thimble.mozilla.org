@@ -29,7 +29,7 @@
                 "NODE_ENV": "development",
                 "DATABASE_URL": "postgres://thimble:thimble@localhost:5432/publish",
                 "S3_EMULATION": true,
-                "PUBLIC_PROJECT_ENDPOINT": "localhost:8001",
+                "PUBLIC_PROJECT_ENDPOINT": "http://localhost:8001",
                 "API_HOST": "0.0.0.0",
                 "PORT": 2015,
                 "REMIX_SCRIPT": "http://localhost:3500/resources/remix/index.js",
@@ -66,7 +66,8 @@
             "merge_logs": true,
             "cwd": "/vagrant",
             "env": {
-                "NODE_ENV": "development"
+                "NODE_ENV": "development",
+                "PROJECT_LOAD_STRATEGY": "tarball"
             }
         }
     ]

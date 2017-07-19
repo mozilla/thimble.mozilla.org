@@ -3,8 +3,8 @@
   <nav class="navbar-thimble container-flex">
 
     <div id="navbar-left" class="container-flex">
-      <div class="navbar-logo-container">
-        <a href="/{{ locale }}" class="logo">
+      <div class="navbar-logo-container small-logo">
+        <a href="/{{ locale }}" class="logo" title="{{ gettext("backToHomepage") }}">
           <img src="/img/thimble-icon.svg" class="thimble-logo">
         </a>
       </div>
@@ -22,10 +22,19 @@
     <div id="navbar-right" class="container-flex">
       {% set publishBtnTitle = gettext("publishBtnTitle") %}
 
-      <div class="nav-chunk">
-        <div title="{{ gettext("helpIconTitle") }}" id="navbar-help" class="nav-link">
-          <img src="/img/icon/question-mark.svg" class="icon-question-mark">
-          {{ gettext("help") }}
+      <div title="{{ gettext("helpIconTitle") }}" id="navbar-help" class="nav-chunk">
+        <div class="dropdown">
+          <div  class="dropdown-toggle">
+            {{ gettext("help") }}
+            <img class="icon-arrow-down" src="/img/icon/dropdown-arrow.svg">
+          </div>
+          <div class="dropdown-content">
+            <ul>
+              <li><a href="https://github.com/mozilla/thimble.mozilla.org/wiki/Thimble-Troubleshooting">{{ gettext("helpTroubleshooting") }}</a></li>
+              <li><a href="https://github.com/mozilla/thimble.mozilla.org/wiki/Using-Thimble-FAQ">{{ gettext("helpFAQ") }}</a></li>
+              <li><a href="https://github.com/mozilla/thimble.mozilla.org/wiki/About-Thimble">{{ gettext("helpFeatures") }}</a></li>
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -80,6 +89,12 @@
                   </a>
                 </li>
                 <li>
+                  <a href="#" id="export-project-zip" target="_self">
+                    <img src="/img/icon/download-cloud.svg">
+                    {{ gettext("downloadProjectLink") }}
+                  </a>
+                </li>
+                <li>
                   <a href="{{ logoutURL }}" id="logout-link" target="_self">
                     <img src="/img/icon/sign-out.svg" />
                     {{ gettext("signOutLink") }}
@@ -105,6 +120,6 @@
       </div>
     {% endif %}
     </div>
-
+    <div class="dialog-overlay"></div>
   </nav>
 {% endblock %}

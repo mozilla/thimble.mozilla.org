@@ -10,6 +10,7 @@ require.config({
     "bowser": "/scripts/vendor/bowser",
     "sso-override": "../../sso-override",
     "logger": "../../logger",
+    "BrambleShim": "../../bramble-shim",
     "jquery": "/node_modules/jquery/dist/jquery.min",
     "localized": "/node_modules/webmaker-i18n/localized",
     "uuid": "/node_modules/node-uuid/uuid",
@@ -17,7 +18,7 @@ require.config({
     "PathCache": "../../path-cache",
     "constants": "../../constants",
     "EventEmitter": "/node_modules/wolfy87-eventemitter/EventEmitter.min",
-    "analytics": "/node_modules/webmaker-analytics/analytics"
+    "analytics": "../../analytics"
   },
   shim: {
     "jquery": {
@@ -26,33 +27,9 @@ require.config({
   }
 });
 
-require(["jquery", "bowser"], function($, bowser) {
-  // Warn users of unsupported browsers that they can try something newer,
-  // specifically anything before IE 11 or Safari 8.
-  if((bowser.msie && bowser.version < 11) || (bowser.safari && bowser.version < 8)) {
-    $("#browser-support-warning").removeClass("hide");
+require(["fc/startup"], function(Startup) {
 
-    $(".let-me-in").on("click", function() {
-      $("#browser-support-warning").fadeOut();
-      return false;
-    });
-  }
-
-  function onError(err) {
-    console.error("[Bramble Error]", err);
-    $("#spinner-container").addClass("loading-error");
-  }
-
-  // If Bramble fails to load (some browser loading issues cause it to fail),
-  // error out now, since we won't get to Bramble.on('error', ...)
-  if(!window.Bramble) {
-    onError(new Error("Unable to load Bramble editor in this browser"));
-    return;
-  }
-
-  Bramble.once("error", onError);
-
-  function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility) {
+  function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility, analytics) {
     var thimbleScript = document.getElementById("thimble-script");
     var appUrl = thimbleScript.getAttribute("data-app-url");
     var projectDetails = thimbleScript.getAttribute("data-project-details");
@@ -64,13 +41,14 @@ require(["jquery", "bowser"], function($, bowser) {
     Project.init(projectDetails, appUrl, function(err) {
       if (err) {
         console.error("[Bramble] Failed to load Project state, with", err);
+        analytics.exception(err, true);
       }
 
       // Initialize the name UI for an anonymous project
       if(!projectDetails.userID){
         ProjectRenameUtility.init(appUrl, BrambleEditor.csrfToken);
       }
-     
+
       // Initialize the login links
       SSOOverride.init();
 
@@ -81,5 +59,7 @@ require(["jquery", "bowser"], function($, bowser) {
     });
   }
 
-  require(["bramble-editor", "project/project", "sso-override", "fc/project-rename"], init);
+  Startup.init(function start() {
+    require(["bramble-editor", "project/project", "sso-override", "fc/project-rename", "analytics"], init);
+  });
 });

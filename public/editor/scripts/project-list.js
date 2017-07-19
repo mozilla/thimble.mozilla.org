@@ -2,7 +2,7 @@ require.config({
   waitSeconds: 120,
   paths: {
     "jquery": "/node_modules/jquery/dist/jquery.min",
-    "analytics": "/node_modules/webmaker-analytics/analytics",
+    "analytics": "/{{ locale }}/editor/scripts/analytics",
     "uuid": "/node_modules/node-uuid/uuid",
     "cookies": "/node_modules/cookies-js/dist/cookies",
     "moment": "/node_modules/moment/min/moment-with-locales.min",
@@ -23,6 +23,7 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
   var locale = $("html")[0].lang;
   var isLocalStorageAvailable = !!(window.localStorage);
   var favorites;
+  var $projectsToDelete = [];
   if(isLocalStorageAvailable){
     try {
       favorites = JSON.parse(localStorage.getItem("project-favorites")) || [];
@@ -68,31 +69,20 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
     var projectSelector = "#" + project.getAttribute("id");
     var lastEdited = project.getAttribute("data-project-date_updated");
     var projectId = project.getAttribute("data-project-id");
-    var publishedUrl = project.getAttribute("data-project-publish_url");
-    var publishedId = publishedUrl.substring(publishedUrl.indexOf( "/", publishedUrl.indexOf("/", 7) + 1) + 1);
 
     if(isLocalStorageAvailable) {
       setFavoriteDataForProject(projectId, projectSelector, project);
     }
 
-    $(projectSelector + " .remix-link").attr("href", publishedId + "/remix");
     $(projectSelector + " .project-information").text(getElapsedTime(lastEdited));
   });
 
   $("#project-list").prepend(favoriteProjectsElementList);
 
-  $(".project-delete").click(function() {
-    // TODO: we can do better than this, but let's at least make it harder to lose data.
-    if(!window.confirm("{{ deleteProjectConfirmationText }}")) {
-      return false;
-    }
+  function deleteProject($project) {
+    var projectId = $project.attr("data-project-id");
 
-    var project = $(this).closest(".project");
-    var projectId = project.attr("data-project-id");
-    var projectElementId = project.attr("id");
-    $("#" + projectElementId + " > .project-title").off("click");
-
-    analytics.event("DeleteProject");
+    analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "Delete Project" });
 
     var request = $.ajax({
       headers: {
@@ -102,23 +92,64 @@ require(["jquery", "constants", "analytics", "moment"], function($, Constants, a
       url: "/" + locale + "/projects/" + projectId,
       timeout: Constants.AJAX_DEFAULT_TIMEOUT_MS
     });
-    request.done(function() {
+    request.done(function(){
       if(request.status !== 204) {
-        console.error("[Thimble error] sending delete request for project ", projectId, request.status);
+        console.error("[Thimble error] Failed to delete project ", projectId, " with status: ", request.status);
       }
-    });
-    request.fail(function(jqXHR, status, err) {
-      err = err || new Error("unknown network error");
-      console.error(err);
-    });
 
-    project.hide({
-      duration: 250,
-      easing: "linear",
-      done: function() {
-        project.remove();
-      }
+      $project.slideToggle({
+        done: function() {
+          $project.remove();
+        }
+      });
     });
+    request.fail(function(jqXHR, status, err){
+      console.error("Failed to delete project with: ", err);
+    });
+  }
+
+  $(".delete-button").click(function() {
+    // TODO: we can do better than this, but let's at least make it harder to lose data.
+    if(!window.confirm("{{ deleteProjectConfirmationText }}")) {
+      return false;
+    }
+
+    $projectsToDelete.forEach(deleteProject);
+    $projectsToDelete = [];
+
+    $(".delete-button").hide();
+
+    return false;
+  });
+
+  $(".project-delete, .project-delete-cancel").click(function() {
+    var $project = $(this).closest(".project");
+
+    if($project.hasClass("pending-delete")) {
+      $projectsToDelete.splice($projectsToDelete.indexOf($project), 1);
+    } else {
+      $projectsToDelete.push($project);
+    }
+
+    $project.find(
+      "a.edit-link, " +
+      "a.project-favorite-button, " +
+      "a.remix-link"
+    ).toggleClass("disabled-link");
+
+    $project.toggleClass("pending-delete");
+    $project.find(
+      "div.project-delete, " +
+      "div.project-delete-cancel"
+    ).toggleClass("hide");
+
+    if($projectsToDelete.length === 0) {
+      $(".delete-button").hide();
+    } else {
+      $(".delete-button").show();
+    }
+
+    return false;
   });
 });
 
@@ -140,8 +171,9 @@ function setupNewProjectLinks($, analytics) {
     var qs = queryString === "" ? "?" + cacheBust : queryString + "&" + cacheBust;
 
     $(e.target).text("{{ newProjectInProgressIndicator }}");
+    $(e.target).addClass("disabled");
 
-    analytics.event("NewProject", {label: "New authenticated project"});
+    analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "New Authenticated Project" });
     window.location.href = "/" + locale + "/projects/new" + qs;
   }
 

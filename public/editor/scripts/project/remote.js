@@ -5,39 +5,43 @@ define(function(require) {
   var Buffer = Bramble.Filer.Buffer;
   var fs = Bramble.getFileSystem();
 
+  // If there are pending operations to be run in the SyncQueue for a
+  // given path in the project (e.g., user deleted a file locally, but closed
+  // before the change could be synced to the server), we can safely ignore
+  // this path, since we'll just be modifying the file anyway.
+  function shouldSkipPath(pending, path) {
+    return pending[path];
+  }
+
+  function installFile(path, data, callback) {
+    var sh = new fs.Shell();
+    var basedir = Path.dirname(path);
+
+    sh.mkdirp(basedir, function(err) {
+      if(err) {
+        return callback(err);
+      }
+
+      fs.writeFile(path, new Buffer(data), {encoding: null}, callback);
+    });
+  }
+
   // Installs a tarball (arraybuffer) containing the project's files/folders.
   function installTarball(config, tarball, callback) {
     var untarWorker;
     var pending = null;
-    var sh = new fs.Shell();
     var root = config.root;
     var pendingOperations = config.syncQueue.pending;
 
-    function extract(path, data, callback) {
-      var basedir = Path.dirname(path);
-
-      sh.mkdirp(basedir, function(err) {
-        if(err) {
-          return callback(err);
-        }
-
-        fs.writeFile(path, new Buffer(data), {encoding: null}, callback);
-      });
-    }
-
-    // If there are pending operations to be run in the SyncQueue for a
-    // given path in the project (e.g., user deleted a file locally, but closed
-    // before the change could be synced to the server), we can safely ignore
-    // the initial extract, since we'll just be modifying the file anyway.
     function maybeExtract(path, data, callback) {
       path = Path.join(root, path);
 
-      if(pendingOperations[path]) {
+      if(shouldSkipPath(pendingOperations, path)) {
         callback();
         return;
       }
 
-      extract(path, data, callback);
+      installFile(path, data, callback);
     }
 
     function finish(err) {
@@ -96,6 +100,49 @@ define(function(require) {
     xhr.send();
   }
 
+  // Load all files as separate requests.  File data is of the form:
+  // [{ id: 1, path: "/index.html", project_id: 3 }, ... ]
+  function loadFiles(config, callback) {
+    if(!Array.isArray(config.data) && config.data.length > 0) {
+      return callback(new Error("file metadata was missing or in wrong form"));
+    }
+
+    var root = config.root;
+    var url = config.host + "/files/";
+
+    $.when.apply($, config.data.map(function(fileInfo) {
+      var deferred = $.Deferred();
+      var path = Path.join(root, fileInfo.path);
+      var pendingOperations = config.syncQueue.pending;
+
+      if(shouldSkipPath(pendingOperations, path)) {
+        return deferred.resolve().promise();
+      }
+
+      // jQuery doesn't seem to support getting the arraybuffer type
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", url + fileInfo.id, true);
+      xhr.responseType = "arraybuffer";
+      xhr.onload = function() {
+        if(this.status !== 200) {
+          return deferred.reject();
+        }
+
+        installFile(path, this.response, function(err) {
+          if(err) {
+            return deferred.reject();
+          }
+          deferred.resolve();
+        });
+      };
+      xhr.send();
+
+      return deferred.promise();
+    })).then(callback, function() {
+      callback(new Error("[Thimble error] unable to load project files."));
+    });
+  }
+
   function upgradeAnonymousProject(config, callback) {
     var shell = new fs.Shell();
     var oldRoot = Path.join(constants.ANONYMOUS_USER_FOLDER, config.anonymousId.toString());
@@ -152,13 +199,24 @@ define(function(require) {
     });
   }
 
+  function load(config, callback) {
+    // Support loading projects as a single tarball or as a set of individual files.
+    // Change the value via .env on the server and the PROJECT_LOAD_STRATEGY variable.
+    // Default to loading a tarball.
+    if(config.projectLoadStrategy === "files") {
+      loadFiles(config, callback);
+    } else {
+      loadTarball(config, callback);
+    }
+  }
+
   function loadProject(config, callback) {
     if (config.user) {
       if (config.anonymousId) {
         return upgradeAnonymousProject(config, callback);
       }
 
-      return loadTarball(config, callback);
+      return load(config, callback);
     }
 
     // First, check if this anonymous project already exists by checking the
@@ -175,6 +233,7 @@ define(function(require) {
             return callback(err);
           }
 
+          // Prefer loading as tarball if this is the default project, even if loadfiles=1.
           loadTarball(config, callback);
         });
       } else {
