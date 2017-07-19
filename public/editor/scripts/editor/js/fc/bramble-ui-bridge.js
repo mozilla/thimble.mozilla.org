@@ -200,6 +200,30 @@ define(function(require) {
       analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Redo" });
     });
 
+    // TouchEmulator
+    var _touchEmulatorEnabled = false;
+    function setTouchEmulator(value) {
+      if(value) {
+        bramble.enableTouchEmulator();
+      } else {
+        bramble.disableTouchEmulator();
+      }
+    }
+    $("#preview-pane-nav-touch-emulator").click(function() {
+      setTouchEmulator(!_touchEmulatorEnabled);
+      return false;
+    });
+    bramble.on("touchEmulatorChange", function(data) {
+      if(data.enabled) {
+        $("#preview-pane-nav-touch-emulator").addClass("enabled");
+        analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "TouchEmulator Enabled" });
+      } else {
+        $("#preview-pane-nav-touch-emulator").removeClass("enabled");
+      }
+      
+      _touchEmulatorEnabled = data.enabled;
+    });
+
     // Inspector
     var _inspectorEnabled = false;
     function setInspector(value) {
