@@ -18,7 +18,7 @@ Thimble uses a modified version of the amazing [Brackets](http://brackets.io) co
 [updated to run within web browsers](https://github.com/mozilla/brackets).  You can read more about
 how it works in [this blog post](http://blog.humphd.org/thimble-and-bramble/).
 
-Thimble requires a modern web browser, and we recommend using Mozilla Firefox or Google Chrome.
+Thimble requires a modern web browser, and we recommend using Mozilla Firefox or Google Chrome. We use [BrowserStack](https://browserstack.com) to test Thimble in modern browsers on different operating systems.
 
 # Setup/Installation
 
