@@ -3,6 +3,7 @@ Thimble
 
 [![Build Status](https://travis-ci.org/mozilla/thimble.mozilla.org.svg)](https://travis-ci.org/mozilla/thimble.mozilla.org)
 [![Shipping fast with zenHub](https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)](https://zenhub.com)
+<a href="https://browserstack.com"><img src="https://assets.mofoprod.net/general/browserstack.svg" height="20rem"></a>
 
 Thimble is Mozilla's online code editor that makes it easy to create and publish
 your own web pages while learning HTML, CSS & JavaScript.  You can try it online
