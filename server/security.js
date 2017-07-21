@@ -4,12 +4,13 @@ let helmet = require("helmet");
 let csurf = require("csurf");
 
 const ONE_YEAR = 31536000000;
+const PONTOON_URL = "https://pontoon.mozilla.org";
 
 let defaultCSPDirectives = {
   defaultSrc: [ "'self'" ],
   connectSrc: [
     "'self'",
-    "https://pontoon.mozilla.org",
+    PONTOON_URL,
     "https://mozilla.github.io/thimble-homepage-gallery/activities.json",
     "https://api.github.com/repos/mozilla/thimble.mozilla.org/issues"
   ],
@@ -20,18 +21,18 @@ let defaultCSPDirectives = {
   ],
   childSrc: [
     "'self'",
-    "https://pontoon.mozilla.org",
+    PONTOON_URL,
     "blob:"
   ],
   frameAncestors: [
-    "https://pontoon.mozilla.org"
+    PONTOON_URL
   ],
   fontSrc: [
     "'self'",
     "https://fonts.gstatic.com",
     "https://netdna.bootstrapcdn.com",
     "https://code.cdn.mozilla.net/",
-    "https://pontoon.mozilla.org"
+    PONTOON_URL
   ],
   imgSrc: [ "*" ],
   mediaSrc: [ "*" ],
@@ -41,7 +42,7 @@ let defaultCSPDirectives = {
     "https://ajax.googleapis.com",
     "https://mozorg.cdn.mozilla.net",
     "https://www.google-analytics.com",
-    "https://pontoon.mozilla.org"
+    PONTOON_URL
   ],
   styleSrc: [
     "'self'",
@@ -50,7 +51,7 @@ let defaultCSPDirectives = {
     "https://fonts.googleapis.com",
     "https://mozorg.cdn.mozilla.net",
     "https://netdna.bootstrapcdn.com",
-    "https://pontoon.mozilla.org",
+    PONTOON_URL,
     // Inline style for the spinner
     "'sha256-AnlD8XRHNPxhNZ/6MucKFJr9yYGQtn8bmvveYkBg7a4='"
   ]
@@ -99,7 +100,11 @@ Security.prototype = {
     return this;
   },
   xframe() {
-    this.server.use(helmet.frameguard({ action: "DENY" }));
+    // Only allow framing from Pontoon
+    this.server.use(helmet.frameguard({ 
+      action: "allow-from",
+      domain: PONTOON_URL
+    }));
     return this;
   }
 };
