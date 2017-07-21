@@ -3,6 +3,7 @@ Thimble
 
 [![Build Status](https://travis-ci.org/mozilla/thimble.mozilla.org.svg)](https://travis-ci.org/mozilla/thimble.mozilla.org)
 [![Shipping fast with zenHub](https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)](https://zenhub.com)
+<a href="https://browserstack.com"><img src="https://assets.mofoprod.net/general/browserstack.svg" height="20rem"></a>
 
 Thimble is Mozilla's online code editor that makes it easy to create and publish
 your own web pages while learning HTML, CSS & JavaScript.  You can try it online
@@ -17,7 +18,7 @@ Thimble uses a modified version of the amazing [Brackets](http://brackets.io) co
 [updated to run within web browsers](https://github.com/mozilla/brackets).  You can read more about
 how it works in [this blog post](http://blog.humphd.org/thimble-and-bramble/).
 
-Thimble requires a modern web browser, and we recommend using Mozilla Firefox or Google Chrome.
+Thimble requires a modern web browser, and we recommend using Mozilla Firefox or Google Chrome. We use [BrowserStack](https://browserstack.com) to test Thimble in modern browsers on different operating systems.
 
 # Setup/Installation
 
