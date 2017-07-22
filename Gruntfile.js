@@ -22,7 +22,7 @@ module.exports = function( grunt ) {
           modules: [{
             name: "editor/scripts/main"
           }, {
-            name: "editor/scripts/project-list"
+            name: "projects-list/scripts/main"
           }],
           findNestedDependencies: true,
           fileExclusionRegExp: /^homepage/,
@@ -44,9 +44,9 @@ module.exports = function( grunt ) {
             "uuid": "../node_modules/node-uuid/uuid",
             "cookies": "../node_modules/cookies-js/dist/cookies",
             "PathCache": "editor/scripts/path-cache",
-            "constants": "editor/scripts/constants",
+            "constants": "shared/scripts/constants",
             "EventEmitter": "../node_modules/wolfy87-eventemitter/EventEmitter.min",
-            "analytics": "editor/scripts/analytics",
+            "analytics": "shared/scripts/analytics",
             "moment": "../node_modules/moment/min/moment-with-locales.min"
           },
           shim: {
@@ -66,9 +66,8 @@ module.exports = function( grunt ) {
     lesslint: {
       src: [
         "./public/editor/stylesheets/*.less",
-        "./public/editor/stylesheets/*.css",
         "./public/homepage/stylesheets/*.less",
-        "./public/homepage/stylesheets/*.css",
+        "./public/projects-list/stylesheets/*.less",
         "./public/resources/remix/*.less",
         "./public/resources/tutorial/*.less",
         "./public/resources/tutorial/*.css"
@@ -123,11 +122,12 @@ module.exports = function( grunt ) {
         files: {
           src: [
             "public/editor/**/*.js",
+            "public/error/**/*.js",
             "public/homepage/**/*.js",
-            "public/lib/**/*.js",
-            "public/resources/remix/index.js",
-            "!public/homepage/scripts/google-analytics.js",
-            "!public/editor/scripts/google-analytics.js"
+            "public/projects-list/**/*.js",
+            "public/shared/**/*.js",
+            "!public/shared/scripts/google-analytics.js",
+            "public/resources/remix/index.js"
           ]
         }
       }

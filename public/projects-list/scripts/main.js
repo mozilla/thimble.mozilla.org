@@ -2,7 +2,8 @@ require.config({
   waitSeconds: 120,
   paths: {
     "jquery": "/node_modules/jquery/dist/jquery.min",
-    "analytics": "/{{ locale }}/editor/scripts/analytics",
+    "analytics": "/{{ locale }}/shared/scripts/analytics",
+    "constants": "/{{ locale }}/shared/scripts/constants",
     "uuid": "/node_modules/node-uuid/uuid",
     "cookies": "/node_modules/cookies-js/dist/cookies",
     "moment": "/node_modules/moment/min/moment-with-locales.min",

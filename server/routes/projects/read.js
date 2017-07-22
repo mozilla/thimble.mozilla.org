@@ -77,15 +77,13 @@ module.exports = function(config, req, res, next) {
       languages: req.app.locals.languages,
       URL_PATHNAME: "/projects" + qs,
       csrf: req.csrfToken ? req.csrfToken() : null,
-      HTTP_STATIC_URL: "/" + locale,
       username: user.username,
       avatar: user.avatar,
       projects: projects,
       queryString: qs,
-      editorHOST: config.editorHOST,
       logoutURL: config.logoutURL
     };
 
-    res.render("editor/projects.html", options);
+    res.render("projects-list/index.html", options);
   });
 };
