@@ -70,6 +70,7 @@ Once you've found a bug that you are interested in working on...
 * Take one issue at a time
 * If someone has claimed an issue but it seems like they've stopped working on it, leave a comment asking them if it's okay to take over the work
 * If you decide to stop working on the issue you took, let us know in the issue
+* If you choose an issue with a **brackets** label, your changes need to be made in the [brackets](https://github.com/mozilla/brackets) repository.
 
 ### Work on your issue
 
@@ -81,7 +82,7 @@ When you begin working to solve the issue in your local environment, do the work
   * Give your branch a descriptive name like ``remix-button-not-showing``
 * If your work is taking more than a few days, drop a comment in the original issue to let everyone know your progress
 
-### Keep "tabs" on your indentation :drum: 
+### Keep "tabs" on your indentation :drum:
 
 Many first-time contributors run into problems when indenting the code, often mixing spaces and tabs. Our general convention to use spaces. A good guideline is to follow the conventions of the code that you are editing.
 
@@ -120,6 +121,10 @@ Once you've got a solution (or a good start) to the issue in your local environm
 * Review the **Files Changed** tab in the Pull Request viewer to make sure only the changes you intended have made it in to the Pull Request
 * Ping someone in a comment and ask for a Review
 
+If you're submitting a Pull Request for a Bracket's related change, but the issue is filed in the Thimble repository you can reference it by replacing
+``Fixes #1332`` to ``Fixes mozilla/thimble.mozilla.org#1332``. By default Github will try to reference an issue under the ID ``#1332`` if it exists within the
+repository from which the Pull Request is being submitted. This works for all repositories, not just Brackets & Thimble.
+
 ### Check if your Pull Request is good to go
 
 At the bottom of the  **Conversation** tab of the Pull Request page, there is a box that describes three different aspects of your Pull Request
@@ -133,4 +138,3 @@ At the bottom of the  **Conversation** tab of the Pull Request page, there is a 
   * Sometimes, if enough time has passed since you first created your branch, changes to the ``master`` branch may require you to rebase your branch to the latest master.
 
 If any of the three above require you to make changes you **do not** need to make a new Pull Request. Simply make the changes in your local branch and then push the changes up to your remote repository. Your new changes will automatically be reflected in your Pull Request.
- 
