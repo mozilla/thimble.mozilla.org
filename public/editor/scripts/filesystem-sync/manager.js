@@ -40,10 +40,10 @@ define(function(require) {
   var $ = require("jquery");
   var EventEmitter = require("EventEmitter");
   var constants = require("constants");
-  var Project = require("project/project");
-  var PathCache = require("PathCache");
-  var Backoff = require("fc/backoff");
-  var logger = require("logger");
+  var Project = require("project/index");
+  var PathCache = require("filesystem-sync/path-cache");
+  var Backoff = require("filesystem-sync/backoff");
+  var logger = require("lib/logger");
 
   var SYNC_OPERATION_UPDATE = constants.SYNC_OPERATION_UPDATE;
   var SYNC_OPERATION_DELETE = constants.SYNC_OPERATION_DELETE;

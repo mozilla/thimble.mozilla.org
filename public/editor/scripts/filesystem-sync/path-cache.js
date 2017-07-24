@@ -9,7 +9,7 @@
 
 define(function(require) {
   var Constants = require("constants");
-  var logger = require("logger");
+  var logger = require("lib/logger");
   var $ = require("jquery");
 
   var SYNC_OPERATION_UPDATE = Constants.SYNC_OPERATION_UPDATE;
