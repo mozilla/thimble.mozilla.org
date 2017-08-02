@@ -25,10 +25,25 @@ define(function(require) {
     });
   }
 
+  function useOfflineSaveIndicators() {
+    Bramble.once("ready", function(bramble) {
+      bramble.on("projectDirty", function(){
+        $("#navbar-saved-offline-indicator").addClass("hide");
+        $("#navbar-save-indicator").removeClass("hide");
+      });
+
+      bramble.on("projectSaved", function(){
+        $("#navbar-save-indicator").addClass("hide");
+        $("#navbar-saved-offline-indicator").removeClass("hide");
+      });
+    });
+  }
+
   function init(csrfToken) {
-    // If an anonymous user is using thimble, they
-    // will not have any persistence of files
+    // If an anonymous user is using Thimble, we won't persist files
+    // to the server.  Show offline saving info instead.
     if(!Project.getUser()) {
+      useOfflineSaveIndicators();
       return null;
     }
 
@@ -36,13 +51,22 @@ define(function(require) {
 
     // Update the UI with a "Saving..." indicator whenever we sync a file
     syncManager.on("file-sync-start", function() {
+      $("#navbar-saved-indicator").addClass("hide");
+      $("#navbar-saved-offline-indicator").addClass("hide");
+
       $("#navbar-save-indicator").removeClass("hide");
       $("#navbar-save-indicator").text("{{ fileSavingIndicator }}");
     });
     syncManager.on("file-sync-stop", function() {
+      $("#navbar-saved-offline-indicator").addClass("hide");
       $("#navbar-save-indicator").addClass("hide");
+
+      $("#navbar-saved-indicator").removeClass("hide");
     });
     syncManager.on("file-sync-error", function() {
+      $("#navbar-saved-indicator").addClass("hide");
+      $("#navbar-saved-offline-indicator").addClass("hide");
+
       // Saving over the network failed, let the user know, and that we'll retry
       $("#navbar-save-indicator").text("{{ fileSavingFailedIndicator }}");
     });
@@ -82,6 +106,21 @@ define(function(require) {
 
       // Begin autosyncing
       syncManager.start();
+
+      // Also show offline saving indicators, in addition to server sync
+      bramble.on("projectDirty", function(){
+        $("#navbar-saved-indicator").addClass("hide");
+        $("#navbar-saved-offline-indicator").addClass("hide");
+
+        $("#navbar-save-indicator").removeClass("hide");
+      });
+
+      bramble.on("projectSaved", function(){
+        $("#navbar-saved-indicator").addClass("hide");
+        $("#navbar-save-indicator").addClass("hide");
+
+        $("#navbar-saved-offline-indicator").removeClass("hide");
+      });
 
       brambleInstance = bramble;
     });
