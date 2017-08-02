@@ -62,11 +62,25 @@ function getContentMessages(locale) {
         return reject(message_error);
       }
 
-      if(locale === "en-US") {
-        en_USStrings = message_properties;
-      }
+      properties.read(path.join(localeSrc, locale, "client.properties"), function(client_error, client_properties) {
+        if (client_error && client_error.code !== "ENOENT") {
+          return reject(client_error);
+        }
 
-      resolve({content: message_properties, locale: locale});
+        properties.read(path.join(localeSrc, locale, "server-client-shared.properties"), function(shared_error, shared_properties) {
+          if (shared_error && shared_error.code !== "ENOENT") {
+            return reject(shared_error);
+          }
+
+          var strings = Object.assign({}, message_properties, client_properties, shared_properties);
+
+          if(locale === "en-US") {
+            en_USStrings = strings;
+          }
+
+          resolve({content: strings, locale: locale});
+        });
+      });
     });
   });
 }
