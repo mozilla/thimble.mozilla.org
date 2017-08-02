@@ -57,9 +57,9 @@ function removeOldLocales(localeInfoList) {
 
 function getContentMessages(locale) {
   return new Promise(function(resolve, reject) {
-    properties.read(path.join(localeSrc, locale, "messages.properties"), function(message_error, message_properties) {
-      if (message_error && message_error.code !== "ENOENT") {
-        return reject(message_error);
+    properties.read(path.join(localeSrc, locale, "server.properties"), function(server_error, server_properties) {
+      if (server_error && server_error.code !== "ENOENT") {
+        return reject(server_error);
       }
 
       properties.read(path.join(localeSrc, locale, "client.properties"), function(client_error, client_properties) {
@@ -72,7 +72,7 @@ function getContentMessages(locale) {
             return reject(shared_error);
           }
 
-          var strings = Object.assign({}, message_properties, client_properties, shared_properties);
+          var strings = Object.assign({}, server_properties, client_properties, shared_properties);
 
           if(locale === "en-US") {
             en_USStrings = strings;
