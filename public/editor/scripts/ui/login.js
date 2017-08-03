@@ -7,7 +7,7 @@ define(function(require) {
   var $ = require("jquery");
   var uuid = require("uuid");
   var cookies = require("cookies");
-  var Project = require("project/project");
+  var Project = require("project/index");
 
   function init() {
     var loginUrl = $("#publish-ssooverride").attr("data-loginUrl");
