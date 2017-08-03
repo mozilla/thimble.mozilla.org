@@ -4,6 +4,7 @@ define(function(require) {
   var PopupMenu = require("fc/bramble-popupmenu");
   var analytics = require("analytics");
 
+  // TODO: Webpack: Use shared/userbar.js functions instead.
   function setupUserMenu() {
     PopupMenu.create("#navbar-logged-in .dropdown-toggle", "#navbar-logged-in .dropdown-content");
   }
@@ -191,7 +192,7 @@ define(function(require) {
 
       return false;
     });
-    
+
     //set the Autocomplete toggle to reflect whether auto-complete is enabled or disabled
     if(bramble.getAutocomplete()) {
         $("#autocomplete-toggle").addClass("switch-enabled");
