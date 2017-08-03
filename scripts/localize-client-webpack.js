@@ -4,10 +4,11 @@ const path = require("path");
 
 const localizeClient = require("./localize-client");
 
-localizeClient.runAll((currentPath, stats) => {
-  // Ignore the homepage dir so that we can localize it separately
+localizeClient.runAll(currentPath => {
+  // Ignore the homepage and projects-list dir so that we
+  // can localize it separately
   // See https://github.com/kriskowal/q-io#listtreepath-guardpath-stat
-  if(path.basename(currentPath) === "homepage") {
+  if(/^homepage$|^projects-list$/.test(path.basename(currentPath))) {
     return null;
   }
 
@@ -20,7 +21,7 @@ localizeClient.runAll((currentPath, stats) => {
   return localizeClient.localizeClientFiles(srcPath, (currentPath, stats) => {
     const relPath = path.relative(srcPath, currentPath);
 
-    if(relPath.indexOf("homepage") === 0 || currentPath === srcPath) {
+    if(/^homepage|^projects-list/.test(relPath) || currentPath === srcPath) {
       return true;
     }
 
