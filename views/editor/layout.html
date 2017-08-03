@@ -5,14 +5,11 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta name="persona-email" content="{{email}}">
-    <meta name="thimble-operation" content="{{pageOperation}}">
-    <meta name="thimble-project-origin" content="{{origin}}">
     <meta name="csrf-token" content="{{csrf}}">
     <meta name="moment-lang" content="{{localeInfo.momentLang}}">
     <title>Mozilla Thimble</title>
 
-    <link rel="stylesheet" href="/editor/stylesheets/normalize.css">
+    <link rel="stylesheet" href="/shared/stylesheets/normalize.css">
     <link rel="stylesheet" href="/editor/stylesheets/editor.css">
     <link rel="stylesheet" href="/resources/stylesheets/userbar.css">
     <link rel="stylesheet" href="/editor/stylesheets/publish.css">
@@ -23,7 +20,7 @@
     {% block head %}{% endblock %}
 
     {% if GA_ACCOUNT %}
-    <script id="google-analytics-js" src="/{{ localeDir }}/editor/scripts/google-analytics.js"
+    <script id="google-analytics-js" src="/{{ localeDir }}/shared/scripts/google-analytics.js"
             data-ga-account="{{ GA_ACCOUNT }}"
             data-ga-domain="{{ GA_DOMAIN }}"
             async>

@@ -7,8 +7,8 @@ var cookies = require("cookies-js");
 var features = require("./features");
 var gallery = require("./gallery");
 var getinvolved = require("./getinvolved");
-var analytics = require("../../editor/scripts/analytics");
-var PopupMenu = require("../../lib/popupmenu");
+var analytics = require("../../shared/scripts/analytics");
+var PopupMenu = require("../../shared/scripts/popupmenu");
 
 function setupNewProjectLinks() {
   var authenticated = $("#navbar-login").hasClass("signed-in");
