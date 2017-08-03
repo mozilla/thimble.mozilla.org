@@ -45,9 +45,23 @@ const PROJECTS_LIST_CONFIG = {
   }
 };
 
+const EDITOR_CONFIG = {
+  entry: [
+    "editor/scripts/main"
+  ]
+  .map(absolutePublicPath),
+
+  output: {
+    path: path.resolve(__dirname, "dist/editor"),
+    pathinfo: IS_DEVELOPMENT,
+    filename: "scripts/main.js"
+  }
+};
+
 module.exports = [
   HOMEPAGE_CONFIG,
-  PROJECTS_LIST_CONFIG
+  PROJECTS_LIST_CONFIG,
+  EDITOR_CONFIG
 ].map(config => Object.assign(config, {
   plugins
 }));
