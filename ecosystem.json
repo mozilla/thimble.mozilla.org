@@ -36,39 +36,6 @@
                 "ID_SERVER_CONNECTION_STRING": "http://localhost:1234",
                 "FILE_SIZE_LIMIT": 5242880
             }
-        },
-        {
-            "name": "localize-client",
-            "script": "scripts/watch-client.js",
-            "merge_logs": true,
-            "cwd": "/vagrant",
-            "env": {
-                "NODE_ENV": "development"
-            }
-        },
-        {
-            "name": "thimble",
-            "script": "app.js",
-            "watch": true,
-            "ignore_watch": [
-                "/vagrant/.git",
-                "/vagrant/node_modules",
-                "/vagrant/services/login.webmaker.org",
-                "/vagrant/services/id.webmaker.org",
-                "/vagrant/services/publish.webmaker.org",
-                "/vagrant/client",
-                "/vagrant/public",
-                "/vagrant/views"
-            ],
-            "watch_options": {
-                "usePolling": true
-            },
-            "merge_logs": true,
-            "cwd": "/vagrant",
-            "env": {
-                "NODE_ENV": "development",
-                "PROJECT_LOAD_STRATEGY": "tarball"
-            }
         }
     ]
 }

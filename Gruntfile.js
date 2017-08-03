@@ -11,68 +11,12 @@ module.exports = function( grunt ) {
   grunt.initConfig({
     pkg: grunt.file.readJSON( "package.json" ),
 
-    requirejs: {
-      dist: {
-        options: {
-          waitSeconds: 120,
-          appDir: "public/",
-          baseUrl: "./",
-          dir: "dist",
-          keepBuildDir: true,
-          modules: [{
-            name: "editor/scripts/main"
-          }, {
-            name: "editor/scripts/project-list"
-          }, {
-            name: "homepage/scripts/main"
-          }],
-          findNestedDependencies: true,
-          optimizeCss: "none",
-          removeCombined: true,
-          paths: {
-            // Folders
-            "fc": "editor/scripts/editor/js/fc",
-            "project": "editor/scripts/project",
-
-            // Files
-            "bowser": "resources/scripts/vendor/bowser",
-            "bramble-editor": "editor/scripts/editor/js/bramble-editor",
-            "sso-override": "editor/scripts/sso-override",
-            "logger": "editor/scripts/logger",
-            "BrambleShim": "editor/scripts/bramble-shim",
-            "jquery": "../node_modules/jquery/dist/jquery.min",
-            "localized": "../node_modules/webmaker-i18n/localized",
-            "uuid": "../node_modules/node-uuid/uuid",
-            "cookies": "../node_modules/cookies-js/dist/cookies",
-            "PathCache": "editor/scripts/path-cache",
-            "constants": "editor/scripts/constants",
-            "EventEmitter": "../node_modules/wolfy87-eventemitter/EventEmitter.min",
-            "analytics": "editor/scripts/analytics",
-            "moment": "../node_modules/moment/min/moment-with-locales.min",
-            "gallery": "homepage/scripts/gallery",
-            "getinvolved": "homepage/scripts/getinvolved",
-            "features": "homepage/scripts/features",
-          },
-          shim: {
-            "jquery": {
-              exports: "$"
-            }
-          },
-          optimize: 'uglify2',
-          preserveLicenseComments: false,
-          useStrict: true,
-          uglify2: {}
-        }
-      }
-    },
-
     // Linting
     lesslint: {
       src: [
         "./public/editor/stylesheets/*.less",
-        "./public/editor/stylesheets/*.css",
         "./public/homepage/stylesheets/*.less",
-        "./public/homepage/stylesheets/*.css",
+        "./public/projects-list/stylesheets/*.less",
         "./public/resources/remix/*.less",
         "./public/resources/tutorial/*.less",
         "./public/resources/tutorial/*.css"
@@ -127,10 +71,12 @@ module.exports = function( grunt ) {
         files: {
           src: [
             "public/editor/**/*.js",
+            "public/error/**/*.js",
             "public/homepage/**/*.js",
-            "public/resources/remix/index.js",
-            "!public/homepage/scripts/google-analytics.js",
-            "!public/editor/scripts/google-analytics.js"
+            "public/projects-list/**/*.js",
+            "public/shared/**/*.js",
+            "!public/shared/scripts/google-analytics.js",
+            "public/resources/remix/index.js"
           ]
         }
       }
@@ -138,6 +84,5 @@ module.exports = function( grunt ) {
   });
 
   grunt.registerTask("test", [ "jshint:server", "jshint:frontend", "lesslint" ]);
-  grunt.registerTask("build", [ "test", "requirejs:dist" ]);
   grunt.registerTask("default", [ "test" ]);
 };
