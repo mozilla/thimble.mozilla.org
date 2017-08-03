@@ -1,7 +1,7 @@
 define(function(require) {
 
   var $ = require("jquery");
-  var PopupMenu = require("fc/bramble-popupmenu");
+  var PopupMenu = require("lib/popupmenu");
   var analytics = require("analytics");
 
   // TODO: Webpack: Use shared/userbar.js functions instead.
