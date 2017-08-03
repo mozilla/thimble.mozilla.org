@@ -6,9 +6,9 @@
 
 define(function(require) {
   var $ = require("jquery");
-  var Project = require("project/project");
-  var SyncManager = require("fc/sync-manager");
-  var SyncState = require("fc/sync-state");
+  var Project = require("project/index");
+  var SyncManager = require("filesystem-sync/manager");
+  var SyncState = require("filesystem-sync/state");
 
   var syncManager;
   var brambleInstance;

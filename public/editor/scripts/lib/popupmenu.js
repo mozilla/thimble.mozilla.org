@@ -1,8 +1,8 @@
 define(function(require) {
 
   var $ = require("jquery");
-  var KeyHandler = require("fc/bramble-keyhandler");
-  var Underlay = require("fc/bramble-underlay");
+  var KeyHandler = require("lib/keyhandler");
+  var Underlay = require("lib/underlay");
 
   function PopupMenu(button, menu, applyOffset) {
     var self = this;
