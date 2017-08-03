@@ -32,8 +32,22 @@ const HOMEPAGE_CONFIG = {
   }
 };
 
+const PROJECTS_LIST_CONFIG = {
+  entry: [
+    "projects-list/scripts/main.js"
+  ]
+  .map(absolutePublicPath),
+
+  output: {
+    path: path.resolve(__dirname, "dist/projects-list"),
+    pathinfo: IS_DEVELOPMENT,
+    filename: "scripts/main.js"
+  }
+};
+
 module.exports = [
-  HOMEPAGE_CONFIG
+  HOMEPAGE_CONFIG,
+  PROJECTS_LIST_CONFIG
 ].map(config => Object.assign(config, {
   plugins
 }));
