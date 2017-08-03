@@ -1,7 +1,7 @@
 /* globals $: true */
 
 var $ = require("jquery");
-var analytics = require("../../editor/scripts/analytics");
+var analytics = require("../../shared/scripts/analytics");
 
 module.exports = {
 

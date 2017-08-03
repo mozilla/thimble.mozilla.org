@@ -1,7 +1,18 @@
-@import "variables.less";
+@import "../../editor/stylesheets/variables.less";
 
 body {
   overflow: auto;
+}
+
+// Logo position overrides
+.navbar-thimble {
+  background: #2D9961;
+  position: relative;
+
+  .navbar-logo-container.small-logo {
+    top: 2px ;
+    left: -9px;
+  }
 }
 
 .project-list-wrapper {
