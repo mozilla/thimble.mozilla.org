@@ -16,85 +16,81 @@
  * for API additons covered below.
  */
 
-define(function() {
+var sentUpdatesAvailable = false;
 
-  var sentUpdatesAvailable = false;
-
-  function triggerUpdatesAvailable() {
-    // Since we've used a shimmed API call, we should trigger our Reload flow.
-    // The `updatesAvailable` event was introduced in the new API, so won't happen
-    // with this old API; however, if we've loaded Bramble, it will also have updated
-    // cache, and it should do the right thing when the user reloads.
-    if(sentUpdatesAvailable) {
-      return;
-    }
-
-    sentUpdatesAvailable = true;
-    console.log("[Thimble] Bramble API out of date, please reload your browser for updates");
-    Bramble.trigger("updatesAvailable");
+function triggerUpdatesAvailable() {
+  // Since we've used a shimmed API call, we should trigger our Reload flow.
+  // The `updatesAvailable` event was introduced in the new API, so won't happen
+  // with this old API; however, if we've loaded Bramble, it will also have updated
+  // cache, and it should do the right thing when the user reloads.
+  if(sentUpdatesAvailable) {
+    return;
   }
 
-  function defaultFalse() {
-    triggerUpdatesAvailable();
-    return false;
-  }
+  sentUpdatesAvailable = true;
+  console.log("[Thimble] Bramble API out of date, please reload your browser for updates");
+  Bramble.trigger("updatesAvailable");
+}
 
-  function defaultTrue() {
-    triggerUpdatesAvailable();
-    return true;
-  }
+function defaultFalse() {
+  triggerUpdatesAvailable();
+  return false;
+}
 
-  function returnZero() {
-    triggerUpdatesAvailable();
-    return 0;
-  }
+function defaultTrue() {
+  triggerUpdatesAvailable();
+  return true;
+}
 
-  function getAutoCloseTagsDefault() {
-    return {
-      whenClosing: true,
-      whenOpening: true,
-      indentTags: []
-    };
-  }
+function returnZero() {
+  triggerUpdatesAvailable();
+  return 0;
+}
 
-  function noop() {}
-
-  function arg0WithCallback(callback) {
-    callback = callback || noop;
-    setTimeout(callback, 0);
-    triggerUpdatesAvailable();
-  }
-
-  function arg1WithCallback(arg0, callback) {
-    arg0WithCallback(callback);
-  }
-
-  // Add any missing functions we might need until the user updates their API.
-  function shimAPI(bramble) {
-    // New API Getters
-    bramble.getAutocomplete        = bramble.getAutocomplete        || defaultTrue;
-    bramble.getAutoCloseTags       = bramble.getAutoCloseTags       || getAutoCloseTagsDefault;
-    bramble.getAllowJavaScript     = bramble.getAllowJavaScript     || defaultTrue;
-    bramble.getAllowWhiteSpace     = bramble.getAllowWhiteSpace     || defaultFalse;
-    bramble.getAutoUpdate          = bramble.getAutoUpdate          || defaultTrue;
-    bramble.getOpenSVGasXML        = bramble.getOpenSVGasXML        || defaultFalse;
-    bramble.getTotalProjectSize    = bramble.getTotalProjectSize    || returnZero;
-    bramble.hasIndexFile           = bramble.hasIndexFile           || defaultTrue;
-    bramble.getFileCount           = bramble.getFileCount           || returnZero;
-
-    // New API Methods
-    bramble.enableWhiteSpace       = bramble.enableWhiteSpace       || arg0WithCallback;
-    bramble.disableWhiteSpace      = bramble.disableWhiteSpace      || arg0WithCallback;
-    bramble.enableAutocomplete     = bramble.enableAutocomplete     || arg0WithCallback;
-    bramble.disableAutocomplete    = bramble.disableAutocomplete    || arg0WithCallback;
-    bramble.openSVGasXML           = bramble.openSVGasXML           || arg0WithCallback;
-    bramble.openSVGasImage         = bramble.openSVGasImage         || arg0WithCallback;
-    bramble.configureAutoCloseTags = bramble.configureAutoCloseTags || arg1WithCallback;
-    bramble.addCodeSnippet         = bramble.addCodeSnippet         || arg1WithCallback;
-  }
-
+function getAutoCloseTagsDefault() {
   return {
-    shimAPI: shimAPI
+    whenClosing: true,
+    whenOpening: true,
+    indentTags: []
   };
+}
 
-});
+function noop() {}
+
+function arg0WithCallback(callback) {
+  callback = callback || noop;
+  setTimeout(callback, 0);
+  triggerUpdatesAvailable();
+}
+
+function arg1WithCallback(arg0, callback) {
+  arg0WithCallback(callback);
+}
+
+// Add any missing functions we might need until the user updates their API.
+function shimAPI(bramble) {
+  // New API Getters
+  bramble.getAutocomplete        = bramble.getAutocomplete        || defaultTrue;
+  bramble.getAutoCloseTags       = bramble.getAutoCloseTags       || getAutoCloseTagsDefault;
+  bramble.getAllowJavaScript     = bramble.getAllowJavaScript     || defaultTrue;
+  bramble.getAllowWhiteSpace     = bramble.getAllowWhiteSpace     || defaultFalse;
+  bramble.getAutoUpdate          = bramble.getAutoUpdate          || defaultTrue;
+  bramble.getOpenSVGasXML        = bramble.getOpenSVGasXML        || defaultFalse;
+  bramble.getTotalProjectSize    = bramble.getTotalProjectSize    || returnZero;
+  bramble.hasIndexFile           = bramble.hasIndexFile           || defaultTrue;
+  bramble.getFileCount           = bramble.getFileCount           || returnZero;
+
+  // New API Methods
+  bramble.enableWhiteSpace       = bramble.enableWhiteSpace       || arg0WithCallback;
+  bramble.disableWhiteSpace      = bramble.disableWhiteSpace      || arg0WithCallback;
+  bramble.enableAutocomplete     = bramble.enableAutocomplete     || arg0WithCallback;
+  bramble.disableAutocomplete    = bramble.disableAutocomplete    || arg0WithCallback;
+  bramble.openSVGasXML           = bramble.openSVGasXML           || arg0WithCallback;
+  bramble.openSVGasImage         = bramble.openSVGasImage         || arg0WithCallback;
+  bramble.configureAutoCloseTags = bramble.configureAutoCloseTags || arg1WithCallback;
+  bramble.addCodeSnippet         = bramble.addCodeSnippet         || arg1WithCallback;
+}
+
+module.exports = {
+  shimAPI: shimAPI
+};
