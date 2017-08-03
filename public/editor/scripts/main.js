@@ -16,9 +16,9 @@ require.config({
     "uuid": "/node_modules/node-uuid/uuid",
     "cookies": "/node_modules/cookies-js/dist/cookies",
     "PathCache": "../../path-cache",
-    "constants": "../../constants",
+    "constants": "/{{ locale }}/shared/scripts/constants",
     "EventEmitter": "/node_modules/wolfy87-eventemitter/EventEmitter.min",
-    "analytics": "../../analytics"
+    "analytics": "/{{ locale }}/shared/scripts/analytics"
   },
   shim: {
     "jquery": {
