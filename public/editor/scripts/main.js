@@ -1,21 +1,13 @@
 // NOTE: if you change this, update Gruntfile's requirejs:dist task too
 require.config({
   waitSeconds: 120,
-  baseUrl: "/{{ locale }}/editor/scripts/editor/js",
+  baseUrl: "/{{ locale }}/editor/scripts",
   paths: {
-    // Folders
-    "project": "../../project",
-
-    // Files
     "bowser": "/scripts/vendor/bowser",
-    "sso-override": "../../sso-override",
-    "logger": "../../logger",
-    "BrambleShim": "../../bramble-shim",
     "jquery": "/node_modules/jquery/dist/jquery.min",
     "localized": "/node_modules/webmaker-i18n/localized",
     "uuid": "/node_modules/node-uuid/uuid",
     "cookies": "/node_modules/cookies-js/dist/cookies",
-    "PathCache": "../../path-cache",
     "constants": "/{{ locale }}/shared/scripts/constants",
     "EventEmitter": "/node_modules/wolfy87-eventemitter/EventEmitter.min",
     "analytics": "/{{ locale }}/shared/scripts/analytics"
@@ -27,9 +19,9 @@ require.config({
   }
 });
 
-require(["fc/startup"], function(Startup) {
+require(["lib/startup"], function(Startup) {
 
-  function init(BrambleEditor, Project, SSOOverride, ProjectRenameUtility, analytics) {
+  function init(Editor, Project, Login, ProjectRenameUtility, analytics) {
     var thimbleScript = document.getElementById("thimble-script");
     var appUrl = thimbleScript.getAttribute("data-app-url");
     var projectDetails = thimbleScript.getAttribute("data-project-details");
@@ -46,13 +38,13 @@ require(["fc/startup"], function(Startup) {
 
       // Initialize the name UI for an anonymous project
       if(!projectDetails.userID){
-        ProjectRenameUtility.init(appUrl, BrambleEditor.csrfToken);
+        ProjectRenameUtility.init(appUrl, Editor.csrfToken);
       }
 
       // Initialize the login links
-      SSOOverride.init();
+      Login.init();
 
-      BrambleEditor.create({
+      Editor.create({
         editorUrl: editorUrl,
         appUrl: appUrl
       });
@@ -60,6 +52,6 @@ require(["fc/startup"], function(Startup) {
   }
 
   Startup.init(function start() {
-    require(["bramble-editor", "project/project", "sso-override", "fc/project-rename", "analytics"], init);
+    require(["editor", "project/index", "ui/login", "ui/project-rename", "analytics"], init);
   });
 });

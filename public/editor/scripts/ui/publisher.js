@@ -1,8 +1,8 @@
 define(function(require) {
   var $ = require("jquery");
-  var Project = require("project/project");
-  var FileSystemSync = require("fc/filesystem-sync");
-  var SyncState = require("fc/sync-state");
+  var Project = require("project/index");
+  var FileSystemSync = require("filesystem-sync/index");
+  var SyncState = require("filesystem-sync/state");
 
   var host;
 

@@ -1,14 +1,14 @@
 define(function(require) {
   var $ = require("jquery");
-  var Publisher = require("fc/publisher");
-  var ProjectRenameUtility = require("fc/project-rename");
-  var KeyHandler = require("fc/bramble-keyhandler");
-  var BrambleMenus = require("fc/bramble-menus");
-  var Underlay = require("fc/bramble-underlay");
-  var FileSystemSync = require("fc/filesystem-sync");
-  var Project = require("project/project");
+  var Publisher = require("ui/publisher");
+  var ProjectRenameUtility = require("ui/project-rename");
+  var KeyHandler = require("lib/keyhandler");
+  var BrambleMenus = require("ui/menus");
+  var Underlay = require("lib/underlay");
+  var FileSystemSync = require("filesystem-sync/index");
+  var Project = require("project/index");
   var analytics = require("analytics");
-  var Startup = require("fc/startup");
+  var Startup = require("lib/startup");
   var Path = Bramble.Filer.Path;
 
   var _escKeyHandler;

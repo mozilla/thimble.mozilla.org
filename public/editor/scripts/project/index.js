@@ -3,8 +3,8 @@ define(function(require) {
   var Constants = require("constants");
   var Remote = require("project/remote");
   var Metadata = require("project/metadata");
-  var logger = require("logger");
-  var PathCache = require("PathCache");
+  var logger = require("lib/logger");
+  var PathCache = require("filesystem-sync/path-cache");
   var Path = Bramble.Filer.Path;
 
   var _host;
