@@ -1,4 +1,13 @@
-define(function() {
+(function(global, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(factory);
+  }
+  else if (typeof module === "object" && module && typeof module.exports === "object") {
+    module.exports = factory();
+  } else {
+    global.constants = factory();
+  }
+}(this, function() {
   return {
     ANONYMOUS_USER_FOLDER: "/.anonymous/projects",
     PROJECT_META_KEY: "thimble-project-meta",
@@ -17,4 +26,4 @@ define(function() {
     BACKOFF_MAX_DELAY_MS: 20 * 1000,
     CACHE_KEY_PREFIX: "thimble-cache-key-"
   };
-});
+}));

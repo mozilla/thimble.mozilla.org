@@ -21,11 +21,9 @@ module.exports = function( grunt ) {
           keepBuildDir: true,
           modules: [{
             name: "editor/scripts/main"
-          }, {
-            name: "projects-list/scripts/main"
           }],
           findNestedDependencies: true,
-          fileExclusionRegExp: /^homepage/,
+          fileExclusionRegExp: /^homepage|^projects-list/,
           optimizeCss: "none",
           removeCombined: true,
           paths: {
