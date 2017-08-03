@@ -11,42 +11,6 @@ module.exports = function( grunt ) {
   grunt.initConfig({
     pkg: grunt.file.readJSON( "package.json" ),
 
-    requirejs: {
-      dist: {
-        options: {
-          waitSeconds: 120,
-          appDir: "public/",
-          baseUrl: "editor/scripts",
-          dir: "dist",
-          keepBuildDir: true,
-          findNestedDependencies: true,
-          fileExclusionRegExp: /^homepage|^projects-list/,
-          optimizeCss: "none",
-          removeCombined: true,
-          paths: {
-            "bowser": "resources/scripts/vendor/bowser",
-            "jquery": "../node_modules/jquery/dist/jquery.min",
-            "localized": "../node_modules/webmaker-i18n/localized",
-            "uuid": "../node_modules/node-uuid/uuid",
-            "cookies": "../node_modules/cookies-js/dist/cookies",
-            "constants": "shared/scripts/constants",
-            "EventEmitter": "../node_modules/wolfy87-eventemitter/EventEmitter.min",
-            "analytics": "shared/scripts/analytics",
-            "moment": "../node_modules/moment/min/moment-with-locales.min"
-          },
-          shim: {
-            "jquery": {
-              exports: "$"
-            }
-          },
-          optimize: 'uglify2',
-          preserveLicenseComments: false,
-          useStrict: true,
-          uglify2: {}
-        }
-      }
-    },
-
     // Linting
     lesslint: {
       src: [
@@ -120,6 +84,5 @@ module.exports = function( grunt ) {
   });
 
   grunt.registerTask("test", [ "jshint:server", "jshint:frontend", "lesslint" ]);
-  grunt.registerTask("build", [ "test", "requirejs:dist" ]);
   grunt.registerTask("default", [ "test" ]);
 };

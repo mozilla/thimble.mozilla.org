@@ -8,7 +8,7 @@ let env = require("../server/lib/environment");
 let getListLocales = require("./common").getListLocales;
 
 let development = env.get("NODE_ENV") === "development";
-let src = path.join(process.cwd(), development ? "public" : "dist");
+let src = path.join(process.cwd(), "dist");
 let dest = path.join(process.cwd(), development ? "client" : "dist");
 let localeDir = path.join(process.cwd(), env.get("L10N").locale_dest || "dist/locales");
 
