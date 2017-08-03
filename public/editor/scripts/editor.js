@@ -1,9 +1,9 @@
 define(function(require) {
   var $ = require("jquery"),
-      BrambleUIBridge = require("fc/bramble-ui-bridge"),
-      FileSystemSync = require("fc/filesystem-sync"),
-      Project = require("project/project"),
-      BrambleShim = require("BrambleShim"),
+      UI = require("ui/index"),
+      FileSystemSync = require("filesystem-sync/index"),
+      Project = require("project/index"),
+      BrambleShim = require("bramble-shim"),
       analytics = require("analytics");
 
   var csrfToken = $("meta[name='csrf-token']").attr("content");
@@ -43,7 +43,7 @@ define(function(require) {
 
         // For debugging, attach to window.
         window.bramble = bramble;
-        BrambleUIBridge.init(bramble, csrfToken, options.appUrl);
+        UI.init(bramble, csrfToken, options.appUrl);
       });
     }
   };

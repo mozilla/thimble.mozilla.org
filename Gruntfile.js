@@ -16,32 +16,19 @@ module.exports = function( grunt ) {
         options: {
           waitSeconds: 120,
           appDir: "public/",
-          baseUrl: "./",
+          baseUrl: "editor/scripts",
           dir: "dist",
           keepBuildDir: true,
-          modules: [{
-            name: "editor/scripts/main"
-          }],
           findNestedDependencies: true,
           fileExclusionRegExp: /^homepage|^projects-list/,
           optimizeCss: "none",
           removeCombined: true,
           paths: {
-            // Folders
-            "fc": "editor/scripts/editor/js/fc",
-            "project": "editor/scripts/project",
-
-            // Files
             "bowser": "resources/scripts/vendor/bowser",
-            "bramble-editor": "editor/scripts/editor/js/bramble-editor",
-            "sso-override": "editor/scripts/sso-override",
-            "logger": "editor/scripts/logger",
-            "BrambleShim": "editor/scripts/bramble-shim",
             "jquery": "../node_modules/jquery/dist/jquery.min",
             "localized": "../node_modules/webmaker-i18n/localized",
             "uuid": "../node_modules/node-uuid/uuid",
             "cookies": "../node_modules/cookies-js/dist/cookies",
-            "PathCache": "editor/scripts/path-cache",
             "constants": "shared/scripts/constants",
             "EventEmitter": "../node_modules/wolfy87-eventemitter/EventEmitter.min",
             "analytics": "shared/scripts/analytics",
