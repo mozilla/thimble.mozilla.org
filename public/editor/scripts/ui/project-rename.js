@@ -1,8 +1,8 @@
 define(function(require) {
   var $ = require("jquery");
-  var InputField = require("fc/bramble-input-field");
-  var KeyHandler = require("fc/bramble-keyhandler");
-  var Project = require("project/project");
+  var InputField = require("lib/input-field");
+  var KeyHandler = require("lib/keyhandler");
+  var Project = require("project/index");
   var analytics = require("analytics");
   var constants = require("constants");
 
