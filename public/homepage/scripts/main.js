@@ -8,7 +8,7 @@ var features = require("./features");
 var gallery = require("./gallery");
 var getinvolved = require("./getinvolved");
 var analytics = require("../../shared/scripts/analytics");
-var PopupMenu = require("../../shared/scripts/popupmenu");
+var userbar = require("../../shared/scripts/userbar");
 
 function setupNewProjectLinks() {
   var authenticated = $("#navbar-login").hasClass("signed-in");
@@ -82,8 +82,7 @@ function setupAuthentication() {
 // separate modules, each of which would be initialized here.
 // See: public/editor/scripts/main.js
 $(function init() {
-  PopupMenu.create("#navbar-logged-in .dropdown-toggle", "#navbar-logged-in .dropdown-content");
-  PopupMenu.create("#navbar-locale .dropdown-toggle", "#navbar-locale .dropdown-content");
+  userbar.createDropdownMenus(["#navbar-help"]);
   setupAuthentication();
   setupNewProjectLinks();
   gallery.init();
