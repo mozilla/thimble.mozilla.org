@@ -55,7 +55,7 @@ All three services are bundled together using Git subtrees to be run together us
 ### Prerequisites for Automated Installation
 In order for Thimble to be installed correctly, the following dependencies need to be installed in order:
 
-- Node.js (version 8.1 or later) [[download](https://nodejs.org/en/download/)]
+- Node.js (version 6.11.1 or later) [[download](https://nodejs.org/en/download/)]
 - [Brackets (Bramble)](#installing-brackets-bramble)
 - Virtualbox (version 5.1 or later) [[download](https://www.virtualbox.org/wiki/Downloads)]
 - Vagrant (version 1.9 or later) [[download](https://www.vagrantup.com/downloads.html)]
@@ -107,7 +107,7 @@ You can also setup Thimble and its needed components outside Vagrant and Virtual
 In order for Thimble to be installed correctly, the following dependencies need to be installed:
 
 - Node.js 4.x or above (see note below)
-  - **Note:** The login.webmaker.org dependency needs a node version of 4.x only while all the other dependencies work with a node version of 4.x and above (Thimble requires node 8.x and above). We suggest installing [NVM](https://github.com/creationix/nvm) to allow the use of multiple versions of node.
+  - **Note:** The login.webmaker.org dependency needs a node version of 4.x only while all the other dependencies work with a node version of 4.x and above (Thimble requires node 6.11.1 or above). We suggest installing [NVM](https://github.com/creationix/nvm) to allow the use of multiple versions of node.
 - [Brackets (Bramble)](#installing-brackets-bramble)
 - [Webmaker ID server](#idwebmakerorg)
 - [Webmaker Publishing Server](#publishwebmakerorg)
