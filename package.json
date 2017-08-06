@@ -87,7 +87,6 @@
     "localize:client": "node scripts/localize-client.js",
     "client": "node scripts/watch-client",
     "server": "node app.js",
-    "restart-server": "vagrant ssh -- pm2 restart thimble ; true",
     "services:logs": "vagrant ssh -- pm2 logs --format",
     "prestart": "run-s build:* localize:*",
     "start": "run-p server client",
