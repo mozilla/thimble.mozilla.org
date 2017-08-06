@@ -15,7 +15,6 @@ let Security = require("./security");
 let localize = require("./localize");
 let HttpError = require("./lib/http-error.js");
 let routes = require("./routes")();
-let Utils = require("./lib/utils");
 
 let server = express();
 let environment = env.get("NODE_ENV");
