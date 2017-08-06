@@ -28,7 +28,6 @@
     "bestlang": "0.0.1",
     "body-parser": "^1.17.1",
     "bowser": "^1.7.1",
-    "chokidar": "^1.6.1",
     "co": "^4.6.0",
     "colors": "^1.1.2",
     "compression": "^1.6.2",
@@ -63,6 +62,7 @@
     "node-uuid": "~1.4.7",
     "npm-run-all": "^4.0.2",
     "nunjucks": "^2.3.0",
+    "on-build-webpack": "^0.1.0",
     "properties-parser": "0.3.1",
     "request": "2.80.0",
     "serve-favicon": "^2.4.1",
@@ -84,11 +84,10 @@
     "env": "shx cp env.dist .env",
     "build:js": "webpack",
     "localize": "node scripts/localize",
-    "client": "node scripts/watch-client",
     "server": "node app.js",
     "services:logs": "vagrant ssh -- pm2 logs --format",
-    "prestart": "run-s build:* localize",
-    "start": "run-p server",
+    "prestart": "npm run localize",
+    "start": "run-p build:* server",
     "invalidate": "node scripts/invalidate.js"
   }
 }
