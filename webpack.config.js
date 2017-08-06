@@ -63,5 +63,8 @@ module.exports = [
   PROJECTS_LIST_CONFIG,
   EDITOR_CONFIG
 ].map(config => Object.assign(config, {
-  plugins
+  plugins,
+  externals: {
+    strings: "__THIMBLE_STRINGS__"
+  }
 }));

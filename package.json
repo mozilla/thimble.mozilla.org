@@ -29,6 +29,7 @@
     "body-parser": "^1.17.1",
     "bowser": "^1.7.1",
     "chokidar": "^1.6.1",
+    "co": "^4.6.0",
     "colors": "^1.1.2",
     "compression": "^1.6.2",
     "cookie-parser": "^1.4.3",
@@ -39,7 +40,6 @@
     "csurf": "^1.9.0",
     "express": "^4.15.2",
     "form-data": "^0.2.0",
-    "fs-writefile-promise": "^2.0.0",
     "glob": "^7.1.1",
     "grunt": "~0.4.1",
     "grunt-cli": "^1.2.0",
@@ -64,9 +64,9 @@
     "npm-run-all": "^4.0.2",
     "nunjucks": "^2.3.0",
     "properties-parser": "0.3.1",
-    "q-io": "1.13.2",
     "request": "2.80.0",
     "serve-favicon": "^2.4.1",
+    "shelljs": "^0.7.8",
     "tar-stream": "^1.5.2",
     "throng": "^4.0.0",
     "time-grunt": "^1.4.0",
@@ -79,17 +79,16 @@
     "shx": "^0.2.2"
   },
   "scripts": {
-    "postinstall": "run-s build:* localize:*",
+    "postinstall": "run-s build:* localize",
     "test": "grunt",
     "env": "shx cp env.dist .env",
     "build:js": "webpack",
-    "localize:locales": "node scripts/properties2json.js",
-    "localize:client": "node scripts/localize-client.js",
+    "localize": "node scripts/localize",
     "client": "node scripts/watch-client",
     "server": "node app.js",
     "services:logs": "vagrant ssh -- pm2 logs --format",
-    "prestart": "run-s build:* localize:*",
-    "start": "run-p server client",
+    "prestart": "run-s build:* localize",
+    "start": "run-p server",
     "invalidate": "node scripts/invalidate.js"
   }
 }
