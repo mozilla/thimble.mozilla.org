@@ -20,7 +20,7 @@
   "license": "MPL-2.0",
   "homepage": "https://thimble.mozilla.org",
   "engines": {
-    "node": "^4.8.4"
+    "node": "^6.11.1"
   },
   "dependencies": {
     "async": "0.2.7",
@@ -75,16 +75,19 @@
     "webpack": "^3.2.0",
     "wolfy87-eventemitter": "^5.1.0"
   },
+  "devDependencies": {
+    "shx": "^0.2.2"
+  },
   "scripts": {
     "postinstall": "run-s build:* localize:*",
     "test": "grunt",
+    "env": "shx cp env.dist .env",
     "build:js": "webpack",
     "localize:locales": "node scripts/properties2json.js",
     "localize:client": "node scripts/localize-client.js",
     "client": "node scripts/watch-client",
     "server": "node app.js",
-    "restart-server": "vagrant ssh -- pm2 restart thimble ; true",
-    "logs": "vagrant ssh -- pm2 logs --format",
+    "services:logs": "vagrant ssh -- pm2 logs --format",
     "prestart": "run-s build:* localize:*",
     "start": "run-p server client",
     "invalidate": "node scripts/invalidate.js"
