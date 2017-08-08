@@ -2,7 +2,6 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
-  config.vm.network :forwarded_port, host: 3500, guest: 3500 # Thimble
   config.vm.network :forwarded_port, host: 2015, guest: 2015 # publish.webmaker.org
   config.vm.network :forwarded_port, host: 8001, guest: 8001 # Published projects
   config.vm.network :forwarded_port, host: 1234, guest: 1234 # id.webmaker.org
@@ -21,5 +20,8 @@ Vagrant.configure("2") do |config|
   config.vm.provision :shell, path: "scripts/setup-services.sh"
 
   # Always provision Thimble and necessary node apps
-  config.vm.provision :shell, path: "scripts/start-services.sh", :run => "always", privileged: false
+  config.vm.provision "shell",
+    run: "always",
+    privileged: false,
+    inline: "pm2 startOrRestart /vagrant/ecosystem.json"
 end

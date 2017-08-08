@@ -32,7 +32,6 @@ npm install -g node-pre-gyp --loglevel=error # For login.webmaker.org sqlite3
 npm install -g autoless@0.1.7 webpack@1.7.3 --loglevel=error # For id.webmaker.org
 npm install -g knex@">=0.8.6 <0.9.0" --loglevel=error # For publish.webmaker.org
 npm install -g pm2 --loglevel=error # For running Thimble, see scripts/start-services.sh
-npm install -g grunt-cli --loglevel=error # For Thimble's npm postinstall script
 # ---
 
 cd /vagrant
@@ -106,10 +105,4 @@ eval "DATABASE_URL=postgres://$DB_USERNAME:$DB_PASSWORD@localhost:5432/publish n
 cd ..
 mkdir -p /tmp/mox/test # Serve published projects from here
 chown -R vagrant:vagrant /tmp/mox/test # Let vagrant write to this dir
-# ---
-
-# --- thimble setup ---
-cd "$ROOT"
-cp env.dist .env
-npm install --no-bin-links --unsafe-perm --loglevel=error
 # ---
