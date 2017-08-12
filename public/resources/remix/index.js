@@ -26,7 +26,7 @@
 
     detailsBar.setAttribute("style", "");
 
-    var isTouchDevice = 'ontouchstart' in document.documentElement;
+    var isTouchDevice = (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
 
     if (isTouchDevice) {
 
