@@ -6,7 +6,7 @@ var HttpError = require("../../lib/http-error");
 module.exports = function(config, req, res, next) {
   var oauth = config.oauth;
   var cryptr = config.cryptr;
-  var authURL = `${oauth.authorization_url}/login/oauth/access_token`;
+  var authURL = `${oauth.webmaker_auth_url}/login/oauth/access_token`;
   var locale = req.session.locale;
   if(!locale) {
     // This can happen when we try to logout again when we are already
@@ -52,7 +52,7 @@ module.exports = function(config, req, res, next) {
     );
   }
 
-  if (req.query.client_id !== oauth.client_id) {
+  if (req.query.client_id !== oauth.webmaker_client_id) {
     res.status(401);
     return next(
       HttpError.format({
@@ -66,8 +66,8 @@ module.exports = function(config, req, res, next) {
   request.post({
     url: authURL,
     form: {
-      client_id: oauth.client_id,
-      client_secret: oauth.client_secret,
+      client_id: oauth.webmaker_client_id,
+      client_secret: oauth.webmaker_client_secret,
       grant_type: "authorization_code",
       code: req.query.code
     }
@@ -107,7 +107,7 @@ module.exports = function(config, req, res, next) {
 
     req.session.token = cryptr.encrypt(body.access_token);
 
-    var userURL = `${oauth.authorization_url}/user`;
+    var userURL = `${oauth.webmaker_auth_url}/user`;
 
     // Next, fetch user data
     request.get({
