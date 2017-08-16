@@ -1,5 +1,8 @@
 "use strict";
 
+// TODO: Here we're going to declare the "passport" dependency, pass it into the request.js file
+// and also initialize the passport.js module file which is going to initialize our strategies.
+
 /**
  * Module dependencies.
  */
@@ -7,6 +10,7 @@ let express = require("express");
 let path = require("path");
 let favicon = require("serve-favicon");
 let url = require("url");
+let passport = require("passport");
 
 let env = require("./lib/environment");
 let templatize = require("./templatize");
@@ -53,6 +57,7 @@ requests.disableHeaders([ "x-powered-by" ])
 .url({ extended: true })
 .lessOptimizations(path.join(root, "public"), cssAssets, !isDevelopment)
 .healthcheck()
+.passport(passport)
 .sessions({
   key: "mozillaThimble",
   secret: env.get("SESSION_SECRET"),
