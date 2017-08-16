@@ -7,6 +7,7 @@
 let WebmakerStrategy = require("passport-webmaker").Strategy;
 let url = require("url");
 
+let env = require("./lib/environment");
 let oauth = env.get("OAUTH");
 
 module.exports = function passport(passport) {
