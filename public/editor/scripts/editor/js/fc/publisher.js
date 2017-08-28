@@ -287,7 +287,7 @@ define(function(require) {
 
     // Expose the published state with the updated link
     published.link
-      .attr({"href": publishUrl, "target": "_blank"})
+      .attr({"href": publishUrl})
       .text(publishUrl);
     published.changed.addClass("hide");
 
