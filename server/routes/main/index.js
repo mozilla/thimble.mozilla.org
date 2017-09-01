@@ -20,8 +20,6 @@ module.exports = {
 
     // Refresh Editor Page
     app.get("/refresh",
-      middleware.clearRedirects,
-      middleware.setUserIfTokenExists,
       require("./refresh").bind(app, config));
 
     // Entry point to the editor for all users
