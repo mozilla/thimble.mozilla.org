@@ -194,7 +194,7 @@ module.exports = function middlewareConstructor(config) {
           "Authorization": `token ${user.token}`
         },
         body: {
-          name: user.displayName
+          name: user.username
         },
         json: true
       }, function(err, response, body) {
