@@ -8,19 +8,10 @@ module.exports = function(config, req, res) {
   }
 
   var options = {
-    loginURL: config.appURL + "/" + locale + "/login",
-    editorHOST: config.editorHOST,
-    editorURL: config.editorURL,
     URL_PATHNAME: "/" + qs,
     languages: req.app.locals.languages,
     pageName: "refresh-editor"
   };
-
-  if (req.user) {
-    options.username = req.user.username;
-    options.avatar = req.user.avatar;
-    options.logoutURL = config.logoutURL;
-  }
 
   res.render("refresh.html", options);
 };
