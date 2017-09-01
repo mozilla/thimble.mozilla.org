@@ -18,6 +18,12 @@ module.exports = {
       middleware.setUserIfTokenExists,
       require("./get-involved").bind(app, config));
 
+    // Refresh Editor Page
+    app.get("/refresh",
+      middleware.clearRedirects,
+      middleware.setUserIfTokenExists,
+      require("./refresh").bind(app, config));
+
     // Entry point to the editor for all users
     app.get("/editor",
       middleware.setErrorMessage("errorMigratingProject"),
