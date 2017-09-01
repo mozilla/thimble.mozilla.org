@@ -8,7 +8,7 @@ module.exports = function(config, req, res) {
   }
 
   var options = {
-    loginURL: config.appURL + "/" + locale + "/login",
+    loginURL: config.appURL + "/" + locale + "/login/webmaker",
     editorHOST: config.editorHOST,
     editorURL: config.editorURL,
     URL_PATHNAME: "/" + qs,

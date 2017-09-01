@@ -67,7 +67,7 @@ module.exports = function(config, req, res, next) {
     languages: req.app.locals.languages,
     csrf: req.csrfToken(),
     editorHOST: config.editorHOST,
-    loginURL: config.appURL + "/" + locale + "/login",
+    loginURL: config.appURL + "/" + locale + "/login/webmaker",
     logoutURL: config.logoutURL,
     queryString: qs
   };

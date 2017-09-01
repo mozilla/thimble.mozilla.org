@@ -1,4 +1,4 @@
-module.exports = function(config, req, res) {
+module.exports = function(config, passport, req, res, next) {
   if (req.query.anonymousId) {
     req.session.project = {
       anonymousId: req.query.anonymousId,
@@ -10,12 +10,10 @@ module.exports = function(config, req, res) {
 
   req.session.locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
 
-  var loginType = "&action=" + (req.query.signup ?  "signup" : "signin");
-  var state = "&state=" + req.cookies.state;
+  var strategy = req.params.strategy.toLowerCase();
+  var action = req.query.signup ? "signup" : "signin";
 
-  res.set({
-    "Cache-Control": "no-cache"
-  });
-
-  res.redirect(307, config.loginURL + state + loginType);
+  // TODO: When we implement multiple strategies, we need to incorporate this into an if/else or switch block.
+  // Right now we ignore the "strategy" variable, because we already know the only valid response is "webmaker".
+  passport.authenticate("webmaker", { scopes: ["user", "email"], action: action })(req, res, next);
 };

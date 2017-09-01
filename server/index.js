@@ -20,6 +20,7 @@ let localize = require("./localize");
 let HttpError = require("./lib/http-error.js");
 let routes = require("./routes")();
 let Utils = require("./lib/utils");
+let passportConfig = require("./passport");
 
 let server = express();
 let environment = env.get("NODE_ENV");
@@ -119,11 +120,15 @@ localize(server, Object.assign(env.get("L10N"), {
    excludeLocaleInUrl: [ "/projects/remix-bar" ]
 }));
 
+/**
+ * Passport
+ */
+ passportConfig(passport);
 
 /**
  * API routes
  */
-routes.init(server);
+routes.init(server, passport);
 
 
 /*
