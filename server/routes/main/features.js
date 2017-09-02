@@ -18,7 +18,7 @@ module.exports = function(config, req, res) {
 
   if (req.user) {
     options.username = req.user.username;
-    options.avatar = req.user.avatar;
+    options.avatar = req.user.photos[0].value;
     options.logoutURL = config.logoutURL;
   }
 

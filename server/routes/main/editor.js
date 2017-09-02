@@ -85,7 +85,7 @@ module.exports = function(config, req, res, next) {
 
   if (req.user) {
     options.username = req.user.username;
-    options.avatar = req.user.avatar;
+    options.avatar = req.user.photos[0].value;
   }
 
   getProjectMetadata(config, req, function(err, status, projectMetadata) {
