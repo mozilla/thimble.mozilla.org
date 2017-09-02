@@ -1,8 +1,5 @@
 "use strict";
 
-// TODO: Here we're going to declare the "passport" dependency, pass it into the request.js file
-// and also initialize the passport.js module file which is going to initialize our strategies.
-
 /**
  * Module dependencies.
  */

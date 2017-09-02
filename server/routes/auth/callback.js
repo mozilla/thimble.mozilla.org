@@ -15,7 +15,7 @@ module.exports = function(config, passport, req, res, next) {
     return res.redirect(307, "/" + locale);
   }
 
-  var strategy = req.params.strategy.toLowerCase();
+  //var strategy = req.params.strategy.toLowerCase();
   var editorURL = "/" + locale + "/editor";
 
   // TODO: When we implement multiple strategies, we need to incorporate this into an if/else or switch block.

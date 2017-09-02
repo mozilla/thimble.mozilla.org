@@ -21,12 +21,10 @@ module.exports = function (passport) {
     return done(null, profile);
   }));
 
-  // TODO: Review this stuff, see if we need it or if it's default handling.
   passport.serializeUser(function(user, done) {
     done(null, user);
   });
 
-  // TODO: Same thing as above, but with this as well.
   passport.deserializeUser(function(user, done) {
     done(null, user);
   });

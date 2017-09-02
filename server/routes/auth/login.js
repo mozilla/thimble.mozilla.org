@@ -10,7 +10,7 @@ module.exports = function(config, passport, req, res, next) {
 
   req.session.locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
 
-  var strategy = req.params.strategy.toLowerCase();
+  //var strategy = req.params.strategy.toLowerCase();
   var action = req.query.signup ? "signup" : "signin";
 
   // TODO: When we implement multiple strategies, we need to incorporate this into an if/else or switch block.

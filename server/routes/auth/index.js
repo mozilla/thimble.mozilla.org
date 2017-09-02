@@ -5,7 +5,6 @@ module.exports = {
       require("./login").bind(app, config, passport));
 
     app.get("/login/:strategy/callback",
-      // TODO: Determine if we actually need this in the new implementation.
       middleware.setErrorMessage("errorAuthenticating"),
       require("./callback").bind(app, config, passport));
 
@@ -13,6 +12,6 @@ module.exports = {
     app.get("/logout", function(req, res) {
       req.logout();
       res.redirect(307, "/");
-    })
+    });
   }
 };

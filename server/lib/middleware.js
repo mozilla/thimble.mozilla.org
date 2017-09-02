@@ -81,8 +81,6 @@ module.exports = function middlewareConstructor(config) {
      * local user object.
      */
     setUserIfTokenExists(req, res, next) {
-     console.log("Session: " + JSON.stringify(req.session, null, 2));
-
       if (!req.session || !req.session.token) {
         return next();
       }
