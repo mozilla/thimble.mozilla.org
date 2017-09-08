@@ -1,0 +1,50 @@
+{% set locale = localeInfo.lang %}
+{% set localeDir = localeInfo.locale %}
+<!DOCTYPE html>
+<html lang="{{ locale }}" dir="{{ localeInfo.direction }}">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ gettext("errorSomethingWentWrong") }}</title>
+    <link rel="stylesheet" href="/homepage/stylesheets/style.css">
+    <link rel="stylesheet" href="/resources/stylesheets/error.css">
+  </head>
+  <body class="error-page">
+
+    <section class="main-cta">
+      <div class="content-wrapper centered-message">
+
+        <img class="spilled-thimble" src="/img/spilled-thimble.png" />
+        <h1>
+          {{ gettext("errorCantLoadPreviewTitle") }}
+        </h1>
+        <h2>
+          {{ gettext("errorCantLoadPreview") }}
+        </h2>
+
+        <p class="button-wrapper">
+          <button class="try-again action-button">
+            {{ gettext("reloadButtonLabel") }}
+          </button>
+        </p>
+        <p>
+          {{ gettext("errorKeepSeeingPage") }}
+        </p>
+
+        <div class="contact-icons">
+          <a title="{{ gettext("contactEmail") }}" class="email" href="mailto:thimble@mozillafoundation.org" target="_blank">
+            <span class="icon"></span>
+          </a>
+          <a title="{{ gettext("contactTwitterTitle") }}" class="twitter" href="https://twitter.com/codewiththimble" target="_blank">
+            <span class="icon"></span>
+          </a>
+          <a title="{{ gettext("contributeTitle") }}" class="github" href="https://github.com/mozilla/thimble.mozilla.org" target="_blank">
+            <span class="icon"></span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <script src="/{{ localeDir }}/error/scripts/main.js"></script>
+  </body>
+</html>
