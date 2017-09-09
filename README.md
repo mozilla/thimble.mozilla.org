@@ -20,6 +20,8 @@ how it works in [this blog post](http://blog.humphd.org/thimble-and-bramble/).
 
 Thimble requires a modern web browser, and we recommend using Mozilla Firefox or Google Chrome. We use [BrowserStack](https://browserstack.com) to test Thimble in modern browsers on different operating systems.
 
+---
+
 # Setup/Installation
 
 Thimble interacts with the Publish API (source managed in [publish.webmaker.org](https://github.com/mozilla/publish.webmaker.org)) to store users, projects, files and other content as well as publish user projects.
@@ -48,6 +50,8 @@ All three services along with Thimble are bundled together using Git subtrees to
   For e.g. `git subtree pull --prefix services/publish.webmaker.org https://github.com/mozilla/publish.webmaker.org master --squash`.
   - Update your remote branch with this new change.
   - Open a pull request to have the subtree update reviewied and merged.
+
+---
 
 ## Automated Installation (Preferred Method)
 **Note:** If you aren't able to properly run virtualization software on your machine (for e.g. some versions of Windows only allow one virtualization client to run at a time and if that isn't VirtualBox, you can't run the required VirtualBox as well. This is often a problem if you have docker installed on Windows) or are trying to host Thimble on your own, refer to the [Manual Installation](#manual-installation) instructions instead.
@@ -107,6 +111,8 @@ npm run localize-client
 
 This will redownload all locale strings and rebuild the client to make use of them.
 
+---
+
 ## Manual Installation
 You can also setup Thimble and its needed components outside Vagrant and Virtualbox. This might be needed if you want to:
 - Host your own instance of Thimble
@@ -163,6 +169,8 @@ Please note: On Windows, use ``copy`` instead of ``cp``
 
 Once everything is ready and running, Thimble will be available at [http://localhost:3500/](http://localhost:3500/)
 
+---
+
 ### Getting Ready to Publish
 To publish locally, you'll need to do the following...
 
@@ -203,6 +211,8 @@ Please refer to the [Wiki](https://github.com/mozilla/thimble.mozilla.org/wiki/L
 
 [Our localization community](https://pontoon.mozilla.org/projects/thimble/contributors) is awesome! They work very hard to translate Thimble so that we can expand our global reach and engage even more users in other languages. We can't thank them enough!
 
+---
+
 Invalidating CloudFront
 ----------------------
 
@@ -219,3 +229,5 @@ Contact Us
 We're a friendly group, so feel free to chat with us in the "Thimble" channel on Mozilla Chat running on [Mattermost](https://about.mattermost.com). To access Mozilla Chat head over to [chat.mozillafoundation.org](https://chat.mozillafoundation.org). Note that you will be prompted to create an account if you do not already have one. If you already have an account, and you are already logged in from a previous visit, you can directly access the Thimble channel by clicking on [this link](https://chat.mozillafoundation.org/mozilla/channels/thimble).
 
 You can also download a mobile or desktop client for Mattermost [here](https://about.mattermost.com/download/#mattermostApps).
+
+---
