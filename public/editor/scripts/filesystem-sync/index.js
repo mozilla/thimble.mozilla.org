@@ -5,6 +5,7 @@
  * get recorded and eventually sent to the server.
  */
 var $ = require("jquery");
+var strings = require("strings");
 
 var Project = require("../project");
 var SyncManager = require("./manager");
@@ -37,14 +38,14 @@ function init(csrfToken) {
   // Update the UI with a "Saving..." indicator whenever we sync a file
   syncManager.on("file-sync-start", function() {
     $("#navbar-save-indicator").removeClass("hide");
-    $("#navbar-save-indicator").text("{{ fileSavingIndicator }}");
+    $("#navbar-save-indicator").text(strings.get("fileSavingIndicator"));
   });
   syncManager.on("file-sync-stop", function() {
     $("#navbar-save-indicator").addClass("hide");
   });
   syncManager.on("file-sync-error", function() {
     // Saving over the network failed, let the user know, and that we'll retry
-    $("#navbar-save-indicator").text("{{ fileSavingFailedIndicator }}");
+    $("#navbar-save-indicator").text(strings.get("fileSavingFailedIndicator"));
   });
 
   // Warn the user when we're syncing so they don't close the window by accident

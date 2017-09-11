@@ -1,6 +1,8 @@
 /* globals $: true */
 
 var $ = require("jquery");
+var strings = require("strings");
+
 var analytics = require("../../shared/scripts/analytics");
 
 module.exports = {
@@ -265,9 +267,9 @@ module.exports = {
     var tagsTitleEl = this.galleryEl.find(".popular-tags .tags-title");
 
     if(type === "featured") {
-      tagsTitleEl.text("{{ popularTags }}");
+      tagsTitleEl.text(strings.get("popularTags"));
     } else {
-      tagsTitleEl.text("{{ addFilter }}");
+      tagsTitleEl.text(strings.get("addFilter"));
     }
 
     if(maxTags > 0) {
@@ -337,9 +339,9 @@ module.exports = {
     }
 
     if(this.mode === "search") {
-      this.galleryEl.find(".title").text("{{ searchResultsTitle }}");
+      this.galleryEl.find(".title").text(strings.get("searchResultsTitle"));
     } else {
-      this.galleryEl.find(".title").text("{{ remixGalleryTitle }}");
+      this.galleryEl.find(".title").text(strings.get("remixGalleryTitle"));
     }
 
     var termLength = $(".search").val().length;

@@ -15,13 +15,12 @@ let Security = require("./security");
 let localize = require("./localize");
 let HttpError = require("./lib/http-error.js");
 let routes = require("./routes")();
-let Utils = require("./lib/utils");
 
 let server = express();
 let environment = env.get("NODE_ENV");
 let isDevelopment = environment === "development";
 let root = path.dirname(__dirname);
-let client = path.join(root, isDevelopment ? "client" : "dist");
+let client = path.join(root, "dist");
 let cssAssets = path.join(require("os").tmpdir(), "mozilla.webmaker.org");
 let editor = url.parse(env.get("BRAMBLE_URI"));
 let editorHost = `${editor.protocol}//${editor.host}`;
@@ -90,18 +89,15 @@ if(!!env.get("FORCE_SSL")) {
   secure.ssl();
 }
 
+requests.enableLogging(environment);
 
 /**
  * Static assets
  */
-Utils.getFileList(path.join(root, "public"), "!(*.js)")
-.forEach(file => server.use(express.static(file, maxCacheAge)));
+server.use(express.static(client, maxCacheAge));
 server.use(express.static(cssAssets, maxCacheAge));
 server.use(express.static(path.join(root, "public/resources"), maxCacheAge));
 server.use("/node_modules", express.static(path.join(root, server.locals.node_path), maxCacheAge));
-// Start logging requests for routes that serve JS
-requests.enableLogging(environment);
-server.use(express.static(client, maxCacheAge));
 // So that we don't break compatibility with existing published projects,
 // we serve the remix resources through this route as well
 server.use("/resources/remix", express.static(path.join(root, "public/resources/remix"), maxCacheAge));

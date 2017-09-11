@@ -1,5 +1,6 @@
 /* globals $: true */
 var $ = require("jquery");
+var strings = require("strings");
 
 var Publisher = require("./publisher");
 var ProjectRenameUtility = require("./project-rename");
@@ -139,7 +140,7 @@ function init(bramble, csrfToken, appUrl) {
     var projectId = Project.getID();
 
     // TODO: we can do better than this, but let's at least make it harder to lose data.
-    if(!window.confirm("{{ deleteProjectConfirmationText }}")) {
+    if(!window.confirm(strings.get("deleteProjectConfirmationText"))) {
       return false;
     }
 
