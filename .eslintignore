@@ -1,0 +1,10 @@
+**/*.min.js
+node_modules
+default
+!default/index.js
+dist
+locales
+services
+views
+Gruntfile.js
+webpack.config.js
