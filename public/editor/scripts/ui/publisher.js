@@ -1,5 +1,6 @@
 /* globals $: true */
 var $ = require("jquery");
+var strings = require("strings");
 
 var Project = require("../project");
 var FileSystemSync = require("../filesystem-sync");
@@ -7,12 +8,12 @@ var SyncState = require("../filesystem-sync/state");
 
 var host;
 
-var TEXT_PUBLISH = "{{ publishBtn }}";
-var TEXT_PUBLISHING = "{{ publishPublishingIndicator }}";
-var TEXT_UNPUBLISH = "{{ publishDeleteBtn }}";
-var TEXT_UNPUBLISHING = "{{ publishUnpublishingIndicator }}";
-var TEXT_UPDATE_PUBLISH = "{{ publishChangesBtn }}";
-var TEXT_UNPUBLISH_WARNING = "{{ publishDeleteWarning }}";
+var TEXT_PUBLISH = strings.get("publishBtn");
+var TEXT_PUBLISHING = strings.get("publishPublishingIndicator");
+var TEXT_UNPUBLISH = strings.get("publishDeleteBtn");
+var TEXT_UNPUBLISHING = strings.get("publishUnpublishingIndicator");
+var TEXT_UPDATE_PUBLISH = strings.get("publishChangesBtn");
+var TEXT_UNPUBLISH_WARNING = strings.get("publishDeleteWarning");
 
 function unpublishedChangesPrompt() {
   var dialog = this.dialog;

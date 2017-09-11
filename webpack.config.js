@@ -1,8 +1,8 @@
 "use strict";
 
 const webpack = require("webpack");
-// const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const path = require("path");
+const WebpackOnBuildPlugin = require("on-build-webpack");
 
 const env = require("./server/lib/environment");
 
@@ -13,6 +13,16 @@ if(!IS_DEVELOPMENT) {
   plugins.push(
     new webpack.optimize.UglifyJsPlugin()
   );
+} else {
+  plugins.push(
+    new WebpackOnBuildPlugin(stats => {
+      if(stats.compilation.outputOptions.path === path.resolve(__dirname, "dist/editor")) {
+        process.nextTick(() => {
+          console.log(`Client files have been built. You can now load Thimble at ${env.get("APP_HOSTNAME")}`);
+        });
+      }
+    })
+  )
 }
 
 function absolutePublicPath(filePath) {
@@ -63,5 +73,9 @@ module.exports = [
   PROJECTS_LIST_CONFIG,
   EDITOR_CONFIG
 ].map(config => Object.assign(config, {
-  plugins
+  plugins,
+  externals: {
+    strings: "__THIMBLE_STRINGS__"
+  },
+  watch: IS_DEVELOPMENT
 }));

@@ -1,5 +1,6 @@
 /* globals $: true */
 var $ = require("jquery");
+var strings = require("strings");
 
 var InputField = require("../lib/input-field");
 var Project = require("../project");
@@ -30,7 +31,7 @@ function toggleComponents(context, isSave) {
     return false;
   }
 
-  saveButton.text("{{ renameProjectSaveBtn }}");
+  saveButton.text(strings.get("renameProjectSaveBtn"));
   saveButton[isSave ? "hide" : "show"]();
   context.renameButton[isSave ? "show" : "hide"]();
   titleBar[isSave ? "save" : "edit"]();
@@ -124,7 +125,7 @@ function save(context) {
   if (contextTitle === Project.getTitle()) {
     editingComplete(context);
   } else {
-    context.saveButton.text("{{ renameProjectSavingIndicator }}");
+    context.saveButton.text(strings.get("renameProjectSavingIndicator"));
 
     persist.call(context, contextTitle, function(err) {
       if (err) {

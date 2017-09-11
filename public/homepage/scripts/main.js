@@ -3,6 +3,7 @@
 var $ = require("jquery");
 var uuid = require("uuid");
 var cookies = require("cookies-js");
+var strings = require("strings");
 
 var features = require("./features");
 var gallery = require("./gallery");
@@ -26,7 +27,7 @@ function setupNewProjectLinks() {
     var cacheBust = "cacheBust=" + Date.now();
     var qs = queryString === "" ? "?" + cacheBust : queryString + "&" + cacheBust;
 
-    $("#new-project-button-text").text("{{ newProjectInProgressIndicator }}");
+    $("#new-project-button-text").text(strings.get("newProjectInProgressIndicator"));
 
     if(authenticated) {
       analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "New Authenticated Project" });

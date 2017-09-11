@@ -17,8 +17,10 @@
     <link rel="stylesheet" href="/projects-list/stylesheets/style.css">
     <link rel="stylesheet" href="/homepage/stylesheets/style.css">
 
+    <script src="/locales/{{ localeDir }}/strings.js"></script>
+
     {% if GA_ACCOUNT %}
-    <script id="google-analytics-js" src="/{{ localeDir }}/shared/scripts/google-analytics.js"
+    <script id="google-analytics-js" src="/shared/scripts/google-analytics.js"
             data-ga-account="{{ GA_ACCOUNT }}"
             data-ga-domain="{{ GA_DOMAIN }}"
             async>
@@ -78,7 +80,7 @@
 
       </div>
 
-      <script src="/{{ localeDir }}/projects-list/scripts/main.js"></script>
+      <script src="/projects-list/scripts/main.js"></script>
       <div class="project-list-scroll"></div>
     </div>
   </body>

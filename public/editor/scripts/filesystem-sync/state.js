@@ -4,10 +4,12 @@
  */
 
 var EventEmitter = require("wolfy87-eventemitter");
+var strings = require("strings");
+
 var SyncState = new EventEmitter();
 
 function _onbeforeunload(e) {
-  var s = "{{ windowCloseFileSavingIndicator }}";
+  var s = strings.get("windowCloseFileSavingIndicator");
   var e = e || window.event;
 
   if(e) {
