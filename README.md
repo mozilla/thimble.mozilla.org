@@ -88,9 +88,11 @@ When Vagrant finishes provisioning the VM, all the services that Thimble relies 
 ```sh
 npm start
 ```
-Once you see a log that says `Express server listening on http://localhost:3500 (this may take a minute...)`, you can access Thimble on [http://localhost:3500](http://localhost:3500).
+Once you see a log that says `Client files have been built. You can now load Thimble at http://localhost:3500`, you can access Thimble on [http://localhost:3500](http://localhost:3500).
 
 You can terminate the Thimble server by hitting Ctrl-C.
+
+Once the Thimble server is on, if you make changes to any file inside the `public` folder, your changes will automatically be picked up and you can see them by refreshing your browser tab. If you make changes to any other file, you will need to terminate the Thimble server and restart it using `npm start` for the changes to take effect.
 
 To suspend the VM and temporarily stop the services Thimble relies on, use `vagrant suspend` (like putting it to sleep). You can also use `vagrant halt` to do a full shutdown of the services.
 

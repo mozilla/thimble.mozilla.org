@@ -17,10 +17,12 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
 
+    <script src="/locales/{{ localeDir }}/strings.js"></script>
+
     {% block head %}{% endblock %}
 
     {% if GA_ACCOUNT %}
-    <script id="google-analytics-js" src="/{{ localeDir }}/shared/scripts/google-analytics.js"
+    <script id="google-analytics-js" src="/shared/scripts/google-analytics.js"
             data-ga-account="{{ GA_ACCOUNT }}"
             data-ga-domain="{{ GA_DOMAIN }}"
             async>

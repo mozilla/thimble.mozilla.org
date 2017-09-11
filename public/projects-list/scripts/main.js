@@ -3,6 +3,7 @@
 var $ = require("jquery");
 var moment = require("moment");
 require("moment/min/locales.min");
+var strings = require("strings");
 
 var Constants = require("../../shared/scripts/constants");
 var analytics = require("../../shared/scripts/analytics");
@@ -46,7 +47,7 @@ function deleteProject($project) {
 function addProjectDeleteListeners() {
   $(".delete-button").click(function() {
     // TODO: we can do better than this, but let's at least make it harder to lose data.
-    if(!window.confirm("{{ deleteProjectConfirmationText }}")) {
+    if(!window.confirm(strings.get("deleteProjectConfirmationText"))) {
       return false;
     }
 
@@ -116,7 +117,7 @@ function setFavoriteDataForProject(projectId, projectSelector, project){
 function getElapsedTime(lastEdited) {
   var timeElapsed = moment(new Date(lastEdited)).fromNow();
 
-  return "{{ momentJSLastEdited | safe }}".replace("<% timeElapsed %>", timeElapsed);
+  return strings.get("momentJSLastEdited").replace("<% timeElapsed %>", timeElapsed);
 }
 
 function setProjectHandlers() {
