@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/homepage/stylesheets/style.css">
     <link rel="stylesheet" href="/resources/stylesheets/error.css">
   </head>
-  <body class="homepage">
+  <body class="error-page">
 
     <nav class="navbar-thimble container-flex">
       <div id="navbar-left" class="container-flex">
@@ -27,7 +27,9 @@
         <div class="reload-message">
           <h1>{{ gettext("pleaseSignOut") }}</h1>
           <p>{{ gettext("pleaseSignOutMessage") }}</p>
-          <a href="{{ logoutURL }}" class="action-button" target="_self">{{ gettext("signOutButtonLabel") }}</a>
+          <p class="button-wrapper">
+            <a href="{{ logoutURL }}" class="action-button" target="_self">{{ gettext("signOutButtonLabel") }}</a>
+          </p>
         </div>
 
         <div class="contact-icons">
