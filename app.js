@@ -6,9 +6,7 @@ const workers = process.env.WEB_CONCURRENCY || 1;
 
 const start = function() {
 
-  const server = thimble.listen(process.env.PORT, function() {
-    console.log("Express server listening on " + process.env.APP_HOSTNAME);
-  });
+  const server = thimble.listen(process.env.PORT);
 
   const shutdown = function() {
     server.close(function() {

@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "async": "0.2.7",
+    "autoprefixer": "^7.1.2",
     "aws-sdk": "^2.23.0",
     "bestlang": "0.0.1",
     "body-parser": "^1.17.1",
@@ -36,8 +37,10 @@
     "cookies-js": "~1.2.1",
     "cors": "^2.8.1",
     "cryptr": "^2.0.0",
+    "css-loader": "^0.28.4",
     "csurf": "^1.9.0",
     "express": "^4.15.2",
+    "extract-text-webpack-plugin": "^3.0.0",
     "form-data": "^0.2.0",
     "glob": "^7.1.1",
     "grunt": "~0.4.1",
@@ -54,7 +57,8 @@
     "helmet": "^3.5.0",
     "jit-grunt": "^0.10.0",
     "jquery": "^3.2.1",
-    "less-middleware": "2.2.0",
+    "less": "^2.7.2",
+    "less-loader": "^4.0.5",
     "memorystream": "^0.3.1",
     "moment": "~2.17.1",
     "morgan": "^1.8.1",
@@ -63,6 +67,8 @@
     "npm-run-all": "^4.0.2",
     "nunjucks": "^2.3.0",
     "on-build-webpack": "^0.1.0",
+    "postcss-loader": "^2.0.6",
+    "progress-bar-webpack-plugin": "^1.10.0",
     "properties-parser": "0.3.1",
     "request": "2.80.0",
     "serve-favicon": "^2.4.1",
@@ -79,15 +85,14 @@
     "shx": "^0.2.2"
   },
   "scripts": {
-    "postinstall": "run-s build:* localize",
-    "test": "grunt",
+    "build:static": "webpack",
+    "build:l10n": "node scripts/localize",
     "env": "shx cp env.dist .env",
-    "build:js": "webpack",
-    "localize": "node scripts/localize",
+    "heroku-postbuild": "npm run build:*",
+    "invalidate": "node scripts/invalidate.js",
     "server": "node app.js",
     "services:logs": "vagrant ssh -- pm2 logs --format",
-    "prestart": "npm run localize",
     "start": "run-p build:* server",
-    "invalidate": "node scripts/invalidate.js"
+    "test": "grunt"
   }
 }
