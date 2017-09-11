@@ -39,8 +39,10 @@
 
     <title>{% block pagetitle %}{% endblock %}</title>
 
+    <script src="/locales/{{ localeDir }}/strings.js"></script>
+
     {% if GA_ACCOUNT %}
-    <script id="google-analytics-js" src="/{{ localeDir }}/shared/scripts/google-analytics.js"
+    <script id="google-analytics-js" src="/shared/scripts/google-analytics.js"
             data-ga-account="{{ GA_ACCOUNT }}"
             data-ga-domain="{{ GA_DOMAIN }}"
             async>
@@ -54,9 +56,7 @@
 
       <script src="https://pontoon.mozilla.org/pontoon.js"></script>
 
-      <script id="homepage-script"
-          src="/{{ localeDir }}/homepage/scripts/main.js">
-      </script>
+      <script id="homepage-script" src="/homepage/scripts/main.js"></script>
 
       {% block top %}{% endblock %}
     </div>
