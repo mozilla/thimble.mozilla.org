@@ -18,10 +18,8 @@ let routes = require("./routes")();
 
 let server = express();
 let environment = env.get("NODE_ENV");
-let isDevelopment = environment === "development";
 let root = path.dirname(__dirname);
 let client = path.join(root, "dist");
-let cssAssets = path.join(require("os").tmpdir(), "mozilla.webmaker.org");
 let editor = url.parse(env.get("BRAMBLE_URI"));
 let editorHost = `${editor.protocol}//${editor.host}`;
 let maxCacheAge = { maxAge: "1d" };
@@ -50,7 +48,6 @@ requests.disableHeaders([ "x-powered-by" ])
 .compress()
 .json({ limit: "5MB" })
 .url({ extended: true })
-.lessOptimizations(path.join(root, "public"), cssAssets, !isDevelopment)
 .healthcheck()
 .sessions({
   key: "mozillaThimble",
@@ -95,7 +92,6 @@ requests.enableLogging(environment);
  * Static assets
  */
 server.use(express.static(client, maxCacheAge));
-server.use(express.static(cssAssets, maxCacheAge));
 server.use(express.static(path.join(root, "public/resources"), maxCacheAge));
 server.use("/node_modules", express.static(path.join(root, server.locals.node_path), maxCacheAge));
 // So that we don't break compatibility with existing published projects,

@@ -5,7 +5,6 @@ let morgan = require("morgan");
 let bodyParser = require("body-parser");
 let cookieParser = require("cookie-parser");
 let cookieSession = require("cookie-session");
-let lessMiddleWare = require("less-middleware");
 
 let version = require("../package").version;
 const Logger = require("./logger");
@@ -91,18 +90,6 @@ Request.prototype = {
         session(req, res, next);
       }
     });
-
-    return this;
-  },
-  lessOptimizations(src, dest, optimize) {
-    this.server.use(lessMiddleWare(src, {
-      once: optimize,
-      debug: !optimize,
-      dest,
-      compress: true,
-      yuicompress: optimize,
-      optimization: optimize ? 0 : 2
-    }));
 
     return this;
   },

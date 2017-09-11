@@ -61,7 +61,7 @@ function installTarball(config, tarball, callback) {
     }
   }
 
-  untarWorker = new Worker("/scripts/vendor/bitjs-untar-worker.min.js");
+  untarWorker = new Worker("/resources/scripts/bitjs-untar-worker.min.js");
   untarWorker.addEventListener("message", function(e) {
     var data = e.data;
 
