@@ -25,21 +25,22 @@
                              keys. Defaults to false.
 */
 
-const html = [{
-  id: "snippet-htmlComment",
-  name: "snippetHTMLComment",
-  title: "snippetHTMLCommentTitle",
-  data: {
-    value: `<!-- {{ gettext("snippetCommentData") }} -->`,
-    l10n: true
-  }
-}, {
-  id: "snippet-table",
-  name: "snippetHTMLTable",
-  title: "snippetHTMLTableTitle",
-  data: {
-    value:
-`<table>
+const html = [
+  {
+    id: "snippet-htmlComment",
+    name: "snippetHTMLComment",
+    title: "snippetHTMLCommentTitle",
+    data: {
+      value: `<!-- {{ gettext("snippetCommentData") }} -->`,
+      l10n: true
+    }
+  },
+  {
+    id: "snippet-table",
+    name: "snippetHTMLTable",
+    title: "snippetHTMLTableTitle",
+    data: {
+      value: `<table>
   <tr>
     <th>{{ gettext("snippetHTMLTableHeading") }}</th>
     <th>{{ gettext("snippetHTMLTableHeading") }}</th>
@@ -50,43 +51,43 @@ const html = [{
   </tr>
 </table>
 `,
-    l10n: true
-  }
-}, {
-  id: "snippet-orderedList",
-  name: "snippetHTMLOrderedList",
-  title: "snippetHTMLOrderedListTitle",
-  data: {
-    value:
-`<ol>
+      l10n: true
+    }
+  },
+  {
+    id: "snippet-orderedList",
+    name: "snippetHTMLOrderedList",
+    title: "snippetHTMLOrderedListTitle",
+    data: {
+      value: `<ol>
   <li>{{ gettext("snippetHTMLItem1") }}</li>
   <li>{{ gettext("snippetHTMLItem2") }}</li>
   <li>{{ gettext("snippetHTMLItem3") }}</li>
 </ol>
 `,
-    l10n: true
-  }
-}, {
-  id: "snippet-unorderedList",
-  name: "snippetHTMLUnorderedList",
-  title: "snippetHTMLUnorderedListTitle",
-  data: {
-    value:
-`<ul>
+      l10n: true
+    }
+  },
+  {
+    id: "snippet-unorderedList",
+    name: "snippetHTMLUnorderedList",
+    title: "snippetHTMLUnorderedListTitle",
+    data: {
+      value: `<ul>
   <li>{{ gettext("snippetHTMLItem1") }}</li>
   <li>{{ gettext("snippetHTMLItem2") }}</li>
   <li>{{ gettext("snippetHTMLItem3") }}</li>
 </ul>
 `,
-    l10n: true
-  }
-}, {
-  id: "snippet-form",
-  name: "snippetHTMLForm",
-  title: "snippetHTMLFormTitle",
-  data: {
-    value:
-`<form action="" method="get">
+      l10n: true
+    }
+  },
+  {
+    id: "snippet-form",
+    name: "snippetHTMLForm",
+    title: "snippetHTMLFormTitle",
+    data: {
+      value: `<form action="" method="get">
   <label for="first-name">{{ gettext("snippetHTMLFormFirstNameLabel") }}</label>
   <input id="first-name" type="text" name="firstname"><br>
   <label for="last-name">{{ gettext("snippetHTMLFormLastNameLabel") }}</label>
@@ -94,102 +95,105 @@ const html = [{
   <input type="submit" value="{{ gettext("snippetHTMLFormSubmit") }}">
 </form>
 `,
-    l10n: true
-  }
-}, {
-  id: "snippet-script",
-  name: "snippetHTMLScript",
-  title: "snippetHTMLScriptTitle",
-  data: {
-    value: '<script src="script.js"></script>'
-  }
-}, {
-  id: "snippet-external-stylesheet",
-  name: "snippetHTMLExternalStylesheet",
-  title: "snippetHTMLExternalStylesheetTitle",
-  data: {
-    value:
-`<!-- {{ gettext("snippetHTMLExternalStyleSheetComment") | safe }} -->
+      l10n: true
+    }
+  },
+  {
+    id: "snippet-script",
+    name: "snippetHTMLScript",
+    title: "snippetHTMLScriptTitle",
+    data: {
+      value: '<script src="script.js"></script>'
+    }
+  },
+  {
+    id: "snippet-external-stylesheet",
+    name: "snippetHTMLExternalStylesheet",
+    title: "snippetHTMLExternalStylesheetTitle",
+    data: {
+      value: `<!-- {{ gettext("snippetHTMLExternalStyleSheetComment") | safe }} -->
 <link href="style.css" rel="stylesheet">
 `,
-    l10n: true
-  }
-}, {
-  id: "snippet-video",
-  name: "snippetHTMLVideo",
-  title: "snippetHTMLVideoTitle",
-  data: {
-    value:
-`<video width="320" height="240" controls>
+      l10n: true
+    }
+  },
+  {
+    id: "snippet-video",
+    name: "snippetHTMLVideo",
+    title: "snippetHTMLVideoTitle",
+    data: {
+      value: `<video width="320" height="240" controls>
   <source src="video.mp4" type="video/mp4">
   {{ gettext("snippetHTMLVideoData") }}
 </video>
 `,
-    l10n: true
-  }
-}, {
-  id: "snippet-audio",
-  name: "snippetHTMLAudio",
-  title: "snippetHTMLAudioTitle",
-  data: {
-    value:
-`<audio controls>
+      l10n: true
+    }
+  },
+  {
+    id: "snippet-audio",
+    name: "snippetHTMLAudio",
+    title: "snippetHTMLAudioTitle",
+    data: {
+      value: `<audio controls>
   <source src="audio.mp3" type="audio/mpeg">
   {{ gettext("snippetHTMLAudioData") }}
 </audio>
 `,
-    l10n: true
+      l10n: true
+    }
   }
-}];
+];
 
-const css = [{
-  id: "snippet-cssComment",
-  name: "snippetCSSComment",
-  title: "snippetCSSCommentTitle",
-  data: {
-    value: '/* {{ gettext("snippetCommentData") }} */\n',
-    l10n: true
-  }
-}, {
-  id: "snippet-tagNameSelector",
-  name: "snippetCSSTagNameSelector",
-  title: "snippetCSSTagNameSelectorTitle",
-  data: {
-    value:
-`p {
+const css = [
+  {
+    id: "snippet-cssComment",
+    name: "snippetCSSComment",
+    title: "snippetCSSCommentTitle",
+    data: {
+      value: '/* {{ gettext("snippetCommentData") }} */\n',
+      l10n: true
+    }
+  },
+  {
+    id: "snippet-tagNameSelector",
+    name: "snippetCSSTagNameSelector",
+    title: "snippetCSSTagNameSelectorTitle",
+    data: {
+      value: `p {
   font-size: 20px;
 }
 `
-  }
-}, {
-  id: "snippet-classSelector",
-  name: "snippetCSSClassSelector",
-  title: "snippetCSSClassSelectorTitle",
-  data: {
-    value:
-`.className {
+    }
+  },
+  {
+    id: "snippet-classSelector",
+    name: "snippetCSSClassSelector",
+    title: "snippetCSSClassSelectorTitle",
+    data: {
+      value: `.className {
   background-color: green;
 }
 `
-  }
-}, {
-  id: "snippet-idSelector",
-  name: "snippetCSSIDSelector",
-  title: "snippetCSSIDSelectorTitle",
-  data: {
-    value:
-`#idName {
+    }
+  },
+  {
+    id: "snippet-idSelector",
+    name: "snippetCSSIDSelector",
+    title: "snippetCSSIDSelectorTitle",
+    data: {
+      value: `#idName {
   background-color: green;
 }
 `
-  }
-}, {
-  id: "snippet-kfa",
-  name: "snippetCSSKeyframe",
-  title: "snippetCSSKeyframeTitle",
-  data: {
-    value:
-`/* {{ gettext("snippetCSSKeyframeAnimationTargetComment") }} */
+    }
+  },
+  {
+    id: "snippet-kfa",
+    name: "snippetCSSKeyframe",
+    title: "snippetCSSKeyframeTitle",
+    data: {
+      value: `/* {{ gettext("snippetCSSKeyframeAnimationTargetComment") }} */
 .animated {
   animation-name: animationName;
   animation-duration: 4s;
@@ -204,15 +208,15 @@ const css = [{
   100% { background-color: yellow; }
 }
 `,
-    l10n: true
-  }
-}, {
-  id: "snippet-linkStyling",
-  name: "snippetCSSAnchorStyle",
-  title: "snippetCSSAnchorStyleTitle",
-  data: {
-    value:
-`/* {{ gettext("snippetCSSAnchorStyleUnvisitedLinkComment") }} */
+      l10n: true
+    }
+  },
+  {
+    id: "snippet-linkStyling",
+    name: "snippetCSSAnchorStyle",
+    title: "snippetCSSAnchorStyleTitle",
+    data: {
+      value: `/* {{ gettext("snippetCSSAnchorStyleUnvisitedLinkComment") }} */
 a:link {
   color: RoyalBlue;
   text-decoration: none;
@@ -233,15 +237,15 @@ a:hover {
   text-decoration: underline;
 }
 `,
-    l10n: true
-  }
-}, {
-  id: "snippet-mediaQueries",
-  name: "snippetCSSMediaQuery",
-  title: "snippetCSSMediaQueryTitle",
-  data: {
-    value:
-`@media screen and (max-width: 320px) {
+      l10n: true
+    }
+  },
+  {
+    id: "snippet-mediaQueries",
+    name: "snippetCSSMediaQuery",
+    title: "snippetCSSMediaQueryTitle",
+    data: {
+      value: `@media screen and (max-width: 320px) {
   /* {{ gettext("snippetCSSMediaQueryNarrow") }} */
 }
 
@@ -253,88 +257,92 @@ a:hover {
  /* {{ gettext("snippetCSSMediaQueryWide") }} */
 }
 `,
-    l10n: true
-  }
-}, {
-  id: "snippet-ffd",
-  name: "snippetCSSFont",
-  title: "snippetCSSFontTitle",
-  data: {
-    value:
-`@font-face {
+      l10n: true
+    }
+  },
+  {
+    id: "snippet-ffd",
+    name: "snippetCSSFont",
+    title: "snippetCSSFontTitle",
+    data: {
+      value: `@font-face {
   font-family: myFirstFont;
   src: url(sansation_bold.woff);
   font-weight: bold;
 }
 `
-  }
-}, {
-  id: "snippet-pseudoElement",
-  name: "snippetCSSPseudo",
-  title: "snippetCSSPseudoTitle",
-  data: {
-    value:
-`/* {{ gettext("snippetCSSPseudoComment") | safe }} */
+    }
+  },
+  {
+    id: "snippet-pseudoElement",
+    name: "snippetCSSPseudo",
+    title: "snippetCSSPseudoTitle",
+    data: {
+      value: `/* {{ gettext("snippetCSSPseudoComment") | safe }} */
 .arrow::before {
   content: "→";
   background: DodgerBlue;
   color: white;
 }
 `,
-    l10n: true
+      l10n: true
+    }
   }
-}];
+];
 
-const js = [{
-   id: "snippet-jsComment",
-   name: "snippetJSComment",
-   title: "snippetJSCommentTitle",
-   data: {
-     value: '// {{ gettext("snippetCommentData") }}\n',
-     l10n: true
-   }
-},{
-  id: "snippet-emptyFunction",
-  name: "snippetJSFunction",
-  title: "snippetJSFunctionTitle",
-  data: {
-    value:
-`function sayHello(name) {
+const js = [
+  {
+    id: "snippet-jsComment",
+    name: "snippetJSComment",
+    title: "snippetJSCommentTitle",
+    data: {
+      value: '// {{ gettext("snippetCommentData") }}\n',
+      l10n: true
+    }
+  },
+  {
+    id: "snippet-emptyFunction",
+    name: "snippetJSFunction",
+    title: "snippetJSFunctionTitle",
+    data: {
+      value: `function sayHello(name) {
   console.log({{ gettext("snippetJSLogHello") | safe }});
 }
 
 sayHello("{{ gettext("snippetJSPersonName1") }}");
 `,
-    l10n: true
-  }
-}, {
-  id: "snippet-array",
-  name: "snippetJSArray",
-  title: "snippetJSArrayTitle",
-  data: {
-    value: 'var names = ["{{ gettext("snippetJSPersonName1") }}", "{{ gettext("snippetJSPersonName2") }}", "{{ gettext("snippetJSPersonName3") }}"];\n',
-    l10n: true
-  }
-}, {
-  id: "snippet-object",
-  name: "snippetJSObject",
-  title: "snippetJSObjectTitle",
-  data: {
-    value:
-`var person = {
+      l10n: true
+    }
+  },
+  {
+    id: "snippet-array",
+    name: "snippetJSArray",
+    title: "snippetJSArrayTitle",
+    data: {
+      value:
+        'var names = ["{{ gettext("snippetJSPersonName1") }}", "{{ gettext("snippetJSPersonName2") }}", "{{ gettext("snippetJSPersonName3") }}"];\n',
+      l10n: true
+    }
+  },
+  {
+    id: "snippet-object",
+    name: "snippetJSObject",
+    title: "snippetJSObjectTitle",
+    data: {
+      value: `var person = {
   name: "{{ gettext("snippetJSPersonName2") }}",
   skills: ["JS", "HTML"]
 };
 `,
-    l10n: true
+      l10n: true
+    }
   },
-}, {
-  id: "snippet-forLoop",
-  name: "snippetJSForLoop",
-  title: "snippetJSForLoopTitle",
-  data: {
-    value:
-`var names = ["{{ gettext("snippetJSPersonName1") }}", "{{ gettext("snippetJSPersonName2") }}", "{{ gettext("snippetJSPersonName3") }}"];
+  {
+    id: "snippet-forLoop",
+    name: "snippetJSForLoop",
+    title: "snippetJSForLoopTitle",
+    data: {
+      value: `var names = ["{{ gettext("snippetJSPersonName1") }}", "{{ gettext("snippetJSPersonName2") }}", "{{ gettext("snippetJSPersonName3") }}"];
 var name;
 
 for (var i = 0; i < names.length; i++) {
@@ -342,29 +350,29 @@ for (var i = 0; i < names.length; i++) {
   console.log(name);
 }
 `,
-    l10n: true
-  }
-}, {
+      l10n: true
+    }
+  },
+  {
     id: "snippet-whileLoop",
     name: "snippetJSWhileLoop",
     title: "snippetJSWhileLoopTitle",
     data: {
-      value:
-`var count = 5;
+      value: `var count = 5;
 
 while (count > 0) {
   console.log(count);
   count = count - 1;
 }
 `
-  }
-}, {
-  id: "snippet-ifElse",
-  name: "snippetJSIfElse",
-  title: "snippetJSIfElseTitle",
-  data: {
-    value:
-`var name = "{{ gettext("snippetJSPersonName2") }}";
+    }
+  },
+  {
+    id: "snippet-ifElse",
+    name: "snippetJSIfElse",
+    title: "snippetJSIfElseTitle",
+    data: {
+      value: `var name = "{{ gettext("snippetJSPersonName2") }}";
 
 if (name === "{{ gettext("snippetJSPersonName2") }}") {
   console.log({{ gettext("snippetJSLogHello") | safe }});
@@ -374,15 +382,15 @@ if (name === "{{ gettext("snippetJSPersonName2") }}") {
   console.log("{{ gettext("snippetJSLogHelloStranger") }}");
 }
 `,
-    l10n: true
-  }
-}, {
-  id: "snippet-switch",
-  name: "snippetJSSwitchCase",
-  title: "snippetJSSwitchCaseTitle",
-  data: {
-    value:
-`var name = "{{ gettext("snippetJSPersonName2") }}";
+      l10n: true
+    }
+  },
+  {
+    id: "snippet-switch",
+    name: "snippetJSSwitchCase",
+    title: "snippetJSSwitchCaseTitle",
+    data: {
+      value: `var name = "{{ gettext("snippetJSPersonName2") }}";
 
 switch(name) {
   case "{{ gettext("snippetJSPersonName2") }}":
@@ -396,37 +404,38 @@ switch(name) {
     console.log("{{ gettext("snippetJSLogHelloStranger") }}");
 }
   `,
-    l10n: true
-  }
-}, {
-  id: "snippet-clickhandler",
-  name: "snippetJSClickHandler",
-  title: "snippetJSClickHandlerTitle",
-  data: {
-    value:
-`// {{ gettext("snippetJSClickHandlerComment") | safe }}
+      l10n: true
+    }
+  },
+  {
+    id: "snippet-clickhandler",
+    name: "snippetJSClickHandler",
+    title: "snippetJSClickHandlerTitle",
+    data: {
+      value: `// {{ gettext("snippetJSClickHandlerComment") | safe }}
 var element = document.querySelector('#button');
 
 element.addEventListener("click", function() {
   console.log("{{ gettext("Click!") }}");
 });
 `,
-    l10n: true
-  }
-}, {
-  id: "snippet-changestyle",
-  name: "snippetJSChangeStyle",
-  title: "snippetJSChangeStyleTitle",
-  data: {
-    value:
-`// {{ gettext("snippetJSChangeStyleComment") | safe }}
+      l10n: true
+    }
+  },
+  {
+    id: "snippet-changestyle",
+    name: "snippetJSChangeStyle",
+    title: "snippetJSChangeStyleTitle",
+    data: {
+      value: `// {{ gettext("snippetJSChangeStyleComment") | safe }}
 var element = document.querySelector('#alert');
 
 element.style.background = "OrangeRed";
 `,
-    l10n: true
+      l10n: true
+    }
   }
-}];
+];
 
 module.exports = {
   html,

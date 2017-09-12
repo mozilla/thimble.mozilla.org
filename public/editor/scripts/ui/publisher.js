@@ -19,9 +19,7 @@ function unpublishedChangesPrompt() {
   var dialog = this.dialog;
   var publish = this.handlers.publish;
   dialog.published.changed.removeClass("hide");
-  dialog.buttons.update
-    .off("click", publish)
-    .on("click", publish);
+  dialog.buttons.update.off("click", publish).on("click", publish);
 }
 
 function Publisher() {
@@ -59,11 +57,11 @@ Publisher.prototype.init = function(bramble) {
     unpublishedChangesPrompt: unpublishedChangesPrompt.bind(publisher)
   };
 
-  if(Project.getDescription()) {
+  if (Project.getDescription()) {
     dialog.description.val(Project.getDescription());
   }
 
-  if(publishUrl) {
+  if (publishUrl) {
     this.updateDialog(publishUrl, true);
   }
 
@@ -84,12 +82,15 @@ Publisher.prototype.init = function(bramble) {
 
   // Were there any files that were updated and not published?
   Project.getPublishNeedsUpdate(function(err, needsUpdate) {
-    if(err) {
-      console.error("[Thimble] Failed to get the publishNeedsUpdate flag while loading the publish dialog: ", err);
+    if (err) {
+      console.error(
+        "[Thimble] Failed to get the publishNeedsUpdate flag while loading the publish dialog: ",
+        err
+      );
       return;
     }
 
-    if(needsUpdate) {
+    if (needsUpdate) {
       publisher.needsUpdate = needsUpdate;
       publisher.enable();
       publisher.handlers.unpublishedChangesPrompt();
@@ -103,20 +104,23 @@ Publisher.prototype.showUnpublishedChangesPrompt = function(callback) {
 
   callback = callback || function() {};
 
-  if(publisher.needsUpdate) {
+  if (publisher.needsUpdate) {
     callback();
     return;
   }
 
-  if(!Project.getPublishUrl()) {
+  if (!Project.getPublishUrl()) {
     callback();
     return;
   }
 
   publisher.handlers.unpublishedChangesPrompt();
   Project.publishNeedsUpdate(true, function(err) {
-    if(err) {
-      console.error("[Thimble] Failed to set the publishNeedsUpdate flag after a file change: ", err);
+    if (err) {
+      console.error(
+        "[Thimble] Failed to set the publishNeedsUpdate flag after a file change: ",
+        err
+      );
       callback(err);
       return;
     }
@@ -134,10 +138,10 @@ Publisher.prototype.publish = function(bramble) {
     return;
   }
 
-  if(!bramble.hasIndexFile()){
+  if (!bramble.hasIndexFile()) {
     // This width hack lets us apply the class again in a way that
     // re-triggers the animation.
-    if(publisher.dialogEl.hasClass("cannot-publish")) {
+    if (publisher.dialogEl.hasClass("cannot-publish")) {
       publisher.dialogEl.removeClass("cannot-publish");
       publisher.dialogEl.width(publisher.dialogEl.width());
     }
@@ -163,15 +167,21 @@ Publisher.prototype.publish = function(bramble) {
 
     var request = publisher.generateRequest("publish");
     request.done(function(project) {
-      if(request.status !== 200) {
-        console.error("[Thimble] Server was unable to publish project, responded with status ", request.status);
+      if (request.status !== 200) {
+        console.error(
+          "[Thimble] Server was unable to publish project, responded with status ",
+          request.status
+        );
         return;
       }
 
       publisher.updateDialog(project.link, true);
       Project.publishNeedsUpdate(false, function(err) {
-        if(err) {
-          console.error("[Thimble] Failed to set the publishNeedsUpdate flag after publishing with: ", err);
+        if (err) {
+          console.error(
+            "[Thimble] Failed to set the publishNeedsUpdate flag after publishing with: ",
+            err
+          );
           return;
         }
 
@@ -180,7 +190,10 @@ Publisher.prototype.publish = function(bramble) {
       });
     });
     request.fail(function(jqXHR, status, err) {
-      console.error("[Thimble] Failed to send request to publish project to the server with: ", err);
+      console.error(
+        "[Thimble] Failed to send request to publish project to the server with: ",
+        err
+      );
     });
     request.always(function() {
       SyncState.completed();
@@ -192,7 +205,7 @@ Publisher.prototype.publish = function(bramble) {
   setState(false);
 
   FileSystemSync.saveAndSyncAll(function(err) {
-    if(err) {
+    if (err) {
       console.error("[Thimble] Failed to publish project");
       setState(true);
       return;
@@ -222,7 +235,9 @@ Publisher.prototype.unpublish = function() {
 
   function setState(done) {
     buttons.publish[done ? "on" : "off"]("click", handlers.publish);
-    buttons.unpublish.children("span").text(done ? TEXT_UNPUBLISH : TEXT_UNPUBLISHING);
+    buttons.unpublish
+      .children("span")
+      .text(done ? TEXT_UNPUBLISH : TEXT_UNPUBLISHING);
   }
 
   // Disable all actions during the unpublish
@@ -232,8 +247,11 @@ Publisher.prototype.unpublish = function() {
 
   var request = publisher.generateRequest("unpublish");
   request.done(function() {
-    if(request.status !== 200) {
-      console.error("[Thimble] Server was unable to unpublish project, responded with status ", request.status);
+    if (request.status !== 200) {
+      console.error(
+        "[Thimble] Server was unable to unpublish project, responded with status ",
+        request.status
+      );
       buttons.unpublish.on("click", handlers.unpublish);
       return;
     }
@@ -243,8 +261,11 @@ Publisher.prototype.unpublish = function() {
     publisher.updateDialog("");
 
     Project.publishNeedsUpdate(false, function(err) {
-      if(err) {
-        console.error("[Thimble] Failed to set the publishNeedsUpdate flag after unpublishing with: ", err);
+      if (err) {
+        console.error(
+          "[Thimble] Failed to set the publishNeedsUpdate flag after unpublishing with: ",
+          err
+        );
         return;
       }
 
@@ -253,7 +274,10 @@ Publisher.prototype.unpublish = function() {
     });
   });
   request.fail(function(jqXHR, status, err) {
-    console.error("[Thimble] Failed to send request to unpublish project to the server with: ", err);
+    console.error(
+      "[Thimble] Failed to send request to unpublish project to the server with: ",
+      err
+    );
     buttons.unpublish.on("click", handlers.unpublish);
   });
   request.always(function() {
@@ -270,14 +294,14 @@ Publisher.prototype.generateRequest = function(action) {
     contentType: "application/json",
     headers: {
       "X-Csrf-Token": publisher.csrfToken,
-      "Accept": "application/json"
+      Accept: "application/json"
     },
     type: "PUT",
     url: host + "/projects/" + Project.getID() + "/" + action,
     data: JSON.stringify({
       description: publisher.dialog.description.val() || " ",
       public: publisher.isProjectPublic,
-      dateUpdated: (new Date()).toISOString()
+      dateUpdated: new Date().toISOString()
     })
   });
 };
@@ -288,18 +312,14 @@ Publisher.prototype.updateDialog = function(publishUrl, allowUnpublish) {
   var unpublish = this.handlers.unpublish;
 
   // Expose the published state with the updated link
-  published.link
-    .attr("href", publishUrl)
-    .text(publishUrl);
+  published.link.attr("href", publishUrl).text(publishUrl);
   published.changed.addClass("hide");
 
   // Re-attach the unpublish handler and remove
   // "publish"/"cancel" buttons
-  if(allowUnpublish) {
+  if (allowUnpublish) {
     this.dialog.buttons.parent.addClass("hide");
-    unpublishBtn
-      .off("click", unpublish)
-      .on("click", unpublish);
+    unpublishBtn.off("click", unpublish).on("click", unpublish);
     published.container.removeClass("hide");
   } else {
     published.container.addClass("hide");

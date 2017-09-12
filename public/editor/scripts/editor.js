@@ -13,17 +13,20 @@ function create(options) {
   FileSystemSync.init(_csrfToken);
 
   // Start loading the Bramble editor resources
-  Bramble.load("#webmaker-bramble",{
+  Bramble.load("#webmaker-bramble", {
     url: options.editorUrl,
     hideUntilReady: true
   });
 
   // Start loading the project files
   Project.load(_csrfToken, function(err, fileToOpen) {
-    if(err) {
+    if (err) {
       console.error("[Thimble Error]", err);
       $("#spinner-container").addClass("loading-error");
-      analytics.event({ category : analytics.eventCategories.TROUBLESHOOTING, action : "Project loading error (Green screen)" });
+      analytics.event({
+        category: analytics.eventCategories.TROUBLESHOOTING,
+        action: "Project loading error (Green screen)"
+      });
       analytics.exception(err, true);
       return;
     }
@@ -34,7 +37,10 @@ function create(options) {
   });
 
   Bramble.once("ready", function(bramble) {
-    analytics.timing({ category: analytics.timingCategories.BRAMBLE, var: "ready Event"});
+    analytics.timing({
+      category: analytics.timingCategories.BRAMBLE,
+      var: "ready Event"
+    });
 
     // Make sure we don't crash trying to access new APIs not in Bramble's API
     // before we update the Service Worker cached version we're using.

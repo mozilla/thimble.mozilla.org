@@ -3,7 +3,7 @@
  * the cloudfront edge caches for Thimble whenever
  * we deploy a new version.
  */
-var AWS = require('aws-sdk');
+var AWS = require("aws-sdk");
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
@@ -17,7 +17,7 @@ var params = {
     Paths: {
       Quantity: 1,
       // We invalidate everything
-      Items: [ '/*' ]
+      Items: ["/*"]
     }
   }
 };
@@ -28,6 +28,6 @@ cloudfront.createInvalidation(params, function(err, data) {
     return process.exit(1);
   }
 
-  console.log('Successfully invalidated CloudFront!\n', data);
+  console.log("Successfully invalidated CloudFront!\n", data);
   process.exit(0);
 });

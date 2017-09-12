@@ -17,7 +17,7 @@ function toggleComponents(context, isSave) {
 
   function saveClicked() {
     // Ignore clicks if the button is disabled.
-    if(context.saveButton.hasClass("disabled")) {
+    if (context.saveButton.hasClass("disabled")) {
       return false;
     }
 
@@ -38,7 +38,7 @@ function toggleComponents(context, isSave) {
   titleBar[isSave ? "removeClass" : "addClass"]("text-input");
   container[isSave ? "addClass" : "removeClass"]("shadow");
 
-  if(isSave) {
+  if (isSave) {
     context.keyHandlers.enter.stop();
     context.keyHandlers.esc.stop();
     delete context.keyHandlers;
@@ -67,7 +67,9 @@ function toggleComponents(context, isSave) {
         var nameLength = input.val().length;
 
         // Add or remove the 'disabled' class based on title length
-        context.saveButton[nameLength === 0 ? "addClass" : "removeClass"]("disabled");
+        context.saveButton[nameLength === 0 ? "addClass" : "removeClass"](
+          "disabled"
+        );
       })
     };
 
@@ -80,7 +82,7 @@ function persist(title, callback) {
   var appUrl = this.appUrl;
   var csrfToken = this.csrfToken;
 
-  if(!Project.getUser()) {
+  if (!Project.getUser()) {
     callback();
     return;
   }
@@ -98,7 +100,7 @@ function persist(title, callback) {
     timeout: AJAX_DEFAULT_TIMEOUT_MS
   });
   request.done(function(data) {
-    if(request.status !== 200) {
+    if (request.status !== 200) {
       callback(data);
       return;
     }
@@ -135,13 +137,19 @@ function save(context) {
 
       Project.setTitle(contextTitle, function(err) {
         if (err) {
-          console.error("[Bramble] Failed to update the project internally: ", err);
+          console.error(
+            "[Bramble] Failed to update the project internally: ",
+            err
+          );
           return;
         }
         editingComplete(context);
-        analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "Rename Project" });
+        analytics.event({
+          category: analytics.eventCategories.PROJECT_ACTIONS,
+          action: "Rename Project"
+        });
 
-        if(context.publisher) {
+        if (context.publisher) {
           context.publisher.showUnpublishedChangesPrompt();
         }
       });

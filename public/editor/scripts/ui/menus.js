@@ -6,7 +6,10 @@ var userbar = require("../../../shared/scripts/userbar");
 var analytics = require("../../../shared/scripts/analytics");
 
 function setupSnippetsMenu(bramble) {
-  var menu = PopupMenu.createWithOffset("#editor-pane-nav-snippets", ".snippets-menu-container");
+  var menu = PopupMenu.createWithOffset(
+    "#editor-pane-nav-snippets",
+    ".snippets-menu-container"
+  );
 
   function dataTypeSelector(elementSelector, dataType) {
     return elementSelector + "[data-type='" + dataType + "']";
@@ -19,9 +22,11 @@ function setupSnippetsMenu(bramble) {
   // Clicks on the Snippet Categories (HTML/CSS/JS)
   $("div.snippets-menu .snippets-categories span").click(function() {
     var $snippetCategory = $(this);
-    var $previousSnippetCategory = $snippetCategory.parent().children(".active");
+    var $previousSnippetCategory = $snippetCategory
+      .parent()
+      .children(".active");
 
-    if($snippetCategory.is($previousSnippetCategory)) {
+    if ($snippetCategory.is($previousSnippetCategory)) {
       return false;
     }
 
@@ -30,8 +35,12 @@ function setupSnippetsMenu(bramble) {
     var previousDataType = $previousSnippetCategory.data("type");
 
     // Current/previously selected snippets
-    var snippetID = $(dataTypeSelector("ul.snippets-list li.selected", dataType)).data("snippet-id");
-    var previousSnippetID = $(dataTypeSelector("ul.snippets-list li.selected", previousDataType)).data("snippet-id");
+    var snippetID = $(
+      dataTypeSelector("ul.snippets-list li.selected", dataType)
+    ).data("snippet-id");
+    var previousSnippetID = $(
+      dataTypeSelector("ul.snippets-list li.selected", previousDataType)
+    ).data("snippet-id");
 
     /*
       - Hide the snippet list items for the previous data type
@@ -40,13 +49,16 @@ function setupSnippetsMenu(bramble) {
       - Show the snippet preview for the currently selected snippet
     */
     $("div.snippets")
-    .find(
-      dataTypeSelector("li", dataType) + ", " +
-      dataTypeSelector("li", previousDataType) + ", " +
-      snippetIDSelector("div.snippets-preview", snippetID) + ", " +
-      snippetIDSelector("div.snippets-preview", previousSnippetID)
-    )
-    .toggleClass("hide");
+      .find(
+        dataTypeSelector("li", dataType) +
+          ", " +
+          dataTypeSelector("li", previousDataType) +
+          ", " +
+          snippetIDSelector("div.snippets-preview", snippetID) +
+          ", " +
+          snippetIDSelector("div.snippets-preview", previousSnippetID)
+      )
+      .toggleClass("hide");
 
     $snippetCategory.toggleClass("active");
     $previousSnippetCategory.toggleClass("active");
@@ -56,10 +68,25 @@ function setupSnippetsMenu(bramble) {
 
   $("ul.snippets-list > li").click(function() {
     var $selectedSnippet = $(this);
-    var $previousSnippet = $(dataTypeSelector("ul.snippets-list li.selected", $selectedSnippet.data("type")));
+    var $previousSnippet = $(
+      dataTypeSelector(
+        "ul.snippets-list li.selected",
+        $selectedSnippet.data("type")
+      )
+    );
 
-    var $selectedSnippetCode = $(snippetIDSelector(".snippets-preview", $selectedSnippet.data("snippet-id")));
-    var $previousSnippetCode = $(snippetIDSelector(".snippets-preview", $previousSnippet.data("snippet-id")));
+    var $selectedSnippetCode = $(
+      snippetIDSelector(
+        ".snippets-preview",
+        $selectedSnippet.data("snippet-id")
+      )
+    );
+    var $previousSnippetCode = $(
+      snippetIDSelector(
+        ".snippets-preview",
+        $previousSnippet.data("snippet-id")
+      )
+    );
 
     $selectedSnippet.toggleClass("selected");
     $previousSnippet.toggleClass("selected");
@@ -70,11 +97,22 @@ function setupSnippetsMenu(bramble) {
   });
 
   $("div.snippets-preview > button").click(function() {
-    var snippetID = $(this).parent().data("snippet-id") || false;
-    if(snippetID){
-      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Insert Snippet", label : snippetID });
+    var snippetID =
+      $(this)
+        .parent()
+        .data("snippet-id") || false;
+    if (snippetID) {
+      analytics.event({
+        category: analytics.eventCategories.EDITOR_UI,
+        action: "Insert Snippet",
+        label: snippetID
+      });
     }
-    bramble.addCodeSnippet($(this).siblings("pre").text());
+    bramble.addCodeSnippet(
+      $(this)
+        .siblings("pre")
+        .text()
+    );
     menu.close();
 
     return false;
@@ -83,27 +121,37 @@ function setupSnippetsMenu(bramble) {
 
 function setupOptionsMenu(bramble) {
   // Gear Options menu
-  PopupMenu.createWithOffset("#editor-pane-nav-options", "#editor-pane-nav-options-menu");
+  PopupMenu.createWithOffset(
+    "#editor-pane-nav-options",
+    "#editor-pane-nav-options-menu"
+  );
 
   // Font size
   $("#editor-pane-nav-decrease-font").click(function() {
     bramble.decreaseFontSize(function() {
       var fontSize = bramble.getFontSize();
-      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Font Size Changed", label : "Decreased to " + fontSize });
+      analytics.event({
+        category: analytics.eventCategories.EDITOR_UI,
+        action: "Font Size Changed",
+        label: "Decreased to " + fontSize
+      });
     });
   });
 
   $("#editor-pane-nav-increase-font").click(function() {
     bramble.increaseFontSize(function() {
       var fontSize = bramble.getFontSize();
-      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Font Size Changed", label : "Increased to " + fontSize });
+      analytics.event({
+        category: analytics.eventCategories.EDITOR_UI,
+        action: "Font Size Changed",
+        label: "Increased to " + fontSize
+      });
     });
   });
 
-
   // Word Wrap toggle
   function setWordWrapUI(value) {
-    if(value) {
+    if (value) {
       $("#line-wrap-toggle").addClass("switch-enabled");
     } else {
       $("#line-wrap-toggle").removeClass("switch-enabled");
@@ -119,46 +167,58 @@ function setupOptionsMenu(bramble) {
     // Toggle current value
     setWordWrap(!bramble.getWordWrap());
     var mode = !bramble.getWordWrap() ? "Enabled" : "Disabled";
-    analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Word Wrap Toggle", label : mode });
+    analytics.event({
+      category: analytics.eventCategories.EDITOR_UI,
+      action: "Word Wrap Toggle",
+      label: mode
+    });
     return false;
   });
   // Set initial UI value to match editor value
   setWordWrapUI(bramble.getWordWrap());
   //set initial UI value to allow javascript UI
-  if(bramble.getAllowJavaScript()) {
-      $("#allow-scripts-toggle").addClass("switch-enabled");
+  if (bramble.getAllowJavaScript()) {
+    $("#allow-scripts-toggle").addClass("switch-enabled");
   } else {
-      $("#allow-scripts-toggle").removeClass("switch-enabled");
+    $("#allow-scripts-toggle").removeClass("switch-enabled");
   }
 
   //set initial UI value to SVG XML UI
-  if(bramble.getOpenSVGasXML()) {
-      $("#edit-SVG-toggle").addClass("switch-enabled");
+  if (bramble.getOpenSVGasXML()) {
+    $("#edit-SVG-toggle").addClass("switch-enabled");
   } else {
-      $("#edit-SVG-toggle").removeClass("switch-enabled");
+    $("#edit-SVG-toggle").removeClass("switch-enabled");
   }
 
   // Enable/Disable JavaScript in Preview
   $("#allow-scripts-toggle").click(function() {
     // Toggle current value
     var $allowScriptsToggle = $("#allow-scripts-toggle");
-    var toggle = !($allowScriptsToggle.hasClass("switch-enabled"));
+    var toggle = !$allowScriptsToggle.hasClass("switch-enabled");
 
-    if(toggle) {
+    if (toggle) {
       $allowScriptsToggle.addClass("switch-enabled");
       bramble.enableJavaScript();
-      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Toggle JavaScript", label : "Enabled" });
+      analytics.event({
+        category: analytics.eventCategories.EDITOR_UI,
+        action: "Toggle JavaScript",
+        label: "Enabled"
+      });
     } else {
       $allowScriptsToggle.removeClass("switch-enabled");
       bramble.disableJavaScript();
-      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Toggle JavaScript", label : "Disabled" });
+      analytics.event({
+        category: analytics.eventCategories.EDITOR_UI,
+        action: "Toggle JavaScript",
+        label: "Disabled"
+      });
     }
 
     return false;
   });
 
   //set initial UI value to allow whitespace indicator
-  if(bramble.getAllowWhiteSpace()) {
+  if (bramble.getAllowWhiteSpace()) {
     $("#allow-whitespace-toggle").addClass("switch-enabled");
   } else {
     $("#allow-whitespace-toggle").removeClass("switch-enabled");
@@ -167,9 +227,9 @@ function setupOptionsMenu(bramble) {
   $("#allow-whitespace-toggle").click(function() {
     // Toggle current value
     var $allowWhitespaceToggle = $("#allow-whitespace-toggle");
-    var toggle = !($allowWhitespaceToggle.hasClass("switch-enabled"));
+    var toggle = !$allowWhitespaceToggle.hasClass("switch-enabled");
 
-    if(toggle) {
+    if (toggle) {
       $allowWhitespaceToggle.addClass("switch-enabled");
       bramble.enableWhiteSpace();
     } else {
@@ -181,18 +241,18 @@ function setupOptionsMenu(bramble) {
   });
 
   //set the Autocomplete toggle to reflect whether auto-complete is enabled or disabled
-  if(bramble.getAutocomplete()) {
-      $("#autocomplete-toggle").addClass("switch-enabled");
+  if (bramble.getAutocomplete()) {
+    $("#autocomplete-toggle").addClass("switch-enabled");
   } else {
-      $("#autocomplete-toggle").removeClass("switch-enabled");
+    $("#autocomplete-toggle").removeClass("switch-enabled");
   }
   // Enable/Disable Autocomplete
   $("#autocomplete-toggle").click(function() {
     // Toggle current value
     var $autocompleteToggle = $("#autocomplete-toggle");
-    var toggle = !($autocompleteToggle.hasClass("switch-enabled"));
+    var toggle = !$autocompleteToggle.hasClass("switch-enabled");
 
-    if(toggle) {
+    if (toggle) {
       $autocompleteToggle.addClass("switch-enabled");
       bramble.enableAutocomplete();
     } else {
@@ -207,9 +267,9 @@ function setupOptionsMenu(bramble) {
   $("#edit-SVG-toggle").click(function() {
     // Toggle current value
     var $editSVGToggle = $("#edit-SVG-toggle");
-    var toggle = !($editSVGToggle.hasClass("switch-enabled"));
+    var toggle = !$editSVGToggle.hasClass("switch-enabled");
 
-    if(toggle) {
+    if (toggle) {
       $editSVGToggle.addClass("switch-enabled");
       bramble.openSVGasXML();
     } else {
@@ -222,7 +282,7 @@ function setupOptionsMenu(bramble) {
 
   //set the AutoCloseTags toggle to reflect whether auto-close tags is enabled or disabled
   var autoCloseTags = bramble.getAutoCloseTags() || {};
-  if(autoCloseTags.whenClosing) {
+  if (autoCloseTags.whenClosing) {
     $("#auto-tags-toggle").addClass("switch-enabled");
   } else {
     $("#auto-tags-toggle").removeClass("switch-enabled");
@@ -232,12 +292,20 @@ function setupOptionsMenu(bramble) {
     var $autoTagsToggle = $("#auto-tags-toggle");
     var autoCloseTagsEnabled = $autoTagsToggle.hasClass("switch-enabled");
 
-    if(autoCloseTagsEnabled) {
+    if (autoCloseTagsEnabled) {
       $autoTagsToggle.removeClass("switch-enabled");
-      bramble.configureAutoCloseTags({ whenOpening: false, whenClosing: false, indentTags: [] });
+      bramble.configureAutoCloseTags({
+        whenOpening: false,
+        whenClosing: false,
+        indentTags: []
+      });
     } else {
       $autoTagsToggle.addClass("switch-enabled");
-      bramble.configureAutoCloseTags({ whenOpening: true, whenClosing: true, indentTags: [] });
+      bramble.configureAutoCloseTags({
+        whenOpening: true,
+        whenClosing: true,
+        indentTags: []
+      });
     }
 
     return false;
@@ -253,9 +321,14 @@ function setupOptionsMenu(bramble) {
     $("#moon-green").fadeOut(transitionSpeed);
 
     // Active Indicator
-    $("#theme-active").css("position", "absolute").animate({
-      left: 35
-    }, transitionSpeed);
+    $("#theme-active")
+      .css("position", "absolute")
+      .animate(
+        {
+          left: 35
+        },
+        transitionSpeed
+      );
   }
 
   function darkThemeUI() {
@@ -267,28 +340,40 @@ function setupOptionsMenu(bramble) {
     $("#sun-green").fadeOut(transitionSpeed);
 
     // Active indicator
-    $("#theme-active").css("position", "absolute").animate({
-      left: 2
-    },transitionSpeed);
+    $("#theme-active")
+      .css("position", "absolute")
+      .animate(
+        {
+          left: 2
+        },
+        transitionSpeed
+      );
   }
 
   function setTheme(theme) {
-    if(theme === "light-theme") {
+    if (theme === "light-theme") {
       bramble.useLightTheme();
       lightThemeUI();
-    } else if(theme === "dark-theme") {
+    } else if (theme === "dark-theme") {
       bramble.useDarkTheme();
       darkThemeUI();
-
     }
   }
   function toggleTheme() {
-    if(bramble.getTheme() === "dark-theme") {
+    if (bramble.getTheme() === "dark-theme") {
       setTheme("light-theme");
-      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Theme Changed", label : "Light Theme" });
+      analytics.event({
+        category: analytics.eventCategories.EDITOR_UI,
+        action: "Theme Changed",
+        label: "Light Theme"
+      });
     } else {
       setTheme("dark-theme");
-      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Theme Changed", label : "Dark Theme" });
+      analytics.event({
+        category: analytics.eventCategories.EDITOR_UI,
+        action: "Theme Changed",
+        label: "Dark Theme"
+      });
     }
   }
   $("#theme-light").click(toggleTheme);
@@ -296,7 +381,7 @@ function setupOptionsMenu(bramble) {
 
   // If the user explicitly set the light-theme last time, use that
   // otherwise default to using the dark-theme.
-  if(bramble.getTheme() === "light-theme") {
+  if (bramble.getTheme() === "light-theme") {
     setTheme("light-theme");
   } else {
     setTheme("dark-theme");
@@ -313,32 +398,38 @@ function setupAddFileMenu(bramble) {
   var $downloadZip = $("#filetree-pane-nav-export-project-zip");
 
   // Add File button and popup menu
-  var menu = PopupMenu.createWithOffset("#filetree-pane-nav-add", "#filetree-pane-nav-add-menu");
+  var menu = PopupMenu.createWithOffset(
+    "#filetree-pane-nav-add",
+    "#filetree-pane-nav-add-menu"
+  );
 
   function downloadFileToFilesystem(location, fileOptions, callback) {
     callback = callback || function noop() {};
 
     menu.close();
 
-    $.get(location).then(function(data) {
-      fileOptions.contents = data;
+    $.get(location).then(
+      function(data) {
+        fileOptions.contents = data;
 
-      bramble.addNewFile(fileOptions, function(err) {
+        bramble.addNewFile(fileOptions, function(err) {
+          if (err) {
+            console.error("[Bramble] Failed to write new file", err);
+            callback(err);
+            return;
+          }
+          callback();
+        });
+      },
+      function(err) {
         if (err) {
-          console.error("[Bramble] Failed to write new file", err);
+          console.error("[Bramble] Failed to download " + location, err);
           callback(err);
           return;
         }
         callback();
-      });
-    }, function(err) {
-      if (err) {
-        console.error("[Bramble] Failed to download " + location, err);
-        callback(err);
-        return;
       }
-      callback();
-    });
+    );
   }
 
   $addHtml.click(function() {
@@ -350,7 +441,11 @@ function setupAddFileMenu(bramble) {
       if (err) {
         console.log("[Brackets] Failed to insert default HTML file", err);
       }
-      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Add File", label : "HTML" });
+      analytics.event({
+        category: analytics.eventCategories.EDITOR_UI,
+        action: "Add File",
+        label: "HTML"
+      });
     });
   });
   $addCss.click(function() {
@@ -362,7 +457,11 @@ function setupAddFileMenu(bramble) {
       if (err) {
         console.log("[Brackets] Failed to insert default CSS file", err);
       }
-      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Add File", label : "CSS" });
+      analytics.event({
+        category: analytics.eventCategories.EDITOR_UI,
+        action: "Add File",
+        label: "CSS"
+      });
     });
   });
   $addJs.click(function() {
@@ -374,39 +473,60 @@ function setupAddFileMenu(bramble) {
       if (err) {
         console.log("[Brackets] Failed to insert default JS file", err);
       }
-      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Add File", label : "JS" });
+      analytics.event({
+        category: analytics.eventCategories.EDITOR_UI,
+        action: "Add File",
+        label: "JS"
+      });
     });
   });
   $addTutorial.click(function() {
-    downloadFileToFilesystem("/tutorial/tutorial.html", {filename: "tutorial.html"}, function(err) {
-      if (err) {
-        console.log("[Brackets] Failed to insert tutorial.html", err);
+    downloadFileToFilesystem(
+      "/tutorial/tutorial.html",
+      { filename: "tutorial.html" },
+      function(err) {
+        if (err) {
+          console.log("[Brackets] Failed to insert tutorial.html", err);
+        }
+        analytics.event({
+          category: analytics.eventCategories.EDITOR_UI,
+          action: "Add File",
+          label: "Tutorial"
+        });
       }
-      analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Add File", label : "Tutorial" });
-    });
+    );
   });
 
   $addFolder.click(function() {
     menu.close();
     bramble.addNewFolder();
-    analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Add New Folder"});
+    analytics.event({
+      category: analytics.eventCategories.EDITOR_UI,
+      action: "Add New Folder"
+    });
   });
 
   $addUpload.click(function() {
     menu.close();
     bramble.showUploadFilesDialog();
-    analytics.event({ category : analytics.eventCategories.EDITOR_UI, action : "Upload File Dialog Shown"});
+    analytics.event({
+      category: analytics.eventCategories.EDITOR_UI,
+      action: "Upload File Dialog Shown"
+    });
   });
 
   $downloadZip.click(function() {
     menu.close();
     bramble.export();
-    analytics.event({ category : analytics.eventCategories.PROJECT_ACTIONS, action : "Export ZIP"});
+    analytics.event({
+      category: analytics.eventCategories.PROJECT_ACTIONS,
+      action: "Export ZIP"
+    });
     return false;
   });
 
   // We hide the add tutorial button if a tutorial exists
-  if(bramble.getTutorialExists()) {
+  if (bramble.getTutorialExists()) {
     $addTutorial.addClass("hide");
   }
 
@@ -420,7 +540,9 @@ function setupAddFileMenu(bramble) {
 }
 
 function refreshSnippets(type) {
-  $("div.snippets-menu .snippets-categories span[data-type='" + type + "']").click();
+  $(
+    "div.snippets-menu .snippets-categories span[data-type='" + type + "']"
+  ).click();
 }
 
 function init(bramble) {

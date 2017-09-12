@@ -7,23 +7,20 @@ body {
 @import "variables.less";
 @import "pencil-button.less";
 
-body, html {
+body,
+html {
   padding: 0;
   margin: 0;
 }
 
-
 // Generic content-wrapper that keeps things centered
-
 .content-wrapper {
   width: 964px;
   margin: 0 auto;
   position: relative;
 }
 
-
 // Capturing mouse events when a menu is open
-
 .click-underlay {
   width: 100%;
   min-height: 100%;
@@ -34,9 +31,7 @@ body, html {
   overflow: hidden;
 }
 
-
 // userbar.less overrides for homepage
-
 .navbar-thimble {
   #navbar-login {
     border-left: none;
@@ -60,6 +55,7 @@ body, html {
       .transform(none);
     }
   }
+
   .thimble-logo {
     height: auto;
     width: auto;
@@ -67,7 +63,6 @@ body, html {
 }
 
 // Wraps the top nav and main-cta area on the site
-
 .feature-section {
   background: linear-gradient(160deg, #166f41, rgb(75, 199, 113));
 
@@ -76,8 +71,8 @@ body, html {
     font-size: 20px;
     color: white;
     background: transparent;
-    padding: 15px 20px 16px 20px;
-    padding: 12px 16px 13px 16px;
+    padding: 15px 20px 16px;
+    padding: 12px 16px 13px;
     border: solid 2px white;
     text-decoration: none;
     font-weight: 400;
@@ -101,7 +96,7 @@ body, html {
     }
 
     &:hover {
-      background-color: rgba(255,255,255,.1);
+      background-color: rgba(255, 255, 255, 0.1);
     }
   }
 
@@ -110,7 +105,6 @@ body, html {
     top: -20px;
     right: -18px;
     color: white;
-    background-color: #ce59a3;
     padding: 8px 0;
     width: 40px;
     display: none;
@@ -118,28 +112,24 @@ body, html {
     font-size: 18px;
     border-radius: 50%;
     background: #e04a27;
-    animation: notification-pop .2s ease-out;
+    animation: notification-pop 0.2s ease-out;
 
     @keyframes notification-pop {
-      0%    { transform: scale(.4) translateY(5px);   }
-      40%   { transform: scale(1.2) translateY(0);  }
-      100%  { transform: scale(1);    }
+      0% { transform: scale(0.4) translateY(5px); }
+      40% { transform: scale(1.2) translateY(0); }
+      100% { transform: scale(1); }
     }
-
   }
 }
 
-
-
 // Top section on the Get Started page
-
 .get-started-feature {
   background-size: 200px;
   padding: 30px 0;
 
   .left-side {
     width: 45%;
-    padding: 30px 0 80px 0;
+    padding: 30px 0 80px;
   }
 
   h1 {
@@ -148,19 +138,19 @@ body, html {
     font-weight: normal;
     font-size: 37px;
     line-height: 42px;
-    margin: 0 0 20px 0;
+    margin: 0 0 20px;
   }
 
   p {
-    color: rgba(255,255,255,.9);
-    margin: 0 0 45px 0;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 45px;
     line-height: 140%;
 
     a {
       color: white;
 
       &:hover {
-        color: rgba(255,255,255,1);
+        color: rgba(255, 255, 255, 1);
       }
     }
   }
@@ -171,7 +161,7 @@ body, html {
     right: 0;
     height: 284px;
     background: black;
-    box-shadow: 7px 7px 0px rgba(0,0,0,.2);
+    box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.2);
 
     iframe {
       position: relative;
@@ -182,7 +172,7 @@ body, html {
   // 404
   .not-found-message {
     text-align: center;
-    padding: 25px 0 35px 0;
+    padding: 25px 0 35px;
 
     h1 {
       font-size: 40px;
@@ -196,9 +186,7 @@ body, html {
   }
 }
 
-
 // Content in page headings
-
 .page-heading {
   padding: 60px 0;
   margin-bottom: 50px;
@@ -206,10 +194,9 @@ body, html {
   h1 {
     color: white;
     padding: 0;
-    font-weight: normal;
     font-size: 37px;
     line-height: 42px;
-    margin: 0 0 25px 0;
+    margin: 0 0 25px;
     font-weight: 400;
   }
 }
@@ -224,18 +211,15 @@ body, html {
     font-family: "Arvo", sans-serif;
   }
 
-
   .get-started-feature h1 {
     font-family: "Arvo", sans-serif;
     font-weight: 400;
   }
 }
 
-
 // Main section below the heading
-
 .page-content {
-  margin: 45px 0 55px 0;
+  margin: 45px 0 55px;
   overflow: auto;
 
   p {
@@ -245,6 +229,7 @@ body, html {
   a {
     color: @link-blue;
     text-decoration: none;
+
     &:hover {
       text-decoration: underline;
     }
@@ -252,14 +237,13 @@ body, html {
 
   p {
     line-height: 150%;
-    color: rgba(0,0,0,.65);
-    margin: 0 0 26px 0;
+    color: rgba(0, 0, 0, 0.65);
+    margin: 0 0 26px;
   }
 
   .link-list {
     margin-bottom: 30px;
     padding-left: 24px;
-
   }
 
   strong {
@@ -270,14 +254,14 @@ body, html {
   .good-bug {
     background: #0e8a16;
     color: white;
-    font-size: .8em;
-    padding: 0px 5px 1px 5px;
+    font-size: 0.8em;
+    padding: 0 5px 1px;
     border-radius: 2px;
     text-decoration: none;
 
     &:hover {
-     text-decoration: none;
-     opacity: .8;
+      text-decoration: none;
+      opacity: 0.8;
     }
   }
 
@@ -287,7 +271,7 @@ body, html {
 
     li {
       padding: 2px 0;
-      color: rgba(0,0,0,.65);
+      color: rgba(0, 0, 0, 0.65);
     }
   }
 
@@ -302,7 +286,7 @@ body, html {
   }
 
   h3 {
-    margin: 15px 0 6px 0;
+    margin: 15px 0 6px;
     font-size: 20px;
   }
 
@@ -312,12 +296,11 @@ body, html {
   }
 
   // Callout box on Get Involved page
-
   .right-box {
     float: right;
     width: 300px;
     padding: 20px;
-    background: rgba(56,152,194,0.2);
+    background: rgba(56, 152, 194, 0.2);
     color: @link-blue;
 
     h2 {
@@ -330,7 +313,7 @@ body, html {
 
     ul {
       padding-left: 22px;
-      margin: 18px 0 5px 0;
+      margin: 18px 0 5px;
       color: inherit;
     }
 
@@ -340,7 +323,6 @@ body, html {
     }
   }
 }
-
 
 .two-col {
   overflow: auto;
@@ -369,14 +351,12 @@ body, html {
   background: yellow;
 }
 
-
 // Footer
-
 footer {
   background: @lightgreen;
 
   .content-wrapper {
-    padding: 40px 0 40px 0;
+    padding: 40px 0;
     width: 964px;
     margin: 0 auto;
     position: relative;
@@ -387,11 +367,10 @@ footer {
 
   .social-links {
     list-style-type: none;
-    margin: 0 0 32px 0;
+    margin: 0 0 32px;
     display: flex;
     justify-content: center;
     padding: 0;
-
 
     li {
       flex: 1;
@@ -444,10 +423,10 @@ footer {
   }
 
   .social-links a {
-    opacity: .7;
+    opacity: 0.7;
     color: white;
     text-decoration: none;
-    .transition(opacity .1s linear);
+    .transition(opacity 0.1s linear);
 
     &:hover {
       opacity: 1;
@@ -478,7 +457,7 @@ footer {
     .thimble-context {
       margin: 0 0 0 122px;
       padding: 0 0 0 20px;
-      color: rgba(255,255,255,.5);
+      color: rgba(255, 255, 255, 0.5);
       border-left: solid 2px @lightgreen;
 
       a {
@@ -493,7 +472,6 @@ footer {
   }
 }
 
-
 .blue-button {
   border: solid 2px @link-blue;
   padding: 8px 16px;
@@ -503,7 +481,7 @@ footer {
 
   &:hover {
     text-decoration: none !important;
-    background: rgba(56,152,194,1);
+    background: rgba(56, 152, 194, 1);
     color: white;
   }
 }

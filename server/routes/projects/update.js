@@ -14,7 +14,7 @@ module.exports = function(config, req, res, next) {
   project.user_id = user.publishId;
 
   utils.updateProject(config, user, project, function(err, status, project) {
-    if(err) {
+    if (err) {
       res.status(status);
       next(HttpError.format(err, req));
       return;

@@ -3,7 +3,8 @@
 var url = require("url");
 var querystring = require("querystring");
 
-var defaultProjectNameKey = require("../../../constants").DEFAULT_PROJECT_NAME_KEY;
+var defaultProjectNameKey = require("../../../constants")
+  .DEFAULT_PROJECT_NAME_KEY;
 var utils = require("../utils");
 var HttpError = require("../../lib/http-error");
 var snippets = require("../../lib/snippets");
@@ -12,9 +13,10 @@ function getProjectMetadata(config, req, callback) {
   var project = req.project;
   var remixId = req.params.remixId;
   var anonymousId = req.params.anonymousId;
-  var locale = (req.localeInfo && req.localeInfo.locale) ? req.localeInfo.locale : "en-US";
+  var locale =
+    req.localeInfo && req.localeInfo.locale ? req.localeInfo.locale : "en-US";
 
-  if(project) {
+  if (project) {
     callback(null, 200, {
       id: project.id,
       userID: req.user.publishId,
@@ -31,7 +33,7 @@ function getProjectMetadata(config, req, callback) {
     return;
   }
 
-  if(!remixId) {
+  if (!remixId) {
     callback(null, 200, {
       anonymousId: anonymousId,
       title: req.gettext(defaultProjectNameKey, locale)
@@ -40,7 +42,7 @@ function getProjectMetadata(config, req, callback) {
   }
 
   utils.getRemixedProject(config, remixId, function(err, status, project) {
-    if(err) {
+    if (err) {
       callback(err, status);
       return;
     }
@@ -55,9 +57,10 @@ function getProjectMetadata(config, req, callback) {
 }
 
 module.exports = function(config, req, res, next) {
-  var locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
+  var locale =
+    req.localeInfo && req.localeInfo.lang ? req.localeInfo.lang : "en-US";
   var qs = querystring.stringify(req.query);
-  if(qs !== "") {
+  if (qs !== "") {
     qs = "?" + qs;
   }
 
@@ -81,7 +84,8 @@ module.exports = function(config, req, res, next) {
 
   // We forward query string params down to the editor iframe so that
   // it's easy to do things like enableExtensions/disableExtensions
-  options.editorURL = config.editorURL + "/index.html" + (url.parse(thimbleUrl).search || "");
+  options.editorURL =
+    config.editorURL + "/index.html" + (url.parse(thimbleUrl).search || "");
 
   if (req.user) {
     options.username = req.user.username;
@@ -93,13 +97,15 @@ module.exports = function(config, req, res, next) {
       "Cache-Control": "no-cache"
     });
 
-    if(err) {
+    if (err) {
       res.status(status);
       next(HttpError.format(err, req));
       return;
     }
 
-    options.projectMetadata = encodeURIComponent(JSON.stringify(projectMetadata));
+    options.projectMetadata = encodeURIComponent(
+      JSON.stringify(projectMetadata)
+    );
 
     options.snippets = snippets;
 

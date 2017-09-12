@@ -1,11 +1,10 @@
-'use strict';
+"use strict";
 
-const throng = require('throng');
-const thimble = require('./server');
+const throng = require("throng");
+const thimble = require("./server");
 const workers = process.env.WEB_CONCURRENCY || 1;
 
 const start = function() {
-
   const server = thimble.listen(process.env.PORT);
 
   const shutdown = function() {
@@ -14,8 +13,8 @@ const start = function() {
     });
   };
 
-  process.on('SIGINT', shutdown);
-  process.on('SIGTERM', shutdown);
+  process.on("SIGINT", shutdown);
+  process.on("SIGTERM", shutdown);
 };
 
 throng(workers, start);

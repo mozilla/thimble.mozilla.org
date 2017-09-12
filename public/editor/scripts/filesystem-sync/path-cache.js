@@ -23,22 +23,32 @@ var items;
 function mergeOperations(previous, requested) {
   // If there is no pending sync operation, or the new one is the same
   // (update followed by update), just return the new one.
-  if(!previous || previous === requested) {
+  if (!previous || previous === requested) {
     return requested;
   }
 
   // A delete trumps a pending update (we can skip a pending update if we'll just delete later)
-  if(previous === SYNC_OPERATION_UPDATE && requested === SYNC_OPERATION_DELETE) {
+  if (
+    previous === SYNC_OPERATION_UPDATE &&
+    requested === SYNC_OPERATION_DELETE
+  ) {
     return SYNC_OPERATION_DELETE;
   }
 
   // An update trumps a pending delete (we can just update the old contents with new)
-  if(previous === SYNC_OPERATION_DELETE && requested === SYNC_OPERATION_UPDATE) {
+  if (
+    previous === SYNC_OPERATION_DELETE &&
+    requested === SYNC_OPERATION_UPDATE
+  ) {
     return SYNC_OPERATION_UPDATE;
   }
 
   // Should never hit this, but if we do, default to an update
-  console.log("[Thimble Error] unexpected sync states, defaulting to update:", previous, requested);
+  console.log(
+    "[Thimble Error] unexpected sync states, defaulting to update:",
+    previous,
+    requested
+  );
   return SYNC_OPERATION_UPDATE;
 }
 
@@ -57,14 +67,14 @@ function init(projectRoot) {
   var key = Constants.CACHE_KEY_PREFIX + projectRoot;
   var noOfOps = 0;
 
-  if(!window.localStorage) {
+  if (!window.localStorage) {
     return;
   }
 
   // Register to save any in-memory cache operations before we close
   window.addEventListener("unload", function() {
     var noOfOpsLeft = items.folders.length + items.files.length;
-    if(!noOfOpsLeft) {
+    if (!noOfOpsLeft) {
       return;
     }
 
@@ -72,7 +82,7 @@ function init(projectRoot) {
   });
 
   var prev = localStorage.getItem(key);
-  if(!prev) {
+  if (!prev) {
     return;
   }
 
@@ -81,9 +91,18 @@ function init(projectRoot) {
   try {
     items = JSON.parse(prev);
     noOfOps = items.files.length + items.folders.length;
-    logger("project", "initialized file operations cache from storage (" + noOfOps + " operations)");
-  } catch(e) {
-    logger("project", "failed to initialize cached file operations from storage", prev);
+    logger(
+      "project",
+      "initialized file operations cache from storage (" +
+        noOfOps +
+        " operations)"
+    );
+  } catch (e) {
+    logger(
+      "project",
+      "failed to initialize cached file operations from storage",
+      prev
+    );
   }
 }
 
@@ -129,7 +148,7 @@ function transferToSyncQueue(syncQueue) {
     var previous = syncQueue.pending[persistedPath] || null;
     var changedFiles = folder.children;
 
-    if(previous) {
+    if (previous) {
       persistedPath = previous.persistedPath;
       $.extend(changedFiles, previous.changed);
       delete syncQueue.pending[folder.oldPath];
@@ -158,7 +177,7 @@ function transferToSyncQueue(syncQueue) {
     Object.keys(syncQueue.pending).forEach(function(file) {
       var newFilePath = renamedPathList[file];
 
-      if(newFilePath) {
+      if (newFilePath) {
         syncQueue.pending[newFilePath] = syncQueue.pending[file];
         delete syncQueue.pending[file];
       }

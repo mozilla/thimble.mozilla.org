@@ -9,7 +9,7 @@ module.exports = function(config, req, res, next) {
   var getMetadata = utils.getProjectFileMetadata;
   var params = [config];
 
-  if(!user && projectId) {
+  if (!user && projectId) {
     getMetadata = utils.getRemixedProjectFileMetadata;
     params.push(projectId);
   } else {
@@ -17,7 +17,7 @@ module.exports = function(config, req, res, next) {
   }
 
   params.push(function(err, status, metadata) {
-    if(err) {
+    if (err) {
       res.status(status);
       next(HttpError.format(err, req));
       return;

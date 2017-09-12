@@ -9,7 +9,7 @@ function toUserFriendlyError(error, request, statusCode) {
   let statusMessage = statusCode;
   const statusMessageKey = HttpError.getStatusMessageKey(statusCode);
 
-  if(statusMessageKey) {
+  if (statusMessageKey) {
     statusMessage = Nunjucks.renderString(
       request.gettext(statusMessageKey, locale),
       { httpStatusCode: statusCode }
@@ -19,7 +19,7 @@ function toUserFriendlyError(error, request, statusCode) {
   return {
     statusMessage,
     status: statusCode,
-    message: error ? (error.userMessage || error) : statusMessage,
+    message: error ? error.userMessage || error : statusMessage,
     localeInfo,
     locale
   };
@@ -33,12 +33,14 @@ class HttpError {
 
     response.format({
       text() {
-        response.send(`${userFriendlyError.statusMessage}: ${userFriendlyError.message}`);
+        response.send(
+          `${userFriendlyError.statusMessage}: ${userFriendlyError.message}`
+        );
       },
       html() {
         // If we get a 500, clear cookies so that we don't wedge user's browser
         // with corrupt/expired cookie info, and for them to clear via browser.
-        if(statusCode === 500) {
+        if (statusCode === 500) {
           request.session = null;
         }
         response.render("error.html", userFriendlyError);
@@ -63,11 +65,13 @@ class HttpError {
   }
 
   static getStatusMessageKey(statusCode) {
-    return statusCode >= 500 ? "errorHttpServiceUnavailable"
-      : (statusCode >= 405 || statusCode === 400) ? "errorHttpClientError"
-      : statusCode === 404 ? "errorHttpNotFound"
-      : statusCode >= 401 ? "errorHttpAuthenticationFailed"
-      : null;
+    return statusCode >= 500
+      ? "errorHttpServiceUnavailable"
+      : statusCode >= 405 || statusCode === 400
+        ? "errorHttpClientError"
+        : statusCode === 404
+          ? "errorHttpNotFound"
+          : statusCode >= 401 ? "errorHttpAuthenticationFailed" : null;
   }
 
   static format(error, request) {

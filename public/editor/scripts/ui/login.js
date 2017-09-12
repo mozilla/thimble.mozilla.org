@@ -12,19 +12,18 @@ var Project = require("../project");
 
 function init() {
   var loginUrl = $("#publish-ssooverride").attr("data-loginUrl");
-  var joinEl = $('#signup-link');
-  var loginEl = $('#login-link');
+  var joinEl = $("#signup-link");
+  var loginEl = $("#login-link");
   var bramble;
 
   // If we're running in the context of the Bramble editor/instance
   // get a reference to it as soon as it becomes available, so that
   // we can save files before we navigate away for sign-in.
-  if(window.Bramble) {
+  if (window.Bramble) {
     window.Bramble.once("ready", function(brambleInstance) {
       bramble = brambleInstance;
     });
   }
-
 
   function signIn(newUser) {
     return function(e) {
@@ -34,7 +33,7 @@ function init() {
       cookies.set("state", uuid.v4());
 
       var location = loginUrl;
-      location += "?now=" + (new Date()).toISOString();
+      location += "?now=" + new Date().toISOString();
 
       if (newUser) {
         location += "&signup=true";
@@ -48,7 +47,7 @@ function init() {
         window.location = location;
       }
 
-      if(bramble) {
+      if (bramble) {
         bramble.saveAll(navigate);
       } else {
         navigate();
@@ -57,10 +56,10 @@ function init() {
   }
 
   // Signup login flow
-  joinEl.on('click', signIn(true));
+  joinEl.on("click", signIn(true));
 
   // Login flow
-  loginEl.on('click', signIn());
+  loginEl.on("click", signIn());
 }
 
 module.exports = {

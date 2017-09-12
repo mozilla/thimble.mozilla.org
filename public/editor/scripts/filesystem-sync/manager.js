@@ -57,13 +57,13 @@ var AJAX_DEFAULT_TIMEOUT_MS = constants.AJAX_DEFAULT_TIMEOUT_MS;
 var _instance;
 
 function bufferToFormData(path, buffer, dateUpdated) {
-  dateUpdated = dateUpdated || (new Date()).toISOString();
+  dateUpdated = dateUpdated || new Date().toISOString();
 
   var formData = new FormData();
   formData.append("dateUpdated", dateUpdated);
   formData.append("bramblePath", Project.stripRoot(path));
   // Don't worry about actual mime type, just treat as binary
-  var blob = new Blob([buffer], {type: "application/octet-stream"});
+  var blob = new Blob([buffer], { type: "application/octet-stream" });
   formData.append("brambleFile", blob);
 
   return formData;
@@ -93,7 +93,7 @@ SyncManager.getInstance = function() {
 
 // Start auto-syncing.
 SyncManager.prototype.start = function() {
-  if(this._interval) {
+  if (this._interval) {
     return;
   }
   // Schedule future syncing
@@ -105,7 +105,11 @@ SyncManager.prototype.start = function() {
 SyncManager.prototype.emitProgressEvent = function() {
   var pendingCount = this.pendingCount;
 
-  logger("SyncManager", "progress event - pending paths to sync:", pendingCount);
+  logger(
+    "SyncManager",
+    "progress event - pending paths to sync:",
+    pendingCount
+  );
   this.trigger("progress", [pendingCount]);
 };
 SyncManager.prototype.emitCompleteEvent = function() {
@@ -146,14 +150,21 @@ SyncManager.prototype.updateOperation = function(path, callback) {
   function send(id) {
     var request;
 
-    if(id) {
+    if (id) {
       options.url = options.url + "/" + id;
     }
 
     request = $.ajax(options);
     request.done(function() {
-      if(request.status !== 201 && request.status !== 200) {
-        return callback(new Error("[Thimble] unable to persist `" + path + "`. Server responded with status " + request.status));
+      if (request.status !== 201 && request.status !== 200) {
+        return callback(
+          new Error(
+            "[Thimble] unable to persist `" +
+              path +
+              "`. Server responded with status " +
+              request.status
+          )
+        );
       }
 
       var data = request.responseJSON;
@@ -161,16 +172,24 @@ SyncManager.prototype.updateOperation = function(path, callback) {
     });
     request.fail(function(jqXHR, status, err) {
       err = err || new Error("unknown network error during update operation");
-      logger("SyncManager", "unable to persist the file update to the server", err);
+      logger(
+        "SyncManager",
+        "unable to persist the file update to the server",
+        err
+      );
       callback(err);
     });
   }
 
   fs.readFile(path, function(err, data) {
-    if(err) {
+    if (err) {
       // Deal with case of local file vanishing before we get a chance to sync (#2018).
-      if(err.code === "ENOENT") {
-        logger("SyncManager", "local file missing for sync update operation, skipping: ", path);
+      if (err.code === "ENOENT") {
+        logger(
+          "SyncManager",
+          "local file missing for sync update operation, skipping: ",
+          path
+        );
         return callback();
       }
       return callback(err);
@@ -178,7 +197,7 @@ SyncManager.prototype.updateOperation = function(path, callback) {
 
     options.data = bufferToFormData(path, data);
     Project.getFileID(path, function(err, id) {
-      if(err) {
+      if (err) {
         return callback(err);
       }
       send(id);
@@ -202,32 +221,54 @@ SyncManager.prototype.deleteOperation = function(path, callback) {
         "X-Csrf-Token": csrfToken
       },
       type: "DELETE",
-      url: Project.getHost() + "/projects/" + Project.getID() + "/files/" + id + "?dateUpdated=" + (new Date()).toISOString(),
+      url:
+        Project.getHost() +
+        "/projects/" +
+        Project.getID() +
+        "/files/" +
+        id +
+        "?dateUpdated=" +
+        new Date().toISOString(),
       timeout: AJAX_DEFAULT_TIMEOUT_MS
     });
     request.done(function() {
-      if(request.status !== 200) {
-        return callback(new Error("[Thimble] unable to persist `" + path + "`. Server responded with status " + request.status));
+      if (request.status !== 200) {
+        return callback(
+          new Error(
+            "[Thimble] unable to persist `" +
+              path +
+              "`. Server responded with status " +
+              request.status
+          )
+        );
       }
 
       finish();
     });
     request.fail(function(jqXHR, status, err) {
       err = err || new Error("unknown network error during delete operation");
-      logger("SyncManager", "unable to persist the file delete to the server", err);
+      logger(
+        "SyncManager",
+        "unable to persist the file delete to the server",
+        err
+      );
       callback(err);
     });
   }
 
   Project.getFileID(path, function(err, id) {
-    if(err) {
+    if (err) {
       return callback(err);
     }
 
     // If the file hasn't been saved to the server yet (i.e., we have
     // no id for this file path), we're done and can just clean up and bail.
-    if(!id) {
-      logger("SyncManager", "skipping remote delete step, no file id for path", path);
+    if (!id) {
+      logger(
+        "SyncManager",
+        "skipping remote delete step, no file id for path",
+        path
+      );
       finish();
       return;
     }
@@ -236,10 +277,17 @@ SyncManager.prototype.deleteOperation = function(path, callback) {
   });
 };
 
-SyncManager.prototype.folderRenameOperation = function(newPath, renameInfo, callback) {
+SyncManager.prototype.folderRenameOperation = function(
+  newPath,
+  renameInfo,
+  callback
+) {
   var self = this;
   var csrfToken = self.csrfToken;
-  var oldPath = Project.stripRoot(renameInfo.persistedPath).replace(/\/?$/, "/");
+  var oldPath = Project.stripRoot(renameInfo.persistedPath).replace(
+    /\/?$/,
+    "/"
+  );
   newPath = Project.stripRoot(newPath).replace(/\/?$/, "/");
   var fileRenames = {};
 
@@ -255,22 +303,34 @@ SyncManager.prototype.folderRenameOperation = function(newPath, renameInfo, call
     url: Project.getHost() + "/projects/" + Project.getID() + "/renamefolder",
     data: JSON.stringify({
       paths: fileRenames,
-      dateUpdated: (new Date()).toISOString()
+      dateUpdated: new Date().toISOString()
     }),
     cache: false,
     contentType: "application/json",
     timeout: AJAX_DEFAULT_TIMEOUT_MS
   });
   request.done(function() {
-    if(request.status !== 200) {
-      return callback(new Error("[Thimble] unable to persist renaming `" + newPath + "`. Server responded with status " + request.status));
+    if (request.status !== 200) {
+      return callback(
+        new Error(
+          "[Thimble] unable to persist renaming `" +
+            newPath +
+            "`. Server responded with status " +
+            request.status
+        )
+      );
     }
 
     callback();
   });
   request.fail(function(jqXHR, status, err) {
-    err = err || new Error("unknown network error during folder rename operation");
-    logger("SyncManager", "unable to persist the folder rename to the server", err);
+    err =
+      err || new Error("unknown network error during folder rename operation");
+    logger(
+      "SyncManager",
+      "unable to persist the folder rename to the server",
+      err
+    );
     callback(err);
   });
 };
@@ -289,7 +349,7 @@ SyncManager.prototype.runNextOperation = function() {
 
   function finalizeOperation(operationErr) {
     Project.getSyncQueue(function(err, syncQueue) {
-      if(err) {
+      if (err) {
         self.emitErrorEvent(err);
         return;
       }
@@ -304,7 +364,7 @@ SyncManager.prototype.runNextOperation = function() {
         Project.setSyncQueue(syncQueue, function(err) {
           var delay;
 
-          if(err) {
+          if (err) {
             self.emitErrorEvent(err);
             return;
           }
@@ -312,13 +372,23 @@ SyncManager.prototype.runNextOperation = function() {
           self.setPendingCount(syncQueue);
 
           // If there are more files to sync, run the next one.
-          if(self.getPendingCount() > 0) {
+          if (self.getPendingCount() > 0) {
             self.emitProgressEvent();
 
             // If the last operation errored, apply a backoff delay.
-            delay = (self.backoff && self.backoff.next()) || AJAX_DEFAULT_DELAY_MS;
+            delay =
+              (self.backoff && self.backoff.next()) || AJAX_DEFAULT_DELAY_MS;
 
-            logger("SyncManager", "finished current operation (" + (operationErr ? "failed" : "success") + "), will run next in " + delay + "ms. " + self.getPendingCount() + " operation(s) remain.");
+            logger(
+              "SyncManager",
+              "finished current operation (" +
+                (operationErr ? "failed" : "success") +
+                "), will run next in " +
+                delay +
+                "ms. " +
+                self.getPendingCount() +
+                " operation(s) remain."
+            );
             setTimeout(self.runNextOperation.bind(self), delay);
           } else {
             self.setSyncing(false);
@@ -328,31 +398,45 @@ SyncManager.prototype.runNextOperation = function() {
       }
 
       function queueOperation() {
-        if(currentOperation === SYNC_OPERATION_UPDATE) {
+        if (currentOperation === SYNC_OPERATION_UPDATE) {
           Project.queueFileUpdate(currentPath);
-        } else if(currentOperation === SYNC_OPERATION_DELETE) {
+        } else if (currentOperation === SYNC_OPERATION_DELETE) {
           Project.queueFileDelete(currentPath);
-        } else if(currentOperation === SYNC_OPERATION_FOLDER_RENAME) {
-          Project.queueFolderRename({
-            oldPath: currentPathInfo.persistedPath,
-            newPath: currentPath,
-            children: currentPathInfo.changed
-          }, true);
+        } else if (currentOperation === SYNC_OPERATION_FOLDER_RENAME) {
+          Project.queueFolderRename(
+            {
+              oldPath: currentPathInfo.persistedPath,
+              newPath: currentPath,
+              children: currentPathInfo.changed
+            },
+            true
+          );
         } else {
-          self.emitErrorEvent(new Error("[Thimble Error] unknown sync operation:" + currentOperation));
+          self.emitErrorEvent(
+            new Error(
+              "[Thimble Error] unknown sync operation:" + currentOperation
+            )
+          );
         }
       }
 
       // If the network operation errored, put this file operation back in the pending list
       // and create a backoff delay object.  If it worked, remove a previous backoff delay (if any).
       // Deal with any cases where the local file has vanished, and we should give up instead.
-      if(operationErr) {
-        logger("SyncManager", "error syncing file: ", operationErr,
-               "Requeuing operation: ", currentOperation, " for path", currentPath);
+      if (operationErr) {
+        logger(
+          "SyncManager",
+          "error syncing file: ",
+          operationErr,
+          "Requeuing operation: ",
+          currentOperation,
+          " for path",
+          currentPath
+        );
         self.trigger("file-sync-error");
         queueOperation();
 
-        if(!self.backoff) {
+        if (!self.backoff) {
           self.backoff = new Backoff();
         }
       } else {
@@ -366,14 +450,20 @@ SyncManager.prototype.runNextOperation = function() {
   function runCurrent() {
     logger("SyncManager", "starting sync", currentPath, currentOperation);
 
-    if(currentOperation === SYNC_OPERATION_UPDATE) {
+    if (currentOperation === SYNC_OPERATION_UPDATE) {
       self.updateOperation(currentPath, finalizeOperation);
-    } else if(currentOperation === SYNC_OPERATION_DELETE) {
+    } else if (currentOperation === SYNC_OPERATION_DELETE) {
       self.deleteOperation(currentPath, finalizeOperation);
-    } else if(currentOperation === SYNC_OPERATION_FOLDER_RENAME) {
-      self.folderRenameOperation(currentPath, currentPathInfo, finalizeOperation);
+    } else if (currentOperation === SYNC_OPERATION_FOLDER_RENAME) {
+      self.folderRenameOperation(
+        currentPath,
+        currentPathInfo,
+        finalizeOperation
+      );
     } else {
-      self.emitErrorEvent(new Error("[Thimble Error] unknown sync operation:" + currentOperation));
+      self.emitErrorEvent(
+        new Error("[Thimble Error] unknown sync operation:" + currentOperation)
+      );
     }
   }
 
@@ -385,8 +475,10 @@ SyncManager.prototype.runNextOperation = function() {
     // Here we loop through the operations until we find an operation that
     // is a folder rename
     paths.every(function(queuedPath) {
-      if(typeof queue[queuedPath] === "object" &&
-         queue[queuedPath].operation === SYNC_OPERATION_FOLDER_RENAME) {
+      if (
+        typeof queue[queuedPath] === "object" &&
+        queue[queuedPath].operation === SYNC_OPERATION_FOLDER_RENAME
+      ) {
         selectedPath = queuedPath;
         return false;
       }
@@ -403,7 +495,7 @@ SyncManager.prototype.runNextOperation = function() {
     self.setPendingCount(syncQueue);
 
     // If there are no pending paths to sync, we're done.
-    if(self.pendingCount === 0) {
+    if (self.pendingCount === 0) {
       logger("SyncManager", "no pending sync operations, stopping syncing.");
       self.emitCompleteEvent();
       self.setSyncing(false);
@@ -412,11 +504,12 @@ SyncManager.prototype.runNextOperation = function() {
 
     // Select and sync a path from the pending list
     currentPath = selectPathToSync(syncQueue.pending);
-    currentOperation = typeof syncQueue.pending[currentPath] === "object" ?
-      syncQueue.pending[currentPath].operation :
-      syncQueue.pending[currentPath];
+    currentOperation =
+      typeof syncQueue.pending[currentPath] === "object"
+        ? syncQueue.pending[currentPath].operation
+        : syncQueue.pending[currentPath];
 
-    if(currentOperation === SYNC_OPERATION_FOLDER_RENAME) {
+    if (currentOperation === SYNC_OPERATION_FOLDER_RENAME) {
       currentPathInfo = {
         changed: syncQueue.pending[currentPath].changed,
         persistedPath: syncQueue.pending[currentPath].persistedPath
@@ -437,7 +530,7 @@ SyncManager.prototype.runNextOperation = function() {
     // Persist this sync info to disk before going further so we can recover
     // if there's a crash or other failure.
     Project.setSyncQueue(syncQueue, function(err) {
-      if(err) {
+      if (err) {
         self.emitErrorEvent(err);
         return;
       }
@@ -448,7 +541,7 @@ SyncManager.prototype.runNextOperation = function() {
   }
 
   function pickCurrentOperation(err, syncQueue) {
-    if(err) {
+    if (err) {
       self.emitErrorEvent(err);
       return;
     }
@@ -459,11 +552,16 @@ SyncManager.prototype.runNextOperation = function() {
     // since it probably means the browser shutdown before it could complete.
     // Otherwise, select a random file/operation to run, prioritizing folder
     // renames first.
-    if(syncQueue.current) {
+    if (syncQueue.current) {
       currentPath = syncQueue.current.path;
       currentOperation = syncQueue.current.operation;
       currentPathInfo = syncQueue.current.pathInfo;
-      logger("SyncManager", "restarting cached sync", currentPath, currentOperation);
+      logger(
+        "SyncManager",
+        "restarting cached sync",
+        currentPath,
+        currentOperation
+      );
       runCurrent();
     } else {
       selectCurrent(syncQueue);
@@ -475,7 +573,7 @@ SyncManager.prototype.runNextOperation = function() {
 
 SyncManager.prototype.setSyncing = function(value) {
   // When we flip from not-syncing to syncing, emit an event
-  if(!this.syncing && value) {
+  if (!this.syncing && value) {
     logger("SyncManager", "start syncing");
     this.trigger("sync-start");
   }
@@ -484,7 +582,7 @@ SyncManager.prototype.setSyncing = function(value) {
 
   // Also tell interested users of SyncManager that we're starting/stopping
   // an AJAX sync for a particular file (vs. entire sync process).
-  if(value) {
+  if (value) {
     this.trigger("file-sync-start");
   } else {
     this.trigger("file-sync-stop");
@@ -495,7 +593,7 @@ SyncManager.prototype.isSyncing = function() {
 };
 SyncManager.prototype.sync = function() {
   // If we're already in the process of syncing, bail
-  if(this.isSyncing()) {
+  if (this.isSyncing()) {
     return;
   }
   this.runNextOperation();
