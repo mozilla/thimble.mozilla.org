@@ -1,0 +1,13 @@
+**/*.min.js
+node_modules
+default
+!default/index.js
+dist
+locales
+services
+views
+Gruntfile.js
+webpack.config.js
+
+# We used to build files into a /client dir which we don't use anymore but makes eslint hang. So we need to explicitly ignore it.
+client

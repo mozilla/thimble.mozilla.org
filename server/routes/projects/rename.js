@@ -7,7 +7,7 @@ module.exports = function(config, req, res, next) {
   req.project.title = req.body.title;
 
   utils.updateProject(config, req.user, req.project, function(err, status) {
-    if(err) {
+    if (err) {
       res.status(status);
       next(HttpError.format(err, req));
       return;

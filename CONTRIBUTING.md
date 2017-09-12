@@ -107,7 +107,11 @@ You'll probably need when working on your issue, and there are a few ways to do 
 
 ### Submit a Pull Request
 
-Once you've got a solution (or a good start) to the issue in your local environment, you'll want to make a Pull Request so that we can look at your code and eventually merge it in. Here are some guidelines...
+Once you've got a solution (or a good start) to the issue in your local environment, you'll want to make a Pull Request so that we can look at your code and eventually merge it in.
+
+Before submitting a Pull Request, make sure your code passes our code style guide tests. To do that, simply run `npm test` to see if there are any code style errors. If you see errors, you can try using the "auto-fix" option to attempt to automagically fix these code style errors for you by running `npm run test:lint:fix`. _Note that not all the errors can be fixed using this method and you might need to fix the rest manually._ After fixing these errors, commit your changes.
+
+Once you fixed any errors that showed up in the tests (if any), you are ready to open up your Pull Request. Here are some guidelines...
 
 * Make the Pull Request against the ``master`` branch
 * Give the Pull Request a descriptive title
@@ -137,4 +141,4 @@ At the bottom of the  **Conversation** tab of the Pull Request page, there is a 
 * **Merge conflicts**
   * Sometimes, if enough time has passed since you first created your branch, changes to the ``master`` branch may require you to rebase your branch to the latest master.
 
-If any of the three above require you to make changes you **do not** need to make a new Pull Request. Simply make the changes in your local branch and then push the changes up to your remote repository. Your new changes will automatically be reflected in your Pull Request.
+If any of the three above require you to make changes you **do not** need to make a new Pull Request. Simply make the changes in your local branch, re-test your code, and then push the changes up to your remote repository. Your new changes will automatically be reflected in your Pull Request.

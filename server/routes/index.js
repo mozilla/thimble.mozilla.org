@@ -29,7 +29,7 @@ module.exports = function() {
     },
 
     rawData: function(req, res) {
-      res.type('text/plain; charset=utf-8');
+      res.type("text/plain; charset=utf-8");
       res.send(getPageData(req));
     }
   };

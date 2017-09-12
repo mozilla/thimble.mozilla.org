@@ -7,26 +7,16 @@ const ONE_YEAR = 31536000000;
 const PONTOON_URL = "https://pontoon.mozilla.org";
 
 let defaultCSPDirectives = {
-  defaultSrc: [ "'self'" ],
+  defaultSrc: ["'self'"],
   connectSrc: [
     "'self'",
     PONTOON_URL,
     "https://mozilla.github.io/thimble-homepage-gallery/activities.json",
     "https://api.github.com/repos/mozilla/thimble.mozilla.org/issues"
   ],
-  frameSrc: [
-    "'self'",
-    "https://docs.google.com",
-    "blob:"
-  ],
-  childSrc: [
-    "'self'",
-    PONTOON_URL,
-    "blob:"
-  ],
-  frameAncestors: [
-    PONTOON_URL
-  ],
+  frameSrc: ["'self'", "https://docs.google.com", "blob:"],
+  childSrc: ["'self'", PONTOON_URL, "blob:"],
+  frameAncestors: [PONTOON_URL],
   fontSrc: [
     "'self'",
     "https://fonts.gstatic.com",
@@ -34,8 +24,8 @@ let defaultCSPDirectives = {
     "https://code.cdn.mozilla.net/",
     PONTOON_URL
   ],
-  imgSrc: [ "*" ],
-  mediaSrc: [ "*" ],
+  imgSrc: ["*"],
+  mediaSrc: ["*"],
   scriptSrc: [
     "'self'",
     "http://mozorg.cdn.mozilla.net",
@@ -68,16 +58,18 @@ Security.prototype = {
       let domainsToAdd = directiveList[directive];
       let defaultDomains = defaultCSPDirectives[directive];
 
-      if(domainsToAdd && defaultDomains.indexOf("*") !== -1) {
+      if (domainsToAdd && defaultDomains.indexOf("*") !== -1) {
         directiveList[directive] = domainsToAdd;
       } else {
-        directiveList[directive] = defaultDomains.concat((domainsToAdd || []));
+        directiveList[directive] = defaultDomains.concat(domainsToAdd || []);
       }
     });
 
-    this.server.use(helmet.contentSecurityPolicy({
-      directives: directiveList
-    }));
+    this.server.use(
+      helmet.contentSecurityPolicy({
+        directives: directiveList
+      })
+    );
 
     return this;
   },
@@ -101,10 +93,12 @@ Security.prototype = {
   },
   xframe() {
     // Only allow framing from Pontoon
-    this.server.use(helmet.frameguard({ 
-      action: "allow-from",
-      domain: PONTOON_URL
-    }));
+    this.server.use(
+      helmet.frameguard({
+        action: "allow-from",
+        domain: PONTOON_URL
+      })
+    );
     return this;
   }
 };

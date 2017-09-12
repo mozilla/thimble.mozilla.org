@@ -17,11 +17,11 @@ function installFile(path, data, callback) {
   var basedir = Path.dirname(path);
 
   sh.mkdirp(basedir, function(err) {
-    if(err) {
+    if (err) {
       return callback(err);
     }
 
-    fs.writeFile(path, new Buffer(data), {encoding: null}, callback);
+    fs.writeFile(path, new Buffer(data), { encoding: null }, callback);
   });
 }
 
@@ -35,7 +35,7 @@ function installTarball(config, tarball, callback) {
   function maybeExtract(path, data, callback) {
     path = Path.join(root, path);
 
-    if(shouldSkipPath(pendingOperations, path)) {
+    if (shouldSkipPath(pendingOperations, path)) {
       callback();
       return;
     }
@@ -51,12 +51,12 @@ function installTarball(config, tarball, callback) {
   }
 
   function writeCallback(err) {
-    if(err) {
+    if (err) {
       console.error("[Thimble error] couldn't extract file for tar", err);
     }
 
     pending--;
-    if(pending === 0) {
+    if (pending === 0) {
       finish(err);
     }
   }
@@ -65,17 +65,21 @@ function installTarball(config, tarball, callback) {
   untarWorker.addEventListener("message", function(e) {
     var data = e.data;
 
-    if(data.type === "progress" && pending === null) {
+    if (data.type === "progress" && pending === null) {
       // Set the total number of files we need to deal with so we know when we're done
       pending = data.totalFilesInArchive;
-    } else if(data.type === "extract") {
-      maybeExtract(data.unarchivedFile.filename, data.unarchivedFile.fileData, writeCallback);
-    } else if(data.type === "error") {
+    } else if (data.type === "extract") {
+      maybeExtract(
+        data.unarchivedFile.filename,
+        data.unarchivedFile.fileData,
+        writeCallback
+      );
+    } else if (data.type === "error") {
       finish(new Error("[Thimble error]: " + data.msg));
     }
   });
 
-  untarWorker.postMessage({file: tarball});
+  untarWorker.postMessage({ file: tarball });
 }
 
 function loadTarball(config, callback) {
@@ -84,14 +88,19 @@ function loadTarball(config, callback) {
   if (config.remixId || config.id) {
     url += "/" + (config.remixId || config.id);
   }
-  url += "/files/data?cacheBust=" + (new Date()).toISOString();
+  url += "/files/data?cacheBust=" + new Date().toISOString();
 
   var xhr = new XMLHttpRequest();
   xhr.open("GET", url, true);
   xhr.responseType = "arraybuffer";
   xhr.onload = function() {
-    if(this.status !== 200) {
-      return callback(new Error("[Thimble error] unable to get tarball, status was:", this.status));
+    if (this.status !== 200) {
+      return callback(
+        new Error(
+          "[Thimble error] unable to get tarball, status was:",
+          this.status
+        )
+      );
     }
 
     installTarball(config, this.response, callback);
@@ -102,49 +111,57 @@ function loadTarball(config, callback) {
 // Load all files as separate requests.  File data is of the form:
 // [{ id: 1, path: "/index.html", project_id: 3 }, ... ]
 function loadFiles(config, callback) {
-  if(!Array.isArray(config.data) && config.data.length > 0) {
+  if (!Array.isArray(config.data) && config.data.length > 0) {
     return callback(new Error("file metadata was missing or in wrong form"));
   }
 
   var root = config.root;
   var url = config.host + "/files/";
 
-  $.when.apply($, config.data.map(function(fileInfo) {
-    var deferred = $.Deferred();
-    var path = Path.join(root, fileInfo.path);
-    var pendingOperations = config.syncQueue.pending;
+  $.when
+    .apply(
+      $,
+      config.data.map(function(fileInfo) {
+        var deferred = $.Deferred();
+        var path = Path.join(root, fileInfo.path);
+        var pendingOperations = config.syncQueue.pending;
 
-    if(shouldSkipPath(pendingOperations, path)) {
-      return deferred.resolve().promise();
-    }
-
-    // jQuery doesn't seem to support getting the arraybuffer type
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", url + fileInfo.id, true);
-    xhr.responseType = "arraybuffer";
-    xhr.onload = function() {
-      if(this.status !== 200) {
-        return deferred.reject();
-      }
-
-      installFile(path, this.response, function(err) {
-        if(err) {
-          return deferred.reject();
+        if (shouldSkipPath(pendingOperations, path)) {
+          return deferred.resolve().promise();
         }
-        deferred.resolve();
-      });
-    };
-    xhr.send();
 
-    return deferred.promise();
-  })).then(callback, function() {
-    callback(new Error("[Thimble error] unable to load project files."));
-  });
+        // jQuery doesn't seem to support getting the arraybuffer type
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url + fileInfo.id, true);
+        xhr.responseType = "arraybuffer";
+        xhr.onload = function() {
+          if (this.status !== 200) {
+            return deferred.reject();
+          }
+
+          installFile(path, this.response, function(err) {
+            if (err) {
+              return deferred.reject();
+            }
+            deferred.resolve();
+          });
+        };
+        xhr.send();
+
+        return deferred.promise();
+      })
+    )
+    .then(callback, function() {
+      callback(new Error("[Thimble error] unable to load project files."));
+    });
 }
 
 function upgradeAnonymousProject(config, callback) {
   var shell = new fs.Shell();
-  var oldRoot = Path.join(constants.ANONYMOUS_USER_FOLDER, config.anonymousId.toString());
+  var oldRoot = Path.join(
+    constants.ANONYMOUS_USER_FOLDER,
+    config.anonymousId.toString()
+  );
   var newRoot = config.root;
   var pathUpdatesCache = [];
 
@@ -167,7 +184,7 @@ function upgradeAnonymousProject(config, callback) {
           return next(err);
         }
 
-        fs.writeFile(newPath, data, {encoding: null}, function(err) {
+        fs.writeFile(newPath, data, { encoding: null }, function(err) {
           if (err) {
             return next(err);
           }
@@ -180,15 +197,21 @@ function upgradeAnonymousProject(config, callback) {
     });
   }
 
-  shell.find(oldRoot, {exec: upgradeFile}, function(err) {
+  shell.find(oldRoot, { exec: upgradeFile }, function(err) {
     if (err) {
-      console.error("[Thimble Error] unable to process path while upgrading anonymous project", err);
+      console.error(
+        "[Thimble Error] unable to process path while upgrading anonymous project",
+        err
+      );
       return callback(err);
     }
 
-    shell.rm(oldRoot, {recursive: true}, function(err) {
-      if(err) {
-        console.error("[Thimble Error] unable to remove path while upgrading anonymous project", err);
+    shell.rm(oldRoot, { recursive: true }, function(err) {
+      if (err) {
+        console.error(
+          "[Thimble Error] unable to remove path while upgrading anonymous project",
+          err
+        );
         return callback(err);
       }
 
@@ -202,7 +225,7 @@ function load(config, callback) {
   // Support loading projects as a single tarball or as a set of individual files.
   // Change the value via .env on the server and the PROJECT_LOAD_STRATEGY variable.
   // Default to loading a tarball.
-  if(config.projectLoadStrategy === "files") {
+  if (config.projectLoadStrategy === "files") {
     loadFiles(config, callback);
   } else {
     loadTarball(config, callback);
@@ -227,7 +250,7 @@ function loadProject(config, callback) {
       }
 
       // Anonymous project does not exist
-      (new fs.Shell()).mkdirp(config.root, function(err) {
+      new fs.Shell().mkdirp(config.root, function(err) {
         if (err) {
           return callback(err);
         }

@@ -6,13 +6,14 @@ module.exports = (config, req, res) => {
   let updated;
   let options;
   let params = req.query;
-  let lang = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
+  let lang =
+    req.localeInfo && req.localeInfo.lang ? req.localeInfo.lang : "en-US";
 
   // Get a localized "time ago" string, dealing with bogus date strings without crashing.
   moment.locale(lang);
   try {
     updated = moment(params.updated).fromNow();
-  } catch(e) {
+  } catch (e) {
     updated = "";
   }
 

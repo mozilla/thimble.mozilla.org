@@ -22,10 +22,30 @@
   "engines": {
     "node": "^6.11.1"
   },
+  "babel": {
+    "presets": [
+      "env"
+    ],
+    "ignore": "**/*.min.js"
+  },
+  "stylelint": {
+    "extends": "stylelint-config-standard",
+    "ignoreFiles": "public/**/normalize.less"
+  },
+  "browserslist": [
+    "Firefox >= 50",
+    "Chrome >= 49",
+    "Safari >= 9.1",
+    "ie >= 11",
+    "Edge >= 12"
+  ],
   "dependencies": {
     "async": "0.2.7",
     "autoprefixer": "^7.1.2",
     "aws-sdk": "^2.23.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
     "bestlang": "0.0.1",
     "body-parser": "^1.17.1",
     "bowser": "^1.7.1",
@@ -42,20 +62,8 @@
     "express": "^4.15.2",
     "extract-text-webpack-plugin": "^3.0.0",
     "form-data": "^0.2.0",
-    "glob": "^7.1.1",
-    "grunt": "~0.4.1",
-    "grunt-cli": "^1.2.0",
-    "grunt-contrib-csslint": "^2.0.0",
-    "grunt-contrib-jshint": "^0.11.2",
-    "grunt-contrib-less": "^1.4.0",
-    "grunt-execute": "0.2.2",
-    "grunt-git": "^0.3.4",
-    "grunt-lesslint": "^1.1.14",
-    "grunt-npm": "git://github.com/sedge/grunt-npm.git#branchcheck",
-    "grunt-update-submodules": "^0.4.1",
     "habitat": "3.1.2",
     "helmet": "^3.5.0",
-    "jit-grunt": "^0.10.0",
     "jquery": "^3.2.1",
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
@@ -75,24 +83,31 @@
     "shelljs": "^0.7.8",
     "tar-stream": "^1.5.2",
     "throng": "^4.0.0",
-    "time-grunt": "^1.4.0",
     "uuid": "2.0.3",
     "webmaker-i18n": "^0.3.32",
     "webpack": "^3.2.0",
     "wolfy87-eventemitter": "^5.1.0"
   },
   "devDependencies": {
-    "shx": "^0.2.2"
+    "eslint": "^4.6.1",
+    "eslint-plugin-prettier": "^2.2.0",
+    "prettier": "^1.6.1",
+    "shx": "^0.2.2",
+    "stylelint": "^8.1.1",
+    "stylelint-config-standard": "^17.0.0"
   },
   "scripts": {
     "build:static": "webpack",
     "build:l10n": "node scripts/localize",
     "env": "shx cp env.dist .env",
-    "heroku-postbuild": "npm run build:*",
+    "heroku-postbuild": "run-s build:*",
     "invalidate": "node scripts/invalidate.js",
     "server": "node app.js",
     "services:logs": "vagrant ssh -- pm2 logs --format",
     "start": "run-p build:* server",
-    "test": "grunt"
+    "test:eslint": "eslint .",
+    "test:stylelint": "stylelint \"public/**/*.less\"",
+    "test:lint:fix": "run-s \"test:* -- --fix\"",
+    "test": "run-s test:*"
   }
 }

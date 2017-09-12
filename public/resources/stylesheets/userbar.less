@@ -10,7 +10,7 @@
   position: relative;
   top: 5px;
 
-  a  {
+  a {
     display: inline-block;
     font-size: 16px;
     padding-bottom: 4px;
@@ -18,11 +18,11 @@
     text-decoration: none;
     color: white;
     margin: 0 20px;
-    opacity: .6;
+    opacity: 0.6;
     border-bottom: solid 2px transparent;
 
     &:hover {
-      border-bottom: solid 2px rgba(255,255,255,.5);
+      border-bottom: solid 2px rgba(255, 255, 255, 0.5);
     }
 
     &.selected {
@@ -30,7 +30,6 @@
       border-bottom: solid 2px white;
     }
   }
-
 }
 
 .container-flex {
@@ -42,7 +41,7 @@
 }
 
 .navbar-thimble {
-  color: rgba(255,255,255,.65);
+  color: rgba(255, 255, 255, 0.65);
   width: 100%;
   height: 60px;
 
@@ -60,9 +59,8 @@
     }
 
     &:active {
-      transform: scale(.95);
+      transform: scale(0.95);
     }
-
   }
 
   .thimble-logo {
@@ -92,7 +90,7 @@
       border: none;
     }
 
-    input#project-title{
+    input#project-title {
       width: 350px;
     }
 
@@ -108,20 +106,22 @@
       display: none;
       font-size: 0.9em;
       background-color: white;
-      color: #55986C;
+      color: #55986c;
       text-decoration: none;
-      padding: 3px 8px 4px 8px;
-      border-bottom: 1px solid #B9D6C3;
+      padding: 3px 8px 4px;
+      border-bottom: 1px solid #b9d6c3;
       border-radius: 2px;
       position: relative;
       top: -2px;
       opacity: 0.9;
       filter: alpha(opacity=90);
     }
+
     #project-rename-save:hover {
       opacity: 1;
       filter: alpha(opacity=100);
     }
+
     #project-rename-save:active {
       opacity: 1;
       filter: alpha(opacity=100);
@@ -129,9 +129,11 @@
       top: -1px;
       border-width: 0;
     }
+
     #project-rename-save.disabled {
       opacity: 0.5;
     }
+
     .text-input {
       outline: none;
       border-bottom: 1px solid !important;
@@ -139,12 +141,15 @@
       margin-right: 3px;
     }
   }
+
   #navbar-project-title.shadow:hover {
-    background-color: rgba(0,0,0,.1);
+    background-color: rgba(0, 0, 0, 0.1);
+
     img.icon-edit {
       opacity: 1;
       filter: alpha(opacity=100);
     }
+
     cursor: pointer;
   }
 
@@ -179,13 +184,13 @@
 
   #navbar-publish-button {
     background-color: white;
-    color: #55986C;
+    color: #55986c;
     text-decoration: none;
     padding: 6px 10px 6px 9px;
-    border-bottom: 2px solid #B9D6C3;
+    border-bottom: 2px solid #b9d6c3;
     border-radius: 2px;
     position: relative;
-    font-weight:400;
+    font-weight: 400;
     margin-right: 15px;
     top: 0;
     filter: alpha(opacity=90);
@@ -215,7 +220,7 @@
       border: none;
     }
 
-    &:after {
+    &::after {
       content: "";
       position: absolute;
       top: 0;
@@ -224,7 +229,7 @@
       bottom: -2px;
     }
 
-    &:active:after {
+    &:active::after {
       top: -3px;
       left: 0;
       right: 0;
@@ -260,7 +265,6 @@
   }
 }
 
-
 /* Mix-ins */
 .icon {
   cursor: pointer;
@@ -295,6 +299,7 @@ a.navbar-login {
 
 a.navbar-login:hover {
   .transition;
+
   cursor: pointer;
   text-decoration: none;
   border-bottom: 1px solid;
@@ -309,8 +314,8 @@ a.navbar-login:hover {
   margin-right: 10px;
 
   &.strobe {
-    -webkit-animation: strobe .3s linear 3;
-    animation: strobe .3s linear 3;
+    -webkit-animation: strobe 0.3s linear 3;
+    animation: strobe 0.3s linear 3;
   }
 }
 
@@ -318,23 +323,23 @@ a.navbar-login:hover {
   #navbar-anonymous {
     margin-right: 0;
   }
+
   #navbar-login {
     padding-right: 15px;
   }
 }
 
 @keyframes strobe {
-  0% {    background: none; }
-  50% {  background: rgba(255,255,255,.15);}
-  0% {    background: none; }
+  0% { background: none; }
+  50% { background: rgba(255, 255, 255, 0.15); }
+  0% { background: none; }
 }
 
 @-webkit-keyframes strobe {
-  0% {    background: none; }
-  50% {  background: rgba(255,255,255,.15);}
-  0% {    background: none; }
+  0% { background: none; }
+  50% { background: rgba(255, 255, 255, 0.15); }
+  0% { background: none; }
 }
-
 
 #navbar-logged-in {
   margin-left: 0;
@@ -364,16 +369,16 @@ a.navbar-login:hover {
   }
 
   .dropdown-toggle {
-    padding: 10px 10px 10px 10px;
+    padding: 10px;
     position: relative;
     color: white;
     text-decoration: none;
-    opacity: .65;
+    opacity: 0.65;
     cursor: pointer;
-
     top: 0;
     .transition;
-    border-top: 1px solid rgba(0,0,0,0);
+
+    border-top: 1px solid rgba(0, 0, 0, 0);
 
     &:hover {
       border-radius: 1px;
@@ -389,9 +394,10 @@ a.navbar-login:hover {
     }
   }
 
-  &.expanded .dropdown-toggle, &:hover.expanded .dropdown-toggle {
-    border-top: 1px solid rgba(0,0,0,.1);
-    background-color: rgba(0,0,0,.1);
+  &.expanded .dropdown-toggle,
+  &:hover.expanded .dropdown-toggle {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
     opacity: 1;
   }
 
@@ -406,7 +412,7 @@ a.navbar-login:hover {
     min-width: 185px;
     top: 43px;
     right: 0;
-    box-shadow: 0 3px 9px rgba(0,0,0,0.24);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.24);
 
     ul {
       list-style-type: none;
@@ -415,14 +421,14 @@ a.navbar-login:hover {
 
       a {
         text-decoration: none;
-        color: rgba(0,0,0,.6);
+        color: rgba(0, 0, 0, 0.6);
         display: block;
         padding: 11px 12px;
         width: 100%;
         box-sizing: border-box;
 
         &:hover {
-          background-color: rgba(0,0,0,.05);
+          background-color: rgba(0, 0, 0, 0.05);
         }
       }
     }
@@ -434,44 +440,40 @@ a.navbar-login:hover {
   }
 }
 
-
 // Locale Dropdown Menu
 #navbar-locale {
   ul {
     margin: 12px 0;
     padding: 0 14px;
-
     -webkit-column-count: 2;
-       -moz-column-count: 2;
-            column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
     -webkit-column-gap: 10px;
-       -moz-column-gap: 10px;
-            column-gap: 10px;
+    -moz-column-gap: 10px;
+    column-gap: 10px;
 
     a {
       padding: 11px 12px 11px 28px;
       -webkit-column-break-inside: avoid;
-              column-break-inside: avoid;
+      break-inside: avoid;
       display: table; // This one simple hack for Firefox
 
       &.selected {
         background-image: ~"url(/img/icon/checkmark-black.svg)";
         background-repeat: no-repeat;
-        background-position:  10px center;
+        background-position: 10px center;
         background-size: 12px;
       }
 
       &:hover {
-        background-color: rgba(0,0,0,.05);
+        background-color: rgba(0, 0, 0, 0.05);
       }
     }
   }
 }
 
-
 // User menu dropdown
-
-#navbar-logged-in  {
+#navbar-logged-in {
   .dropdown-toggle {
     padding-left: 45px;
 
@@ -482,7 +484,7 @@ a.navbar-login:hover {
       position: absolute;
       top: 8px;
       left: 10px;
-      border: solid 1px rgba(255,255,255,.2);
+      border: solid 1px rgba(255, 255, 255, 0.2);
     }
   }
 
@@ -497,7 +499,7 @@ a.navbar-login:hover {
           padding-right: 10px;
           width: 16px;
           height: 16px;
-          opacity: .6;
+          opacity: 0.6;
           position: relative;
           top: 2px;
         }

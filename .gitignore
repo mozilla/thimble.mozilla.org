@@ -5,9 +5,5 @@ node_modules
 .heroku
 *.log
 npm-debug.log.*
-locale/**/*.json
-public/stylesheets/userbar.css
 dist/
-client/
-mozilla.webmaker.org
 package-lock.json

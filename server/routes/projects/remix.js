@@ -6,42 +6,61 @@ var uuid = require("uuid");
 var HttpError = require("../../lib/http-error");
 
 module.exports = function(config, req, res, next) {
-  var locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
+  var locale =
+    req.localeInfo && req.localeInfo.lang ? req.localeInfo.lang : "en-US";
   var publishedId = req.params.publishedId;
   var user = req.user;
-  if(!user) {
-    res.redirect(307, "/" + locale + "/anonymous/" + uuid.v4() + "/" + publishedId);
+  if (!user) {
+    res.redirect(
+      307,
+      "/" + locale + "/anonymous/" + uuid.v4() + "/" + publishedId
+    );
     return;
   }
 
-  var now = req.query.now || (new Date()).toISOString();
+  var now = req.query.now || new Date().toISOString();
   var options = {
     method: "PUT",
-    uri: config.publishURL + "/publishedProjects/" + publishedId + "/remix?now=" + now,
+    uri:
+      config.publishURL +
+      "/publishedProjects/" +
+      publishedId +
+      "/remix?now=" +
+      now,
     headers: {
-      "Authorization": "token " + user.token
+      Authorization: "token " + user.token
     }
   };
 
   request(options, function(err, response, body) {
-    if(err) {
+    if (err) {
       res.status(500);
       next(
-        HttpError.format({
-          message: "Failed to send request to " + options.uri,
-          context: err
-        }, req)
+        HttpError.format(
+          {
+            message: "Failed to send request to " + options.uri,
+            context: err
+          },
+          req
+        )
       );
       return;
     }
 
-    if(response.statusCode !== 200) {
+    if (response.statusCode !== 200) {
       res.status(response.statusCode);
       next(
-        HttpError.format({
-          message: "Request to " + options.uri + " returned a status of " + response.statusCode,
-          context: response.body
-        }, req)
+        HttpError.format(
+          {
+            message:
+              "Request to " +
+              options.uri +
+              " returned a status of " +
+              response.statusCode,
+            context: response.body
+          },
+          req
+        )
       );
       return;
     }
@@ -49,18 +68,25 @@ module.exports = function(config, req, res, next) {
     var project;
     try {
       project = JSON.parse(body);
-    } catch(e) {
+    } catch (e) {
       res.status(500);
       next(
-        HttpError.format({
-          message: "Project sent by calling function was in an invalid format. Failed to run `JSON.parse`",
-          context: e.message,
-          stack: e.stack
-        }, req)
+        HttpError.format(
+          {
+            message:
+              "Project sent by calling function was in an invalid format. Failed to run `JSON.parse`",
+            context: e.message,
+            stack: e.stack
+          },
+          req
+        )
       );
       return;
     }
 
-    res.redirect(307, "/" + locale + "/user/" + user.username + "/" + project.id);
+    res.redirect(
+      307,
+      "/" + locale + "/user/" + user.username + "/" + project.id
+    );
   });
 };

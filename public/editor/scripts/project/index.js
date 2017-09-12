@@ -71,7 +71,7 @@ function setPublishUrl(value) {
 }
 
 function getRoot() {
-  if(!_user) {
+  if (!_user) {
     return Path.join(Constants.ANONYMOUS_USER_FOLDER, _anonymousId.toString());
   }
 
@@ -152,7 +152,10 @@ function init(projectDetails, host, callback) {
   _description = projectDetails.description;
   _projectLoadStrategy = projectDetails.projectLoadStrategy;
 
-  var metadataLocation = _user && _anonymousId ? Path.join(Constants.ANONYMOUS_USER_FOLDER, _anonymousId.toString()) : getRoot();
+  var metadataLocation =
+    _user && _anonymousId
+      ? Path.join(Constants.ANONYMOUS_USER_FOLDER, _anonymousId.toString())
+      : getRoot();
 
   // We have to check if we can access the 'title' stored
   // on an xattr first to know which value
@@ -183,110 +186,122 @@ function init(projectDetails, host, callback) {
 
 // Set all necesary data for this project, based on makeDetails rendered into page.
 function _load(csrfToken, syncQueue, callback) {
-  var now = (new Date()).toISOString();
+  var now = new Date().toISOString();
   var isUpdate = !!_user && !!_anonymousId;
 
   // Step 1: download the project's metadata
-  Metadata.download({
-    host: _host,
-    id: _id,
-    user: _user,
-    update: isUpdate
-  }, function(err, data) {
-    if(err) {
-      return callback(err);
-    }
-
-    // Step 2: download the project's contents (files) or upload an
-    // anonymous project's content if this is an upgrade, and install into the root
-    Remote.loadProject({
-      root: getRoot(),
+  Metadata.download(
+    {
       host: _host,
-      user: _user,
       id: _id,
-      remixId: _remixId,
-      anonymousId: _anonymousId,
-      syncQueue: syncQueue,
-      data: data,
-      projectLoadStrategy: _projectLoadStrategy
-    }, function(err, pathUpdatesCache) {
-      if(err) {
-        // If we have paths to sync in the SyncQueue, ignore this error and keep going
-        if(!Object.keys(syncQueue.pending).length) {
-          return callback(err);
-        }
+      user: _user,
+      update: isUpdate
+    },
+    function(err, data) {
+      if (err) {
+        return callback(err);
       }
 
-      // If there are cached paths that need to be updated, queue those now
-      if(pathUpdatesCache && pathUpdatesCache.length) {
-        pathUpdatesCache.forEach(function(path) {
-          queueFileUpdate(path);
-        });
-      }
-
-      // Step 3: If this was a project upgrade (from anonymous to authenticated),
-      // update the project metadata on the server
-      Metadata.update({
-        host: _host,
-        update: isUpdate,
-        id: _id,
-        csrfToken: csrfToken,
-        data: {
-          title: _title,
-          description: _description,
-          dateCreated: now,
-          dateUpdated: now
-        }
-      }, function(err) {
-        if(err) {
-          return callback(err);
-        }
-
-        // Step 4: install the project's metadata (project + file IDs on publish) and
-        // install into an xattrib on the project root.
-        Metadata.install({
+      // Step 2: download the project's contents (files) or upload an
+      // anonymous project's content if this is an upgrade, and install into the root
+      Remote.loadProject(
+        {
           root: getRoot(),
-          title: _title,
-          id: _id,
-          data: data,
+          host: _host,
           user: _user,
-          update: isUpdate
-        }, function(err) {
-          if(err) {
-            return callback(err);
+          id: _id,
+          remixId: _remixId,
+          anonymousId: _anonymousId,
+          syncQueue: syncQueue,
+          data: data,
+          projectLoadStrategy: _projectLoadStrategy
+        },
+        function(err, pathUpdatesCache) {
+          if (err) {
+            // If we have paths to sync in the SyncQueue, ignore this error and keep going
+            if (!Object.keys(syncQueue.pending).length) {
+              return callback(err);
+            }
           }
 
-          // Find the index.html file in the project root to open
-          var indexLocation = Path.join(getRoot(), "index.html");
-          _fs.exists(indexLocation, function(exists) {
-            if(exists) {
-              callback(null, indexLocation);
-              return;
+          // If there are cached paths that need to be updated, queue those now
+          if (pathUpdatesCache && pathUpdatesCache.length) {
+            pathUpdatesCache.forEach(function(path) {
+              queueFileUpdate(path);
+            });
+          }
+
+          // Step 3: If this was a project upgrade (from anonymous to authenticated),
+          // update the project metadata on the server
+          Metadata.update(
+            {
+              host: _host,
+              update: isUpdate,
+              id: _id,
+              csrfToken: csrfToken,
+              data: {
+                title: _title,
+                description: _description,
+                dateCreated: now,
+                dateUpdated: now
+              }
+            },
+            function(err) {
+              if (err) {
+                return callback(err);
+              }
+
+              // Step 4: install the project's metadata (project + file IDs on publish) and
+              // install into an xattrib on the project root.
+              Metadata.install(
+                {
+                  root: getRoot(),
+                  title: _title,
+                  id: _id,
+                  data: data,
+                  user: _user,
+                  update: isUpdate
+                },
+                function(err) {
+                  if (err) {
+                    return callback(err);
+                  }
+
+                  // Find the index.html file in the project root to open
+                  var indexLocation = Path.join(getRoot(), "index.html");
+                  _fs.exists(indexLocation, function(exists) {
+                    if (exists) {
+                      callback(null, indexLocation);
+                      return;
+                    }
+
+                    // Create a default index.html file
+                    $.get(DEFAULT_INDEX_HTML_URL).then(function(data) {
+                      _fs.writeFile(indexLocation, data, function(err) {
+                        if (err) {
+                          console.error("Cannot write file to project: ", err);
+                          callback(err);
+                          return;
+                        }
+
+                        if (_user) {
+                          // Make sure we will sync the index.html file we have
+                          // created.
+                          queueFileUpdate(addRoot("index.html"));
+                        }
+
+                        callback(null, indexLocation);
+                      });
+                    }, callback);
+                  });
+                }
+              );
             }
-
-            // Create a default index.html file
-            $.get(DEFAULT_INDEX_HTML_URL).then(function(data) {
-              _fs.writeFile(indexLocation, data, function(err) {
-                if (err) {
-                  console.error("Cannot write file to project: ", err);
-                  callback(err);
-                  return;
-                }
-
-                if(_user) {
-                  // Make sure we will sync the index.html file we have
-                  // created.
-                  queueFileUpdate(addRoot("index.html"));
-                }
-
-                callback(null, indexLocation);
-              });
-            }, callback);
-          });
-        });
-      });
-    });
-  });
+          );
+        }
+      );
+    }
+  );
 }
 
 /**
@@ -298,11 +313,11 @@ function _load(csrfToken, syncQueue, callback) {
 function load(csrfToken, callback) {
   PathCache.init(getRoot());
   getSyncQueue(function(err, syncQueue) {
-    if(err) {
+    if (err) {
       // If the project root doesn't exist yet, we can simulate an empty SyncQueue
       // since there are no path operations needing to be run yet.
-      if(err.code === "ENOENT") {
-        _load(csrfToken, {pending: {}}, callback);
+      if (err.code === "ENOENT") {
+        _load(csrfToken, { pending: {} }, callback);
       } else {
         callback(err);
       }
@@ -313,7 +328,7 @@ function load(csrfToken, callback) {
     syncQueue = PathCache.transferToSyncQueue(syncQueue);
 
     setSyncQueue(syncQueue, function(err) {
-      if(err) {
+      if (err) {
         callback(err);
         return;
       }

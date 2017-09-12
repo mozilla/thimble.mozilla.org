@@ -16,19 +16,31 @@ class Logger {
     this.isDevelopmentEnv = environment === "development";
     this.logLevel = LOG_LEVELS.indexOf(level);
 
-    if(this.logLevel === -1) {
+    if (this.logLevel === -1) {
       this.logLevel = 0; // Default to "info"
     }
   }
 
   getMessagePrefix() {
-    let messagePrefix = "method".cyan + "=" + this.requestMethod + " " +
-      "path".cyan + "=" + this.requestURL + " ";
+    let messagePrefix =
+      "method".cyan +
+      "=" +
+      this.requestMethod +
+      " " +
+      "path".cyan +
+      "=" +
+      this.requestURL +
+      " ";
 
-    if(!this.isDevelopmentEnv) {
-      messagePrefix = "[request_id=" + this.requestID + "] " +
+    if (!this.isDevelopmentEnv) {
+      messagePrefix =
+        "[request_id=" +
+        this.requestID +
+        "] " +
         messagePrefix +
-        "fwd=" + this.requestIP + " ";
+        "fwd=" +
+        this.requestIP +
+        " ";
     }
 
     return messagePrefix;
@@ -50,7 +62,7 @@ class Logger {
   }
 
   info() {
-    if(this.logLevel > 0) {
+    if (this.logLevel > 0) {
       return;
     }
 
@@ -59,7 +71,7 @@ class Logger {
   }
 
   warn() {
-    if(this.logLevel > 1) {
+    if (this.logLevel > 1) {
       return;
     }
 

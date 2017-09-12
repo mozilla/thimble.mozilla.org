@@ -81,8 +81,7 @@ npm install
 vagrant up
 ```
 This process can take a while depending on your internet connection speed as it needs to download all dependencies.
-The Vagrant VM is set to use 1 virtual CPU and 1.5G of RAM. If you find you need to adjust these resource levels, you
-can do so in the `/Vagrantfile`.
+The Vagrant VM is set to use 1 virtual CPU and 1.5G of RAM. If you find you need to adjust these resource levels, you can do so in the `/Vagrantfile`.
 
 When Vagrant finishes provisioning the VM, all the services that Thimble relies on will be running. Now, you can start the Thimble server by running:
 ```sh
@@ -124,7 +123,7 @@ Please note: On Windows, use ``copy`` instead of ``cp``
 
 #### Thimble
 * Fork and clone https://github.com/mozilla/thimble.mozilla.org
-* Run ``cp env.dist .env`` to create an environment file
+* Run ``npm run env`` to create an environment file
 * Run ``npm install`` to install dependencies
 * Run ``npm start`` to start the server
 
