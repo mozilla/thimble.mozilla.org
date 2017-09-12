@@ -11,29 +11,32 @@ const colors = require("colors");
 const env = require("./server/lib/environment");
 
 const IS_DEVELOPMENT = env.get("NODE_ENV") === "development";
-const cssConfig = {
-  use: [{
-    loader: "css-loader",
-    options: {
-      minimize: !IS_DEVELOPMENT
-    }
+
+const moduleConfig = {
+  rules: [{
+    test: /\.js$/,
+    exclude: /node_modules/,
+    loader: "babel-loader"
   }, {
-    loader: "postcss-loader",
-    options: {
-      plugins: [autoprefixer({
-        browsers: [
-          "Firefox >= 50",
-          "Chrome >= 49",
-          "Safari >= 9.1",
-          "ie >= 11",
-          "Edge >= 12"
-        ]
-      })]
-    }
-  }, {
-    loader: "less-loader"
+    test: /\.less$/,
+    use: ExtractTextPlugin.extract({
+      use: [{
+        loader: "css-loader",
+        options: {
+          minimize: !IS_DEVELOPMENT
+        }
+      }, {
+        loader: "postcss-loader",
+        options: {
+          plugins: [ autoprefixer() ]
+        }
+      }, {
+        loader: "less-loader"
+      }]
+    })
   }]
 };
+
 const plugins = [
   new ExtractTextPlugin("stylesheets/style.css")
 ];
@@ -76,13 +79,6 @@ const HOMEPAGE_CONFIG = {
     path: path.resolve(__dirname, "dist/homepage"),
     pathinfo: IS_DEVELOPMENT,
     filename: "scripts/main.js"
-  },
-
-  module: {
-    rules: [{
-      test: /\.less$/,
-      use: ExtractTextPlugin.extract(cssConfig)
-    }]
   }
 };
 
@@ -97,13 +93,6 @@ const PROJECTS_LIST_CONFIG = {
     path: path.resolve(__dirname, "dist/projects-list"),
     pathinfo: IS_DEVELOPMENT,
     filename: "scripts/main.js"
-  },
-
-  module: {
-    rules: [{
-      test: /\.less$/,
-      use: ExtractTextPlugin.extract(cssConfig)
-    }]
   }
 };
 
@@ -119,13 +108,6 @@ const EDITOR_CONFIG = {
     path: path.resolve(__dirname, "dist/editor"),
     pathinfo: IS_DEVELOPMENT,
     filename: "scripts/main.js"
-  },
-
-  module: {
-    rules: [{
-      test: /\.less$/,
-      use: ExtractTextPlugin.extract(cssConfig)
-    }]
   }
 };
 
@@ -154,13 +136,6 @@ const RESOURCES_CSS_CONFIG = {
     filename: "stylesheets/[name].css"
   },
 
-  module: {
-    rules: [{
-      test: /\.less$/,
-      use: ExtractTextPlugin.extract(cssConfig)
-    }]
-  },
-
   plugins: [
     new ExtractTextPlugin("stylesheets/[name].css"),
     ...plugins.slice(1)
@@ -174,6 +149,7 @@ module.exports = [
   RESOURCES_JS_CONFIG,
   RESOURCES_CSS_CONFIG
 ].map(config => Object.assign({
+  module: moduleConfig,
   plugins,
   externals: {
     strings: "__THIMBLE_STRINGS__"

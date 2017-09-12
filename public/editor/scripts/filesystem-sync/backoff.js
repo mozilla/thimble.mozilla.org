@@ -18,7 +18,10 @@ function Backoff() {
 
 Backoff.prototype.next = function() {
   this.iter++;
-  var v = Math.min(BACKOFF_BASE_MS * Math.pow(2, this.iter), BACKOFF_MAX_DELAY_MS);
+  var v = Math.min(
+    BACKOFF_BASE_MS * Math.pow(2, this.iter),
+    BACKOFF_MAX_DELAY_MS
+  );
   return _getRandomIntInclusive(0, v);
 };
 

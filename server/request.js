@@ -10,13 +10,19 @@ let version = require("../package").version;
 const Logger = require("./logger");
 
 const logFormats = {
-  production: "[request_id=:request-id] date=:date[clf] method=:method path=:url status=:status fwd=:fwd bytes=:res[content-length]",
+  production:
+    "[request_id=:request-id] date=:date[clf] method=:method path=:url status=:status fwd=:fwd bytes=:res[content-length]",
   development:
-    "method".cyan + "=:method " +
-    "path".cyan + "=:url " +
-    "status".cyan + "=:status " +
-    "bytes".cyan + "=:res[content-length] " +
-    "response_time".cyan + "=:response-time[0]"
+    "method".cyan +
+    "=:method " +
+    "path".cyan +
+    "=:url " +
+    "status".cyan +
+    "=:status " +
+    "bytes".cyan +
+    "=:res[content-length] " +
+    "response_time".cyan +
+    "=:response-time[0]"
 };
 
 morgan.token("request-id", function(request, response) {
@@ -31,18 +37,20 @@ morgan.token("fwd", function(request, response) {
 
 morgan.token("status", function(request, response) {
   // Taken from morgan.js
-  if(!response._header) {
+  if (!response._header) {
     return "-";
   }
 
   const status = response.statusCode;
   const statusStr = status.toString();
 
-  return status >= 500 ? statusStr.red
-    : status >= 400 ? statusStr.yellow
-    : status >= 300 ? statusStr.blue
-    : status >= 200 ? statusStr.green
-    : status;
+  return status >= 500
+    ? statusStr.red
+    : status >= 400
+      ? statusStr.yellow
+      : status >= 300
+        ? statusStr.blue
+        : status >= 200 ? statusStr.green : status;
 });
 
 function Request(server) {
@@ -84,7 +92,7 @@ Request.prototype = {
     // See https://github.com/senchalabs/connect/issues/323
     let session = cookieSession(cookieOptions);
     this.server.use((req, res, next) => {
-      if(req.method.toLowerCase() === "options") {
+      if (req.method.toLowerCase() === "options") {
         next();
       } else {
         session(req, res, next);
@@ -95,7 +103,7 @@ Request.prototype = {
   },
   healthcheck() {
     this.server.get("/healthcheck", (req, res) => {
-      res.json({ http: 'okay', version: version });
+      res.json({ http: "okay", version: version });
     });
 
     return this;

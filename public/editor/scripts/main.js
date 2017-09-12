@@ -24,7 +24,7 @@ function load() {
     }
 
     // Initialize the name UI for an anonymous project
-    if(!projectDetails.userID){
+    if (!projectDetails.userID) {
       ProjectRenameUtility.init(appUrl, Editor.csrfToken);
     }
 

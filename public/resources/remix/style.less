@@ -12,7 +12,10 @@
 }
 
 @media print {
-  .details-bar, .collapsed, .cleanslate, .mouse-mode {
+  .details-bar,
+  .collapsed,
+  .cleanslate,
+  .mouse-mode {
     display: none !important;
   }
 }
@@ -24,15 +27,17 @@
   font-family: "Fira Medium", "Helvetica Neue", sans-serif !important;
   z-index: 2000000 !important;
 
-  .remix-project-title, .remix-project-meta, .remix-project-author {
-    color: #2E9961 !important;
+  .remix-project-title,
+  .remix-project-meta,
+  .remix-project-author {
+    color: #2e9961 !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
   }
 
   .remix-project-title {
-    margin: 1px 0 3px 0 !important;
+    margin: 1px 0 3px !important;
     font-size: 18px !important;
     line-height: 22px !important;
     font-weight: normal !important;
@@ -42,7 +47,7 @@
   .remix-project-meta {
     font-size: 14px !important;
     line-height: 15px !important;
-    opacity: .6 !important;
+    opacity: 0.6 !important;
 
     .remix-project-author {
       color: inherit !important;
@@ -65,11 +70,10 @@
       height: 17px !important;
       display: block !important;
       cursor: pointer !important;
-      background: #47AD66 !important;
-      box-shadow: 0 2px 0 #417C53 !important;
+      background: #47ad66 !important;
+      box-shadow: 0 2px 0 #417c53 !important;
       position: relative !important;
-      padding: 12px 18px 10px 18px !important;
-      border-radius: 2px !important;
+      padding: 12px 18px 10px !important;
       color: white !important;
       text-align: center !important;
       text-decoration: none !important;
@@ -87,7 +91,6 @@
   }
 
   &.mouse-mode {
-
     width: 400px !important;
     top: 6px !important;
     right: 6px !important;
@@ -97,18 +100,19 @@
     box-sizing: border-box !important;
     font-family: "Fira Medium", "Helvetica Neue", sans-serif !important;
     max-width: ~"calc(100% - 12px)" !important;
-    transition: width ease-out .1s, background ease-out .1s !important;
-    border: 5px solid rgba(0,0,0,.15) !important;
+    transition: width ease-out 0.1s, background ease-out 0.1s !important;
+    border: 5px solid rgba(0, 0, 0, 0.15) !important;
     background-clip: padding-box !important;
     border-radius: 3px !important;
+
     .details-bar-remix-button-wrapper {
-      padding: 7px 7px 8px 7px !important;
+      padding: 7px 7px 8px !important;
     }
 
     .thimble-logo {
       position: absolute !important;
       width: 60px !important;
-      background: #2E9961 !important;
+      background: #2e9961 !important;
       height: ~"calc(100% - 10px)" !important;
       top: 0 !important;
       left: 0 !important;
@@ -126,7 +130,7 @@
         background-position: 16px center !important;
         background-size: 24px !important;
         background-repeat: no-repeat !important;
-        transition: transform .05s linear !important;
+        transition: transform 0.05s linear !important;
       }
 
       &:hover .icon {
@@ -135,6 +139,7 @@
 
       &:active {
         background: #28915a !important;
+
         .icon {
           transform: scale(1) !important;
         }
@@ -148,27 +153,27 @@
     &.collapsed {
       width: 112px !important;
       padding: 11px 11px 11px 14px !important;
-      box-shadow: 0 1px 1px rgba(0,0,0,.2) !important;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2) !important;
       box-shadow: none !important;
       text-align: right !important;
       background: none !important;
-      border: 5px solid rgba(0,0,0,0) !important;
-      transition: width cubic-bezier(0.520, -0.580, 0.595, 1.010) .15s, background ease-out .1s .15s !important;
-      border: 5px solid rgba(0,0,0,0) !important;
+      border: 5px solid rgba(0, 0, 0, 0) !important;
+      transition: width cubic-bezier(0.52, -0.58, 0.595, 1.01) 0.15s, background ease-out 0.1s 0.15s !important;
+
       .details-bar-remix-button-wrapper {
-        background: rgba(255,255,255,.2) !important;
         border-radius: 3px !important;
-        background: rgba(0,0,0,.2) !important;
-        transition: background ease-out .2s .2s !important;
+        background: rgba(0, 0, 0, 0.2) !important;
+        transition: background ease-out 0.2s 0.2s !important;
 
         .details-bar-remix-button {
-          transition: box-shadow ease-out .2s .2s !important;
-          box-shadow: 0 2px 0 rgba(0,0,0,.3) !important;
+          transition: box-shadow ease-out 0.2s 0.2s !important;
+          box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3) !important;
         }
-
       }
 
-     .thimble-logo, .remix-project-title, .remix-project-meta {
+      .thimble-logo,
+      .remix-project-title,
+      .remix-project-meta {
         opacity: 0 !important;
         transition: none !important;
       }
@@ -181,9 +186,9 @@
     right: 6px !important;
     max-width: ~"calc(100% - 12px)" !important;
     background: white !important;
-    padding: 15px 15px 15px 15px !important;
+    padding: 15px !important;
     box-sizing: border-box !important;
-    box-shadow: 0 2px 2px rgba(0,0,0,.5) !important;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5) !important;
 
     .details-bar-remix-button-wrapper {
       margin-top: 10px !important;
@@ -194,9 +199,8 @@
 
     .thimble-button {
       position: absolute !important;
-      display: block !important;
       border-radius: 30px !important;
-      background: rgba(0,0,0,.2) !important;
+      background: rgba(0, 0, 0, 0.2) !important;
       width: 48px !important;
       height: 49px !important;
       padding: 7px !important;
@@ -210,13 +214,13 @@
         width: 48px !important;
         height: 48px !important;
         border-radius: 50% !important;
-        background-color: #47AD66 !important;
-        box-shadow: 0 2px 0 rgba(0,0,0,.3) !important;
+        background-color: #47ad66 !important;
+        box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3) !important;
         background-image: ~"url(thimble-logo.svg)" !important;
         background-position: center !important;
         background-size: 22px !important;
         background-repeat: no-repeat !important;
-        transition: transform .05s linear !important;
+        transition: transform 0.05s linear !important;
         cursor: pointer !important;
       }
 
@@ -231,7 +235,7 @@
       border-radius: 50% !important;
       bottom: 13px !important;
       right: 10px !important;
-      opacity: .25 !important;
+      opacity: 0.25 !important;
       cursor: pointer !important;
       width: 42px !important;
       height: 42px !important;
@@ -260,11 +264,11 @@
         display: none !important;
       }
 
-     .thimble-logo,
-     .remix-project-title,
-     .remix-project-meta,
-     .close-details-bar,
-     .details-bar-remix-button-wrapper{
+      .thimble-logo,
+      .remix-project-title,
+      .remix-project-meta,
+      .close-details-bar,
+      .details-bar-remix-button-wrapper {
         display: none;
         opacity: 0 !important;
         transition: none !important;
@@ -272,15 +276,16 @@
     }
   }
 }
+
 /* move the remix button to the left side for AFrame projects only*/
 .a-body .details-bar.touch-mode {
   right: auto !important;
   left: 6px !important;
-    
+
   .thimble-button {
-    left: 0px !important;
+    left: 0 !important;
   }
-    
+
   .details-bar-remix-button-wrapper {
     margin-right: auto !important;
     margin-left: 46px !important;
@@ -290,4 +295,3 @@
     left: 10px !important;
   }
 }
-

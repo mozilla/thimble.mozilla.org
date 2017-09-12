@@ -6,11 +6,11 @@ body {
 
 // Logo position overrides
 .navbar-thimble {
-  background: #2D9961;
+  background: #2d9961;
   position: relative;
 
   .navbar-logo-container.small-logo {
-    top: 2px ;
+    top: 2px;
     left: -9px;
   }
 }
@@ -26,15 +26,15 @@ h2 {
   font-weight: 600;
   font-size: 1.4em;
   padding: 3px 0 0 4px;
-  margin: 0 0 30px 0;
+  margin: 0 0 30px;
 }
 
 .shared-button-styles {
   cursor: pointer;
   color: white;
-  border-bottom: solid 2px rgba(0,0,0,.3);
+  border-bottom: solid 2px rgba(0, 0, 0, 0.3);
   border-radius: 2px;
-  padding: 8px 15px 8px 15px;
+  padding: 8px 15px;
   position: relative;
   float: right;
 
@@ -45,12 +45,12 @@ h2 {
   &:active {
     margin-top: 2px;
     border: none;
-    opacity: .5;
+    opacity: 0.5;
   }
 
   &.disabled {
-    color: rgba(0,0,0,.4);
-    background: rgba(0, 0, 0, .2) !important;
+    color: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.2) !important;
     border-bottom: solid 2px transparent !important;
     cursor: progress;
   }
@@ -83,7 +83,7 @@ h2 {
   width: 100%;
   margin-bottom: 25px;
   position: relative;
-  transition: opacity .15s ease-out;
+  transition: opacity 0.15s ease-out;
   opacity: 0;
 
   &.loaded {
@@ -91,7 +91,7 @@ h2 {
   }
 
   .project {
-    border-bottom: 1px solid #DDD;
+    border-bottom: 1px solid #ddd;
     position: relative;
     padding: 0 10px 0 36px;
     display: flex;
@@ -101,13 +101,13 @@ h2 {
     }
 
     &:hover {
-      background: rgba(0,0,0,.04);
+      background: rgba(0, 0, 0, 0.04);
     }
   }
 
   .edit-link {
     flex: 1;
-    color: rgba(0,0,0,.7);
+    color: rgba(0, 0, 0, 0.7);
     text-decoration: none;
     display: block;
     font-weight: 600;
@@ -116,10 +116,10 @@ h2 {
   }
 
   .pending-delete {
-    background: rgba(255,0,0,.08);
+    background: rgba(255, 0, 0, 0.08);
 
     &:hover {
-      background: rgba(255,0,0,.1)
+      background: rgba(255, 0, 0, 0.1);
     }
   }
 
@@ -130,7 +130,7 @@ h2 {
     padding-top: 10px;
   }
 
-  .published-link  {
+  .published-link {
     text-decoration: none;
     color: #3186c1;
     display: inline-block;
@@ -170,7 +170,7 @@ h2 {
 
   .project-information {
     font-size: 0.8em;
-    color: rgba(0,0,0,.4);
+    color: rgba(0, 0, 0, 0.4);
     font-style: italic;
     white-space: nowrap;
     font-weight: 400;
@@ -178,7 +178,7 @@ h2 {
 
   .project-description {
     font-size: 0.9em;
-    color: rgba(0,0,0,.5);
+    color: rgba(0, 0, 0, 0.5);
     margin-top: 5px;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -190,16 +190,18 @@ h2 {
     }
   }
 
-  .project-delete, .project-delete-cancel {
+  .project-delete,
+  .project-delete-cancel {
     color: black;
     margin-left: 12px;
-    opacity: .3;
+    opacity: 0.3;
     cursor: pointer;
     font-weight: 600;
     display: inline-block;
   }
 
-  .project-delete.hide, .project-delete-cancel.hide {
+  .project-delete.hide,
+  .project-delete-cancel.hide {
     display: none;
   }
 
@@ -213,9 +215,9 @@ h2 {
     background-repeat: no-repeat;
     background-size: 15px;
     background-position: bottom;
-    transform: scale(.95);
+    transform: scale(0.95);
 
-    &:after {
+    &::after {
       content: "";
       width: 15px;
       height: 6px;
@@ -226,15 +228,17 @@ h2 {
       background-repeat: no-repeat;
       background-size: 17px;
       background-position: top;
-      transition: transform .1s ease-out;
+      transition: transform 0.1s ease-out;
     }
   }
 
-  .project-delete:hover, .project-delete-cancel:hover {
-    opacity: .6;
+  .project-delete:hover,
+  .project-delete-cancel:hover {
+    opacity: 0.6;
   }
 
-  .project-delete:hover ::after, .project-delete-cancel:hover ::after {
+  .project-delete:hover ::after,
+  .project-delete-cancel:hover ::after {
     transform-origin: left;
     transform: rotate(-4deg) translateY(-1px);
   }
@@ -249,7 +253,7 @@ h2 {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 20px;
-    opacity: .6;
+    opacity: 0.6;
     display: block;
     cursor: pointer;
 
@@ -261,13 +265,14 @@ h2 {
   .project-favorite-selected {
     background-image: url(/img/icon/star-on.svg);
     opacity: 1;
-    animation: starpop .3s ease-out;
+    animation: starpop 0.3s ease-out;
   }
 
   @keyframes starpop {
     0% {
-      transform: scale(.6) rotate(0);
+      transform: scale(0.6) rotate(0);
     }
+
     40% {
       transform: scale(1.2);
     }

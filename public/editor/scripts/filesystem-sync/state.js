@@ -12,7 +12,7 @@ function _onbeforeunload(e) {
   var s = strings.get("windowCloseFileSavingIndicator");
   var e = e || window.event;
 
-  if(e) {
+  if (e) {
     e.returnValue = s;
   }
 

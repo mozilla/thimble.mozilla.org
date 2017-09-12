@@ -8,9 +8,10 @@ module.exports = function(config, req, res) {
     req.session.home = true;
   }
 
-  req.session.locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
+  req.session.locale =
+    req.localeInfo && req.localeInfo.lang ? req.localeInfo.lang : "en-US";
 
-  var loginType = "&action=" + (req.query.signup ?  "signup" : "signin");
+  var loginType = "&action=" + (req.query.signup ? "signup" : "signin");
   var state = "&state=" + req.cookies.state;
 
   res.set({

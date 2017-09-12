@@ -9,10 +9,12 @@ module.exports = function templatize(server, paths) {
     autoescape: true
   };
 
-  let engine = new Nunjucks.Environment(paths.map(path => new Nunjucks.FileSystemLoader(path, nunjucksOptions)));
+  let engine = new Nunjucks.Environment(
+    paths.map(path => new Nunjucks.FileSystemLoader(path, nunjucksOptions))
+  );
 
   engine.addFilter("instantiate", function(input) {
-    return (new Nunjucks.Template(input)).render(this.getVariables());
+    return new Nunjucks.Template(input).render(this.getVariables());
   });
 
   engine.express(server);

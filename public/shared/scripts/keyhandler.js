@@ -4,19 +4,18 @@ var $ = require("jquery");
 
 // Run the given function `fn` when the key with `keyCode` is pressed down
 function KeyHandler(keyCode, elem, fn) {
-
-  if(typeof keyCode !== "number") {
+  if (typeof keyCode !== "number") {
     fn = elem;
     elem = keyCode;
     keyCode = null;
   }
 
   function handler(e) {
-    if(!keyCode) {
+    if (!keyCode) {
       return fn(e);
     }
 
-    if(e.which !== keyCode) {
+    if (e.which !== keyCode) {
       return;
     }
 
@@ -25,7 +24,7 @@ function KeyHandler(keyCode, elem, fn) {
     fn(e);
   }
 
-  if(typeof elem === "function") {
+  if (typeof elem === "function") {
     fn = elem;
     elem = document;
   }

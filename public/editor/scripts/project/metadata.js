@@ -14,7 +14,7 @@ var metadataLock;
 var lockQueue = [];
 
 function lock(fn) {
-  if(metadataLock) {
+  if (metadataLock) {
     lockQueue.push(fn);
     return;
   }
@@ -27,7 +27,7 @@ function unlock() {
   metadataLock = null;
 
   var next = lockQueue.shift();
-  if(next) {
+  if (next) {
     lock(next);
   }
 }
@@ -43,7 +43,7 @@ function lockSafeCallback(callback) {
 // Callers should acquire the lock before calling getMetadata().
 function getMetadata(root, callback) {
   fs.getxattr(root, PROJECT_META_KEY, function(err, value) {
-    if(err && err.code !== 'ENOATTR') {
+    if (err && err.code !== "ENOATTR") {
       return callback(err);
     }
 
@@ -57,7 +57,7 @@ function getFileID(root, path, callback) {
 
   lock(function() {
     getMetadata(root, function(err, value) {
-      if(err) {
+      if (err) {
         return callback(err);
       }
 
@@ -72,7 +72,7 @@ function getTitle(root, callback) {
 
   lock(function() {
     getMetadata(root, function(err, value) {
-      if(err) {
+      if (err) {
         return callback(err);
       }
 
@@ -87,7 +87,7 @@ function setTitle(root, title, callback) {
 
   lock(function() {
     getMetadata(root, function(err, value) {
-      if(err) {
+      if (err) {
         return callback(err);
       }
 
@@ -105,7 +105,7 @@ function setFileID(root, path, id, callback) {
 
   lock(function() {
     getMetadata(root, function(err, value) {
-      if(err) {
+      if (err) {
         return callback(err);
       }
 
@@ -124,7 +124,7 @@ function removeFile(root, path, callback) {
 
   lock(function() {
     getMetadata(root, function(err, value) {
-      if(err) {
+      if (err) {
         return callback(err);
       }
 
@@ -143,7 +143,7 @@ function setPublishNeedsUpdate(root, value, callback) {
 
   lock(function() {
     getMetadata(root, function(err, metadata) {
-      if(err) {
+      if (err) {
         return callback(err);
       }
 
@@ -162,7 +162,7 @@ function getPublishNeedsUpdate(root, callback) {
 
   lock(function() {
     getMetadata(root, function(err, metadata) {
-      if(err) {
+      if (err) {
         return callback(err);
       }
 
@@ -178,12 +178,12 @@ function getSyncQueue(root, callback) {
 
   lock(function() {
     getMetadata(root, function(err, metadata) {
-      if(err) {
+      if (err) {
         return callback(err);
       }
 
       // Always return an object that has a `pending` child object.
-      var syncQueue = metadata && metadata.syncQueue || {pending: {}};
+      var syncQueue = (metadata && metadata.syncQueue) || { pending: {} };
       callback(null, syncQueue);
     });
   });
@@ -195,7 +195,7 @@ function setSyncQueue(root, value, callback) {
 
   lock(function() {
     getMetadata(root, function(err, metadata) {
-      if(err) {
+      if (err) {
         return callback(err);
       }
 
@@ -213,7 +213,7 @@ function setSyncQueue(root, value, callback) {
 function setMetadata(config, callback) {
   // Check if there is any metadata already present for that root
   fs.getxattr(config.root, PROJECT_META_KEY, function(err, project) {
-    if(err && err.code !== 'ENOATTR') {
+    if (err && err.code !== "ENOATTR") {
       return callback(err);
     }
 
@@ -239,7 +239,7 @@ function setMetadata(config, callback) {
 
 // Downloads project metadata (project id, file paths + publish ids).
 function download(config, callback) {
-  if(!config.user || config.update) {
+  if (!config.user || config.update) {
     // There is no metadata to fetch from the server if this project is
     // being upgraded from an anonymous to a persisted project (we push
     // metadata to the server instead of downloading it)
@@ -250,12 +250,12 @@ function download(config, callback) {
   if (config.id) {
     url += "/" + config.id;
   }
-  url += "/files/meta?cacheBust=" + (new Date()).toISOString();
+  url += "/files/meta?cacheBust=" + new Date().toISOString();
 
   var request = $.ajax({
     type: "GET",
     headers: {
-      "Accept": "application/json"
+      Accept: "application/json"
     },
     url: url,
     timeout: AJAX_DEFAULT_TIMEOUT_MS
@@ -276,8 +276,8 @@ function loadAnonymous(config, callback) {
     fs.getxattr(config.root, PROJECT_META_KEY, function(err) {
       // We use this because `getMetadata()` swallows the 'ENOATTR'
       // error, which we use to know whether to write
-      if(err) {
-        if(err.code !== 'ENOATTR') {
+      if (err) {
+        if (err.code !== "ENOATTR") {
           return callback(err);
         }
         return setMetadata(config, callback);
@@ -289,7 +289,7 @@ function loadAnonymous(config, callback) {
 }
 
 function install(config, callback) {
-  if(!config.user) {
+  if (!config.user) {
     return loadAnonymous(config, callback);
   }
 
@@ -304,7 +304,7 @@ function update(config, callback) {
   var request = $.ajax({
     type: "PUT",
     headers: {
-      "Accept": "application/json",
+      Accept: "application/json",
       "Content-Type": "application/json",
       "X-Csrf-Token": config.csrfToken
     },

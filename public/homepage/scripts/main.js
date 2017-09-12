@@ -25,20 +25,29 @@ function setupNewProjectLinks() {
     e.stopPropagation();
 
     var cacheBust = "cacheBust=" + Date.now();
-    var qs = queryString === "" ? "?" + cacheBust : queryString + "&" + cacheBust;
+    var qs =
+      queryString === "" ? "?" + cacheBust : queryString + "&" + cacheBust;
 
-    $("#new-project-button-text").text(strings.get("newProjectInProgressIndicator"));
+    $("#new-project-button-text").text(
+      strings.get("newProjectInProgressIndicator")
+    );
 
-    if(authenticated) {
-      analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "New Authenticated Project" });
+    if (authenticated) {
+      analytics.event({
+        category: analytics.eventCategories.HOMEPAGE,
+        action: "New Authenticated Project"
+      });
       window.location.href = "/" + locale + "/projects/new" + qs;
     } else {
-      analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "New Anonymous Project" });
+      analytics.event({
+        category: analytics.eventCategories.HOMEPAGE,
+        action: "New Anonymous Project"
+      });
       window.location.href = "/" + locale + "/editor" + queryString;
     }
   }
 
-  if(authenticated) {
+  if (authenticated) {
     $("#new-project-link").one("click", newProjectClickHandler);
   }
 
@@ -46,8 +55,8 @@ function setupNewProjectLinks() {
 }
 
 function setupAuthentication() {
-  var joinEl = $('#signup-link');
-  var loginEl = $('#login-link');
+  var joinEl = $("#signup-link");
+  var loginEl = $("#login-link");
   var loginUrl = loginEl.attr("data-loginUrl");
 
   function signIn(newUser) {
@@ -61,10 +70,16 @@ function setupAuthentication() {
       var location = loginUrl;
 
       if (newUser) {
-        analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Create Account" });
+        analytics.event({
+          category: analytics.eventCategories.HOMEPAGE,
+          action: "Create Account"
+        });
         location += "?signup=true";
       } else {
-        analytics.event({ category : analytics.eventCategories.HOMEPAGE, action : "Sign In" });
+        analytics.event({
+          category: analytics.eventCategories.HOMEPAGE,
+          action: "Sign In"
+        });
       }
 
       window.location = location;
@@ -72,10 +87,10 @@ function setupAuthentication() {
   }
 
   // Signup login flow
-  joinEl.on('click', signIn(true));
+  joinEl.on("click", signIn(true));
 
   // Login flow
-  loginEl.on('click', signIn());
+  loginEl.on("click", signIn());
 }
 
 // At this point, all the homepage needs is handlers for the login/logout

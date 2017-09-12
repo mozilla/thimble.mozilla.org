@@ -15,8 +15,10 @@ var syncManager;
 var brambleInstance;
 
 function saveAndSyncAll(callback) {
-  if(!(brambleInstance && syncManager)) {
-    callback(new Error("[Thimble Error] saveAndSyncAll() called before init()"));
+  if (!(brambleInstance && syncManager)) {
+    callback(
+      new Error("[Thimble Error] saveAndSyncAll() called before init()")
+    );
     return;
   }
 
@@ -29,7 +31,7 @@ function saveAndSyncAll(callback) {
 function init(csrfToken) {
   // If an anonymous user is using thimble, they
   // will not have any persistence of files
-  if(!Project.getUser()) {
+  if (!Project.getUser()) {
     return null;
   }
 

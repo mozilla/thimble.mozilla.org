@@ -4,7 +4,7 @@
 var $ = require("jquery");
 
 function triggerListeners(context, listenerList, args) {
-  if(!listenerList) {
+  if (!listenerList) {
     return;
   }
 
@@ -14,8 +14,9 @@ function triggerListeners(context, listenerList, args) {
 }
 
 function generateElement(mode) {
-  return mode === InputField.Modes.STATIC ?
-         $("<span></span>") : $("<input type=\"text\" />");
+  return mode === InputField.Modes.STATIC
+    ? $("<span></span>")
+    : $('<input type="text" />');
 }
 
 function create(context) {
@@ -68,7 +69,9 @@ InputField.prototype.save = function() {
   context._element = element;
   context.val(value);
 
-  triggerListeners(context, context._listeners.change, [InputField.EventTypes.SAVE]);
+  triggerListeners(context, context._listeners.change, [
+    InputField.EventTypes.SAVE
+  ]);
 };
 
 // Morph the field into an editable input field
@@ -86,7 +89,9 @@ InputField.prototype.edit = function() {
   context._element = element;
   context._element.focus().val(value);
 
-  triggerListeners(context, context._listeners.change, [InputField.EventTypes.EDIT]);
+  triggerListeners(context, context._listeners.change, [
+    InputField.EventTypes.EDIT
+  ]);
 };
 
 // Get or set the value of the field
@@ -95,7 +100,7 @@ InputField.prototype.val = function() {
   // Extract the value from the <input> or <span> depending on input state
   var method = this.mode === InputField.Modes.STATIC ? "text" : "val";
 
-  if(arguments.length === 0) {
+  if (arguments.length === 0) {
     return this._element[method]();
   }
 
@@ -127,7 +132,7 @@ InputField.prototype.select = function() {
 // Polyfill: Allow listeners to listen for events triggered by
 // the input field
 InputField.prototype.on = function(eventName, listener) {
-  if(!this._listeners[eventName]) {
+  if (!this._listeners[eventName]) {
     this._listeners[eventName] = [];
   }
   this._listeners[eventName].push(listener);

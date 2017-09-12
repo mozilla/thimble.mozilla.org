@@ -8,10 +8,16 @@ module.exports = function(config, req, res) {
   // this is a request for getting files for a project that is
   // being remixed and the `projectId` corresponds to a published
   // project
-  if(!user && projectId) {
-    utils.sendResponseStream(res, utils.getRemixedProjectFileTar(config, projectId));
+  if (!user && projectId) {
+    utils.sendResponseStream(
+      res,
+      utils.getRemixedProjectFileTar(config, projectId)
+    );
     return;
   }
 
-  utils.sendResponseStream(res, utils.getProjectFileTar(config, user, projectId));
+  utils.sendResponseStream(
+    res,
+    utils.getProjectFileTar(config, user, projectId)
+  );
 };

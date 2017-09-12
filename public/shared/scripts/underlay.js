@@ -6,7 +6,7 @@ var $ = require("jquery");
 function Underlay(parent, onclick) {
   this._onclick = onclick;
 
-  var underlay$ = this._underlay$ = $("<div class=click-underlay></div>");
+  var underlay$ = (this._underlay$ = $("<div class=click-underlay></div>"));
   $(parent).after(underlay$);
   underlay$.on("click", onclick);
 }
