@@ -86,7 +86,6 @@ module.exports = function middlewareConstructor(config) {
       }
 
       // Decrypt oauth token
-      // TODO: Is this a breaking change? Token appears to be undefined for me?
       req.user = req.session.passport.user;
       let token = req.user.token = cryptr.decrypt(req.session.token);
 

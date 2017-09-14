@@ -25,7 +25,6 @@ module.exports = function() {
       ].forEach(function(module) {
         module.init(app, middleware, config);
       });
-      // TODO: See if this is the best way to do this.
       require("./auth").init(app, middleware, config, passport);
     },
 

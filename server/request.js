@@ -119,9 +119,6 @@ Request.prototype = {
 
     return this;
   }
-  // TODO: Here we're going create a new function called "passport(), or similar"
-  // This function is going to initialize the Passport middleware like "lessOptimizations".
-  // We need to initialize "passport.initialize()" and "passport.session()".
 };
 
 module.exports = Request;
