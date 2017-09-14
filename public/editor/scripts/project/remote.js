@@ -1,3 +1,5 @@
+var $ = require("jquery");
+
 var constants = require("../../../shared/scripts/constants");
 
 var Path = Bramble.Filer.Path;
