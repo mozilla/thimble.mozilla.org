@@ -1,4 +1,4 @@
-"use strict";
+var HttpError = require("../../lib/http-error");
 
 module.exports = function(config, passport, req, res, next) {
   var locale = req.session.locale;
@@ -10,18 +10,35 @@ module.exports = function(config, passport, req, res, next) {
     locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
   }
 
-  if (req.query.logout) {
-    req.session = null;
-    return res.redirect(307, "/" + locale);
-  }
-
   //var strategy = req.params.strategy.toLowerCase();
-  var editorURL = "/" + locale + "/editor";
+  var editorURL = `/${locale}/editor`;
 
   // TODO: When we implement multiple strategies, we need to incorporate this into an if/else or switch block.
   // Right now we ignore the "strategy" variable, because we already know the only valid response is "webmaker".
+  passport.authenticate("webmaker", function(err, user, info) {
+    if (err) {
+      res.status(500);
+      next(HttpError.format({
+        message: `(Passport) Failed to authenticate user.`,
+        context: err
+      }, req));
+      return;
+    }
 
-  // TODO: We actually need to implement a custom callback here, see: http://passportjs.org/docs/configure
-  // So that we can handle "failureRedirect" properly, by calling the HTTP-Error class, and triggering an error page.
-  passport.authenticate("webmaker", { session: true, successRedirect: editorURL })(req, res, next);
+    if (!user) {
+      return res.redirect(`/${locale}/login/webmaker`);
+    }
+
+    req.logIn(user, function(err) {
+      if (err) {
+        res.status(500);
+        next(HttpError.format({
+          message: `(Passport) Failed to serialize user session cookie.`,
+          context: err
+        }, req));
+        return;
+      }
+      return res.redirect(editorURL);
+    });
+  })(req, res, next);
 };

@@ -8,10 +8,6 @@ module.exports = {
       middleware.setErrorMessage("errorAuthenticating"),
       require("./callback").bind(app, config, passport));
 
-    // TODO: Do we want to throw this in middleware.js? Also where do we want to redirect them?
-    app.get("/logout", function(req, res) {
-      req.logout();
-      res.redirect(307, "/");
-    });
+    app.get("/logout", middleware.logout);
   }
 };

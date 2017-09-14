@@ -287,7 +287,14 @@ module.exports = function middlewareConstructor(config) {
     clearRedirects(req, res, next) {
       delete req.session.home;
       next();
-    }
+    },
 
+    // TODO: See if the redirect is even going to the right place.
+    logout(req, res, next) {
+      let locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
+      req.logout();
+      req.session = null;
+      res.redirect(307, `/${locale}`);
+    }
   };
 };
