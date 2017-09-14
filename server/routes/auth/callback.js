@@ -15,14 +15,13 @@ module.exports = function(config, passport, req, res, next) {
 
   // TODO: When we implement multiple strategies, we need to incorporate this into an if/else or switch block.
   // Right now we ignore the "strategy" variable, because we already know the only valid response is "webmaker".
-  passport.authenticate("webmaker", function(err, user, info) {
+  passport.authenticate("webmaker", function(err, user) {
     if (err) {
       res.status(500);
-      next(HttpError.format({
+      return next(HttpError.format({
         message: `(Passport) Failed to authenticate user.`,
         context: err
       }, req));
-      return;
     }
 
     if (!user) {
@@ -32,11 +31,10 @@ module.exports = function(config, passport, req, res, next) {
     req.logIn(user, function(err) {
       if (err) {
         res.status(500);
-        next(HttpError.format({
+        return next(HttpError.format({
           message: `(Passport) Failed to serialize user session cookie.`,
           context: err
         }, req));
-        return;
       }
       return res.redirect(editorURL);
     });
