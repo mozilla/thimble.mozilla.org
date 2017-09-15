@@ -20,6 +20,7 @@ module.exports = {
 
     // Refresh Editor Page
     app.get("/refresh",
+      middleware.enableCORS(config.editorHOST),
       require("./refresh").bind(app, config));
 
     // Entry point to the editor for all users
