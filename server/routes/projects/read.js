@@ -79,7 +79,7 @@ module.exports = function(config, req, res, next) {
       csrf: req.csrfToken ? req.csrfToken() : null,
       HTTP_STATIC_URL: "/" + locale,
       username: user.username,
-      avatar: user.avatar,
+      avatar: user.photos[0].value,
       projects: projects,
       queryString: qs,
       editorHOST: config.editorHOST,

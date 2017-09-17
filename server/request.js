@@ -112,6 +112,12 @@ Request.prototype = {
     });
 
     return this;
+  },
+  passport(passport) {
+    this.server.use(passport.initialize());
+    this.server.use(passport.session());
+
+    return this;
   }
 };
 

@@ -67,7 +67,7 @@ module.exports = function(config, req, res, next) {
     languages: req.app.locals.languages,
     csrf: req.csrfToken(),
     editorHOST: config.editorHOST,
-    loginURL: config.appURL + "/" + locale + "/login",
+    loginURL: config.appURL + "/" + locale + "/login/webmaker",
     logoutURL: config.logoutURL,
     queryString: qs
   };
@@ -85,7 +85,7 @@ module.exports = function(config, req, res, next) {
 
   if (req.user) {
     options.username = req.user.username;
-    options.avatar = req.user.avatar;
+    options.avatar = req.user.photos[0].value;
   }
 
   getProjectMetadata(config, req, function(err, status, projectMetadata) {

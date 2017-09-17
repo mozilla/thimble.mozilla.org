@@ -16,9 +16,8 @@ function getPageData(req) {
 
 module.exports = function() {
   return {
-    init: function(app) {
+    init: function(app, passport) {
       [
-        require("./auth"),
         require("./main"),
         require("./projects"),
         require("./files"),
@@ -26,6 +25,7 @@ module.exports = function() {
       ].forEach(function(module) {
         module.init(app, middleware, config);
       });
+      require("./auth").init(app, middleware, config, passport);
     },
 
     rawData: function(req, res) {

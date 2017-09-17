@@ -1,10 +1,13 @@
 module.exports = {
-  init: function(app, middleware, config) {
-    app.get("/login",
-      require("./login").bind(app, config));
+  init: function(app, middleware, config, passport) {
 
-    app.get("/callback",
+    app.get("/login/:strategy",
+      require("./login").bind(app, config, passport));
+
+    app.get("/login/:strategy/callback",
       middleware.setErrorMessage("errorAuthenticating"),
-      require("./oauth2-callback").bind(app, config));
+      require("./callback").bind(app, config, passport));
+
+    app.get("/logout", middleware.logout);
   }
 };

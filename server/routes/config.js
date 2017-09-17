@@ -3,12 +3,9 @@ var Cryptr = require("cryptr");
 
 var env = require("../lib/environment");
 var oauth = env.get("OAUTH");
-var loginURL = oauth.authorization_url + "/login/oauth/authorize?" + [
-  "client_id=" + oauth.client_id,
-  "response_type=code",
-  "scopes=user email"
-].join("&");
-var logoutURL = oauth.authorization_url + "/logout?client_id=" + oauth.client_id;
+
+var loginURL = url.resolve(env.get("APP_HOSTNAME"), "/login/webmaker");
+var logoutURL = url.resolve(env.get("APP_HOSTNAME"), "/logout");
 
 // We make sure to grab just the protocol and hostname for
 // postmessage security.

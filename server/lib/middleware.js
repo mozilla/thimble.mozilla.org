@@ -22,7 +22,7 @@ const ASSERT_TOKEN = env.get("ASSERT_TOKEN");
 module.exports = function middlewareConstructor(config) {
   // Set up a token decryptor using the default cryptr 2.0.0 algorithm.
   let cryptr = new Cryptr(env.get("SESSION_SECRET"));
-  
+
   // Set up a fallback decryptor that matches the cryptr 1.0.0 algorithm
   // https://github.com/MauriceButler/cryptr/compare/fabae97a61119d69f03fc189f7c95dda826c96b7...master#diff-168726dbe96b3ce427e7fedce31bb0bcR9
   let cryptrFallback = new Cryptr(env.get("SESSION_SECRET"), "aes256");
@@ -63,7 +63,7 @@ module.exports = function middlewareConstructor(config) {
      * sign out and sign in again (to bust browser cache).
      */
     checkForAuth(req, res, next) {
-      if(req.session.user) {
+      if(req.session.passport.user) {
         return next();
       }
 
@@ -86,7 +86,7 @@ module.exports = function middlewareConstructor(config) {
       }
 
       // Decrypt oauth token
-      req.user = req.session.user;
+      req.user = req.session.passport.user;
       let token = req.user.token = cryptr.decrypt(req.session.token);
 
       if(ASSERT_TOKEN) {
@@ -102,23 +102,23 @@ module.exports = function middlewareConstructor(config) {
           }
 
           let tokenType = typeof token;
-          
+
           if(tokenType !== "string") {
             console.log("ASSERT_TOKEN FAILED: Expected token type to be String, instead got: " + tokenType);
             return false;
           }
-          
+
           if(!/^[a-z0-9]{64}$/.test(token)) {
             console.log("ASSERT_TOKEN FAILED: Expected token to only have chars a-z, 0-9. Also got: '" +  token.replace(/[a-z0-9]/g, ' ') + "'");
             return false;
           }
-          
+
           return true;
         };
 
         if (!assert(token)) {
           console.log("ASSERT_TOKEN FAILED: retrying decryption using aes-256 rather than aes-256-ctr");
-          
+
           token = req.user.token = cryptrFallback.decrypt(req.session.token);
 
           if (!assert(token)) {
@@ -137,7 +137,7 @@ module.exports = function middlewareConstructor(config) {
         qs = `?${qs}`;
       }
 
-      if(req.session.user) {
+      if(req.session.passport.user) {
         next();
       } else {
         res.redirect(307, `/${locale}/anonymous/${uuid.v4()}${qs}`);
@@ -286,6 +286,13 @@ module.exports = function middlewareConstructor(config) {
     clearRedirects(req, res, next) {
       delete req.session.home;
       next();
+    },
+
+    logout(req, res) {
+      let locale = (req.localeInfo && req.localeInfo.lang) ? req.localeInfo.lang : "en-US";
+      req.logout();
+      req.session = null;
+      res.redirect(307, `/${locale}`);
     }
   };
 };
