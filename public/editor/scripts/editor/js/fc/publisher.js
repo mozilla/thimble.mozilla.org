@@ -37,7 +37,10 @@ define(function(require) {
       published: {
         link: $("#publish-link > a"),
         changed: $("#publish-changes"),
-        container: $("#publish-live")
+        container: $("#publish-live"),
+        publishTitle: $("#publish-title"),
+        publishedTitle: $("#published-title")
+
       }
     };
     this.dialogEl = $("#publish-dialog");
@@ -299,8 +302,14 @@ define(function(require) {
         .off("click", unpublish)
         .on("click", unpublish);
       published.container.removeClass("hide");
+      published.publishTitle.addClass("hide");
+      published.publishedTitle.removeClass("hide");
+
     } else {
       published.container.addClass("hide");
+      published.publishTitle.removeClass("hide");
+      published.publishedTitle.addClass("hide");
+
     }
   };
 
