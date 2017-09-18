@@ -2,6 +2,17 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
 @import url('https://fonts.googleapis.com/css?family=Merriweather:400,700');
 
+/* formatting highlighted text */
+
+::-moz-selection { /* For Firefox */
+  color: whitesmoke;
+  background: #3F729B;
+}
+::selection {
+  color: whitesmoke;
+  background: #3F729B;
+}
+
 body {
   background-color: white;
   font-family: "Open Sans", sans-serif;
@@ -9,6 +20,7 @@ body {
   font-size: 18px;
   margin: 0;
   color: #444;
+
 }
 
 h1 {
