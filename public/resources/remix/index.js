@@ -125,7 +125,7 @@
 
     stylesheet = document.createElement("link");
     stylesheet.rel = "stylesheet";
-    stylesheet.href = metadata.host + "/resources/remix/style.css";
+    stylesheet.href = metadata.host + "/resources/stylesheets/remix.css";
     document.head.appendChild(stylesheet);
   }
 
