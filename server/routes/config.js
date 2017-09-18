@@ -17,7 +17,10 @@ var logoutURL =
 // We make sure to grab just the protocol and hostname for
 // postmessage security.
 var editorHOST = url.parse(env.get("BRAMBLE_URI"));
-editorHOST = editorHOST.protocol + "//" + editorHOST.host + editorHOST.pathname;
+editorHOST = `${editorHOST.protocol}//${editorHOST.host}${editorHOST.pathname}`.replace(
+  /\/$/,
+  ""
+);
 
 module.exports = {
   appURL: env.get("APP_HOSTNAME"),
