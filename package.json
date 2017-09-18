@@ -81,6 +81,7 @@
     "request": "2.80.0",
     "serve-favicon": "^2.4.1",
     "shelljs": "^0.7.8",
+    "svg-url-loader": "^2.1.1",
     "tar-stream": "^1.5.2",
     "throng": "^4.0.0",
     "uuid": "2.0.3",

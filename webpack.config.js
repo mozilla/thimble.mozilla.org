@@ -34,6 +34,9 @@ const moduleConfig = {
         loader: "less-loader"
       }]
     })
+  }, {
+    test: /\.svg$/,
+    loader: "svg-url-loader"
   }]
 };
 
@@ -128,7 +131,8 @@ const RESOURCES_CSS_CONFIG = {
   entry: {
     "error": absolutePublicPath("resources/stylesheets/error.less"),
     "normalize": absolutePublicPath("resources/stylesheets/normalize.less"),
-    "userbar": absolutePublicPath("resources/stylesheets/userbar.less")
+    "userbar": absolutePublicPath("resources/stylesheets/userbar.less"),
+    "remix": absolutePublicPath("resources/remix/style.less")
   },
 
   output: {
