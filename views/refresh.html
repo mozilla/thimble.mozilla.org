@@ -4,9 +4,11 @@
 <html lang="{{ locale }}" dir="{{ localeInfo.direction }}">
   <head>
     <meta charset="utf-8">
+    <base href="{{ appURL }}">
     <title>{{ gettext("errorSomethingWentWrong") }}</title>
     <link rel="stylesheet" href="/homepage/stylesheets/style.css">
     <link rel="stylesheet" href="/resources/stylesheets/error.css">
+    <script src="/locales/{{ localeDir }}/strings.js"></script>
   </head>
   <body class="error-page">
 
