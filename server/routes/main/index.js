@@ -1,3 +1,6 @@
+const Security = require("../../security");
+const config = require("../config");
+
 module.exports = {
   init: function(app, middleware, config) {
     // Home page for the application
@@ -28,6 +31,11 @@ module.exports = {
     app.get(
       "/refresh",
       middleware.enableCORS(),
+      Security.csp(
+        Object.assign(config.csp, {
+          frameAncestors: ["*"]
+        })
+      ),
       require("./refresh").bind(app, config)
     );
 

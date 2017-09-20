@@ -15,16 +15,14 @@ let Security = require("./security");
 let localize = require("./localize");
 let HttpError = require("./lib/http-error.js");
 let routes = require("./routes")();
+let config = require("./routes/config");
 
 let server = express();
 let environment = env.get("NODE_ENV");
 let root = path.dirname(__dirname);
 let client = path.join(root, "dist");
-let editor = url.parse(env.get("BRAMBLE_URI"));
-let editorHost = `${editor.protocol}//${editor.host}`;
 let maxCacheAge = { maxAge: "1d" };
 let maxAge1Week = 7 * 24 * 3600000;
-let homepageVideoLink = "https://www.youtube.com/embed/JecFOjD9I3k";
 
 /*
  * Local server variables
@@ -74,13 +72,7 @@ secure
   .mimeSniff()
   .csrf()
   .xframe()
-  .csp({
-    defaultSrc: [editorHost],
-    frameSrc: [editorHost, homepageVideoLink],
-    childSrc: [editorHost, homepageVideoLink],
-    scriptSrc: [editorHost],
-    connectSrc: [editorHost]
-  });
+  .csp(config.csp);
 if (!!env.get("FORCE_SSL")) {
   secure.ssl();
 }

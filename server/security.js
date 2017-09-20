@@ -51,54 +51,68 @@ function Security(server) {
   this.server = server;
 }
 
+Security.csp = directiveList => {
+  directiveList = directiveList || {};
+
+  Object.keys(defaultCSPDirectives).forEach(function(directive) {
+    const domainsToAdd = directiveList[directive];
+    const defaultDomains = defaultCSPDirectives[directive];
+
+    if (!Array.isArray(domainsToAdd)) {
+      directiveList[directive] = defaultDomains;
+      return;
+    }
+
+    if (domainsToAdd.indexOf("*") !== -1) {
+      directiveList[directive] = ["*"];
+    } else if (defaultDomains.indexOf("*") !== -1) {
+      directiveList[directive] = domainsToAdd;
+    } else {
+      directiveList[directive] = defaultDomains.concat(domainsToAdd);
+    }
+  });
+
+  return helmet.contentSecurityPolicy({
+    directives: directiveList
+  });
+};
+Security.ssl = () => helmet.hsts({ maxAge: ONE_YEAR });
+Security.xss = () => helmet.xssFilter();
+Security.mimeSniff = () => helmet.noSniff();
+Security.csrf = () => csurf();
+Security.xframe = () =>
+  helmet.frameguard({
+    action: "allow-from",
+    domain: PONTOON_URL
+  });
+
 Security.prototype = {
   csp(directiveList) {
-    directiveList = directiveList || {};
-    Object.keys(defaultCSPDirectives).forEach(function(directive) {
-      let domainsToAdd = directiveList[directive];
-      let defaultDomains = defaultCSPDirectives[directive];
-
-      if (domainsToAdd && defaultDomains.indexOf("*") !== -1) {
-        directiveList[directive] = domainsToAdd;
-      } else {
-        directiveList[directive] = defaultDomains.concat(domainsToAdd || []);
-      }
-    });
-
-    this.server.use(
-      helmet.contentSecurityPolicy({
-        directives: directiveList
-      })
-    );
+    this.server.use(Security.csp(directiveList));
 
     return this;
   },
   ssl() {
-    this.server.use(helmet.hsts({ maxAge: ONE_YEAR }));
+    this.server.use(Security.ssl());
     this.server.enable("trust proxy");
 
     return this;
   },
   xss() {
-    this.server.use(helmet.xssFilter());
+    this.server.use(Security.xss());
     return this;
   },
   mimeSniff() {
-    this.server.use(helmet.noSniff());
+    this.server.use(Security.mimeSniff());
     return this;
   },
   csrf() {
-    this.server.use(csurf());
+    this.server.use(Security.csrf());
     return this;
   },
   xframe() {
     // Only allow framing from Pontoon
-    this.server.use(
-      helmet.frameguard({
-        action: "allow-from",
-        domain: PONTOON_URL
-      })
-    );
+    this.server.use(Security.xframe());
     return this;
   }
 };

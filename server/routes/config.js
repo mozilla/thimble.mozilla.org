@@ -17,10 +17,10 @@ var logoutURL =
 // We make sure to grab just the protocol and hostname for
 // postmessage security.
 var editorHOST = url.parse(env.get("BRAMBLE_URI"));
-editorHOST = `${editorHOST.protocol}//${editorHOST.host}${editorHOST.pathname}`.replace(
-  /\/$/,
-  ""
-);
+const editorDomain = `${editorHOST.protocol}//${editorHOST.host}`;
+editorHOST = `${editorDomain}${editorHOST.pathname}`.replace(/\/$/, "");
+
+const homepageVideoLink = "https://www.youtube.com/embed/JecFOjD9I3k";
 
 module.exports = {
   appURL: env.get("APP_HOSTNAME"),
@@ -38,5 +38,12 @@ module.exports = {
   DEFAULT_PROJECT_TITLE: env.get("DEFAULT_PROJECT_TITLE"),
   // One of "tarball" (default) or "files" to specify how projects should get loaded.
   projectLoadStrategy:
-    env.get("PROJECT_LOAD_STRATEGY") === "files" ? "files" : "tarball"
+    env.get("PROJECT_LOAD_STRATEGY") === "files" ? "files" : "tarball",
+  csp: {
+    defaultSrc: [editorDomain],
+    frameSrc: [editorDomain, homepageVideoLink],
+    childSrc: [editorDomain, homepageVideoLink],
+    scriptSrc: [editorDomain],
+    connectSrc: [editorDomain]
+  }
 };
