@@ -37,6 +37,11 @@ module.exports = function middlewareConstructor(config) {
      * Add CORS Headers to the response
      */
     enableCORS(whiteList) {
+      // If no domains are whitelisted, we enable CORS for all domains
+      if (!whiteList) {
+        return cors();
+      }
+
       whiteList = Array.isArray(whiteList) ? whiteList : [whiteList];
       return cors({
         origin(origin, callback) {

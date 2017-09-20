@@ -27,7 +27,7 @@ module.exports = {
     // Refresh Editor Page
     app.get(
       "/refresh",
-      middleware.enableCORS(config.editorHOST),
+      middleware.enableCORS(),
       require("./refresh").bind(app, config)
     );
 
