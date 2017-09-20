@@ -117,7 +117,8 @@ const EDITOR_CONFIG = {
 const RESOURCES_JS_CONFIG = {
   entry: {
     "bitjs-untar-worker.min": absolutePublicPath("resources/scripts/bitjs-untar-worker.min.js"),
-    "error": absolutePublicPath("resources/scripts/error.js")
+    "error": absolutePublicPath("resources/scripts/error.js"),
+    "google-analytics": absolutePublicPath("resources/scripts/google-analytics.js")
   },
 
   output: {
