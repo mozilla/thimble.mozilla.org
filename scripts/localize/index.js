@@ -79,12 +79,12 @@ co(function*() {
   yield writeFile(
     "en-US",
     "messages.json",
-    Object.assign(enUSServerProperties, enUSSharedProperties)
+    Object.assign({}, enUSServerProperties, enUSSharedProperties)
   );
   yield writeFile(
     "en-US",
     "strings.js",
-    Object.assign(enUSClientProperties, enUSSharedProperties),
+    Object.assign({}, enUSClientProperties, enUSSharedProperties),
     true
   );
 
@@ -102,6 +102,7 @@ co(function*() {
       locale,
       "messages.json",
       Object.assign(
+        {},
         enUSServerProperties,
         enUSSharedProperties,
         serverProperties,
@@ -112,6 +113,7 @@ co(function*() {
       locale,
       "strings.js",
       Object.assign(
+        {},
         enUSClientProperties,
         enUSSharedProperties,
         clientProperties,
