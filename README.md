@@ -5,6 +5,30 @@ Thimble
 [![Shipping fast with zenHub](https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)](https://zenhub.com)
 <a href="https://browserstack.com"><img src="https://assets.mofoprod.net/general/browserstack.svg" height="20rem"></a>
 
+
+Table of contents
+=================
+
+* [Setup Installation](#Setup/Installation)
+* [Automated Installation (Preferred Method)](#Automated Installation (Preferred Method))
+* [Prerequisites for Automated Installation](#Prerequisites for Automated Installation)
+* [Installing Brackets (Bramble)](#Installing Brackets (Bramble))
+* [Installing Thimble and Services with Vagrant](#Installing Thimble and Services with Vagrant)
+* [Dealing with missing locale strings](#Dealing with missing locale strings)
+* [Manual Installation](#Manual Installation)
+* [Prerequisites for Manual Installation](#Prerequisites for Manual Installation)
+* [Manually Installing the Parts](#Manually Installing the Parts)
+* [Thimble](#Thimble)
+* [id.webmaker.org](#id.webmaker.org)
+* [login.webmaker.org](#login.webmaker.org)
+* [PostgreSQL](#PostgreSQL)
+* [publish.webmaker.org](#publish.webmaker.org)
+* [Getting Ready to Publish](#Getting Ready to Publish)
+* [Teach the ID server about the Publish server](#Teach the ID server about the Publish server)
+* [Sign In](#Sign In)
+* [Our Localization Community](#Our Localization Community)
+
+
 Thimble is Mozilla's online code editor that makes it easy to create and publish
 your own web pages while learning HTML, CSS & JavaScript.  You can try it online
 by visiting https://thimble.mozilla.org (or https://bramble.mofostaging.net for our
@@ -22,7 +46,7 @@ Thimble requires a modern web browser, and we recommend using Mozilla Firefox or
 
 ---
 
-# Setup/Installation
+## Setup/Installation
 
 Thimble interacts with the Publish API (source managed in [publish.webmaker.org](https://github.com/mozilla/publish.webmaker.org)) to store users, projects, files and other content as well as publish user projects.
 
@@ -51,9 +75,7 @@ All three services along with Thimble are bundled together using Git subtrees to
   - Update your remote branch with this new change.
   - Open a pull request to have the subtree update reviewied and merged.
 
----
-
-## Automated Installation (Preferred Method)
+### Automated Installation (Preferred Method)
 **Note:** If you aren't able to properly run virtualization software on your machine (for e.g. some versions of Windows only allow one virtualization client to run at a time and if that isn't VirtualBox, you can't run the required VirtualBox as well. This is often a problem if you have docker installed on Windows) or are trying to host Thimble on your own, refer to the [Manual Installation](#manual-installation) instructions instead.
 
 ### Prerequisites for Automated Installation
@@ -111,8 +133,6 @@ npm run localize-client
 
 This will redownload all locale strings and rebuild the client to make use of them.
 
----
-
 ## Manual Installation
 You can also setup Thimble and its needed components outside Vagrant and Virtualbox. This might be needed if you want to:
 - Host your own instance of Thimble
@@ -168,8 +188,6 @@ Please note: On Windows, use ``copy`` instead of ``cp``
 * Run ``npm start`` to run the server
 
 Once everything is ready and running, Thimble will be available at [http://localhost:3500/](http://localhost:3500/)
-
----
 
 ### Getting Ready to Publish
 To publish locally, you'll need to do the following...
@@ -229,5 +247,3 @@ Contact Us
 We're a friendly group, so feel free to chat with us in the "Thimble" channel on Mozilla Chat running on [Mattermost](https://about.mattermost.com). To access Mozilla Chat head over to [chat.mozillafoundation.org](https://chat.mozillafoundation.org). Note that you will be prompted to create an account if you do not already have one. If you already have an account, and you are already logged in from a previous visit, you can directly access the Thimble channel by clicking on [this link](https://chat.mozillafoundation.org/mozilla/channels/thimble).
 
 You can also download a mobile or desktop client for Mattermost [here](https://about.mattermost.com/download/#mattermostApps).
-
----
