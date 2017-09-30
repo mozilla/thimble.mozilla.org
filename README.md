@@ -5,14 +5,13 @@ Thimble
 [![Shipping fast with zenHub](https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)](https://zenhub.com)
 <a href="https://browserstack.com"><img src="https://assets.mofoprod.net/general/browserstack.svg" height="20rem"></a>
 
-
 Table of contents
 =================
 
 * [Setup Installation](#setup/installation)
-* [Automated Installation (Preferred Method)](#automated-installation-(preferred-method))
+* [Automated Installation (Preferred Method)](#automated-installation-\(preferred-method\))
 * [Prerequisites for Automated Installation](#prerequisites-for-automated-installation)
-* [Installing Brackets (Bramble)](#installing-brackets-(bramble))
+* [Installing Brackets (Bramble)](#installing-brackets-\(bramble\))
 * [Installing Thimble and Services with Vagrant](#installing-thimble-and-services-with-vagrant)
 * [Dealing with missing locale strings](#dealing-with-missing-locale-strings)
 * [Manual Installation](#manual-installation)
@@ -27,7 +26,6 @@ Table of contents
 * [Teach the ID server about the Publish server](#teach-the-id-server-about-the-publish-server)
 * [Sign In](#sign-in)
 * [Our Localization Community](#our-localization-community)
-
 
 Thimble is Mozilla's online code editor that makes it easy to create and publish
 your own web pages while learning HTML, CSS & JavaScript.  You can try it online
