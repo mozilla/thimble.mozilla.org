@@ -263,6 +263,23 @@ function setupOptionsMenu(bramble) {
     return false;
   });
 
+  //allow text clickable to Eable/Disable Autocomplete
+  $("#autocomplete-toggle-text").click(function() {
+    var $autocompleteToggle = $("#autocomplete-toggle");
+    var $autocompleteToggleText = $("#autocomplete-toggle-text");
+    var toggle = !$autocompleteToggle.hasClass("switch-enabled");
+
+    if (toggle) {
+      $autocompleteToggle.addClass("switch-enabled");
+      bramble.enableAutocomplete();
+    } else {
+      $autocompleteToggle.removeClass("switch-enabled");
+      bramble.disableAutocomplete();
+    }
+
+    return false;
+  });
+
   //Edit SVG as XML
   $("#edit-SVG-toggle").click(function() {
     // Toggle current value

@@ -536,6 +536,10 @@ body {
       padding: 20px 100px 20px 20px;
       position: relative;
       color: rgba(0, 0, 0, 0.6);
+
+      .toggle-text{
+        cursor:  pointer;
+      }
     }
 
     li + li {
@@ -558,6 +562,7 @@ body {
 
 // Line wrap toggle
 #editor-pane-nav-options-menu {
+
   .switch-toggle {
     position: absolute;
     right: 18px;
@@ -565,7 +570,9 @@ body {
     width: 60px;
     top: 16px;
     cursor: pointer;
-
+    &.show-border{
+      display:none !important;
+    }
     &.switch-enabled {
       .toggle-backing {
         background: @buttonGreen;
