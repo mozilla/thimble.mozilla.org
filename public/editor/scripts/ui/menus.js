@@ -163,7 +163,7 @@ function setupOptionsMenu(bramble) {
       setWordWrapUI(value);
     });
   }
-  $("#wraptext-toggle-li").click(function() {
+  $("#editor-option-wraptext").click(function() {
     // Toggle current value
     setWordWrap(!bramble.getWordWrap());
     var mode = !bramble.getWordWrap() ? "Enabled" : "Disabled";
@@ -191,7 +191,7 @@ function setupOptionsMenu(bramble) {
   }
 
   // Enable/Disable JavaScript in Preview
-  $("#allowjs-toggle-li").click(function() {
+  $("#editor-option-allowjs").click(function() {
     // Toggle current value
     var $allowScriptsToggle = $("#allow-scripts-toggle");
     var toggle = !$allowScriptsToggle.hasClass("switch-enabled");
@@ -225,7 +225,7 @@ function setupOptionsMenu(bramble) {
   }
 
   // Enable/Disable Whitespace Indicator
-  $("#allowws-toggle-li").click(function() {
+  $("#editor-option-allowws").click(function() {
     // Toggle current value
     var $allowWhitespaceToggle = $("#allow-whitespace-toggle");
     var toggle = !$allowWhitespaceToggle.hasClass("switch-enabled");
@@ -249,7 +249,7 @@ function setupOptionsMenu(bramble) {
   }
 
   // Enable/Disable Autocomplete
-  $("#autocomplete-toggle-li").click(function() {
+  $("#editor-option-autocomplete").click(function() {
     // Toggle current value
     var $autocompleteToggle = $("#autocomplete-toggle");
     var toggle = !$autocompleteToggle.hasClass("switch-enabled");
@@ -266,7 +266,7 @@ function setupOptionsMenu(bramble) {
   });
 
   //Edit SVG as XML
-  $("#svgedit-toggle-li").click(function() {
+  $("#editor-option-svgedit").click(function() {
     // Toggle current value
     var $editSVGToggle = $("#edit-SVG-toggle");
     var toggle = !$editSVGToggle.hasClass("switch-enabled");
@@ -290,7 +290,7 @@ function setupOptionsMenu(bramble) {
     $("#auto-tags-toggle").removeClass("switch-enabled");
   }
 
-  $("#autoenclosetags-toggle-li").click(function() {
+  $("#editor-option-autoenclosetags").click(function() {
     var $autoTagsToggle = $("#auto-tags-toggle");
     var autoCloseTagsEnabled = $autoTagsToggle.hasClass("switch-enabled");
 
@@ -378,7 +378,7 @@ function setupOptionsMenu(bramble) {
       });
     }
   }
-  $("#colortheme-toggle-li").click(toggleTheme);
+  $("#editor-option-colortheme").click(toggleTheme);
 
   // If the user explicitly set the light-theme last time, use that
   // otherwise default to using the dark-theme.
