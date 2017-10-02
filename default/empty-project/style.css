@@ -2,7 +2,8 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
 @import url('https://fonts.googleapis.com/css?family=Merriweather:400,700');
 
-body {
+body { 
+  /* This is where all the CSS code for the body of the HTML document goes! */
   background-color: white;
   font-family: "Open Sans", sans-serif;
   padding: 5px 25px;
@@ -11,7 +12,7 @@ body {
   color: #444;
 }
 
-h1 {
+h1, h2, h3, h4, h5, h6 {
+  /* This is specific only to the headings! */
   font-family: "Merriweather", serif;
-  font-size: 32px;
 }
