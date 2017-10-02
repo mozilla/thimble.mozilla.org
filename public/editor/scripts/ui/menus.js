@@ -163,7 +163,7 @@ function setupOptionsMenu(bramble) {
       setWordWrapUI(value);
     });
   }
-  $("#line-wrap-toggle").click(function() {
+  $("#wraptext-toggle-li").click(function() {
     // Toggle current value
     setWordWrap(!bramble.getWordWrap());
     var mode = !bramble.getWordWrap() ? "Enabled" : "Disabled";
@@ -191,7 +191,7 @@ function setupOptionsMenu(bramble) {
   }
 
   // Enable/Disable JavaScript in Preview
-  $("#allow-scripts-toggle").click(function() {
+  $("#allowjs-toggle-li").click(function() {
     // Toggle current value
     var $allowScriptsToggle = $("#allow-scripts-toggle");
     var toggle = !$allowScriptsToggle.hasClass("switch-enabled");
@@ -223,8 +223,9 @@ function setupOptionsMenu(bramble) {
   } else {
     $("#allow-whitespace-toggle").removeClass("switch-enabled");
   }
+
   // Enable/Disable Whitespace Indicator
-  $("#allow-whitespace-toggle").click(function() {
+  $("#allowws-toggle-li").click(function() {
     // Toggle current value
     var $allowWhitespaceToggle = $("#allow-whitespace-toggle");
     var toggle = !$allowWhitespaceToggle.hasClass("switch-enabled");
@@ -246,8 +247,9 @@ function setupOptionsMenu(bramble) {
   } else {
     $("#autocomplete-toggle").removeClass("switch-enabled");
   }
+
   // Enable/Disable Autocomplete
-  $("#autocomplete-toggle").click(function() {
+  $("#autocomplete-toggle-li").click(function() {
     // Toggle current value
     var $autocompleteToggle = $("#autocomplete-toggle");
     var toggle = !$autocompleteToggle.hasClass("switch-enabled");
@@ -263,25 +265,8 @@ function setupOptionsMenu(bramble) {
     return false;
   });
 
-  //allow text clickable to Eable/Disable Autocomplete
-  $("#autocomplete-toggle-text").click(function() {
-    var $autocompleteToggle = $("#autocomplete-toggle");
-    var $autocompleteToggleText = $("#autocomplete-toggle-text");
-    var toggle = !$autocompleteToggle.hasClass("switch-enabled");
-
-    if (toggle) {
-      $autocompleteToggle.addClass("switch-enabled");
-      bramble.enableAutocomplete();
-    } else {
-      $autocompleteToggle.removeClass("switch-enabled");
-      bramble.disableAutocomplete();
-    }
-
-    return false;
-  });
-
   //Edit SVG as XML
-  $("#edit-SVG-toggle").click(function() {
+  $("#svgedit-toggle-li").click(function() {
     // Toggle current value
     var $editSVGToggle = $("#edit-SVG-toggle");
     var toggle = !$editSVGToggle.hasClass("switch-enabled");
@@ -305,7 +290,7 @@ function setupOptionsMenu(bramble) {
     $("#auto-tags-toggle").removeClass("switch-enabled");
   }
 
-  $("#auto-tags-toggle").click(function() {
+  $("#autoenclosetags-toggle-li").click(function() {
     var $autoTagsToggle = $("#auto-tags-toggle");
     var autoCloseTagsEnabled = $autoTagsToggle.hasClass("switch-enabled");
 
@@ -393,8 +378,7 @@ function setupOptionsMenu(bramble) {
       });
     }
   }
-  $("#theme-light").click(toggleTheme);
-  $("#theme-dark").click(toggleTheme);
+  $("#colortheme-toggle-li").click(toggleTheme);
 
   // If the user explicitly set the light-theme last time, use that
   // otherwise default to using the dark-theme.
