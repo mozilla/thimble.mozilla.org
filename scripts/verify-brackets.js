@@ -1,5 +1,5 @@
-const config = require('../server/routes/config');
-const isReachable = require('is-reachable');
+const config = require("../server/routes/config");
+const isReachable = require("is-reachable");
 var brambleServer = config.editorHOST;
 
 
