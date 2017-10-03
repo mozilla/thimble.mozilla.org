@@ -12,7 +12,7 @@ module.exports = function(config, req, res) {
     loginURL: config.appURL + "/" + locale + "/login",
     editorHOST: config.editorHOST,
     editorURL: config.editorURL,
-    URL_PATHNAME: "/" + qs,
+    URL_PATHNAME: "/features/" + qs,
     languages: req.app.locals.languages,
     pageName: "features"
   };
