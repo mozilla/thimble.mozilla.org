@@ -9,9 +9,9 @@ Table of contents
 =================
 
 * [Setup Installation](#setup/installation)
-* [Automated Installation (Preferred Method)](#automated-installation-\(preferred-method\))
+* [Automated Installation (Preferred Method)](#automated-installation-preferred-method)
 * [Prerequisites for Automated Installation](#prerequisites-for-automated-installation)
-* [Installing Brackets (Bramble)](#installing-brackets-\(bramble\))
+* [Installing Brackets (Bramble)](#installing-brackets-bramble)
 * [Installing Thimble and Services with Vagrant](#installing-thimble-and-services-with-vagrant)
 * [Dealing with missing locale strings](#dealing-with-missing-locale-strings)
 * [Manual Installation](#manual-installation)
