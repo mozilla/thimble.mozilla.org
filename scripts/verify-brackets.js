@@ -7,7 +7,7 @@ isReachable(brambleServer).then(reachable => {
   if (!reachable) {
     console.warn(
       colors.yellow(
-        `Error: Bramble server is not running. Please end this process and run the Brackets server with: npm start`
+        `Error: Brackets is not running. In a separate terminal window, run Brackets using npm start in the brackets folder.`
       )
     );
   }
