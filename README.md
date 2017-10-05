@@ -76,8 +76,8 @@ The first step is to fork and clone Thimble and navigate to the cloned directory
 For the first time, you need to install Thimble's dependencies and start all dependent services. To do this, simply run the following commands in succession:
 
 ```sh
-npm run env
 npm install
+npm run env
 vagrant up
 ```
 This process can take a while depending on your internet connection speed as it needs to download all dependencies.
@@ -123,8 +123,8 @@ Please note: On Windows, use ``copy`` instead of ``cp``
 
 #### Thimble
 * Fork and clone https://github.com/mozilla/thimble.mozilla.org
-* Run ``npm run env`` to create an environment file
 * Run ``npm install`` to install dependencies
+* Run ``npm run env`` to create an environment file
 * Run ``npm start`` to start the server
 
 #### id.webmaker.org
