@@ -8,7 +8,7 @@ Thimble
 Table of contents
 =================
 
-* [Setup Installation](#setup/installation)
+* [Setup Installation](#setup-installation)
 * [Automated Installation (Preferred Method)](#automated-installation-preferred-method)
 * [Prerequisites for Automated Installation](#prerequisites-for-automated-installation)
 * [Installing Brackets (Bramble)](#installing-brackets-bramble)
