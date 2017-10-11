@@ -145,7 +145,13 @@ Publisher.prototype.publish = function(bramble) {
       publisher.dialogEl.removeClass("cannot-publish");
       publisher.dialogEl.width(publisher.dialogEl.width());
     }
-    $('#publish-buttons').show();
+    if ($('#publish-button-update').is(":visible"))
+    {
+      $('#publish-buttons').show();
+      $('#publish-buttons').css({ 'border-top' : '0px' });      
+      $('#publish-button-publish').hide();
+      $('#publish-button-cancel').hide();                
+    } 
     publisher.dialogEl.addClass("cannot-publish");
     return;
   }
