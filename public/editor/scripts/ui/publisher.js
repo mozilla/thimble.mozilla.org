@@ -29,6 +29,7 @@ function Publisher() {
     buttons: {
       publish: $("#publish-button-publish"),
       update: $("#publish-button-update"),
+      saveDescription: $("#publish-button-cancel"), /*Added Cancel button*/
       unpublish: $("#publish-button-unpublish"),
       parent: $("#publish-buttons"),
       indexMessage: $("#no-index")
@@ -54,6 +55,7 @@ Publisher.prototype.init = function(bramble) {
   publisher.handlers = {
     publish: publisher.publish.bind(publisher, bramble),
     unpublish: publisher.unpublish.bind(publisher),
+    setDesc: publisher.setDesc.bind(publisher),
     unpublishedChangesPrompt: unpublishedChangesPrompt.bind(publisher)
   };
 
@@ -78,6 +80,10 @@ Publisher.prototype.init = function(bramble) {
     publisher.showUnpublishedChangesPrompt();
   });
 
+  //saves the description and displays message to user telling them they have made changes
+  //and suggesting they should publish their project.
+  dialog.buttons.saveDescription.on("click", publisher.handlers.setDesc);
+  
   dialog.buttons.publish.on("click", publisher.handlers.publish);
 
   // Were there any files that were updated and not published?
@@ -127,6 +133,58 @@ Publisher.prototype.showUnpublishedChangesPrompt = function(callback) {
 
     publisher.needsUpdate = true;
     callback();
+  });
+};
+
+//Using parts from "unpublish" in order to sync properly
+Publisher.prototype.setDesc = function() {
+  var publisher = this;
+  var handlers = publisher.handlers;
+  var dialog = publisher.dialog;
+  var buttons = dialog.buttons;
+
+  if (publisher.unpublishing) {
+    return;
+  }
+
+  publisher.unpublishing = true;
+
+  SyncState.syncing();
+
+  var request = publisher.generateRequest("unpublish");
+  request.done(function() {
+    if (request.status !== 200) {
+      console.error(
+        "[Thimble] Server was unable to unpublish project, responded with status ",
+        request.status
+      );
+      return;
+    }
+
+    buttons.parent.removeClass("hide");
+
+    publisher.updateDialog("");
+
+    Project.publishNeedsUpdate(false, function(err) {
+      if (err) {
+        console.error(
+          "[Thimble] Failed to set the publishNeedsUpdate flag after unpublishing with: ",
+          err
+        );
+        return;
+      }
+      Project.setPublishUrl(null);
+      publisher.needsUpdate = false;
+    });
+  });
+  request.fail(function(jqXHR, status, err) {
+    console.error(
+      "[Thimble] Failed to send request to unpublish project to the server with: ",
+      err
+    );
+  });
+  request.always(function() {
+    SyncState.completed();
   });
 };
 
