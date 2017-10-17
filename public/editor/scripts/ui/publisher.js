@@ -42,9 +42,6 @@ function Publisher() {
   };
   this.dialogEl = $("#publish-dialog");
   this.button = $("#navbar-publish-button");
-  
-  //1 - This does not seem to work...
-  //this.underlay = $("#click-underlay");
 }
 
 Publisher.prototype.init = function(bramble) {
@@ -82,13 +79,6 @@ Publisher.prototype.init = function(bramble) {
   bramble.on("folderRename", function() {
     publisher.showUnpublishedChangesPrompt();
   });
-
-  //saves the description and displays message to user telling them they have made changes
-  //and suggesting they should publish their project.
-  
-  //2 - THIS DOES NOT WORK - how can we implement setDescription by 
-  //clicking the underlay?
-  //publisher.underlay.on("click", publisher.handlers.setDescription);
 
   dialog.buttons.publish.on("click", publisher.handlers.publish);
 
@@ -143,10 +133,17 @@ Publisher.prototype.showUnpublishedChangesPrompt = function(callback) {
 };
 
 //Using generateRequest("unpublish") in order to sync description
-//throws error since nothing is being unpublished, however request
-//to save description. This is currently a "hack" until further notice 
+//throws error since nothing is being unpublished, however this works
+//to save description. This is currently a "hack", a more elegant
+//solution may be implemented after
 Publisher.prototype.setDescription = function() {
   var publisher = this;
+  
+  //We don't want to unpublish something that is published
+  var action = "unpublish";
+  if(Project.getPublishUrl()){
+    var action = "publish";
+  }
 
   SyncState.syncing();
 
@@ -157,7 +154,7 @@ Publisher.prototype.setDescription = function() {
       Accept: "application/json"
     },
     type: "PUT",
-    url: host + "/projects/" + Project.getID() + "/unpublish",
+    url: host + "/projects/" + Project.getID() + "/" + action,
     data: JSON.stringify({
       description: publisher.dialog.description.val() || " ",
       public: publisher.isProjectPublic,
@@ -165,11 +162,11 @@ Publisher.prototype.setDescription = function() {
     })
   });
 
-  //expected to fail because an unpublished project can't be unpublished
+  //publishing/unpublishing an already published/unpublished project is expected to fail
   //doing this for now until we can send an ajax request to UPDATE only
   request.fail(function(jqXHR, status, err) {
     console.error(
-      "[Thimble] Failed to send request to unpublish project to the server with: ",
+      "[Thimble] Failed to send request to", action, "project to the server with: ",
       err, "but description is now updated"
     );
   });
@@ -333,6 +330,7 @@ Publisher.prototype.unpublish = function() {
   request.always(function() {
     SyncState.completed();
     publisher.unpublishing = false;
+    publickCheck = false;
     setState(true);
   });
 };

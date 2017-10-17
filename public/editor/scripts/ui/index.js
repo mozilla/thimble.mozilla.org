@@ -443,6 +443,10 @@ function init(bramble, csrfToken, appUrl) {
 
     _escKeyHandler.stop();
     _escKeyHandler = null;
+
+    //Calling function in public/editor/ui/publisher.js
+    //When user clicks outside the dialog box, description is saved
+    publisher.handlers.setDescription();
   }
   function showPublishDialog() {
     publishDialogUnderlay = new Underlay("#publish-dialog", hidePublishDialog);
