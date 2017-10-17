@@ -29,7 +29,6 @@ function Publisher() {
     buttons: {
       publish: $("#publish-button-publish"),
       update: $("#publish-button-update"),
-      saveDescription: $("#publish-button-cancel"),
       unpublish: $("#publish-button-unpublish"),
       parent: $("#publish-buttons"),
       indexMessage: $("#no-index")
@@ -43,12 +42,16 @@ function Publisher() {
   };
   this.dialogEl = $("#publish-dialog");
   this.button = $("#navbar-publish-button");
+  
+  //1 - This does not seem to work...
+  //this.underlay = $("#click-underlay");
 }
 
 Publisher.prototype.init = function(bramble) {
   var publisher = this;
   var dialog = publisher.dialog;
   var publishUrl = Project.getPublishUrl();
+
 
   publisher.isProjectPublic = true;
   publisher.needsUpdate = false;
@@ -82,9 +85,10 @@ Publisher.prototype.init = function(bramble) {
 
   //saves the description and displays message to user telling them they have made changes
   //and suggesting they should publish their project.
-  dialog.buttons.saveDescription.on("click", publisher.handlers.setDescription);
-  //$("#click-underlay").on("click", publisher.handlers.setDesc);
-
+  
+  //2 - THIS DOES NOT WORK - how can we implement setDescription by 
+  //clicking the underlay?
+  //publisher.underlay.on("click", publisher.handlers.setDescription);
 
   dialog.buttons.publish.on("click", publisher.handlers.publish);
 
