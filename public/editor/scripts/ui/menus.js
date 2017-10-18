@@ -126,8 +126,8 @@ function setupOptionsMenu(bramble) {
     "#editor-pane-nav-options-menu"
   );
 
-//  Display font size
-  $("#editor-pane-nav-font-size").ready(function(){
+  //  Display font size
+  $("#editor-pane-nav-font-size").ready(function() {
     var fontSize = bramble.getFontSize();
     $("#editor-pane-nav-font-size").text(fontSize);
   });
