@@ -139,7 +139,7 @@ Publisher.prototype.setDescription = function() {
   var publisher = this;
   var action = "unpublish";
 
-  if( Project.getPublishUrl() ){
+  if (Project.getPublishUrl()) {
     var action = "publish";
   }
 
@@ -164,16 +164,16 @@ Publisher.prototype.setDescription = function() {
   //doing this for now until we can send an ajax request to UPDATE only
   request.fail(function(jqXHR, status, err) {
     console.error(
-      "[Thimble] Failed to send request to", 
-      action, 
+      "[Thimble] Failed to send request to",
+      action,
       "project to the server with: ",
-      err, 
+      err,
       "but description is now updated"
     );
   });
   request.always(function() {
     SyncState.completed();
-  }); 
+  });
 };
 
 Publisher.prototype.publish = function(bramble) {
