@@ -49,7 +49,6 @@ Publisher.prototype.init = function(bramble) {
   var dialog = publisher.dialog;
   var publishUrl = Project.getPublishUrl();
 
-
   publisher.isProjectPublic = true;
   publisher.needsUpdate = false;
   publisher.handlers = {
@@ -138,10 +137,9 @@ Publisher.prototype.showUnpublishedChangesPrompt = function(callback) {
 //solution may be implemented after
 Publisher.prototype.setDescription = function() {
   var publisher = this;
-  
-  //We don't want to unpublish something that is published
   var action = "unpublish";
-  if(Project.getPublishUrl()){
+
+  if( Project.getPublishUrl() ){
     var action = "publish";
   }
 
@@ -166,16 +164,17 @@ Publisher.prototype.setDescription = function() {
   //doing this for now until we can send an ajax request to UPDATE only
   request.fail(function(jqXHR, status, err) {
     console.error(
-      "[Thimble] Failed to send request to", action, "project to the server with: ",
-      err, "but description is now updated"
+      "[Thimble] Failed to send request to", 
+      action, 
+      "project to the server with: ",
+      err, 
+      "but description is now updated"
     );
   });
   request.always(function() {
     SyncState.completed();
-  });
-  
+  }); 
 };
-
 
 Publisher.prototype.publish = function(bramble) {
   var publisher = this;
