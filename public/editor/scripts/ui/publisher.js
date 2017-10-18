@@ -138,7 +138,6 @@ Publisher.prototype.showUnpublishedChangesPrompt = function(callback) {
 Publisher.prototype.setDescription = function() {
   var publisher = this;
   var action = "unpublish";
-
   if (Project.getPublishUrl()) {
     var action = "publish";
   }
