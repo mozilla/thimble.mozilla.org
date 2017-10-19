@@ -127,16 +127,14 @@ function setupOptionsMenu(bramble) {
   );
 
   // Display Font size
-  $("#editor-pane-nav-font-size").ready(function() {
+  function displayFontSize() {
     var fontSize = bramble.getFontSize();
     $("#editor-pane-nav-font-size").text(fontSize);
-  });
-
+  }
   // Re-display Font size if it was changed
-  bramble.on("fontSizeChange", function() {
-    var fontSize = bramble.getFontSize();
-    $("#editor-pane-nav-font-size").text(fontSize);
-  });
+  bramble.on("fontSizeChange", displayFontSize);
+  // Display Font size on startup
+  displayFontSize();
 
   // Font size -button
   $("#editor-pane-nav-decrease-font").click(function() {
