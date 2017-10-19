@@ -133,7 +133,7 @@ function setupOptionsMenu(bramble) {
   });
 
   // Re-display Font size if it was changed
-  bramble.on("fontSizeChange",function() {
+  bramble.on("fontSizeChange", function() {
     var fontSize = bramble.getFontSize();
     $("#editor-pane-nav-font-size").text(fontSize);
   });
