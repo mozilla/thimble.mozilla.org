@@ -126,17 +126,22 @@ function setupOptionsMenu(bramble) {
     "#editor-pane-nav-options-menu"
   );
 
-  //  Display font size
+  // Display Font size
   $("#editor-pane-nav-font-size").ready(function() {
     var fontSize = bramble.getFontSize();
     $("#editor-pane-nav-font-size").text(fontSize);
   });
 
-  // Font size -icon
+  // Re-display Font size if it was changed
+  bramble.on('fontSizeChange',function() {
+    var fontSize = bramble.getFontSize();
+    $("#editor-pane-nav-font-size").text(fontSize);
+  });
+
+  // Font size -button
   $("#editor-pane-nav-decrease-font").click(function() {
     bramble.decreaseFontSize(function() {
       var fontSize = bramble.getFontSize();
-      $("#editor-pane-nav-font-size").text(fontSize);
       analytics.event({
         category: analytics.eventCategories.EDITOR_UI,
         action: "Font Size Changed",
@@ -145,11 +150,10 @@ function setupOptionsMenu(bramble) {
     });
   });
 
-  // Font size +icon
+  // Font size +button
   $("#editor-pane-nav-increase-font").click(function() {
     bramble.increaseFontSize(function() {
       var fontSize = bramble.getFontSize();
-      $("#editor-pane-nav-font-size").text(fontSize);
       analytics.event({
         category: analytics.eventCategories.EDITOR_UI,
         action: "Font Size Changed",
