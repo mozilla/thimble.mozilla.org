@@ -187,18 +187,19 @@ Publisher.prototype.saveDescription = function() {
     dateUpdated: new Date().toISOString()
   };
 
-  Metadata.update({
-
-    update: true,
-    csrfToken: publisher.csrfToken,
-    host: Project.getHost(),
-    id: Project.getID(),
-    data 
-
-  }, 
+  Metadata.update(
+    {
+      update: true,
+      csrfToken: publisher.csrfToken,
+      host: Project.getHost(),
+      id: Project.getID(),
+      data
+    },
     error => {
-      console.error("[Thimble] Failed to update project description with: ", error);
-    });
+      console.error("[Thimble] Failed to update project description with: ",
+        error
+      );
+  });
 };
 
 Publisher.prototype.publish = function(bramble) {
