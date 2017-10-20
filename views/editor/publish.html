@@ -16,9 +16,16 @@
     </div>
 
     <div id="publish-live" class="hide">
+     
       <p>{{ gettext("publishShareLink") }}</p>
       <div id="publish-link">
         <a id="link-publish-link" title="{{ gettext("publishShareLinkTitle") }}" target="_blank" href="test"></a>
+      </div>
+      
+        <!--   Embed iFrame   -->
+      <p>{{ gettext("publishEmbedLinkTitle") }}</p>
+      <div id="publish-link">
+          <span>&lt;iframe {{ gettext("PUBLISHED_PROJECTS_HOSTNAME") }} &gt; </span>
       </div>
 
       <div id="publish-button-unpublish">
@@ -28,10 +35,10 @@
     </div>
 
     <div id="publish-details">
-      <label>{{ gettext("publishProjectDescription") }}</label>
+      <label>Description</label>
       <textarea class="publish-description" placeholder="{{ gettext("publishProjectDescriptionPlaceholder") }}"></textarea>
     </div>
-
+    
   </div>
 
   <div id="publish-buttons">
