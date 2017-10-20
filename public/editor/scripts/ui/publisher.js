@@ -175,7 +175,7 @@ Publisher.prototype.saveDescription = function() {
   const oldDescription = Project.getDescription();
   const description = publisher.dialog.description.val();
 
-  if(oldDescription === description) {
+  if (oldDescription === description) {
     return;
   }
 
@@ -188,14 +188,17 @@ Publisher.prototype.saveDescription = function() {
   };
 
   Metadata.update({
+
     update: true,
     csrfToken: publisher.csrfToken,
     host: Project.getHost(),
     id: Project.getID(),
     data 
-  }, error => {
-    console.error("[Thimble] Failed to update project description with: ", error);
-  });
+
+  }, 
+    error => {
+      console.error("[Thimble] Failed to update project description with: ", error);
+    });
 };
 
 Publisher.prototype.publish = function(bramble) {
