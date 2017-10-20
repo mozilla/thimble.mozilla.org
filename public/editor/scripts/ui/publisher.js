@@ -5,6 +5,7 @@ var strings = require("strings");
 var Project = require("../project");
 var FileSystemSync = require("../filesystem-sync");
 var SyncState = require("../filesystem-sync/state");
+var Metadata = require("../project/metadata.js");
 
 var host;
 
@@ -54,6 +55,7 @@ Publisher.prototype.init = function(bramble) {
   publisher.handlers = {
     publish: publisher.publish.bind(publisher, bramble),
     unpublish: publisher.unpublish.bind(publisher),
+    saveDescription: publisher.saveDescription.bind(publisher),
     unpublishedChangesPrompt: unpublishedChangesPrompt.bind(publisher)
   };
 
@@ -128,6 +130,77 @@ Publisher.prototype.showUnpublishedChangesPrompt = function(callback) {
     publisher.needsUpdate = true;
     callback();
   });
+};
+
+Publisher.prototype.saveDescription = function() {
+  /*var publisher = this;
+  var action = "unpublish";
+  if (Project.getPublishUrl()) {
+    var action = "publish";
+  }
+
+  SyncState.syncing();
+
+  var request = $.ajax({
+    contentType: "application/json",
+    headers: {
+      "X-Csrf-Token": publisher.csrfToken,
+      Accept: "application/json"
+    },
+    type: "PUT",
+    url: host + "/projects/" + Project.getID() + "/" + action,
+    data: JSON.stringify({
+      description: publisher.dialog.description.val() || " ",
+      public: publisher.isProjectPublic,
+      dateUpdated: new Date().toISOString()
+    })
+  });
+
+  //publishing/unpublishing an already published/unpublished project is expected to fail
+  //doing this for now until we can send an ajax request to UPDATE only
+  request.fail(function(jqXHR, status, err) {
+    console.error(
+      "[Thimble] Failed to send request to",
+      action,
+      "project to the server with: ",
+      err,
+      "but description is now updated"
+    );
+  });
+  request.always(function() {
+    SyncState.completed();
+  });*/
+
+  const publisher = this;
+  const oldDescription = Project.getDescription();
+  const description = publisher.dialog.description.val();
+
+  if (oldDescription === description) {
+    return;
+  }
+
+  Project.setDescription(description);
+
+  const data = {
+    title: Project.getTitle(),
+    description,
+    dateUpdated: new Date().toISOString()
+  };
+
+  Metadata.update(
+    {
+      update: true,
+      csrfToken: publisher.csrfToken,
+      host: Project.getHost(),
+      id: Project.getID(),
+      data
+    },
+    error => {
+        console.error("[Thimble] Failed to update project description with: ",
+        error
+      );
+    }
+  );
 };
 
 Publisher.prototype.publish = function(bramble) {
