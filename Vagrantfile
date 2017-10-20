@@ -11,8 +11,8 @@ Vagrant.configure("2") do |config|
   # VM, but users are encouraged to test this and make adjustments below (or file PRs)
   # if you find the VM lagging or unresponsive.
   config.vm.provider "virtualbox" do |v|
-    v.memory = 2536
-    v.cpus = 2
+    v.memory = 1536
+    v.cpus = 1
     v.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/vagrant", "1"]
   end
 
