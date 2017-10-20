@@ -5,6 +5,7 @@ var strings = require("strings");
 var Project = require("../project");
 var FileSystemSync = require("../filesystem-sync");
 var SyncState = require("../filesystem-sync/state");
+var Metadata = require("../project/metadata.js");
 
 var host;
 
@@ -54,7 +55,7 @@ Publisher.prototype.init = function(bramble) {
   publisher.handlers = {
     publish: publisher.publish.bind(publisher, bramble),
     unpublish: publisher.unpublish.bind(publisher),
-    setDescription: publisher.setDescription.bind(publisher),
+    saveDescription: publisher.saveDescription.bind(publisher),
     unpublishedChangesPrompt: unpublishedChangesPrompt.bind(publisher)
   };
 
@@ -131,12 +132,8 @@ Publisher.prototype.showUnpublishedChangesPrompt = function(callback) {
   });
 };
 
-//Using generateRequest("unpublish") in order to sync description
-//throws error since nothing is being unpublished, however this works
-//to save description. This is currently a "hack", a more elegant
-//solution may be implemented after
-Publisher.prototype.setDescription = function() {
-  var publisher = this;
+Publisher.prototype.saveDescription = function() {
+  /*var publisher = this;
   var action = "unpublish";
   if (Project.getPublishUrl()) {
     var action = "publish";
@@ -172,6 +169,32 @@ Publisher.prototype.setDescription = function() {
   });
   request.always(function() {
     SyncState.completed();
+  });*/
+
+  const publisher = this;
+  const oldDescription = Project.getDescription();
+  const description = publisher.dialog.description.val();
+
+  if(oldDescription === description) {
+    return;
+  }
+
+  Project.setDescription(description);
+
+  const data = {
+    title: Project.getTitle(),
+    description,
+    dateUpdated: new Date().toISOString()
+  };
+
+  Metadata.update({
+    update: true,
+    csrfToken: publisher.csrfToken,
+    host: Project.getHost(),
+    id: Project.getID(),
+    data 
+  }, error => {
+    console.error("[Thimble] Failed to update project description with: ", error);
   });
 };
 
@@ -328,7 +351,6 @@ Publisher.prototype.unpublish = function() {
   request.always(function() {
     SyncState.completed();
     publisher.unpublishing = false;
-    publickCheck = false;
     setState(true);
   });
 };

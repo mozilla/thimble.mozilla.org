@@ -446,7 +446,7 @@ function init(bramble, csrfToken, appUrl) {
 
     //Calling function in public/editor/ui/publisher.js
     //When user clicks outside the dialog box, description is saved
-    publisher.handlers.setDescription();
+    publisher.handlers.saveDescription();
   }
   function showPublishDialog() {
     publishDialogUnderlay = new Underlay("#publish-dialog", hidePublishDialog);
