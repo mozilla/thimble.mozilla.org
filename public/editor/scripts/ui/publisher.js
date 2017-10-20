@@ -196,10 +196,12 @@ Publisher.prototype.saveDescription = function() {
       data
     },
     error => {
-      console.error("[Thimble] Failed to update project description with: ",
+
+        console.error("[Thimble] Failed to update project description with: ",
         error
       );
-  });
+    }
+  );
 };
 
 Publisher.prototype.publish = function(bramble) {
