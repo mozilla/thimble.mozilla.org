@@ -38,6 +38,7 @@ exports.js = function (filename) {
  * GET health check for app
  */
 var version = require("../../../package").version;
+var commit = require("../../../node_modules/git-rev-sync/").long;
 var wts = require("webmaker-translation-stats");
 var i18n = require("webmaker-i18n");
 var path = require("path");
@@ -45,7 +46,8 @@ var path = require("path");
 exports.healthcheck = function (req, res) {
   var healthcheckObject = {
     http: "okay",
-    version: version
+    version: version,
+    commit: commit
   };
   wts(i18n.getSupportLanguages(), path.join(__dirname, "../../../locale"), function (err, data) {
     if (err) {
