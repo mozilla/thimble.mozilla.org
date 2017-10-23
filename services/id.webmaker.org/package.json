@@ -14,6 +14,7 @@
     "jshint": "jshint -c node_modules/mofo-style/linters/.jshintrc lib test web webpack.config.js",
     "jsbeautify": "js-beautify lib test web *.js -r",
     "lint": "npm run jshint && npm run jscs",
+    "preinstall": "node scripts/ensure-env",
     "postinstall": "node scripts/build",
     "test:setup": "npm run test:droptables && npm run test:createtables && npm run test:insertdata",
     "test:droptables": "node scripts/drop-tables",
@@ -69,7 +70,6 @@
     "joi": "6.0.8",
     "jsx-loader": "0.12.2",
     "less": "1.7.5",
-    "newrelic": "1.20.1",
     "pass-test": "1.0.3",
     "pg": "4.3.0",
     "react": "0.12.2",
@@ -90,7 +90,7 @@
     "jscs": "1.11.3",
     "jshint": "2.6.3",
     "json-loader": "0.5.1",
-    "lab": "5.5.0",
+    "lab": "13.1.0",
     "less": "2.4.0",
     "mocha": "2.2.1",
     "mocha-phantomjs": "3.6.0",
@@ -100,6 +100,6 @@
     "phantomjs": "1.9.7-14"
   },
   "engines": {
-    "node": "^4.6.0"
+    "node": "^4.8.4"
   }
 }

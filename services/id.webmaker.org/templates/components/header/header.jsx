@@ -17,7 +17,7 @@ var Header = React.createClass({
 
     return (
       <div className={className}>
-        <img src="/assets/img/webmaker-horizontal.svg" alt="Mozilla Webmaker" className="wordmark" />
+        <img src="/assets/img/mozilla-logo.svg" alt="Mozilla" className="wordmark" />
         <div className="redirect"><span ref="text">{redirectText}</span> <Link onClick={this.handleGA.bind(this, redirectLabel, origin)} to={redirectPage} query={redirectQuery} className="underline" ref="link">{redirectLabel}</Link></div>
       </div>
     );

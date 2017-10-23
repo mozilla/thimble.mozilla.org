@@ -41,6 +41,7 @@ var Login = React.createClass({
   componentDidMount: function() {
     document.title = "Webmaker Login - Login";
     WebmakerActions.addListener('FORM_VALIDATION', this.handleFormData);
+    WebmakerActions.addListener('FORM_WARNING', this.enableButton);
   },
   componentWillUnmount: function() {
     WebmakerActions.deleteListener('FORM_VALIDATION', this.handleFormData);
@@ -49,6 +50,10 @@ var Login = React.createClass({
     return {
       username: ''
     };
+  },
+  enableButton: function() {
+    var buttonEl = this.getDOMNode().querySelector(".login-button");
+    buttonEl.removeAttribute("disabled");
   },
   render: function() {
     // FIXME: totally not localized yet!
@@ -79,7 +84,7 @@ var Login = React.createClass({
                   onInputBlur={this.handleBlur}
                   defaultUsername={this.queryObj.username}
             />
-            <button onClick={this.processFormData} className="btn btn-awsm">{buttonText}</button>
+            <button onClick={this.processFormData} className="login-button btn btn-awsm">{buttonText}</button>
             <Link onClick={this.handleGA.bind(this, 'Forgot your password')} to="reset-password" query={this.queryObj} className="need-help">Forgot your password?</Link>
           </div>
         </div>
@@ -87,6 +92,9 @@ var Login = React.createClass({
     );
   },
   processFormData: function(e) {
+    var buttonEl = this.getDOMNode().querySelector(".login-button");
+    buttonEl.setAttribute("disabled", true);
+
     e.preventDefault();
     var form = this.refs.userform;
     ga.event({category: 'Login', action: 'Start login'});
@@ -103,15 +111,21 @@ var Login = React.createClass({
     }
   },
   handleFormData: function(data) {
+
+    var buttonEl = this.getDOMNode().querySelector(".login-button");
+
     var data = data.user;
     var error = data.err
     if ( error ) {
       ga.event({category: 'Login', action: 'Error during form validation'})
       console.error('validation error', error);
+      this.enableButton();
       return;
     }
     var csrfToken = cookiejs.parse(document.cookie).crumb;
     var queryObj = Url.parse(window.location.href, true).query;
+    var that = this;
+
     fetch('/login', {
       method: 'post',
       credentials: 'same-origin',
@@ -134,17 +148,20 @@ var Login = React.createClass({
           state: queryObj.state,
           scopes: queryObj.scopes
         };
-
         ga.event({category: 'Login', action: 'Logged in'});
         window.location = Url.format(redirectObj);
       }
       if( response.status === 401 ) {
         WebmakerActions.displayError({field: 'password', message: 'Invalid password.'})
       }
+      if( response.status >= 400 ) {
+        that.enableButton();
+      }
       // handle errors!
     }).catch(function(ex) {
       ga.event({category: 'Login', action: 'Error', label: 'Error with the server'});
       console.error('Error parsing response', ex);
+      that.enableButton();
     });
   }
 });
