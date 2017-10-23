@@ -146,15 +146,17 @@ Publisher.prototype.publish = function(bramble) {
       publisher.dialogEl.width(publisher.dialogEl.width());
     }
     if ($("#publish-button-update").is(":visible")) {
-      $("#publish-buttons").show();
-      $("#publish-buttons").css({ "border-top": "0px" });
-      $("#publish-button-publish").hide();
-      $("#publish-button-cancel").hide();
+      $("#updateDialog").show();
+      $("#no-index-update")
+        .removeClass("hide")
+        .addClass("show");
     }
+
     publisher.dialogEl.addClass("cannot-publish");
     return;
   }
 
+  console.info("After");
   publisher.publishing = true;
 
   function setState(done) {
@@ -230,6 +232,11 @@ Publisher.prototype.unpublish = function() {
   if (publisher.unpublishing) {
     return;
   }
+
+  $("#updateDialog").hide();
+  $("#no-index-update")
+    .removeClass("show")
+    .addClass("hide");
 
   var didConfirm = window.confirm(TEXT_UNPUBLISH_WARNING);
 

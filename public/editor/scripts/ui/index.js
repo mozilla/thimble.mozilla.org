@@ -445,6 +445,11 @@ function init(bramble, csrfToken, appUrl) {
     _escKeyHandler = null;
   }
   function showPublishDialog() {
+    $("#updateDialog").hide();
+    $("#no-index-update")
+      .addClass("hide")
+      .removeClass("show");
+
     publishDialogUnderlay = new Underlay("#publish-dialog", hidePublishDialog);
     $("#publish-dialog").show();
 

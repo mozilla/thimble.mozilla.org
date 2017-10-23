@@ -40,5 +40,11 @@
     <div id="publish-button-cancel">{{ gettext("publishCancelBtn") }}</div>
     <div id="publish-button-publish">{{ gettext("publishBtn") }}</div>
   </div>
+
+  <div id="updateDialog" class="hide">
+    {% set learnMoreURL = "https://github.com/mozilla/thimble.mozilla.org/wiki/Using-Thimble-FAQ#why-do-i-need-an-indexhtml-file-when-publishing-my-project" %}
+    <div id="no-index-update" class="hide" >{{ gettext("noIndexFound_2") | instantiate | safe }}</div>
+  </div>
 </div>
+
 {% endblock %}
