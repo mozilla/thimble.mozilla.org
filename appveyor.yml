@@ -1,0 +1,32 @@
+version: "{build}"
+
+environment:
+  nodejs_version: "4"
+  DATABASE_URL: postgres://postgres:Password12!@localhost:5432/webmaker_oauth_test
+
+services:
+  - postgresql
+
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - npm install
+
+before_test:
+  - SET PGUSER=postgres
+  - SET PGPASSWORD=Password12!
+  - PATH=C:\Program Files\PostgreSQL\9.6\bin\;%PATH%
+  - createdb webmaker_oauth_test
+
+test_script:
+  - node --version
+  - npm --version
+  - npm test
+
+build: off
+
+branches:
+
+  only:
+    - master
+
+clone_depth: 1
