@@ -10,6 +10,9 @@
       <div class="main-nav">
 
         <a href="/{{ locale }}" class="{% if pageName == 'home' %}selected{% endif %}">{{ gettext("userbarGetStarted") }}</a>
+        {% if username %}
+          <a href="/{{ locale }}/projects" class="{% if pageName == 'projects' %}selected{% endif %}">{{ gettext("userbarMyProjects") }}</a>
+        {% endif %}
         <a href="/{{ locale }}/features" class="{% if pageName == 'features' %}selected{% endif %}">{{ gettext("userbarCoolFeatures") }}</a>
         <a href="/{{ locale }}/get-involved" class="{% if pageName == 'get-involved' %}selected{% endif %}">{{ gettext("userbarGetInvolved") }}</a>
       </div>
