@@ -183,7 +183,9 @@ module.exports = function middlewareConstructor(config) {
         next(
           HttpError.format(
             {
-              message: `Data validation in middleware failed for ${req.originalUrl}`,
+              message: `Data validation in middleware failed for ${
+                req.originalUrl
+              }`,
               context: {
                 expected: properties,
                 actual: req.body
@@ -239,7 +241,9 @@ module.exports = function middlewareConstructor(config) {
             return next(
               HttpError.format(
                 {
-                  message: `Request to ${userUrl} returned a status of ${response.statusCode}`,
+                  message: `Request to ${userUrl} returned a status of ${
+                    response.statusCode
+                  }`,
                   context: response.body
                 },
                 req
@@ -293,7 +297,9 @@ module.exports = function middlewareConstructor(config) {
             return next(
               HttpError.format(
                 {
-                  message: `Request to ${projectUrl} returned a status of ${response.statusCode}`,
+                  message: `Request to ${projectUrl} returned a status of ${
+                    response.statusCode
+                  }`,
                   context: response.body
                 },
                 req

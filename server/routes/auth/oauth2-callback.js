@@ -95,7 +95,9 @@ module.exports = function(config, req, res, next) {
         return next(
           HttpError.format(
             {
-              message: `Failed to send request to ${authURL}. Verify that the authentication server is up and running.`,
+              message: `Failed to send request to ${
+                authURL
+              }. Verify that the authentication server is up and running.`,
               context: err
             },
             req
@@ -108,7 +110,9 @@ module.exports = function(config, req, res, next) {
         return next(
           HttpError.format(
             {
-              message: `Request to ${authURL} returned a status of ${response.statusCode}`,
+              message: `Request to ${authURL} returned a status of ${
+                response.statusCode
+              }`,
               context: response.body
             },
             req
@@ -151,7 +155,9 @@ module.exports = function(config, req, res, next) {
             return next(
               HttpError.format(
                 {
-                  message: `Failed to send request to ${userURL}. Verify that the authentication server is up and running.`,
+                  message: `Failed to send request to ${
+                    userURL
+                  }. Verify that the authentication server is up and running.`,
                   context: err
                 },
                 req
@@ -164,7 +170,9 @@ module.exports = function(config, req, res, next) {
             return next(
               HttpError.format(
                 {
-                  message: `Request to ${userURL} returned a status of ${response.statusCode}`,
+                  message: `Request to ${userURL} returned a status of ${
+                    response.statusCode
+                  }`,
                   context: response.body
                 },
                 req

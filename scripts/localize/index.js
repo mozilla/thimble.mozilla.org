@@ -31,9 +31,9 @@ function writeFile(locale, file, properties, addWrapper) {
   locale = locale.replace(/-/g, "_");
   properties = JSON.stringify(properties, null, IS_DEVELOPMENT ? 2 : 0);
   if (addWrapper) {
-    properties = `${IS_DEVELOPMENT
-      ? JS_WRAPPER
-      : JS_WRAPPER_MIN}_values: ${properties}};`;
+    properties = `${IS_DEVELOPMENT ? JS_WRAPPER : JS_WRAPPER_MIN}_values: ${
+      properties
+    }};`;
   }
 
   return new Promise(function(resolve, reject) {
