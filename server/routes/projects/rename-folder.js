@@ -27,11 +27,9 @@ module.exports = function(config, req, res, next) {
         next(
           HttpError.format(
             {
-              message: `Failed to send request to ${uri}, paths sent: ${JSON.stringify(
-                req.body.paths,
-                null,
-                2
-              )}`,
+              message: `Failed to send request to ${
+                uri
+              }, paths sent: ${JSON.stringify(req.body.paths, null, 2)}`,
               context: err
             },
             req
@@ -45,11 +43,9 @@ module.exports = function(config, req, res, next) {
         next(
           HttpError.format(
             {
-              message: `Request to ${uri} returned a status of ${response.statusCode}. Paths sent: ${JSON.stringify(
-                req.body.paths,
-                null,
-                2
-              )}`,
+              message: `Request to ${uri} returned a status of ${
+                response.statusCode
+              }. Paths sent: ${JSON.stringify(req.body.paths, null, 2)}`,
               context: response.body
             },
             req
