@@ -33,7 +33,7 @@ function Publisher() {
       update: $("#publish-button-update"),
       unpublish: $("#publish-button-unpublish"),
       parent: $("#publish-buttons"),
-      indexMessage: $("#no-index"),
+      indexMessage: $("#no-index")
     },
     description: $("#publish-details > textarea.publish-description"),
     embed: $("#link-publish-embed"),
@@ -314,7 +314,6 @@ Publisher.prototype.updateDialog = function(publishUrl, allowUnpublish) {
   var published = this.dialog.published;
   var unpublishBtn = this.dialog.buttons.unpublish;
   var unpublish = this.handlers.unpublish;
-    
   published.embed.text("<iframe src={$publishUrl}></iframe>");
   // Expose the published state with the updated link
   published.link.attr("href", publishUrl).text(publishUrl);
