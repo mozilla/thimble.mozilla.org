@@ -44,7 +44,6 @@ function Publisher() {
       container: $("#publish-live")
     }
   };
-  this.$("#link-publish-embed").text("Testing");
   this.dialogEl = $("#publish-dialog");
   this.button = $("#navbar-publish-button");
 }
