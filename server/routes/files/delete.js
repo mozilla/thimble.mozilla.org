@@ -37,7 +37,9 @@ module.exports = function(config, req, res, next) {
         next(
           HttpError.format(
             {
-              message: `Request to ${url} returned a status of ${response.statusCode}`,
+              message: `Request to ${url} returned a status of ${
+                response.statusCode
+              }`,
               context: response.body
             },
             req
