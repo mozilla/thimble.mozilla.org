@@ -83,7 +83,7 @@ echo "Setting up login.webmaker.org"
 cd login.webmaker.org
 cp env.sample .env
 sudo npm install --no-bin-links --loglevel=error # sudo needed for bcrypt permissions
-sudo npm install --no-bin-links || sudo npm install --no-bin-links
+cd ..
 # ---
 
 # --- id.webmaker.org setup and database setup ---
