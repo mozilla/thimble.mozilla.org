@@ -37,7 +37,6 @@ function Publisher() {
     },
     description: $("#publish-details > textarea.publish-description"),
     embed: $("#link-publish-embed"),
-
     published: {
       link: $("#publish-link > a"),
       changed: $("#publish-changes"),
