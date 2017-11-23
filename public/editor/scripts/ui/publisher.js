@@ -148,6 +148,13 @@ Publisher.prototype.publish = function(bramble) {
       publisher.dialogEl.removeClass("cannot-publish");
       publisher.dialogEl.width(publisher.dialogEl.width());
     }
+    if ($("#publish-button-update").is(":visible")) {
+      $("#updateDialog").show();
+      $("#no-index-update")
+        .removeClass("hide")
+        .addClass("show");
+    }
+
     publisher.dialogEl.addClass("cannot-publish");
     return;
   }
@@ -227,6 +234,11 @@ Publisher.prototype.unpublish = function() {
   if (publisher.unpublishing) {
     return;
   }
+
+  $("#updateDialog").hide();
+  $("#no-index-update")
+    .removeClass("show")
+    .addClass("hide");
 
   var didConfirm = window.confirm(TEXT_UNPUBLISH_WARNING);
 
