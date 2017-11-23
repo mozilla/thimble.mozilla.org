@@ -313,7 +313,7 @@ Publisher.prototype.updateDialog = function(publishUrl, allowUnpublish) {
   var published = this.dialog.published;
   var unpublishBtn = this.dialog.buttons.unpublish;
   var unpublish = this.handlers.unpublish;
-  published.embed.text("<iframe src={$publishUrl}></iframe>");
+  published.embed.text(`<iframe src=${publishUrl}></iframe>`);
   // Expose the published state with the updated link
   published.link.attr("href", publishUrl).text(publishUrl);
   published.changed.addClass("hide");
