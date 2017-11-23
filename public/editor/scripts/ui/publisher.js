@@ -156,7 +156,6 @@ Publisher.prototype.publish = function(bramble) {
     return;
   }
 
-  console.info("After");
   publisher.publishing = true;
 
   function setState(done) {
