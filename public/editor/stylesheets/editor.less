@@ -381,10 +381,6 @@ body {
     opacity: .3;
   }
 
-  .dark & .editor-icon {
-    background-image: url("/img/icon/snippets.svg");
-    opacity: .5;
-  }
 
   &:hover .editor-icon {
     opacity: .7;
@@ -392,6 +388,11 @@ body {
 
   .dark & {
     background-color: #2b2b2b;
+
+    .editor-icon {
+        background-image: url("/img/icon/snippets.svg");
+        opacity: .5;
+      }
   }
 }
 
