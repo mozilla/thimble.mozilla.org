@@ -328,6 +328,7 @@ function setupOptionsMenu(bramble) {
   function lightThemeUI() {
     var transitionSpeed = 200;
 
+    $(".bramble-toolbar").removeClass("dark");
     $("#sun-green").fadeIn(transitionSpeed);
     $("#moon-white").fadeIn(transitionSpeed);
     $("#sun-white").fadeOut(transitionSpeed);
@@ -347,6 +348,7 @@ function setupOptionsMenu(bramble) {
   function darkThemeUI() {
     var transitionSpeed = 200;
 
+    $(".bramble-toolbar").addClass("dark");
     $("#moon-green").fadeIn(transitionSpeed);
     $("#sun-white").fadeIn(transitionSpeed);
     $("#moon-white").fadeOut(transitionSpeed);

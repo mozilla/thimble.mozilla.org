@@ -76,10 +76,14 @@ body {
   left: 0;
   z-index: 2;
   height: @toolbarHeight;
-  background-color: #212121;
   vertical-align: top;
   float: left;
   overflow: hidden;
+  background-color: #AAA;
+
+  .dark & {
+    background-color: #212121;
+  }
 
   .narrow {
     display: none;
@@ -87,12 +91,15 @@ body {
 }
 
 .filetree-pane-nav-title {
-  color: white;
+  color: black;
   font-weight: 600;
   font-size: 1em;
   opacity: 0.45;
-  filter: alpha(opacity=45);
   .vertical-align;
+
+  .dark & {
+    color: white;
+  }
 }
 
 .filetree-pane-nav-btn {
@@ -195,8 +202,9 @@ body {
   width: 50%;
   z-index: 2;
   height: @toolbarHeight;
-  background-color: #3f3f3f;
-  color: #757575;
+  border-right: solid 1px #BBB;
+  // background: #CCC;
+  color: black;
   float: left;
   overflow: hidden;
 
@@ -205,11 +213,10 @@ body {
   }
 
   .editor-pane-nav-title {
-    color: white;
     font-weight: 600;
     opacity: 0.45;
-    filter: alpha(opacity=45);
     margin-right: 10px;
+    color: black;
     .vertical-align;
   }
 
@@ -217,6 +224,16 @@ body {
     margin-right: 10px;
     font-weight: 600;
   }
+
+  .dark & {
+    color: #757575;
+    background-color: #3f3f3f;
+
+    .editor-pane-nav-title {
+      color: white;
+    }
+  }
+
 }
 
 #editor-pane-nav-fileview {
@@ -341,7 +358,7 @@ body {
 
 /* Snippets */
 #editor-pane-nav-snippets {
-  background-color: #2b2b2b;
+  background-color: #f9f9f9;
   height: 30px;
   width: 30px;
   text-align: center;
@@ -350,17 +367,31 @@ body {
   position: relative;
   .icon;
 
-  img {
-    opacity: 0.5;
-    height: 20px;
+  .editor-icon {
     width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
     position: absolute;
     top: 5px;
     left: 5px;
+    background-image: url("/img/icon/snippets-light-theme.svg");
+    opacity: .3;
   }
 
-  &:hover img {
-    opacity: 0.7;
+  .dark & .editor-icon {
+    background-image: url("/img/icon/snippets.svg");
+    opacity: .5;
+  }
+
+  &:hover .editor-icon {
+    opacity: .7;
+  }
+
+  .dark & {
+    background-color: #2b2b2b;
   }
 }
 
