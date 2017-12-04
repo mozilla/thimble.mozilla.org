@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="8px" height="8px" viewBox="0 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12081) - http://www.bohemiancoding.com/sketch -->
+    <title>file-tray-arrow-left</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="file-tray-arrow-left" sketch:type="MSArtboardGroup" fill="#000000">
+            <path d="M1.41199995,0.123733333 C1.33733329,0.206933333 1.29999995,0.308266667 1.29999995,0.424533333 L1.29999995,7.5744 C1.29999995,7.69173333 1.33733329,7.79093333 1.41199995,7.87413333 C1.48666662,7.9584 1.58373329,8 1.69999995,8 C1.80026662,8 1.87386662,7.97333333 1.92506662,7.92426667 L1.97519995,7.87413333 L5.87493329,4.4736 C6.02426662,4.3232 6.09893329,4.16533333 6.09893329,4 C6.09893329,3.83253333 6.02426662,3.67466667 5.87493329,3.52426667 L1.97519995,0.123733333 L1.90053329,0.0746666667 L1.69999995,0 C1.58373329,0 1.48666662,0.0416 1.41199995,0.123733333 Z" id="Imported-Layers" sketch:type="MSShapeGroup" transform="translate(3.699467, 4.000000) rotate(-180.000000) translate(-3.699467, -4.000000) "></path>
+        </g>
+    </g>
+</svg>
