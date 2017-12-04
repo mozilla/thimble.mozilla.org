@@ -81,7 +81,7 @@ body {
 
   .nav-container {
     box-sizing: border-box;
-    border-right: solid 1px #CCC;
+    border-right: solid 1px #ccc;
   }
 
   .filetree-pane-nav-title {
@@ -109,9 +109,9 @@ body {
   }
 }
 
-
 // Shared styles for icons that show & hide the file view
-#editor-pane-nav-fileview, #filetree-pane-nav-hide {
+#editor-pane-nav-fileview,
+#filetree-pane-nav-hide {
   .light-theme-icon-colors;
   width: 25px;
   height: 25px;
@@ -140,12 +140,12 @@ body {
 
     .icon-container {
       background-image: url("/img/icon/file-tray-arrow-right-white.svg");
-      opacity: .2
+      opacity: 0.2;
     }
 
     &:hover {
       .icon-container {
-        opacity: .4;
+        opacity: 0.4;
       }
     }
 
@@ -170,10 +170,9 @@ body {
 
     &:active {
       .icon-container {
-        opacity: .7;
+        opacity: 0.7;
       }
     }
-
   }
 }
 
@@ -243,7 +242,7 @@ body {
   width: 50%;
   z-index: 2;
   height: @toolbarHeight;
-  border-right: solid 1px #BBB;
+  border-right: solid 1px #bbb;
   color: black;
   float: left;
   overflow: hidden;
@@ -263,7 +262,7 @@ body {
   #editor-pane-nav-filename {
     margin-right: 10px;
     font-weight: 600;
-    opacity: .3;
+    opacity: 0.3;
   }
 
   .dark & {
@@ -308,20 +307,21 @@ body {
   background-color: #f9f9f9;
 
   .icon-container {
-    opacity: .3;
+    opacity: 0.3;
     transition: opacity @transitionTime ease-out;
   }
 
   &:hover {
     .icon-container {
-      opacity: .5;
+      opacity: 0.5;
     }
   }
 
-  &:active, &.active {
+  &:active,
+  &.active {
     background-color: white;
     .icon-container {
-      opacity: .7;
+      opacity: 0.7;
     }
   }
 }
@@ -332,14 +332,15 @@ body {
     background-color: #2b2b2b;
 
     &:hover .icon-container {
-      opacity: .5;
+      opacity: 0.5;
     }
 
-    &:active, &.active {
+    &:active,
+    &.active {
       background-color: #1b1b1b;
 
       .icon-container {
-        opacity: .8;
+        opacity: 0.8;
       }
     }
   }
@@ -372,17 +373,17 @@ body {
     vertical-align: top;
     position: relative;
     top: -1px;
-    opacity: .3;
+    opacity: 0.3;
     color: black;
     .transition;
   }
 
   &:hover span {
-    opacity: .5;
+    opacity: 0.5;
   }
 
   &:active span {
-    opacity: .7;
+    opacity: 0.7;
   }
 
   .dark & {
@@ -552,17 +553,18 @@ body {
 
 // Settings (gear) buttons
 #editor-pane-nav-options {
-  opacity: .3;
+  opacity: 0.3;
   padding: 4px;
   transition: opacity @transitionTime ease-out;
   cursor: pointer;
 
   &:hover {
-    opacity: .5;
+    opacity: 0.5;
   }
 
-  &:active, &.active {
-    opacity: .7;
+  &:active,
+  &.active {
+    opacity: 0.7;
   }
 
   .icon-container {
@@ -576,18 +578,19 @@ body {
   }
 
   .dark & {
-    opacity: .5;
+    opacity: 0.5;
 
     .icon-container {
       background-image: url("/img/icon/gear-white.svg");
     }
 
     &:hover {
-      opacity: .7;
+      opacity: 0.7;
     }
 
-    &:active, &.active {
-      opacity: .8;
+    &:active,
+    &.active {
+      opacity: 0.8;
     }
   }
 
