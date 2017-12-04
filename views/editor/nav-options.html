@@ -26,7 +26,7 @@
         </div>
 
         <div title="{{ gettext("navCollapseFileTrayIconTitle") }}" id="filetree-pane-nav-hide">
-          <div class="filetree-pane-nav-btn"></div>
+          <div class="icon-container"></div>
         </div>
       </div>
     </div>
@@ -37,7 +37,7 @@
 
     <div class="nav-container">
       <div title="{{ gettext("navExpandFileTrayIconTitle") }}" id="editor-pane-nav-fileview">
-        <div></div>
+        <div class="icon-container"></div>
       </div>
 
       <span data-adapt-order="2" class="editor-pane-nav-title">{{ gettext("navEditor") }}</span>
@@ -47,17 +47,18 @@
       <div class="flex-container pull-right">
 
         <div data-adapt-order="6" title="{{ gettext("navUndoTitle") }}" id="editor-pane-nav-undo">
-          <img src="/img/icon/undo.svg">
+          <div class="icon-container"></div>
           <span data-adapt-order="1">{{ gettext("navUndo") }}</span>
         </div>
 
         <div data-adapt-order="5" title="{{ gettext("navRedoIconTitle") }}" id="editor-pane-nav-redo">
-          <img src="/img/icon/redo.svg">
+            <div class="icon-container"></div>
         </div>
 
         <div data-adapt-order="3" id="editor-pane-nav-snippets" title="{{ gettext("navInsertSnippetIconTitle") }}">
-          <div class="editor-icon"></div>
+            <div class="icon-container"></div>
         </div>
+
         <div class="snippets-menu-container hide">
           <div class="snippets-menu">
             <header>
@@ -108,7 +109,7 @@
         </div>
 
         <div data-adapt-order="6" title="{{ gettext("navEditorOptionsIconTitle") }}" id="editor-pane-nav-options">
-          <img src="/img/icon/gear-white.svg">
+          <div class="icon-container"></div>
         </div>
         <div id="editor-pane-nav-options-menu" class="hide">
           <ul>

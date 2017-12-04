@@ -11,8 +11,8 @@ body {
 @toolbarHeight: 60px;
 @brambleTop: 120px;
 
-/* Transition time for hover effects */
-@transitionTime: 0.15s;
+// Global transition time
+@transitionTime: 0.1s;
 
 #webmaker-bramble {
   position: absolute;
@@ -25,7 +25,7 @@ body {
   background-color: #f8f8f8;
 }
 
-// Logo position overrides
+// Green header bar
 .navbar-thimble {
   background: #2d9961;
   position: relative;
@@ -36,14 +36,13 @@ body {
   }
 }
 
+// Wrapper for headers above each pane
 .bramble-toolbar {
   position: absolute;
   z-index: 2;
   top: @headerHeight;
   height: @toolbarHeight;
   width: 100%;
-  margin: 0;
-  padding: 0;
   background: #eaeaea;
 }
 
@@ -52,11 +51,11 @@ body {
 }
 
 .editor-nav {
-  position: absolute;
-  display: block;
-  top: 0;
-  width: 100%;
-  height: 0;
+  // position: absolute;
+  // display: block;
+  // top: 0;
+  // width: 100%;
+  // height: 0;
 }
 
 // For capturing mouse events over the iframe when menus appear overtop.
@@ -70,7 +69,7 @@ body {
   overflow: hidden;
 }
 
-/* ------ FILETREE PANE ------ */
+// Header bar above FILES pane
 .filetree-pane-nav {
   top: 0;
   left: 0;
@@ -79,10 +78,30 @@ body {
   vertical-align: top;
   float: left;
   overflow: hidden;
-  background-color: #AAA;
+
+  .nav-container {
+    box-sizing: border-box;
+    border-right: solid 1px #CCC;
+  }
+
+  .filetree-pane-nav-title {
+    color: black;
+    font-weight: 600;
+    font-size: 1em;
+    opacity: 0.45;
+    .vertical-align;
+
+    .dark & {
+      color: white;
+    }
+  }
 
   .dark & {
     background-color: #212121;
+
+    .nav-container {
+      border: none;
+    }
   }
 
   .narrow {
@@ -90,38 +109,90 @@ body {
   }
 }
 
-.filetree-pane-nav-title {
-  color: black;
-  font-weight: 600;
-  font-size: 1em;
-  opacity: 0.45;
-  .vertical-align;
 
-  .dark & {
-    color: white;
+// Shared styles for icons that show & hide the file view
+#editor-pane-nav-fileview, #filetree-pane-nav-hide {
+  .light-theme-icon-colors;
+  width: 25px;
+  height: 25px;
+  border-radius: 2px;
+  cursor: pointer;
+
+  .icon-container {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 10px 10px;
   }
 }
 
-.filetree-pane-nav-btn {
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 10px 10px;
+// Show filetree button
+#editor-pane-nav-fileview {
+  margin-right: 10px;
+
+  .icon-container {
+    background-image: url("/img/icon/file-tray-arrow-right-black.svg");
+  }
+
+  .dark & {
+    background-color: #2b2b2b;
+
+    .icon-container {
+      background-image: url("/img/icon/file-tray-arrow-right-white.svg");
+      opacity: .2
+    }
+
+    &:hover {
+      .icon-container {
+        opacity: .4;
+      }
+    }
+
+    &:active {
+      background-color: #1b1b1b;
+    }
+  }
 }
 
+// Hide filetree button
+#filetree-pane-nav-hide {
+  .icon-container {
+    background-image: url("/img/icon/file-tray-arrow-left-black.svg");
+  }
+
+  .dark & {
+    background-color: #3f3f3f;
+
+    &:hover {
+      background-color: #585858;
+    }
+
+    &:active {
+      .icon-container {
+        opacity: .7;
+      }
+    }
+
+  }
+}
+
+// Add file button
 #filetree-pane-nav-add {
   width: 25px;
   height: 25px;
   background-color: @buttonGreen;
   margin-right: 5px;
-  border-radius: 1px;
-  .icon;
+  border-radius: 2px;
   .transition;
 
   div {
     background-image: url("/img/icon/file-white.svg");
     background-size: 13px 15px;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
   }
 
   &:hover {
@@ -133,35 +204,7 @@ body {
   }
 }
 
-#filetree-pane-nav-hide {
-  width: 25px;
-  height: 25px;
-  background-color: #3f3f3f;
-  border-radius: 1px;
-  .icon;
-  .transition;
-
-  div {
-    background-image: url("/img/icon/file-tray-arrow-left.svg");
-    opacity: 0.4;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 10px;
-  }
-
-  &:hover {
-    background-color: #4f4f4f;
-  }
-
-  &:active {
-    div {
-      opacity: 0.7;
-    }
-
-    background-color: #4f4f4f;
-  }
-}
-
+// Add file menu button
 #filetree-pane-nav-add-menu {
   position: absolute;
   z-index: 151;
@@ -186,8 +229,6 @@ body {
       &:hover {
         background-color: rgba(0, 0, 0, 0.05);
       }
-
-      .icon;
     }
 
     .top-border {
@@ -196,14 +237,13 @@ body {
   }
 }
 
-/* ------ LEFT PANE ------ */
+// Header above Editor pane
 .editor-pane-nav {
   top: 0;
   width: 50%;
   z-index: 2;
   height: @toolbarHeight;
   border-right: solid 1px #BBB;
-  // background: #CCC;
   color: black;
   float: left;
   overflow: hidden;
@@ -213,8 +253,8 @@ body {
   }
 
   .editor-pane-nav-title {
-    font-weight: 600;
-    opacity: 0.45;
+    font-weight: bold;
+    opacity: 0.6;
     margin-right: 10px;
     color: black;
     .vertical-align;
@@ -223,180 +263,175 @@ body {
   #editor-pane-nav-filename {
     margin-right: 10px;
     font-weight: 600;
+    opacity: .3;
   }
 
   .dark & {
     color: #757575;
     background-color: #3f3f3f;
+    border: none;
 
     .editor-pane-nav-title {
       color: white;
     }
-  }
 
+    #editor-pane-nav-filename {
+      opacity: 1;
+    }
+  }
 }
 
-#editor-pane-nav-fileview {
-  width: 25px;
-  height: 25px;
-  margin-right: 10px;
-  background-color: #2b2b2b;
-  border-radius: 2px;
-  .icon;
+// Header icon structure
+.header-button {
+  height: 30px;
+  width: 30px;
+  border-radius: 15px;
+  margin-left: 6px;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  transition: background @transitionTime ease-out;
 
-  div {
-    width: 100%;
-    height: 100%;
-    background-image: url("/img/icon/file-tray-arrow-right.svg");
-    opacity: 0.2;
-    background-repeat: no-repeat;
+  .icon-container {
+    display: block;
+    background-size: 100%;
     background-position: center;
-    background-size: 10px;
-    .transition;
-  }
-
-  &:hover div {
-    opacity: 0.4;
-  }
-
-  &:active {
-    background-color: #1b1b1b;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    transition: opacity @transitionTime ease-out;
   }
 }
 
+// Light theme for header icons
+.light-theme-icon-colors {
+  background-color: #f9f9f9;
+
+  .icon-container {
+    opacity: .3;
+    transition: opacity @transitionTime ease-out;
+  }
+
+  &:hover {
+    .icon-container {
+      opacity: .5;
+    }
+  }
+
+  &:active, &.active {
+    background-color: white;
+    .icon-container {
+      opacity: .7;
+    }
+  }
+}
+
+// Dark theme for header icons
+.dark-theme-icon-colors {
+  .dark & {
+    background-color: #2b2b2b;
+
+    &:hover .icon-container {
+      opacity: .5;
+    }
+
+    &:active, &.active {
+      background-color: #1b1b1b;
+
+      .icon-container {
+        opacity: .8;
+      }
+    }
+  }
+}
+
+// Undo button
 #editor-pane-nav-undo {
-  background-color: #2b2b2b;
-  border-radius: 25px;
+  .header-button;
+  .light-theme-icon-colors;
+  .dark-theme-icon-colors;
+
   height: 20px;
-  padding: 5px 8px 5px 7px;
+  width: auto;
+  padding: 5px 8px 5px 30px;
   position: relative;
 
-  .icon;
-
-  img {
-    opacity: 0.5;
-    filter: alpha(opacity=50);
-    height: 15px;
-    width: 15px;
-    position: relative;
+  .icon-container {
+    background-image: url("/img/icon/undo-black.svg");
+    background-size: 15px;
+    position: absolute;
     top: 0;
-    .transition;
+    left: 0;
+  }
+
+  .dark & .icon-container {
+    background-image: url("/img/icon/undo-white.svg");
   }
 
   span {
-    color: white;
     vertical-align: top;
     position: relative;
     top: -1px;
-    opacity: 0.5;
-    filter: alpha(opacity=50);
-    .transition;
-  }
-
-  &:hover {
-    img {
-      opacity: 0.7;
-      filter: alpha(opacity=70);
-    }
-
-    span {
-      opacity: 0.7;
-      filter: alpha(opacity=70);
-    }
-  }
-
-  &:active {
-    background-color: #1b1b1b;
-
-    img {
-      opacity: 0.8;
-    }
-
-    span {
-      opacity: 0.8;
-      filter: alpha(opacity=80);
-    }
-  }
-}
-
-#editor-pane-nav-redo {
-  background-color: #2b2b2b;
-  height: 20px;
-  width: 20px;
-  padding: 5px;
-  border-radius: 50%;
-  margin-left: 6px;
-  position: relative;
-  .icon;
-
-  img {
-    opacity: 0.5;
-    filter: alpha(opacity=50);
-    height: 15px;
-    width: 15px;
-    position: absolute;
-    top: 7px;
-    left: 8px;
-    .transition;
-  }
-
-  &:hover {
-    img {
-      opacity: 0.7;
-      filter: alpha(opacity=70);
-    }
-  }
-
-  &:active {
-    img {
-      opacity: 0.8;
-    }
-
-    background-color: #1b1b1b;
-  }
-}
-
-/* Snippets */
-#editor-pane-nav-snippets {
-  background-color: #f9f9f9;
-  height: 30px;
-  width: 30px;
-  text-align: center;
-  border-radius: 50%;
-  margin-left: 6px;
-  position: relative;
-  .icon;
-
-  .editor-icon {
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    background-image: url("/img/icon/snippets-light-theme.svg");
     opacity: .3;
+    color: black;
+    .transition;
   }
 
+  &:hover span {
+    opacity: .5;
+  }
 
-  &:hover .editor-icon {
+  &:active span {
     opacity: .7;
   }
 
   .dark & {
-    background-color: #2b2b2b;
+    span {
+      color: white;
+    }
 
-    .editor-icon {
-        background-image: url("/img/icon/snippets.svg");
-        opacity: .5;
-      }
+    &:hover span {
+      opacity: 0.5;
+    }
+
+    &:active span {
+      opacity: 0.8;
+    }
   }
 }
 
-/* ------ EDITOR SNIPPETS MENU - START ------ */
+// Redo button
+#editor-pane-nav-redo {
+  .header-button;
+  .light-theme-icon-colors;
+  .dark-theme-icon-colors;
+
+  .icon-container {
+    background-image: url("/img/icon/redo-black.svg");
+    background-size: 15px;
+  }
+
+  .dark & .icon-container {
+    background-image: url("/img/icon/redo-white.svg");
+  }
+}
+
+// Snippets button
+#editor-pane-nav-snippets {
+  .header-button;
+  .light-theme-icon-colors;
+  .dark-theme-icon-colors;
+
+  .icon-container {
+    background-image: url("/img/icon/snippets-black.svg");
+    background-size: 20px;
+  }
+  .dark & .icon-container {
+    background-image: url("/img/icon/snippets-white.svg");
+  }
+}
+
+// Snippets Menu
 .snippets-menu-container {
   position: absolute;
   z-index: 151;
@@ -482,8 +517,6 @@ body {
           &.selected {
             background-color: rgba(0, 0, 0, 0.1);
           }
-
-          .icon;
         }
 
         .top-border {
@@ -517,36 +550,51 @@ body {
   }
 }
 
-/* ------ EDITOR SNIPPETS MENU - END ------ */
-
-#editor-pane-nav-options.active,
-#editor-pane-nav-options:hover {
-  opacity: 0.7;
-  filter: alpha(opacity=70);
-}
-
+// Settings (gear) buttons
 #editor-pane-nav-options {
-  opacity: 0.5;
-  filter: alpha(opacity=50);
+  opacity: .3;
   padding: 4px;
-  .transition;
+  transition: opacity @transitionTime ease-out;
+  cursor: pointer;
+
+  &:hover {
+    opacity: .5;
+  }
+
+  &:active, &.active {
+    opacity: .7;
+  }
+
+  .icon-container {
+    display: block;
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 22px;
+    height: 22px;
+    background-image: url("/img/icon/gear-black.svg");
+  }
+
+  .dark & {
+    opacity: .5;
+
+    .icon-container {
+      background-image: url("/img/icon/gear-white.svg");
+    }
+
+    &:hover {
+      opacity: .7;
+    }
+
+    &:active, &.active {
+      opacity: .8;
+    }
+  }
 
   margin-left: 6px;
-
-  .icon;
-
-  img {
-    width: 22px;
-    display: block;
-  }
 }
 
-#editor-pane-nav-options:hover {
-  opacity: 0.7;
-  filter: alpha(opacity=70);
-}
-
-/* ------ EDITOR OPTIONS MENU ------ */
+// Settings (gear) menu
 #editor-pane-nav-options-menu {
   position: absolute;
   z-index: 151;
@@ -581,7 +629,7 @@ body {
   }
 }
 
-.arrow-tip {
+.bramble-toolbar .arrow-tip {
   position: absolute;
   border-style: solid;
   border-width: 0 15px 15px;
@@ -593,7 +641,7 @@ body {
   left: calc(~"50% - 11px");
 }
 
-// Line wrap toggle
+// Switch toggle for editor settings
 #editor-pane-nav-options-menu {
   .switch-toggle {
     position: absolute;
@@ -635,7 +683,7 @@ body {
       border-radius: 15px;
       top: 0;
       left: 0;
-      transition: left 0.1s ease-out;
+      transition: left  ease-out;
     }
 
     .toggle-backing {
@@ -662,7 +710,7 @@ body {
   }
 }
 
-/* Font increase/decrease */
+// Text Size UI
 .text-size-ui {
   position: absolute;
   right: 18px;
@@ -688,7 +736,6 @@ body {
     color: white;
     font-size: 1.2em;
     display: inline-block;
-    .icon;
     .transition;
 
     &:hover {
@@ -701,7 +748,7 @@ body {
   }
 }
 
-/* Theme toggle*/
+// Theme Toggle
 #editor-pane-nav-toggle-theme {
   margin-left: auto;
   background-color: #55986c;
@@ -756,7 +803,7 @@ body {
   }
 }
 
-/* ------ RIGHT PANE ------ */
+// Header above Preview pane
 .preview-tutorial-toggle {
   .preview-pane-nav-title {
     padding-bottom: 1px;
@@ -799,6 +846,7 @@ body {
     padding: 5px;
     border-radius: 50%;
     border: solid 2px #eaeaea;
+    cursor: pointer;
 
     &.spin img {
       animation: spin 0.25s ease-out;
@@ -814,7 +862,6 @@ body {
       left: -1px;
       .transition;
     }
-    .icon;
 
     &:hover {
       img {
@@ -909,7 +956,6 @@ body {
   position: absolute;
   height: @toolbarHeight;
   z-index: 2;
-  background-color: #eaeaea;
   float: right;
   overflow: hidden;
 
@@ -934,6 +980,7 @@ body {
   border-radius: 50%;
   position: relative;
   margin-left: 6px;
+  cursor: pointer;
 
   .icon-wrapper {
     position: absolute;
@@ -965,8 +1012,6 @@ body {
       opacity: 1;
     }
   }
-
-  .icon;
 }
 
 .preview-device-toggle {
@@ -974,6 +1019,7 @@ body {
   border-radius: 30px;
   height: 30px;
   margin-left: 6px;
+  cursor: pointer;
 
   img {
     width: 20px;
@@ -985,8 +1031,6 @@ body {
 }
 
 #preview-pane-nav-desktop {
-  .icon;
-
   margin-left: 13px;
 }
 
@@ -995,8 +1039,6 @@ body {
 }
 
 #preview-pane-nav-phone {
-  .icon;
-
   margin: 0 10px 0 4px;
 }
 
@@ -1055,13 +1097,6 @@ body {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   transition-timing-function: ease-out;
-}
-
-.icon {
-  cursor: pointer;
-  -webkit-user-select: none; /* Chrome/Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE10+ */
 }
 
 .flex-container {
@@ -1224,7 +1259,6 @@ body {
     width: 98px;
     height: 52px;
     padding: 4px;
-    background: rgba(0, 0, 0, 0.3);
     border-radius: 3px;
     box-sizing: border-box;
 
@@ -1276,7 +1310,7 @@ body {
 body.modal-open .dialog-overlay {
   display: block;
   z-index: 99;
-  animation: showModalBackdrop 0.1s ease-out;
+  animation: showModalBackdrop  ease-out;
 
   @keyframes showModalBackdrop {
     0% {
