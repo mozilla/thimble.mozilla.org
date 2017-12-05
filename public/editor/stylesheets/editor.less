@@ -85,13 +85,13 @@ body {
   }
 
   .filetree-pane-nav-title {
-    color: black;
+    color: #a9a9a9;
     font-weight: 600;
     font-size: 1em;
-    opacity: 0.45;
     .vertical-align;
 
     .dark & {
+      opacity: 0.45;
       color: white;
     }
   }
@@ -254,9 +254,8 @@ body {
 
   .editor-pane-nav-title {
     font-weight: bold;
-    opacity: 0.6;
     margin-right: 10px;
-    color: black;
+    color: #aeaeae;
     .vertical-align;
   }
 
@@ -273,6 +272,7 @@ body {
 
     .editor-pane-nav-title {
       color: white;
+      opacity: 0.6;
     }
 
     #editor-pane-nav-filename {
@@ -356,7 +356,8 @@ body {
 
   height: 20px;
   width: auto;
-  padding: 5px 8px 5px 30px;
+  padding: 5px 8px 5px 8px;
+  min-width: 14px;
   position: relative;
 
   .icon-container {
@@ -377,6 +378,7 @@ body {
     top: -1px;
     opacity: 0.3;
     color: black;
+    margin-left: 20px;
     .transition;
   }
 
