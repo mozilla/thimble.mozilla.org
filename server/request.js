@@ -7,6 +7,7 @@ let cookieParser = require("cookie-parser");
 let cookieSession = require("cookie-session");
 
 let version = require("../package").version;
+const commit = require("git-rev-sync").long();
 const Logger = require("./logger");
 
 const logFormats = {
@@ -103,7 +104,7 @@ Request.prototype = {
   },
   healthcheck() {
     this.server.get("/healthcheck", (req, res) => {
-      res.json({ http: "okay", version: version });
+      res.json({ http: "okay", version: version, commit: commit });
     });
 
     return this;
