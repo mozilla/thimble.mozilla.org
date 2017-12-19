@@ -272,7 +272,9 @@ function getRemixedProject(config, projectId, callback) {
     } catch (e) {
       callback(
         {
-          message: `Project data received by the publish server for ${publishURL} was in an invalid format. Failed to run \`JSON.parse\``,
+          message: `Project data received by the publish server for ${
+            publishURL
+          } was in an invalid format. Failed to run \`JSON.parse\``,
           context: e.message,
           stack: e.stack
         },
@@ -334,7 +336,9 @@ function getProjectFileMetadata(config, user, projectId, callback) {
       } catch (e) {
         callback(
           {
-            message: `Project data received by the publish server for ${url} was in an invalid format. Failed to run \`JSON.parse\``,
+            message: `Project data received by the publish server for ${
+              url
+            } was in an invalid format. Failed to run \`JSON.parse\``,
             context: e.message,
             stack: e.stack
           },
@@ -414,7 +418,9 @@ function getRemixedProjectFileMetadata(config, projectId, callback) {
     } catch (e) {
       callback(
         {
-          message: `Project data received by the publish server for ${publishURL} was in an invalid format. Failed to run \`JSON.parse\``,
+          message: `Project data received by the publish server for ${
+            publishURL
+          } was in an invalid format. Failed to run \`JSON.parse\``,
           context: e.message,
           stack: e.stack
         },

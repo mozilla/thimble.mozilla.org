@@ -78,7 +78,9 @@ module.exports = function(config, req, res, next) {
         next(
           HttpError.format(
             {
-              message: `Failed to initiate request to ${options.pathname} ${errorLogSuffix}`,
+              message: `Failed to initiate request to ${options.pathname} ${
+                errorLogSuffix
+              }`,
               context: err
             },
             req
@@ -93,7 +95,9 @@ module.exports = function(config, req, res, next) {
         next(
           HttpError.format(
             {
-              message: `Failed to send request to ${options.pathname} ${errorLogSuffix}`,
+              message: `Failed to send request to ${options.pathname} ${
+                errorLogSuffix
+              }`,
               context: err
             },
             req
@@ -114,7 +118,9 @@ module.exports = function(config, req, res, next) {
           next(
             HttpError.format(
               {
-                message: `Data sent by the publish server was in an invalid format. Failed to run \`JSON.parse\` ${errorLogSuffix}`,
+                message: `Data sent by the publish server was in an invalid format. Failed to run \`JSON.parse\` ${
+                  errorLogSuffix
+                }`,
                 context: e.message,
                 stack: e.stack
               },
@@ -130,7 +136,9 @@ module.exports = function(config, req, res, next) {
           next(
             HttpError.format(
               {
-                message: `Request to ${options.pathname} returned a status of ${response.statusCode} ${errorLogSuffix}`,
+                message: `Request to ${options.pathname} returned a status of ${
+                  response.statusCode
+                } ${errorLogSuffix}`,
                 context: body
               },
               req
@@ -163,7 +171,9 @@ module.exports = function(config, req, res, next) {
       next(
         HttpError.format(
           {
-            message: `File data could not be read from stream ${errorLogSuffix}`,
+            message: `File data could not be read from stream ${
+              errorLogSuffix
+            }`,
             context: err
           },
           req

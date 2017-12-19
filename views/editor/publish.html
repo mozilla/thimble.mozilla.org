@@ -1,4 +1,5 @@
 {% block publishdialog %}
+{% set learnMoreURL = "https://github.com/mozilla/thimble.mozilla.org/wiki/Using-Thimble-FAQ#why-do-i-need-an-indexhtml-file-when-publishing-my-project" %}
 <div id="publish-ssooverride" class="hide"
      data-loginUrl="{{ loginURL }}"
      data-oauth-username="{{ username }}"
@@ -35,10 +36,14 @@
   </div>
 
   <div id="publish-buttons">
-    {% set learnMoreURL = "https://github.com/mozilla/thimble.mozilla.org/wiki/Using-Thimble-FAQ#why-do-i-need-an-indexhtml-file-when-publishing-my-project" %}
-    <div id="no-index">{{ gettext("noIndexFound") | instantiate | safe }}</div>
+    <div id="no-index">{{ gettext("noIndexFound_2") | instantiate | safe }}</div>
     <div id="publish-button-cancel">{{ gettext("publishCancelBtn") }}</div>
     <div id="publish-button-publish">{{ gettext("publishBtn") }}</div>
   </div>
+
+  <div id="updateDialog" class="hide">
+    <div id="no-index-update" class="hide" >{{ gettext("noIndexFound_2") | instantiate | safe }}</div>
+  </div>
 </div>
+
 {% endblock %}

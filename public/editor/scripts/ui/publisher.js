@@ -14,6 +14,8 @@ var TEXT_UNPUBLISH = strings.get("publishDeleteBtn");
 var TEXT_UNPUBLISHING = strings.get("publishUnpublishingIndicator");
 var TEXT_UPDATE_PUBLISH = strings.get("publishChangesBtn");
 var TEXT_UNPUBLISH_WARNING = strings.get("publishDeleteWarning");
+var TEXT_PUBLISH_HEADER = strings.get("publishHeader");
+var TEXT_PUBLISH_HEADER_ONLINE = strings.get("publishHeaderOnline");
 
 function unpublishedChangesPrompt() {
   var dialog = this.dialog;
@@ -34,6 +36,7 @@ function Publisher() {
       indexMessage: $("#no-index")
     },
     description: $("#publish-details > textarea.publish-description"),
+    publishHeader: $(".content > h1"),
     published: {
       link: $("#publish-link > a"),
       changed: $("#publish-changes"),
@@ -145,6 +148,13 @@ Publisher.prototype.publish = function(bramble) {
       publisher.dialogEl.removeClass("cannot-publish");
       publisher.dialogEl.width(publisher.dialogEl.width());
     }
+    if ($("#publish-button-update").is(":visible")) {
+      $("#updateDialog").show();
+      $("#no-index-update")
+        .removeClass("hide")
+        .addClass("show");
+    }
+
     publisher.dialogEl.addClass("cannot-publish");
     return;
   }
@@ -224,6 +234,11 @@ Publisher.prototype.unpublish = function() {
   if (publisher.unpublishing) {
     return;
   }
+
+  $("#updateDialog").hide();
+  $("#no-index-update")
+    .removeClass("show")
+    .addClass("hide");
 
   var didConfirm = window.confirm(TEXT_UNPUBLISH_WARNING);
 
@@ -319,10 +334,12 @@ Publisher.prototype.updateDialog = function(publishUrl, allowUnpublish) {
   // "publish"/"cancel" buttons
   if (allowUnpublish) {
     this.dialog.buttons.parent.addClass("hide");
+    this.dialog.publishHeader.text(TEXT_PUBLISH_HEADER_ONLINE);
     unpublishBtn.off("click", unpublish).on("click", unpublish);
     published.container.removeClass("hide");
   } else {
     published.container.addClass("hide");
+    this.dialog.publishHeader.text(TEXT_PUBLISH_HEADER);
   }
 };
 

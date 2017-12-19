@@ -112,14 +112,15 @@
         </div>
         <div id="editor-pane-nav-options-menu" class="hide">
           <ul>
-            <li id="editor-option-textsize">
+            <li title="{{ gettext("navTextSizeTitle") }}" id="editor-option-textsize">
               <span>{{ gettext("navTextSize") }}</span>
+                &nbsp;(<span id="editor-pane-nav-font-size"></span>)
               <div class="text-size-ui">
                 <div title="{{ gettext("navDecreaseTextSizeIconTitle") }}" id="editor-pane-nav-decrease-font" class="font-size-button"></div>
                 <div title="{{ gettext("navIncreaseTextSizeIconTitle") }}" id="editor-pane-nav-increase-font" class="font-size-button"></div>
               </div>
             </li>
-            <li id="editor-option-colortheme">
+            <li title="{{ gettext("navColorThemeTitle") }}" id="editor-option-colortheme">
               <span>{{ gettext("navColorTheme") }}</span>
               <div id="editor-pane-nav-toggle-theme">
                 <div id="theme-active"></div>
@@ -133,44 +134,44 @@
                 </div>
               </div>
             </li>
-            <li id="editor-option-wraptext">
+            <li title="{{ gettext("navWrapTextTitle") }}" id="editor-option-wraptext">
               <span>{{ gettext("navWrapText") }}</span>
-              <div title="{{ gettext("navWrapTextTitle") }}" class="switch-toggle switch-enabled" id="line-wrap-toggle">
+              <div  class="switch-toggle switch-enabled" id="line-wrap-toggle">
                 <div class="toggle-backing"></div>
                 <div class="toggle-button"></div>
               </div>
             </li>
-            <li id="editor-option-allowjs">
+            <li title="{{ gettext("navAllowJSTitle") }}" id="editor-option-allowjs">
               <span>{{ gettext("navAllowJS") }}</span>
-              <div title="{{ gettext("navAllowJSTitle") }}" class="switch-toggle switch-enabled" id="allow-scripts-toggle">
+              <div  class="switch-toggle switch-enabled" id="allow-scripts-toggle">
                 <div class="toggle-backing"></div>
                 <div class="toggle-button"></div>
               </div>
             </li>
-            <li id="editor-option-allowws">
+            <li title="{{ gettext("navAllowWSTitle") }}" id="editor-option-allowws">
               <span>{{ gettext("navAllowWS") }}</span>
-              <div title="{{ gettext("navAllowWSTitle") }}" class="switch-toggle switch-enabled" id="allow-whitespace-toggle">
+              <div  class="switch-toggle switch-enabled" id="allow-whitespace-toggle">
                 <div class="toggle-backing"></div>
                 <div class="toggle-button"></div>
               </div>
             </li>
-            <li id="editor-option-autoenclosetags">
+            <li title="{{ gettext("navAutoEncloseTagsTitle") }}" id="editor-option-autoenclosetags">
               <span>{{ gettext("navAutoEncloseTags") }}</span>
-              <div title="{{ gettext("navAutoEncloseTagsTitle") }}" class="switch-toggle switch-enabled" id="auto-tags-toggle">
+              <div  class="switch-toggle switch-enabled" id="auto-tags-toggle">
                 <div class="toggle-backing"></div>
                 <div class="toggle-button"></div>
               </div>
             </li>
-            <li id="editor-option-autocomplete">
+            <li title="{{ gettext("navAutoCompleteTitle") }}" id="editor-option-autocomplete">
               <span>{{ gettext("navAutoComplete") }}</span>
-              <div title="{{ gettext("navAutoCompleteTitle") }}" class="switch-toggle switch-enabled" id="autocomplete-toggle">
+              <div  class="switch-toggle switch-enabled" id="autocomplete-toggle">
                 <div class="toggle-backing"></div>
                 <div class="toggle-button"></div>
               </div>
             </li>
-            <li id="editor-option-svgedit">
+            <li title="{{ gettext("navXMLSVGTitle") }}" id="editor-option-svgedit">
               <span>{{ gettext("navSVGedit") }}</span>
-              <div title="{{ gettext("navXMLSVGTitle") }}" class="switch-toggle switch-enabled" id="edit-SVG-toggle">
+              <div  class="switch-toggle switch-enabled" id="edit-SVG-toggle">
                 <div class="toggle-backing"></div>
                 <div class="toggle-button"></div>
               </div>

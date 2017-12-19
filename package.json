@@ -92,7 +92,8 @@
   "devDependencies": {
     "eslint": "^4.6.1",
     "eslint-plugin-prettier": "^2.2.0",
-    "prettier": "^1.6.1",
+    "is-reachable": "^2.3.3",
+    "prettier": "~1.8.2",
     "shx": "^0.2.2",
     "stylelint": "^8.1.1",
     "stylelint-config-standard": "^17.0.0"
@@ -105,6 +106,7 @@
     "invalidate": "node scripts/invalidate.js",
     "server": "node app.js",
     "services:logs": "vagrant ssh -- pm2 logs --format",
+    "prestart": "node scripts/verify-brackets",
     "start": "run-p build:* server",
     "test:eslint": "eslint .",
     "test:stylelint": "stylelint \"public/**/*.less\"",
