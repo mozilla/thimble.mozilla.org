@@ -36,7 +36,7 @@ function Publisher() {
       indexMessage: $("#no-index")
     },
     description: $("#publish-details > textarea.publish-description"),
-    embed: $("#link-publish-embed"),
+    publishHeader: $(".content > h1"),
     published: {
       link: $("#publish-link > a"),
       changed: $("#publish-changes"),
@@ -148,6 +148,13 @@ Publisher.prototype.publish = function(bramble) {
       publisher.dialogEl.removeClass("cannot-publish");
       publisher.dialogEl.width(publisher.dialogEl.width());
     }
+    if ($("#publish-button-update").is(":visible")) {
+      $("#updateDialog").show();
+      $("#no-index-update")
+        .removeClass("hide")
+        .addClass("show");
+    }
+
     publisher.dialogEl.addClass("cannot-publish");
     return;
   }
@@ -227,6 +234,11 @@ Publisher.prototype.unpublish = function() {
   if (publisher.unpublishing) {
     return;
   }
+
+  $("#updateDialog").hide();
+  $("#no-index-update")
+    .removeClass("show")
+    .addClass("hide");
 
   var didConfirm = window.confirm(TEXT_UNPUBLISH_WARNING);
 
@@ -313,7 +325,7 @@ Publisher.prototype.updateDialog = function(publishUrl, allowUnpublish) {
   var published = this.dialog.published;
   var unpublishBtn = this.dialog.buttons.unpublish;
   var unpublish = this.handlers.unpublish;
-  published.embed.text(`<iframe src=${publishUrl}></iframe>`);
+
   // Expose the published state with the updated link
   published.link.attr("href", publishUrl).text(publishUrl);
   published.changed.addClass("hide");
