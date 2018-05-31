@@ -5,6 +5,28 @@ Thimble
 [![Shipping fast with zenHub](https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)](https://zenhub.com)
 <a href="https://browserstack.com"><img src="https://assets.mofoprod.net/general/browserstack.svg" height="20rem"></a>
 
+Table of contents
+=================
+
+* [Setup Installation](#setup-installation)
+* [Automated Installation (Preferred Method)](#automated-installation-preferred-method)
+* [Prerequisites for Automated Installation](#prerequisites-for-automated-installation)
+* [Installing Brackets (Bramble)](#installing-brackets-bramble)
+* [Installing Thimble and Services with Vagrant](#installing-thimble-and-services-with-vagrant)
+* [Dealing with missing locale strings](#dealing-with-missing-locale-strings)
+* [Manual Installation](#manual-installation)
+* [Prerequisites for Manual Installation](#prerequisites-for-manual-installation)
+* [Manually Installing the Parts](#manually-installing-the-parts)
+* [Thimble](#thimble)
+* [id.webmaker.org](#id.webmaker.org)
+* [login.webmaker.org](#login.webmaker.org)
+* [PostgreSQL](#postgresql)
+* [publish.webmaker.org](#publish.webmaker.org)
+* [Getting Ready to Publish](#getting-ready-to-publish)
+* [Teach the ID server about the Publish server](#teach-the-id-server-about-the-publish-server)
+* [Sign In](#sign-in)
+* [Our Localization Community](#our-localization-community)
+
 Thimble is Mozilla's online code editor that makes it easy to create and publish
 your own web pages while learning HTML, CSS & JavaScript.  You can try it online
 by visiting https://thimble.mozilla.org (or https://bramble.mofostaging.net for our
@@ -20,7 +42,9 @@ how it works in [this blog post](http://blog.humphd.org/thimble-and-bramble/).
 
 Thimble requires a modern web browser, and we recommend using Mozilla Firefox or Google Chrome. We use [BrowserStack](https://browserstack.com) to test Thimble in modern browsers on different operating systems.
 
-# Setup/Installation
+---
+
+## Setup/Installation
 
 Thimble interacts with the Publish API (source managed in [publish.webmaker.org](https://github.com/mozilla/publish.webmaker.org)) to store users, projects, files and other content as well as publish user projects.
 
@@ -49,7 +73,7 @@ All three services are bundled together using Git subtrees to be run together us
   - Update your remote branch with this new change.
   - Open a pull request to have the subtree update reviewied and merged.
 
-## Automated Installation (Preferred Method)
+### Automated Installation (Preferred Method)
 **Note:** If you aren't able to properly run virtualization software on your machine (for e.g. some versions of Windows only allow one virtualization client to run at a time and if that isn't VirtualBox, you can't run the required VirtualBox as well. This is often a problem if you have docker installed on Windows) or are trying to host Thimble on your own, refer to the [Manual Installation](#manual-installation) instructions instead.
 
 ### Prerequisites for Automated Installation
@@ -194,6 +218,8 @@ Please refer to the [Wiki](https://github.com/mozilla/thimble.mozilla.org/wiki/L
 ##### Our Localization Community
 
 [Our localization community](https://pontoon.mozilla.org/projects/thimble/contributors) is awesome! They work very hard to translate Thimble so that we can expand our global reach and engage even more users in other languages. We can't thank them enough!
+
+---
 
 Invalidating CloudFront
 ----------------------
