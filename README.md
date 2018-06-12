@@ -47,10 +47,10 @@ All three services are bundled together using Git subtrees to be run together us
   Replace `<service's repository name>` and `<branch name>` with the same values you used in the previous command.<br>
   For e.g. `git subtree pull --prefix services/publish.webmaker.org https://github.com/mozilla/publish.webmaker.org master --squash`.
   - Update your remote branch with this new change.
-  - Open a pull request to have the subtree update reviewied and merged.
+  - Open a pull request to have the subtree update reviewed and merged.
 
 ## Automated Installation (Preferred Method)
-**Note:** If you aren't able to properly run virtualization software on your machine (for e.g. some versions of Windows only allow one virtualization client to run at a time and if that isn't VirtualBox, you can't run the required VirtualBox as well. This is often a problem if you have docker installed on Windows) or are trying to host Thimble on your own, refer to the [Manual Installation](#manual-installation) instructions instead.
+**Note:** If you aren't able to properly run virtualization software on your machine (for e.g. some versions of Windows only allow one virtualization client to run at a time and if that isn't VirtualBox, you can't run the required VirtualBox as well. This is often a problem if you have Docker installed on Windows) or are trying to host Thimble on your own, refer to the [Manual Installation](#manual-installation) instructions instead.
 
 ### Prerequisites for Automated Installation
 In order for Thimble to be installed correctly, the following dependencies need to be installed in order:
@@ -198,7 +198,7 @@ Please refer to the [Wiki](https://github.com/mozilla/thimble.mozilla.org/wiki/L
 Invalidating CloudFront
 ----------------------
 
-To invalidate the production CloudFront distribution, make sure you have correct credentials set up in your env file. Then run `node invalidate.js`. Alternatively, if you have access to the heroku deployments, run the invalidation as a one-off dyno with `heroku run npm run invalidate`
+To invalidate the production CloudFront distribution, make sure you have correct credentials set up in your env file. Then run `node invalidate.js`. Alternatively, if you have access to the Heroku deployments, run the invalidation as a one-off dyno with `heroku run npm run invalidate`
 
 Concurrency
 -----------
