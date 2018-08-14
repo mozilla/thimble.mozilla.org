@@ -116,7 +116,7 @@ In order for Thimble to be installed correctly, the following dependencies need 
 - g++ 4.8 or above (for the login.webmaker.org dependency)
 - [Webmaker Login Server](#loginwebmakerorg)
 
-The following is an abbreviated guide to getting it all set up. Please see each server's README for more details.
+The following is an abbreviated guide to getting it all setup. Please see each server's README for more details.
 
 ### Manually Installing the Parts
 Please note: On Windows, use ``copy`` instead of ``cp``
