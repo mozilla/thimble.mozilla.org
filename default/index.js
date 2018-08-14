@@ -57,107 +57,107 @@ var _defaultProjects = {};
 var _defaultProjectPaths = {};
 
 function doSyncOp(op) {
-  var ret;
+    var ret;
 
-  try {
-    ret = op();
-  } catch (e) {
-    console.error("Failed to cache default project files: ", e);
-  }
+    try {
+        ret = op();
+    } catch (e) {
+        console.error("Failed to cache default project files: ", e);
+    }
 
-  return ret;
+    return ret;
 }
 
 function getDefaultProject(title, dataType) {
-  var result = dataType === TAR_STREAM ? Tar.pack() : [];
+    var result = dataType === TAR_STREAM ? Tar.pack() : [];
 
-  _defaultProjects[title].forEach(function(file) {
-    switch(dataType) {
-    case TAR_STREAM:
-      result.entry({ name: file.path }, file.buffer);
-      break;
-    case FILE_STREAM:
-      result.push({
-        path: file.path,
-        stream: MemoryStream.createReadStream(file.buffer),
-        size: file.buffer.length
-      });
-      break;
-    case BUFFER:
-    default:
-      result.push(file);
-      break;
+    _defaultProjects[title].forEach(function (file) {
+        switch (dataType) {
+            case TAR_STREAM:
+                result.entry({ name: file.path }, file.buffer);
+                break;
+            case FILE_STREAM:
+                result.push({
+                    path: file.path,
+                    stream: MemoryStream.createReadStream(file.buffer),
+                    size: file.buffer.length
+                });
+                break;
+            case BUFFER:
+            default:
+                result.push(file);
+                break;
+        }
+    });
+
+    if (TAR_STREAM === dataType) {
+        result.finalize();
     }
-  });
 
-  if(TAR_STREAM === dataType) {
-    result.finalize();
-  }
-
-  return result;
+    return result;
 }
 
 function readDirectory(dirName) {
-  var contents = doSyncOp(fs.readdirSync.bind(fs, dirName));
-  var files = [];
-  var filePaths = [];
+    var contents = doSyncOp(fs.readdirSync.bind(fs, dirName));
+    var files = [];
+    var filePaths = [];
 
-  contents.forEach(function(nodeName) {
-    var nodePath = Path.join(dirName, nodeName);
-    var file = { path: Path.join("/", nodeName) };
-    var stats = doSyncOp(fs.statSync.bind(fs, nodePath));
+    contents.forEach(function (nodeName) {
+        var nodePath = Path.join(dirName, nodeName);
+        var file = { path: Path.join("/", nodeName) };
+        var stats = doSyncOp(fs.statSync.bind(fs, nodePath));
 
-    if(stats.isFile()) {
-      file.buffer = doSyncOp(fs.readFileSync.bind(fs, nodePath));
-      filePaths.push(file.path);
-      files.push(file);
-      return;
-    }
+        if (stats.isFile()) {
+            file.buffer = doSyncOp(fs.readFileSync.bind(fs, nodePath));
+            filePaths.push(file.path);
+            files.push(file);
+            return;
+        }
 
-    var nodeContents = readDirectory(nodePath);
-    nodeContents.forEach(function(file) {
-      file.path = Path.join("/", nodeName, file.path);
-      filePaths.push(file.path);
-      files.push(file);
+        var nodeContents = readDirectory(nodePath);
+        nodeContents.forEach(function (file) {
+            file.path = Path.join("/", nodeName, file.path);
+            filePaths.push(file.path);
+            files.push(file);
+        });
     });
-  });
 
-  return {
-    contents: files,
-    paths: filePaths
-  };
+    return {
+        contents: files,
+        paths: filePaths
+    };
 }
 
 function cacheProjectFiles() {
-  // The folder containing this index.js file also contains the default 
-  // content, each in its own folder.
-  var projects = doSyncOp(fs.readdirSync.bind(fs, __dirname));
+    // The folder containing this index.js file also contains the default 
+    // content, each in its own folder.
+    var projects = doSyncOp(fs.readdirSync.bind(fs, __dirname));
 
-  projects.forEach(function(projectName) {
-    var projectDir = Path.join(__dirname, projectName);
+    projects.forEach(function (projectName) {
+        var projectDir = Path.join(__dirname, projectName);
 
-    // Cache the folders, exluding this index.js and other miscellaneous files
-    if (fs.statSync(projectDir).isDirectory()) {
-      var project = readDirectory(projectDir);
-      _defaultProjectPaths[projectName] = project.paths;
-      _defaultProjects[projectName] = project.contents;
-    }
-  });
+        // Cache the folders, exluding this index.js and other miscellaneous files
+        if (fs.statSync(projectDir).isDirectory()) {
+            var project = readDirectory(projectDir);
+            _defaultProjectPaths[projectName] = project.paths;
+            _defaultProjects[projectName] = project.contents;
+        }
+    });
 }
 
 cacheProjectFiles();
 
 module.exports = {
-  getAsStreams: function getAsStreams(title) {
-    return getDefaultProject(title, FILE_STREAM);
-  },
-  getAsBuffers: function getAsBuffers(title) {
-    return getDefaultProject(title, BUFFER);
-  },
-  getAsTar: function getAsTar(title) {
-    return getDefaultProject(title, TAR_STREAM);
-  },
-  getPaths: function(title) {
-    return _defaultProjectPaths[title];
-  }
+    getAsStreams: function getAsStreams(title) {
+        return getDefaultProject(title, FILE_STREAM);
+    },
+    getAsBuffers: function getAsBuffers(title) {
+        return getDefaultProject(title, BUFFER);
+    },
+    getAsTar: function getAsTar(title) {
+        return getDefaultProject(title, TAR_STREAM);
+    },
+    getPaths: function (title) {
+        return _defaultProjectPaths[title];
+    }
 };
