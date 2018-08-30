@@ -49,7 +49,9 @@
 
   <body data-locale="{{ localeDir }}">
 
-    {% include './glitch-notice.html' %}
+    {% if glitchExportEnabled %}
+      {% include './glitch-notice.html' %}
+    {% endif %}
 
     <div class="feature-section">
       {% include './userbar.html' %}

@@ -18,6 +18,7 @@ module.exports = function(config, req, res) {
     loginURL: config.appURL + "/" + locale + "/login",
     editorHOST: config.editorHOST,
     editorURL: config.editorURL,
+    glitchExportEnabled: req.user && config.glitch.exportEnabled,
     migrationDate: migrationDate,
     moreInfoURL: config.glitch.moreInfoURL,
     URL_PATHNAME: "/" + qs,
