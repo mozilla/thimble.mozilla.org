@@ -22,6 +22,9 @@ editorHOST = `${editorDomain}${editorHOST.pathname}`.replace(/\/$/, "");
 
 const homepageVideoLink = "https://www.youtube.com/embed/JecFOjD9I3k";
 
+var glitchMigrationDate = env.get("GLITCH_MIGRATION_DATE");
+var glitchMoreInfoURL = env.get("GLITCH_HOMEPAGE_DIALOG_BLOG_POST");
+
 module.exports = {
   appURL: env.get("APP_HOSTNAME"),
   oauth: oauth,
@@ -29,6 +32,10 @@ module.exports = {
   logoutURL: logoutURL,
   publishURL: env.get("PUBLISH_HOSTNAME"),
   publishedProjectsHostname: env.get("PUBLISHED_PROJECTS_HOSTNAME"),
+  glitch: {
+    migrationDate: glitchMigrationDate,
+    moreInfoURL: glitchMoreInfoURL
+  },
   editorHOST: editorHOST,
   editorURL:
     env.get("NODE_ENV") === "development"

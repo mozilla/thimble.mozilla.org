@@ -73,6 +73,7 @@ const HOMEPAGE_CONFIG = {
     "homepage/scripts/main.js",
     "homepage/stylesheets/style.less",
     "homepage/stylesheets/get-involved.less",
+    "homepage/stylesheets/glitch-notice.less",
     "homepage/stylesheets/gallery.less",
     "homepage/stylesheets/features.less"
   ]
