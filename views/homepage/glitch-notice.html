@@ -1,0 +1,17 @@
+{% block glitchnotice %}
+  <link rel="stylesheet" href="/resources/stylesheets/glitch-notice.css">
+
+  <div class="glitch-banner container-flex">
+    <div  class="glitch-banner-content" class="container-flex">
+      <span class="notice">
+        <i class="glitch-logo"></i>{{ gettext("movingNotice") | instantiate | safe}}
+      </span>
+
+      <a class="more-info" href="{{ moreInfoURL }}" target="_blank">{{ gettext("readAboutMoving") }}</a>
+
+      <a class="export-button" href="/projects">
+        <i class="export-icon"></i><span class="label">{{ gettext("startExporting") }}</span>
+      </a>
+    </div>
+  </div>
+{% endblock %}

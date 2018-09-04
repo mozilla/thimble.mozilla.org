@@ -29,6 +29,11 @@ module.exports = {
   logoutURL: logoutURL,
   publishURL: env.get("PUBLISH_HOSTNAME"),
   publishedProjectsHostname: env.get("PUBLISHED_PROJECTS_HOSTNAME"),
+  glitch: {
+    exportEnabled: env.get("GLITCH_EXPORT_ENABLED"),
+    migrationDate: env.get("GLITCH_MIGRATION_DATE"),
+    moreInfoURL: env.get("GLITCH_HOMEPAGE_DIALOG_BLOG_POST")
+  },
   editorHOST: editorHOST,
   editorURL:
     env.get("NODE_ENV") === "development"
