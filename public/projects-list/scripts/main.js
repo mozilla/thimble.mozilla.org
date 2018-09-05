@@ -9,7 +9,7 @@ var Constants = require("../../shared/scripts/constants");
 var analytics = require("../../shared/scripts/analytics");
 var userbar = require("../../shared/scripts/userbar");
 
-var glitch = require('./glitch');
+var glitch = require("./glitch");
 
 var LOCALE = "en-US";
 var favorites;
