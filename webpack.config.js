@@ -73,7 +73,6 @@ const HOMEPAGE_CONFIG = {
     "homepage/scripts/main.js",
     "homepage/stylesheets/style.less",
     "homepage/stylesheets/get-involved.less",
-    "homepage/stylesheets/glitch-notice.less",
     "homepage/stylesheets/gallery.less",
     "homepage/stylesheets/features.less"
   ]
@@ -134,6 +133,7 @@ const RESOURCES_CSS_CONFIG = {
     "error": absolutePublicPath("resources/stylesheets/error.less"),
     "normalize": absolutePublicPath("resources/stylesheets/normalize.less"),
     "userbar": absolutePublicPath("resources/stylesheets/userbar.less"),
+    "glitch": absolutePublicPath("resources/stylesheets/glitch.less"),
     "remix": absolutePublicPath("resources/remix/style.less")
   },
 

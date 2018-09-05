@@ -1,5 +1,6 @@
 "use strict";
 
+var moment = require("moment");
 var request = require("request");
 var querystring = require("querystring");
 
@@ -93,6 +94,11 @@ module.exports = function(config, req, res, next) {
         );
       });
 
+      // make sure the glitch move date is localized:
+      moment.locale("en");
+      var migrationDate = moment(config.glitch.migrationDate);
+      migrationDate = migrationDate.locale(locale).format("LL");
+
       var options = {
         languages: req.app.locals.languages,
         URL_PATHNAME: "/projects" + qs,
@@ -100,6 +106,8 @@ module.exports = function(config, req, res, next) {
         username: user.username,
         avatar: user.avatar,
         projects: projects,
+        glitchExportEnabled: req.user && config.glitch.exportEnabled,
+        migrationDate: migrationDate,
         queryString: qs,
         logoutURL: config.logoutURL
       };

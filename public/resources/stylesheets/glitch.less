@@ -10,10 +10,41 @@
     border: 3px solid black;
     border-radius: 5px;
     box-shadow: 3px 3px 0 0 black;
+    cursor: pointer;
   }
 
   .btn:hover {
     background: #46ffb5;
+  }
+
+  .glitch-logo {
+    background-image: ~"url(/img/glitch.svg)";
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .export-button {
+    display: inline-block;
+    font-family: Helvetica;
+    font-weight: bold;
+    text-decoration: none;
+    margin-left: 14px;
+    font-size: 12px;
+    line-height: 14px;
+    padding: 11px 10px 9px;
+
+    .export-icon {
+      display: inline-block;
+      vertical-align: -3px;
+      width: 14px;
+      height: 14px;
+      margin-right: 8px;
+      background-image: ~"url(/img/export.svg)";
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
   }
 
   &.glitch-banner {
@@ -36,10 +67,6 @@
         vertical-align: -50%;
         width: 32px;
         height: 32px;
-        background-image: ~"url(/img/glitch.svg)";
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
         margin-right: 14px;
       }
 
@@ -49,29 +76,45 @@
         font-family: 'Open Sans';
         font-weight: normal;
       }
+    }
+  }
 
-      .export-button {
-        display: inline-block;
-        margin-left: 14px;
-        font-family: Helvetica;
-        font-size: 12px;
-        font-weight: bold;
-        line-height: 14px;
-        text-decoration: none;
-        padding: 11px 10px 9px;
+  /* rule overrides for the projects page */
+  &.project-list {
+    margin-bottom: 5px;
 
-        .export-icon {
-          display: inline-block;
-          vertical-align: -3px;
-          width: 14px;
-          height: 14px;
-          background-image: ~"url(/img/export.svg)";
-          background-size: contain;
-          background-repeat: no-repeat;
-          background-position: center;
-          margin-right: 8px;
-        }
+    .glitch-banner-content {
+      .glitch-logo {
+        width: 42px;
+        height: 42px;
+        vertical-align: -15px;
       }
+    }
+
+    .export-button {
+      font-family: 'Open Sans';
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.4;
+      box-shadow: none;
+      border: 2px solid black;
+      border-radius: 3px;
+      padding: 5px 18px;
+      margin-right: 5px;
+
+      .export-icon {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .hooray {
+      display: inline-block;
+      font-family: 'Open Sans';
+      font-weight: 700;
+      font-style: italic;
+      color: black;
+      opacity: 0.4;
     }
   }
 
@@ -110,10 +153,6 @@
         width: 70px;
         height: 54px;
         margin: 0 auto 15px;
-        background-image: ~"url(/img/glitch.svg)";
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
       }
 
       h1 {
@@ -141,21 +180,14 @@
 
       .export-button {
         display: inline-block;
-        font-family: Helvetica;
         font-size: 18px;
-        font-weight: bold;
         line-height: 1.2;
         padding: 15px 17px;
 
         .export-icon {
-          display: inline-block;
           vertical-align: -3px;
           width: 20px;
           height: 20px;
-          background-image: ~"url(/img/export.svg)";
-          background-size: contain;
-          background-repeat: no-repeat;
-          background-position: center;
           margin-right: 15px;
         }
       }
