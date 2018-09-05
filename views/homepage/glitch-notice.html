@@ -14,4 +14,19 @@
       </a>
     </div>
   </div>
+
+  <div class="glitch-cta underlay hidden">
+    <div class="glitch-cta content">
+      <img class="cta-close" src="/img/clear.svg" tabindex="0"></img>
+      <i class="glitch-logo"></i>
+      <h1>{{ gettext("weAreMoving") | safe }}</h1>
+      <p>{{ gettext("takeAction")  | safe }}</p>
+      <p>
+        <a class="export-button" href="/projects">
+          <i class="export-icon"></i><span class="label">{{ gettext("startExporting") }}</span>
+        </a>
+      </p>
+      <p class="notice">{{ gettext("learnMore") | instantiate | safe }}</p>
+    </div>
+  </div>
 {% endblock %}

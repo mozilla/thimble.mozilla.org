@@ -61,3 +61,98 @@
     }
   }
 }
+
+.glitch-cta.underlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 5;
+
+  &.hidden {
+    display: none;
+  }
+
+  .glitch-cta.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 80px;
+    text-align: center;
+    box-shadow: 10px 10px 0 0 #c1bfbf;
+
+    .cta-close {
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      width: 14px;
+      height: 14px;
+      border: none;
+      background: inherit;
+      cursor: pointer;
+    }
+
+    .glitch-logo {
+      display: block;
+      width: 70px;
+      height: 54px;
+      margin: 0 auto 15px;
+      background-image: ~"url(/img/glitch.svg)";
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    h1 {
+      font-family: Arvo;
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    p {
+      font-size: 14px;
+      font-family: 'Open Sans';
+      font-weight: 600;
+      line-height: 1.4;
+      margin: 30px auto;
+      padding: 0;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    .export-button {
+      display: inline-block;
+      font-family: Helvetica;
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 1.2;
+      text-decoration: none;
+      color: black !important;
+      background: #7effcc;
+      border: 3px solid black;
+      border-radius: 3px;
+      box-shadow: 3px 3px 0 0 black;
+      padding: 17px;
+
+      .export-icon {
+        display: inline-block;
+        vertical-align: -3px;
+        width: 20px;
+        height: 20px;
+        background-image: ~"url(/img/export.svg)";
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-right: 15px;
+      }
+    }
+  }
+}

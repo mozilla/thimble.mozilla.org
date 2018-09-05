@@ -8,6 +8,7 @@ var strings = require("strings");
 var features = require("./features");
 var gallery = require("./gallery");
 var getinvolved = require("./getinvolved");
+var glitch = require("./glitch");
 var analytics = require("../../shared/scripts/analytics");
 var userbar = require("../../shared/scripts/userbar");
 
@@ -104,4 +105,5 @@ $(function init() {
   gallery.init();
   features.init();
   getinvolved.init();
+  glitch.init();
 });
