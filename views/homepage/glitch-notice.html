@@ -1,7 +1,7 @@
 {% block glitchnotice %}
   <link rel="stylesheet" href="/resources/stylesheets/glitch-notice.css">
 
-  <div class="glitch-banner container-flex">
+  <div class="glitch glitch-banner hidden container-flex">
     <div  class="glitch-banner-content" class="container-flex">
       <span class="notice">
         <i class="glitch-logo"></i>{{ gettext("movingNotice") | instantiate | safe}}
@@ -9,20 +9,20 @@
 
       <a class="more-info" href="{{ moreInfoURL }}" target="_blank">{{ gettext("readAboutMoving") }}</a>
 
-      <a class="export-button" href="/projects">
+      <a class="btn export-button" href="/projects">
         <i class="export-icon"></i><span class="label">{{ gettext("startExporting") }}</span>
       </a>
     </div>
   </div>
 
-  <div class="glitch-cta underlay hidden">
+  <div class="glitch glitch-cta underlay">
     <div class="glitch-cta content">
       <img class="cta-close" src="/img/clear.svg" tabindex="0"></img>
       <i class="glitch-logo"></i>
       <h1>{{ gettext("weAreMoving") | safe }}</h1>
-      <p>{{ gettext("takeAction")  | safe }}</p>
+      <p>{{ gettext("takeAction") | instantiate | safe }}</p>
       <p>
-        <a class="export-button" href="/projects">
+        <a class="btn export-button" href="/projects">
           <i class="export-icon"></i><span class="label">{{ gettext("startExporting") }}</span>
         </a>
       </p>
