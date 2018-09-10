@@ -10,7 +10,7 @@
 
     <title>Mozilla Thimble</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
     <link rel="stylesheet" href="/resources/stylesheets/normalize.css">
     <link rel="stylesheet" href="/resources/stylesheets/userbar.css">
@@ -30,6 +30,10 @@
   <body>
     <script src="https://pontoon.mozilla.org/pontoon.js"></script>
 
+    {% if glitchExportEnabled %}
+      {% include './glitch-notice.html' %}
+    {% endif %}
+
     {% include '../homepage/userbar.html' %}
 
     <div class="project-list-wrapper">
@@ -45,7 +49,7 @@
 
       <h2>{{ gettext("yourProjectsLink") }}</h2>
 
-      <div id="project-list" data-username="{{ username }}">
+      <div id="project-list" class="glitch project-list" data-username="{{ username }}">
 
       {% for project in projects %}
         <div class="project bramble-user-project"
@@ -63,11 +67,25 @@
             <div class="project-description">{% if project.description %}{{ project.description | trim }}{% endif %}</div>
           </a>
 
-          <div class="project-ui">
-            {% if project.publish_url %}
-            <a class="published-link" target="_blank" href="{{ project.publish_url }}">{{ gettext("publishedLink") }}</a>
-            <a class="remix-link" href="/projects/{{ project.published_id }}/remix">{{ gettext("remix") }}</a>
+          <div class="project-ui glitch">
+            {% if glitchExportEnabled %}
+              {% if project.glitch_migrated %}
+                <div class="hooray">
+                  Hooray! Your project is now on Glitch
+                </div>
+              {% else %}
+                <div class="btn export-button" title="{{ gettext("prjListMigrateProjectBtnTitle") }}">
+                  <i class="export-icon"></i>
+                  {{ gettext("prjListMigrateProjectBtnTitle") }}
+                </div>
+              {% endif %}
+            {% else %}
+              {% if project.publish_url %}
+                <a class="published-link" target="_blank" href="{{ project.publish_url }}">{{ gettext("publishedLink") }}</a>
+                <a class="remix-link" href="/projects/{{ project.published_id }}/remix">{{ gettext("remix") }}</a>
+              {% endif %}
             {% endif %}
+
             <div class="project-delete" title="{{ gettext("prjListDeleteProjectBtnTitle") }}">
               <div class="icon-garbage-can"></div>
               {{ gettext("prjListDeleteProjectBtn") }}

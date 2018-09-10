@@ -7,12 +7,7 @@ module.exports = {
     let banner = $(".glitch-banner");
     let cta = $(".glitch-cta.underlay");
     if (banner && cta) {
-      var close = $(".glitch-cta .cta-close");
-      close.click(() => {
-        banner.removeClass("hidden");
-        cta.addClass("hidden");
-      });
-      cta.removeClass("hidden");
+      banner.removeClass("hidden");
     }
   }
 };
