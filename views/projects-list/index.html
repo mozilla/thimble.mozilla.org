@@ -7,9 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="csrf-token" content="{{csrf}}">
     <meta name="moment-lang" content="{{localeInfo.momentLang}}">
+    <meta name="glitch-url" content="{{GLITCH_IMPORT_PROJECT_APP_URL}}">
 
     <title>Mozilla Thimble</title>
 
+    <link href="https://fonts.googleapis.com/css?family=Arvo:400,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
     <link rel="stylesheet" href="/resources/stylesheets/normalize.css">
@@ -51,7 +53,7 @@
 
       <div id="project-list" class="glitch project-list" data-username="{{ username }}">
 
-      {% for project in projects %}
+        {% for project in projects %}
         <div class="project bramble-user-project"
             id="{{ [ 'project', project.id ] | join('-') }}"
         {% for key, value in project %}
@@ -74,10 +76,10 @@
                   Hooray! Your project is now on Glitch
                 </div>
               {% else %}
-                <div class="btn export-button" title="{{ gettext("prjListMigrateProjectBtnTitle") }}">
+                <button class="btn export-button" data-project-id="{{ project.id }}" title="{{ gettext("prjListMigrateProjectBtnTitle") }}">
                   <i class="export-icon"></i>
                   {{ gettext("prjListMigrateProjectBtnTitle") }}
-                </div>
+                </button>
               {% endif %}
             {% else %}
               {% if project.publish_url %}
@@ -94,9 +96,42 @@
           </div>
 
         </div>
-      {% endfor %}
+        {% endfor %}
 
+        <div class="glitch glitch-cta underlay hidden">
+          <div class="glitch-cta content">
+            <div class="project-import-url">{{ GLITCH_IMPORT_PROJECT_APP_URL }}<div>
+            <img class="cta-close" src="/img/clear.svg" tabindex="0">
+            <i class="glitch-logo"></i>
+            <h1>Before you continue, we would like you to know&hellip;</h1>
+            <p>
+              <ul>
+                <li>Projects on Glitch are published automatically, which means your exported project will be public (to view only, not edit)</li>
+                <li>Remember to create an account on Glitch after the export if you are not logged in already</li>
+                <li>Don't forget to update any links to your published Thimble project to now link to your Glitch project</li>
+                <li>Currently Glitch is translated in English only</li>
+              </ul>
+            </p>
+            <p>
+              <!-- initial view: one button -->
+              <button class="btn export-button start">
+                <i class="export-icon"></i><span class="label">Start exporting your project</span>
+              </button>
+
+              <!-- click-through view: two buttons for 'last publish'  and 'current project' -->
+              <button class="btn export-button published hidden">
+                <i class="export-icon"></i><span class="label">Export published project</span>
+              </button>
+
+              <button class="btn export-button unpublished hidden">
+                <i class="export-icon"></i><span class="label">Export unpublished project</span>
+              </button>
+            </p>
+            <p><a class="" href="">Read Glitch's privacy policy</a></p>
+          </div>
+        </div>
       </div>
+
 
       <script src="/projects-list/scripts/main.js"></script>
       <div class="project-list-scroll"></div>

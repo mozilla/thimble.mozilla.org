@@ -120,6 +120,7 @@ module.exports = function(config, req, res, next) {
         projects: projects,
         glitchExportEnabled: req.user && config.glitch.exportEnabled,
         migrationDate: migrationDate,
+        GLITCH_IMPORT_PROJECT_APP_URL: config.glitch.importURL,
         queryString: qs,
         logoutURL: config.logoutURL
       };
