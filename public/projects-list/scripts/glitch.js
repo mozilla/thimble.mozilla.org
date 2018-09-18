@@ -4,7 +4,8 @@ var $ = require("jquery");
 
 module.exports = {
   init: function() {
-    let cta = $(".glitch-cta.underlay"),
+    let banner = $(".glitch-banner"),
+      cta = $(".glitch-cta.underlay"),
       content = $(".content", cta),
       close = $(".cta-close", content),
       start = $("button.export-button.start", content),
@@ -12,6 +13,10 @@ module.exports = {
       exportUnpublished = $("button.export-button.unpublished", content),
       csrfToken = $("meta[name='csrf-token']").attr("content"),
       importURL = $("meta[name='glitch-url']").attr("content");
+
+    if (banner && cta) {
+      banner.removeClass("hidden");
+    }
 
     function getToken(url, onSuccess, onError) {
       try {
