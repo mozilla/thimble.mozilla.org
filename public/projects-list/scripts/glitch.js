@@ -14,7 +14,7 @@ module.exports = {
       csrfToken = $("meta[name='csrf-token']").attr("content"),
       importURL = $("meta[name='glitch-url']").attr("content");
 
-    if (banner && cta) {
+    if (banner.length && cta.length) {
       banner.removeClass("hidden");
     }
 
