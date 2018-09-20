@@ -50,11 +50,12 @@ module.exports = {
     // one specific project to be exported.
 
     let runOperation = (evt, button, published) => {
-      let url = `/${published ? `publishedprojects` : `projects`}/${projectId}/export/start`;
+      let root = published ? `publishedprojects` : `projects`;
+      let url = `/${root}/${projectId}/export/start`;
 
-      $("button.export-button", cta).each((i,e) => e.classList.add("busy"));
+      $("button.export-button", cta).each((i, e) => e.classList.add("busy"));
 
-      let label = $("span.label",button);
+      let label = $("span.label", button);
       let labelText = label.text();
       restoreButtonText = () => label.text(labelText);
       label.text(exportLabel);
@@ -76,7 +77,7 @@ module.exports = {
     close.click(() => {
       cta.addClass("hidden");
       restoreButtonText();
-      [exportPublished,exportUnpublished,start].forEach(e => {
+      [exportPublished, exportUnpublished, start].forEach(e => {
         e.removeClass("busy");
         e.addClass("hidden");
       });
