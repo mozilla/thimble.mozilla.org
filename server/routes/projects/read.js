@@ -106,6 +106,8 @@ module.exports = function(config, req, res, next) {
         return t1 - t2;
       });
 
+      projects.forEach(p => p.string = JSON.stringify(p,false,2));
+
       // make sure the glitch move date is localized:
       moment.locale("en");
       var migrationDate = moment(config.glitch.migrationDate);

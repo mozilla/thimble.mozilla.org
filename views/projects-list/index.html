@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{csrf}}">
     <meta name="moment-lang" content="{{localeInfo.momentLang}}">
     <meta name="glitch-url" content="{{GLITCH_IMPORT_PROJECT_APP_URL}}">
+    <meta name="export-label" content="{{ gettext("exportLabel") }}">
 
     <title>Mozilla Thimble</title>
 
@@ -52,7 +53,6 @@
       <h2>{{ gettext("yourProjectsLink") }}</h2>
 
       <div id="project-list" class="glitch project-list" data-username="{{ username }}">
-
         {% for project in projects %}
         <div class="project bramble-user-project"
             id="{{ [ 'project', project.id ] | join('-') }}"
@@ -76,13 +76,13 @@
                   Hooray! Your project is now on Glitch
                 </div>
               {% else %}
-                <button class="btn export-button" data-project-id="{{ project.id }}" title="{{ gettext("prjListMigrateProjectBtnTitle") }}">
+                <button class="btn export-button" data-project-id="{{ project.id }}" data-project-url="{{ project.publish_url }}" title="{{ gettext("prjListMigrateProjectBtnTitle") }}">
                   <i class="export-icon"></i>
                   {{ gettext("prjListMigrateProjectBtnTitle") }}
                 </button>
               {% endif %}
             {% else %}
-              {% if project.publish_url %}
+              {% if project.publish_url != None %}
                 <a class="published-link" target="_blank" href="{{ project.publish_url }}">{{ gettext("publishedLink") }}</a>
                 <a class="remix-link" href="/projects/{{ project.published_id }}/remix">{{ gettext("remix") }}</a>
               {% endif %}
@@ -94,44 +94,46 @@
             </div>
             <div class="project-delete-cancel hide" title="{{ gettext("prjListCancelDeleteProjectBtnTitle") }}">{{ gettext("prjListCancelDeleteProjectBtn") }}</div>
           </div>
-
         </div>
         {% endfor %}
 
         <div class="glitch glitch-cta underlay hidden">
           <div class="glitch-cta content">
-            <div class="project-import-url">{{ GLITCH_IMPORT_PROJECT_APP_URL }}<div>
+            <div class="project-import-url">{{ GLITCH_IMPORT_PROJECT_APP_URL }}</div>
             <img class="cta-close" src="/img/clear.svg" tabindex="0">
             <i class="glitch-logo"></i>
-            <h1>Before you continue, we would like you to know&hellip;</h1>
-            <p>
-              <ul>
-                <li>Projects on Glitch are published automatically, which means your exported project will be public (to view only, not edit)</li>
-                <li>Remember to create an account on Glitch after the export if you are not logged in already</li>
-                <li>Don't forget to update any links to your published Thimble project to now link to your Glitch project</li>
-                <li>Currently Glitch is translated in English only</li>
-              </ul>
-            </p>
-            <p>
-              <!-- initial view: one button -->
-              <button class="btn export-button start">
-                <i class="export-icon"></i><span class="label">Start exporting your project</span>
-              </button>
+            <div class="normal">
+              <h1>{{ gettext("beforeYouStart") | safe }}</h1>
+              <p>
+                <ul>
+                  <li>{{ gettext("glitchPoint1") }}</li>
+                  <li>{{ gettext("glitchPoint2") }}</li>
+                  <li>{{ gettext("glitchPoint3") }}</li>
+                  <li>{{ gettext("glitchPoint4") }}</li>
+                </ul>
+              </p>
+            </div>
 
-              <!-- click-through view: two buttons for 'last publish'  and 'current project' -->
+            <div class="error hidden">
+              <h1>{{ gettext("exportOops") }}</h1>
+              <p>{{ gettext("retryOrMail") | safe }}</p>
+            </div>
+
+            <p>
+              <button class="btn export-button start hidden">
+                <i class="export-icon"></i><span class="label">{{ gettext("startExportingProject") }}</span>
+              </button>
               <button class="btn export-button published hidden">
-                <i class="export-icon"></i><span class="label">Export published project</span>
+                <i class="export-icon"></i><span class="label">{{ gettext("exportPublished") }}</span>
               </button>
-
               <button class="btn export-button unpublished hidden">
-                <i class="export-icon"></i><span class="label">Export unpublished project</span>
+                <i class="export-icon"></i><span class="label">{{ gettext("exportUnpublished") }}</span>
               </button>
             </p>
-            <p><a class="" href="">Read Glitch's privacy policy</a></p>
+            <p><a class="privacy-policy" href="https://glitch.com/legal">{{ gettext("readPP") }}</a></p>
           </div>
         </div>
       </div>
-
 
       <script src="/projects-list/scripts/main.js"></script>
       <div class="project-list-scroll"></div>
