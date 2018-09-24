@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="csrf-token" content="{{csrf}}">
     <meta name="moment-lang" content="{{localeInfo.momentLang}}">
-    <meta name="glitch-url" content="{{GLITCH_IMPORT_PROJECT_APP_URL}}">
+    <meta name="glitch-url" content="{{glitch.importURL}}">
     <meta name="export-label" content="{{ gettext("exportLabel") }}">
 
     <title>Mozilla Thimble</title>
@@ -82,7 +82,7 @@
                 </button>
               {% endif %}
             {% else %}
-              {% if project.publish_url != None %}
+              {% if not project.publish_url %}
                 <a class="published-link" target="_blank" href="{{ project.publish_url }}">{{ gettext("publishedLink") }}</a>
                 <a class="remix-link" href="/projects/{{ project.published_id }}/remix">{{ gettext("remix") }}</a>
               {% endif %}
@@ -99,7 +99,6 @@
 
         <div class="glitch glitch-cta underlay hidden">
           <div class="glitch-cta content">
-            <div class="project-import-url">{{ GLITCH_IMPORT_PROJECT_APP_URL }}</div>
             <img class="cta-close" src="/img/clear.svg" tabindex="0">
             <i class="glitch-logo"></i>
             <div class="normal">
@@ -116,7 +115,7 @@
 
             <div class="error hidden">
               <h1>{{ gettext("exportOops") }}</h1>
-              <p>{{ gettext("retryOrMail") | safe }}</p>
+              <p>{{ gettext("retryOrMail") | instantiate | safe }}</p>
             </div>
 
             <p>

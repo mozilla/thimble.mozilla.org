@@ -39,6 +39,7 @@ module.exports = {
     function notifyError(error) {
       $(".normal", cta).addClass("hidden");
       $(".error", cta).removeClass("hidden");
+      restoreButtonText();
     }
 
     if (banner.length && cta.length) {
