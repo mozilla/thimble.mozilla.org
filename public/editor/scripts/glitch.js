@@ -8,9 +8,9 @@ module.exports = {
     let cta = $(".glitch-cta.underlay");
 
     if (banner.length && cta.length) {
-        let btn = $(".export-button", banner);
-        btn.click(() => cta.removeClass("hidden"));
-        banner.removeClass("hidden");
+      let btn = $(".export-button", banner);
+      btn.click(() => cta.removeClass("hidden"));
+      banner.removeClass("hidden");
     }
 
     let content = $(".content", cta),
@@ -71,7 +71,7 @@ module.exports = {
       let label = $("span.label", button);
       let labelText = label.text();
       restoreButtonText = () => label.text(labelText);
-      label.text(exportLabel)
+      label.text(exportLabel);
 
       getToken(
         url,
@@ -88,4 +88,3 @@ module.exports = {
     exportPublished.click(evt => runOperation(evt, exportPublished, true));
   }
 };
-
