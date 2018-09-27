@@ -72,7 +72,8 @@ module.exports = function(config, req, res, next) {
     editorHOST: config.editorHOST,
     loginURL: config.appURL + "/" + locale + "/login",
     logoutURL: config.logoutURL,
-    queryString: qs
+    queryString: qs,
+    glitchExportEnabled: req.user && config.glitch.exportEnabled
   };
 
   // We add the localization code to the query params through a URL object
@@ -108,6 +109,7 @@ module.exports = function(config, req, res, next) {
     );
 
     options.snippets = snippets;
+    options.project = projectMetadata;
 
     res.render("editor/index.html", options);
   });

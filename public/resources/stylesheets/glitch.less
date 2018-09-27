@@ -167,58 +167,64 @@
     }
   }
 
-  /* rule overrides for the projects page */
-  &.project-list {
-    margin-bottom: 5px;
+  .export-related-cta {
+    .glitch-cta.content {
+      width: 480px;
+      padding: 55px 80px;
 
-    .glitch-cta.underlay {
-      .glitch-cta.content {
-        width: 480px;
-        padding: 55px 80px;
+      h1 {
+        font-size: 24px;
+        font-weight: 900;
+        line-height: 30px;
+        margin: 0;
+        text-align: left;
+      }
 
-        h1 {
-          font-size: 24px;
-          font-weight: 900;
-          line-height: 30px;
-          margin: 0;
-          text-align: left;
+      ul {
+        text-align: left;
+        font-size: 14px;
+        line-height: 20px;
+        padding-left: 17px;
+
+        li {
+          margin-bottom: 1em;
+        }
+      }
+
+      .export-button {
+        user-select: none;
+        width: 100%;
+        margin-left: 0;
+        text-align: left;
+        padding-left: 21px;
+
+        & + .export-button {
+          margin-top: 1em;
         }
 
-        ul {
-          text-align: left;
-          font-size: 14px;
-          line-height: 20px;
-          padding-left: 17px;
+        &.busy {
+          background: white;
+          color: #999 !important;
+          border-color: #999;
+          box-shadow: 3px 3px 0 0 #999;
 
-          li {
-            margin-bottom: 1em;
-          }
-        }
-
-        .export-button {
-          user-select: none;
-          width: 100%;
-          margin-left: 0;
-          text-align: left;
-          padding-left: 21px;
-
-          & + .export-button {
-            margin-top: 1em;
-          }
-
-          &.busy {
-            background: white;
-            color: #999 !important;
-            border-color: #999;
-            box-shadow: 3px 3px 0 0 #999;
-
-            .export-icon {
-              opacity: 0.5;
-            }
+          .export-icon {
+            opacity: 0.5;
           }
         }
       }
     }
+  }
+
+  &.editor {
+    .export-related-cta;
+  }
+
+  /* rule overrides for the projects page */
+  &.project-list {
+    margin-bottom: 5px;
+
+    .export-related-cta;
 
     .glitch-banner-content {
       .glitch-logo {
