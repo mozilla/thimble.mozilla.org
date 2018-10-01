@@ -15,6 +15,7 @@ module.exports = {
       importURL = $("meta[name='glitch-url']").attr("content"),
       exportLabel = $("meta[name='export-label']").attr("content"),
       projectId = undefined,
+      projectPubId = undefined,
       projectUrl = undefined,
       restoreButtonText = () => {};
 
@@ -52,7 +53,8 @@ module.exports = {
 
     let runOperation = (evt, button, published) => {
       let root = published ? `publishedprojects` : `projects`;
-      let url = `/${root}/${projectId}/export/start`;
+      let id = published ? projectPubId : projectId;
+      let url = `/${root}/${id}/export/start`;
 
       $("button.export-button", cta).each((i, e) => e.classList.add("busy"));
 
@@ -90,6 +92,7 @@ module.exports = {
       $(e).click(evt => {
         let data = e.dataset;
         projectId = parseInt(data.projectId, 10);
+        projectPubId = parseInt(data.publishedId, 10);
 
         if (data.projectUrl) {
           exportPublished.removeClass("hidden");

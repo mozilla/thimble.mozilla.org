@@ -76,7 +76,13 @@
                   Hooray! Your project is now on Glitch
                 </div>
               {% else %}
-                <button class="btn export-button" data-project-id="{{ project.id }}" data-project-url="{{ project.publish_url }}" title="{{ gettext("prjListMigrateProjectBtnTitle") }}">
+                <button
+                  class="btn export-button"
+                  data-project-id="{{ project.id }}"
+                  data-published-id="{{ project.published_id }}"
+                  data-project-url="{{ project.publish_url }}"
+                  title="{{ gettext("prjListMigrateProjectBtnTitle") }}"
+                >
                   <i class="export-icon"></i>
                   {{ gettext("prjListMigrateProjectBtnTitle") }}
                 </button>
