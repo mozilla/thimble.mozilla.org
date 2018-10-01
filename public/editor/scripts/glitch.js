@@ -33,7 +33,8 @@ module.exports = {
     let csrfToken = $("meta[name='csrf-token']").attr("content"),
       importURL = $("meta[name='glitch-url']").attr("content"),
       exportLabel = $("meta[name='export-label']").attr("content"),
-      projectId = $("meta[name='project-id']").attr("content");
+      projectId = $("meta[name='project-id']").attr("content"),
+      publishId = $("meta[name='publish-id']").attr("content");
 
     function getToken(url, onSuccess, onError) {
       fetch(url, {
@@ -64,7 +65,8 @@ module.exports = {
 
     let runOperation = (evt, button, published) => {
       let root = published ? `publishedprojects` : `projects`;
-      let url = `/${root}/${projectId}/export/start`;
+      let id = published ? publishId : projectId;
+      let url = `/${root}/${id}/export/start`;
 
       $("button.export-button", cta).each((i, e) => e.classList.add("busy"));
 
