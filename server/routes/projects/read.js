@@ -119,7 +119,7 @@ module.exports = function(config, req, res, next) {
         avatar: user.avatar,
         projects: projects,
         glitchExportEnabled: req.user && config.glitch.exportEnabled,
-        migrationDate: migrationDate,
+        glitch: req.user && config.glitch,
         queryString: qs,
         logoutURL: config.logoutURL
       };

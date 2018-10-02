@@ -32,7 +32,9 @@ module.exports = {
   glitch: {
     exportEnabled: env.get("GLITCH_EXPORT_ENABLED"),
     migrationDate: env.get("GLITCH_MIGRATION_DATE"),
-    moreInfoURL: env.get("GLITCH_HOMEPAGE_DIALOG_BLOG_POST")
+    moreInfoURL: env.get("GLITCH_HOMEPAGE_DIALOG_BLOG_POST"),
+    supportEmail: env.get("GLITCH_SUPPORT_EMAIL"),
+    importURL: env.get("GLITCH_IMPORT_PROJECT_APP_URL")
   },
   editorHOST: editorHOST,
   editorURL:

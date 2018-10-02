@@ -1,6 +1,10 @@
 .glitch {
   &.hidden {
-    display: none;
+    display: none !important;
+  }
+
+  .hidden {
+    display: none !important;
   }
 
   .btn {
@@ -79,45 +83,6 @@
     }
   }
 
-  /* rule overrides for the projects page */
-  &.project-list {
-    margin-bottom: 5px;
-
-    .glitch-banner-content {
-      .glitch-logo {
-        width: 42px;
-        height: 42px;
-        vertical-align: -15px;
-      }
-    }
-
-    .export-button {
-      font-family: 'Open Sans';
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 1.4;
-      box-shadow: none;
-      border: 2px solid black;
-      border-radius: 3px;
-      padding: 5px 18px;
-      margin-right: 5px;
-
-      .export-icon {
-        width: 18px;
-        height: 18px;
-      }
-    }
-
-    .hooray {
-      display: inline-block;
-      font-family: 'Open Sans';
-      font-weight: 700;
-      font-style: italic;
-      color: black;
-      opacity: 0.4;
-    }
-  }
-
   &.glitch-cta.underlay {
     position: fixed;
     top: 0;
@@ -136,6 +101,8 @@
       padding: 80px;
       text-align: center;
       box-shadow: 10px 10px 0 0 #c1bfbf;
+      width: 500px;
+      box-sizing: border-box;
 
       .cta-close {
         position: absolute;
@@ -172,7 +139,13 @@
         padding: 0;
       }
 
-      p:last-child {
+      .error p {
+        font-size: 18px;
+        line-height: 24px;
+        font-weight: 400;
+      }
+
+      & > p:last-child { /* read more link */
         margin-bottom: 0;
         font-size: 12px;
         font-weight: 400;
@@ -191,6 +164,94 @@
           margin-right: 15px;
         }
       }
+    }
+  }
+
+  /* rule overrides for the projects page */
+  &.project-list {
+    margin-bottom: 5px;
+
+    .glitch-cta.underlay {
+      .glitch-cta.content {
+        width: 480px;
+        padding: 55px 80px;
+
+        h1 {
+          font-size: 24px;
+          font-weight: 900;
+          line-height: 30px;
+          margin: 0;
+          text-align: left;
+        }
+
+        ul {
+          text-align: left;
+          font-size: 14px;
+          line-height: 20px;
+          padding-left: 17px;
+
+          li {
+            margin-bottom: 1em;
+          }
+        }
+
+        .export-button {
+          user-select: none;
+          width: 100%;
+          margin-left: 0;
+          text-align: left;
+          padding-left: 21px;
+
+          & + .export-button {
+            margin-top: 1em;
+          }
+
+          &.busy {
+            background: white;
+            color: #999 !important;
+            border-color: #999;
+            box-shadow: 3px 3px 0 0 #999;
+
+            .export-icon {
+              opacity: 0.5;
+            }
+          }
+        }
+      }
+    }
+
+    .glitch-banner-content {
+      .glitch-logo {
+        width: 42px;
+        height: 42px;
+        vertical-align: -15px;
+      }
+    }
+
+    .project-ui .export-button {
+      font-family: 'Open Sans';
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.4;
+      box-shadow: none;
+      border: 2px solid black;
+      border-radius: 3px;
+      padding: 5px 18px;
+      margin-right: 5px;
+
+      .export-icon {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .hooray {
+      display: inline-block;
+      font-family: 'Open Sans';
+      font-weight: 700;
+      font-style: italic;
+      color: black;
+      opacity: 0.4;
     }
   }
 }
