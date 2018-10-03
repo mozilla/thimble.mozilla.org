@@ -258,3 +258,36 @@
     }
   }
 }
+
+.glitch + .feature-section + .page-content {
+  background: #eee;
+  margin: -50px 0;
+  padding: 50px 0 80px;
+
+  .two-col {
+    img {
+      width: ~"calc(100% - 6px)";
+      box-sizing: border-box;
+      box-shadow: 6px 6px 0 0 #CCC;
+      margin-bottom: 6px;
+    }
+  }
+
+  a.faq-link {
+    text-decoration: none;
+    color: inherit;
+
+    &:hover, &:focus, &:active, &:visited {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    &:hover:before {
+      content: '#';
+      width: 0;
+      display: inline-block;
+      position: relative;
+      left: -1em;
+    }
+  }
+}

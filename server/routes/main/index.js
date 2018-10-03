@@ -27,6 +27,14 @@ module.exports = {
       require("./get-involved").bind(app, config)
     );
 
+    // Moving to Glitch page
+    app.get(
+      "/moving-to-glitch",
+      middleware.clearRedirects,
+      middleware.setUserIfTokenExists,
+      require("./moving-to-glitch").bind(app, config)
+    );
+
     // Refresh Editor Page
     app.get(
       "/refresh",
