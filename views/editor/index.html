@@ -2,6 +2,9 @@
 
 {% block body %}
     {% include './warnings.html' %}
+    {% if glitchExportEnabled %}
+      {% include './glitch-notice.html' %}
+    {% endif %}
     {% include './userbar.html' %}
     {% include './bramble.html' %}
     {% include './publish.html' %}

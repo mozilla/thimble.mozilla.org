@@ -8,6 +8,8 @@ var Editor = require("./editor");
 var Login = require("./ui/login");
 var ProjectRenameUtility = require("./ui/project-rename");
 
+var glitch = require("./glitch.js");
+
 function load() {
   var thimbleScript = $("#thimble-script");
   var appUrl = thimbleScript.data("app-url");
@@ -35,6 +37,9 @@ function load() {
       editorUrl: editorUrl,
       appUrl: appUrl
     });
+
+    // initialize the Glitch banner, if there is one
+    glitch.init();
   });
 }
 

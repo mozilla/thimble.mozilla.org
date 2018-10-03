@@ -19,6 +19,7 @@ function getProjectMetadata(config, req, callback) {
   if (project) {
     callback(null, 200, {
       id: project.id,
+      published_id: project.published_id,
       userID: req.user.publishId,
       anonymousId: project.anonymousId,
       remixId: project.remixId,
@@ -72,7 +73,9 @@ module.exports = function(config, req, res, next) {
     editorHOST: config.editorHOST,
     loginURL: config.appURL + "/" + locale + "/login",
     logoutURL: config.logoutURL,
-    queryString: qs
+    queryString: qs,
+    glitchExportEnabled: req.user && config.glitch.exportEnabled,
+    glitch: req.user && config.glitch
   };
 
   // We add the localization code to the query params through a URL object
@@ -103,11 +106,12 @@ module.exports = function(config, req, res, next) {
       return;
     }
 
+    options.snippets = snippets;
+    options.project = projectMetadata;
+
     options.projectMetadata = encodeURIComponent(
       JSON.stringify(projectMetadata)
     );
-
-    options.snippets = snippets;
 
     res.render("editor/index.html", options);
   });

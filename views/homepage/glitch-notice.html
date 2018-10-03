@@ -2,7 +2,7 @@
   <link rel="stylesheet" href="/resources/stylesheets/glitch.css">
 
   <div class="glitch glitch-banner container-flex hidden">
-    <div  class="glitch-banner-content" class="container-flex">
+    <div class="glitch-banner-content" class="container-flex">
       <span class="notice">
         <i class="glitch-logo"></i>{{ gettext("movingNotice") | instantiate | safe}}
       </span>
@@ -15,6 +15,7 @@
     </div>
   </div>
 
+  {% if showGlitchDialog %}
   <div class="glitch glitch-cta underlay hidden">
     <div class="glitch-cta content">
       <img class="cta-close" src="/img/clear.svg" tabindex="0">
@@ -29,4 +30,5 @@
       <p class="notice">{{ gettext("learnMore") | instantiate | safe }}</p>
     </div>
   </div>
+  {% endif %}
 {% endblock %}

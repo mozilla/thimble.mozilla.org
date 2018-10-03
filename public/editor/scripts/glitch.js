@@ -4,20 +4,37 @@ var $ = require("jquery");
 
 module.exports = {
   init: function() {
-    let banner = $(".glitch-banner"),
-      cta = $(".glitch-cta.underlay"),
-      content = $(".content", cta),
+    let banner = $(".glitch-banner");
+    let cta = $(".glitch-cta.underlay");
+
+    if (banner.length && cta.length) {
+      let btn = $(".export-button", banner);
+      btn.click(() => cta.removeClass("hidden"));
+      banner.removeClass("hidden");
+    }
+
+    let content = $(".content", cta),
       close = $(".cta-close", content),
       start = $("button.export-button.start", content),
       exportPublished = $("button.export-button.published", content),
       exportUnpublished = $("button.export-button.unpublished", content),
-      csrfToken = $("meta[name='csrf-token']").attr("content"),
+      restoreButtonText = () => {};
+
+    close.click(() => {
+      cta.addClass("hidden");
+      restoreButtonText();
+      [exportPublished, exportUnpublished, start].forEach(e => {
+        e.removeClass("busy");
+      });
+      $(".normal", cta).removeClass("hidden");
+      $(".error", cta).addClass("hidden");
+    });
+
+    let csrfToken = $("meta[name='csrf-token']").attr("content"),
       importURL = $("meta[name='glitch-url']").attr("content"),
       exportLabel = $("meta[name='export-label']").attr("content"),
-      projectId = undefined,
-      projectPubId = undefined,
-      projectUrl = undefined,
-      restoreButtonText = () => {};
+      projectId = $("meta[name='project-id']").attr("content"),
+      publishId = $("meta[name='publish-id']").attr("content");
 
     function getToken(url, onSuccess, onError) {
       fetch(url, {
@@ -40,11 +57,6 @@ module.exports = {
     function notifyError(error) {
       $(".normal", cta).addClass("hidden");
       $(".error", cta).removeClass("hidden");
-      restoreButtonText();
-    }
-
-    if (banner.length && cta.length) {
-      banner.removeClass("hidden");
     }
 
     // We track the projectId "globally" for a dialog, because there
@@ -53,7 +65,7 @@ module.exports = {
 
     let runOperation = (evt, button, published) => {
       let root = published ? `publishedprojects` : `projects`;
-      let id = published ? projectPubId : projectId;
+      let id = published ? publishId : projectId;
       let url = `/${root}/${id}/export/start`;
 
       $("button.export-button", cta).each((i, e) => e.classList.add("busy"));
@@ -76,33 +88,5 @@ module.exports = {
     start.click(evt => runOperation(evt, start));
     exportUnpublished.click(evt => runOperation(evt, exportUnpublished));
     exportPublished.click(evt => runOperation(evt, exportPublished, true));
-
-    close.click(() => {
-      cta.addClass("hidden");
-      restoreButtonText();
-      [exportPublished, exportUnpublished, start].forEach(e => {
-        e.removeClass("busy");
-        e.addClass("hidden");
-      });
-      $(".normal", cta).removeClass("hidden");
-      $(".error", cta).addClass("hidden");
-    });
-
-    $("button.export-button[data-project-id]").each((_, e) => {
-      $(e).click(evt => {
-        let data = e.dataset;
-        projectId = parseInt(data.projectId, 10);
-        projectPubId = parseInt(data.publishedId, 10);
-
-        if (data.projectUrl) {
-          exportPublished.removeClass("hidden");
-          exportUnpublished.removeClass("hidden");
-        } else {
-          start.removeClass("hidden");
-        }
-
-        cta.removeClass("hidden");
-      });
-    });
   }
 };

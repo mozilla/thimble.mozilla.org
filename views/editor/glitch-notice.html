@@ -1,0 +1,54 @@
+{% block glitchnotice %}
+  <link rel="stylesheet" href="/resources/stylesheets/glitch.css">
+
+  <div class="glitch glitch-banner container-flex hidden">
+    <div  class="glitch-banner-content" class="container-flex">
+      <span class="notice">
+        <i class="glitch-logo"></i>{{ gettext("areYouReady") }}
+      </span>
+
+      <button class="btn export-button">
+        <i class="export-icon"></i><span class="label">{{ gettext("exportToGlitch") }}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="editor glitch glitch-cta underlay hidden">
+    <div class="glitch-cta content">
+        <img class="cta-close" src="/img/clear.svg" tabindex="0">
+        <i class="glitch-logo"></i>
+
+        <div class="normal">
+            <h1>{{ gettext("beforeYouStart") | safe }}</h1>
+            <ul>
+                <li>{{ gettext("glitchPoint1") }}</li>
+                <li>{{ gettext("glitchPoint2") }}</li>
+                <li>{{ gettext("glitchPoint3") }}</li>
+                <li>{{ gettext("glitchPoint4") }}</li>
+            </ul>
+        </div>
+
+        <div class="error hidden">
+            <h1>{{ gettext("exportOops") }}</h1>
+            <p>{{ gettext("retryOrMail") | instantiate | safe }}</p>
+        </div>
+
+        <div>
+            {% if project.publishUrl %}
+                <button class="btn export-button published">
+                    <i class="export-icon"></i><span class="label">{{ gettext("exportPublished") }}</span>
+                </button>
+                <button class="btn export-button unpublished">
+                    <i class="export-icon"></i><span class="label">{{ gettext("exportUnpublished") }}</span>
+                </button>
+            {% else %}
+                <button class="btn export-button start">
+                    <i class="export-icon"></i><span class="label">{{ gettext("startExportingProject") }}</span>
+                </button>
+            {% endif %}
+        </div>
+
+        <p><a class="privacy-policy" href="https://glitch.com/legal">{{ gettext("readPP") }}</a></p>
+    </div>
+</div>
+{% endblock %}

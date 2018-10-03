@@ -19,6 +19,7 @@ module.exports = function(config, req, res) {
     editorHOST: config.editorHOST,
     editorURL: config.editorURL,
     glitchExportEnabled: req.user && config.glitch.exportEnabled,
+    showGlitchDialog: true,
     migrationDate: migrationDate,
     moreInfoURL: config.glitch.moreInfoURL,
     URL_PATHNAME: "/" + qs,
