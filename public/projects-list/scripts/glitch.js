@@ -66,7 +66,7 @@ module.exports = {
       getToken(
         url,
         token => {
-          let args = `token=${token}&id=${projectId}&published=${published}`;
+          let args = `token=${token}&id=${id}&published=${published}`;
           window.location = `//${importURL}?${args}`;
         },
         notifyError

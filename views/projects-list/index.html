@@ -109,14 +109,12 @@
             <i class="glitch-logo"></i>
             <div class="normal">
               <h1>{{ gettext("beforeYouStart") | safe }}</h1>
-              <p>
-                <ul>
-                  <li>{{ gettext("glitchPoint1") }}</li>
-                  <li>{{ gettext("glitchPoint2") }}</li>
-                  <li>{{ gettext("glitchPoint3") }}</li>
-                  <li>{{ gettext("glitchPoint4") }}</li>
-                </ul>
-              </p>
+              <ul>
+                <li>{{ gettext("glitchPoint1") }}</li>
+                <li>{{ gettext("glitchPoint2") }}</li>
+                <li>{{ gettext("glitchPoint3") }}</li>
+                <li>{{ gettext("glitchPoint4") }}</li>
+              </ul>
             </div>
 
             <div class="error hidden">
@@ -124,7 +122,7 @@
               <p>{{ gettext("retryOrMail") | instantiate | safe }}</p>
             </div>
 
-            <p>
+            <div>
               <button class="btn export-button start hidden">
                 <i class="export-icon"></i><span class="label">{{ gettext("startExportingProject") }}</span>
               </button>
@@ -134,7 +132,7 @@
               <button class="btn export-button unpublished hidden">
                 <i class="export-icon"></i><span class="label">{{ gettext("exportUnpublished") }}</span>
               </button>
-            </p>
+            </div>
             <p><a class="privacy-policy" href="https://glitch.com/legal">{{ gettext("readPP") }}</a></p>
           </div>
         </div>

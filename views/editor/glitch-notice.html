@@ -20,14 +20,12 @@
 
         <div class="normal">
             <h1>{{ gettext("beforeYouStart") | safe }}</h1>
-            <p>
-                <ul>
-                    <li>{{ gettext("glitchPoint1") }}</li>
-                    <li>{{ gettext("glitchPoint2") }}</li>
-                    <li>{{ gettext("glitchPoint3") }}</li>
-                    <li>{{ gettext("glitchPoint4") }}</li>
-                </ul>
-            </p>
+            <ul>
+                <li>{{ gettext("glitchPoint1") }}</li>
+                <li>{{ gettext("glitchPoint2") }}</li>
+                <li>{{ gettext("glitchPoint3") }}</li>
+                <li>{{ gettext("glitchPoint4") }}</li>
+            </ul>
         </div>
 
         <div class="error hidden">
@@ -35,7 +33,7 @@
             <p>{{ gettext("retryOrMail") | instantiate | safe }}</p>
         </div>
 
-        <p>
+        <div>
             {% if project.publishUrl %}
                 <button class="btn export-button published">
                     <i class="export-icon"></i><span class="label">{{ gettext("exportPublished") }}</span>
@@ -48,8 +46,7 @@
                     <i class="export-icon"></i><span class="label">{{ gettext("startExportingProject") }}</span>
                 </button>
             {% endif %}
-
-        </p>
+        </div>
 
         <p><a class="privacy-policy" href="https://glitch.com/legal">{{ gettext("readPP") }}</a></p>
     </div>

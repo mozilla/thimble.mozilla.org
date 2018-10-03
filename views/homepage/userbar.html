@@ -1,6 +1,6 @@
 {% block userbar %}
   <!-- Thimble user bar for homepage and project list -->
-  <nav class="navbar-thimble container-flex">
+  <nav class="navbar-thimble container-flex {% if showGlitchDialog %}navbar-fix{% endif %}">
     <div id="navbar-left" class="container-flex">
       <div class="navbar-logo-container">
         <a href="/{{ locale }}" class="logo">
