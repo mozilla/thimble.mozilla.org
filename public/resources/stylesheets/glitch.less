@@ -268,7 +268,7 @@
     img {
       width: ~"calc(100% - 6px)";
       box-sizing: border-box;
-      box-shadow: 6px 6px 0 0 #CCC;
+      box-shadow: 6px 6px 0 0 #ccc;
       margin-bottom: 6px;
     }
   }
@@ -277,12 +277,15 @@
     text-decoration: none;
     color: inherit;
 
-    &:hover, &:focus, &:active, &:visited {
-        color: inherit;
-        text-decoration: none;
+    &:hover,
+    &:focus,
+    &:active,
+    &:visited {
+      color: inherit;
+      text-decoration: none;
     }
 
-    &:hover:before {
+    &:hover::before {
       content: '#';
       width: 0;
       display: inline-block;
