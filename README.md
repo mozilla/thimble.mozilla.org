@@ -60,7 +60,7 @@ In order for Thimble to be installed correctly, the following dependencies need 
 - Virtualbox (version 5.1 or later) [[download](https://www.virtualbox.org/wiki/Downloads)]
 - Vagrant (version 1.9 or later) [[download](https://www.vagrantup.com/downloads.html)]
   - __Note:__ On Windows machines, you may need to restart your computer after installing Vagrant for it to be fully usable.
-  Avoid installation in directories containing *spaces*.  Vagrant is written in Ruby which has issues with directory names containing spaces, so be sure that your VAGRANT_HOME environment variable does not contain any spaces (i.e. a user home folder w/ spaces).  You can set VAGRANT_HOME via Control Panel > Advanced system settings > Environment variables > System Variables or set it from command prompt with [setx]%28https://technet.microsoft.com/en-us/library/cc755104(v=ws.11).aspx%29 command `setx VAGRANT_HOME c:\.vagrant.d -m`.
+  Avoid installation in directories containing *spaces*.  Vagrant is written in Ruby which has issues with directory names containing spaces, so be sure that your VAGRANT_HOME environment variable does not contain any spaces (i.e. a user home folder w/ spaces).  You can set VAGRANT_HOME via Control Panel > Advanced system settings > Environment variables > System Variables or set it from command prompt with [setx](https://technet.microsoft.com/en-us/library/cc755104(v=ws.11).aspx) command `setx VAGRANT_HOME c:\.vagrant.d -m`.
   For further safety, you can also check to make sure your VM snapshots are stored in a folder without spaces.  To do this, open the Virtualbox GUI, click Preferences > General > Default Machine Folder, and set your path here.
 
 ### Installing Brackets (Bramble)
