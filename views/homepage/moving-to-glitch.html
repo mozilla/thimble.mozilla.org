@@ -53,24 +53,33 @@
 
       <hr>
 
-      <h3 id="my-things-dont-show-in-my-live-project"><a class="faq-link" href="#my-things-dont-show-in-my-live-project">{{ gettext("mtgMyAssetsDontShowHeading") }}</a></h3>
+      <h3 id="how-do-I-create-an-account"><a class="faq-link" href="#how-do-I-create-an-account">{{ gettext("mtgCreateAccountHeading") }}</a></h3>
 
-      <div class="two-col">
-        <div>
-          <p>{{ gettext("mtgMyAssetsDontShowText1") }}</p>
-          <p>{{ gettext("mtgMyAssetsDontShowText2") }}</p>
-        </div>
+      <p>{{ gettext("mtgCreateAccountText") | safe }}</p>
 
-        <div>
-          <img src="/img/moving-to-glitch.gif" width="100%" height="auto" alt="{{ gettext("mtgMyAssetsDontShowImageAlt") }}">
-        </div>
-      </div>
+      <hr>
+
+      <h3 id="how-much-storage-do-I-get"><a class="faq-link" href="#how-much-storage-do-I-get">{{ gettext("mtgStorageHeading") }}</a></h3>
+
+      <p>{{ gettext("mtgStorageText") }}</p>
+
+      <hr>
+
+      <h3 id="how-much-does-glitch-cost"><a class="faq-link" href="#how-much-does-glitch-cost">{{ gettext("mtgCostHeading") }}</a></h3>
+
+      <p>{{ gettext("mtgCostText") | safe }}</p>
 
       <hr>
 
       <h3 id="what-happens-after-I-export"><a class="faq-link" href="#what-happens-after-I-export">{{ gettext("mtgWhatHappensAfterHeading") }}</a></h3>
 
       <p>{{ gettext("mtgWhatHappensAfterText") | instantiate | safe }}</p>
+
+      <hr>
+
+      <h3 id="how-do-I-manage-glitch-projects"><a class="faq-link" href="#how-do-I-manage-glitch-projects">{{ gettext("mtgManageProjectsHeading") }}</a></h3>
+
+      <p>{{ gettext("mtgManageProjectsText") }}</p>
 
       <hr>
 
@@ -83,9 +92,14 @@
             <li>{{ gettext("mtgRoadmapDate1") | instantiate | safe }}</li>
             <li>{{ gettext("mtgRoadmapDate2") | instantiate | safe }}</li>
             <li>{{ gettext("mtgRoadmapDate3") | instantiate | safe }}</li>
-            <li>{{ gettext("mtgRoadmapDate4") | instantiate | safe }}</li>
         </ul>
       </p>
+
+      <hr>
+
+      <h3 id="what-is-glitchs-privacy-policy"><a class="faq-link" href="#what-is-glitchs-privacy-policy">{{ gettext("mtgPrivacyHeading") }}</a></h3>
+
+      <p>{{ gettext("mtgPrivacyText") | safe }}</p>
 
       <hr>
 

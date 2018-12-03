@@ -12,7 +12,9 @@
         <a href="/{{ locale }}" class="{% if pageName == 'home' %}selected{% endif %}">{{ gettext("userbarGetStarted") }}</a>
         <a href="/{{ locale }}/features" class="{% if pageName == 'features' %}selected{% endif %}">{{ gettext("userbarCoolFeatures") }}</a>
         <a href="/{{ locale }}/get-involved" class="{% if pageName == 'get-involved' %}selected{% endif %}">{{ gettext("userbarGetInvolved") }}</a>
+        {% if glitchExportEnabled %}
         <a href="/{{ locale }}/moving-to-glitch" class="{% if pageName == 'moving-to-glitch' %}selected{% endif %}">{{ gettext("userbarMovingToGlitch") }}</a>
+        {% endif %}
       </div>
     </div>
 
