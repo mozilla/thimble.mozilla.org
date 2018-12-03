@@ -49,8 +49,7 @@ module.exports = {
           }
           return response.json();
         })
-        .then(object => o.token)
-        .then(token => onSuccess(token))
+        .then(object => onSuccess(object.token))
         .catch(e => onError(e));
     }
 
@@ -78,8 +77,13 @@ module.exports = {
       getToken(
         url,
         token => {
-          let args = `token=${token}&id=${id}&published=${published}`;
-          window.location = `//${importURL}?${args}`;
+          let args = `token=${token}&id=${id}`;
+
+          if (published) {
+            args = `${args}&published=true`;
+          }
+
+          window.location = `${importURL}?${args}`;
         },
         notifyError
       );
