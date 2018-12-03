@@ -4,6 +4,7 @@ var NodeFormData = require("form-data");
 var async = require("async");
 
 var defaultProject = require("../../default");
+var HttpError = require("../lib/http-error");
 
 function createProject(config, user, data, callback) {
   var createURL = config.publishURL + "/projects";
@@ -466,11 +467,11 @@ function proxyExportRequest(
   successCode = 200
 ) {
   const { params: { [idParamName]: id } } = req;
-  const { publishUrl } = config;
+  const { publishURL } = config;
   const { token } = tokenType === "export" ? req.export : req.user;
   const options = {
     method,
-    uri: `${publishUrl}/${prefix}/${id}/export/${requestName}`,
+    uri: `${publishURL}/${prefix}/${id}/export/${requestName}`,
     headers: {
       Authorization: `${tokenType} ${token}`
     }

@@ -4,9 +4,9 @@ const { sendResponseStream } = require("../utils");
 
 function data(config, req, res, prefix, idParamName) {
   const { export: { token }, params: { [idParamName]: id } } = req;
-  const { publishUrl } = config;
+  const { publishURL } = config;
   const options = {
-    uri: `${publishUrl}/${prefix}/${id}/export/data`,
+    uri: `${publishURL}/${prefix}/${id}/export/data`,
     headers: {
       Authorization: `export ${token}`
     }
