@@ -17,15 +17,13 @@ module.exports = function(config, req, res) {
     moment(glitch.migrationDate),
     moment(glitch.roadmapDate1),
     moment(glitch.roadmapDate2),
-    moment(glitch.roadmapDate3),
-    moment(glitch.roadmapDate4)
+    moment(glitch.roadmapDate3)
   ].map(date => date.locale(locale).format("LL"));
 
   glitch.migrationDate = glitchDates[0];
   glitch.roadmapDate1 = glitchDates[1];
   glitch.roadmapDate2 = glitchDates[2];
   glitch.roadmapDate3 = glitchDates[3];
-  glitch.roadmapDate4 = glitchDates[4];
 
   var options = {
     loginURL: config.appURL + "/" + locale + "/login",

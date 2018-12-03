@@ -37,8 +37,7 @@ module.exports = {
     importURL: env.get("GLITCH_IMPORT_PROJECT_APP_URL"),
     roadmapDate1: env.get("GLITCH_ROADMAP_DATE_1"),
     roadmapDate2: env.get("GLITCH_ROADMAP_DATE_2"),
-    roadmapDate3: env.get("GLITCH_ROADMAP_DATE_3"),
-    roadmapDate4: env.get("GLITCH_ROADMAP_DATE_4")
+    roadmapDate3: env.get("GLITCH_ROADMAP_DATE_3")
   },
   editorHOST: editorHOST,
   editorURL:
