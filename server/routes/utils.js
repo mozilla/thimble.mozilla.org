@@ -454,6 +454,68 @@ function sendResponseStream(res, binaryStream) {
     .pipe(res);
 }
 
+function proxyExportRequest(
+  config,
+  req,
+  res,
+  prefix,
+  idParamName,
+  requestName,
+  method = "GET",
+  tokenType = "export",
+  successCode = 200
+) {
+  const { params: { [idParamName]: id } } = req;
+  const { publishUrl } = config;
+  const { token } = tokenType === "export" ? req.export : req.user;
+  const options = {
+    method,
+    uri: `${publishUrl}/${prefix}/${id}/export/${requestName}`,
+    headers: {
+      Authorization: `${tokenType} ${token}`
+    }
+  };
+
+  request(options, (err, response, body) => {
+    if (err) {
+      return HttpError.generic(
+        {
+          err,
+          userMessage:
+            `[${prefix}] Export ${requestName}: ` +
+            `Failed sending the request for #${id}`
+        },
+        req,
+        res
+      );
+    }
+
+    if (body) {
+      try {
+        body = JSON.parse(body);
+      } catch (e) {
+        return HttpError.generic(
+          {
+            e,
+            userMessage:
+              `[${prefix}] Export ${requestName}: ` +
+              `Received invalid data for #${id}`
+          },
+          req,
+          res
+        );
+      }
+    }
+
+    if (response.statusCode !== successCode) {
+      res.status(response.statusCode);
+      return HttpError.generic(body, req, res);
+    }
+
+    res.json(body);
+  });
+}
+
 module.exports = {
   createProject: createProject,
   persistProjectFiles: persistProjectFiles,
@@ -464,5 +526,6 @@ module.exports = {
   getProjectFile: getProjectFile,
   getRemixedProjectFileMetadata: getRemixedProjectFileMetadata,
   getRemixedProjectFileTar: getRemixedProjectFileTar,
-  sendResponseStream
+  sendResponseStream,
+  proxyExportRequest
 };

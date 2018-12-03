@@ -67,7 +67,7 @@ module.exports = {
         url,
         token => {
           let args = `token=${token}&id=${id}&published=${published}`;
-          window.location = `//${importURL}?${args}`;
+          window.location = `${importURL}?${args}`;
         },
         notifyError
       );

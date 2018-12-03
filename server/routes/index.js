@@ -22,7 +22,8 @@ module.exports = function() {
         require("./main"),
         require("./projects"),
         require("./files"),
-        require("./tutorials")
+        require("./tutorials"),
+        require("./export")
       ].forEach(function(module) {
         module.init(app, middleware, config);
       });

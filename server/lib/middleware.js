@@ -338,6 +338,26 @@ module.exports = function middlewareConstructor(config) {
     clearRedirects(req, res, next) {
       delete req.session.home;
       next();
+    },
+
+    /**
+     * Sets the token used to export/migrate data from a project
+     */
+    setExportToken(req, res, next) {
+      const tokenMatch = /^export\s+(\S+)/.exec(req.get("Authorization"));
+
+      if (tokenMatch) {
+        req.export = { token: tokenMatch[1] };
+        return next();
+      }
+
+      req.errorMessageKey = "errorHttpAuthenticationFailed";
+
+      next(
+        HttpError.format({
+          message: "Provided an invalid export token"
+        })
+      );
     }
   };
 };
