@@ -1,0 +1,113 @@
+{% extends "./base.html" %}
+
+{% block pagetitle %}
+  {{ gettext("pageTitleMovingToGlitch") | safe }}
+{% endblock %}
+
+{% block top %}
+  <div class="page-heading">
+    <div class="content-wrapper">
+      <h1>
+        {{ gettext("movingToGlitchHeader") | safe }}
+      </h1>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="page-content">
+    <div class="content-wrapper">
+
+      <p>{{ gettext("mtgIntroParagraph1") | instantiate | safe }}</p>
+
+      <p>{{ gettext("mtgIntroParagraph2") | instantiate | safe }}</p>
+
+      <h2>{{ gettext("mtgFAQ") }}</h2>
+
+      <h3 id="what-do-I-need-to-do"><a class="faq-link" href="#what-do-I-need-to-do">{{ gettext("mtgWhatToDoHeading") }}</a></h3>
+
+      <p>{{ gettext("mtgWhatToDoText") | instantiate | safe}}</p>
+
+      <hr>
+
+      <h3 id="what-is-glitch"><a class="faq-link" href="#what-is-glitch">{{ gettext("mtgWhatIsGlitchHeading") }}</a></h3>
+
+      <p>{{ gettext("mtgWhatIsGlitchText") | safe }}</p>
+
+      <hr>
+
+      <h3 id="is-glitch-available-in-my-language"><a class="faq-link" href="#is-glitch-available-in-my-language">{{ gettext("mtgIsGlitchAvailableHeading") }}</a></h3>
+
+      <p>{{ gettext("mtgIsGlitchAvailableText") }}</p>
+
+      <hr>
+
+      <h3 id="will-my-project-work-as-in-thimble"><a class="faq-link" href="#will-my-project-work-as-in-thimble">{{ gettext("mtgWillMyProjectWorkHeading") }}</a></h3>
+
+      <p>{{ gettext("mtgWillMyProjectWorkText") }}</p>
+
+      <ol>
+          <li>{{ gettext("mtgWillMyProjectWorkBullet1") | safe }}</li>
+          <li>{{ gettext("mtgWillMyProjectWorkBullet2") }}</li>
+      </ol>
+
+      <hr>
+
+      <h3 id="how-do-I-create-an-account"><a class="faq-link" href="#how-do-I-create-an-account">{{ gettext("mtgCreateAccountHeading") }}</a></h3>
+
+      <p>{{ gettext("mtgCreateAccountText") | safe }}</p>
+
+      <hr>
+
+      <h3 id="how-much-storage-do-I-get"><a class="faq-link" href="#how-much-storage-do-I-get">{{ gettext("mtgStorageHeading") }}</a></h3>
+
+      <p>{{ gettext("mtgStorageText") }}</p>
+
+      <hr>
+
+      <h3 id="how-much-does-glitch-cost"><a class="faq-link" href="#how-much-does-glitch-cost">{{ gettext("mtgCostHeading") }}</a></h3>
+
+      <p>{{ gettext("mtgCostText") | safe }}</p>
+
+      <hr>
+
+      <h3 id="what-happens-after-I-export"><a class="faq-link" href="#what-happens-after-I-export">{{ gettext("mtgWhatHappensAfterHeading") }}</a></h3>
+
+      <p>{{ gettext("mtgWhatHappensAfterText") | instantiate | safe }}</p>
+
+      <hr>
+
+      <h3 id="how-do-I-manage-glitch-projects"><a class="faq-link" href="#how-do-I-manage-glitch-projects">{{ gettext("mtgManageProjectsHeading") }}</a></h3>
+
+      <p>{{ gettext("mtgManageProjectsText") }}</p>
+
+      <hr>
+
+      <h3 id="can-I-keep-using-thimble-until-I-export"><a class="faq-link" href="#can-I-keep-using-thimble-until-I-export">{{ gettext("mtgCanIKeepThimblingHeading") }}</a></h3>
+
+      <p>{{ gettext("mtgCanIKeepThimblingText") }}</p>
+
+      <p>
+        <ul>
+            <li>{{ gettext("mtgRoadmapDate1") | instantiate | safe }}</li>
+            <li>{{ gettext("mtgRoadmapDate2") | instantiate | safe }}</li>
+            <li>{{ gettext("mtgRoadmapDate3") | instantiate | safe }}</li>
+        </ul>
+      </p>
+
+      <hr>
+
+      <h3 id="what-is-glitchs-privacy-policy"><a class="faq-link" href="#what-is-glitchs-privacy-policy">{{ gettext("mtgPrivacyHeading") }}</a></h3>
+
+      <p>{{ gettext("mtgPrivacyText") | safe }}</p>
+
+      <hr>
+
+      <h3 id="I-have-other-questions"><a class="faq-link" href="#I-have-other-questions">{{ gettext("mtgIHaveMoreQuestionsHeading") }}</a></h3>
+
+      <p>{{ gettext("mtgIHaveMoreQuestionsText") | safe }}</p>
+
+    </div>
+  </div>
+
+{% endblock %}
