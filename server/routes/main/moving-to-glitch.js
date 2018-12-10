@@ -24,6 +24,7 @@ module.exports = function(config, req, res) {
   glitch.roadmapDate1 = glitchDates[1];
   glitch.roadmapDate2 = glitchDates[2];
   glitch.roadmapDate3 = glitchDates[3];
+  glitch.roadmapDate4 = glitchDates[3];
 
   var options = {
     loginURL: config.appURL + "/" + locale + "/login",
