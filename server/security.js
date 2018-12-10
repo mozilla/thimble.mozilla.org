@@ -47,6 +47,8 @@ let defaultCSPDirectives = {
   ]
 };
 
+const validateCSRF = csurf();
+
 function Security(server) {
   this.server = server;
 }
@@ -79,7 +81,14 @@ Security.csp = directiveList => {
 Security.ssl = () => helmet.hsts({ maxAge: ONE_YEAR });
 Security.xss = () => helmet.xssFilter();
 Security.mimeSniff = () => helmet.noSniff();
-Security.csrf = () => csurf();
+Security.csrf = () => (req, res, next) => {
+  if (/^\/projects\/\d+\/export/.test(req.path)) {
+    console.log("Skipping csrf");
+    next();
+  } else {
+    validateCSRF(req, res, next);
+  }
+};
 Security.xframe = () =>
   helmet.frameguard({
     action: "allow-from",

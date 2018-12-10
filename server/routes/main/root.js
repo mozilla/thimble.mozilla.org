@@ -29,10 +29,10 @@ module.exports = function(config, req, res, next) {
     return;
   }
 
-  // Authenticated user without a selected project: redirect to the project
-  // list page
+  // Authenticated user without a selected project: redirect to the homepage
+  // so that they see the migration CTA
   if (!migrate) {
-    res.redirect(307, "/" + locale + "/projects/" + qs);
+    res.redirect(307, "/" + locale + "/" + qs);
     return;
   }
 
