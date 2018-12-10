@@ -1,6 +1,7 @@
 "use strict";
 
 const { sendResponseStream } = require("../utils");
+const request = require("request");
 
 function data(config, req, res, prefix, idParamName) {
   const { export: { token }, params: { [idParamName]: id } } = req;
