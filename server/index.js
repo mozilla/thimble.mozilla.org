@@ -63,6 +63,8 @@ requests
 let faviconPath = path.join(root, "public/resources/img/favicon.png");
 server.use(favicon(faviconPath));
 
+requests.enableLogging(environment);
+
 /**
  * Server Security
  */
@@ -76,8 +78,6 @@ secure
 if (!!env.get("FORCE_SSL")) {
   secure.ssl();
 }
-
-requests.enableLogging(environment);
 
 /**
  * Static assets
