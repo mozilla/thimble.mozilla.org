@@ -65,10 +65,10 @@ module.exports = {
       getToken(
         url,
         token => {
-          let args = `token=${token}&id=${id}`;
+          let args = `TOKEN=${token}&ID=${id}`;
 
           if (published) {
-            args = `${args}&published=true`;
+            args = `${args}&PUBLISHED=true`;
           }
 
           window.location = `${importURL}?${args}`;
