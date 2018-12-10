@@ -82,8 +82,7 @@ Security.ssl = () => helmet.hsts({ maxAge: ONE_YEAR });
 Security.xss = () => helmet.xssFilter();
 Security.mimeSniff = () => helmet.noSniff();
 Security.csrf = () => (req, res, next) => {
-  if (/^\/projects\/\d+\/export/.test(req.path)) {
-    console.log("Skipping csrf");
+  if (/^(\/en-US)?\/projects\/\d+\/export/.test(req.path)) {
     next();
   } else {
     validateCSRF(req, res, next);
