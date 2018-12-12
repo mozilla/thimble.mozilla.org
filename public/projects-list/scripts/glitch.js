@@ -1,6 +1,7 @@
 /* globals $: true */
 
 var $ = require("jquery");
+var strings = require("strings");
 
 module.exports = {
   init: function() {
@@ -17,7 +18,8 @@ module.exports = {
       projectId = undefined,
       projectPubId = undefined,
       projectUrl = undefined,
-      restoreButtonText = () => {};
+      restoreButtonText = () => {},
+      currentExportProjectButton;
 
     function getToken(url, onSuccess, onError) {
       fetch(url, {
@@ -40,6 +42,7 @@ module.exports = {
       $(".normal", cta).addClass("hidden");
       $(".error", cta).removeClass("hidden");
       restoreButtonText();
+      currentExportProjectButton = null;
     }
 
     if (banner.length && cta.length) {
@@ -71,7 +74,13 @@ module.exports = {
             args = `${args}&PUBLISHED=true`;
           }
 
-          window.location = `${importURL}?${args}`;
+          cta.addClass("hidden");
+          currentExportProjectButton.replaceWith(
+            `<div class="hooray">${strings.get("glitchProjectMigrated")}</div>`
+          );
+          currentExportProjectButton = null;
+
+          window.open(`${importURL}?${args}`, "_blank");
         },
         notifyError
       );
@@ -90,10 +99,13 @@ module.exports = {
       });
       $(".normal", cta).removeClass("hidden");
       $(".error", cta).addClass("hidden");
+      currentExportProjectButton = null;
     });
 
     $("button.export-button[data-project-id]").each((_, e) => {
-      $(e).click(evt => {
+      const exportButton = $(e);
+
+      exportButton.click(evt => {
         let data = e.dataset;
         projectId = parseInt(data.projectId, 10);
         projectPubId = parseInt(data.publishedId, 10);
@@ -106,6 +118,7 @@ module.exports = {
         }
 
         cta.removeClass("hidden");
+        currentExportProjectButton = exportButton;
       });
     });
   }

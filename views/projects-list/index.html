@@ -73,7 +73,7 @@
             {% if glitchExportEnabled %}
               {% if project.glitch_migrated %}
                 <div class="hooray">
-                  Hooray! Your project is now on Glitch
+                  {{ gettext("glitchProjectMigrated") }}
                 </div>
               {% else %}
                 <button
@@ -111,9 +111,10 @@
               <h1>{{ gettext("beforeYouStart") | safe }}</h1>
               <ul>
                 <li>{{ gettext("glitchPoint1") }}</li>
-                <li>{{ gettext("glitchPoint2") }}</li>
+                <li>{{ gettext("glitchPoint2v2") | safe }}</li>
                 <li>{{ gettext("glitchPoint3") }}</li>
                 <li>{{ gettext("glitchPoint4") }}</li>
+                <li>{{ gettext("glitchPoint5") }}</li>
               </ul>
             </div>
 
