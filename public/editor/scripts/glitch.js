@@ -1,15 +1,18 @@
 /* globals $: true */
 
 var $ = require("jquery");
+var strings = require("strings");
+var FileSystemSync = require("./filesystem-sync");
 
 module.exports = {
   init: function() {
     let banner = $(".glitch-banner");
     let cta = $(".glitch-cta.underlay");
+    let exportBtn;
 
     if (banner.length && cta.length) {
-      let btn = $(".export-button", banner);
-      btn.click(() => cta.removeClass("hidden"));
+      exportBtn = $(".export-button", banner);
+      exportBtn.click(() => cta.removeClass("hidden"));
       banner.removeClass("hidden");
     }
 
@@ -74,19 +77,32 @@ module.exports = {
       restoreButtonText = () => label.text(labelText);
       label.text(exportLabel);
 
-      getToken(
-        url,
-        token => {
-          let args = `TOKEN=${token}&ID=${id}`;
+      FileSystemSync.saveAndSyncAll(err => {
+        if (err) {
+          console.error("Failed to save project before exporting with: ", err);
+          return notifyError(err);
+        }
 
-          if (published) {
-            args = `${args}&PUBLISHED=true`;
-          }
+        getToken(
+          url,
+          token => {
+            let args = `TOKEN=${token}&ID=${id}`;
 
-          window.location = `${importURL}?${args}`;
-        },
-        notifyError
-      );
+            if (published) {
+              args = `${args}&PUBLISHED=true`;
+            }
+
+            cta.addClass("hidden");
+            $("span.notice-text", banner).text(
+              strings.get("glitchProjectMigratedChanges")
+            );
+            exportBtn.addClass("hidden");
+
+            window.open(`${importURL}?${args}`, "_blank");
+          },
+          notifyError
+        );
+      });
     };
 
     start.click(evt => runOperation(evt, start));

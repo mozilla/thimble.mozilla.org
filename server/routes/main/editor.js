@@ -29,7 +29,8 @@ function getProjectMetadata(config, req, callback) {
       tags: project.tags,
       description: project.description,
       publishUrl: project.publish_url,
-      projectLoadStrategy: config.projectLoadStrategy
+      projectLoadStrategy: config.projectLoadStrategy,
+      glitch_migrated: project.glitch_migrated
     });
     return;
   }
@@ -52,7 +53,8 @@ function getProjectMetadata(config, req, callback) {
       anonymousId: anonymousId,
       remixId: remixId,
       title: project.title,
-      description: project.description
+      description: project.description,
+      glitch_migrated: project.glitch_migrated
     });
   });
 }
@@ -108,6 +110,7 @@ module.exports = function(config, req, res, next) {
 
     options.snippets = snippets;
     options.project = projectMetadata;
+    options.glitch_migrated = projectMetadata.glitch_migrated;
 
     options.projectMetadata = encodeURIComponent(
       JSON.stringify(projectMetadata)
