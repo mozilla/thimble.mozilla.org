@@ -74,11 +74,11 @@ module.exports = {
             args = `${args}&PUBLISHED=true`;
           }
 
-          cta.addClass("hidden");
           currentExportProjectButton.replaceWith(
             `<div class="hooray">${strings.get("glitchProjectMigrated")}</div>`
           );
           currentExportProjectButton = null;
+          close.trigger("click");
 
           window.open(`${importURL}?${args}`, "_blank");
         },
