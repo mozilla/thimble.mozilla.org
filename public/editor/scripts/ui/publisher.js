@@ -5,6 +5,7 @@ var strings = require("strings");
 var Project = require("../project");
 var FileSystemSync = require("../filesystem-sync");
 var SyncState = require("../filesystem-sync/state");
+var glitch = require("../glitch");
 
 var host;
 
@@ -197,6 +198,9 @@ Publisher.prototype.publish = function(bramble) {
 
         Project.setPublishUrl(project.link);
         publisher.needsUpdate = false;
+        glitch.setPublishId(
+          parseInt(/(\d+)\/?$/.exec(project.link)[1])
+        );
       });
     });
     request.fail(function(jqXHR, status, err) {
@@ -286,6 +290,7 @@ Publisher.prototype.unpublish = function() {
 
       Project.setPublishUrl(null);
       publisher.needsUpdate = false;
+      glitch.unsetPublishId();
     });
   });
   request.fail(function(jqXHR, status, err) {

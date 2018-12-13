@@ -4,11 +4,14 @@ var $ = require("jquery");
 var strings = require("strings");
 var FileSystemSync = require("./filesystem-sync");
 
+var projectId, publishId, start, exportPublished, exportUnpublished;
+
 module.exports = {
   init: function() {
     let banner = $(".glitch-banner");
     let cta = $(".glitch-cta.underlay");
     let exportBtn;
+    let exported = false;
 
     if (banner.length && cta.length) {
       exportBtn = $(".export-button", banner);
@@ -18,13 +21,24 @@ module.exports = {
 
     let content = $(".content", cta),
       close = $(".cta-close", content),
-      start = $("button.export-button.start", content),
-      exportPublished = $("button.export-button.published", content),
-      exportUnpublished = $("button.export-button.unpublished", content),
+      exportedLink = $("a.exported-link", content),
       restoreButtonText = () => {};
+
+    start = $("button.export-button.start", content),
+    exportPublished = $("button.export-button.published", content),
+    exportUnpublished = $("button.export-button.unpublished", content),
 
     close.click(() => {
       cta.addClass("hidden");
+
+      if (exported) {
+        $("span.notice-text", banner).text(
+          strings.get("glitchProjectMigratedChanges")
+        );
+        exportBtn.addClass("hidden");
+        return;
+      }
+
       restoreButtonText();
       [exportPublished, exportUnpublished, start].forEach(e => {
         e.removeClass("busy");
@@ -35,9 +49,10 @@ module.exports = {
 
     let csrfToken = $("meta[name='csrf-token']").attr("content"),
       importURL = $("meta[name='glitch-url']").attr("content"),
-      exportLabel = $("meta[name='export-label']").attr("content"),
-      projectId = $("meta[name='project-id']").attr("content"),
-      publishId = $("meta[name='publish-id']").attr("content");
+      exportLabel = $("meta[name='export-label']").attr("content");
+
+    projectId = $("meta[name='project-id']").attr("content"),
+    publishId = $("meta[name='publish-id']").attr("content");
 
     function getToken(url, onSuccess, onError) {
       fetch(url, {
@@ -92,13 +107,14 @@ module.exports = {
               args = `${args}&PUBLISHED=true`;
             }
 
-            cta.addClass("hidden");
-            $("span.notice-text", banner).text(
-              strings.get("glitchProjectMigratedChanges")
-            );
-            exportBtn.addClass("hidden");
-
-            window.open(`${importURL}?${args}`, "_blank");
+            exported = true;
+            exportedLink.attr("href", `${importURL}?${args}`);
+            [exportPublished, exportUnpublished, start].forEach(e => {
+              e.addClass("hidden");
+            });
+            exportedLink.one("click", () => close.trigger("click"));
+            $(".export-link-button", exportedLink).removeClass("busy");
+            exportedLink.removeClass("hidden");
           },
           notifyError
         );
@@ -108,5 +124,17 @@ module.exports = {
     start.click(evt => runOperation(evt, start));
     exportUnpublished.click(evt => runOperation(evt, exportUnpublished));
     exportPublished.click(evt => runOperation(evt, exportPublished, true));
+  },
+  setPublishId: function(id) {
+    publishId = id;
+    start.addClass("hidden");
+    exportPublished.removeClass("hidden");
+    exportUnpublished.removeClass("hidden");
+  },
+  unsetPublishId: function() {
+    publishId = null;
+    start.removeClass("hidden");
+    exportPublished.addClass("hidden");
+    exportUnpublished.addClass("hidden");
   }
 };

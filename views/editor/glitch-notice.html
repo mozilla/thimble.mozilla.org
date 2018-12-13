@@ -28,7 +28,7 @@
             <h1>{{ gettext("beforeYouStart") | safe }}</h1>
             <ul>
                 <li>{{ gettext("glitchPoint1") }}</li>
-                <li>{{ gettext("glitchPoint2v2") }}</li>
+                <li>{{ gettext("glitchPoint2v2") | safe }}</li>
                 <li>{{ gettext("glitchPoint3") }}</li>
                 <li>{{ gettext("glitchPoint4") }}</li>
                 <li>{{ gettext("glitchPoint5") }}</li>
@@ -41,18 +41,20 @@
         </div>
 
         <div>
-            {% if project.publishUrl %}
-                <button class="btn export-button published">
-                    <i class="export-icon"></i><span class="label">{{ gettext("exportPublished") }}</span>
+            <button class="btn export-button published{% if not project.publishUrl %} hidden{% endif %}">
+                <i class="export-icon"></i><span class="label">{{ gettext("exportPublished") }}</span>
+            </button>
+            <button class="btn export-button unpublished{% if not project.publishUrl %} hidden{% endif %}">
+                <i class="export-icon"></i><span class="label">{{ gettext("exportUnpublished") }}</span>
+            </button>
+            <button class="btn export-button start{% if project.publishUrl %} hidden{% endif %}">
+                <i class="export-icon"></i><span class="label">{{ gettext("startExportingProject") }}</span>
+            </button>
+            <a target="_blank" class="exported-link hidden">
+                <button class="btn export-button export-link-button">
+                    <i class="export-glitch-icon"></i><span class="label">{{ gettext("glitchTakeMeToProject") }}</span>
                 </button>
-                <button class="btn export-button unpublished">
-                    <i class="export-icon"></i><span class="label">{{ gettext("exportUnpublished") }}</span>
-                </button>
-            {% else %}
-                <button class="btn export-button start">
-                    <i class="export-icon"></i><span class="label">{{ gettext("startExportingProject") }}</span>
-                </button>
-            {% endif %}
+            </a>
         </div>
 
         <p><a class="privacy-policy" href="https://glitch.com/legal/#privacy">{{ gettext("readPP") }}</a></p>
