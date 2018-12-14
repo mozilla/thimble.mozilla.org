@@ -15,6 +15,7 @@ module.exports = {
       csrfToken = $("meta[name='csrf-token']").attr("content"),
       importURL = $("meta[name='glitch-url']").attr("content"),
       exportLabel = $("meta[name='export-label']").attr("content"),
+      exportedLink = $("a.exported-link", content),
       projectId = undefined,
       projectPubId = undefined,
       projectUrl = undefined,
@@ -78,9 +79,17 @@ module.exports = {
             `<div class="hooray">${strings.get("glitchProjectMigrated")}</div>`
           );
           currentExportProjectButton = null;
-          close.trigger("click");
 
-          window.open(`${importURL}?${args}`, "_blank");
+          exportedLink.attr("href", `${importURL}?${args}`);
+          [exportPublished, exportUnpublished, start].forEach(e => {
+            e.addClass("hidden");
+          });
+          exportedLink.one("click", () => {
+            close.trigger("click");
+            exportedLink.addClass("hidden");
+          });
+          $(".export-link-button", exportedLink).removeClass("busy");
+          exportedLink.removeClass("hidden");
         },
         notifyError
       );
