@@ -198,9 +198,7 @@ Publisher.prototype.publish = function(bramble) {
 
         Project.setPublishUrl(project.link);
         publisher.needsUpdate = false;
-        glitch.setPublishId(
-          parseInt(/(\d+)\/?$/.exec(project.link)[1])
-        );
+        glitch.setPublishId(parseInt(/(\d+)\/?$/.exec(project.link)[1]));
       });
     });
     request.fail(function(jqXHR, status, err) {

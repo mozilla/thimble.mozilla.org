@@ -24,9 +24,9 @@ module.exports = {
       exportedLink = $("a.exported-link", content),
       restoreButtonText = () => {};
 
-    start = $("button.export-button.start", content),
-    exportPublished = $("button.export-button.published", content),
-    exportUnpublished = $("button.export-button.unpublished", content),
+    start = $("button.export-button.start", content);
+    exportPublished = $("button.export-button.published", content);
+    exportUnpublished = $("button.export-button.unpublished", content);
 
     close.click(() => {
       cta.addClass("hidden");
@@ -51,7 +51,7 @@ module.exports = {
       importURL = $("meta[name='glitch-url']").attr("content"),
       exportLabel = $("meta[name='export-label']").attr("content");
 
-    projectId = $("meta[name='project-id']").attr("content"),
+    projectId = $("meta[name='project-id']").attr("content");
     publishId = $("meta[name='publish-id']").attr("content");
 
     function getToken(url, onSuccess, onError) {
