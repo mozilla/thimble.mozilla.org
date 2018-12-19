@@ -35,5 +35,23 @@
 {% endblock %}
 
 {% block content %}
+  <section class="start-using-glitch">
+    <h1>{{ gettext("But before you click that start button...") | safe }}</h1>
+    <div class="content-wrapper">
+      <div class="flex-col">
+        <p>{{ gettext("startUsingGlitch1") | instantiate | safe }}</p>
+      </div>
+
+      <div class="flex-col vc">
+        <a href="https://glitch.com"><img src="/img/glitch.svg" alt="The Glitch logo" title="Glitch.com"></a>
+      </div>
+
+      <div class="flex-col">
+        <p>{{ gettext("startUsingGlitch2") | safe }}</p>
+      </div>
+
+    </div>
+  </section>
+
   {% include '../gallery.html' %}
 {% endblock %}
