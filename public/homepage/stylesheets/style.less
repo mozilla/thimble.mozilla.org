@@ -210,32 +210,38 @@ html {
     &.vc {
       align-self: center;
     }
+
+    p {
+      color: rgba(0, 0, 0, 0.9);
+      margin: 0 0 10px;
+      line-height: 140%;
+      text-align: left;
+      font-size: 1em;
+
+      a {
+        color: #3897c1;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    p:first-child {
+      padding-top: 20px;
+    }
   }
 
   h1 {
     color: black;
     padding: 0;
     font-weight: normal;
+    font-family: "Arvo", sans-serif;
     font-size: 37px;
     line-height: 42px;
     margin: 0 0 20px;
     text-align: center;
-  }
-
-  p {
-    color: rgba(0, 0, 0, 0.9);
-    margin: 0 0 45px;
-    line-height: 140%;
-    text-align: left;
-    padding-top: 50px;
-
-    a {
-      color: black;
-
-      &:hover {
-        color: rgba(0, 0, 0, 1);
-      }
-    }
   }
 }
 
