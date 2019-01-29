@@ -45,7 +45,7 @@ One of the important ways in which you can contribute to Thimble is by filing bu
 
 ### Get to know both repositories
 
-Thimble it made up of two parts, each with a separate repository. The [Thimble](https://github.com/mozilla/thimble.mozilla.org/) repo has the homepage as well as all of the UI above the actual editor windows. The [Brackets](https://github.com/mozilla/brackets/) repo (aka, 'Bramble' or 'BRAckets in thiMBLE') contains the editor.  We separate the two apps for security reasons, since our Brackets editor allows users to write and then execute random JavaScript.  By hosting these from different origins, we isolate them and keep everything secure.  It makes development a bit harder, but keeps our users safe.
+Thimble is made up of two parts, each with a separate repository. The [Thimble](https://github.com/mozilla/thimble.mozilla.org/) repo has the homepage as well as all of the UI above the actual editor windows. The [Brackets](https://github.com/mozilla/brackets/) repo (aka, 'Bramble' or 'BRAckets in thiMBLE') contains the editor.  We separate the two apps for security reasons, since our Brackets editor allows users to write and then execute random JavaScript.  By hosting these from different origins, we isolate them and keep everything secure.  It makes development a bit harder, but keeps our users safe.
 
 Go ahead and check them out, the README.md file in each repo contains the instructions on how to get your local development environment up and running.
 
