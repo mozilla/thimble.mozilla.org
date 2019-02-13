@@ -111,6 +111,7 @@
     "test:eslint": "eslint .",
     "test:stylelint": "stylelint \"public/**/*.less\"",
     "test:lint:fix": "run-s \"test:* -- --fix\"",
-    "test": "run-s test:*"
+    "test": "run-s test:*",
+    "watch:l10n": "nodemon -e properties -x \"run-p build:l10n server\""
   }
 }
