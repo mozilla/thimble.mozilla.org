@@ -1,8 +1,10 @@
+@import "variables.less";
+
 .gallery-wrapper {
   background: #efefef;
 
   a {
-    color: #3897c1;
+    color: @link-blue;
     text-decoration: none;
 
     &:hover {
@@ -64,7 +66,7 @@
       }
 
       .tag {
-        background: #3897c1;
+        background: @link-blue;
         border-bottom: solid 1px rgba(0, 0, 0, 0.12);
         line-height: 1em;
         color: white;
@@ -167,19 +169,19 @@
         .remix {
           display: block;
           color: white;
-          background: #51b56b;
+          background: @darkgreen;
           padding: 15px 0 14px;
           border-bottom: solid 2px rgba(0, 0, 0, 0.2);
 
           &:hover {
-            background: #5cbf71;
+            background: @lightgreen;
           }
 
           &:active {
             border-bottom: solid 2px white;
             position: relative;
             top: 2px;
-            background: #3e9652;
+            background: @darkgreen;
             opacity: 1;
           }
         }
@@ -470,7 +472,7 @@
     display: inline-block;
 
     .search-tag {
-      background: #3897c1;
+      background: @link-blue;
       color: white;
       margin-right: 4px;
       display: inline-block;
