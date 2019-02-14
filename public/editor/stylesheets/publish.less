@@ -1,8 +1,8 @@
 @import "variables.less";
 
 .disabled {
-  border-color: #a9a9a9 !important;
-  background-color: #b0b0b0 !important;
+  border-color: @lightgrey !important;
+  background-color: @navy !important;
 }
 
 #publish-dialog::after {
@@ -10,7 +10,7 @@
   position: absolute;
   border-style: solid;
   border-width: 0 15px 15px;
-  border-color: #fff transparent;
+  border-color: @white transparent;
   display: block;
   width: 0;
   z-index: 1;
@@ -28,7 +28,7 @@
 }
 
 #publish-dialog {
-  background-color: white;
+  background-color: @white;
   border: none;
   box-shadow: 0 3px 9px rgba(0, 0, 0, 0.35);
   z-index: 151;
@@ -99,7 +99,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       display: inline-block;
-      color: #3186c1;
+      color: @blue;
       text-decoration: none;
       font-weight: 600;
       max-width: 100%;
@@ -117,13 +117,13 @@
 
     #publish-buttons,
     #updateDialog {
-      background: #ffde8b;
+      background: @lightyellow;
     }
   }
 
   #publish-buttons,
   #updateDialog {
-    border-top: 1px solid #ddd;
+    border-top: 1px solid @midgrey;
     padding: 15px 20px;
     background: rgba(0, 0, 0, 0.05);
     display: flex;
@@ -141,7 +141,7 @@
     }
 
     #no-index {
-      color: #5a4944;
+      color: @grey;
       position: relative;
       font-size: 0.9em;
       padding-right: 10px;
@@ -154,7 +154,7 @@
     }
 
     #no-index-update {
-      color: #5a4944;
+      color: @grey;
       position: relative;
       font-size: 0.9em;
       padding-right: 10px;
@@ -234,8 +234,8 @@
 }
 
 #publish-button-unpublish {
-  border-color: #a9a9a9;
-  background-color: #b0b0b0;
+  border-color: @lightgrey;
+  background-color: @grey;
   margin: 0;
   position: relative;
 
@@ -287,14 +287,14 @@
 }
 
 .grey-button {
-  background-color: #b0b0b0;
+  background-color: @grey;
 
   &:hover {
-    background-color: #bcbcbc;
+    background-color: @midgrey;
   }
 
   &:active {
-    background-color: #9b9b9b;
+    background-color: @lightgrey;
   }
 }
 
