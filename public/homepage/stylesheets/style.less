@@ -69,14 +69,13 @@ html {
 
 // Wraps the top nav and main-cta area on the site
 .feature-section {
-  background: linear-gradient(160deg, #166f41, rgb(75, 199, 113));
+  background: linear-gradient(160deg, @darkgreen, @lightgreen);
 
   .feature-button {
     position: relative;
     font-size: 20px;
     color: white;
     background: transparent;
-    padding: 15px 20px 16px;
     padding: 12px 16px 13px;
     border: solid 2px white;
     text-decoration: none;
@@ -96,7 +95,6 @@ html {
       background: ~"url(/img/icon/github-white.svg)" left no-repeat;
       background-size: 24px;
       background-position: 15px 14px;
-      padding: 15px 20px 16px 60px;
       padding: 12px 16px 13px 50px;
     }
 
@@ -116,7 +114,7 @@ html {
     text-align: center;
     font-size: 18px;
     border-radius: 50%;
-    background: #e04a27;
+    background: @red;
     animation: notification-pop 0.2s ease-out;
 
     @keyframes notification-pop {
@@ -219,7 +217,7 @@ html {
       font-size: 1em;
 
       a {
-        color: #3897c1;
+        color: @link-blue;
         text-decoration: none;
 
         &:hover {
@@ -311,7 +309,7 @@ html {
   }
 
   .good-bug {
-    background: #0e8a16;
+    background: @darkgreen;
     color: white;
     font-size: 0.8em;
     padding: 0 5px 1px;
@@ -412,7 +410,7 @@ html {
 
 // Footer
 footer {
-  background: @lightgreen;
+  background: @darkgreen;
 
   .content-wrapper {
     padding: 40px 0;
@@ -507,7 +505,7 @@ footer {
       left: 20px;
       width: 100px;
       height: 29px;
-      background-image: ~"url(/img/mozilla-logo.svg)";
+      background-image: ~"url(/img/bomberbot-company-logo.svg)";
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;

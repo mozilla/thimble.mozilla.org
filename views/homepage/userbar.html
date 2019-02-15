@@ -4,42 +4,37 @@
     <div id="navbar-left" class="container-flex">
       <div class="navbar-logo-container">
         <a href="/{{ locale }}" class="logo">
-          <img src="/img/thimble-logo.svg" class="thimble-logo-full">
+          <img src="/img/bomberbot-logo.svg" class="thimble-logo-full">
         </a>
       </div>
       <div class="main-nav">
 
         <a href="/{{ locale }}" class="{% if pageName == 'home' %}selected{% endif %}">{{ gettext("userbarGetStarted") }}</a>
-        <a href="/{{ locale }}/features" class="{% if pageName == 'features' %}selected{% endif %}">{{ gettext("userbarCoolFeatures") }}</a>
-        <a href="/{{ locale }}/get-involved" class="{% if pageName == 'get-involved' %}selected{% endif %}">{{ gettext("userbarGetInvolved") }}</a>
-        {% if glitchExportEnabled %}
-        <a href="/{{ locale }}/moving-to-glitch" class="{% if pageName == 'moving-to-glitch' %}selected{% endif %}">{{ gettext("userbarMovingToGlitch") }}</a>
-        {% endif %}
       </div>
     </div>
 
     <div id="navbar-right" class="container-flex">
 
-      <div id="navbar-locale" class="nav-chunk">
-        <div class="dropdown">
-          <div class="dropdown-toggle">
-            {{ languages[locale].nativeName }}
-            <img class="icon-arrow-down" src="/img/icon/dropdown-arrow.svg">
-          </div>
-          <div class="dropdown-content">
-            <ul class="language-list">
-              {% for langCode, obj in languages %}
-                <li><a {% if langCode == locale %} class="selected" {% endif %} target="_self" href="/{{ langCode }}{{ URL_PATHNAME }}">{{ obj.nativeName }}</a></li>
-              {% endfor %}
-            </ul>
-            <!-- We're going to disable this for now until we figure out where to link this to
-            <p class="bottom-message">
-              Don't see your language? <a href="#">Help add it.</a>
-            </p>
-            -->
-          </div>
-        </div>
-      </div>
+      <!--<div id="navbar-locale" class="nav-chunk">-->
+        <!--<div class="dropdown">-->
+          <!--<div class="dropdown-toggle">-->
+            <!--{{ languages[locale].nativeName }}-->
+            <!--<img class="icon-arrow-down" src="/img/icon/dropdown-arrow.svg">-->
+          <!--</div>-->
+          <!--<div class="dropdown-content">-->
+            <!--<ul class="language-list">-->
+              <!--{% for langCode, obj in languages %}-->
+                <!--<li><a {% if langCode == locale %} class="selected" {% endif %} target="_self" href="/{{ langCode }}{{ URL_PATHNAME }}">{{ obj.nativeName }}</a></li>-->
+              <!--{% endfor %}-->
+            <!--</ul>-->
+            <!--&lt;!&ndash; We're going to disable this for now until we figure out where to link this to-->
+            <!--<p class="bottom-message">-->
+              <!--Don't see your language? <a href="#">Help add it.</a>-->
+            <!--</p>-->
+            <!--&ndash;&gt;-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
 
       <div id="navbar-login" class="{% if username %}signed-in{% endif %} nav-chunk" >
         <div id="navbar-login-inner">

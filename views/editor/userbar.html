@@ -5,7 +5,7 @@
     <div id="navbar-left" class="container-flex">
       <div class="navbar-logo-container small-logo">
         <a href="/{{ locale }}" class="logo" title="{{ gettext("backToHomepage") }}">
-          <img src="/img/thimble-icon.svg" class="thimble-logo">
+          <img src="/img/bomberbot-icon.svg" class="thimble-logo">
         </a>
       </div>
       <div title="{{ gettext("renameProjectInputBoxTitle") }}" id="navbar-project-title" class="shadow">
@@ -22,42 +22,42 @@
     <div id="navbar-right" class="container-flex">
       {% set publishBtnTitle = gettext("publishBtnTitle") %}
 
-      <div title="{{ gettext("helpIconTitle") }}" id="navbar-help" class="nav-chunk">
-        <div class="dropdown">
-          <div  class="dropdown-toggle">
-            {{ gettext("help") }}
-            <img class="icon-arrow-down" src="/img/icon/dropdown-arrow.svg">
-          </div>
-          <div class="dropdown-content">
-            <ul>
-              <li><a target = "_blank" href="https://github.com/mozilla/thimble.mozilla.org/wiki/Thimble-Troubleshooting">{{ gettext("helpTroubleshooting") }}</a></li>
-              <li><a target = "_blank" href="https://github.com/mozilla/thimble.mozilla.org/wiki/Using-Thimble-FAQ">{{ gettext("helpFAQ") }}</a></li>
-              <li><a target = "_blank" href="https://github.com/mozilla/thimble.mozilla.org/wiki/About-Thimble">{{ gettext("helpFeatures") }}</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      <!--<div title="{{ gettext("helpIconTitle") }}" id="navbar-help" class="nav-chunk">-->
+        <!--<div class="dropdown">-->
+          <!--<div  class="dropdown-toggle">-->
+            <!--{{ gettext("help") }}-->
+            <!--<img class="icon-arrow-down" src="/img/icon/dropdown-arrow.svg">-->
+          <!--</div>-->
+          <!--<div class="dropdown-content">-->
+            <!--<ul>-->
+              <!--<li><a target = "_blank" href="https://github.com/mozilla/thimble.mozilla.org/wiki/Thimble-Troubleshooting">{{ gettext("helpTroubleshooting") }}</a></li>-->
+              <!--<li><a target = "_blank" href="https://github.com/mozilla/thimble.mozilla.org/wiki/Using-Thimble-FAQ">{{ gettext("helpFAQ") }}</a></li>-->
+              <!--<li><a target = "_blank" href="https://github.com/mozilla/thimble.mozilla.org/wiki/About-Thimble">{{ gettext("helpFeatures") }}</a></li>-->
+            <!--</ul>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
 
-      <div id="navbar-locale" class="nav-chunk">
-        <div class="dropdown">
-          <div class="dropdown-toggle">
-            {{ languages[locale].nativeName }}
-            <img class="icon-arrow-down" src="/img/icon/dropdown-arrow.svg">
-          </div>
-          <div class="dropdown-content">
-            <ul class="language-list">
-              {% for langCode, obj in languages %}
-                <li><a target="_self" {% if langCode == locale %} class="selected" {% endif %} href="/{{ langCode }}{{ URL_PATHNAME }}">{{ obj.nativeName }}</a></li>
-              {% endfor %}
-            </ul>
-            <!-- We're going to disable this for now until we figure out where to link this to
-            <p class="bottom-message">
-              Don't see your language? <a href="#">Help add it.</a>
-            </p>
-            -->
-          </div>
-        </div>
-      </div>
+      <!--<div id="navbar-locale" class="nav-chunk">-->
+        <!--<div class="dropdown">-->
+          <!--<div class="dropdown-toggle">-->
+            <!--{{ languages[locale].nativeName }}-->
+            <!--<img class="icon-arrow-down" src="/img/icon/dropdown-arrow.svg">-->
+          <!--</div>-->
+          <!--<div class="dropdown-content">-->
+            <!--<ul class="language-list">-->
+              <!--{% for langCode, obj in languages %}-->
+                <!--<li><a target="_self" {% if langCode == locale %} class="selected" {% endif %} href="/{{ langCode }}{{ URL_PATHNAME }}">{{ obj.nativeName }}</a></li>-->
+              <!--{% endfor %}-->
+            <!--</ul>-->
+            <!--&lt;!&ndash; We're going to disable this for now until we figure out where to link this to-->
+            <!--<p class="bottom-message">-->
+              <!--Don't see your language? <a href="#">Help add it.</a>-->
+            <!--</p>-->
+            <!--&ndash;&gt;-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
 
       <div id="navbar-login" class="{% if username %}signed-in{% endif %} nav-chunk">
         <div id="navbar-login-inner">
