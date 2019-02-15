@@ -1,3 +1,3 @@
 module.exports = {
-  DEFAULT_PROJECT_NAME_KEY: "Project zonder naam"
+  DEFAULT_PROJECT_NAME_KEY: "untitledProject"
 };
