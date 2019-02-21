@@ -1,0 +1,148 @@
+#spinner-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  background: #4acea5;
+  opacity: 1;
+  background: rgba(74, 206, 165, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#spinner-container h2 {
+  color: white;
+  font-size: 20px;
+  margin: 0 0 5px;
+}
+
+#spinner-container .message {
+  width: 100%;
+  text-align: center;
+  color: rgba(255, 255, 255, .6);
+}
+
+#spinner-container .error-message {
+  display: none;
+}
+
+#spinner-container.loading-error .error-message {
+  display: block;
+}
+
+#spinner-container a {
+  color: white;
+  text-decoration: underline;
+}
+
+#spinner-container .thimble-spinner {
+  width: 50px;
+  height: 50px;
+  background: url(/img/bomberbot-icon.svg);
+  background-position: center;
+  background-size: 100%;
+  animation: spinner 2s infinite ease-in-out;
+  outline: 1px solid transparent;
+  margin: 0 auto 15px auto;
+}
+
+#spinner-container.loading-error {
+  background: black;
+}
+
+#spinner-container.loading-error .loading-message {
+  display: none;
+}
+
+#spinner-container.loading-error .thimble-spinner {
+  animation: none;
+}
+
+#spinner-container .loading-message-help-link {
+  animation: none;
+}
+
+#spinner-container button {
+  opacity: 1;
+  margin: 15px auto 0;
+  display: block;
+  outline: none;
+  padding: 8px 14px;
+  border-radius: 2px;
+  cursor: pointer;
+  border: solid 2px white;
+  background: transparent;
+  color: white;
+}
+
+#spinner-container .reload-message {
+  margin-bottom: 30px;
+}
+
+#spinner-container button:hover {
+  background: rgba(255, 255, 255, .2);
+}
+
+#spinner-container button:active {
+  background: white;
+  color: black;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+  25% {
+    transform: rotateX(-180.1deg) rotateY(0deg);
+  }
+  50% {
+    transform: rotateX(-180deg) rotateY(-179.9deg);
+  }
+  75% {
+    transform: rotateX(-360deg) rotateY(-179.9deg);
+  }
+  100% {
+    transform: rotateX(-360deg) rotateY(-360deg);
+  }
+}
+
+#spinner-container .taking-too-long {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding-top: 30px;
+  transition: max-height 1s ease-out 0s, opacity 1s ease-out .25s;
+  margin: 0 auto;
+}
+
+#spinner-container .taking-too-long p {
+  margin: 0 0 10px 0;
+}
+
+#spinner-container .taking-too-long p.email-us {
+  margin: 50px 0 0 0;
+}
+
+#spinner-container .taking-too-long.visible {
+  max-height: 400px;
+  opacity: 1;
+}
+
+#spinner-container .important-notice {
+  position: absolute;
+  top: 20px;
+  background: black;
+  color: rgba(255, 255, 255, .6);
+  padding: 20px 20px 12px 20px;
+  max-width: 80%;
+  font-size: 15px;
+}
+
+#spinner-container .important-notice h2 {
+  color: rgba(255, 255, 255, .9);
+  font-size: 18px;
+}
