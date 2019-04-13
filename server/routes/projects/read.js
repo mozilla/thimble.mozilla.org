@@ -122,7 +122,8 @@ module.exports = function(config, req, res, next) {
         glitch: req.user && config.glitch,
         migrationDate,
         queryString: qs,
-        logoutURL: config.logoutURL
+        logoutURL: config.logoutURL,
+        pageName: "projects"
       };
 
       res.render("projects-list/index.html", options);
