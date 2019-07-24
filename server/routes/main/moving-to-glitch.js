@@ -36,7 +36,9 @@ module.exports = function(config, req, res) {
     glitchExportEnabled: req.user && config.glitch.exportEnabled,
     glitch: glitch,
     migrationDate: glitch.migrationDate,
-    moreInfoURL: config.glitch.moreInfoURL
+    moreInfoURL: config.glitch.moreInfoURL,
+    shutdownNewAccounts: config.shutdownNewAccounts,
+    shutdownNewProjectsAndPublishing: config.shutdownNewProjectsAndPublishing
   };
 
   if (req.user) {

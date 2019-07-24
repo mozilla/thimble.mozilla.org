@@ -55,14 +55,18 @@
         <div class='tags'></div>
       </div>
       <div class='buttons'>
+        {% if not shutdownNewProjectsAndPublishing %}
         <a class="remix">{{ gettext("remix") }}</a>
+        {% endif %}
         <a class="teaching-kit">{{ gettext("lessonPlan") }}</a>
       </div>
     </div>
 
+    {% if not shutdownNewProjectsAndPublishing %}
     <p class="contribute-activity">
       {{ gettext("submitProject") | safe }}
     </p>
+    {% endif %}
 
   </div>
 </div>

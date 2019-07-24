@@ -53,12 +53,14 @@
 
             <div class="dropdown-content">
               <ul class="dropdown">
+                {% if not shutdownNewProjectsAndPublishing %}
                 <li>
                   <a id="new-project-link" href="/{{ locale }}/projects/new">
                     <img src="/img/icon/new-project.svg" />
                     {{ gettext("newProjectLink") }}
                   </a>
                 </li>
+                {% endif %}
                 <li>
                   <a href="/{{ locale }}/projects/{{ queryString }}" target="_self">
                     <img src="/img/icon/your-projects.svg" />
@@ -75,7 +77,11 @@
             </div>
         {% else %}
           <div id="navbar-anonymous">
+            {% if shutdownNewAccounts %}
+            {{ gettext("signInPromptHomepage2") | instantiate | safe }}
+            {% else %}
             {{ gettext("signInPromptHomepage") | instantiate | safe }}
+            {% endif %}
           </div>
         {% endif %}
         </div>

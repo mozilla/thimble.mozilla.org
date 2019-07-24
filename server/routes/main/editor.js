@@ -77,7 +77,9 @@ module.exports = function(config, req, res, next) {
     logoutURL: config.logoutURL,
     queryString: qs,
     glitchExportEnabled: req.user && config.glitch.exportEnabled,
-    glitch: req.user && config.glitch
+    glitch: req.user && config.glitch,
+    shutdownNewAccounts: config.shutdownNewAccounts,
+    shutdownNewProjectsAndPublishing: config.shutdownNewProjectsAndPublishing
   };
 
   // We add the localization code to the query params through a URL object

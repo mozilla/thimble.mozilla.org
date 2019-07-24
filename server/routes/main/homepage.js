@@ -24,7 +24,9 @@ module.exports = function(config, req, res) {
     moreInfoURL: config.glitch.moreInfoURL,
     URL_PATHNAME: "/" + qs,
     languages: req.app.locals.languages,
-    pageName: "home"
+    pageName: "home",
+    shutdownNewAccounts: config.shutdownNewAccounts,
+    shutdownNewProjectsAndPublishing: config.shutdownNewProjectsAndPublishing
   };
 
   if (req.user) {
