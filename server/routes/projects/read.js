@@ -127,7 +127,8 @@ module.exports = function(config, req, res, next) {
         queryString: qs,
         logoutURL: config.logoutURL,
         shutdownNewAccounts: config.shutdownNewAccounts,
-        shutdownNewProjectsAndPublishing: config.shutdownNewProjectsAndPublishing
+        shutdownNewProjectsAndPublishing:
+          config.shutdownNewProjectsAndPublishing
       };
 
       res.render("projects-list/index.html", options);
