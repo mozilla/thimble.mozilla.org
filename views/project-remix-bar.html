@@ -1,3 +1,4 @@
+{% if not shutdownNewProjectsAndPublishing %}
 <!-- Project Remix bar -->
 <div lang="{{ lang }}" class="details-bar collapsed cleanslate" style="display: none !important">
   <a class="thimble-logo" title="{{ gettext("thimbleByMozilla") }}" href="https://thimble.mozilla.org">
@@ -20,3 +21,4 @@
   </div>
 </div>
 <!-- End of Remix bar -->
+{% endif %}

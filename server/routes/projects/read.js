@@ -45,12 +45,17 @@ module.exports = function(config, req, res, next) {
 
       if (response.statusCode === 404) {
         if (config.shutdownNewProjectsAndPublishing) {
-          body = "[]";
+          res.redirect(
+            307,
+            `/${
+              locale
+            }/moving-to-glitch/#can-I-keep-using-thimble-until-I-export`
+          );
         } else {
           // If there aren't any projects for this user, create one with a redirect
           res.redirect(307, "/" + locale + "/projects/new" + qs);
-          return;
         }
+        return;
       } else if (response.statusCode !== 200) {
         res.status(response.statusCode);
         next(
