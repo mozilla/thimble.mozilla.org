@@ -147,7 +147,7 @@ Please note: On Windows, use ``copy`` instead of ``cp``
 * Run ``npm start`` the server
 
 #### PostgreSQL
-* Run ``initdb -D /usr/local/var/postgres`` to initialize PostreSQL
+* Run ``initdb -D /usr/local/var/postgres`` to initialize PostgreSQL
   * If this already exists, run ``rm -rf /usr/local/var/postgres`` to remove it
 * Run ``postgres -D /usr/local/var/postgres`` to start the PostgreSQL server
 * Run ``createdb publish`` to create the Publish database
@@ -182,7 +182,7 @@ To publish locally, you'll need to do the following...
       ```
 
   * Run ``node scripts/test-data.js``
-    * You'll see a ``INSERT 0 1`` message if successful
+    * You'll see an ``INSERT 0 1`` message if successful
 
 #### Sign In
 
