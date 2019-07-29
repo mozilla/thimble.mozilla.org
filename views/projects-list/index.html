@@ -41,9 +41,11 @@
 
     <div class="project-list-wrapper">
 
+      {% if not shutdownNewProjectsAndPublishing %}
       <a href="/{{ locale }}/projects/new" id="project-0">
         <div title="{{ gettext("prjListNewProjectBtnTitle") }}" class="project-button">{{ gettext("prjListNewProjectBtn") }}</div>
       </a>
+      {% endif %}
 
       <div class="delete-button">
         <img src="/img/icon/garbage-can-white.svg">

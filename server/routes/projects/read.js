@@ -44,12 +44,19 @@ module.exports = function(config, req, res, next) {
       }
 
       if (response.statusCode === 404) {
-        // If there aren't any projects for this user, create one with a redirect
-        res.redirect(307, "/" + locale + "/projects/new" + qs);
+        if (config.shutdownNewProjectsAndPublishing) {
+          res.redirect(
+            307,
+            `/${
+              locale
+            }/moving-to-glitch/#can-I-keep-using-thimble-until-I-export`
+          );
+        } else {
+          // If there aren't any projects for this user, create one with a redirect
+          res.redirect(307, "/" + locale + "/projects/new" + qs);
+        }
         return;
-      }
-
-      if (response.statusCode !== 200) {
+      } else if (response.statusCode !== 200) {
         res.status(response.statusCode);
         next(
           HttpError.format(
@@ -68,6 +75,7 @@ module.exports = function(config, req, res, next) {
       }
 
       var projects;
+
       try {
         projects = JSON.parse(body);
       } catch (e) {
@@ -122,7 +130,10 @@ module.exports = function(config, req, res, next) {
         glitch: req.user && config.glitch,
         migrationDate,
         queryString: qs,
-        logoutURL: config.logoutURL
+        logoutURL: config.logoutURL,
+        shutdownNewAccounts: config.shutdownNewAccounts,
+        shutdownNewProjectsAndPublishing:
+          config.shutdownNewProjectsAndPublishing
       };
 
       res.render("projects-list/index.html", options);

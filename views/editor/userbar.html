@@ -70,12 +70,14 @@
             </div>
             <div class="dropdown-content">
               <ul>
+                {% if not shutdownNewProjectsAndPublishing %}
                 <li>
                   <a id="new-project-link" href="/{{ locale }}/projects/new">
                     <img src="/img/icon/new-project.svg" />
                     {{ gettext("newProjectLink") }}
                   </a>
                 </li>
+                {% endif %}
                 <li>
                   <a id="delete-project-link">
                     <img src="/img/icon/garbage-can.svg" />
@@ -103,7 +105,7 @@
               </ul>
             </div>
           </div>
-        {% else %}
+        {% elseif not shutdownNewAccounts %}
           {% set publishBtnOpenTag = '<span title="{{ publishBtnTitle }}" id="navbar-publish-button"><img src="/img/icon/publish.svg" class="icon-publish">' | instantiate | safe %}
           {% set publishBtnCloseTag = '</span>' | safe %}
           <div id="navbar-anonymous">
@@ -113,7 +115,7 @@
         </div>
       </div>
 
-    {% if username %}
+    {% if username and not shutdownNewProjectsAndPublishing %}
       <div id="navbar-publish" class="nav-chunk">
         <div title="{{ publishBtnTitle }}" id="navbar-publish-button"><img src="/img/icon/publish.svg" class="icon-publish">{{ gettext("publishBtn") }}
         </div>

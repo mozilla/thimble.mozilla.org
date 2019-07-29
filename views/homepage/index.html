@@ -12,6 +12,7 @@
         <p>
           {{ gettext("thimbleDescription1") | safe }}
         </p>
+        {% if not shutdownNewProjectsAndPublishing %}
         <div class="new-project-button-wrapper">
           <a id="new-project-button" class="feature-button" href="/{{ locale }}/projects/new" title="{{ gettext("newProjectBtnTitle") }}" class="button">
             <div class="pencil-animation">
@@ -25,6 +26,7 @@
             <span id="new-project-button-text">{{ gettext("newProjectBtn") }}</span>
           </a>
         </div>
+        {% endif %}
       </div>
 
       <div class="video">

@@ -55,5 +55,10 @@ module.exports = {
     childSrc: [editorDomain, homepageVideoLink],
     scriptSrc: [editorDomain],
     connectSrc: [editorDomain]
-  }
+  },
+  shutdownNewAccounts: env.get("SHUTDOWN_NEW_ACCOUNTS", false),
+  shutdownNewProjectsAndPublishing: env.get(
+    "SHUTDOWN_NEW_PROJECTS_AND_PUBLISHING",
+    false
+  )
 };

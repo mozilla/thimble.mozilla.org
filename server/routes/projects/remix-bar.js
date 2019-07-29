@@ -23,7 +23,8 @@ module.exports = (config, req, res) => {
     title: params.title,
     author: params.author,
     updated: updated,
-    lang: lang
+    lang: lang,
+    shutdownNewProjectsAndPublishing: config.shutdownNewProjectsAndPublishing
   };
 
   res.render("project-remix-bar.html", options);
