@@ -59,11 +59,16 @@ var Signup = React.createClass({
     document.body.className = "signup-bg";
     WebmakerActions.addListener('FORM_ERROR', this.setFormState);
     WebmakerActions.addListener('FORM_VALIDATION', this.handleFormData);
+    WebmakerActions.addListener('FORM_WARNING', this.enableButton);
   },
   componentWillUnmount: function() {
     document.body.className = "";
     WebmakerActions.deleteListener('FORM_ERROR', this.setFormState);
     WebmakerActions.deleteListener('FORM_VALIDATION', this.handleFormData);
+  },
+  enableButton : function(){
+    var buttonEl = this.getDOMNode().querySelector(".signup-button button");
+    buttonEl.removeAttribute("disabled");
   },
   render: function() {
     var queryObj = Url.parse(window.location.href, true).query;
@@ -87,7 +92,7 @@ var Signup = React.createClass({
           <IconText iconClass="agreement" textClass="eula">
             By signing up, I agree to Webmaker&lsquo;s <a tabIndex="5" href="//beta.webmaker.org/#/legal" className="underline">Terms of Service</a> and <a tabIndex="6" href="//www.mozilla.org/privacy/websites" className="underline">Privacy Policy</a>.
           </IconText>
-          <div className="signup-button"><button type="submit" tabIndex="7" className="btn btn-awsm" onClick={this.processSignup}>SIGN UP</button></div>
+          <div className="signup-button"><button type="submit" tabIndex="7" className="btn btn-awsm btn-inverted" onClick={this.processSignup}>SIGN UP</button></div>
         </div>
       </div>
     );
@@ -96,6 +101,8 @@ var Signup = React.createClass({
     this.refs.userform.setState({['valid_' +data.field]: false});
   },
   processSignup: function(evt) {
+    var buttonEl = this.getDOMNode().querySelector(".signup-button button");
+    buttonEl.setAttribute("disabled", true);
     this.refs.userform.processFormData(evt);
   },
   handleBlur: function(fieldName, value) {
@@ -115,14 +122,14 @@ var Signup = React.createClass({
     var data = data.user;
     if ( error ) {
       ga.event({category: 'Signup', action: 'Error during form validation'});
+      this.enableButton();
       console.error("validation error", error);
       return;
     }
-
     var userform = this.refs.userform;
     var csrfToken = cookiejs.parse(document.cookie).crumb;
     var queryObj = Url.parse(window.location.href, true).query;
-
+    var that = this;
     userform.validatePassword(data.password);
     fetch("/create-user", {
       method: "post",
@@ -153,9 +160,15 @@ var Signup = React.createClass({
         ga.event({category: 'Signup', action: 'Successfully created an account'});
         window.location = Url.format(redirectObj);
       }
+
+      if( response.status >= 400 ) {
+        that.enableButton();
+      }
+
     }).catch(function(ex) {
       ga.event({category: 'Signup', action: 'Error', label: 'Error parsing response from the server'});
       console.error("Error parsing response", ex);
+      that.enableButton();
     });
 
   }

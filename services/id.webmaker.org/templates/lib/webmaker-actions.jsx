@@ -7,29 +7,45 @@ var Constants = {
   "FORM_VALID": "FORM_VALID",
   "FORM_VALIDATION": "FORM_VALIDATION"
 };
+function dispatchWhenReady(data, fn) {
+  if (WebmakerDispatcher.isDispatching()) {
+    return setTimeout(function retry() {
+      dispatchWhenReady(data, fn);
+    }, 200);
+  }
+  fn(data);
+}
 var WebmakerActions = Object.assign({}, EventEmitter.prototype, {
   displayError: function(data) {
-    WebmakerDispatcher.dispatch({
-      'data': data,
-      'actionType': Constants.FORM_ERROR
+    dispatchWhenReady(data, function(data) {
+      WebmakerDispatcher.dispatch({
+        'data': data,
+        'actionType': Constants.FORM_ERROR
+      });
     });
   },
   onFormValidation: function(data) {
-    WebmakerDispatcher.dispatch({
-      'data': data,
-      'actionType': Constants.FORM_VALIDATION
+    dispatchWhenReady(data, function(data) {
+      WebmakerDispatcher.dispatch({
+        'data': data,
+        'actionType': Constants.FORM_VALIDATION
+      });
     });
   },
   displayWarning: function(data) {
-    WebmakerDispatcher.dispatch({
-      'data': data,
-      'actionType': Constants.FORM_WARNING
+    dispatchWhenReady(data, function(data) {
+      WebmakerDispatcher.dispatch({
+        'data': data,
+        'actionType': Constants.FORM_WARNING
+      });
     });
   },
   validField: function(data) {
-    WebmakerDispatcher.dispatch({
-      'data': data,
-      'actionType': Constants.FORM_VALID
+    dispatchWhenReady(data, function(data) {
+      WebmakerDispatcher.dispatch({
+        'data': data,
+        'actionType': Constants.FORM_VALID
+      });
     });
   },
   addListener: function(actionType, callback) {
